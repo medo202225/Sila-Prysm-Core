@@ -13,6 +13,11 @@ var (
 		Name:  "sepolia",
 		Usage: "Runs Prysm configured for the Sepolia test network.",
 	}
+	// SilaMainnet flag for the Sila main network.
+	SilaMainnet = &cli.BoolFlag{
+		Name:  "sila",
+		Usage: "Runs Prysm configured for the Sila main network.",
+	}
 	// HoleskyTestnet flag for the multiclient Ethereum consensus testnet.
 	HoleskyTestnet = &cli.BoolFlag{
 		Name:  "holesky",
@@ -238,6 +243,7 @@ var ValidatorFlags = append(deprecatedFlags, []cli.Flag{
 	SepoliaTestnet,
 	HoodiTestnet,
 	Mainnet,
+	SilaMainnet,
 	dynamicKeyReloadDebounceInterval,
 	disableAttestTimely,
 	enableSlashingProtectionPruning,
@@ -264,6 +270,7 @@ var BeaconChainFlags = combinedFlags([]cli.Flag{
 	SepoliaTestnet,
 	HoodiTestnet,
 	Mainnet,
+	SilaMainnet,
 	disablePeerScorer,
 	disableBroadcastSlashingFlag,
 	disableStakinContractCheck,
@@ -310,6 +317,7 @@ var E2EBeaconChainFlags = []string{
 // NetworkFlags contains a list of network flags.
 var NetworkFlags = []cli.Flag{
 	Mainnet,
+	SilaMainnet,
 	SepoliaTestnet,
 	HoleskyTestnet,
 	HoodiTestnet,

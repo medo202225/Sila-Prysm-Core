@@ -135,7 +135,12 @@ func InitWithReset(c *Flags) func() {
 
 // configureTestnet sets the config according to specified testnet flag
 func configureTestnet(ctx *cli.Context) error {
-	if ctx.Bool(SepoliaTestnet.Name) {
+	if ctx.Bool(SilaMainnet.Name) {
+		log.Info("Running on the Sila Beacon Chain Mainnet")
+		if err := params.SetActive(params.SilaMainnetConfig().Copy()); err != nil {
+			return err
+		}
+	} else if ctx.Bool(SepoliaTestnet.Name) {
 		log.Info("Running on the Sepolia Beacon Chain Testnet")
 		if err := params.SetActive(params.SepoliaConfig().Copy()); err != nil {
 			return err
