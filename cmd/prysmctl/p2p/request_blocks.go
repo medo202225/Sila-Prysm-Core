@@ -46,7 +46,7 @@ var requestBlocksCmd = &cli.Command{
 		cmd.ChainConfigFileFlag,
 		&cli.StringFlag{
 			Name:        "network",
-			Usage:       "network to run on (mainnet, sepolia, holesky)",
+			Usage:       "network to run on (mainnet, sila, sepolia, holesky, hoodi)",
 			Destination: &requestBlocksFlags.Network,
 			Value:       "mainnet",
 		},
