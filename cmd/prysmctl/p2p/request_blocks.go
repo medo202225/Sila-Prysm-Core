@@ -110,6 +110,10 @@ func cliActionRequestBlocks(cliCtx *cli.Context) error {
 		if err := params.SetActive(params.HoodiConfig()); err != nil {
 			log.Fatal(err)
 		}
+	case params.SilaMainnetName:
+		if err := params.SetActive(params.SilaMainnetConfig()); err != nil {
+			log.Fatal(err)
+		}
 	case params.MainnetName:
 		// Do nothing
 	default:
