@@ -6,6 +6,7 @@ const (
 	EndToEndMainnetName = "end-to-end-mainnet"
 	InteropName         = "interop"
 	MainnetName         = "mainnet"
+	SilaMainnetName     = "sila"
 	MainnetTestName     = "mainnet-test"
 	MinimalName         = "minimal"
 	SepoliaName         = "sepolia"
