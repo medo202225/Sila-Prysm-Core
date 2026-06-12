@@ -163,10 +163,10 @@ func configureTestnet(ctx *cli.Context) error {
 		params.UseHoodiNetworkConfig()
 	} else {
 		if ctx.IsSet(cmd.ChainConfigFileFlag.Name) {
-			log.Warning("Running on custom Ethereum network specified in a chain configuration YAML file")
+			log.Warning("Running on custom network specified in a chain configuration YAML file")
 			params.UseCustomNetworkConfig()
 		} else {
-			log.Info("Running on Ethereum Mainnet")
+			log.Info("Running on Mainnet")
 		}
 		if err := params.SetActive(params.MainnetConfig()); err != nil {
 			return err
