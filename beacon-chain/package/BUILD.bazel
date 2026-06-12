@@ -40,7 +40,7 @@ pkg_deb(
         "etc/prysm/beacon-chain.yaml",
     ],
     data = ":debian-data",
-    description = "Prysm Beacon Chain - Ethereum consensus network communications",
+    description = "Sila Prysm Beacon Chain - consensus network communications",
     homepage = "https://prysmaticlabs.com/",
     maintainer = "Prysmatic Labs <contact@prysmaticlabs.com>",
     package = "prysm-beacon-chain",
