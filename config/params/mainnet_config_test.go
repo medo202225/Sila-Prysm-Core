@@ -53,3 +53,18 @@ func TestMainnetConfigMatchesUpstreamYaml(t *testing.T) {
 	fields := fieldsFromYamls(t, append(presetFPs, configFP))
 	assertYamlFieldsMatch(t, "mainnet", fields, pcfg, params.BeaconConfig())
 }
+
+func TestSilaMainnetConfigDoesNotMutateMainnet(t *testing.T) {
+	mainnet := params.MainnetConfig()
+	sila := params.SilaMainnetConfig()
+	mainnetAgain := params.MainnetConfig()
+
+	require.Equal(t, params.MainnetName, mainnet.ConfigName)
+	require.Equal(t, params.SilaMainnetName, sila.ConfigName)
+	require.Equal(t, mainnet.ConfigName, mainnetAgain.ConfigName)
+	require.Equal(t, mainnet.DepositChainID, mainnetAgain.DepositChainID)
+	require.Equal(t, mainnet.GenesisForkVersion, mainnetAgain.GenesisForkVersion)
+	require.NotEqual(t, mainnet.ConfigName, sila.ConfigName)
+	require.NotEqual(t, mainnet.DepositChainID, sila.DepositChainID)
+	require.NotEqual(t, mainnet.GenesisForkVersion, sila.GenesisForkVersion)
+}
