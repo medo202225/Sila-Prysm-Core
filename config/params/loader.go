@@ -92,7 +92,7 @@ func LoadChainConfigFile(path string, conf *BeaconChainConfig) error {
 // ReplaceHexStringWithYAMLFormat will replace hex strings that the yaml parser will understand.
 func ReplaceHexStringWithYAMLFormat(line string) []string {
 	parts := strings.Split(line, "0x")
-	decoded, err := hex.DecodeString(parts[1])
+	decoded, err := hex.DecodeString(strings.TrimSpace(parts[1]))
 	if err != nil {
 		log.WithError(err).Error("Failed to decode hex string.")
 	}
