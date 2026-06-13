@@ -597,7 +597,7 @@ func (s *Service) createLocalNode(
 	current := params.GetNetworkScheduleEntry(currentEpoch)
 	next := params.NextNetworkScheduleEntry(currentEpoch)
 	if err := updateENR(localNode, current, next); err != nil {
-		return nil, errors.Wrap(err, "could not add eth2 fork version entry to enr")
+		return nil, errors.Wrap(err, "could not add Sila fork version entry to enr")
 	}
 
 	localNode = initializeAttSubnets(localNode)
