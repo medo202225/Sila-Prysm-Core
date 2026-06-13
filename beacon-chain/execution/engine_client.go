@@ -73,36 +73,36 @@ var (
 
 const (
 	// NewPayloadMethod v1 request string for JSON-RPC.
-	NewPayloadMethod = "engine_newPayloadV1"
+	NewPayloadMethod = "silaEngine_newPayloadV1"
 	// NewPayloadMethodV2 v2 request string for JSON-RPC.
-	NewPayloadMethodV2 = "engine_newPayloadV2"
-	NewPayloadMethodV3 = "engine_newPayloadV3"
+	NewPayloadMethodV2 = "silaEngine_newPayloadV2"
+	NewPayloadMethodV3 = "silaEngine_newPayloadV3"
 	// NewPayloadMethodV4 is the engine_newPayloadVX method added at Electra.
-	NewPayloadMethodV4 = "engine_newPayloadV4"
+	NewPayloadMethodV4 = "silaEngine_newPayloadV4"
 	// NewPayloadMethodV5 is the engine_newPayloadVX method added at Gloas.
-	NewPayloadMethodV5 = "engine_newPayloadV5"
+	NewPayloadMethodV5 = "silaEngine_newPayloadV5"
 	// ForkchoiceUpdatedMethod v1 request string for JSON-RPC.
-	ForkchoiceUpdatedMethod = "engine_forkchoiceUpdatedV1"
+	ForkchoiceUpdatedMethod = "silaEngine_forkchoiceUpdatedV1"
 	// ForkchoiceUpdatedMethodV2 v2 request string for JSON-RPC.
-	ForkchoiceUpdatedMethodV2 = "engine_forkchoiceUpdatedV2"
+	ForkchoiceUpdatedMethodV2 = "silaEngine_forkchoiceUpdatedV2"
 	// ForkchoiceUpdatedMethodV3 v3 request string for JSON-RPC.
-	ForkchoiceUpdatedMethodV3 = "engine_forkchoiceUpdatedV3"
+	ForkchoiceUpdatedMethodV3 = "silaEngine_forkchoiceUpdatedV3"
 	// GetPayloadMethod v1 request string for JSON-RPC.
-	GetPayloadMethod = "engine_getPayloadV1"
+	GetPayloadMethod = "silaEngine_getPayloadV1"
 	// GetPayloadMethodV2 v2 request string for JSON-RPC.
-	GetPayloadMethodV2 = "engine_getPayloadV2"
+	GetPayloadMethodV2 = "silaEngine_getPayloadV2"
 	// GetPayloadMethodV3 is the get payload method added for deneb
-	GetPayloadMethodV3 = "engine_getPayloadV3"
+	GetPayloadMethodV3 = "silaEngine_getPayloadV3"
 	// GetPayloadMethodV4 is the get payload method added for electra
-	GetPayloadMethodV4 = "engine_getPayloadV4"
+	GetPayloadMethodV4 = "silaEngine_getPayloadV4"
 	// GetPayloadMethodV5 is the get payload method added for fulu
-	GetPayloadMethodV5 = "engine_getPayloadV5"
+	GetPayloadMethodV5 = "silaEngine_getPayloadV5"
 	// GetPayloadMethodV6 is the get payload method added for gloas/amsterdam.
-	GetPayloadMethodV6 = "engine_getPayloadV6"
+	GetPayloadMethodV6 = "silaEngine_getPayloadV6"
 	// ForkchoiceUpdatedMethodV4 is the forkchoice updated method added for gloas/amsterdam.
-	ForkchoiceUpdatedMethodV4 = "engine_forkchoiceUpdatedV4"
+	ForkchoiceUpdatedMethodV4 = "silaEngine_forkchoiceUpdatedV4"
 	// BlockByHashMethod request string for JSON-RPC.
-	BlockByHashMethod = "eth_getBlockByHash"
+	BlockByHashMethod = "sila_getBlockByHash"
 	// BlockByNumberMethod request string for JSON-RPC.
 	BlockByNumberMethod = "sila_getBlockByNumber"
 	// GetPayloadBodiesByHashV1 is the engine_getPayloadBodiesByHashX JSON-RPC method for pre-Electra payloads.

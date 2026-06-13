@@ -216,7 +216,7 @@ func (r *RPCClient) CallContext(ctx context.Context, obj any, methodName string,
 			Number: h.Number,
 			Time:   h.Time,
 		}
-	case "eth_getBlockByHash":
+	case "sila_getBlockByHash":
 		val, ok := args[0].(common.Hash)
 		if !ok {
 			return errors.Errorf("wrong argument type provided: %T", args[0])
