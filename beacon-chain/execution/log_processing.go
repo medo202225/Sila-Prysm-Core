@@ -214,7 +214,7 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 				log.WithFields(logrus.Fields{
 					"deposits":          deposits,
 					"genesisValidators": valCount,
-				}).Info("Processing deposits from Ethereum 1 chain")
+				}).Info("Processing deposits from Sila execution chain")
 			}
 		}
 	} else {
