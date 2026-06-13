@@ -37,7 +37,7 @@ func getProposerSettings(c *cli.Context, r io.Reader) error {
 			}
 			defaultFeeRecipient = recipient
 		} else {
-			promptText := "Please enter a default fee recipient address (an ethereum address in hex format)"
+			promptText := "Please enter a default fee recipient address (a Sila address in hex format)"
 			resp, err := prompt.ValidatePrompt(r, promptText, validateIsExecutionAddress)
 			if err != nil {
 				return err
