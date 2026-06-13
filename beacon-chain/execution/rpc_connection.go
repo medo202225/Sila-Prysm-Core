@@ -3,6 +3,7 @@ package execution
 import (
 	"context"
 	"fmt"
+	"math/big"
 	"net/http"
 	"strings"
 	"time"
@@ -139,13 +140,17 @@ func (s *Service) newRPCClientWithAuth(ctx context.Context, endpoint network.End
 // Checks the chain ID of the execution client to ensure
 // it matches local parameters of what Prysm expects.
 func ensureCorrectExecutionChain(ctx context.Context, client *ethclient.Client) error {
-	cID, err := client.ChainID(ctx)
-	if err != nil {
+	var chainIDHex string
+	if err := client.Client().CallContext(ctx, &chainIDHex, "sila_chainId"); err != nil {
 		return err
+	}
+	cID, ok := new(big.Int).SetString(strings.TrimPrefix(chainIDHex, "0x"), 16)
+	if !ok {
+		return fmt.Errorf("invalid Sila chain ID %q", chainIDHex)
 	}
 	wantChainID := params.BeaconConfig().DepositChainID
 	if cID.Uint64() != wantChainID {
-		return fmt.Errorf("wanted chain ID %d, got %d", wantChainID, cID.Uint64())
+		return fmt.Errorf("wanted Sila chain ID %d, got %d", wantChainID, cID.Uint64())
 	}
 	return nil
 }

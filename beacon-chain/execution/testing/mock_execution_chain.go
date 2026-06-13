@@ -148,6 +148,14 @@ type RPCClient struct {
 func (*RPCClient) Close() {}
 
 func (r *RPCClient) CallContext(ctx context.Context, obj any, methodName string, args ...any) error {
+	if methodName == "sila_chainId" {
+		chainID, ok := obj.(*string)
+		if !ok {
+			return errors.Errorf("wrong argument type provided: %T", obj)
+		}
+		*chainID = "0x7ea"
+		return nil
+	}
 	if r.BlockNumMap != nil && methodName == "eth_getBlockByNumber" {
 		val, ok := args[0].(string)
 		if !ok {

@@ -248,7 +248,7 @@ func (s *Service) Start() {
 	s.isRunning = true
 
 	// Poll the execution client connection and fallback if errors occur.
-	s.pollConnectionStatus(s.ctx)
+	go s.pollConnectionStatus(s.ctx)
 
 	go s.run(s.ctx.Done())
 }
