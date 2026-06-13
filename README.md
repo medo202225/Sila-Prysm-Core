@@ -13,6 +13,10 @@
 
 ---
 
+## External Compatibility Boundaries
+
+Sila-Prysm keeps a small number of external compatibility names where they refer to third-party protocols, historical records, or upstream dependencies rather than Sila consensus identity. Examples include the official Web3Signer `/api/v1/eth2/*` API, `go-eth2-*` dependency names, external interop references, and historical changelog entries. These names must not be changed unless a full Sila-native replacement is implemented.
+
 ## 📖 Overview
 
 This is the core repository for Prysm, a [Golang](https://go.dev/) implementation of the [Sila Consensus](https://ethereum.org/en/developers/docs/consensus-mechanisms/#proof-of-stake) [specification](https://github.com/ethereum/consensus-specs), developed by [Offchain Labs](https://www.offchainlabs.com).
