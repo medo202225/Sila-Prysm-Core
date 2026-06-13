@@ -2,20 +2,20 @@ package db
 
 import "github.com/OffchainLabs/prysm/v7/beacon-chain/db/iface"
 
-// ReadOnlyDatabase exposes Prysm's Ethereum data backend for read access only, no information about
+// ReadOnlyDatabase exposes Prysm's Sila data backend for read access only, no information about
 // head info. For head info, use github.com/prysmaticlabs/prysm/blockchain.HeadFetcher.
 type ReadOnlyDatabase = iface.ReadOnlyDatabase
 
-// NoHeadAccessDatabase exposes Prysm's Ethereum data backend for read/write access, no information
+// NoHeadAccessDatabase exposes Prysm's Sila data backend for read/write access, no information
 // about head info. For head info, use github.com/prysmaticlabs/prysm/blockchain.HeadFetcher.
 type NoHeadAccessDatabase = iface.NoHeadAccessDatabase
 
-// ReadOnlyDatabaseWithSeqNum exposes Prysm's Ethereum data backend for read access only, no information about
+// ReadOnlyDatabaseWithSeqNum exposes Prysm's Sila data backend for read access only, no information about
 // head info, but with read/write access to the p2p metadata sequence number.
 // This is used for the p2p service.
 type ReadOnlyDatabaseWithSeqNum = iface.ReadOnlyDatabaseWithSeqNum
 
-// HeadAccessDatabase exposes Prysm's Ethereum backend for read/write access with information about
+// HeadAccessDatabase exposes Prysm's Sila backend for read/write access with information about
 // chain head information. This interface should be used sparingly as the HeadFetcher is the source
 // of truth around chain head information while this interface serves as persistent storage for the
 // head fetcher.
@@ -23,7 +23,7 @@ type ReadOnlyDatabaseWithSeqNum = iface.ReadOnlyDatabaseWithSeqNum
 // See github.com/prysmaticlabs/prysm/blockchain.HeadFetcher
 type HeadAccessDatabase = iface.HeadAccessDatabase
 
-// Database defines the necessary methods for Prysm's Ethereum backend which may be implemented by any
+// Database defines the necessary methods for Prysm's Sila backend which may be implemented by any
 // key-value or relational database in practice. This is the full database interface which should
 // not be used often. Prefer a more restrictive interface in this package.
 type Database = iface.Database

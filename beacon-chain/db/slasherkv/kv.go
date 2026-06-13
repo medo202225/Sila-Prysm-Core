@@ -27,7 +27,7 @@ const (
 )
 
 // Store defines an implementation of the Prysm Database interface
-// using BoltDB as the underlying persistent kv-store for Ethereum consensus.
+// using BoltDB as the underlying persistent kv-store for Sila consensus.
 type Store struct {
 	db           *bolt.DB
 	databasePath string

@@ -111,7 +111,7 @@ var blockedBuckets = [][]byte{
 }
 
 // Store defines an implementation of the Prysm Database interface
-// using BoltDB as the underlying persistent kv-store for Ethereum Beacon Nodes.
+// using BoltDB as the underlying persistent kv-store for Sila Beacon Nodes.
 type Store struct {
 	db                  *bolt.DB
 	databasePath        string

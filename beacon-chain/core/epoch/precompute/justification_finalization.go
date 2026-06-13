@@ -177,7 +177,7 @@ func computeCheckpoints(state state.BeaconState, newBits bitfield.Bitvector4) (*
 		justifiedCheckpoint.Root = blockRoot
 	}
 
-	// Process finalization according to Ethereum Beacon Chain specification.
+	// Process finalization according to Sila Beacon Chain specification.
 	if len(newBits) == 0 {
 		return nil, nil, errors.New("empty justification bits")
 	}

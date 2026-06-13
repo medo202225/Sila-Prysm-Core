@@ -66,13 +66,13 @@ type ForkchoiceFetcher interface {
 	RecordBlockForEquivocation(primitives.Slot, primitives.ValidatorIndex, [32]byte)
 }
 
-// TimeFetcher retrieves the Ethereum consensus data that's related to time.
+// TimeFetcher retrieves the Sila consensus data that's related to time.
 type TimeFetcher interface {
 	GenesisTime() time.Time
 	CurrentSlot() primitives.Slot
 }
 
-// GenesisFetcher retrieves the Ethereum consensus data related to its genesis.
+// GenesisFetcher retrieves the Sila consensus data related to its genesis.
 type GenesisFetcher interface {
 	GenesisValidatorsRoot() [32]byte
 }
@@ -97,7 +97,7 @@ type HeadFetcher interface {
 	HeadDomainFetcher
 }
 
-// ForkFetcher retrieves the current fork information of the Ethereum beacon chain.
+// ForkFetcher retrieves the current fork information of the Sila beacon chain.
 type ForkFetcher interface {
 	CurrentFork() *ethpb.Fork
 	GenesisFetcher

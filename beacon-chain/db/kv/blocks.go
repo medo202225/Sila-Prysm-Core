@@ -81,7 +81,7 @@ func (s *Store) OriginCheckpointBlockRoot(ctx context.Context) ([32]byte, error)
 	return root, err
 }
 
-// HeadBlockRoot returns the latest canonical block root in the Ethereum Beacon Chain.
+// HeadBlockRoot returns the latest canonical block root in the Sila Beacon Chain.
 func (s *Store) HeadBlockRoot() ([32]byte, error) {
 	var root [32]byte
 	err := s.db.View(func(tx *bolt.Tx) error {
@@ -96,7 +96,7 @@ func (s *Store) HeadBlockRoot() ([32]byte, error) {
 	return root, err
 }
 
-// HeadBlock returns the latest canonical block in the Ethereum Beacon Chain.
+// HeadBlock returns the latest canonical block in the Sila Beacon Chain.
 func (s *Store) HeadBlock(ctx context.Context) (interfaces.ReadOnlySignedBeaconBlock, error) {
 	ctx, span := trace.StartSpan(ctx, "BeaconDB.HeadBlock")
 	defer span.End()
