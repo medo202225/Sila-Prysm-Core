@@ -8,7 +8,7 @@ import (
 )
 
 // SyncCommitteeRoot computes the HashTreeRoot Merkleization of a committee root.
-// a SyncCommitteeRoot struct according to the eth2
+// a SyncCommitteeRoot struct according to the Sila
 // Simple Serialize specification.
 func SyncCommitteeRoot(committee *ethpb.SyncCommittee) ([32]byte, error) {
 	var fieldRoots [][32]byte

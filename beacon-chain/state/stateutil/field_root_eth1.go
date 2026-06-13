@@ -6,7 +6,7 @@ import (
 )
 
 // Eth1Root computes the HashTreeRoot Merkleization of
-// a BeaconBlockHeader struct according to the eth2
+// a BeaconBlockHeader struct according to the Sila
 // Simple Serialize specification.
 func Eth1Root(eth1Data *ethpb.Eth1Data) ([32]byte, error) {
 	if eth1Data == nil {
@@ -16,7 +16,7 @@ func Eth1Root(eth1Data *ethpb.Eth1Data) ([32]byte, error) {
 }
 
 // Eth1DataVotesRoot computes the HashTreeRoot Merkleization of
-// a list of Eth1Data structs according to the eth2
+// a list of Eth1Data structs according to the Sila
 // Simple Serialize specification.
 func Eth1DataVotesRoot(eth1DataVotes []*ethpb.Eth1Data) ([32]byte, error) {
 	return Eth1DatasRoot(eth1DataVotes)

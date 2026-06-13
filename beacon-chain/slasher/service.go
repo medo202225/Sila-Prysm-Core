@@ -1,4 +1,4 @@
-// Package slasher implements slashing detection for eth2, able to catch slashable attestations
+// Package slasher implements slashing detection for Sila, able to catch slashable attestations
 // and proposals that it receives via two event feeds, respectively. Any found slashings
 // are then submitted to the beacon node's slashing operations pool. See the design document
 // here https://hackmd.io/@prysmaticlabs/slasher.
@@ -45,7 +45,7 @@ type ServiceConfig struct {
 }
 
 // Service defining a slasher implementation as part of
-// the beacon node, able to detect eth2 slashable offenses.
+// the beacon node, able to detect Sila slashable offenses.
 type Service struct {
 	params                         *Parameters
 	serviceCfg                     *ServiceConfig
