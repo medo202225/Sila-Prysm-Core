@@ -151,7 +151,7 @@ type Reconstructor interface {
 	ReconstructExecutionPayloadEnvelope(ctx context.Context, envelope *ethpb.SignedBlindedExecutionPayloadEnvelope) (*ethpb.SignedExecutionPayloadEnvelope, error)
 }
 
-// EngineCaller defines a client that can interact with an Ethereum
+// EngineCaller defines a client that can interact with a Sila
 // execution node's engine service via JSON-RPC.
 type EngineCaller interface {
 	NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, executionRequests *pb.ExecutionRequests) ([]byte, error)
