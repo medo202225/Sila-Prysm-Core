@@ -77,9 +77,9 @@ const (
 	// NewPayloadMethodV2 v2 request string for JSON-RPC.
 	NewPayloadMethodV2 = "silaEngine_newPayloadV2"
 	NewPayloadMethodV3 = "silaEngine_newPayloadV3"
-	// NewPayloadMethodV4 is the engine_newPayloadVX method added at Electra.
+	// NewPayloadMethodV4 is the silaEngine_newPayloadVX method added at Electra.
 	NewPayloadMethodV4 = "silaEngine_newPayloadV4"
-	// NewPayloadMethodV5 is the engine_newPayloadVX method added at Gloas.
+	// NewPayloadMethodV5 is the silaEngine_newPayloadVX method added at Gloas.
 	NewPayloadMethodV5 = "silaEngine_newPayloadV5"
 	// ForkchoiceUpdatedMethod v1 request string for JSON-RPC.
 	ForkchoiceUpdatedMethod = "silaEngine_forkchoiceUpdatedV1"
@@ -105,13 +105,13 @@ const (
 	BlockByHashMethod = "sila_getBlockByHash"
 	// BlockByNumberMethod request string for JSON-RPC.
 	BlockByNumberMethod = "sila_getBlockByNumber"
-	// GetPayloadBodiesByHashV1 is the engine_getPayloadBodiesByHashX JSON-RPC method for pre-Electra payloads.
+	// GetPayloadBodiesByHashV1 is the silaEngine_getPayloadBodiesByHashX JSON-RPC method for pre-Electra payloads.
 	GetPayloadBodiesByHashV1 = "silaEngine_getPayloadBodiesByHashV1"
-	// GetPayloadBodiesByRangeV1 is the engine_getPayloadBodiesByRangeX JSON-RPC method for pre-Electra payloads.
+	// GetPayloadBodiesByRangeV1 is the silaEngine_getPayloadBodiesByRangeX JSON-RPC method for pre-Electra payloads.
 	GetPayloadBodiesByRangeV1 = "silaEngine_getPayloadBodiesByRangeV1"
-	// GetPayloadBodiesByHashV2 is the engine_getPayloadBodiesByHashV2 JSON-RPC method for amsterdam payloads.
+	// GetPayloadBodiesByHashV2 is the silaEngine_getPayloadBodiesByHashV2 JSON-RPC method for amsterdam payloads.
 	GetPayloadBodiesByHashV2 = "silaEngine_getPayloadBodiesByHashV2"
-	// GetPayloadBodiesByRangeV2 is the engine_getPayloadBodiesByRangeV2 JSON-RPC method for amsterdam payloads.
+	// GetPayloadBodiesByRangeV2 is the silaEngine_getPayloadBodiesByRangeV2 JSON-RPC method for amsterdam payloads.
 	GetPayloadBodiesByRangeV2 = "silaEngine_getPayloadBodiesByRangeV2"
 	// ExchangeCapabilities request string for JSON-RPC.
 	ExchangeCapabilities = "silaEngine_exchangeCapabilities"
@@ -128,7 +128,7 @@ const (
 var errInvalidPayloadBodyResponse = errors.New("engine api payload body response is invalid")
 
 // ForkchoiceUpdatedResponse is the response kind received by the
-// engine_forkchoiceUpdatedV1 endpoint.
+// silaEngine_forkchoiceUpdatedV1 endpoint.
 type ForkchoiceUpdatedResponse struct {
 	Status          *pb.PayloadStatus  `json:"payloadStatus"`
 	PayloadId       *pb.PayloadIDBytes `json:"payloadId"`
@@ -166,7 +166,7 @@ type EngineCaller interface {
 
 var ErrEmptyBlockHash = errors.New("Block hash is empty 0x0000...")
 
-// NewPayload request calls the engine_newPayloadVX method via JSON-RPC.
+// NewPayload request calls the silaEngine_newPayloadVX method via JSON-RPC.
 func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, executionRequests *pb.ExecutionRequests) ([]byte, error) {
 	ctx, span := trace.StartSpan(ctx, "powchain.engine-api-client.NewPayload")
 	defer span.End()
@@ -238,7 +238,7 @@ func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionDa
 	}
 }
 
-// ForkchoiceUpdated calls the engine_forkchoiceUpdatedV1 method via JSON-RPC.
+// ForkchoiceUpdated calls the silaEngine_forkchoiceUpdatedV1 method via JSON-RPC.
 func (s *Service) ForkchoiceUpdated(
 	ctx context.Context, state *pb.ForkchoiceState, attrs payloadattribute.Attributer,
 ) (*pb.PayloadIDBytes, []byte, error) {
@@ -337,7 +337,7 @@ func getPayloadMethodAndMessage(slot primitives.Slot) (string, proto.Message) {
 	return GetPayloadMethod, &pb.ExecutionPayload{}
 }
 
-// GetPayload calls the engine_getPayloadVX method via JSON-RPC.
+// GetPayload calls the silaEngine_getPayloadVX method via JSON-RPC.
 // It returns the execution data as well as the blobs bundle.
 func (s *Service) GetPayload(ctx context.Context, payloadId [8]byte, slot primitives.Slot) (*blocks.GetPayloadResponse, error) {
 	ctx, span := trace.StartSpan(ctx, "powchain.engine-api-client.GetPayload")
@@ -486,7 +486,7 @@ func (s *Service) GetTerminalBlockHash(ctx context.Context, transitionTime uint6
 }
 
 // LatestExecutionBlock fetches the latest execution engine block by calling
-// eth_blockByNumber via JSON-RPC.
+// sila_blockByNumber via JSON-RPC.
 func (s *Service) LatestExecutionBlock(ctx context.Context) (*pb.ExecutionBlock, error) {
 	ctx, span := trace.StartSpan(ctx, "powchain.engine-api-client.LatestExecutionBlock")
 	defer span.End()
@@ -503,7 +503,7 @@ func (s *Service) LatestExecutionBlock(ctx context.Context) (*pb.ExecutionBlock,
 }
 
 // ExecutionBlockByHash fetches an execution engine block by hash by calling
-// eth_blockByHash via JSON-RPC.
+// sila_blockByHash via JSON-RPC.
 func (s *Service) ExecutionBlockByHash(ctx context.Context, hash common.Hash, withTxs bool) (*pb.ExecutionBlock, error) {
 	ctx, span := trace.StartSpan(ctx, "powchain.engine-api-client.ExecutionBlockByHash")
 	defer span.End()
@@ -513,7 +513,7 @@ func (s *Service) ExecutionBlockByHash(ctx context.Context, hash common.Hash, wi
 }
 
 // ExecutionBlocksByHashes fetches a batch of execution engine blocks by hash by calling
-// eth_blockByHash via JSON-RPC.
+// sila_blockByHash via JSON-RPC.
 func (s *Service) ExecutionBlocksByHashes(ctx context.Context, hashes []common.Hash, withTxs bool) ([]*pb.ExecutionBlock, error) {
 	_, span := trace.StartSpan(ctx, "powchain.engine-api-client.ExecutionBlocksByHashes")
 	defer span.End()
@@ -605,7 +605,7 @@ func (s *Service) GetBlobsV2(ctx context.Context, versionedHashes []common.Hash)
 	return result, handleRPCError(err)
 }
 
-// GetClientVersion calls engine_getClientVersionV1 to retrieve EL client information.
+// GetClientVersion calls silaEngine_getClientVersionV1 to retrieve EL client information.
 func (s *Service) GetClientVersionV1(ctx context.Context) ([]*structs.ClientVersionV1, error) {
 	ctx, span := trace.StartSpan(ctx, "powchain.engine-api-client.GetClientVersionV1")
 	defer span.End()
@@ -937,7 +937,7 @@ func (s *Service) ConstructDataColumnSidecars(ctx context.Context, populator pee
 	return verifiedROSidecars, nil
 }
 
-// fetchCellsAndProofsFromExecution fetches cells and proofs from the execution client (using engine_getBlobsV2 execution API method)
+// fetchCellsAndProofsFromExecution fetches cells and proofs from the execution client (using silaEngine_getBlobsV2 execution API method)
 func (s *Service) fetchCellsAndProofsFromExecution(ctx context.Context, kzgCommitments [][]byte) ([][]kzg.Cell, [][]kzg.Proof, error) {
 	// Collect KZG hashes for all blobs.
 	versionedHashes := make([]common.Hash, 0, len(kzgCommitments))

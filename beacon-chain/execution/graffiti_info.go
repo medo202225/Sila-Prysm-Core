@@ -17,8 +17,8 @@ const (
 // It is thread-safe and can be updated by the execution service and read by the validator server.
 type GraffitiInfo struct {
 	mu       sync.RWMutex
-	elCode   string // From engine_getClientVersionV1
-	elCommit string // From engine_getClientVersionV1
+	elCode   string // From silaEngine_getClientVersionV1
+	elCommit string // From silaEngine_getClientVersionV1
 	logOnce  sync.Once
 }
 
