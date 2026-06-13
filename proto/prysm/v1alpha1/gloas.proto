@@ -15,7 +15,7 @@ option go_package = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1;eth";
 // =============================================================================
 // Gloas Fork Specification
 // =============================================================================
-// This file implements the Gloas fork of the Ethereum consensus specification
+// This file implements the Gloas fork of the Sila consensus specification
 // Reference:
 // https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/beacon-chain.md
 

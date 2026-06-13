@@ -139,7 +139,7 @@ message SignedBeaconBlock {
   bytes signature = 2 [ (ethereum.eth.ext.ssz_size) = "96" ];
 }
 
-// The Ethereum consensus beacon block. The message does not contain a validator
+// The Sila consensus beacon block. The message does not contain a validator
 // signature.
 message BeaconBlock {
   // Beacon chain slot that this block represents.
@@ -163,12 +163,12 @@ message BeaconBlock {
   BeaconBlockBody body = 5;
 }
 
-// The block body of an Ethereum consensus beacon block.
+// The block body of an Sila consensus beacon block.
 message BeaconBlockBody {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -288,7 +288,7 @@ message BeaconBlockBodyAltair {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -360,7 +360,7 @@ message BeaconBlockBodyBellatrix {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -431,7 +431,7 @@ message BlindedBeaconBlockBodyBellatrix {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -502,7 +502,7 @@ message BeaconBlockBodyCapella {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -576,7 +576,7 @@ message BlindedBeaconBlockBodyCapella {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -686,7 +686,7 @@ message BeaconBlockBodyDeneb {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -765,7 +765,7 @@ message BlindedBeaconBlockBodyDeneb {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -916,7 +916,7 @@ message BeaconBlockBodyElectra {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -1001,7 +1001,7 @@ message BlindedBeaconBlockBodyElectra {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Ethereum 1.x chain.
+  // A reference to the Sila execution chain.
   Eth1Data eth1_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and

@@ -51,7 +51,7 @@ message SignedBeaconBlockHeader {
   bytes signature = 2 [ (ethereum.eth.ext.ssz_size) = "96" ];
 }
 
-// Eth1Data represents references to the Ethereum 1.x deposit contract.
+// Eth1Data represents references to the Sila deposit contract.
 message Eth1Data {
   // The 32 byte deposit tree root for the last deposit included in this
   // block.
@@ -61,7 +61,7 @@ message Eth1Data {
   // including the deposits in this block.
   uint64 deposit_count = 2;
 
-  // The 32 byte block hash of the Ethereum 1.x block considered for deposit
+  // The 32 byte block hash of the Sila execution block considered for deposit
   // inclusion.
   bytes block_hash = 3 [ (ethereum.eth.ext.ssz_size) = "32" ];
 }
@@ -76,7 +76,7 @@ message ProposerSlashing {
   SignedBeaconBlockHeader header_2 = 3;
 }
 
-// Deposit into the Ethereum consensus from the Ethereum 1.x deposit contract.
+// Deposit into the Sila consensus from the Sila deposit contract.
 message Deposit {
   // DepositData that is encoded into a deposit signature.
   message Data {
