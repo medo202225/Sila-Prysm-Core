@@ -1,5 +1,5 @@
 // Package shuffle contains all conformity specification tests
-// for validator shuffling logic according to the Ethereum Beacon Node spec.
+// for validator shuffling logic according to the Sila Beacon Node spec.
 package shuffle
 
 import (
