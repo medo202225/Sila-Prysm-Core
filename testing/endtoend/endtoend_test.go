@@ -675,12 +675,12 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 	recoveryEpochStart, recoveryEpochEnd := lastForkEpoch+3, lastForkEpoch+4
 	secondRecoveryEpochStart, secondRecoveryEpochEnd := lastForkEpoch+8, lastForkEpoch+9
 
-	newPayloadMethod := "engine_newPayloadV4"
-	forkChoiceUpdatedMethod := "engine_forkchoiceUpdatedV3"
+	newPayloadMethod := "silaEngine_newPayloadV4"
+	forkChoiceUpdatedMethod := "silaEngine_forkchoiceUpdatedV3"
 	//  Fallback if Electra is not set.
 	if params.BeaconConfig().ElectraForkEpoch == math.MaxUint64 {
-		newPayloadMethod = "engine_newPayloadV3"
-		forkChoiceUpdatedMethod = "engine_forkchoiceUpdatedV3"
+		newPayloadMethod = "silaEngine_newPayloadV3"
+		forkChoiceUpdatedMethod = "silaEngine_forkchoiceUpdatedV3"
 	}
 
 	switch primitives.Epoch(epoch) {
@@ -796,10 +796,10 @@ func (r *testRunner) multiScenario(ec *e2etypes.EvaluationContext, epoch uint64,
 	secondRecoveryEpochStart, secondRecoveryEpochEnd := lastForkEpoch+8, lastForkEpoch+9
 	thirdRecoveryEpochStart, thirdRecoveryEpochEnd := lastForkEpoch+13, lastForkEpoch+14
 
-	newPayloadMethod := "engine_newPayloadV4"
+	newPayloadMethod := "silaEngine_newPayloadV4"
 	//  Fallback if Electra is not set.
 	if params.BeaconConfig().ElectraForkEpoch == math.MaxUint64 {
-		newPayloadMethod = "engine_newPayloadV3"
+		newPayloadMethod = "silaEngine_newPayloadV3"
 	}
 	switch primitives.Epoch(epoch) {
 	case freezeStartEpoch:
