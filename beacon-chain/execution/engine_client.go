@@ -106,21 +106,21 @@ const (
 	// BlockByNumberMethod request string for JSON-RPC.
 	BlockByNumberMethod = "sila_getBlockByNumber"
 	// GetPayloadBodiesByHashV1 is the engine_getPayloadBodiesByHashX JSON-RPC method for pre-Electra payloads.
-	GetPayloadBodiesByHashV1 = "engine_getPayloadBodiesByHashV1"
+	GetPayloadBodiesByHashV1 = "silaEngine_getPayloadBodiesByHashV1"
 	// GetPayloadBodiesByRangeV1 is the engine_getPayloadBodiesByRangeX JSON-RPC method for pre-Electra payloads.
-	GetPayloadBodiesByRangeV1 = "engine_getPayloadBodiesByRangeV1"
+	GetPayloadBodiesByRangeV1 = "silaEngine_getPayloadBodiesByRangeV1"
 	// GetPayloadBodiesByHashV2 is the engine_getPayloadBodiesByHashV2 JSON-RPC method for amsterdam payloads.
-	GetPayloadBodiesByHashV2 = "engine_getPayloadBodiesByHashV2"
+	GetPayloadBodiesByHashV2 = "silaEngine_getPayloadBodiesByHashV2"
 	// GetPayloadBodiesByRangeV2 is the engine_getPayloadBodiesByRangeV2 JSON-RPC method for amsterdam payloads.
-	GetPayloadBodiesByRangeV2 = "engine_getPayloadBodiesByRangeV2"
+	GetPayloadBodiesByRangeV2 = "silaEngine_getPayloadBodiesByRangeV2"
 	// ExchangeCapabilities request string for JSON-RPC.
 	ExchangeCapabilities = "silaEngine_exchangeCapabilities"
 	// GetBlobsV1 request string for JSON-RPC.
-	GetBlobsV1 = "engine_getBlobsV1"
+	GetBlobsV1 = "silaEngine_getBlobsV1"
 	// GetBlobsV2 request string for JSON-RPC.
-	GetBlobsV2 = "engine_getBlobsV2"
+	GetBlobsV2 = "silaEngine_getBlobsV2"
 	// GetClientVersionV1 is the JSON-RPC method that identifies the execution client.
-	GetClientVersionV1 = "engine_getClientVersionV1"
+	GetClientVersionV1 = "silaEngine_getClientVersionV1"
 	// Defines the seconds before timing out engine endpoints with non-block execution semantics.
 	defaultEngineTimeout = time.Second
 )
