@@ -1,5 +1,5 @@
 /*
-Package p2p implements the Ethereum consensus networking specification.
+Package p2p implements the Sila consensus networking specification.
 
 Canonical spec reference: https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/p2p-interface.md
 

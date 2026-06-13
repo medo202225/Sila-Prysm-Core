@@ -160,7 +160,7 @@ func updateENR(node *enode.LocalNode, entry, next params.NetworkScheduleEntry) e
 }
 
 // Retrieves an enrForkID from an ENR record by key lookup
-// under the Ethereum consensus EnrKey
+// under the Sila consensus ENR key
 func forkEntry(record *enr.Record) (*pb.ENRForkID, error) {
 	sszEncodedForkEntry := make([]byte, 16)
 	entry := enr.WithEntry(eth2EnrKey, &sszEncodedForkEntry)

@@ -323,7 +323,7 @@ func validateAttesterData(
 		return pubsub.ValidationReject, err
 	}
 	// Attestation must be unaggregated and the bit index must exist in the range of committee indices.
-	// Note: The Ethereum Beacon chain spec suggests (len(get_attesting_indices(state, attestation.data, attestation.aggregation_bits)) == 1)
+	// Note: The Sila Beacon Chain spec suggests (len(get_attesting_indices(state, attestation.data, attestation.aggregation_bits)) == 1)
 	// however this validation can be achieved without use of get_attesting_indices which is an O(n) lookup.
 	if a.GetAggregationBits().Count() != 1 || a.GetAggregationBits().BitIndices()[0] >= len(committee) {
 		return pubsub.ValidationReject, errors.New("attestation bitfield is invalid")

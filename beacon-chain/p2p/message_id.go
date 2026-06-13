@@ -12,7 +12,7 @@ import (
 
 // MsgID is a content addressable ID function.
 //
-// Ethereum Beacon Chain spec defines the message ID as:
+// Sila Beacon Chain spec defines the message ID as:
 //
 //	The `message-id` of a gossipsub message MUST be the following 20 byte value computed from the message data:
 //	If `message.data` has a valid snappy decompression, set `message-id` to the first 20 bytes of the `SHA256` hash of
