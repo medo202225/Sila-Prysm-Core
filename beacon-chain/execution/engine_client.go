@@ -104,7 +104,7 @@ const (
 	// BlockByHashMethod request string for JSON-RPC.
 	BlockByHashMethod = "eth_getBlockByHash"
 	// BlockByNumberMethod request string for JSON-RPC.
-	BlockByNumberMethod = "eth_getBlockByNumber"
+	BlockByNumberMethod = "sila_getBlockByNumber"
 	// GetPayloadBodiesByHashV1 is the engine_getPayloadBodiesByHashX JSON-RPC method for pre-Electra payloads.
 	GetPayloadBodiesByHashV1 = "engine_getPayloadBodiesByHashV1"
 	// GetPayloadBodiesByRangeV1 is the engine_getPayloadBodiesByRangeX JSON-RPC method for pre-Electra payloads.
@@ -114,7 +114,7 @@ const (
 	// GetPayloadBodiesByRangeV2 is the engine_getPayloadBodiesByRangeV2 JSON-RPC method for amsterdam payloads.
 	GetPayloadBodiesByRangeV2 = "engine_getPayloadBodiesByRangeV2"
 	// ExchangeCapabilities request string for JSON-RPC.
-	ExchangeCapabilities = "engine_exchangeCapabilities"
+	ExchangeCapabilities = "silaEngine_exchangeCapabilities"
 	// GetBlobsV1 request string for JSON-RPC.
 	GetBlobsV1 = "engine_getBlobsV1"
 	// GetBlobsV2 request string for JSON-RPC.

@@ -156,7 +156,7 @@ func (r *RPCClient) CallContext(ctx context.Context, obj any, methodName string,
 		*chainID = "0x7ea"
 		return nil
 	}
-	if r.BlockNumMap != nil && methodName == "eth_getBlockByNumber" {
+	if r.BlockNumMap != nil && methodName == "sila_getBlockByNumber" {
 		val, ok := args[0].(string)
 		if !ok {
 			return errors.Errorf("wrong argument type provided: %T", args[0])
@@ -173,7 +173,7 @@ func (r *RPCClient) CallContext(ctx context.Context, obj any, methodName string,
 		*assertedObj = b
 		return nil
 	}
-	if r.Backend == nil && methodName == "eth_getBlockByNumber" {
+	if r.Backend == nil && methodName == "sila_getBlockByNumber" {
 		h := &gethTypes.Header{
 			Number: big.NewInt(15),
 			Time:   150,
@@ -190,7 +190,7 @@ func (r *RPCClient) CallContext(ctx context.Context, obj any, methodName string,
 		return nil
 	}
 	switch methodName {
-	case "eth_getBlockByNumber":
+	case "sila_getBlockByNumber":
 		val, ok := args[0].(string)
 		if !ok {
 			return errors.Errorf("wrong argument type provided: %T", args[0])

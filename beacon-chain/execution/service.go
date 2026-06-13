@@ -448,7 +448,7 @@ func (s *Service) batchRequestHeaders(startBlock, endBlock uint64) ([]*types.Hea
 	for i := startBlock; i <= endBlock; i++ {
 		header := &types.HeaderInfo{}
 		elems = append(elems, gethRPC.BatchElem{
-			Method: "eth_getBlockByNumber",
+			Method: "sila_getBlockByNumber",
 			Args:   []any{hexutil.EncodeBig(new(big.Int).SetUint64(i)), false},
 			Result: header,
 			Error:  error(nil),
