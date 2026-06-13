@@ -13,11 +13,58 @@ import (
 	"github.com/OffchainLabs/prysm/v7/io/logs"
 	"github.com/OffchainLabs/prysm/v7/network"
 	"github.com/OffchainLabs/prysm/v7/network/authorization"
+	"github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
 	gethRPC "github.com/ethereum/go-ethereum/rpc"
 	"github.com/pkg/errors"
 )
 
+type silaCallArg struct {
+	From     *common.Address `json:"from,omitempty"`
+	To       *common.Address `json:"to,omitempty"`
+	Gas      hexutil.Uint64  `json:"gas,omitempty"`
+	GasPrice *hexutil.Big    `json:"gasPrice,omitempty"`
+	Value    *hexutil.Big    `json:"value,omitempty"`
+	Data     hexutil.Bytes   `json:"data,omitempty"`
+}
+
+type silaContractCaller struct {
+	client *gethRPC.Client
+}
+
+func (c *silaContractCaller) CodeAt(ctx context.Context, contract common.Address, blockNumber *big.Int) ([]byte, error) {
+	var result hexutil.Bytes
+	if err := c.client.CallContext(ctx, &result, "sila_getCode", contract, toSilaBlockNumArg(blockNumber)); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *silaContractCaller) CallContract(ctx context.Context, call ethereum.CallMsg, blockNumber *big.Int) ([]byte, error) {
+	from := call.From
+	arg := silaCallArg{
+		From:     &from,
+		To:       call.To,
+		Gas:      hexutil.Uint64(call.Gas),
+		GasPrice: (*hexutil.Big)(call.GasPrice),
+		Value:    (*hexutil.Big)(call.Value),
+		Data:     call.Data,
+	}
+	var result hexutil.Bytes
+	if err := c.client.CallContext(ctx, &result, "sila_call", arg, toSilaBlockNumArg(blockNumber)); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func toSilaBlockNumArg(number *big.Int) string {
+	if number == nil {
+		return "latest"
+	}
+	return hexutil.EncodeBig(number)
+}
 func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpoint network.Endpoint) error {
 	client, err := s.newRPCClientWithAuth(ctx, currEndpoint)
 	if err != nil {
@@ -28,7 +75,7 @@ func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpo
 	s.rpcClient = client
 	s.httpLogger = fetcher
 
-	depositContractCaller, err := contracts.NewDepositContractCaller(s.cfg.depositContractAddr, fetcher)
+	depositContractCaller, err := contracts.NewDepositContractCaller(s.cfg.depositContractAddr, &silaContractCaller{client: client})
 	if err != nil {
 		client.Close()
 		return errors.Wrap(err, "could not initialize deposit contract caller")
