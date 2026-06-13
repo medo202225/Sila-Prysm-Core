@@ -44,9 +44,9 @@ import (
 // We have to declare this again here to prevent a circular dependency
 // with the main p2p package.
 const (
-	metadataV1Topic = "/eth2/beacon_chain/req/metadata/1"
-	metadataV2Topic = "/eth2/beacon_chain/req/metadata/2"
-	metadataV3Topic = "/eth2/beacon_chain/req/metadata/3"
+	metadataV1Topic = "/sila/beacon_chain/req/metadata/1"
+	metadataV2Topic = "/sila/beacon_chain/req/metadata/2"
+	metadataV3Topic = "/sila/beacon_chain/req/metadata/3"
 )
 
 // TestP2P represents a p2p implementation that can be used for testing.
