@@ -2435,7 +2435,7 @@ func newPayloadV4Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.Execu
 		require.NoError(t, err)
 		jsonRequestString := string(enc)
 		require.Equal(t, true, strings.Contains(
-			jsonRequestString, string("engine_newPayloadV4"),
+			jsonRequestString, string("silaEngine_newPayloadV4"),
 		))
 
 		reqPayload, err := json.Marshal(payload)
@@ -2599,7 +2599,7 @@ func TestReconstructBlobSidecars(t *testing.T) {
 	t.Run("get-blobs end point is not supported", func(t *testing.T) {
 		hi := mockSummary(t, []bool{true, true, true, true, true, false})
 		verifiedBlobs, err := client.ReconstructBlobSidecars(ctx, sb, r, hi)
-		require.ErrorContains(t, "engine_getBlobsV1 is not supported", err)
+		require.ErrorContains(t, "silaEngine_getBlobsV1 is not supported", err)
 		require.Equal(t, 0, len(verifiedBlobs))
 	})
 
@@ -2682,7 +2682,7 @@ func TestConstructDataColumnSidecars(t *testing.T) {
 
 	t.Run("GetBlobsV2 is not supported", func(t *testing.T) {
 		_, err := client.ConstructDataColumnSidecars(ctx, peerdas.PopulateFromBlock(roBlock))
-		require.ErrorContains(t, "engine_getBlobsV2 is not supported", err)
+		require.ErrorContains(t, "silaEngine_getBlobsV2 is not supported", err)
 	})
 
 	t.Run("nothing received", func(t *testing.T) {
