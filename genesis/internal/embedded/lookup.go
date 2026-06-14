@@ -6,8 +6,9 @@ import (
 	"errors"
 
 	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
+	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
 	"github.com/OffchainLabs/prysm/v7/config/params"
-	detect "github.com/OffchainLabs/prysm/v7/encoding/ssz/detect"
+	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
 	"github.com/golang/snappy"
 )
 
@@ -39,11 +40,15 @@ func Has(name string) bool {
 
 // load a compressed ssz state file into a beacon state struct.
 func load(b []byte) (state.BeaconState, error) {
+	st := &ethpb.BeaconState{}
 	b, err := snappy.Decode(nil /*dst*/, b)
 	if err != nil {
 		return nil, err
 	}
-	return detect.UnmarshalState(b)
+	if err := st.UnmarshalSSZ(b); err != nil {
+		return nil, err
+	}
+	return state_native.InitializeFromProtoUnsafePhase0(st)
 }
 
 type embeddedProvider struct{}

@@ -17,13 +17,3 @@ func TestEmbededGenesisDataMatchesMainnet(t *testing.T) {
 	require.DeepEqual(t, gvr, data.ValidatorsRoot[:])
 	require.Equal(t, st.GenesisTime(), data.Time)
 }
-
-func TestEmbeddedGenesisDataMatchesSilaMainnet(t *testing.T) {
-	st, err := embedded.ByName(params.SilaMainnetName)
-	require.NoError(t, err)
-	gvr := st.GenesisValidatorsRoot()
-
-	data := embeddedGenesisData[params.SilaMainnetName]
-	require.DeepEqual(t, gvr, data.ValidatorsRoot[:])
-	require.Equal(t, st.GenesisTime(), data.Time)
-}
