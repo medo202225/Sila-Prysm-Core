@@ -17,49 +17,49 @@
 
 Sila-Prysm keeps a small number of external compatibility names where they refer to third-party protocols, historical records, or upstream dependencies rather than Sila consensus identity. Examples include the official Web3Signer `/api/v1/eth2/*` API, `go-eth2-*` dependency names, external interop references, and historical changelog entries. These names must not be changed unless a full Sila-native replacement is implemented.
 
-## 📖 Overview
+## Overview
 
-This is the core repository for Prysm, a [Golang](https://go.dev/) implementation of the [Sila Consensus](https://ethereum.org/en/developers/docs/consensus-mechanisms/#proof-of-stake) [specification](https://github.com/ethereum/consensus-specs), developed by [Offchain Labs](https://www.offchainlabs.com).
+This is the core repository for Sila-Prysm, a [Golang](https://go.dev/) implementation of the [Sila Consensus](https://ethereum.org/en/developers/docs/consensus-mechanisms/#proof-of-stake) [specification](https://github.com/ethereum/consensus-specs), developed as the reference implementation of Sila Consensus.
 
-See the [Changelog](https://github.com/OffchainLabs/prysm/releases) for details of the latest releases and upcoming breaking changes.
-
----
-
-## 🚀 Getting Started
-
-A detailed set of installation and usage instructions as well as breakdowns of each individual component are available in the **[official documentation portal](https://prysm.offchainlabs.com/docs/)**.
-
-💬 **Need help?** Join our **[Discord Community](https://discord.gg/qEZK94mFXP)** for support (this invite link never expires).
+See the [Changelog](https://github.com/medo202225/Sila-Prysm-Core/releases) for details of the latest releases and upcoming breaking changes.
 
 ---
 
-## 🏆 Staking on Mainnet
+## Getting Started
+
+A detailed set of installation and usage instructions as well as breakdowns of each individual component are available in the **[official documentation portal](https://github.com/medo202225/Sila-Prysm-Core)**.
+
+**Need help?** Use the project issues for Sila-Prysm support.
+
+---
+
+## Staking on Mainnet
 
 To participate in staking, you can join the **[official Ethereum launchpad](https://launchpad.ethereum.org)**. The launchpad is the **only recommended** way to become a validator on mainnet.
 
-🔍 Explore validator rewards/penalties:
+Explore validator rewards/penalties:
 
 - **[beaconcha.in](https://beaconcha.in)**
 - **[beaconscan](https://beaconscan.com)**
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-### 🔥 Branches
+### Branches
 
-Prysm maintains two permanent branches:
+Sila-Prysm maintains the following primary branches:
 
-- **[`master`](https://github.com/OffchainLabs/prysm/tree/master)** - This points to the latest stable release. It is ideal for most users.
-- **[`develop`](https://github.com/OffchainLabs/prysm/tree/develop)** - This is used for development and contains the latest PRs. Developers should base their PRs on this branch.
+- **[`main`](https://github.com/medo202225/Sila-Prysm-Core/tree/main)** - This points to the latest stable release.
+- Development branches may be created as needed for ongoing work.
 
-### 🛠 Contribution Guide
+### Contribution Guide
 
-Want to get involved? Check out our **[Contribution Guide](https://prysm.offchainlabs.com/docs/contribute/contribution-guidelines/)** to learn more!
+Want to get involved? Check out our **[Contribution Guide](https://github.com/medo202225/Sila-Prysm-Core)** to learn more!
 
 ---
 
-## 📜 License
+## License
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
 
@@ -67,6 +67,6 @@ This project is licensed under the **GNU General Public License v3.0**.
 
 ---
 
-## ⚖️ Legal Disclaimer
+## Legal Disclaimer
 
-📜 [Terms of Use](/TERMS_OF_SERVICE.md)
+[Terms of Use](/TERMS_OF_SERVICE.md)
