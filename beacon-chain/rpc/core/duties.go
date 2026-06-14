@@ -287,7 +287,7 @@ func AttestationDependentRoot(s state.BeaconState, epoch primitives.Epoch) ([]by
 
 // ProposalDependentRoot returns the block root at (epoch start - 1),
 // which is the dependent root for proposer duties at the given epoch.
-// This is the pre-Fulu (v1) calculation used by the REST /eth/v1 endpoint.
+// This is the pre-Fulu (v1) calculation used by the REST /sila/v1 endpoint.
 // Callers must handle epoch 0 separately (e.g. using the genesis block root from the DB).
 func ProposalDependentRoot(s state.BeaconState, epoch primitives.Epoch) ([]byte, error) {
 	if epoch == 0 {
@@ -310,7 +310,7 @@ func ProposalDependentRootV2(s state.BeaconState, epoch primitives.Epoch) ([]byt
 		// Post-Fulu (EIP-7917) the proposer schedule is deterministic from the
 		// previous epoch's state, so the dependent root is (prev_epoch_start - 1),
 		// matching AttestationDependentRoot. Pre-Fulu it falls back to (epoch_start - 1).
-		// See https://github.com/ethereum/beacon-APIs/pull/563.
+		// See https://github.com/Sila/beacon-APIs/pull/563.
 		return AttestationDependentRoot(s, epoch)
 	}
 	return ProposalDependentRoot(s, epoch)
