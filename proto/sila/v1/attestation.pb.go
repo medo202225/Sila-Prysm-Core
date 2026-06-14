@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.3
 // 	protoc        v3.21.7
-// source: proto/eth/v1/attestation.proto
+// source: proto/sila/v1/attestation.proto
 
 package v1
 
@@ -12,7 +12,7 @@ import (
 
 	github_com_OffchainLabs_go_bitfield "github.com/OffchainLabs/go-bitfield"
 	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	_ "github.com/OffchainLabs/prysm/v7/proto/sila/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -430,18 +430,18 @@ func file_proto_eth_v1_attestation_proto_rawDescGZIP() []byte {
 
 var file_proto_eth_v1_attestation_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_eth_v1_attestation_proto_goTypes = []any{
-	(*Attestation)(nil),                        // 0: ethereum.eth.v1.Attestation
-	(*AggregateAttestationAndProof)(nil),       // 1: ethereum.eth.v1.AggregateAttestationAndProof
-	(*SignedAggregateAttestationAndProof)(nil), // 2: ethereum.eth.v1.SignedAggregateAttestationAndProof
-	(*AttestationData)(nil),                    // 3: ethereum.eth.v1.AttestationData
-	(*Checkpoint)(nil),                         // 4: ethereum.eth.v1.Checkpoint
+	(*Attestation)(nil),                        // 0: Sila.Eth.v1.Attestation
+	(*AggregateAttestationAndProof)(nil),       // 1: Sila.Eth.v1.AggregateAttestationAndProof
+	(*SignedAggregateAttestationAndProof)(nil), // 2: Sila.Eth.v1.SignedAggregateAttestationAndProof
+	(*AttestationData)(nil),                    // 3: Sila.Eth.v1.AttestationData
+	(*Checkpoint)(nil),                         // 4: Sila.Eth.v1.Checkpoint
 }
 var file_proto_eth_v1_attestation_proto_depIdxs = []int32{
-	3, // 0: ethereum.eth.v1.Attestation.data:type_name -> ethereum.eth.v1.AttestationData
-	0, // 1: ethereum.eth.v1.AggregateAttestationAndProof.aggregate:type_name -> ethereum.eth.v1.Attestation
-	1, // 2: ethereum.eth.v1.SignedAggregateAttestationAndProof.message:type_name -> ethereum.eth.v1.AggregateAttestationAndProof
-	4, // 3: ethereum.eth.v1.AttestationData.source:type_name -> ethereum.eth.v1.Checkpoint
-	4, // 4: ethereum.eth.v1.AttestationData.target:type_name -> ethereum.eth.v1.Checkpoint
+	3, // 0: Sila.Eth.v1.Attestation.data:type_name -> Sila.Eth.v1.AttestationData
+	0, // 1: Sila.Eth.v1.AggregateAttestationAndProof.aggregate:type_name -> Sila.Eth.v1.Attestation
+	1, // 2: Sila.Eth.v1.SignedAggregateAttestationAndProof.message:type_name -> Sila.Eth.v1.AggregateAttestationAndProof
+	4, // 3: Sila.Eth.v1.AttestationData.source:type_name -> Sila.Eth.v1.Checkpoint
+	4, // 4: Sila.Eth.v1.AttestationData.target:type_name -> Sila.Eth.v1.Checkpoint
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.3
 // 	protoc        v3.21.7
-// source: proto/eth/v1/validator.proto
+// source: proto/sila/v1/validator.proto
 
 package v1
 
@@ -11,7 +11,7 @@ import (
 	sync "sync"
 
 	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	_ "github.com/OffchainLabs/prysm/v7/proto/sila/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -421,14 +421,14 @@ func file_proto_eth_v1_validator_proto_rawDescGZIP() []byte {
 var file_proto_eth_v1_validator_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_eth_v1_validator_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_proto_eth_v1_validator_proto_goTypes = []any{
-	(ValidatorStatus)(0),         // 0: ethereum.eth.v1.ValidatorStatus
-	(*Validator)(nil),            // 1: ethereum.eth.v1.Validator
-	(*ProduceBlockRequest)(nil),  // 2: ethereum.eth.v1.ProduceBlockRequest
-	(*ProduceBlockResponse)(nil), // 3: ethereum.eth.v1.ProduceBlockResponse
-	(*BeaconBlock)(nil),          // 4: ethereum.eth.v1.BeaconBlock
+	(ValidatorStatus)(0),         // 0: Sila.Eth.v1.ValidatorStatus
+	(*Validator)(nil),            // 1: Sila.Eth.v1.Validator
+	(*ProduceBlockRequest)(nil),  // 2: Sila.Eth.v1.ProduceBlockRequest
+	(*ProduceBlockResponse)(nil), // 3: Sila.Eth.v1.ProduceBlockResponse
+	(*BeaconBlock)(nil),          // 4: Sila.Eth.v1.BeaconBlock
 }
 var file_proto_eth_v1_validator_proto_depIdxs = []int32{
-	4, // 0: ethereum.eth.v1.ProduceBlockResponse.data:type_name -> ethereum.eth.v1.BeaconBlock
+	4, // 0: Sila.Eth.v1.ProduceBlockResponse.data:type_name -> Sila.Eth.v1.BeaconBlock
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

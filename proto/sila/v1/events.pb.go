@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.3
 // 	protoc        v3.21.7
-// source: proto/eth/v1/events.proto
+// source: proto/sila/v1/events.proto
 
 package v1
 
@@ -11,7 +11,7 @@ import (
 	sync "sync"
 
 	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	_ "github.com/OffchainLabs/prysm/v7/proto/sila/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -459,10 +459,10 @@ func file_proto_eth_v1_events_proto_rawDescGZIP() []byte {
 
 var file_proto_eth_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_eth_v1_events_proto_goTypes = []any{
-	(*EventHead)(nil),                // 0: ethereum.eth.v1.EventHead
-	(*EventBlock)(nil),               // 1: ethereum.eth.v1.EventBlock
-	(*EventChainReorg)(nil),          // 2: ethereum.eth.v1.EventChainReorg
-	(*EventFinalizedCheckpoint)(nil), // 3: ethereum.eth.v1.EventFinalizedCheckpoint
+	(*EventHead)(nil),                // 0: Sila.Eth.v1.EventHead
+	(*EventBlock)(nil),               // 1: Sila.Eth.v1.EventBlock
+	(*EventChainReorg)(nil),          // 2: Sila.Eth.v1.EventChainReorg
+	(*EventFinalizedCheckpoint)(nil), // 3: Sila.Eth.v1.EventFinalizedCheckpoint
 }
 var file_proto_eth_v1_events_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

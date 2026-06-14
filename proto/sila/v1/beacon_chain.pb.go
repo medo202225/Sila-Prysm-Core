@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.3
 // 	protoc        v3.21.7
-// source: proto/eth/v1/beacon_chain.proto
+// source: proto/sila/v1/beacon_chain.proto
 
 package v1
 
@@ -102,7 +102,7 @@ func file_proto_eth_v1_beacon_chain_proto_rawDescGZIP() []byte {
 
 var file_proto_eth_v1_beacon_chain_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_eth_v1_beacon_chain_proto_goTypes = []any{
-	(*StateRequest)(nil), // 0: ethereum.eth.v1.StateRequest
+	(*StateRequest)(nil), // 0: Sila.Eth.v1.StateRequest
 }
 var file_proto_eth_v1_beacon_chain_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
