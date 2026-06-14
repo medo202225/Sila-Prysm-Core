@@ -38,7 +38,7 @@ func TestNewEventStream(t *testing.T) {
 
 func TestEventStream(t *testing.T) {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/eth/v1/events", func(w http.ResponseWriter, _ *http.Request) {
+	mux.HandleFunc("/sila/v1/events", func(w http.ResponseWriter, _ *http.Request) {
 		flusher, ok := w.(http.Flusher)
 		require.Equal(t, true, ok)
 		for i := 1; i <= 3; i++ {

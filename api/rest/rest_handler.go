@@ -101,7 +101,7 @@ func (c *handler) Get(ctx context.Context, endpoint string, resp any) error {
 }
 
 // GetStatusCode sends a GET request and returns only the HTTP status code.
-// This is useful for endpoints like /eth/v1/node/health that communicate status via HTTP codes
+// This is useful for endpoints like /sila/v1/node/health that communicate status via HTTP codes
 // (200 = ready, 206 = syncing, 503 = unavailable) rather than response bodies.
 func (c *handler) GetStatusCode(ctx context.Context, endpoint string) (int, error) {
 	url := c.host + endpoint

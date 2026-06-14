@@ -29,7 +29,7 @@ type Server struct {
 	startFailure error
 }
 
-const eventStreamPath = "/eth/v1/events"
+const eventStreamPath = "/sila/v1/events"
 
 // New returns a new instance of the Server.
 func New(ctx context.Context, opts ...Option) (*Server, error) {
@@ -54,7 +54,7 @@ func New(ctx context.Context, opts ...Option) (*Server, error) {
 		timeoutHandler := http.TimeoutHandler(baseHandler, g.cfg.timeout, "request timed out")
 		handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// SSE streams stay open indefinitely, so the global timeout wrapper must not
-			// cancel `/eth/v1/events` before the handler starts streaming responses.
+			// cancel `/sila/v1/events` before the handler starts streaming responses.
 			if r.URL != nil && r.URL.Path == eventStreamPath {
 				baseHandler.ServeHTTP(w, r)
 				return

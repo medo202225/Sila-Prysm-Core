@@ -12,9 +12,9 @@ import (
 )
 
 const (
-	localKeysPath    = "/eth/v1/keystores"
-	remoteKeysPath   = "/eth/v1/remotekeys"
-	feeRecipientPath = "/eth/v1/validator/{pubkey}/feerecipient"
+	localKeysPath    = "/sila/v1/keystores"
+	remoteKeysPath   = "/sila/v1/remotekeys"
+	feeRecipientPath = "/sila/v1/validator/{pubkey}/feerecipient"
 )
 
 // Client provides a collection of helper methods for calling the Keymanager API endpoints.

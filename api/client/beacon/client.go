@@ -23,15 +23,15 @@ import (
 )
 
 const (
-	getSignedBlockPath       = "/eth/v2/beacon/blocks"
-	getBlockRootPath         = "/eth/v1/beacon/blocks/{{.Id}}/root"
-	getForkForStatePath      = "/eth/v1/beacon/states/{{.Id}}/fork"
-	getForkSchedulePath      = "/eth/v1/config/fork_schedule"
-	getConfigSpecPath        = "/eth/v1/config/spec"
-	getStatePath             = "/eth/v2/debug/beacon/states"
-	changeBLStoExecutionPath = "/eth/v1/beacon/pool/bls_to_execution_changes"
+	getSignedBlockPath       = "/sila/v2/beacon/blocks"
+	getBlockRootPath         = "/sila/v1/beacon/blocks/{{.Id}}/root"
+	getForkForStatePath      = "/sila/v1/beacon/states/{{.Id}}/fork"
+	getForkSchedulePath      = "/sila/v1/config/fork_schedule"
+	getConfigSpecPath        = "/sila/v1/config/spec"
+	getStatePath             = "/sila/v2/debug/beacon/states"
+	changeBLStoExecutionPath = "/sila/v1/beacon/pool/bls_to_execution_changes"
 
-	GetNodeVersionPath      = "/eth/v1/node/version"
+	GetNodeVersionPath      = "/sila/v1/node/version"
 	GetWeakSubjectivityPath = "/prysm/v1/beacon/weak_subjectivity"
 )
 
