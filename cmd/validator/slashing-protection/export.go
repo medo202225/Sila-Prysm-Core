@@ -42,7 +42,7 @@ func exportSlashingProtectionJSON(cliCtx *cli.Context) error {
 
 	log.Info(
 		"This command exports your validator's attestation and proposal history into " +
-			"a file that can then be imported into any other Prysm setup across computers",
+			"a file that can then be imported into any other Sila-Prysm setup across computers",
 	)
 
 	// Check if a minimal database is requested

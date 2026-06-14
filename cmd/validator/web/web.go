@@ -13,15 +13,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Commands for managing Prysm validator accounts.
+// Commands for managing Sila-Prysm validator accounts.
 var Commands = &cli.Command{
 	Name:     "web",
 	Category: "web",
-	Usage:    "Defines commands for interacting with the Prysm web interface.",
+	Usage:    "Defines commands for interacting with the Sila-Prysm web interface.",
 	Subcommands: []*cli.Command{
 		{
 			Name:        "generate-auth-token",
-			Description: `Generate an authentication token for the Prysm web interface`,
+			Description: `Generate an authentication token for the Sila-Prysm web interface`,
 			Flags: cmd.WrapFlags([]cli.Flag{
 				flags.WalletDirFlag,
 				flags.HTTPServerHost,

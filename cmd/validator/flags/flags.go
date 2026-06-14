@@ -155,7 +155,7 @@ var (
 	// WalletDirFlag defines the path to a wallet directory for Prysm accounts.
 	WalletDirFlag = &cli.StringFlag{
 		Name:  "wallet-dir",
-		Usage: "Path to a wallet directory on-disk for Prysm validator accounts.",
+		Usage: "Path to a wallet directory on-disk for Sila-Prysm validator accounts.",
 		Value: filepath.Join(DefaultValidatorDir(), WalletDefaultDirName),
 	}
 	// AccountPasswordFileFlag is path to a file containing a password for a validator account.
@@ -299,7 +299,7 @@ var (
 	// web3signer documentation can be found in Consensys' web3signer project docs
 	Web3SignerURLFlag = &cli.StringFlag{
 		Name:    "validators-external-signer-url",
-		Usage:   "URL for consensys' web3signer software to use with the Prysm validator client.",
+		Usage:   "URL for consensys' web3signer software to use with the Sila-Prysm validator client.",
 		Value:   "",
 		Aliases: []string{"remote-signer-url"},
 	}
@@ -391,10 +391,10 @@ var (
 		Usage: "Sets the maximum size for one batch of validator registrations. Use a non-positive value to disable batching.",
 		Value: 200,
 	}
-	// EnableDistributed enables the usage of prysm validator client in a Distributed Validator Cluster.
+	// EnableDistributed enables the usage of Sila-Prysm validator client in a Distributed Validator Cluster.
 	EnableDistributed = &cli.BoolFlag{
 		Name:  "distributed",
-		Usage: "To enable the use of prysm validator client in Distributed Validator Cluster",
+		Usage: "To enable the use of Sila-Prysm validator client in Distributed Validator Cluster",
 		Value: false,
 	}
 	// EnableStatelessFlag enables the stateless block production path for Gloas: the validator requests the

@@ -8,14 +8,14 @@ import (
 )
 
 var (
-	// SourceDataDirFlag defines a path on disk where source Prysm databases are stored. Used for conversion.
+	// SourceDataDirFlag defines a path on disk where source Sila-Prysm databases are stored. Used for conversion.
 	SourceDataDirFlag = &cli.StringFlag{
 		Name:     "source-data-dir",
 		Usage:    "Source data directory",
 		Required: true,
 	}
 
-	// SourceDataDirFlag defines a path on disk where source Prysm databases are stored. Used for conversion.
+	// SourceDataDirFlag defines a path on disk where source Sila-Prysm databases are stored. Used for conversion.
 	TargetDataDirFlag = &cli.StringFlag{
 		Name:     "target-data-dir",
 		Usage:    "Target data directory",
@@ -23,11 +23,11 @@ var (
 	}
 )
 
-// Commands for interacting with the Prysm validator database.
+// Commands for interacting with the Sila-Prysm validator database.
 var Commands = &cli.Command{
 	Name:     "db",
 	Category: "db",
-	Usage:    "Defines commands for interacting with the Prysm validator database.",
+	Usage:    "Defines commands for interacting with the Sila-Prysm validator database.",
 	Subcommands: []*cli.Command{
 		{
 			Name:        "restore",

@@ -8,7 +8,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Commands for wallets for Prysm validators.
+// Commands for wallets for Sila-Prysm validators.
 var Commands = &cli.Command{
 	Name:     "wallet",
 	Category: "wallet",

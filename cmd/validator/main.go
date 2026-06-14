@@ -242,7 +242,7 @@ func main() {
 			// Log Prysm version on startup. After initializing log-file and ephemeral log-file.
 			log.WithFields(logrus.Fields{
 				"version": version.Version(),
-			}).Info("Prysm Validator started")
+			}).Info("Sila-Prysm Validator started")
 
 			// Fix data dir for Windows users.
 			outdatedDataDir := filepath.Join(file.HomeDir(), "AppData", "Roaming", "Eth2Validators")

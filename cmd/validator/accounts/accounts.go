@@ -10,7 +10,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Commands for managing Prysm validator accounts.
+// Commands for managing Sila-Prysm validator accounts.
 var Commands = &cli.Command{
 	Name:     "accounts",
 	Category: "accounts",

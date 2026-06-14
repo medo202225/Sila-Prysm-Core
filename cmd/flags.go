@@ -41,7 +41,7 @@ var (
 		Name:  "log.vmodule",
 		Usage: "Per-package log verbosity. packagePath=level entries separated by commas.",
 	}
-	// DataDirFlag defines a path on disk where Prysm databases are stored.
+	// DataDirFlag defines a path on disk where Sila-Prysm databases are stored.
 	DataDirFlag = &cli.StringFlag{
 		Name:  "datadir",
 		Usage: "Data directory for the databases.",
