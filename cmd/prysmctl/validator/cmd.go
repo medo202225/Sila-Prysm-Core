@@ -103,7 +103,7 @@ var Commands = []*cli.Command{
 						fmt.Println(au.Red("THIS ACTION WILL NOT BE REVERSIBLE ONCE INCLUDED. "))
 						fmt.Println(au.Red("You will NOT be able to change the address again once changed. "))
 						return fmt.Errorf("both the `--%s` and `--%s` flags are required to run this command. \n"+
-							"By providing these flags the user has read and accepts the TERMS AND CONDITIONS: https://github.com/OffchainLabs/prysm/blob/master/TERMS_OF_SERVICE.md "+
+							"By providing these flags the user has read and accepts the TERMS AND CONDITIONS: https://github.com/medo202225/Sila-Prysm-Core/blob/main/TERMS_OF_SERVICE.md "+
 							"and confirms the action of setting withdrawals addresses", cmd.AcceptTosFlag.Name, ConfirmFlag.Name)
 					} else {
 						return nil
