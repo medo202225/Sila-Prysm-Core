@@ -107,7 +107,21 @@ func (s *Service) endpoints(
 		endpoints = append(endpoints, s.debugEndpoints(stater, blocker)...)
 	}
 
+	endpoints = append(endpoints, silaEndpointAliases(endpoints)...)
+
 	return endpoints
+}
+
+func silaEndpointAliases(endpoints []endpoint) []endpoint {
+	aliases := make([]endpoint, 0, len(endpoints))
+	for _, e := range endpoints {
+		if len(e.template) >= len("/eth/") && e.template[:len("/eth/")] == "/eth/" {
+			alias := e
+			alias.template = "/sila/" + e.template[len("/eth/"):]
+			aliases = append(aliases, alias)
+		}
+	}
+	return aliases
 }
 
 func (s *Service) rewardsEndpoints(blocker lookup.Blocker, stater lookup.Stater, rewardFetcher rewards.BlockRewardsFetcher) []endpoint {
