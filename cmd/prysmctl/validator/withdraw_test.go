@@ -27,7 +27,7 @@ func getHappyPathTestServer(file string, t *testing.T) *httptest.Server {
 		w.Header().Set("Content-Type", "application/json")
 		if r.Method == http.MethodGet {
 			fmt.Println(r.RequestURI)
-			if r.RequestURI == "/eth/v1/beacon/pool/bls_to_execution_changes" {
+			if r.RequestURI == "/sila/v1/beacon/pool/bls_to_execution_changes" {
 				b, err := os.ReadFile(filepath.Clean(file))
 				require.NoError(t, err)
 				var to []*structs.SignedBLSToExecutionChange
@@ -37,7 +37,7 @@ func getHappyPathTestServer(file string, t *testing.T) *httptest.Server {
 					Data: to,
 				})
 				require.NoError(t, err)
-			} else if r.RequestURI == "/eth/v1/beacon/states/head/fork" {
+			} else if r.RequestURI == "/sila/v1/beacon/states/head/fork" {
 				err := json.NewEncoder(w).Encode(&structs.GetStateForkResponse{
 					Data: &structs.Fork{
 						PreviousVersion: hexutil.Encode(params.BeaconConfig().CapellaForkVersion),
@@ -48,7 +48,7 @@ func getHappyPathTestServer(file string, t *testing.T) *httptest.Server {
 					Finalized:           true,
 				})
 				require.NoError(t, err)
-			} else if r.RequestURI == "/eth/v1/config/spec" {
+			} else if r.RequestURI == "/sila/v1/config/spec" {
 				m := make(map[string]string)
 				m["CAPELLA_FORK_EPOCH"] = "1350"
 				err := json.NewEncoder(w).Encode(&structs.GetSpecResponse{
@@ -216,7 +216,7 @@ func TestCallWithdrawalEndpoint_Errors(t *testing.T) {
 	l, err := net.Listen("tcp", baseurl)
 	require.NoError(t, err)
 	srv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodPost && r.RequestURI == "/eth/v1/beacon/pool/bls_to_execution_changes" {
+		if r.Method == http.MethodPost && r.RequestURI == "/sila/v1/beacon/pool/bls_to_execution_changes" {
 			w.WriteHeader(400)
 			w.Header().Set("Content-Type", "application/json")
 			err = json.NewEncoder(w).Encode(&server.IndexedErrorContainer{
@@ -226,7 +226,7 @@ func TestCallWithdrawalEndpoint_Errors(t *testing.T) {
 			})
 			require.NoError(t, err)
 		} else if r.Method == http.MethodGet {
-			if r.RequestURI == "/eth/v1/beacon/states/head/fork" {
+			if r.RequestURI == "/sila/v1/beacon/states/head/fork" {
 				w.WriteHeader(200)
 				w.Header().Set("Content-Type", "application/json")
 				err := json.NewEncoder(w).Encode(&structs.GetStateForkResponse{
@@ -239,7 +239,7 @@ func TestCallWithdrawalEndpoint_Errors(t *testing.T) {
 					Finalized:           true,
 				})
 				require.NoError(t, err)
-			} else if r.RequestURI == "/eth/v1/config/spec" {
+			} else if r.RequestURI == "/sila/v1/config/spec" {
 				w.WriteHeader(200)
 				w.Header().Set("Content-Type", "application/json")
 				m := make(map[string]string)
@@ -285,7 +285,7 @@ func TestCallWithdrawalEndpoint_ForkBeforeCapella(t *testing.T) {
 	srv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
 		w.Header().Set("Content-Type", "application/json")
-		if r.RequestURI == "/eth/v1/beacon/states/head/fork" {
+		if r.RequestURI == "/sila/v1/beacon/states/head/fork" {
 
 			err := json.NewEncoder(w).Encode(&structs.GetStateForkResponse{
 				Data: &structs.Fork{
@@ -297,7 +297,7 @@ func TestCallWithdrawalEndpoint_ForkBeforeCapella(t *testing.T) {
 				Finalized:           true,
 			})
 			require.NoError(t, err)
-		} else if r.RequestURI == "/eth/v1/config/spec" {
+		} else if r.RequestURI == "/sila/v1/config/spec" {
 			m := make(map[string]string)
 			m["CAPELLA_FORK_EPOCH"] = "1350"
 			err := json.NewEncoder(w).Encode(&structs.GetSpecResponse{
