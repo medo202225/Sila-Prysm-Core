@@ -1,37 +1,36 @@
-name: 🐞 Bug report
-description: Report a bug or problem with running Prysm
+name: Bug report
+description: Report a bug or problem with running Sila-Prysm
 type: "Bug"
 body:
   - type: markdown
     attributes:
       value: |
-        To help us tend to your issue faster, please search our currently open issues before submitting a new one.
-        Existing issues often contain information about workarounds, resolution, or progress updates.
+        Please search existing issues before submitting a new one.
+        Existing issues may contain workarounds, resolutions, or progress updates.
   - type: textarea
     id: what-happened
     attributes:
       label: Describe the bug
-      description: |
-        A clear and concise description of the problem...
+      description: A clear and concise description of the problem.
     validations:
       required: true
   - type: textarea
     id: previous-version
     attributes:
       label: Has this worked before in a previous version?
-      description: Did this behavior use to work in the previous version?
+      description: Did this behavior use to work in a previous version?
       render: text
   - type: textarea
     id: reproduction-steps
     attributes:
-      label: 🔬 Minimal Reproduction
+      label: Minimal reproduction
       description: |
-        Please let us know how we can reproduce this issue. 
-        Include the exact method you used to run Prysm along with any flags used in your beacon chain and/or validator. 
-        Make sure you don't upload any confidential files or private keys.
+        Please describe how to reproduce this issue.
+        Include the exact method used to run Sila-Prysm and any beacon node or validator flags.
+        Do not upload confidential files, secrets, or private keys.
       placeholder: |
         Steps to reproduce:
-        
+
         1. Start '...'
         2. Then '...'
         3. Check '...'
@@ -40,9 +39,7 @@ body:
     id: errors
     attributes:
       label: Error
-      description: |
-        If the issue is accompanied by an error, please share the error logs with us below. 
-        If you have a lot of logs, place make a paste bin with your logs and share the link with us here:
+      description: If the issue has logs or errors, share the relevant excerpt here.
       render: text
   - type: dropdown
     id: platform
@@ -59,8 +56,8 @@ body:
         - Windows (ARM)
   - type: input
     attributes:
-      label: What version of Prysm are you running? (Which release)
-      description: You can check your Prysm version by running your beacon node or validator with the `--version` flag.
+      label: What version of Sila-Prysm are you running?
+      description: Check your beacon node or validator with the `--version` flag.
   - type: textarea
     attributes:
-      label: Anything else relevant (validator index / public key)?
+      label: Anything else relevant?
