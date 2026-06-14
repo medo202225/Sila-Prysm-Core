@@ -1,3 +1,3 @@
 ### Changed
 
-- Update go-ethereum to v1.17.3.
+- Update go-Sila to v1.17.3.

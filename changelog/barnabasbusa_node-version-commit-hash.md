@@ -1,3 +1,3 @@
 ### Changed
 
-- Include git commit hash in `/eth/v1/node/version` response.
+- Include git commit hash in `/sila/v1/node/version` response.

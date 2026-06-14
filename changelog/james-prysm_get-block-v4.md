@@ -1,3 +1,3 @@
 ### Added
 
-- GET /eth/v4/validator/blocks/{slot}
+- GET /sila/v4/validator/blocks/{slot}

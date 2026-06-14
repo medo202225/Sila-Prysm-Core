@@ -1,3 +1,3 @@
 ### Added
 
-- Include `ptc_window` in the Gloas response of `/eth/v2/debug/beacon/states/{state_id}`.
+- Include `ptc_window` in the Gloas response of `/sila/v2/debug/beacon/states/{state_id}`.
