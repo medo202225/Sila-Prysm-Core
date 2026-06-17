@@ -41,7 +41,7 @@ func (s *Server) ListKeystores(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	km, err := s.validatorService.Keymanager()
@@ -77,7 +77,7 @@ func (s *Server) ListKeystores(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, response)
 }
 
-// ImportKeystores allows for importing keystores into Prysm with their slashing protection history.
+// ImportKeystores allows for importing keystores into Sila-Prysm with their slashing protection history.
 func (s *Server) ImportKeystores(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.ImportKeystores")
 	defer span.End()
@@ -87,7 +87,7 @@ func (s *Server) ImportKeystores(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	km, err := s.validatorService.Keymanager()
@@ -173,7 +173,7 @@ func (s *Server) ImportKeystores(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, &ImportKeystoresResponse{Data: statuses})
 }
 
-// DeleteKeystores allows for deleting specified public keys from Prysm.
+// DeleteKeystores allows for deleting specified public keys from Sila-Prysm.
 func (s *Server) DeleteKeystores(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.DeleteKeystores")
 	defer span.End()
@@ -183,7 +183,7 @@ func (s *Server) DeleteKeystores(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	km, err := s.validatorService.Keymanager()
@@ -397,7 +397,7 @@ func (s *Server) ListRemoteKeys(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	km, err := s.validatorService.Keymanager()
@@ -443,7 +443,7 @@ func (s *Server) ImportRemoteKeys(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	km, err := s.validatorService.Keymanager()
@@ -452,7 +452,7 @@ func (s *Server) ImportRemoteKeys(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if s.wallet.KeymanagerKind() != keymanager.Web3Signer {
-		httputil.HandleError(w, "Prysm Wallet is not of type Web3Signer. Please execute validator client with web3signer flags.", http.StatusInternalServerError)
+		httputil.HandleError(w, "Sila Wallet is not of type Web3Signer. Please execute validator client with web3signer flags.", http.StatusInternalServerError)
 		return
 	}
 
@@ -510,7 +510,7 @@ func (s *Server) DeleteRemoteKeys(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	km, err := s.validatorService.Keymanager()
@@ -519,7 +519,7 @@ func (s *Server) DeleteRemoteKeys(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if s.wallet.KeymanagerKind() != keymanager.Web3Signer {
-		httputil.HandleError(w, "Prysm Wallet is not of type Web3Signer. Please execute validator client with web3signer flags.", http.StatusInternalServerError)
+		httputil.HandleError(w, "Sila Wallet is not of type Web3Signer. Please execute validator client with web3signer flags.", http.StatusInternalServerError)
 		return
 	}
 

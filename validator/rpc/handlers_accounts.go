@@ -37,7 +37,7 @@ func (s *Server) ListAccounts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	pageSize := r.URL.Query().Get("page_size")
@@ -116,7 +116,7 @@ func (s *Server) BackupAccounts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 
@@ -226,7 +226,7 @@ func (s *Server) VoluntaryExit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !s.walletInitialized {
-		httputil.HandleError(w, "Prysm Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
+		httputil.HandleError(w, "Sila Wallet not initialized. Please create a new wallet.", http.StatusServiceUnavailable)
 		return
 	}
 	var req VoluntaryExitRequest

@@ -310,7 +310,7 @@ func (*Server) ValidateKeystores(w http.ResponseWriter, r *http.Request) {
 			doesNotDecrypt := strings.Contains(err.Error(), keymanager.IncorrectPasswordErrMsg)
 			if doesNotDecrypt {
 				httputil.HandleError(w, fmt.Sprintf("Password for keystore with public key %s is incorrect. "+
-					"Prysm web only supports importing batches of keystores with the same password for all of them",
+					"Sila-Prysm web only supports importing batches of keystores with the same password for all of them",
 					keystore.Pubkey), http.StatusBadRequest)
 				return
 			} else {

@@ -64,7 +64,7 @@ func TestServer_ListKeystores(t *testing.T) {
 		w.Body = &bytes.Buffer{}
 		s.ListKeystores(w, req)
 		require.NotEqual(t, http.StatusOK, w.Code)
-		require.StringContains(t, "Prysm Wallet not initialized. Please create a new wallet.", w.Body.String())
+		require.StringContains(t, "Sila Wallet not initialized. Please create a new wallet.", w.Body.String())
 	})
 
 	localWalletDir := setupWalletDir(t)

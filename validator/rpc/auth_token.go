@@ -23,7 +23,7 @@ import (
 
 // CreateAuthToken generates a new jwt key, token and writes them
 // to a file in the specified directory. Also, it logs out a prepared URL
-// for the user to navigate to and authenticate with the Prysm web interface.
+// for the user to navigate to and authenticate with the Sila-Prysm web interface.
 func CreateAuthToken(authPath, validatorWebAddr string) error {
 	token, err := api.GenerateRandomHexString()
 	if err != nil {
@@ -124,7 +124,7 @@ func logValidatorWebAuth(validatorWebAddr, token, tokenPath string) {
 			url.QueryEscape(token),
 		)
 		log.Infof(
-			"Starting Prysm WebUI, once your validator process is running, navigate to the link below to authenticate",
+			"Starting Sila-Prysm WebUI, once your validator process is running, navigate to the link below to authenticate",
 		)
 		log.Info(webAuthURL)
 	}
