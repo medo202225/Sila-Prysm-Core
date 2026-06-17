@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	// PrysmClientCode is the two-letter client code for Prysm.
+	// PrysmClientCode is kept as Prysm's registered two-letter client code for compatibility.
 	PrysmClientCode = "PM"
-	PrysmClientName = "Prysm"
+	PrysmClientName = "Sila-Prysm"
 )
 
 // GraffitiInfo holds version information for generating block graffiti.
@@ -122,7 +122,7 @@ func logGraffitiInfo(graffiti string, available int) {
 		log.WithField("graffiti", graffiti).Info("Graffiti includes client version info appended after user graffiti")
 		return
 	}
-	log.WithField("graffiti", graffiti).Info("Prysm adds consensus and execution debugging information to the end of the graffiti field when possible. To prevent deletion of debugging info, please consider using a shorter graffiti")
+	log.WithField("graffiti", graffiti).Info("Sila-Prysm adds consensus and execution debugging information to the end of the graffiti field when possible. To prevent deletion of debugging info, please consider using a shorter graffiti")
 }
 
 // truncateCommit returns the first n characters of the commit string.

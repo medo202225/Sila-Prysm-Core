@@ -41,7 +41,7 @@ func GitCommit() string {
 
 // BuildData returns the git tag and commit of the current build.
 func BuildData() string {
-	return fmt.Sprintf("Prysm/%s/%s", gitTag, resolvedGitCommit())
+	return fmt.Sprintf("Sila-Prysm/%s/%s", gitTag, resolvedGitCommit())
 }
 
 func resolvedGitCommit() string {

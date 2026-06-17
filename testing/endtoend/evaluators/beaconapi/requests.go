@@ -207,8 +207,8 @@ var getRequests = map[string]endpoint{
 			if pResp.Data == nil {
 				return errEmptyPrysmData
 			}
-			if !strings.Contains(pResp.Data.Version, "Prysm") {
-				return errors.New("version response does not contain Prysm client name")
+			if !strings.Contains(pResp.Data.Version, "Sila-Prysm") {
+				return errors.New("version response does not contain Sila-Prysm client name")
 			}
 			return nil
 		})),

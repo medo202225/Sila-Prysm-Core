@@ -109,7 +109,7 @@ func (*Server) GetVersion(w http.ResponseWriter, r *http.Request) {
 	_, span := trace.StartSpan(r.Context(), "node.GetVersion")
 	defer span.End()
 
-	v := fmt.Sprintf("Prysm/%s-%s (%s %s)", version.SemanticVersion(), version.GitCommit()[:7], runtime.GOOS, runtime.GOARCH)
+	v := fmt.Sprintf("Sila-Prysm/%s-%s (%s %s)", version.SemanticVersion(), version.GitCommit()[:7], runtime.GOOS, runtime.GOARCH)
 	resp := &structs.GetVersionResponse{
 		Data: &structs.Version{
 			Version: v,
@@ -140,7 +140,7 @@ func (s *Server) GetVersionV2(w http.ResponseWriter, r *http.Request) {
 		Data: &structs.VersionV2{
 			BeaconNode: &structs.ClientVersionV1{
 				Code:    "PM",
-				Name:    "Prysm",
+				Name:    "Sila-Prysm",
 				Version: version.SemanticVersion(),
 				Commit:  commit,
 			},

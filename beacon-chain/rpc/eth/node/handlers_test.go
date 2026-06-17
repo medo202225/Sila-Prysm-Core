@@ -123,7 +123,7 @@ func TestGetVersionV2(t *testing.T) {
 		require.Equal(t, "v1.0.0", resp.Data.ExecutionClient.Version)
 		require.Equal(t, "abcdef12", resp.Data.ExecutionClient.Commit)
 		require.Equal(t, "PM", resp.Data.BeaconNode.Code)
-		require.Equal(t, "Prysm", resp.Data.BeaconNode.Name)
+		require.Equal(t, "Sila-Prysm", resp.Data.BeaconNode.Name)
 		require.Equal(t, version.SemanticVersion(), resp.Data.BeaconNode.Version)
 		require.Equal(t, true, len(resp.Data.BeaconNode.Commit) <= 8)
 	})
