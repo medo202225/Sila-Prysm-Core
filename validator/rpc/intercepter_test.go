@@ -162,8 +162,20 @@ func TestServer_AuthTokenHandler_ProtectsRoutes(t *testing.T) {
 			wantErrSubstr: "Unauthorized",
 		},
 		{
+			name:          "rejects missing token on Sila keymanager endpoint",
+			path:          "/sila/v1/keystores",
+			wantCode:      http.StatusUnauthorized,
+			wantErrSubstr: "Unauthorized",
+		},
+		{
 			name:       "accepts matching token on keymanager endpoint",
 			path:       "/eth/v1/keystores",
+			authHeader: "Bearer " + token,
+			wantCode:   http.StatusOK,
+		},
+		{
+			name:       "accepts matching token on Sila keymanager endpoint",
+			path:       "/sila/v1/keystores",
 			authHeader: "Bearer " + token,
 			wantCode:   http.StatusOK,
 		},

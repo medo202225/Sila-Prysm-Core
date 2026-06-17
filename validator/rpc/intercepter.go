@@ -41,7 +41,9 @@ func (s *Server) AuthTokenInterceptor() grpc.UnaryServerInterceptor {
 func (s *Server) AuthTokenHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
-		needsAuth := strings.Contains(path, api.WebApiUrlPrefix) || strings.Contains(path, api.KeymanagerApiPrefix)
+		needsAuth := strings.Contains(path, api.WebApiUrlPrefix) ||
+			strings.Contains(path, api.KeymanagerApiPrefix) ||
+			isValidatorKeymanagerAPIPath(path)
 		// Protect direct (non-/api) web endpoints too; otherwise callers can bypass auth by hitting /v2/validator/*.
 		if strings.HasPrefix(path, api.WebUrlPrefix) &&
 			!strings.HasPrefix(path, api.WebUrlPrefix+"initialize") &&
@@ -74,6 +76,23 @@ func (s *Server) AuthTokenHandler(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+func isValidatorKeymanagerAPIPath(path string) bool {
+	keymanagerPrefixes := [...]string{
+		"/eth/v1/keystores",
+		"/eth/v1/remotekeys",
+		"/eth/v1/validator/",
+		"/sila/v1/keystores",
+		"/sila/v1/remotekeys",
+		"/sila/v1/validator/",
+	}
+	for _, prefix := range keymanagerPrefixes {
+		if strings.HasPrefix(path, prefix) {
+			return true
+		}
+	}
+	return false
 }
 
 // Authorize the token received is valid.
