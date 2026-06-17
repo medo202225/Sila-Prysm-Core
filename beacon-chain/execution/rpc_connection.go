@@ -16,6 +16,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	gethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	gethRPC "github.com/ethereum/go-ethereum/rpc"
 	"github.com/pkg/errors"
@@ -28,6 +29,63 @@ type silaCallArg struct {
 	GasPrice *hexutil.Big    `json:"gasPrice,omitempty"`
 	Value    *hexutil.Big    `json:"value,omitempty"`
 	Data     hexutil.Bytes   `json:"data,omitempty"`
+}
+
+type silaLogFilterer struct {
+	client *gethRPC.Client
+}
+
+func (f *silaLogFilterer) FilterLogs(ctx context.Context, q ethereum.FilterQuery) ([]gethTypes.Log, error) {
+	arg := toSilaFilterArg(q)
+	var result []gethTypes.Log
+	if err := f.client.CallContext(ctx, &result, "sila_getLogs", arg); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (f *silaLogFilterer) SubscribeFilterLogs(context.Context, ethereum.FilterQuery, chan<- gethTypes.Log) (ethereum.Subscription, error) {
+	return nil, errors.New("sila log subscriptions are not implemented")
+}
+
+func toSilaFilterArg(q ethereum.FilterQuery) map[string]any {
+	arg := map[string]any{}
+
+	if q.BlockHash != nil {
+		arg["blockHash"] = *q.BlockHash
+	} else {
+		if q.FromBlock != nil {
+			arg["fromBlock"] = toSilaBlockNumArg(q.FromBlock)
+		}
+		if q.ToBlock != nil {
+			arg["toBlock"] = toSilaBlockNumArg(q.ToBlock)
+		}
+	}
+
+	switch len(q.Addresses) {
+	case 0:
+	case 1:
+		arg["address"] = q.Addresses[0]
+	default:
+		arg["address"] = q.Addresses
+	}
+
+	if len(q.Topics) > 0 {
+		topics := make([]any, len(q.Topics))
+		for i, topicSet := range q.Topics {
+			switch len(topicSet) {
+			case 0:
+				topics[i] = nil
+			case 1:
+				topics[i] = topicSet[0]
+			default:
+				topics[i] = topicSet
+			}
+		}
+		arg["topics"] = topics
+	}
+
+	return arg
 }
 
 type silaContractCaller struct {
@@ -73,7 +131,7 @@ func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpo
 	// Attach the clients to the service struct.
 	fetcher := ethclient.NewClient(client)
 	s.rpcClient = client
-	s.httpLogger = fetcher
+	s.httpLogger = &silaLogFilterer{client: client}
 
 	depositContractCaller, err := contracts.NewDepositContractCaller(s.cfg.depositContractAddr, &silaContractCaller{client: client})
 	if err != nil {
