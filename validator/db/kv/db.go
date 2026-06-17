@@ -60,7 +60,7 @@ type Config struct {
 	PubKeys [][fieldparams.BLSPubkeyLength]byte
 }
 
-// Store defines an implementation of the Prysm Database interface
+// Store defines an implementation of the Sila-Prysm Database interface
 // using BoltDB as the underlying persistent kv-store for Sila consensus nodes.
 type Store struct {
 	db                                 *bolt.DB

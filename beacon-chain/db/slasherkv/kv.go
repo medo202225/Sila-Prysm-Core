@@ -26,7 +26,7 @@ const (
 	mmapSize = 536870912
 )
 
-// Store defines an implementation of the Prysm Database interface
+// Store defines an implementation of the Sila-Prysm Database interface
 // using BoltDB as the underlying persistent kv-store for Sila consensus.
 type Store struct {
 	db           *bolt.DB

@@ -360,7 +360,7 @@ func startBaseServices(cliCtx *cli.Context, beacon *BeaconNode, depositAddress s
 	log.Debugln("Starting State Gen")
 	if err := beacon.startStateGen(ctx, bfs, beacon.forkChoicer); err != nil {
 		if errors.Is(err, stategen.ErrNoGenesisBlock) {
-			log.Errorf("No genesis block/state is found. Prysm only provides a mainnet genesis "+
+			log.Errorf("No genesis block/state is found. Sila-Prysm only provides a mainnet genesis "+
 				"state bundled in the application. You must provide the --%s or --%s flag to load "+
 				"a genesis block/state for this network.", "genesis-state", "genesis-beacon-api-url")
 		}

@@ -1,5 +1,5 @@
 // Package testing allows for spinning up a real bolt-db
-// instance for unit tests throughout the Prysm repo.
+// instance for unit tests throughout the Sila-Prysm repo.
 package testing
 
 import (

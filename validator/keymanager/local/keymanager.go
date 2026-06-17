@@ -68,7 +68,7 @@ func (a *accountStore) Copy() *accountStore {
 	return storeCopy
 }
 
-// AccountsKeystoreRepresentation defines an internal Prysm representation
+// AccountsKeystoreRepresentation defines an internal Sila-Prysm representation
 // of validator accounts, encrypted according to the EIP-2334 standard.
 type AccountsKeystoreRepresentation struct {
 	Crypto  map[string]any `json:"crypto"`
@@ -335,7 +335,7 @@ func CreateAccountsKeystoreRepresentation(
 	}, nil
 }
 
-// CreateEmptyKeyStoreRepresentationForNewWallet creates a placeholder accounts keystore for a new Prysm Local Wallet.
+// CreateEmptyKeyStoreRepresentationForNewWallet creates a placeholder accounts keystore for a new Sila-Prysm Local Wallet.
 func CreateEmptyKeyStoreRepresentationForNewWallet(ctx context.Context, walletPassword string) (*AccountsKeystoreRepresentation, error) {
 	// make sure everything is clean when creating this.
 	ResetCaches()

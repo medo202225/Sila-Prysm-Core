@@ -73,7 +73,7 @@ type ImportAccountsConfig struct {
 }
 
 // Import can import external, EIP-2335 compliant keystore.json files as
-// new accounts into the Prysm validator wallet. This uses the CLI to extract
+// new accounts into the Sila-Prysm validator wallet. This uses the CLI to extract
 // values necessary to run the function.
 func (acm *CLIManager) Import(ctx context.Context) error {
 	k, ok := acm.keymanager.(keymanager.Importer)
@@ -82,7 +82,7 @@ func (acm *CLIManager) Import(ctx context.Context) error {
 	}
 	log.Info("importing validator keystores...")
 	// Check if the user wishes to import a one-off, private key directly
-	// as an account into the Prysm validator.
+	// as an account into the Sila-Prysm validator.
 	if acm.importPrivateKeys {
 		return importPrivateKeyAsAccount(ctx, acm.wallet, k, acm.privateKeyFile)
 	}
@@ -193,7 +193,7 @@ func processDirectory(ctx context.Context, dir string, depth int) ([]*keymanager
 }
 
 // ImportAccounts can import external, EIP-2335 compliant keystore.json files as
-// new accounts into the Prysm validator wallet.
+// new accounts into the Sila-Prysm validator wallet.
 func ImportAccounts(ctx context.Context, cfg *ImportAccountsConfig) ([]*keymanager.KeyStatus, error) {
 	if cfg.AccountPassword == "" {
 		statuses := make([]*keymanager.KeyStatus, len(cfg.Keystores))
@@ -220,7 +220,7 @@ func ImportAccounts(ctx context.Context, cfg *ImportAccountsConfig) ([]*keymanag
 }
 
 // Imports a one-off file containing a private key as a hex string into
-// the Prysm validator's accounts.
+// the Sila-Prysm validator's accounts.
 func importPrivateKeyAsAccount(ctx context.Context, wallet *wallet.Wallet, importer keymanager.Importer, privKeyFile string) error {
 	fullPath, err := file.ExpandPath(privKeyFile)
 	if err != nil {

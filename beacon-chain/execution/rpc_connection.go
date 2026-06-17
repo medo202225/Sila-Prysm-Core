@@ -243,7 +243,7 @@ func (s *Service) newRPCClientWithAuth(ctx context.Context, endpoint network.End
 }
 
 // Checks the chain ID of the execution client to ensure
-// it matches local parameters of what Prysm expects.
+// it matches local parameters of what Sila-Prysm expects.
 func ensureCorrectExecutionChain(ctx context.Context, client *ethclient.Client) error {
 	var chainIDHex string
 	if err := client.Client().CallContext(ctx, &chainIDHex, "sila_chainId"); err != nil {

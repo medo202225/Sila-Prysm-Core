@@ -15,7 +15,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// ValidatorDB defines the necessary methods for a Prysm validator DB.
+// ValidatorDB defines the necessary methods for a Sila-Prysm validator DB.
 type ValidatorDB interface {
 	io.Closer
 	backup.Exporter

@@ -20,7 +20,7 @@ import (
 )
 
 // ImportStandardProtection takes in EIP-3076 compliant JSON file used for slashing protection
-// by Sila validators and imports its data into Prysm's internal complete representation of slashing
+// by Sila validators and imports its data into Sila-Prysm's internal complete representation of slashing
 // protection in the validator client's database.
 func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error {
 	encodedJSON, err := io.ReadAll(r)
@@ -62,7 +62,7 @@ func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) e
 
 	for pubKey, signedBlocks := range signedBlocksByPubKey {
 		// Transform the processed signed blocks data from the JSON.
-		// file into the internal Prysm representation of proposal history.
+		// file into the internal Sila-Prysm representation of proposal history.
 		if err := bar.Add(1); err != nil {
 			log.WithError(err).Debug("Could not increase progress bar")
 		}
@@ -78,7 +78,7 @@ func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) e
 	bar = common.InitializeProgressBar(len(signedAttsByPubKey), "Transform signed attestations:")
 	for pubKey, signedAtts := range signedAttsByPubKey {
 		// Transform the processed signed attestation data from the JSON.
-		// file into the internal Prysm representation of attesting history.
+		// file into the internal Sila-Prysm representation of attesting history.
 		if err := bar.Add(1); err != nil {
 			log.WithError(err).Debug("Could not increase progress bar")
 		}

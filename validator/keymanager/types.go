@@ -11,7 +11,7 @@ import (
 	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
 )
 
-// IKeymanager defines a general keymanager interface for Prysm wallets.
+// IKeymanager defines a general keymanager interface for Sila-Prysm wallets.
 type IKeymanager interface {
 	PublicKeysFetcher
 	Signer
@@ -110,7 +110,7 @@ type Keystore struct {
 }
 
 // Kind defines an enum for either local, derived, or remote-signing
-// keystores for Prysm wallets.
+// keystores for Sila-Prysm wallets.
 type Kind int
 
 const (

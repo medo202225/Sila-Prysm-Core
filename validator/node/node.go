@@ -60,7 +60,7 @@ type ValidatorClient struct {
 	once                  sync.Once
 }
 
-// NewValidatorClient creates a new instance of the Prysm validator client.
+// NewValidatorClient creates a new instance of the Sila-Prysm validator client.
 func NewValidatorClient(cliCtx *cli.Context) (*ValidatorClient, error) {
 	// TODO(#9883) - Maybe we can pass in a new validator client config instead of the cliCTX to abstract away the use of flags here .
 	if err := tracing.Setup(

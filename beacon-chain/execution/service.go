@@ -92,7 +92,7 @@ type POWBlockFetcher interface {
 	BlockExists(ctx context.Context, hash common.Hash) (bool, *big.Int, error)
 }
 
-// Chain defines a standard interface for the powchain service in Prysm.
+// Chain defines a standard interface for the powchain service in Sila-Prysm.
 type Chain interface {
 	ChainStartFetcher
 	ChainInfoFetcher

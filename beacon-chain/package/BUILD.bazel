@@ -40,7 +40,7 @@ pkg_deb(
         "etc/prysm/beacon-chain.yaml",
     ],
     data = ":debian-data",
-    description = "Sila Prysm Beacon Chain - consensus network communications",
+    description = "Sila-Prysm Beacon Chain - consensus network communications",
     homepage = "https://github.com/medo202225/Sila-Prysm-Core",
     maintainer = "Sila-Prysm <security@silachain.com>",
     package = "prysm-beacon-chain",
