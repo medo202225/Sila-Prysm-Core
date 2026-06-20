@@ -1,6 +1,7 @@
 package params_test
 
 import (
+	"bytes"
 	"path"
 	"testing"
 
@@ -63,8 +64,8 @@ func TestSilaMainnetConfigDoesNotMutateMainnet(t *testing.T) {
 	require.Equal(t, params.SilaMainnetName, sila.ConfigName)
 	require.Equal(t, mainnet.ConfigName, mainnetAgain.ConfigName)
 	require.Equal(t, mainnet.DepositChainID, mainnetAgain.DepositChainID)
-	require.Equal(t, mainnet.GenesisForkVersion, mainnetAgain.GenesisForkVersion)
+	require.Equal(t, true, bytes.Equal(mainnet.GenesisForkVersion, mainnetAgain.GenesisForkVersion))
 	require.NotEqual(t, mainnet.ConfigName, sila.ConfigName)
 	require.NotEqual(t, mainnet.DepositChainID, sila.DepositChainID)
-	require.NotEqual(t, mainnet.GenesisForkVersion, sila.GenesisForkVersion)
+	require.Equal(t, false, bytes.Equal(mainnet.GenesisForkVersion, sila.GenesisForkVersion))
 }
