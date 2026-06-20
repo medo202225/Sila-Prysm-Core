@@ -268,9 +268,6 @@ func (m *Chain) InsertBlock(height int, time uint64, hash []byte) *Chain {
 
 func SetupRPCServer() (*rpc.Server, string, error) {
 	srv := rpc.NewServer()
-	if err := srv.RegisterName("eth", &testETHRPC{}); err != nil {
-		return nil, "", err
-	}
 	if err := srv.RegisterName("sila", &testETHRPC{}); err != nil {
 		return nil, "", err
 	}
