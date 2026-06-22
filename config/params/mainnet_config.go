@@ -42,6 +42,26 @@ func SilaMainnetConfig() *BeaconChainConfig {
 	return cfg
 }
 
+// SilaPublicTestnetConfig returns the configuration to be used in the Sila public testnet.
+func SilaPublicTestnetConfig() *BeaconChainConfig {
+	cfg := SilaMainnetConfig()
+	cfg.ConfigName = SilaPublicTestnetName
+	cfg.DepositChainID = 20263001
+	cfg.DepositNetworkID = 20263001
+
+	cfg.GenesisForkVersion = []byte{0x01, 0x35, 0x30, 0x59}
+	cfg.AltairForkVersion = []byte{0x01, 0x35, 0x30, 0x5a}
+	cfg.BellatrixForkVersion = []byte{0x01, 0x35, 0x30, 0x5b}
+	cfg.CapellaForkVersion = []byte{0x01, 0x35, 0x30, 0x5c}
+	cfg.DenebForkVersion = []byte{0x01, 0x35, 0x30, 0x5d}
+	cfg.ElectraForkVersion = []byte{0x01, 0x35, 0x30, 0x5e}
+	cfg.FuluForkVersion = []byte{0x01, 0x35, 0x30, 0x5f}
+	cfg.GloasForkVersion = []byte{0x01, 0x35, 0x30, 0x60}
+	cfg.InitializeForkSchedule()
+
+	return cfg
+}
+
 const (
 	// Genesis Fork Epoch for the mainnet config.
 	genesisForkEpoch = 0

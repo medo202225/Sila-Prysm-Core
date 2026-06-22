@@ -4,6 +4,7 @@ func init() {
 	defaults := []*BeaconChainConfig{
 		MainnetConfig(),
 		SilaMainnetConfig(),
+		SilaPublicTestnetConfig(),
 		MinimalSpecConfig(),
 		E2ETestConfig(),
 		E2EMainnetTestConfig(),
