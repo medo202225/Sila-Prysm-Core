@@ -46,7 +46,7 @@ var requestBlocksCmd = &cli.Command{
 		cmd.ChainConfigFileFlag,
 		&cli.StringFlag{
 			Name:        "network",
-			Usage:       "network to run on (mainnet, sila, sepolia, holesky, hoodi)",
+			Usage:       "network to run on (mainnet, sila, sila-public-testnet, sepolia, holesky, hoodi)",
 			Destination: &requestBlocksFlags.Network,
 			Value:       "mainnet",
 		},
@@ -112,6 +112,10 @@ func cliActionRequestBlocks(cliCtx *cli.Context) error {
 		}
 	case params.SilaMainnetName:
 		if err := params.SetActive(params.SilaMainnetConfig()); err != nil {
+			log.Fatal(err)
+		}
+	case params.SilaPublicTestnetName:
+		if err := params.SetActive(params.SilaPublicTestnetConfig()); err != nil {
 			log.Fatal(err)
 		}
 	case params.MainnetName:

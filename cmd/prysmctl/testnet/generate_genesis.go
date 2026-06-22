@@ -204,9 +204,13 @@ func cliActionGenerateGenesisState(cliCtx *cli.Context) error {
 
 func setGlobalParams() error {
 	chainConfigFile := generateGenesisStateFlags.ChainConfigFile
-	if chainConfigFile == params.SilaMainnetName {
+	switch chainConfigFile {
+	case params.SilaMainnetName:
 		log.Infof("Specified Sila chain config: %s", chainConfigFile)
 		return params.SetActive(params.SilaMainnetConfig())
+	case params.SilaPublicTestnetName:
+		log.Infof("Specified Sila chain config: %s", chainConfigFile)
+		return params.SetActive(params.SilaPublicTestnetConfig())
 	}
 	if chainConfigFile != "" {
 		log.Infof("Specified a chain config file: %s", chainConfigFile)
