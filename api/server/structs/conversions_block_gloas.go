@@ -19,13 +19,13 @@ func SilaPayloadEnvelopeFromConsensus(e *eth.SilaPayloadEnvelope) (*SilaPayloadE
 	if err != nil {
 		return nil, err
 	}
-	var requests *ExecutionRequests
-	if e.ExecutionRequests != nil {
-		requests = ExecutionRequestsFromConsensus(e.ExecutionRequests)
+	var requests *SilaRequests
+	if e.SilaRequests != nil {
+		requests = SilaRequestsFromConsensus(e.SilaRequests)
 	}
 	return &SilaPayloadEnvelope{
 		Payload:               payload,
-		ExecutionRequests:     requests,
+		SilaRequests:     requests,
 		BuilderIndex:          fmt.Sprintf("%d", e.BuilderIndex),
 		BeaconBlockRoot:       hexutil.Encode(e.BeaconBlockRoot),
 		ParentBeaconBlockRoot: hexutil.Encode(e.ParentBeaconBlockRoot),
@@ -80,11 +80,11 @@ func (e *SilaPayloadEnvelope) ToConsensus() (*eth.SilaPayloadEnvelope, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Payload")
 	}
-	var requests *silaenginev1.ExecutionRequests
-	if e.ExecutionRequests != nil {
-		requests, err = e.ExecutionRequests.ToConsensus()
+	var requests *silaenginev1.SilaRequests
+	if e.SilaRequests != nil {
+		requests, err = e.SilaRequests.ToConsensus()
 		if err != nil {
-			return nil, server.NewDecodeError(err, "ExecutionRequests")
+			return nil, server.NewDecodeError(err, "SilaRequests")
 		}
 	}
 	builderIndex, err := strconv.ParseUint(e.BuilderIndex, 10, 64)
@@ -101,7 +101,7 @@ func (e *SilaPayloadEnvelope) ToConsensus() (*eth.SilaPayloadEnvelope, error) {
 	}
 	return &eth.SilaPayloadEnvelope{
 		Payload:               payload,
-		ExecutionRequests:     requests,
+		SilaRequests:     requests,
 		BuilderIndex:          primitives.BuilderIndex(builderIndex),
 		BeaconBlockRoot:       beaconBlockRoot,
 		ParentBeaconBlockRoot: parentBeaconBlockRoot,
@@ -131,13 +131,13 @@ func BlindedSilaPayloadEnvelopeFromConsensus(b *eth.WireBlindedSilaPayloadEnvelo
 	if b == nil {
 		return nil, errNilValue
 	}
-	var requests *ExecutionRequests
-	if b.ExecutionRequests != nil {
-		requests = ExecutionRequestsFromConsensus(b.ExecutionRequests)
+	var requests *SilaRequests
+	if b.SilaRequests != nil {
+		requests = SilaRequestsFromConsensus(b.SilaRequests)
 	}
 	return &BlindedSilaPayloadEnvelope{
 		PayloadRoot:           hexutil.Encode(b.PayloadRoot),
-		ExecutionRequests:     requests,
+		SilaRequests:     requests,
 		BuilderIndex:          fmt.Sprintf("%d", b.BuilderIndex),
 		BeaconBlockRoot:       hexutil.Encode(b.BeaconBlockRoot),
 		ParentBeaconBlockRoot: hexutil.Encode(b.ParentBeaconBlockRoot),
@@ -152,11 +152,11 @@ func (b *BlindedSilaPayloadEnvelope) ToConsensus() (*eth.WireBlindedSilaPayloadE
 	if err != nil {
 		return nil, server.NewDecodeError(err, "PayloadRoot")
 	}
-	var requests *silaenginev1.ExecutionRequests
-	if b.ExecutionRequests != nil {
-		requests, err = b.ExecutionRequests.ToConsensus()
+	var requests *silaenginev1.SilaRequests
+	if b.SilaRequests != nil {
+		requests, err = b.SilaRequests.ToConsensus()
 		if err != nil {
-			return nil, server.NewDecodeError(err, "ExecutionRequests")
+			return nil, server.NewDecodeError(err, "SilaRequests")
 		}
 	}
 	builderIndex, err := strconv.ParseUint(b.BuilderIndex, 10, 64)
@@ -173,7 +173,7 @@ func (b *BlindedSilaPayloadEnvelope) ToConsensus() (*eth.WireBlindedSilaPayloadE
 	}
 	return &eth.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           payloadRoot,
-		ExecutionRequests:     requests,
+		SilaRequests:     requests,
 		BuilderIndex:          primitives.BuilderIndex(builderIndex),
 		BeaconBlockRoot:       beaconBlockRoot,
 		ParentBeaconBlockRoot: parentBeaconBlockRoot,
@@ -262,7 +262,7 @@ func WireBlindedFromFull(full *eth.SilaPayloadEnvelope) (*eth.WireBlindedSilaPay
 	}
 	return &eth.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           payloadRoot[:],
-		ExecutionRequests:     full.ExecutionRequests,
+		SilaRequests:     full.SilaRequests,
 		BuilderIndex:          full.BuilderIndex,
 		BeaconBlockRoot:       bytesutil.SafeCopyBytes(full.BeaconBlockRoot),
 		ParentBeaconBlockRoot: bytesutil.SafeCopyBytes(full.ParentBeaconBlockRoot),

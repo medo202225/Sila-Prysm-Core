@@ -17,7 +17,7 @@ import (
 
 // prefetchedDepositSigs returns the cached per-request validity slice, or nil
 // on cache miss.
-func prefetchedDepositSigs(rqs *silaenginev1.ExecutionRequests) []bool {
+func prefetchedDepositSigs(rqs *silaenginev1.SilaRequests) []bool {
 	if rqs == nil || len(rqs.Deposits) == 0 {
 		return nil
 	}

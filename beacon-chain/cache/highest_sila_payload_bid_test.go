@@ -99,7 +99,7 @@ func testSignedSilaPayloadBid(
 			BuilderIndex:          1,
 			Value:                 primitives.Gwei(value),
 			ExecutionPayment:      10,
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: bytes.Repeat([]byte{0x06}, 96),
 	}

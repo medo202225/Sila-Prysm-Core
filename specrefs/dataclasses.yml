@@ -163,7 +163,7 @@
         block_value: uint256
         blobs_bundle: BlobsBundle
         # [New in Electra]
-        execution_requests: Sequence[bytes]
+        sila_requests: Sequence[bytes]
     </spec>
 
 - name: GetPayloadResponse#fulu
@@ -179,7 +179,7 @@
         block_value: uint256
         # [Modified in Fulu:SIP7594]
         blobs_bundle: BlobsBundle
-        execution_requests: Sequence[bytes]
+        sila_requests: Sequence[bytes]
     </spec>
 
 - name: InclusionListStore#heze
@@ -278,7 +278,7 @@
 - name: NewPayloadRequest#electra
   sources:
     - file: beacon-chain/execution/silaengine_client.go
-      search: func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, executionRequests *pb.ExecutionRequests
+      search: func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, silaRequests *pb.SilaRequests
   spec: |
     <spec dataclass="NewPayloadRequest" fork="electra" hash="366a2e72">
     class NewPayloadRequest:
@@ -286,7 +286,7 @@
         versioned_hashes: Sequence[VersionedHash]
         parent_beacon_block_root: Root
         # [New in Electra]
-        execution_requests: ExecutionRequests
+        sila_requests: SilaRequests
     </spec>
 
 - name: OptimisticStore#bellatrix

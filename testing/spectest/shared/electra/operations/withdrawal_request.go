@@ -17,11 +17,11 @@ func blockWithWithdrawalRequest(ssz []byte) (interfaces.SignedBeaconBlock, error
 	if err := wr.UnmarshalSSZ(ssz); err != nil {
 		return nil, err
 	}
-	er := &silaenginev1.ExecutionRequests{
+	er := &silaenginev1.SilaRequests{
 		Withdrawals: []*silaenginev1.WithdrawalRequest{wr},
 	}
 	b := util.NewBeaconBlockElectra()
-	b.Block.Body = &silapb.BeaconBlockBodyElectra{ExecutionRequests: er}
+	b.Block.Body = &silapb.BeaconBlockBodyElectra{SilaRequests: er}
 	return blocks.NewSignedBeaconBlock(b)
 }
 

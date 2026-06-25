@@ -17,7 +17,7 @@ type GetPayloadResponse struct {
 	OverrideBuilder bool
 	// todo: should we convert this to Gwei up front?
 	Bid               primitives.Wei
-	ExecutionRequests *pb.ExecutionRequests
+	SilaRequests *pb.SilaRequests
 }
 
 // bundleGetter is an interface satisfied by get payload responses that have a blobs bundle.
@@ -38,8 +38,8 @@ type shouldOverrideBuilderGetter interface {
 	GetShouldOverrideBuilder() bool
 }
 
-type executionRequestsGetter interface {
-	GetDecodedExecutionRequests(pb.ExecutionRequestLimits) (*pb.ExecutionRequests, error)
+type silaRequestsGetter interface {
+	GetDecodedSilaRequests(pb.ExecutionRequestLimits) (*pb.SilaRequests, error)
 }
 
 func NewGetPayloadResponse(msg proto.Message) (*GetPayloadResponse, error) {
@@ -72,13 +72,13 @@ func NewGetPayloadResponse(msg proto.Message) (*GetPayloadResponse, error) {
 	}
 	r.ExecutionData = ed
 
-	executionRequestsGetter, hasExecutionRequests := msg.(executionRequestsGetter)
-	if hasExecutionRequests {
-		requests, err := executionRequestsGetter.GetDecodedExecutionRequests(params.BeaconConfig().ExecutionRequestLimits())
+	silaRequestsGetter, hasSilaRequests := msg.(silaRequestsGetter)
+	if hasSilaRequests {
+		requests, err := silaRequestsGetter.GetDecodedSilaRequests(params.BeaconConfig().ExecutionRequestLimits())
 		if err != nil {
-			return nil, errors.Wrap(err, "get decoded execution requests")
+			return nil, errors.Wrap(err, "get decoded sila requests")
 		}
-		r.ExecutionRequests = requests
+		r.SilaRequests = requests
 	}
 	return r, nil
 }

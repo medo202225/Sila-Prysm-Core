@@ -1,3 +1,3 @@
 ### Added
 
-- Cache deposit request signature verdicts keyed by execution requests root.
+- Cache deposit request signature verdicts keyed by sila requests root.

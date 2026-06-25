@@ -24,11 +24,11 @@ func blockWithDepositRequest(ssz []byte) (interfaces.SignedBeaconBlock, error) {
 	if err := dr.UnmarshalSSZ(ssz); err != nil {
 		return nil, err
 	}
-	er := &silaenginev1.ExecutionRequests{
+	er := &silaenginev1.SilaRequests{
 		Deposits: []*silaenginev1.DepositRequest{dr},
 	}
 	b := util.NewBeaconBlockElectra()
-	b.Block.Body = &silapb.BeaconBlockBodyElectra{ExecutionRequests: er}
+	b.Block.Body = &silapb.BeaconBlockBodyElectra{SilaRequests: er}
 	return blocks.NewSignedBeaconBlock(b)
 }
 
@@ -45,7 +45,7 @@ func RunDepositRequestsTest(t *testing.T, config string) {
 			blk, err := blockWithDepositRequest(drSSZ)
 			require.NoError(t, err)
 			common.RunBlockOperationTest(t, folderPath, blk, sszToState, func(ctx context.Context, s state.BeaconState, b interfaces.ReadOnlySignedBeaconBlock) (state.BeaconState, error) {
-				e, err := b.Block().Body().ExecutionRequests()
+				e, err := b.Block().Body().SilaRequests()
 				if err != nil {
 					return nil, err
 				}

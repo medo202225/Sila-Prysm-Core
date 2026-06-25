@@ -23,7 +23,7 @@ type SilaPayloadEnvelopeVerifier interface {
 	VerifySlotMatchesBlock(primitives.Slot) error
 	VerifyBuilderValid(interfaces.ROSilaPayloadBid) error
 	VerifyPayloadHash(interfaces.ROSilaPayloadBid) error
-	VerifyExecutionRequestsRoot(interfaces.ROSilaPayloadBid) error
+	VerifySilaRequestsRoot(interfaces.ROSilaPayloadBid) error
 	VerifySignature(context.Context, state.ReadOnlyBeaconState) error
 	SatisfyRequirement(Requirement)
 }
@@ -41,7 +41,7 @@ var SilaPayloadEnvelopeGossipRequirements = []Requirement{
 	RequireEnvelopeSlotMatchesBlock,
 	RequireBuilderValid,
 	RequirePayloadHashValid,
-	RequireExecutionRequestsRootValid,
+	RequireSilaRequestsRootValid,
 	RequireBuilderSignatureValid,
 }
 
@@ -55,7 +55,7 @@ var (
 	ErrEnvelopeSlotMismatch           = errors.New("envelope slot does not match block slot")
 	ErrIncorrectEnvelopeBuilder       = errors.New("builder index does not match committed header")
 	ErrIncorrectEnvelopeBlockHash     = errors.New("block hash does not match committed header")
-	ErrIncorrectExecutionRequestsRoot = errors.New("execution requests root does not match committed bid")
+	ErrIncorrectSilaRequestsRoot = errors.New("sila requests root does not match committed bid")
 )
 
 var _ SilaPayloadEnvelopeVerifier = &EnvelopeVerifier{}
@@ -151,20 +151,20 @@ func (v *EnvelopeVerifier) VerifyPayloadHash(bid interfaces.ROSilaPayloadBid) (e
 	return nil
 }
 
-// VerifyExecutionRequestsRoot checks that hash_tree_root(envelope.execution_requests) == bid.execution_requests_root.
-func (v *EnvelopeVerifier) VerifyExecutionRequestsRoot(bid interfaces.ROSilaPayloadBid) (err error) {
-	defer v.record(RequireExecutionRequestsRootValid, &err)
+// VerifySilaRequestsRoot checks that hash_tree_root(envelope.sila_requests) == bid.sila_requests_root.
+func (v *EnvelopeVerifier) VerifySilaRequestsRoot(bid interfaces.ROSilaPayloadBid) (err error) {
+	defer v.record(RequireSilaRequestsRootValid, &err)
 	env, err := v.e.Envelope()
 	if err != nil {
 		return errors.Wrap(err, "failed to get envelope")
 	}
-	requestsRoot, err := env.ExecutionRequests().HashTreeRoot()
+	requestsRoot, err := env.SilaRequests().HashTreeRoot()
 	if err != nil {
-		return errors.Wrap(err, "could not compute execution requests root")
+		return errors.Wrap(err, "could not compute sila requests root")
 	}
-	bidRoot := bid.ExecutionRequestsRoot()
+	bidRoot := bid.SilaRequestsRoot()
 	if requestsRoot != bidRoot {
-		return fmt.Errorf("%w: envelope=%#x bid=%#x", ErrIncorrectExecutionRequestsRoot, requestsRoot, bidRoot)
+		return fmt.Errorf("%w: envelope=%#x bid=%#x", ErrIncorrectSilaRequestsRoot, requestsRoot, bidRoot)
 	}
 	return nil
 }

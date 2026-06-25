@@ -37,7 +37,7 @@ func validSilaPayloadEnvelope() *silapb.SilaPayloadEnvelope {
 
 	return &silapb.SilaPayloadEnvelope{
 		Payload: payload,
-		ExecutionRequests: &silaenginev1.ExecutionRequests{
+		SilaRequests: &silaenginev1.SilaRequests{
 			Deposits: []*silaenginev1.DepositRequest{
 				{
 					Pubkey:                bytes.Repeat([]byte{0x09}, 48),
@@ -76,11 +76,11 @@ func TestWrappedROSilaPayloadEnvelope(t *testing.T) {
 		require.Equal(t, primitives.Slot(9), wrapped.Slot())
 		assert.DeepEqual(t, [32]byte(bytes.Repeat([]byte{0xAA}, 32)), wrapped.BeaconBlockRoot())
 
-		reqs := wrapped.ExecutionRequests()
+		reqs := wrapped.SilaRequests()
 		require.NotNil(t, reqs)
 		if len(reqs.Deposits) > 0 {
 			reqs.Deposits[0].Pubkey[0] = 0xFF
-			require.NotEqual(t, reqs.Deposits[0].Pubkey[0], env.ExecutionRequests.Deposits[0].Pubkey[0])
+			require.NotEqual(t, reqs.Deposits[0].Pubkey[0], env.SilaRequests.Deposits[0].Pubkey[0])
 		}
 
 		exec, err := wrapped.Execution()

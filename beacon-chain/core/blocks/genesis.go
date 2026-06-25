@@ -218,7 +218,7 @@ func gloasGenesisBlock(root [fieldparams.RootLength]byte, latestBid *silapb.Sila
 			PrevRandao:            make([]byte, 32),
 			FeeRecipient:          make([]byte, 20),
 			BlobKzgCommitments:    make([][]byte, 0),
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		}
 	}
 	return &silapb.BeaconBlockGloas{
@@ -240,7 +240,7 @@ func gloasGenesisBlock(root [fieldparams.RootLength]byte, latestBid *silapb.Sila
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
 			PayloadAttestations: make([]*silapb.PayloadAttestation, 0),
-			ParentExecutionRequests: &silaenginev1.ExecutionRequests{
+			ParentSilaRequests: &silaenginev1.SilaRequests{
 				Withdrawals:    make([]*silaenginev1.WithdrawalRequest, 0),
 				Deposits:       make([]*silaenginev1.DepositRequest, 0),
 				Consolidations: make([]*silaenginev1.ConsolidationRequest, 0),
@@ -279,7 +279,7 @@ func electraGenesisBlock(root [fieldparams.RootLength]byte) *silapb.BeaconBlockE
 			},
 			BlsToExecutionChanges: make([]*silapb.SignedBLSToExecutionChange, 0),
 			BlobKzgCommitments:    make([][]byte, 0),
-			ExecutionRequests: &silaenginev1.ExecutionRequests{
+			SilaRequests: &silaenginev1.SilaRequests{
 				Withdrawals:    make([]*silaenginev1.WithdrawalRequest, 0),
 				Deposits:       make([]*silaenginev1.DepositRequest, 0),
 				Consolidations: make([]*silaenginev1.ConsolidationRequest, 0),

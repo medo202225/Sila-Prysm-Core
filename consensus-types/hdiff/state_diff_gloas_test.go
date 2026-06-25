@@ -334,14 +334,14 @@ func TestGloasPTCWindow(t *testing.T) {
 	requireEqualState(t, target, result)
 }
 
-func TestGloasExecutionRequestsRoot(t *testing.T) {
+func TestGloasSilaRequestsRoot(t *testing.T) {
 	source, err := gloasState(t, 64)
 	require.NoError(t, err)
 
 	target := source.Copy()
 	require.NoError(t, target.SetSlot(source.Slot()+1))
 
-	// Mutate ExecutionRequestsRoot on the bid.
+	// Mutate SilaRequestsRoot on the bid.
 	srcBid, err := target.LatestSilaPayloadBid()
 	require.NoError(t, err)
 	parentBlockHash := srcBid.ParentBlockHash()
@@ -365,7 +365,7 @@ func TestGloasExecutionRequestsRoot(t *testing.T) {
 		ExecutionPayment:      srcBid.ExecutionPayment(),
 		BlobKzgCommitments:    srcBid.BlobKzgCommitments(),
 		FeeRecipient:          feeRecipient[:],
-		ExecutionRequestsRoot: newRequestsRoot[:],
+		SilaRequestsRoot: newRequestsRoot[:],
 	}
 	wrapped, err := blocks.WrappedROSilaPayloadBid(newBidProto)
 	require.NoError(t, err)
@@ -382,6 +382,6 @@ func TestGloasExecutionRequestsRoot(t *testing.T) {
 	// Sanity: the restored bid carries the mutated requests root.
 	gotBid, err := result.LatestSilaPayloadBid()
 	require.NoError(t, err)
-	gotRoot := gotBid.ExecutionRequestsRoot()
+	gotRoot := gotBid.SilaRequestsRoot()
 	require.Equal(t, newRequestsRoot, gotRoot)
 }

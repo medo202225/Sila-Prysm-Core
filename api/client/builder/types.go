@@ -238,9 +238,9 @@ type BlobBundler interface {
 	BundleProto() (*v1.BlobsBundle, error)
 }
 
-// ParsedExecutionRequests can retrieve the underlying execution requests for the given sila payload response.
-type ParsedExecutionRequests interface {
-	ExecutionRequestsProto() (*v1.ExecutionRequests, error)
+// ParsedSilaRequests can retrieve the underlying sila requests for the given sila payload response.
+type ParsedSilaRequests interface {
+	SilaRequestsProto() (*v1.SilaRequests, error)
 }
 
 func (r *SilaPayloadResponse) ParsePayload() (ParsedPayload, error) {
@@ -550,18 +550,18 @@ func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*eth.BuilderBidElectra, e
 		}
 		kzgCommitments[i] = bytesutil.SafeCopyBytes(commit)
 	}
-	// post electra execution requests should not be nil, if no requests exist use an empty request
-	if bb.ExecutionRequests == nil {
-		return nil, errors.New("bid contains nil execution requests")
+	// post electra sila requests should not be nil, if no requests exist use an empty request
+	if bb.SilaRequests == nil {
+		return nil, errors.New("bid contains nil sila requests")
 	}
-	executionRequests, err := bb.ExecutionRequests.ToConsensus()
+	silaRequests, err := bb.SilaRequests.ToConsensus()
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to convert ExecutionRequests")
+		return nil, errors.Wrap(err, "failed to convert SilaRequests")
 	}
 	return &eth.BuilderBidElectra{
 		Header:             header,
 		BlobKzgCommitments: kzgCommitments,
-		ExecutionRequests:  executionRequests,
+		SilaRequests:  silaRequests,
 		// Note that SSZBytes() reverses byte order for the little-endian representation.
 		// Uint256.Bytes() is big-endian, SSZBytes takes this value and reverses it.
 		Value:  bytesutil.SafeCopyBytes(bb.Value.SSZBytes()),
@@ -573,7 +573,7 @@ func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*eth.BuilderBidElectra, e
 type BuilderBidElectra struct {
 	Header             *structs.SilaPayloadHeaderDeneb `json:"header"`
 	BlobKzgCommitments []hexutil.Bytes                      `json:"blob_kzg_commitments"`
-	ExecutionRequests  *structs.ExecutionRequests           `json:"execution_requests"`
+	SilaRequests  *structs.SilaRequests           `json:"sila_requests"`
 	Value              Uint256                              `json:"value"`
 	Pubkey             hexutil.Bytes                        `json:"pubkey"`
 }

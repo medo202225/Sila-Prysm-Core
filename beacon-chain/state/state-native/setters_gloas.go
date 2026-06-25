@@ -102,7 +102,7 @@ func (b *BeaconState) SetSilaPayloadBid(h interfaces.ROSilaPayloadBid) error {
 	randao := h.PrevRandao()
 	blobKzgCommitments := h.BlobKzgCommitments()
 	feeRecipient := h.FeeRecipient()
-	executionRequestsRoot := h.ExecutionRequestsRoot()
+	silaRequestsRoot := h.SilaRequestsRoot()
 	b.latestSilaPayloadBid = &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentBlockHash[:],
 		ParentBlockRoot:       parentBlockRoot[:],
@@ -115,7 +115,7 @@ func (b *BeaconState) SetSilaPayloadBid(h interfaces.ROSilaPayloadBid) error {
 		ExecutionPayment:      h.ExecutionPayment(),
 		BlobKzgCommitments:    blobKzgCommitments,
 		FeeRecipient:          feeRecipient[:],
-		ExecutionRequestsRoot: executionRequestsRoot[:],
+		SilaRequestsRoot: silaRequestsRoot[:],
 	}
 	b.markFieldAsDirty(types.LatestSilaPayloadBid)
 

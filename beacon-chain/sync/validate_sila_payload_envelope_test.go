@@ -235,7 +235,7 @@ func (m *mockSilaPayloadEnvelopeVerifier) VerifyPayloadHash(_ interfaces.ROSilaP
 	return m.errPayloadHash
 }
 
-func (m *mockSilaPayloadEnvelopeVerifier) VerifyExecutionRequestsRoot(_ interfaces.ROSilaPayloadBid) error {
+func (m *mockSilaPayloadEnvelopeVerifier) VerifySilaRequestsRoot(_ interfaces.ROSilaPayloadBid) error {
 	return nil
 }
 
@@ -408,7 +408,7 @@ func testSignedSilaPayloadEnvelope(t *testing.T, slot primitives.Slot, builderId
 	return &silapb.SignedSilaPayloadEnvelope{
 		Message: &silapb.SilaPayloadEnvelope{
 			Payload: payload,
-			ExecutionRequests: &silaenginev1.ExecutionRequests{
+			SilaRequests: &silaenginev1.SilaRequests{
 				Deposits: []*silaenginev1.DepositRequest{},
 			},
 			BuilderIndex:          builderIdx,

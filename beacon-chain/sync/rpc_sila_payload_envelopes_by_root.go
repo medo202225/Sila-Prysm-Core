@@ -154,7 +154,7 @@ func (s *Service) silaPayloadEnvelopesByRootRPCHandler(ctx context.Context, msg 
 			envelope := &silapb.SignedSilaPayloadEnvelope{
 				Message: &silapb.SilaPayloadEnvelope{
 					Payload:               payload,
-					ExecutionRequests:     req.env.Message.ExecutionRequests,
+					SilaRequests:     req.env.Message.SilaRequests,
 					BuilderIndex:          req.env.Message.BuilderIndex,
 					BeaconBlockRoot:       req.env.Message.BeaconBlockRoot,
 					ParentBeaconBlockRoot: req.env.Message.ParentBeaconBlockRoot,

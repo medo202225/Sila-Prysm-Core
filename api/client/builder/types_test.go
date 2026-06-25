@@ -180,7 +180,7 @@ var testExampleHeaderResponseElectra = `{
       "blob_kzg_commitments": [
         "0xa94170080872584e54a1cf092d845703b13907f2e6b3b1c0ad573b910530499e3bcd48c6378846b80d2bfa58c81cf3d5"
       ],
-      "execution_requests": {
+      "sila_requests": {
         "deposits": [
           {
             "pubkey": "0x93247f2209abcacf57b75a51dafae777f9dd38bc7053d1af526f220a7489a6d3a2753e5f3e8b1cfe39b56f43611df74a",

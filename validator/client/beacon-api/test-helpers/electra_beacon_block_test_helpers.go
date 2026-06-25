@@ -238,7 +238,7 @@ func GenerateProtoElectraBeaconBlockContents() *silapb.BeaconBlockContentsElectr
 					},
 				},
 				BlobKzgCommitments: [][]byte{FillByteSlice(48, 145), FillByteSlice(48, 146)},
-				ExecutionRequests: &silaenginev1.ExecutionRequests{
+				SilaRequests: &silaenginev1.SilaRequests{
 					Deposits: []*silaenginev1.DepositRequest{{
 						Pubkey:                FillByteSlice(48, 147),
 						WithdrawalCredentials: FillByteSlice(32, 148),
@@ -482,7 +482,7 @@ func GenerateProtoBlindedElectraBeaconBlock() *silapb.BlindedBeaconBlockElectra 
 				},
 			},
 			BlobKzgCommitments: [][]byte{FillByteSlice(48, 137), FillByteSlice(48, 138)},
-			ExecutionRequests: &silaenginev1.ExecutionRequests{
+			SilaRequests: &silaenginev1.SilaRequests{
 				Deposits: []*silaenginev1.DepositRequest{{
 					Pubkey:                FillByteSlice(48, 139),
 					WithdrawalCredentials: FillByteSlice(32, 140),
@@ -740,7 +740,7 @@ func GenerateJsonElectraBeaconBlockContents() *structs.BeaconBlockContentsElectr
 					},
 				},
 				BlobKzgCommitments: []string{FillEncodedByteSlice(48, 145), FillEncodedByteSlice(48, 146)},
-				ExecutionRequests: &structs.ExecutionRequests{
+				SilaRequests: &structs.SilaRequests{
 					Deposits: []*structs.DepositRequest{{
 						Pubkey:                FillEncodedByteSlice(48, 147),
 						WithdrawalCredentials: FillEncodedByteSlice(32, 148),
@@ -984,7 +984,7 @@ func GenerateJsonBlindedElectraBeaconBlock() *structs.BlindedBeaconBlockElectra 
 				},
 			},
 			BlobKzgCommitments: []string{FillEncodedByteSlice(48, 137), FillEncodedByteSlice(48, 138)},
-			ExecutionRequests: &structs.ExecutionRequests{
+			SilaRequests: &structs.SilaRequests{
 				Deposits: []*structs.DepositRequest{{
 					Pubkey:                FillEncodedByteSlice(48, 139),
 					WithdrawalCredentials: FillEncodedByteSlice(32, 140),

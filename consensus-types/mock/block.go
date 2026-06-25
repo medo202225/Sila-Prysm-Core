@@ -272,7 +272,7 @@ func (b *BeaconBlockBody) BlobKzgCommitments() ([][]byte, error) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) ExecutionRequests() (*silaenginev1.ExecutionRequests, error) {
+func (b *BeaconBlockBody) SilaRequests() (*silaenginev1.SilaRequests, error) {
 	panic("implement me")
 }
 
@@ -284,7 +284,7 @@ func (b *BeaconBlockBody) SignedSilaPayloadBid() (*eth.SignedSilaPayloadBid, err
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) ParentExecutionRequests() (*silaenginev1.ExecutionRequests, error) {
+func (b *BeaconBlockBody) ParentSilaRequests() (*silaenginev1.SilaRequests, error) {
 	panic("implement me")
 }
 

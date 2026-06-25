@@ -551,7 +551,7 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 			}
 		}
 
-		er, err := b.Body().ExecutionRequests()
+		er, err := b.Body().SilaRequests()
 		if err != nil {
 			return nil, err
 		}
@@ -575,7 +575,7 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 					SilaPayload:      p,
 					BlsToExecutionChanges: blsToExecutionChanges,
 					BlobKzgCommitments:    commitments,
-					ExecutionRequests:     er,
+					SilaRequests:     er,
 				},
 			},
 			Signature: sig[:],
@@ -616,7 +616,7 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 			}
 		}
 
-		er, err := b.Body().ExecutionRequests()
+		er, err := b.Body().SilaRequests()
 		if err != nil {
 			return nil, err
 		}
@@ -640,7 +640,7 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 					SilaPayload:      p,
 					BlsToExecutionChanges: blsToExecutionChanges,
 					BlobKzgCommitments:    commitments,
-					ExecutionRequests:     er,
+					SilaRequests:     er,
 				},
 			},
 			Signature: sig[:],

@@ -252,7 +252,7 @@ func (s *Service) notifyNewPayload(ctx context.Context, stVersion int, header in
 	var lastValidHash []byte
 	var parentRoot *common.Hash
 	var versionedHashes []common.Hash
-	var requests *silaenginev1.ExecutionRequests
+	var requests *silaenginev1.SilaRequests
 	if blk.Version() >= version.Deneb {
 		versionedHashes, err = kzgCommitmentsToVersionedHashes(blk.Block().Body())
 		if err != nil {
@@ -262,12 +262,12 @@ func (s *Service) notifyNewPayload(ctx context.Context, stVersion int, header in
 		parentRoot = &prh
 	}
 	if blk.Version() >= version.Electra {
-		requests, err = blk.Block().Body().ExecutionRequests()
+		requests, err = blk.Block().Body().SilaRequests()
 		if err != nil {
-			return false, errors.Wrap(err, "could not get execution requests")
+			return false, errors.Wrap(err, "could not get sila requests")
 		}
 		if requests == nil {
-			return false, errors.New("nil execution requests")
+			return false, errors.New("nil sila requests")
 		}
 	}
 

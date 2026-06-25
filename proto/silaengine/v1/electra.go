@@ -17,13 +17,13 @@ var (
 	crSize    = crExample.SizeSSZ()
 )
 
-// emptyRequestsRootOnce merkleizes a zero-value ExecutionRequests.
+// emptyRequestsRootOnce merkleizes a zero-value SilaRequests.
 var emptyRequestsRootOnce = sync.OnceValues(func() ([32]byte, error) {
-	return (&ExecutionRequests{}).HashTreeRoot()
+	return (&SilaRequests{}).HashTreeRoot()
 })
 
-// EmptyExecutionRequestsHashTreeRoot returns the merkle root of an empty ExecutionRequests.
-func EmptyExecutionRequestsHashTreeRoot() ([32]byte, error) {
+// EmptySilaRequestsHashTreeRoot returns the merkle root of an empty SilaRequests.
+func EmptySilaRequestsHashTreeRoot() ([32]byte, error) {
 	return emptyRequestsRootOnce()
 }
 
@@ -40,12 +40,12 @@ type ExecutionRequestLimits struct {
 	Consolidations uint64
 }
 
-func (ebe *ExecutionBundleElectra) GetDecodedExecutionRequests(limits ExecutionRequestLimits) (*ExecutionRequests, error) {
-	return decodeExecutionRequestList(ebe.ExecutionRequests, limits)
+func (ebe *ExecutionBundleElectra) GetDecodedSilaRequests(limits ExecutionRequestLimits) (*SilaRequests, error) {
+	return decodeExecutionRequestList(ebe.SilaRequests, limits)
 }
 
-func decodeExecutionRequestList(raw [][]byte, limits ExecutionRequestLimits) (*ExecutionRequests, error) {
-	requests := &ExecutionRequests{}
+func decodeExecutionRequestList(raw [][]byte, limits ExecutionRequestLimits) (*SilaRequests, error) {
+	requests := &SilaRequests{}
 	var prevTypeNum *uint8
 	for i := range raw {
 		requestType, requestListInSSZBytes, err := decodeExecutionRequest(raw[i])
@@ -122,9 +122,9 @@ func decodeExecutionRequest(req []byte) (typ uint8, data []byte, err error) {
 	return req[0], req[1:], nil
 }
 
-func EncodeExecutionRequests(requests *ExecutionRequests) ([]hexutil.Bytes, error) {
+func EncodeSilaRequests(requests *SilaRequests) ([]hexutil.Bytes, error) {
 	if requests == nil {
-		return nil, errors.New("invalid execution requests")
+		return nil, errors.New("invalid sila requests")
 	}
 
 	requestsData := make([]hexutil.Bytes, 0)

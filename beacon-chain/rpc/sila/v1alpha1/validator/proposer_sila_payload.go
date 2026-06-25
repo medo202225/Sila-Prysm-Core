@@ -314,7 +314,7 @@ func (vs *Server) applyParentSilaPayloadToHead(ctx context.Context, head state.B
 	if err != nil {
 		return errors.Wrap(err, "could not get parent sila payload envelope")
 	}
-	if err := coregloas.ApplyParentSilaPayload(ctx, head, envelope.Message.ExecutionRequests); err != nil {
+	if err := coregloas.ApplyParentSilaPayload(ctx, head, envelope.Message.SilaRequests); err != nil {
 		return errors.Wrap(err, "could not apply parent sila payload")
 	}
 	return nil

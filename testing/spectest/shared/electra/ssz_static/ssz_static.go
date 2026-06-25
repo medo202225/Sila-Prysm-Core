@@ -147,8 +147,8 @@ func UnmarshalledSSZ(t *testing.T, serializedBytes []byte, folderName string) (a
 		obj = &silaenginev1.DepositRequest{}
 	case "ConsolidationRequest":
 		obj = &silaenginev1.ConsolidationRequest{}
-	case "ExecutionRequests":
-		obj = &silaenginev1.ExecutionRequests{}
+	case "SilaRequests":
+		obj = &silaenginev1.SilaRequests{}
 	default:
 		return nil, errors.New("type not found")
 	}

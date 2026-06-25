@@ -1075,7 +1075,7 @@ func genBlindedBeaconBlockBodyElectra() *v1alpha1.BlindedBeaconBlockBodyElectra 
 		SilaPayloadHeader: genPayloadHeaderElectra(),
 		BlsToExecutionChanges:  genBLSToExecutionChanges(10),
 		BlobKzgCommitments:     getKZGCommitments(4),
-		ExecutionRequests:      genExecutionRequests(),
+		SilaRequests:      genSilaRequests(),
 	}
 }
 
@@ -1110,12 +1110,12 @@ func genBeaconBlockBodyElectra() *v1alpha1.BeaconBlockBodyElectra {
 		SilaPayload:      genPayloadElectra(),
 		BlsToExecutionChanges: genBLSToExecutionChanges(10),
 		BlobKzgCommitments:    getKZGCommitments(4),
-		ExecutionRequests:     genExecutionRequests(),
+		SilaRequests:     genSilaRequests(),
 	}
 }
 
-func genExecutionRequests() *silaenginev1.ExecutionRequests {
-	return &silaenginev1.ExecutionRequests{
+func genSilaRequests() *silaenginev1.SilaRequests {
+	return &silaenginev1.SilaRequests{
 		Deposits:       genDepositRequests(10),
 		Withdrawals:    genWithdrawalRequests(10),
 		Consolidations: genConsolidationRequests(10),

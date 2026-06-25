@@ -1,5 +1,5 @@
 package silaenginev1
 
-func (ebe *ExecutionBundleFulu) GetDecodedExecutionRequests(limits ExecutionRequestLimits) (*ExecutionRequests, error) {
-	return decodeExecutionRequestList(ebe.ExecutionRequests, limits)
+func (ebe *ExecutionBundleFulu) GetDecodedSilaRequests(limits ExecutionRequestLimits) (*SilaRequests, error) {
+	return decodeExecutionRequestList(ebe.SilaRequests, limits)
 }

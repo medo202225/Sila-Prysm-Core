@@ -137,17 +137,17 @@ func setExecutionData(ctx context.Context, blk interfaces.SignedBeaconBlock, loc
 				}
 			}
 
-			var executionRequests *silaenginev1.ExecutionRequests
+			var silaRequests *silaenginev1.SilaRequests
 			if bid.Version() >= version.Electra {
 				bidElectra, ok := bid.(builder.BidElectra)
 				if !ok {
 					log.Warnf("Bid type %T does not implement builder.BidElectra", bid)
 					return local.Bid, local.BlobsBundler, setLocalExecution(blk, local)
 				} else {
-					executionRequests = bidElectra.ExecutionRequests()
+					silaRequests = bidElectra.SilaRequests()
 				}
 			}
-			if err := setBuilderExecution(blk, builderPayload, builderKzgCommitments, executionRequests); err != nil {
+			if err := setBuilderExecution(blk, builderPayload, builderKzgCommitments, silaRequests); err != nil {
 				log.WithError(err).Warn("Proposer: failed to set builder payload")
 				return local.Bid, local.BlobsBundler, setLocalExecution(blk, local)
 			} else {
@@ -285,13 +285,13 @@ func (vs *Server) getPayloadHeaderFromBuilder(
 		}
 		kzgCommitments = dBid.BlobKzgCommitments()
 	}
-	var executionRequests *silaenginev1.ExecutionRequests
+	var silaRequests *silaenginev1.SilaRequests
 	if bid.Version() >= version.Electra {
 		eBid, ok := bid.(builder.BidElectra)
 		if !ok {
 			return nil, fmt.Errorf("bid type %T does not implement builder.BidElectra", eBid)
 		}
-		executionRequests = eBid.ExecutionRequests()
+		silaRequests = eBid.SilaRequests()
 	}
 	l := log.WithFields(logrus.Fields{
 		"gweiValue":          primitives.WeiToGwei(v),
@@ -304,10 +304,10 @@ func (vs *Server) getPayloadHeaderFromBuilder(
 	if len(kzgCommitments) > 0 {
 		l = l.WithField("kzgCommitmentCount", len(kzgCommitments))
 	}
-	if executionRequests != nil {
-		l = l.WithField("depositRequestCount", len(executionRequests.Deposits))
-		l = l.WithField("withdrawalRequestCount", len(executionRequests.Withdrawals))
-		l = l.WithField("consolidationRequestCount", len(executionRequests.Consolidations))
+	if silaRequests != nil {
+		l = l.WithField("depositRequestCount", len(silaRequests.Deposits))
+		l = l.WithField("withdrawalRequestCount", len(silaRequests.Withdrawals))
+		l = l.WithField("consolidationRequestCount", len(silaRequests.Consolidations))
 	}
 	l.Info("Received header with bid")
 
@@ -372,23 +372,23 @@ func setLocalExecution(blk interfaces.SignedBeaconBlock, local *blocks.GetPayloa
 	if local.BlobsBundler != nil {
 		kzgCommitments = local.BlobsBundler.GetKzgCommitments()
 	}
-	if local.ExecutionRequests != nil {
-		if err := blk.SetExecutionRequests(local.ExecutionRequests); err != nil {
-			return errors.Wrap(err, "could not set execution requests")
+	if local.SilaRequests != nil {
+		if err := blk.SetSilaRequests(local.SilaRequests); err != nil {
+			return errors.Wrap(err, "could not set sila requests")
 		}
 	}
-	return setExecution(blk, local.ExecutionData, false, kzgCommitments, local.ExecutionRequests)
+	return setExecution(blk, local.ExecutionData, false, kzgCommitments, local.SilaRequests)
 }
 
 // setBuilderExecution sets the execution context for a builder's beacon block.
 // It delegates to setExecution for the actual work.
-func setBuilderExecution(blk interfaces.SignedBeaconBlock, execution interfaces.ExecutionData, builderKzgCommitments [][]byte, requests *silaenginev1.ExecutionRequests) error {
+func setBuilderExecution(blk interfaces.SignedBeaconBlock, execution interfaces.ExecutionData, builderKzgCommitments [][]byte, requests *silaenginev1.SilaRequests) error {
 	return setExecution(blk, execution, true, builderKzgCommitments, requests)
 }
 
 // setExecution sets the execution context for a beacon block. It also sets KZG commitments based on the block version.
 // The function is designed to be flexible and handle both local and builder executions.
-func setExecution(blk interfaces.SignedBeaconBlock, execution interfaces.ExecutionData, isBlinded bool, kzgCommitments [][]byte, requests *silaenginev1.ExecutionRequests) error {
+func setExecution(blk interfaces.SignedBeaconBlock, execution interfaces.ExecutionData, isBlinded bool, kzgCommitments [][]byte, requests *silaenginev1.SilaRequests) error {
 	if execution == nil {
 		return errors.New("execution is nil")
 	}
@@ -421,12 +421,12 @@ func setExecution(blk interfaces.SignedBeaconBlock, execution interfaces.Executi
 		return nil
 	}
 
-	// Set the execution requests
-	requestsErr := "failed to set local execution requests"
+	// Set the sila requests
+	requestsErr := "failed to set local sila requests"
 	if isBlinded {
-		requestsErr = "failed to set builder execution requests"
+		requestsErr = "failed to set builder sila requests"
 	}
-	if err := blk.SetExecutionRequests(requests); err != nil {
+	if err := blk.SetSilaRequests(requests); err != nil {
 		return errors.Wrap(err, requestsErr)
 	}
 	return nil

@@ -66,7 +66,7 @@ func (s signedSilaPayloadEnvelope) IsNil() bool {
 	if len(s.s.Message.ParentBeaconBlockRoot) != field_params.RootLength {
 		return true
 	}
-	if s.s.Message.ExecutionRequests == nil {
+	if s.s.Message.SilaRequests == nil {
 		return true
 	}
 	if s.s.Message.Payload == nil {
@@ -113,9 +113,9 @@ func (p *silaPayloadEnvelope) Execution() (interfaces.ExecutionData, error) {
 	return WrappedSilaPayloadGloas(p.p.Payload)
 }
 
-// ExecutionRequests returns the execution requests attached to the envelope.
-func (p *silaPayloadEnvelope) ExecutionRequests() *silaenginev1.ExecutionRequests {
-	return silapb.CopyExecutionRequests(p.p.ExecutionRequests)
+// SilaRequests returns the sila requests attached to the envelope.
+func (p *silaPayloadEnvelope) SilaRequests() *silaenginev1.SilaRequests {
+	return silapb.CopySilaRequests(p.p.SilaRequests)
 }
 
 // BuilderIndex returns the proposer/builder index for the envelope.
@@ -176,8 +176,8 @@ func (p *blindedSilaPayloadEnvelope) IsBlinded() bool {
 	return true
 }
 
-func (p *blindedSilaPayloadEnvelope) ExecutionRequests() *silaenginev1.ExecutionRequests {
-	return silapb.CopyExecutionRequests(p.p.ExecutionRequests)
+func (p *blindedSilaPayloadEnvelope) SilaRequests() *silaenginev1.SilaRequests {
+	return silapb.CopySilaRequests(p.p.SilaRequests)
 }
 
 func (p *blindedSilaPayloadEnvelope) BuilderIndex() primitives.BuilderIndex {

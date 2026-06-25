@@ -253,7 +253,7 @@ func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, pre
 			BlockHash:     make([]byte, 32),
 			Transactions:  make([][]byte, 0),
 		},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{
+		SilaRequests: &silaenginev1.SilaRequests{
 			Deposits:       make([]*silaenginev1.DepositRequest, 0),
 			Withdrawals:    make([]*silaenginev1.WithdrawalRequest, 0),
 			Consolidations: make([]*silaenginev1.ConsolidationRequest, 0),

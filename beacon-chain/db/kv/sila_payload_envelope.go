@@ -132,7 +132,7 @@ func blindEnvelope(env *silapb.SignedSilaPayloadEnvelope) *silapb.SignedBlindedS
 	return &silapb.SignedBlindedSilaPayloadEnvelope{
 		Message: &silapb.BlindedSilaPayloadEnvelope{
 			BlockHash:             env.Message.Payload.BlockHash,
-			ExecutionRequests:     env.Message.ExecutionRequests,
+			SilaRequests:     env.Message.SilaRequests,
 			BuilderIndex:          env.Message.BuilderIndex,
 			BeaconBlockRoot:       env.Message.BeaconBlockRoot,
 			Slot:                  primitives.Slot(env.Message.Payload.SlotNumber),

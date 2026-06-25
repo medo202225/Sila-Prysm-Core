@@ -80,7 +80,7 @@ func InitializeDataMaps() {
 		},
 		bytesutil.ToBytes4(params.BeaconConfig().ElectraForkVersion): func() (interfaces.ReadOnlySignedBeaconBlock, error) {
 			return blocks.NewSignedBeaconBlock(
-				&silapb.SignedBeaconBlockElectra{Block: &silapb.BeaconBlockElectra{Body: &silapb.BeaconBlockBodyElectra{SilaPayload: &silaenginev1.SilaPayloadDeneb{}, ExecutionRequests: &silaenginev1.ExecutionRequests{}}}},
+				&silapb.SignedBeaconBlockElectra{Block: &silapb.BeaconBlockElectra{Body: &silapb.BeaconBlockBodyElectra{SilaPayload: &silaenginev1.SilaPayloadDeneb{}, SilaRequests: &silaenginev1.SilaRequests{}}}},
 			)
 		},
 		bytesutil.ToBytes4(params.BeaconConfig().GloasForkVersion): func() (interfaces.ReadOnlySignedBeaconBlock, error) {
@@ -90,7 +90,7 @@ func InitializeDataMaps() {
 		},
 		bytesutil.ToBytes4(params.BeaconConfig().FuluForkVersion): func() (interfaces.ReadOnlySignedBeaconBlock, error) {
 			return blocks.NewSignedBeaconBlock(
-				&silapb.SignedBeaconBlockFulu{Block: &silapb.BeaconBlockElectra{Body: &silapb.BeaconBlockBodyElectra{SilaPayload: &silaenginev1.SilaPayloadDeneb{}, ExecutionRequests: &silaenginev1.ExecutionRequests{}}}},
+				&silapb.SignedBeaconBlockFulu{Block: &silapb.BeaconBlockElectra{Body: &silapb.BeaconBlockBodyElectra{SilaPayload: &silaenginev1.SilaPayloadDeneb{}, SilaRequests: &silaenginev1.SilaRequests{}}}},
 			)
 		},
 	}

@@ -27,7 +27,7 @@ func testEnvelopeProto() *eth.SilaPayloadEnvelope {
 			BlockHash:     fillByteSlice(common.HashLength, 0x22),
 			SlotNumber:    42,
 		},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 		BuilderIndex:          7,
 		BeaconBlockRoot:       fillByteSlice(32, 0x33),
 		ParentBeaconBlockRoot: fillByteSlice(32, 0x44),
@@ -44,21 +44,21 @@ func TestSilaPayloadEnvelopeFromConsensus(t *testing.T) {
 	require.Equal(t, hexutil.Encode(env.BeaconBlockRoot), result.BeaconBlockRoot)
 	require.Equal(t, hexutil.Encode(env.ParentBeaconBlockRoot), result.ParentBeaconBlockRoot)
 	require.Equal(t, "42", result.Payload.SlotNumber)
-	require.NotNil(t, result.ExecutionRequests)
+	require.NotNil(t, result.SilaRequests)
 }
 
 func TestSilaPayloadEnvelopeFromConsensus_NilRequests(t *testing.T) {
 	env := testEnvelopeProto()
-	env.ExecutionRequests = nil
+	env.SilaRequests = nil
 	result, err := SilaPayloadEnvelopeFromConsensus(env)
 	require.NoError(t, err)
-	require.Equal(t, (*ExecutionRequests)(nil), result.ExecutionRequests)
+	require.Equal(t, (*SilaRequests)(nil), result.SilaRequests)
 }
 
 func testWireBlindedProto() *eth.WireBlindedSilaPayloadEnvelope {
 	return &eth.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           fillByteSlice(32, 0x55),
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 		BuilderIndex:          7,
 		BeaconBlockRoot:       fillByteSlice(32, 0x33),
 		ParentBeaconBlockRoot: fillByteSlice(32, 0x44),
@@ -81,7 +81,7 @@ func TestWireBlindedHTRMatchesFull(t *testing.T) {
 			Withdrawals:   []*silaenginev1.Withdrawal{},
 			SlotNumber:    primitives.Slot(100),
 		},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 		BuilderIndex:          primitives.BuilderIndex(42),
 		BeaconBlockRoot:       fillByteSlice(32, 0x09),
 		ParentBeaconBlockRoot: fillByteSlice(32, 0x0a),
@@ -127,7 +127,7 @@ func TestBlindedSilaPayloadEnvelopeFromConsensus(t *testing.T) {
 	require.Equal(t, "7", result.BuilderIndex)
 	require.Equal(t, hexutil.Encode(b.BeaconBlockRoot), result.BeaconBlockRoot)
 	require.Equal(t, hexutil.Encode(b.ParentBeaconBlockRoot), result.ParentBeaconBlockRoot)
-	require.NotNil(t, result.ExecutionRequests)
+	require.NotNil(t, result.SilaRequests)
 }
 
 func TestBlindedSilaPayloadEnvelopeFromConsensus_Nil(t *testing.T) {
@@ -145,7 +145,7 @@ func TestBlindedSilaPayloadEnvelope_ToConsensusRoundTrip(t *testing.T) {
 	require.Equal(t, b.BuilderIndex, back.BuilderIndex)
 	require.DeepEqual(t, b.BeaconBlockRoot, back.BeaconBlockRoot)
 	require.DeepEqual(t, b.ParentBeaconBlockRoot, back.ParentBeaconBlockRoot)
-	require.NotNil(t, back.ExecutionRequests)
+	require.NotNil(t, back.SilaRequests)
 }
 
 func TestSignedBlindedSilaPayloadEnvelope_ToConsensus(t *testing.T) {

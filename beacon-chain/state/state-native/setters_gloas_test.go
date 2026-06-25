@@ -50,7 +50,7 @@ func (t testSilaPayloadBid) BlobKzgCommitmentCount() uint64 {
 	return uint64(len(t.blobKzgCommitments))
 }
 func (t testSilaPayloadBid) FeeRecipient() [20]byte          { return t.feeRecipient }
-func (t testSilaPayloadBid) ExecutionRequestsRoot() [32]byte { return [32]byte{} }
+func (t testSilaPayloadBid) SilaRequestsRoot() [32]byte { return [32]byte{} }
 func (t testSilaPayloadBid) IsNil() bool                     { return false }
 
 func TestSetSilaPayloadBid(t *testing.T) {

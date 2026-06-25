@@ -54,7 +54,7 @@ func testSilaPayloadEnvelope(slot primitives.Slot, builderIndex primitives.Build
 			ExtraData:     make([]byte, 0),
 			SlotNumber:    slot,
 		},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 		BuilderIndex:          builderIndex,
 		BeaconBlockRoot:       make([]byte, 32),
 		ParentBeaconBlockRoot: make([]byte, 32),

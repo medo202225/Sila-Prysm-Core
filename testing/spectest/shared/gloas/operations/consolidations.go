@@ -17,11 +17,11 @@ func blockWithConsolidation(ssz []byte) (interfaces.SignedBeaconBlock, error) {
 	if err := cr.UnmarshalSSZ(ssz); err != nil {
 		return nil, err
 	}
-	er := &silaenginev1.ExecutionRequests{
+	er := &silaenginev1.SilaRequests{
 		Consolidations: []*silaenginev1.ConsolidationRequest{cr},
 	}
 	b := util.NewBeaconBlockElectra()
-	b.Block.Body = &silapb.BeaconBlockBodyElectra{ExecutionRequests: er}
+	b.Block.Body = &silapb.BeaconBlockBodyElectra{SilaRequests: er}
 	return blocks.NewSignedBeaconBlock(b)
 }
 

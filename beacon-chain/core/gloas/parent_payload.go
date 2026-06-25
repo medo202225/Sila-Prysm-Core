@@ -32,31 +32,31 @@ func ProcessParentSilaPayload(ctx context.Context, st state.BeaconState, blk int
 		return errors.Wrap(err, "could not get parent sila payload bid")
 	}
 
-	parentExecutionRequests, err := body.ParentExecutionRequests()
+	parentSilaRequests, err := body.ParentSilaRequests()
 	if err != nil {
-		return errors.Wrap(err, "could not get parent execution requests")
+		return errors.Wrap(err, "could not get parent sila requests")
 	}
 
 	parentBidBlockHash := parentBid.BlockHash()
 	isParentFull := bytes.Equal(bid.ParentBlockHash, parentBidBlockHash[:])
 
 	if !isParentFull {
-		if !IsEmptyExecutionRequests(parentExecutionRequests) {
-			return errors.New("parent was empty but parent_execution_requests is non-empty")
+		if !IsEmptySilaRequests(parentSilaRequests) {
+			return errors.New("parent was empty but parent_sila_requests is non-empty")
 		}
 		return nil
 	}
 
-	requestsRoot, err := parentExecutionRequests.HashTreeRoot()
+	requestsRoot, err := parentSilaRequests.HashTreeRoot()
 	if err != nil {
-		return errors.Wrap(err, "could not compute parent execution requests root")
+		return errors.Wrap(err, "could not compute parent sila requests root")
 	}
-	parentBidRequestRoot := parentBid.ExecutionRequestsRoot()
+	parentBidRequestRoot := parentBid.SilaRequestsRoot()
 	if requestsRoot != parentBidRequestRoot {
-		return errors.Errorf("parent execution requests root mismatch: block=%#x, bid=%#x", requestsRoot, parentBidRequestRoot)
+		return errors.Errorf("parent sila requests root mismatch: block=%#x, bid=%#x", requestsRoot, parentBidRequestRoot)
 	}
 
-	return ApplyParentSilaPayload(ctx, st, parentExecutionRequests)
+	return ApplyParentSilaPayload(ctx, st, parentSilaRequests)
 }
 
 // ApplyParentSilaPayload reads parent_bid from state.latest_sila_payload_bid
@@ -67,7 +67,7 @@ func ProcessParentSilaPayload(ctx context.Context, st state.BeaconState, blk int
 func ApplyParentSilaPayload(
 	ctx context.Context,
 	st state.BeaconState,
-	reqs *silaenginev1.ExecutionRequests,
+	reqs *silaenginev1.SilaRequests,
 ) error {
 	parentBid, err := st.LatestSilaPayloadBid()
 	if err != nil {
@@ -75,8 +75,8 @@ func ApplyParentSilaPayload(
 	}
 	parentSlot := parentBid.Slot()
 
-	if err := processExecutionRequests(ctx, st, reqs); err != nil {
-		return errors.Wrap(err, "could not process parent execution requests")
+	if err := processSilaRequests(ctx, st, reqs); err != nil {
+		return errors.Wrap(err, "could not process parent sila requests")
 	}
 
 	if err := st.QueueBuilderPaymentForSlot(parentSlot); err != nil {
@@ -95,7 +95,7 @@ func ApplyParentSilaPayload(
 	return nil
 }
 
-func processExecutionRequests(ctx context.Context, st state.BeaconState, rqs *silaenginev1.ExecutionRequests) error {
+func processSilaRequests(ctx context.Context, st state.BeaconState, rqs *silaenginev1.SilaRequests) error {
 	if err := ProcessDepositRequests(ctx, st, rqs.Deposits, prefetchedDepositSigs(rqs)); err != nil {
 		return errors.Wrap(err, "could not process deposit requests")
 	}
@@ -107,8 +107,8 @@ func processExecutionRequests(ctx context.Context, st state.BeaconState, rqs *si
 	return requests.ProcessConsolidationRequests(ctx, st, rqs.Consolidations)
 }
 
-// IsEmptyExecutionRequests returns true if the execution requests contain no entries.
-func IsEmptyExecutionRequests(r *silaenginev1.ExecutionRequests) bool {
+// IsEmptySilaRequests returns true if the sila requests contain no entries.
+func IsEmptySilaRequests(r *silaenginev1.SilaRequests) bool {
 	if r == nil {
 		return true
 	}

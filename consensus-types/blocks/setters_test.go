@@ -84,12 +84,12 @@ func TestSignedBeaconBlock_SetExecution(t *testing.T) {
 	})
 }
 
-func TestSignedBeaconBlock_SetExecutionRequests(t *testing.T) {
+func TestSignedBeaconBlock_SetSilaRequests(t *testing.T) {
 	t.Run("rejects Gloas version", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Gloas)
-		requests := &silaenginev1.ExecutionRequests{}
+		requests := &silaenginev1.SilaRequests{}
 
-		err := sb.SetExecutionRequests(requests)
+		err := sb.SetSilaRequests(requests)
 		require.ErrorIs(t, err, consensus_types.ErrUnsupportedField)
 	})
 }

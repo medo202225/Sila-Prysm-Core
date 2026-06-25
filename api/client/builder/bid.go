@@ -36,10 +36,10 @@ type BidDeneb interface {
 	BlobKzgCommitments() [][]byte
 }
 
-// BidElectra is an interface that exposes the newly added execution requests on top of the builder bid
+// BidElectra is an interface that exposes the newly added sila requests on top of the builder bid
 type BidElectra interface {
 	BidDeneb
-	ExecutionRequests() *v1.ExecutionRequests
+	SilaRequests() *v1.SilaRequests
 }
 
 type signedBuilderBid struct {
@@ -341,9 +341,9 @@ func (b builderBidElectra) Header() (interfaces.ExecutionData, error) {
 	return blocks.WrappedSilaPayloadHeaderDeneb(b.p.Header)
 }
 
-// ExecutionRequests --
-func (b builderBidElectra) ExecutionRequests() *v1.ExecutionRequests {
-	return b.p.ExecutionRequests // does not copy
+// SilaRequests --
+func (b builderBidElectra) SilaRequests() *v1.SilaRequests {
+	return b.p.SilaRequests // does not copy
 }
 
 // BlobKzgCommitments --

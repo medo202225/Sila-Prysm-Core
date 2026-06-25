@@ -18,7 +18,7 @@ type ROSignedSilaPayloadEnvelope interface {
 // ROBlindedSilaPayloadEnvelope contains the fields common to both
 // full and blinded sila payload envelopes.
 type ROBlindedSilaPayloadEnvelope interface {
-	ExecutionRequests() *silaenginev1.ExecutionRequests
+	SilaRequests() *silaenginev1.SilaRequests
 	BuilderIndex() primitives.BuilderIndex
 	BeaconBlockRoot() [field_params.RootLength]byte
 	ParentBeaconBlockRoot() [field_params.RootLength]byte

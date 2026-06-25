@@ -34,7 +34,7 @@ const (
 	// Execution payload envelope specific.
 	RequireBuilderValid
 	RequirePayloadHashValid
-	RequireExecutionRequestsRootValid
+	RequireSilaRequestsRootValid
 	RequireEnvelopeSlotAboveFinalized
 	RequireEnvelopeSlotMatchesBlock
 	RequireBuilderSignatureValid

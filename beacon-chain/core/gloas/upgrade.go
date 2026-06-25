@@ -82,7 +82,7 @@ import (
 //	        latest_sila_payload_bid=SilaPayloadBid(
 //	            block_hash=pre.latest_sila_payload_header.block_hash,
 //	            gas_limit=pre.latest_sila_payload_header.gas_limit,
-//	            execution_requests_root=hash_tree_root(ExecutionRequests()),
+//	            sila_requests_root=hash_tree_root(SilaRequests()),
 //	        ),
 //	        # [New in Gloas:SIP7732]
 //	        payload_expected_withdrawals=[],
@@ -309,9 +309,9 @@ func upgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 		}
 	}
 
-	emptyExecutionRequestsRoot, err := silaenginev1.EmptyExecutionRequestsHashTreeRoot()
+	emptySilaRequestsRoot, err := silaenginev1.EmptySilaRequestsHashTreeRoot()
 	if err != nil {
-		return nil, errors.Wrap(err, "could not compute empty execution requests root")
+		return nil, errors.Wrap(err, "could not compute empty sila requests root")
 	}
 
 	s := &silapb.BeaconStateGloas{
@@ -350,7 +350,7 @@ func upgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 			ParentBlockHash:       make([]byte, fieldparams.RootLength),
 			ParentBlockRoot:       make([]byte, fieldparams.RootLength),
 			PrevRandao:            make([]byte, fieldparams.RootLength),
-			ExecutionRequestsRoot: emptyExecutionRequestsRoot[:],
+			SilaRequestsRoot: emptySilaRequestsRoot[:],
 		},
 		NextWithdrawalIndex:           wi,
 		NextWithdrawalValidatorIndex:  vi,

@@ -49,7 +49,7 @@ func TestSetSelfBuildSilaPayloadBid(t *testing.T) {
 		ExecutionData:     ed,
 		Bid:               bidValue,
 		BlobsBundler:      &silaenginev1.BlobsBundle{},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	vs := &Server{}
@@ -119,7 +119,7 @@ func TestSetSelfBuildSilaPayloadBid_BlobCommitments(t *testing.T) {
 		BlobsBundler: &silaenginev1.BlobsBundle{
 			KzgCommitments: commitments,
 		},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	vs := &Server{}
@@ -186,7 +186,7 @@ func TestSetSilaPayloadBid_PrefersP2PBid(t *testing.T) {
 		ExecutionData:     ed,
 		Bid:               big.NewInt(0),
 		BlobsBundler:      &silaenginev1.BlobsBundle{},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	// Populate the highest bid cache with a P2P bid.
@@ -203,7 +203,7 @@ func TestSetSilaPayloadBid_PrefersP2PBid(t *testing.T) {
 			GasLimit:              30_000_000,
 			PrevRandao:            make([]byte, 32),
 			BlobKzgCommitments:    [][]byte{},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: make([]byte, 96),
 	}
@@ -260,7 +260,7 @@ func TestSetSilaPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 		ExecutionData:     ed,
 		Bid:               big.NewInt(2000_000_000_000),
 		BlobsBundler:      &silaenginev1.BlobsBundle{},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	// P2P bid is only 1000 Gwei — local should win.
@@ -277,7 +277,7 @@ func TestSetSilaPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 			GasLimit:              30_000_000,
 			PrevRandao:            make([]byte, 32),
 			BlobKzgCommitments:    [][]byte{},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: make([]byte, 96),
 	}
@@ -333,7 +333,7 @@ func TestSetSilaPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 		ExecutionData:     ed,
 		Bid:               big.NewInt(0),
 		BlobsBundler:      &silaenginev1.BlobsBundle{},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	// P2P bid has higher value, but selfBuildOnly=true should force self-build.
@@ -350,7 +350,7 @@ func TestSetSilaPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 			GasLimit:              30_000_000,
 			PrevRandao:            make([]byte, 32),
 			BlobKzgCommitments:    [][]byte{},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: make([]byte, 96),
 	}
@@ -405,7 +405,7 @@ func TestSetSilaPayloadBid_FallsBackToSelfBuildWhenNoCachedBid(t *testing.T) {
 		ExecutionData:     ed,
 		Bid:               big.NewInt(0),
 		BlobsBundler:      &silaenginev1.BlobsBundle{},
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	// Empty cache — no P2P bids.

@@ -218,7 +218,7 @@ func (x *ConsolidationRequest) GetTargetPubkey() []byte {
 	return nil
 }
 
-type ExecutionRequests struct {
+type SilaRequests struct {
 	state          protoimpl.MessageState  `protogen:"open.v1"`
 	Deposits       []*DepositRequest       `protobuf:"bytes,1,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"8192"`
 	Withdrawals    []*WithdrawalRequest    `protobuf:"bytes,2,rep,name=withdrawals,proto3" json:"withdrawals,omitempty" ssz-max:"16"`
@@ -227,20 +227,20 @@ type ExecutionRequests struct {
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *ExecutionRequests) Reset() {
-	*x = ExecutionRequests{}
+func (x *SilaRequests) Reset() {
+	*x = SilaRequests{}
 	mi := &file_proto_engine_v1_electra_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionRequests) String() string {
+func (x *SilaRequests) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionRequests) ProtoMessage() {}
+func (*SilaRequests) ProtoMessage() {}
 
-func (x *ExecutionRequests) ProtoReflect() protoreflect.Message {
+func (x *SilaRequests) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_electra_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -252,26 +252,26 @@ func (x *ExecutionRequests) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionRequests.ProtoReflect.Descriptor instead.
-func (*ExecutionRequests) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaRequests.ProtoReflect.Descriptor instead.
+func (*SilaRequests) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ExecutionRequests) GetDeposits() []*DepositRequest {
+func (x *SilaRequests) GetDeposits() []*DepositRequest {
 	if x != nil {
 		return x.Deposits
 	}
 	return nil
 }
 
-func (x *ExecutionRequests) GetWithdrawals() []*WithdrawalRequest {
+func (x *SilaRequests) GetWithdrawals() []*WithdrawalRequest {
 	if x != nil {
 		return x.Withdrawals
 	}
 	return nil
 }
 
-func (x *ExecutionRequests) GetConsolidations() []*ConsolidationRequest {
+func (x *SilaRequests) GetConsolidations() []*ConsolidationRequest {
 	if x != nil {
 		return x.Consolidations
 	}
@@ -284,7 +284,7 @@ type ExecutionBundleElectra struct {
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundle           `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
-	ExecutionRequests     [][]byte               `protobuf:"bytes,5,rep,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
+	SilaRequests     [][]byte               `protobuf:"bytes,5,rep,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -347,9 +347,9 @@ func (x *ExecutionBundleElectra) GetShouldOverrideBuilder() bool {
 	return false
 }
 
-func (x *ExecutionBundleElectra) GetExecutionRequests() [][]byte {
+func (x *ExecutionBundleElectra) GetSilaRequests() [][]byte {
 	if x != nil {
-		return x.ExecutionRequests
+		return x.SilaRequests
 	}
 	return nil
 }
@@ -460,15 +460,15 @@ var file_proto_engine_v1_electra_proto_goTypes = []any{
 	(*WithdrawalRequest)(nil),      // 0: sila.silaengine.v1.WithdrawalRequest
 	(*DepositRequest)(nil),         // 1: sila.silaengine.v1.DepositRequest
 	(*ConsolidationRequest)(nil),   // 2: sila.silaengine.v1.ConsolidationRequest
-	(*ExecutionRequests)(nil),      // 3: sila.silaengine.v1.ExecutionRequests
+	(*SilaRequests)(nil),      // 3: sila.silaengine.v1.SilaRequests
 	(*ExecutionBundleElectra)(nil), // 4: sila.silaengine.v1.ExecutionBundleElectra
 	(*SilaPayloadDeneb)(nil),  // 5: sila.silaengine.v1.SilaPayloadDeneb
 	(*BlobsBundle)(nil),            // 6: sila.silaengine.v1.BlobsBundle
 }
 var file_proto_engine_v1_electra_proto_depIdxs = []int32{
-	1, // 0: sila.silaengine.v1.ExecutionRequests.deposits:type_name -> sila.silaengine.v1.DepositRequest
-	0, // 1: sila.silaengine.v1.ExecutionRequests.withdrawals:type_name -> sila.silaengine.v1.WithdrawalRequest
-	2, // 2: sila.silaengine.v1.ExecutionRequests.consolidations:type_name -> sila.silaengine.v1.ConsolidationRequest
+	1, // 0: sila.silaengine.v1.SilaRequests.deposits:type_name -> sila.silaengine.v1.DepositRequest
+	0, // 1: sila.silaengine.v1.SilaRequests.withdrawals:type_name -> sila.silaengine.v1.WithdrawalRequest
+	2, // 2: sila.silaengine.v1.SilaRequests.consolidations:type_name -> sila.silaengine.v1.ConsolidationRequest
 	5, // 3: sila.silaengine.v1.ExecutionBundleElectra.payload:type_name -> sila.silaengine.v1.SilaPayloadDeneb
 	6, // 4: sila.silaengine.v1.ExecutionBundleElectra.blobs_bundle:type_name -> sila.silaengine.v1.BlobsBundle
 	5, // [5:5] is the sub-list for method output_type

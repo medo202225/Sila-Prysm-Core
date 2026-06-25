@@ -202,7 +202,7 @@ func (s *Service) streamCanonicalEnvelopes(ctx context.Context, rp rangeParams, 
 		fullEnv := &pb.SignedSilaPayloadEnvelope{
 			Message: &pb.SilaPayloadEnvelope{
 				Payload:               payload,
-				ExecutionRequests:     c.env.Message.ExecutionRequests,
+				SilaRequests:     c.env.Message.SilaRequests,
 				BuilderIndex:          c.env.Message.BuilderIndex,
 				BeaconBlockRoot:       c.env.Message.BeaconBlockRoot,
 				ParentBeaconBlockRoot: c.env.Message.ParentBeaconBlockRoot,

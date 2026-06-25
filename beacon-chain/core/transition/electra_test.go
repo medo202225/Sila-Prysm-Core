@@ -23,21 +23,21 @@ func TestProcessOperationsWithNilRequests(t *testing.T) {
 		{
 			name: "Nil deposit request",
 			modifyBlk: func(blk *silapb.SignedBeaconBlockElectra) {
-				blk.Block.Body.ExecutionRequests.Deposits = []*silaenginev1.DepositRequest{nil}
+				blk.Block.Body.SilaRequests.Deposits = []*silaenginev1.DepositRequest{nil}
 			},
 			errMsg: "nil deposit request",
 		},
 		{
 			name: "Nil withdrawal request",
 			modifyBlk: func(blk *silapb.SignedBeaconBlockElectra) {
-				blk.Block.Body.ExecutionRequests.Withdrawals = []*silaenginev1.WithdrawalRequest{nil}
+				blk.Block.Body.SilaRequests.Withdrawals = []*silaenginev1.WithdrawalRequest{nil}
 			},
 			errMsg: "nil withdrawal request",
 		},
 		{
 			name: "Nil consolidation request",
 			modifyBlk: func(blk *silapb.SignedBeaconBlockElectra) {
-				blk.Block.Body.ExecutionRequests.Consolidations = []*silaenginev1.ConsolidationRequest{nil}
+				blk.Block.Body.SilaRequests.Consolidations = []*silaenginev1.ConsolidationRequest{nil}
 			},
 			errMsg: "nil consolidation request",
 		},

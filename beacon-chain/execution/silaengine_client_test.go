@@ -381,7 +381,7 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, proofs, resp.BlobsBundler.GetProofs())
 		blobs := [][]byte{bytesutil.PadTo([]byte("a"), fieldparams.BlobLength), bytesutil.PadTo([]byte("b"), fieldparams.BlobLength)}
 		require.DeepEqual(t, blobs, resp.BlobsBundler.GetBlobs())
-		requests := &pb.ExecutionRequests{
+		requests := &pb.SilaRequests{
 			Deposits: []*pb.DepositRequest{
 				{
 					Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -407,7 +407,7 @@ func TestClient_HTTP(t *testing.T) {
 			},
 		}
 
-		require.DeepEqual(t, requests, resp.ExecutionRequests)
+		require.DeepEqual(t, requests, resp.SilaRequests)
 	})
 	t.Run(GetPayloadMethodV5, func(t *testing.T) {
 		payloadId := [8]byte{1}
@@ -646,7 +646,7 @@ func TestClient_HTTP(t *testing.T) {
 		// We call the RPC method via HTTP and expect a proper result.
 		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
-		requests := &pb.ExecutionRequests{
+		requests := &pb.SilaRequests{
 			Deposits: []*pb.DepositRequest{
 				{
 					Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -727,7 +727,7 @@ func TestClient_HTTP(t *testing.T) {
 		// We call the RPC method via HTTP and expect a proper result.
 		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
-		requests := &pb.ExecutionRequests{
+		requests := &pb.SilaRequests{
 			Deposits: []*pb.DepositRequest{
 				{
 					Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -807,7 +807,7 @@ func TestClient_HTTP(t *testing.T) {
 		// We call the RPC method via HTTP and expect a proper result.
 		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
-		requests := &pb.ExecutionRequests{
+		requests := &pb.SilaRequests{
 			Deposits: []*pb.DepositRequest{
 				{
 					Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -888,7 +888,7 @@ func TestClient_HTTP(t *testing.T) {
 		// We call the RPC method via HTTP and expect a proper result.
 		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
-		requests := &pb.ExecutionRequests{
+		requests := &pb.SilaRequests{
 			Deposits: []*pb.DepositRequest{
 				{
 					Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -1913,7 +1913,7 @@ func fixturesStruct() *payloadFixtures {
 			Proofs:      []hexutil.Bytes{[]byte("proof1"), []byte("proof2")},
 			Blobs:       []hexutil.Bytes{{'a'}, {'b'}},
 		},
-		ExecutionRequests: []hexutil.Bytes{append([]byte{pb.DepositRequestType}, depositRequestBytes...),
+		SilaRequests: []hexutil.Bytes{append([]byte{pb.DepositRequestType}, depositRequestBytes...),
 			append([]byte{pb.WithdrawalRequestType}, withdrawalRequestBytes...),
 			append([]byte{pb.ConsolidationRequestType}, consolidationRequestBytes...)},
 	}
@@ -1943,7 +1943,7 @@ func fixturesStruct() *payloadFixtures {
 			Proofs:      []hexutil.Bytes{[]byte("proof1"), []byte("proof2")},
 			Blobs:       []hexutil.Bytes{{'a'}, {'b'}},
 		},
-		ExecutionRequests: []hexutil.Bytes{append([]byte{pb.DepositRequestType}, depositRequestBytes...),
+		SilaRequests: []hexutil.Bytes{append([]byte{pb.DepositRequestType}, depositRequestBytes...),
 			append([]byte{pb.WithdrawalRequestType}, withdrawalRequestBytes...),
 			append([]byte{pb.ConsolidationRequestType}, consolidationRequestBytes...)},
 	}
@@ -2425,7 +2425,7 @@ func newPayloadV3Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaP
 	return service
 }
 
-func newPayloadV4Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaPayloadDeneb, requests *pb.ExecutionRequests) *Service {
+func newPayloadV4Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaPayloadDeneb, requests *pb.SilaRequests) *Service {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		defer func() {
@@ -2446,7 +2446,7 @@ func newPayloadV4Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaP
 			jsonRequestString, string(reqPayload),
 		))
 
-		reqRequests, err := pb.EncodeExecutionRequests(requests)
+		reqRequests, err := pb.EncodeSilaRequests(requests)
 		require.NoError(t, err)
 
 		jsonRequests, err := json.Marshal(reqRequests)

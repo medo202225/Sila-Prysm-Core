@@ -17,7 +17,7 @@ import (
 
 // VerifySilaPayloadEnvelope is a verification function called by fork-choice when
 // importing a signed sila payload. It verifies the payload against the
-// SilaEngine without processing execution requests or updating state.
+// SilaEngine without processing sila requests or updating state.
 // Actual state mutations are deferred to process_parent_sila_payload in
 // the next block.
 //
@@ -45,7 +45,7 @@ import (
 //	    assert payload.prev_randao == bid.prev_randao
 //	    assert payload.gas_limit == bid.gas_limit
 //	    assert payload.block_hash == bid.block_hash
-//	    assert hash_tree_root(envelope.execution_requests) == bid.execution_requests_root
+//	    assert hash_tree_root(envelope.sila_requests) == bid.sila_requests_root
 //
 //	    # Verify the sila payload is valid
 //	    assert payload.slot_number == state.slot
@@ -60,7 +60,7 @@ import (
 //	                for commitment in bid.blob_kzg_commitments
 //	            ],
 //	            parent_beacon_block_root=envelope.parent_beacon_block_root,
-//	            execution_requests=envelope.execution_requests,
+//	            sila_requests=envelope.sila_requests,
 //	        )
 //	    )
 //	</spec>
@@ -132,14 +132,14 @@ func validatePayloadConsistency(ctx context.Context, st state.BeaconState, envel
 		return errors.Errorf("envelope builder index does not match committed bid builder index: envelope=%d, bid=%d", envelope.BuilderIndex(), latestBid.BuilderIndex())
 	}
 
-	// Verify execution_requests_root matches the bid commitment.
-	executionRequestsRoot, err := envelope.ExecutionRequests().HashTreeRoot()
+	// Verify sila_requests_root matches the bid commitment.
+	silaRequestsRoot, err := envelope.SilaRequests().HashTreeRoot()
 	if err != nil {
-		return errors.Wrap(err, "could not compute execution requests root")
+		return errors.Wrap(err, "could not compute sila requests root")
 	}
-	bidExecutionRequestsRoot := latestBid.ExecutionRequestsRoot()
-	if executionRequestsRoot != bidExecutionRequestsRoot {
-		return errors.Errorf("execution requests root mismatch: envelope=%#x, bid=%#x", executionRequestsRoot, bidExecutionRequestsRoot)
+	bidSilaRequestsRoot := latestBid.SilaRequestsRoot()
+	if silaRequestsRoot != bidSilaRequestsRoot {
+		return errors.Errorf("sila requests root mismatch: envelope=%#x, bid=%#x", silaRequestsRoot, bidSilaRequestsRoot)
 	}
 
 	payload, err := envelope.Execution()

@@ -181,8 +181,8 @@ func ComputeBlockBodyFieldRoots(ctx context.Context, blockBody *BeaconBlockBody)
 	}
 
 	if blockBody.version >= version.Electra {
-		// Execution Requests
-		er, err := blockBody.ExecutionRequests()
+		// Sila Requests
+		er, err := blockBody.SilaRequests()
 		if err != nil {
 			return nil, err
 		}

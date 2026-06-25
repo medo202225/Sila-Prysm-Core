@@ -61,8 +61,8 @@ func (r Requirement) String() string {
 		return "RequireBuilderValid"
 	case RequirePayloadHashValid:
 		return "RequirePayloadHashValid"
-	case RequireExecutionRequestsRootValid:
-		return "RequireExecutionRequestsRootValid"
+	case RequireSilaRequestsRootValid:
+		return "RequireSilaRequestsRootValid"
 	case RequireEnvelopeSlotAboveFinalized:
 		return "RequireEnvelopeSlotAboveFinalized"
 	case RequireEnvelopeSlotMatchesBlock:

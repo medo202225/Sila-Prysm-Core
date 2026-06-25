@@ -224,13 +224,13 @@
     <spec fn="apply_parent_sila_payload" fork="gloas" hash="44874701">
     def apply_parent_sila_payload(
         state: BeaconState,
-        requests: ExecutionRequests,
+        requests: SilaRequests,
     ) -> None:
         parent_bid = state.latest_sila_payload_bid
         parent_slot = parent_bid.slot
         parent_epoch = compute_epoch_at_slot(parent_slot)
 
-        # Process execution requests from parent's payload. The execution
+        # Process sila requests from parent's payload. The execution
         # requests are processed at state.slot (child's slot), not the parent's slot.
         def for_ops(operations: Sequence[Any], fn: Callable[[BeaconState, Any], None]) -> None:
             for operation in operations:
@@ -3845,13 +3845,13 @@
         return bls.Sign(privkey, signing_root)
     </spec>
 
-- name: get_execution_requests#electra
+- name: get_sila_requests#electra
   sources:
     - file: proto/silaengine/v1/electra.go
-      search: func (ebe *ExecutionBundleElectra) GetDecodedExecutionRequests(
+      search: func (ebe *ExecutionBundleElectra) GetDecodedSilaRequests(
   spec: |
-    <spec fn="get_execution_requests" fork="electra" hash="2c0fb728">
-    def get_execution_requests(execution_requests_list: Sequence[bytes]) -> ExecutionRequests:
+    <spec fn="get_sila_requests" fork="electra" hash="2c0fb728">
+    def get_sila_requests(sila_requests_list: Sequence[bytes]) -> SilaRequests:
         deposits = []
         withdrawals = []
         consolidations = []
@@ -3863,7 +3863,7 @@
         ]
 
         prev_request_type = None
-        for request in execution_requests_list:
+        for request in sila_requests_list:
             request_type, request_data = request[0:1], request[1:]
 
             # Check that the request type is valid
@@ -3888,24 +3888,24 @@
                     List[ConsolidationRequest, MAX_CONSOLIDATION_REQUESTS_PER_PAYLOAD], request_data
                 )
 
-        return ExecutionRequests(
+        return SilaRequests(
             deposits=deposits,
             withdrawals=withdrawals,
             consolidations=consolidations,
         )
     </spec>
 
-- name: get_execution_requests_list#electra
+- name: get_sila_requests_list#electra
   sources:
     - file: proto/silaengine/v1/electra.go
-      search: func EncodeExecutionRequests(
+      search: func EncodeSilaRequests(
   spec: |
-    <spec fn="get_execution_requests_list" fork="electra" hash="0a0be93f">
-    def get_execution_requests_list(execution_requests: ExecutionRequests) -> Sequence[bytes]:
+    <spec fn="get_sila_requests_list" fork="electra" hash="0a0be93f">
+    def get_sila_requests_list(sila_requests: SilaRequests) -> Sequence[bytes]:
         requests = [
-            (DEPOSIT_REQUEST_TYPE, execution_requests.deposits),
-            (WITHDRAWAL_REQUEST_TYPE, execution_requests.withdrawals),
-            (CONSOLIDATION_REQUEST_TYPE, execution_requests.consolidations),
+            (DEPOSIT_REQUEST_TYPE, sila_requests.deposits),
+            (WITHDRAWAL_REQUEST_TYPE, sila_requests.withdrawals),
+            (CONSOLIDATION_REQUEST_TYPE, sila_requests.consolidations),
         ]
 
         return [
@@ -8448,7 +8448,7 @@
             # Make a copy of the state to avoid mutability issues
             state = copy(state)
             # Apply parent payload before computing withdrawals
-            apply_parent_sila_payload(state, envelope.execution_requests)
+            apply_parent_sila_payload(state, envelope.sila_requests)
             withdrawals = get_expected_withdrawals(state).withdrawals
             head_block_hash = parent_bid.block_hash
         else:
@@ -9607,7 +9607,7 @@
                 versioned_hashes=versioned_hashes,
                 parent_beacon_block_root=state.latest_block_header.parent_root,
                 # [New in Electra]
-                execution_requests=body.execution_requests,
+                sila_requests=body.sila_requests,
             )
         )
 
@@ -9668,7 +9668,7 @@
                 sila_payload=payload,
                 versioned_hashes=versioned_hashes,
                 parent_beacon_block_root=state.latest_block_header.parent_root,
-                execution_requests=body.execution_requests,
+                sila_requests=body.sila_requests,
             )
         )
 
@@ -9727,7 +9727,7 @@
                 sila_payload=payload,
                 versioned_hashes=versioned_hashes,
                 parent_beacon_block_root=state.latest_block_header.parent_root,
-                execution_requests=body.execution_requests,
+                sila_requests=body.sila_requests,
             )
         )
 
@@ -10143,11 +10143,11 @@
         for_ops(body.voluntary_exits, process_voluntary_exit)
         for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
         # [New in Electra:SIP6110]
-        for_ops(body.execution_requests.deposits, process_deposit_request)
+        for_ops(body.sila_requests.deposits, process_deposit_request)
         # [New in Electra:SIP7002:SIP7251]
-        for_ops(body.execution_requests.withdrawals, process_withdrawal_request)
+        for_ops(body.sila_requests.withdrawals, process_withdrawal_request)
         # [New in Electra:SIP7251]
-        for_ops(body.execution_requests.consolidations, process_consolidation_request)
+        for_ops(body.sila_requests.consolidations, process_consolidation_request)
     </spec>
 
 - name: process_operations#fulu
@@ -10169,9 +10169,9 @@
         # Removed `process_deposit`
         for_ops(body.voluntary_exits, process_voluntary_exit)
         for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-        for_ops(body.execution_requests.deposits, process_deposit_request)
-        for_ops(body.execution_requests.withdrawals, process_withdrawal_request)
-        for_ops(body.execution_requests.consolidations, process_consolidation_request)
+        for_ops(body.sila_requests.deposits, process_deposit_request)
+        for_ops(body.sila_requests.withdrawals, process_withdrawal_request)
+        for_ops(body.sila_requests.consolidations, process_consolidation_request)
     </spec>
 
 - name: process_operations#gloas
@@ -10212,15 +10212,15 @@
     def process_parent_sila_payload(state: BeaconState, block: BeaconBlock) -> None:
         bid = block.body.signed_sila_payload_bid.message
         parent_bid = state.latest_sila_payload_bid
-        requests = block.body.parent_execution_requests
+        requests = block.body.parent_sila_requests
 
         if bid.parent_block_hash != parent_bid.block_hash:
-            # Parent was EMPTY -- no execution requests expected
-            assert requests == ExecutionRequests()
+            # Parent was EMPTY -- no sila requests expected
+            assert requests == SilaRequests()
             return
 
         # Parent was FULL -- verify the bid commitment and apply the payload
-        assert hash_tree_root(requests) == parent_bid.execution_requests_root
+        assert hash_tree_root(requests) == parent_bid.sila_requests_root
         apply_parent_sila_payload(state, requests)
     </spec>
 
@@ -12894,7 +12894,7 @@
             latest_sila_payload_bid=SilaPayloadBid(
                 block_hash=pre.latest_sila_payload_header.block_hash,
                 gas_limit=pre.latest_sila_payload_header.gas_limit,
-                execution_requests_root=hash_tree_root(ExecutionRequests()),
+                sila_requests_root=hash_tree_root(SilaRequests()),
             ),
             # [New in Gloas:SIP7732]
             payload_expected_withdrawals=[],
@@ -12926,7 +12926,7 @@
             value=pre.latest_sila_payload_bid.value,
             execution_payment=pre.latest_sila_payload_bid.execution_payment,
             blob_kzg_commitments=pre.latest_sila_payload_bid.blob_kzg_commitments,
-            execution_requests_root=pre.latest_sila_payload_bid.execution_requests_root,
+            sila_requests_root=pre.latest_sila_payload_bid.sila_requests_root,
             # [New in Heze:SIP7805]
             inclusion_list_bits=Bitvector[INCLUSION_LIST_COMMITTEE_SIZE](),
         )
@@ -15513,7 +15513,7 @@
         assert payload.prev_randao == bid.prev_randao
         assert payload.gas_limit == bid.gas_limit
         assert payload.block_hash == bid.block_hash
-        assert hash_tree_root(envelope.execution_requests) == bid.execution_requests_root
+        assert hash_tree_root(envelope.sila_requests) == bid.sila_requests_root
 
         # Verify the sila payload is valid
         assert payload.slot_number == state.slot
@@ -15528,7 +15528,7 @@
                     for commitment in bid.blob_kzg_commitments
                 ],
                 parent_beacon_block_root=envelope.parent_beacon_block_root,
-                execution_requests=envelope.execution_requests,
+                sila_requests=envelope.sila_requests,
             )
         )
     </spec>

@@ -27,7 +27,7 @@ type ExecutionBundleFulu struct {
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundleV2         `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
-	ExecutionRequests     [][]byte               `protobuf:"bytes,5,rep,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
+	SilaRequests     [][]byte               `protobuf:"bytes,5,rep,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -90,9 +90,9 @@ func (x *ExecutionBundleFulu) GetShouldOverrideBuilder() bool {
 	return false
 }
 
-func (x *ExecutionBundleFulu) GetExecutionRequests() [][]byte {
+func (x *ExecutionBundleFulu) GetSilaRequests() [][]byte {
 	if x != nil {
-		return x.ExecutionRequests
+		return x.SilaRequests
 	}
 	return nil
 }
@@ -103,7 +103,7 @@ type ExecutionBundleGloas struct {
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundleV2         `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
-	ExecutionRequests     [][]byte               `protobuf:"bytes,5,rep,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
+	SilaRequests     [][]byte               `protobuf:"bytes,5,rep,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -166,9 +166,9 @@ func (x *ExecutionBundleGloas) GetShouldOverrideBuilder() bool {
 	return false
 }
 
-func (x *ExecutionBundleGloas) GetExecutionRequests() [][]byte {
+func (x *ExecutionBundleGloas) GetSilaRequests() [][]byte {
 	if x != nil {
-		return x.ExecutionRequests
+		return x.SilaRequests
 	}
 	return nil
 }

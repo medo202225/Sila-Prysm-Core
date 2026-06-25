@@ -628,7 +628,7 @@ func TestServer_setExecutionData(t *testing.T) {
 		require.NoError(t, err)
 		require.DeepEqual(t, bid.BlobKzgCommitments, got)
 	})
-	t.Run("Can get builder payload, blobs, and execution requests Electra", func(t *testing.T) {
+	t.Run("Can get builder payload, blobs, and sila requests Electra", func(t *testing.T) {
 		cfg := params.BeaconConfig().Copy()
 		cfg.ElectraForkEpoch = 0
 		params.OverrideBeaconConfig(cfg)
@@ -644,7 +644,7 @@ func TestServer_setExecutionData(t *testing.T) {
 		require.NoError(t, err)
 		builderValue := bytesutil.ReverseByteOrder(big.NewInt(1e9).Bytes())
 
-		requests := &v1.ExecutionRequests{
+		requests := &v1.SilaRequests{
 			Deposits: []*v1.DepositRequest{
 				{
 					Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -691,7 +691,7 @@ func TestServer_setExecutionData(t *testing.T) {
 			Pubkey:             sk.PublicKey().Marshal(),
 			Value:              bytesutil.PadTo(builderValue, 32),
 			BlobKzgCommitments: [][]byte{bytesutil.PadTo([]byte{2}, fieldparams.BLSPubkeyLength), bytesutil.PadTo([]byte{5}, fieldparams.BLSPubkeyLength)},
-			ExecutionRequests:  requests,
+			SilaRequests:  requests,
 		}
 
 		d := params.BeaconConfig().DomainApplicationBuilder
@@ -739,7 +739,7 @@ func TestServer_setExecutionData(t *testing.T) {
 		eBid, ok := builderBid.(builder.BidElectra)
 		require.Equal(t, true, ok)
 		require.DeepEqual(t, bid.BlobKzgCommitments, eBid.BlobKzgCommitments())
-		require.DeepEqual(t, bid.ExecutionRequests, eBid.ExecutionRequests())
+		require.DeepEqual(t, bid.SilaRequests, eBid.SilaRequests())
 		require.Equal(t, bid.Header.BlockNumber, builderPayload.BlockNumber()) // header should be the same from block
 
 		res, err := vs.getLocalPayload(ctx, blk.Block(), denebTransitionState, false)
@@ -752,9 +752,9 @@ func TestServer_setExecutionData(t *testing.T) {
 		require.NoError(t, err)
 		require.DeepEqual(t, bid.BlobKzgCommitments, got)
 
-		gRequests, err := blk.Block().Body().ExecutionRequests()
+		gRequests, err := blk.Block().Body().SilaRequests()
 		require.NoError(t, err)
-		require.DeepEqual(t, bid.ExecutionRequests, gRequests)
+		require.DeepEqual(t, bid.SilaRequests, gRequests)
 	})
 }
 
@@ -1011,7 +1011,7 @@ func TestServer_getPayloadHeader(t *testing.T) {
 			name: "electra bid with fulu head block - compatible",
 			mock: func() *builderTest.MockBuilderService {
 				// Create Electra bid
-				requests := &v1.ExecutionRequests{
+				requests := &v1.SilaRequests{
 					Deposits: []*v1.DepositRequest{
 						{
 							Pubkey:                bytesutil.PadTo([]byte{byte('a')}, fieldparams.BLSPubkeyLength),
@@ -1058,7 +1058,7 @@ func TestServer_getPayloadHeader(t *testing.T) {
 					Pubkey:             sk.PublicKey().Marshal(),
 					Value:              bytesutil.PadTo([]byte{1, 2, 3}, 32),
 					BlobKzgCommitments: [][]byte{bytesutil.PadTo([]byte{2}, fieldparams.BLSPubkeyLength)},
-					ExecutionRequests:  requests,
+					SilaRequests:  requests,
 				}
 
 				d := params.BeaconConfig().DomainApplicationBuilder

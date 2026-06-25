@@ -154,7 +154,7 @@ type Reconstructor interface {
 // EngineCaller defines a client that can interact with a Sila
 // execution node's engine service via JSON-RPC.
 type EngineCaller interface {
-	NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, executionRequests *pb.ExecutionRequests) ([]byte, error)
+	NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, silaRequests *pb.SilaRequests) ([]byte, error)
 	ForkchoiceUpdated(
 		ctx context.Context, state *pb.ForkchoiceState, attrs payloadattribute.Attributer,
 	) (*pb.PayloadIDBytes, []byte, error)
@@ -167,7 +167,7 @@ type EngineCaller interface {
 var ErrEmptyBlockHash = errors.New("Block hash is empty 0x0000...")
 
 // NewPayload request calls the silaEngine_newPayloadVX method via JSON-RPC.
-func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, executionRequests *pb.ExecutionRequests) ([]byte, error) {
+func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, silaRequests *pb.SilaRequests) ([]byte, error) {
 	ctx, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.NewPayload")
 	defer span.End()
 	defer func(start time.Time) {
@@ -191,15 +191,15 @@ func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionDa
 			return nil, handleRPCError(err)
 		}
 	case *pb.SilaPayloadDeneb:
-		if executionRequests == nil {
+		if silaRequests == nil {
 			err := s.rpcClient.CallContext(ctx, result, NewPayloadMethodV3, payloadPb, versionedHashes, parentBlockRoot)
 			if err != nil {
 				return nil, handleRPCError(err)
 			}
 		} else {
-			flattenedRequests, err := pb.EncodeExecutionRequests(executionRequests)
+			flattenedRequests, err := pb.EncodeSilaRequests(silaRequests)
 			if err != nil {
-				return nil, errors.Wrap(err, "failed to encode execution requests")
+				return nil, errors.Wrap(err, "failed to encode sila requests")
 			}
 			err = s.rpcClient.CallContext(ctx, result, NewPayloadMethodV4, payloadPb, versionedHashes, parentBlockRoot, flattenedRequests)
 			if err != nil {
@@ -207,9 +207,9 @@ func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionDa
 			}
 		}
 	case *pb.SilaPayloadGloas:
-		flattenedRequests, err := pb.EncodeExecutionRequests(executionRequests)
+		flattenedRequests, err := pb.EncodeSilaRequests(silaRequests)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to encode execution requests")
+			return nil, errors.Wrap(err, "failed to encode sila requests")
 		}
 		err = s.rpcClient.CallContext(ctx, result, NewPayloadMethodV5, payloadPb, versionedHashes, parentBlockRoot, flattenedRequests)
 		if err != nil {
@@ -686,7 +686,7 @@ func (s *Service) ReconstructSilaPayloadEnvelope(
 	return &silapb.SignedSilaPayloadEnvelope{
 		Message: &silapb.SilaPayloadEnvelope{
 			Payload:               payload,
-			ExecutionRequests:     envelope.Message.ExecutionRequests,
+			SilaRequests:     envelope.Message.SilaRequests,
 			BuilderIndex:          envelope.Message.BuilderIndex,
 			BeaconBlockRoot:       envelope.Message.BeaconBlockRoot,
 			ParentBeaconBlockRoot: envelope.Message.ParentBeaconBlockRoot,

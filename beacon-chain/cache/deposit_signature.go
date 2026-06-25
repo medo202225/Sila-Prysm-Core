@@ -21,7 +21,7 @@ var (
 )
 
 // DepositSig stores the indices of invalid deposit signatures keyed by
-// execution_requests_root; empty slice means all valid.
+// sila_requests_root; empty slice means all valid.
 var DepositSig = NewDepositSigCache()
 
 type DepositSigCache struct {

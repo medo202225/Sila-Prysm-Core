@@ -214,7 +214,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						SilaPayloadHeader: header,
 						BlsToExecutionChanges:  b.block.body.blsToExecutionChanges,
 						BlobKzgCommitments:     b.block.body.blobKzgCommitments,
-						ExecutionRequests:      b.block.body.executionRequests,
+						SilaRequests:      b.block.body.silaRequests,
 					},
 				},
 				Signature: b.signature[:],
@@ -250,7 +250,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						SilaPayloadHeader: header,
 						BlsToExecutionChanges:  b.block.body.blsToExecutionChanges,
 						BlobKzgCommitments:     b.block.body.blobKzgCommitments,
-						ExecutionRequests:      b.block.body.executionRequests,
+						SilaRequests:      b.block.body.silaRequests,
 					},
 				},
 				Signature: b.signature[:],
@@ -1279,12 +1279,12 @@ func (b *BeaconBlockBody) BlobKzgCommitments() ([][]byte, error) {
 	return nil, errIncorrectBlockVersion
 }
 
-// ExecutionRequests returns the execution requests
-func (b *BeaconBlockBody) ExecutionRequests() (*silaenginev1.ExecutionRequests, error) {
+// SilaRequests returns the sila requests
+func (b *BeaconBlockBody) SilaRequests() (*silaenginev1.SilaRequests, error) {
 	if b.version < version.Electra || b.version >= version.Gloas {
-		return nil, consensus_types.ErrNotSupported("ExecutionRequests", b.version)
+		return nil, consensus_types.ErrNotSupported("SilaRequests", b.version)
 	}
-	return b.executionRequests, nil
+	return b.silaRequests, nil
 }
 
 // PayloadAttestations returns the payload attestations in the block.
@@ -1303,12 +1303,12 @@ func (b *BeaconBlockBody) SignedSilaPayloadBid() (*eth.SignedSilaPayloadBid, err
 	return nil, consensus_types.ErrNotSupported("SignedSilaPayloadBid", b.version)
 }
 
-// ParentExecutionRequests returns the parent's deferred execution requests.
-func (b *BeaconBlockBody) ParentExecutionRequests() (*silaenginev1.ExecutionRequests, error) {
+// ParentSilaRequests returns the parent's deferred sila requests.
+func (b *BeaconBlockBody) ParentSilaRequests() (*silaenginev1.SilaRequests, error) {
 	if b.version >= version.Gloas {
-		return b.parentExecutionRequests, nil
+		return b.parentSilaRequests, nil
 	}
-	return nil, consensus_types.ErrNotSupported("ParentExecutionRequests", b.version)
+	return nil, consensus_types.ErrNotSupported("ParentSilaRequests", b.version)
 }
 
 // Version returns the version of the beacon block body

@@ -319,13 +319,13 @@ func (c *ConsolidationRequest) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionRequests object
-func (e *ExecutionRequests) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaRequests object
+func (e *SilaRequests) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionRequests object to a target array
-func (e *ExecutionRequests) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaRequests object to a target array
+func (e *SilaRequests) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(12)
 
@@ -377,8 +377,8 @@ func (e *ExecutionRequests) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionRequests object
-func (e *ExecutionRequests) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaRequests object
+func (e *SilaRequests) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 12 {
@@ -463,8 +463,8 @@ func (e *ExecutionRequests) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionRequests object
-func (e *ExecutionRequests) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaRequests object
+func (e *SilaRequests) SizeSSZ() (size int) {
 	size = 12
 
 	// Field (0) 'Deposits'
@@ -479,13 +479,13 @@ func (e *ExecutionRequests) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionRequests object
-func (e *ExecutionRequests) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaRequests object
+func (e *SilaRequests) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionRequests object with a hasher
-func (e *ExecutionRequests) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaRequests object with a hasher
+func (e *SilaRequests) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Deposits'

@@ -327,9 +327,9 @@ func topLevelRoots(body interfaces.ReadOnlyBeaconBlockBody) ([][]byte, error) {
 
 	// KZG commitments is not needed
 
-	// Execution requests
+	// Sila requests
 	if body.Version() >= version.Electra {
-		er, err := body.ExecutionRequests()
+		er, err := body.SilaRequests()
 		if err != nil {
 			return nil, err
 		}

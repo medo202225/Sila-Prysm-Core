@@ -40,7 +40,7 @@ func testGloasBlock(t *testing.T) (*consensusblocks.GetPayloadResponse, interfac
 	local := &consensusblocks.GetPayloadResponse{
 		ExecutionData:     ed,
 		Bid:               big.NewInt(0),
-		ExecutionRequests: &silaenginev1.ExecutionRequests{},
+		SilaRequests: &silaenginev1.SilaRequests{},
 	}
 
 	sBlk, err := consensusblocks.NewSignedBeaconBlock(util.NewBeaconBlockGloas())
@@ -194,7 +194,7 @@ func TestPublishSilaPayloadEnvelope_Success(t *testing.T) {
 				ExtraData:     make([]byte, 0),
 				SlotNumber:    1,
 			},
-			ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+			SilaRequests:     &silaenginev1.SilaRequests{},
 			BuilderIndex:          0,
 			BeaconBlockRoot:       make([]byte, 32),
 			ParentBeaconBlockRoot: make([]byte, 32),
@@ -237,7 +237,7 @@ func TestPublishSilaPayloadEnvelope_ImportFailureIsAborted(t *testing.T) {
 				ExtraData:     make([]byte, 0),
 				SlotNumber:    1,
 			},
-			ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+			SilaRequests:     &silaenginev1.SilaRequests{},
 			BeaconBlockRoot:       make([]byte, 32),
 			ParentBeaconBlockRoot: make([]byte, 32),
 		},

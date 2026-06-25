@@ -68,7 +68,7 @@ func prepareGloasForkchoiceState(
 			PrevRandao:            make([]byte, 32),
 			FeeRecipient:          make([]byte, 20),
 			BlobKzgCommitments:    [][]byte{make([]byte, 48)},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Builders:                     make([]*silapb.Builder, 0),
 		BuilderPendingPayments:       builderPendingPayments,
@@ -140,7 +140,7 @@ func testGloasState(t *testing.T, slot primitives.Slot, parentRoot [32]byte, blo
 			PrevRandao:            make([]byte, 32),
 			FeeRecipient:          make([]byte, 20),
 			BlobKzgCommitments:    [][]byte{make([]byte, 48)},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Builders:                     make([]*silapb.Builder, 0),
 		BuilderPendingPayments:       builderPendingPayments,
@@ -183,7 +183,7 @@ func testSignedEnvelope(t *testing.T, blockRoot [32]byte, slot primitives.Slot, 
 				Transactions:  [][]byte{},
 				Withdrawals:   []*silaenginev1.Withdrawal{},
 			},
-			ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+			SilaRequests:     &silaenginev1.SilaRequests{},
 			BuilderIndex:          0,
 			BeaconBlockRoot:       blockRoot[:],
 			ParentBeaconBlockRoot: make([]byte, 32),
@@ -269,7 +269,7 @@ func TestNotifyNewEnvelope_Valid(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
@@ -297,7 +297,7 @@ func TestNotifyNewEnvelope_Syncing(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
@@ -325,7 +325,7 @@ func TestNotifyNewEnvelope_Invalid(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
@@ -471,7 +471,7 @@ func TestValidateExecutionOnEnvelope_Valid(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:], ParentHash: make([]byte, 32)},
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)

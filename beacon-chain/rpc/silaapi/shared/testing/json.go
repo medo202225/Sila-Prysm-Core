@@ -1445,7 +1445,7 @@ var BlindedElectraBlock = fmt.Sprintf(`{
         }
       ],
  	  "blob_kzg_commitments":["0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8000"],
-	  "execution_requests": {
+	  "sila_requests": {
 		"deposits": [
 		  {
 		    "pubkey": "0x93247f2209abcacf57b75a51dafae777f9dd38bc7053d1af526f220a7489a6d3a2753e5f3e8b1cfe39b56f43611df74a",
@@ -1881,7 +1881,7 @@ var ElectraBlockContents = fmt.Sprintf(`{
 				}
 			  ],
 			  "blob_kzg_commitments":["0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8000"],
-				  "execution_requests": {
+				  "sila_requests": {
 					"deposits": [
 					  {
 					    "pubkey": "0x93247f2209abcacf57b75a51dafae777f9dd38bc7053d1af526f220a7489a6d3a2753e5f3e8b1cfe39b56f43611df74a",

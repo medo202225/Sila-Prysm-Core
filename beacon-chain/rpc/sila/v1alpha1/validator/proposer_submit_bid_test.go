@@ -35,7 +35,7 @@ func TestSubmitSignedSilaPayloadBid_OK(t *testing.T) {
 			BuilderIndex:          1,
 			Slot:                  10,
 			Value:                 100,
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: make([]byte, 96),
 	}

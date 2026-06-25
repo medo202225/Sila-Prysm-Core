@@ -29,7 +29,7 @@ func ROSilaPayloadBidFromConsensus(b interfaces.ROSilaPayloadBid) *SilaPayloadBi
 	for _, commitment := range commitments {
 		blobKzgCommitments = append(blobKzgCommitments, hexutil.Encode(commitment))
 	}
-	erRoot := b.ExecutionRequestsRoot()
+	erRoot := b.SilaRequestsRoot()
 	return &SilaPayloadBid{
 		ParentBlockHash:       hexutil.Encode(pbh[:]),
 		ParentBlockRoot:       hexutil.Encode(pbr[:]),
@@ -42,7 +42,7 @@ func ROSilaPayloadBidFromConsensus(b interfaces.ROSilaPayloadBid) *SilaPayloadBi
 		Value:                 fmt.Sprintf("%d", b.Value()),
 		ExecutionPayment:      fmt.Sprintf("%d", b.ExecutionPayment()),
 		BlobKzgCommitments:    blobKzgCommitments,
-		ExecutionRequestsRoot: hexutil.Encode(erRoot[:]),
+		SilaRequestsRoot: hexutil.Encode(erRoot[:]),
 	}
 }
 

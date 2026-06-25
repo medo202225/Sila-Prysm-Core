@@ -21,7 +21,7 @@ func (header *SilaPayloadBid) Copy() *SilaPayloadBid {
 		Value:                 header.Value,
 		ExecutionPayment:      header.ExecutionPayment,
 		BlobKzgCommitments:    bytesutil.SafeCopy2dBytes(header.BlobKzgCommitments),
-		ExecutionRequestsRoot: bytesutil.SafeCopyBytes(header.ExecutionRequestsRoot),
+		SilaRequestsRoot: bytesutil.SafeCopyBytes(header.SilaRequestsRoot),
 	}
 }
 

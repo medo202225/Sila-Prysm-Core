@@ -580,7 +580,7 @@ func (body *BlindedBeaconBlockBodyElectra) Copy() *BlindedBeaconBlockBodyElectra
 		SilaPayloadHeader: body.SilaPayloadHeader.Copy(),
 		BlsToExecutionChanges:  CopySlice(body.BlsToExecutionChanges),
 		BlobKzgCommitments:     CopyBlobKZGs(body.BlobKzgCommitments),
-		ExecutionRequests:      CopyExecutionRequests(body.ExecutionRequests),
+		SilaRequests:      CopySilaRequests(body.SilaRequests),
 	}
 }
 
@@ -627,12 +627,12 @@ func (body *BeaconBlockBodyElectra) Copy() *BeaconBlockBodyElectra {
 		SilaPayload:      body.SilaPayload.Copy(),
 		BlsToExecutionChanges: CopySlice(body.BlsToExecutionChanges),
 		BlobKzgCommitments:    CopyBlobKZGs(body.BlobKzgCommitments),
-		ExecutionRequests:     CopyExecutionRequests(body.ExecutionRequests),
+		SilaRequests:     CopySilaRequests(body.SilaRequests),
 	}
 }
 
-// CopyExecutionRequests copies the provided execution requests.
-func CopyExecutionRequests(e *silaenginev1.ExecutionRequests) *silaenginev1.ExecutionRequests {
+// CopySilaRequests copies the provided sila requests.
+func CopySilaRequests(e *silaenginev1.SilaRequests) *silaenginev1.SilaRequests {
 	if e == nil {
 		return nil
 	}
@@ -649,7 +649,7 @@ func CopyExecutionRequests(e *silaenginev1.ExecutionRequests) *silaenginev1.Exec
 		cr[i] = c.Copy()
 	}
 
-	return &silaenginev1.ExecutionRequests{
+	return &silaenginev1.SilaRequests{
 		Deposits:       dr,
 		Withdrawals:    wr,
 		Consolidations: cr,

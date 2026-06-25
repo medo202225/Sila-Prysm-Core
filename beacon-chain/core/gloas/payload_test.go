@@ -68,7 +68,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *silaenginev1.SilaPay
 		SlotNumber:    slot,
 	}
 
-	emptyRequestsRoot, err := silaenginev1.EmptyExecutionRequestsHashTreeRoot()
+	emptyRequestsRoot, err := silaenginev1.EmptySilaRequestsHashTreeRoot()
 	require.NoError(t, err)
 	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentHash,
@@ -81,7 +81,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *silaenginev1.SilaPay
 		Value:                 0,
 		ExecutionPayment:      0,
 		FeeRecipient:          bytes.Repeat([]byte{0xEE}, 20),
-		ExecutionRequestsRoot: emptyRequestsRoot[:],
+		SilaRequestsRoot: emptyRequestsRoot[:],
 	}
 
 	header := &silapb.BeaconBlockHeader{
@@ -98,7 +98,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *silaenginev1.SilaPay
 		BeaconBlockRoot:       headerRoot[:],
 		ParentBeaconBlockRoot: header.ParentRoot,
 		Payload:               payload,
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 	}
 
 	if mutate != nil {

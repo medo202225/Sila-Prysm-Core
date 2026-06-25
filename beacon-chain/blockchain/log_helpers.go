@@ -65,9 +65,9 @@ func logStateTransitionData(b interfaces.ReadOnlyBeaconBlock) error {
 		}
 	}
 	if b.Version() >= version.Electra && b.Version() < version.Gloas {
-		eReqs, err := b.Body().ExecutionRequests()
+		eReqs, err := b.Body().SilaRequests()
 		if err != nil {
-			log.WithError(err).Error("Failed to get execution requests")
+			log.WithError(err).Error("Failed to get sila requests")
 		} else {
 			if len(eReqs.Deposits) > 0 {
 				log = log.WithField("depositRequestCount", len(eReqs.Deposits))

@@ -93,9 +93,9 @@ func electraOperations(ctx context.Context, st state.BeaconState, block interfac
 		return nil, errors.Wrap(ErrProcessBLSChangesFailed, err.Error())
 	}
 	// new in electra
-	requests, err := bb.ExecutionRequests()
+	requests, err := bb.SilaRequests()
 	if err != nil {
-		return nil, electra.NewExecReqError(errors.Wrap(err, "could not get execution requests").Error())
+		return nil, electra.NewExecReqError(errors.Wrap(err, "could not get sila requests").Error())
 	}
 	for _, d := range requests.Deposits {
 		if d == nil {

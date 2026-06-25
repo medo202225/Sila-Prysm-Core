@@ -33,7 +33,7 @@ type fields struct {
 	execPayloadHeaderDeneb   *silaenginev1.SilaPayloadHeaderDeneb
 	blsToExecutionChanges    []*eth.SignedBLSToExecutionChange
 	kzgCommitments           [][]byte
-	execRequests             *silaenginev1.ExecutionRequests
+	execRequests             *silaenginev1.SilaRequests
 }
 
 func Test_SignedBeaconBlock_Proto(t *testing.T) {
@@ -1530,7 +1530,7 @@ func bodyPbElectra() *eth.BeaconBlockBodyElectra {
 		SilaPayload:      f.execPayloadDeneb,
 		BlsToExecutionChanges: f.blsToExecutionChanges,
 		BlobKzgCommitments:    f.kzgCommitments,
-		ExecutionRequests:     f.execRequests,
+		SilaRequests:     f.execRequests,
 	}
 }
 
@@ -1553,7 +1553,7 @@ func bodyPbBlindedElectra() *eth.BlindedBeaconBlockBodyElectra {
 		SilaPayloadHeader: f.execPayloadHeaderDeneb,
 		BlsToExecutionChanges:  f.blsToExecutionChanges,
 		BlobKzgCommitments:     f.kzgCommitments,
-		ExecutionRequests:      f.execRequests,
+		SilaRequests:      f.execRequests,
 	}
 }
 
@@ -1762,7 +1762,7 @@ func bodyElectra(t *testing.T) *BeaconBlockBody {
 		silaPayload:         p,
 		blsToExecutionChanges:    f.blsToExecutionChanges,
 		blobKzgCommitments:       f.kzgCommitments,
-		executionRequests:        f.execRequests,
+		silaRequests:        f.execRequests,
 	}
 }
 
@@ -1788,7 +1788,7 @@ func bodyBlindedElectra(t *testing.T) *BeaconBlockBody {
 		silaPayloadHeader:   ph,
 		blsToExecutionChanges:    f.blsToExecutionChanges,
 		blobKzgCommitments:       f.kzgCommitments,
-		executionRequests:        f.execRequests,
+		silaRequests:        f.execRequests,
 	}
 }
 
@@ -2169,7 +2169,7 @@ func getFields() fields {
 		bytesutil.PadTo([]byte{143}, 48),
 	}
 
-	execRequests := &silaenginev1.ExecutionRequests{
+	execRequests := &silaenginev1.SilaRequests{
 		Deposits: []*silaenginev1.DepositRequest{{
 			Pubkey:                b48,
 			WithdrawalCredentials: root[:],

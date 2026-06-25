@@ -36,7 +36,7 @@ func makeEnvelope(t *testing.T, slot primitives.Slot, blockHash [32]byte, parent
 		Message: &silapb.SilaPayloadEnvelope{
 			BeaconBlockRoot:       make([]byte, fieldparams.RootLength),
 			ParentBeaconBlockRoot: make([]byte, fieldparams.RootLength),
-			ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+			SilaRequests:     &silaenginev1.SilaRequests{},
 			Payload: &silaenginev1.SilaPayloadGloas{
 				ParentHash:    parentHash[:],
 				FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),

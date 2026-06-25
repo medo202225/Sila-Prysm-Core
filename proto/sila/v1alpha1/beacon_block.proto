@@ -828,7 +828,7 @@ message BuilderBidElectra {
     (sila.eth.ext.ssz_size) = "?,48",
     (sila.eth.ext.ssz_max) = "max_blob_commitments.size"
   ];
-  sila.silaengine.v1.ExecutionRequests execution_requests = 3;
+  sila.silaengine.v1.SilaRequests sila_requests = 3;
   bytes value = 4 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes pubkey = 5 [ (sila.eth.ext.ssz_size) = "48" ];
 }
@@ -963,8 +963,8 @@ message BeaconBlockBodyElectra {
     (sila.eth.ext.ssz_max) = "max_blob_commitments.size"
   ];
 
-  // Execution requests. New in Electra network upgrade.
-  sila.silaengine.v1.ExecutionRequests execution_requests = 13;
+  // Sila requests. New in Electra network upgrade.
+  sila.silaengine.v1.SilaRequests sila_requests = 13;
 }
 
 message SignedBlindedBeaconBlockElectra {
@@ -1043,8 +1043,8 @@ message BlindedBeaconBlockBodyElectra {
     (sila.eth.ext.ssz_max) = "max_blob_commitments.size"
   ];
 
-  // Execution requests. New in Electra network upgrade.
-  sila.silaengine.v1.ExecutionRequests execution_requests = 13;
+  // Sila requests. New in Electra network upgrade.
+  sila.silaengine.v1.SilaRequests sila_requests = 13;
 }
 
 // ----------------------------------------------------------------------------

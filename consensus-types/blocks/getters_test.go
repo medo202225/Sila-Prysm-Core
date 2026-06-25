@@ -521,24 +521,24 @@ func Test_BeaconBlockBody_Execution(t *testing.T) {
 	require.ErrorIs(t, err, consensus_types.ErrUnsupportedField)
 }
 
-func Test_BeaconBlockBody_ExecutionRequests(t *testing.T) {
+func Test_BeaconBlockBody_SilaRequests(t *testing.T) {
 	t.Run("unsupported before Electra", func(t *testing.T) {
 		bb := &BeaconBlockBody{version: version.Deneb}
-		_, err := bb.ExecutionRequests()
+		_, err := bb.SilaRequests()
 		require.ErrorIs(t, err, consensus_types.ErrUnsupportedField)
 	})
 
 	t.Run("electra returns requests", func(t *testing.T) {
-		reqs := &pb.ExecutionRequests{}
-		bb := &BeaconBlockBody{version: version.Electra, executionRequests: reqs}
-		result, err := bb.ExecutionRequests()
+		reqs := &pb.SilaRequests{}
+		bb := &BeaconBlockBody{version: version.Electra, silaRequests: reqs}
+		result, err := bb.SilaRequests()
 		require.NoError(t, err)
 		require.Equal(t, reqs, result)
 	})
 
 	t.Run("unsupported for Gloas", func(t *testing.T) {
 		bb := &BeaconBlockBody{version: version.Gloas}
-		_, err := bb.ExecutionRequests()
+		_, err := bb.SilaRequests()
 		require.ErrorIs(t, err, consensus_types.ErrUnsupportedField)
 	})
 }
@@ -684,11 +684,11 @@ func hydrateBeaconBlockBodyGloas() *eth.BeaconBlockBodyGloas {
 				PrevRandao:            make([]byte, fieldparams.RootLength),
 				FeeRecipient:          make([]byte, 20),
 				BlobKzgCommitments:    [][]byte{make([]byte, fieldparams.BLSPubkeyLength)},
-				ExecutionRequestsRoot: make([]byte, fieldparams.RootLength),
+				SilaRequestsRoot: make([]byte, fieldparams.RootLength),
 			},
 			Signature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ParentExecutionRequests: &pb.ExecutionRequests{},
+		ParentSilaRequests: &pb.SilaRequests{},
 		PayloadAttestations: []*eth.PayloadAttestation{
 			{
 				AggregationBits: bits,
@@ -754,7 +754,7 @@ func hydrateBeaconBlockBodyElectra() *eth.BeaconBlockBodyElectra {
 			Transactions:  make([][]byte, 0),
 			Withdrawals:   make([]*pb.Withdrawal, 0),
 		},
-		ExecutionRequests: &pb.ExecutionRequests{
+		SilaRequests: &pb.SilaRequests{
 			Deposits:       make([]*pb.DepositRequest, 0),
 			Withdrawals:    make([]*pb.WithdrawalRequest, 0),
 			Consolidations: make([]*pb.ConsolidationRequest, 0),

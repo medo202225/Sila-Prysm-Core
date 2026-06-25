@@ -631,20 +631,20 @@ func (p *Builder) handleHeaderRequestElectra(w http.ResponseWriter) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	requests, err := b.GetDecodedExecutionRequests(params.BeaconConfig().ExecutionRequestLimits())
+	requests, err := b.GetDecodedSilaRequests(params.BeaconConfig().ExecutionRequestLimits())
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not get decoded execution requests")
+		p.cfg.logger.WithError(err).Error("Could not get decoded sila requests")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	rv1 := structs.ExecutionRequestsFromConsensus(requests)
+	rv1 := structs.SilaRequestsFromConsensus(requests)
 
 	bid := &builderAPI.BuilderBidElectra{
 		Header:             wrappedHdr,
 		BlobKzgCommitments: commitments,
 		Value:              val,
 		Pubkey:             secKey.PublicKey().Marshal(),
-		ExecutionRequests:  rv1,
+		SilaRequests:  rv1,
 	}
 
 	sszBid := &eth.BuilderBidElectra{
@@ -652,7 +652,7 @@ func (p *Builder) handleHeaderRequestElectra(w http.ResponseWriter) {
 		BlobKzgCommitments: b.BlobsBundle.KzgCommitments,
 		Value:              val.SSZBytes(),
 		Pubkey:             secKey.PublicKey().Marshal(),
-		ExecutionRequests:  requests,
+		SilaRequests:  requests,
 	}
 	d, err := signing.ComputeDomain(params.BeaconConfig().DomainApplicationBuilder,
 		nil, /* fork version */

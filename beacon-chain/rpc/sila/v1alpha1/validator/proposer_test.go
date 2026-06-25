@@ -654,7 +654,7 @@ func TestServer_GetBeaconBlock_Electra(t *testing.T) {
 					BaseFeePerGas: make([]byte, fieldparams.RootLength),
 					BlockHash:     make([]byte, fieldparams.RootLength),
 				},
-				ExecutionRequests: &silaenginev1.ExecutionRequests{
+				SilaRequests: &silaenginev1.SilaRequests{
 					Withdrawals:    wr,
 					Deposits:       dr,
 					Consolidations: cr,
@@ -697,7 +697,7 @@ func TestServer_GetBeaconBlock_Electra(t *testing.T) {
 	require.NoError(t, err)
 	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
 		PayloadIDBytes: &silaenginev1.PayloadIDBytes{1},
-		GetPayloadResponse: &blocks.GetPayloadResponse{ExecutionData: ed, ExecutionRequests: &silaenginev1.ExecutionRequests{
+		GetPayloadResponse: &blocks.GetPayloadResponse{ExecutionData: ed, SilaRequests: &silaenginev1.SilaRequests{
 			Withdrawals:    wr,
 			Deposits:       dr,
 			Consolidations: cr,
@@ -791,7 +791,7 @@ func TestServer_GetBeaconBlock_Fulu(t *testing.T) {
 					BaseFeePerGas: make([]byte, fieldparams.RootLength),
 					BlockHash:     make([]byte, fieldparams.RootLength),
 				},
-				ExecutionRequests: &silaenginev1.ExecutionRequests{
+				SilaRequests: &silaenginev1.SilaRequests{
 					Withdrawals:    wr,
 					Deposits:       dr,
 					Consolidations: cr,
@@ -834,7 +834,7 @@ func TestServer_GetBeaconBlock_Fulu(t *testing.T) {
 	require.NoError(t, err)
 	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
 		PayloadIDBytes: &silaenginev1.PayloadIDBytes{1},
-		GetPayloadResponse: &blocks.GetPayloadResponse{ExecutionData: ed, ExecutionRequests: &silaenginev1.ExecutionRequests{
+		GetPayloadResponse: &blocks.GetPayloadResponse{ExecutionData: ed, SilaRequests: &silaenginev1.SilaRequests{
 			Withdrawals:    wr,
 			Deposits:       dr,
 			Consolidations: cr,

@@ -408,7 +408,7 @@ type BeaconBlockBodyElectra struct {
 	SilaPayload      *SilaPayloadDeneb        `json:"sila_payload"`
 	BLSToExecutionChanges []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	BlobKzgCommitments    []string                      `json:"blob_kzg_commitments"`
-	ExecutionRequests     *ExecutionRequests            `json:"execution_requests"`
+	SilaRequests     *SilaRequests            `json:"sila_requests"`
 }
 
 type BlindedBeaconBlockElectra struct {
@@ -447,7 +447,7 @@ type BlindedBeaconBlockBodyElectra struct {
 	SilaPayloadHeader *SilaPayloadHeaderDeneb  `json:"sila_payload_header"`
 	BLSToExecutionChanges  []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	BlobKzgCommitments     []string                      `json:"blob_kzg_commitments"`
-	ExecutionRequests      *ExecutionRequests            `json:"execution_requests"`
+	SilaRequests      *SilaRequests            `json:"sila_requests"`
 }
 
 // ----------------------------------------------------------------------------
@@ -520,7 +520,7 @@ type SilaPayloadBid struct {
 	Value                 string   `json:"value"`
 	ExecutionPayment      string   `json:"execution_payment"`
 	BlobKzgCommitments    []string `json:"blob_kzg_commitments"`
-	ExecutionRequestsRoot string   `json:"execution_requests_root"`
+	SilaRequestsRoot string   `json:"sila_requests_root"`
 }
 
 type SignedSilaPayloadBid struct {
@@ -560,7 +560,7 @@ type BeaconBlockBodyGloas struct {
 	BLSToExecutionChanges     []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	SignedSilaPayloadBid *SignedSilaPayloadBid    `json:"signed_sila_payload_bid"`
 	PayloadAttestations       []*PayloadAttestation         `json:"payload_attestations"`
-	ParentExecutionRequests   *ExecutionRequests            `json:"parent_execution_requests"`
+	ParentSilaRequests   *SilaRequests            `json:"parent_sila_requests"`
 }
 
 type BeaconBlockGloas struct {
@@ -595,7 +595,7 @@ type BlockContentsGloas struct {
 
 type SilaPayloadEnvelope struct {
 	Payload               *SilaPayloadGloas `json:"payload"`
-	ExecutionRequests     *ExecutionRequests     `json:"execution_requests"`
+	SilaRequests     *SilaRequests     `json:"sila_requests"`
 	BuilderIndex          string                 `json:"builder_index"`
 	BeaconBlockRoot       string                 `json:"beacon_block_root"`
 	ParentBeaconBlockRoot string                 `json:"parent_beacon_block_root"`
@@ -618,7 +618,7 @@ type SignedSilaPayloadEnvelopeContents struct {
 // BlindedSilaPayloadEnvelope replaces the full payload with payload_root so its HTR matches the full envelope.
 type BlindedSilaPayloadEnvelope struct {
 	PayloadRoot           string             `json:"payload_root"`
-	ExecutionRequests     *ExecutionRequests `json:"execution_requests"`
+	SilaRequests     *SilaRequests `json:"sila_requests"`
 	BuilderIndex          string             `json:"builder_index"`
 	BeaconBlockRoot       string             `json:"beacon_block_root"`
 	ParentBeaconBlockRoot string             `json:"parent_beacon_block_root"`

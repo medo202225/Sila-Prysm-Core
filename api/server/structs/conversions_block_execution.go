@@ -927,17 +927,17 @@ func (d *DepositRequest) ToConsensus() (*silaenginev1.DepositRequest, error) {
 	}, nil
 }
 
-func ExecutionRequestsFromConsensus(er *silaenginev1.ExecutionRequests) *ExecutionRequests {
-	return &ExecutionRequests{
+func SilaRequestsFromConsensus(er *silaenginev1.SilaRequests) *SilaRequests {
+	return &SilaRequests{
 		Deposits:       DepositRequestsFromConsensus(er.Deposits),
 		Withdrawals:    WithdrawalRequestsFromConsensus(er.Withdrawals),
 		Consolidations: ConsolidationRequestsFromConsensus(er.Consolidations),
 	}
 }
 
-func (e *ExecutionRequests) ToConsensus() (*silaenginev1.ExecutionRequests, error) {
+func (e *SilaRequests) ToConsensus() (*silaenginev1.SilaRequests, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionRequests")
+		return nil, server.NewDecodeError(errNilValue, "SilaRequests")
 	}
 	var err error
 	if err = slice.VerifyMaxLength(e.Deposits, params.BeaconConfig().MaxDepositRequestsPerPayload); err != nil {
@@ -947,7 +947,7 @@ func (e *ExecutionRequests) ToConsensus() (*silaenginev1.ExecutionRequests, erro
 	for i, d := range e.Deposits {
 		depositRequests[i], err = d.ToConsensus()
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionRequests.Deposits[%d]", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaRequests.Deposits[%d]", i))
 		}
 	}
 
@@ -958,7 +958,7 @@ func (e *ExecutionRequests) ToConsensus() (*silaenginev1.ExecutionRequests, erro
 	for i, w := range e.Withdrawals {
 		withdrawalRequests[i], err = w.ToConsensus()
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionRequests.Withdrawals[%d]", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaRequests.Withdrawals[%d]", i))
 		}
 	}
 
@@ -969,10 +969,10 @@ func (e *ExecutionRequests) ToConsensus() (*silaenginev1.ExecutionRequests, erro
 	for i, c := range e.Consolidations {
 		consolidationRequests[i], err = c.ToConsensus()
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionRequests.Consolidations[%d]", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaRequests.Consolidations[%d]", i))
 		}
 	}
-	return &silaenginev1.ExecutionRequests{
+	return &silaenginev1.SilaRequests{
 		Deposits:       depositRequests,
 		Withdrawals:    withdrawalRequests,
 		Consolidations: consolidationRequests,

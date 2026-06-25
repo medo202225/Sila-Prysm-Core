@@ -37,7 +37,7 @@ func testEnvelope(t *testing.T) *silapb.SignedSilaPayloadEnvelope {
 				ExcessBlobGas: 0,
 				SlotNumber:    99,
 			},
-			ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+			SilaRequests:     &silaenginev1.SilaRequests{},
 			BuilderIndex:          primitives.BuilderIndex(42),
 			BeaconBlockRoot:       bytesutil.PadTo([]byte("beaconroot"), 32),
 			ParentBeaconBlockRoot: make([]byte, 32),

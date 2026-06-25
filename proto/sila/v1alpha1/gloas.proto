@@ -34,7 +34,7 @@ option go_package = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1a
 //     value: Gwei
 //     execution_payment: Gwei
 //     blob_kzg_commitments: List[KZGCommitment, MAX_BLOB_COMMITMENTS_PER_BLOCK]
-//     execution_requests_root: Root
+//     sila_requests_root: Root
 message SilaPayloadBid {
   bytes parent_block_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes parent_block_root = 2 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -61,7 +61,7 @@ message SilaPayloadBid {
     (sila.eth.ext.ssz_size) = "?,48",
     (sila.eth.ext.ssz_max) = "max_blob_commitments.size"
   ];
-  bytes execution_requests_root = 12 [ (sila.eth.ext.ssz_size) = "32" ];
+  bytes sila_requests_root = 12 [ (sila.eth.ext.ssz_size) = "32" ];
 }
 
 // SignedSilaPayloadBid wraps an sila payload bid with a signature.
@@ -186,8 +186,8 @@ message BeaconBlockGloas {
 }
 
 // BeaconBlockBodyGloas represents the body of a beacon block in the Gloas fork.
-// New fields: signed_sila_payload_bid, payload_attestations, parent_execution_requests
-// Removed fields: sila_payload, blob_kzg_commitments, execution_requests
+// New fields: signed_sila_payload_bid, payload_attestations, parent_sila_requests
+// Removed fields: sila_payload, blob_kzg_commitments, sila_requests
 //
 // Spec:
 // class BeaconBlockBody(Container):
@@ -203,7 +203,7 @@ message BeaconBlockGloas {
 //     bls_to_execution_changes: List[SignedBLSToExecutionChange, MAX_BLS_TO_EXECUTION_CHANGES]
 //     signed_sila_payload_bid: SignedSilaPayloadBid
 //     payload_attestations: List[PayloadAttestation, MAX_PAYLOAD_ATTESTATIONS]
-//     parent_execution_requests: ExecutionRequests
+//     parent_sila_requests: SilaRequests
 message BeaconBlockBodyGloas {
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
   SilaExecutionData sila_execution_data = 2;
@@ -225,7 +225,7 @@ message BeaconBlockBodyGloas {
   SignedSilaPayloadBid signed_sila_payload_bid = 11;
   repeated PayloadAttestation payload_attestations = 12
       [ (sila.eth.ext.ssz_max) = "payload_attestation.size" ];
-  sila.silaengine.v1.ExecutionRequests parent_execution_requests = 13;
+  sila.silaengine.v1.SilaRequests parent_sila_requests = 13;
 }
 
 // SignedBeaconBlockGloas represents a signed beacon block in the Gloas fork.
@@ -503,13 +503,13 @@ message DataColumnSidecarGloas {
 // Spec:
 // class SilaPayloadEnvelope(Container):
 //     payload: SilaPayload
-//     execution_requests: ExecutionRequests
+//     sila_requests: SilaRequests
 //     builder_index: BuilderIndex
 //     beacon_block_root: Root
 //     parent_beacon_block_root: Root
 message SilaPayloadEnvelope {
   sila.silaengine.v1.SilaPayloadGloas payload = 1;
-  sila.silaengine.v1.ExecutionRequests execution_requests = 2;
+  sila.silaengine.v1.SilaRequests sila_requests = 2;
   uint64 builder_index = 3 [ (sila.eth.ext.cast_type) =
                                  "github.com/sila-chain/Sila-Consensus-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];
@@ -536,7 +536,7 @@ message SignedSilaPayloadEnvelope {
 // the block_hash.
 message BlindedSilaPayloadEnvelope {
   bytes block_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
-  sila.silaengine.v1.ExecutionRequests execution_requests = 2;
+  sila.silaengine.v1.SilaRequests sila_requests = 2;
   uint64 builder_index = 3 [ (sila.eth.ext.cast_type) =
                                  "github.com/sila-chain/Sila-Consensus-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];
@@ -560,7 +560,7 @@ message SignedBlindedSilaPayloadEnvelope {
 // payload_root so HTR matches the full envelope. Distinct from the storage-form BlindedSilaPayloadEnvelope above.
 message WireBlindedSilaPayloadEnvelope {
   bytes payload_root = 1 [ (sila.eth.ext.ssz_size) = "32" ];
-  sila.silaengine.v1.ExecutionRequests execution_requests = 2;
+  sila.silaengine.v1.SilaRequests sila_requests = 2;
   uint64 builder_index = 3 [ (sila.eth.ext.cast_type) =
                                  "github.com/sila-chain/Sila-Consensus-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];

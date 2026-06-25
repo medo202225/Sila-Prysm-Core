@@ -505,12 +505,12 @@ func (b *BuilderBidElectra) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(b.BlobKzgCommitments) * 48
 
-	// Offset (2) 'ExecutionRequests'
+	// Offset (2) 'SilaRequests'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.ExecutionRequests == nil {
-		b.ExecutionRequests = new(v1.ExecutionRequests)
+	if b.SilaRequests == nil {
+		b.SilaRequests = new(v1.SilaRequests)
 	}
-	offset += b.ExecutionRequests.SizeSSZ()
+	offset += b.SilaRequests.SizeSSZ()
 
 	// Field (3) 'Value'
 	if size := len(b.Value); size != 32 {
@@ -544,8 +544,8 @@ func (b *BuilderBidElectra) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		dst = append(dst, b.BlobKzgCommitments[ii]...)
 	}
 
-	// Field (2) 'ExecutionRequests'
-	if dst, err = b.ExecutionRequests.MarshalSSZTo(dst); err != nil {
+	// Field (2) 'SilaRequests'
+	if dst, err = b.SilaRequests.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -577,7 +577,7 @@ func (b *BuilderBidElectra) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrOffset
 	}
 
-	// Offset (2) 'ExecutionRequests'
+	// Offset (2) 'SilaRequests'
 	if o2 = ssz.ReadOffset(buf[8:12]); o2 > size || o1 > o2 {
 		return ssz.ErrOffset
 	}
@@ -621,13 +621,13 @@ func (b *BuilderBidElectra) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (2) 'ExecutionRequests'
+	// Field (2) 'SilaRequests'
 	{
 		buf = tail[o2:]
-		if b.ExecutionRequests == nil {
-			b.ExecutionRequests = new(v1.ExecutionRequests)
+		if b.SilaRequests == nil {
+			b.SilaRequests = new(v1.SilaRequests)
 		}
-		if err = b.ExecutionRequests.UnmarshalSSZ(buf); err != nil {
+		if err = b.SilaRequests.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -647,11 +647,11 @@ func (b *BuilderBidElectra) SizeSSZ() (size int) {
 	// Field (1) 'BlobKzgCommitments'
 	size += len(b.BlobKzgCommitments) * 48
 
-	// Field (2) 'ExecutionRequests'
-	if b.ExecutionRequests == nil {
-		b.ExecutionRequests = new(v1.ExecutionRequests)
+	// Field (2) 'SilaRequests'
+	if b.SilaRequests == nil {
+		b.SilaRequests = new(v1.SilaRequests)
 	}
-	size += b.ExecutionRequests.SizeSSZ()
+	size += b.SilaRequests.SizeSSZ()
 
 	return
 }
@@ -689,8 +689,8 @@ func (b *BuilderBidElectra) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		hh.MerkleizeWithMixin(subIndx, numItems, 4096)
 	}
 
-	// Field (2) 'ExecutionRequests'
-	if err = b.ExecutionRequests.HashTreeRootWith(hh); err != nil {
+	// Field (2) 'SilaRequests'
+	if err = b.SilaRequests.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -1576,12 +1576,12 @@ func (b *BeaconBlockBodyElectra) MarshalSSZTo(buf []byte) (dst []byte, err error
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(b.BlobKzgCommitments) * 48
 
-	// Offset (12) 'ExecutionRequests'
+	// Offset (12) 'SilaRequests'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.ExecutionRequests == nil {
-		b.ExecutionRequests = new(v1.ExecutionRequests)
+	if b.SilaRequests == nil {
+		b.SilaRequests = new(v1.SilaRequests)
 	}
-	offset += b.ExecutionRequests.SizeSSZ()
+	offset += b.SilaRequests.SizeSSZ()
 
 	// Field (3) 'ProposerSlashings'
 	if size := len(b.ProposerSlashings); size > 16 {
@@ -1681,8 +1681,8 @@ func (b *BeaconBlockBodyElectra) MarshalSSZTo(buf []byte) (dst []byte, err error
 		dst = append(dst, b.BlobKzgCommitments[ii]...)
 	}
 
-	// Field (12) 'ExecutionRequests'
-	if dst, err = b.ExecutionRequests.MarshalSSZTo(dst); err != nil {
+	// Field (12) 'SilaRequests'
+	if dst, err = b.SilaRequests.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -1772,7 +1772,7 @@ func (b *BeaconBlockBodyElectra) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrOffset
 	}
 
-	// Offset (12) 'ExecutionRequests'
+	// Offset (12) 'SilaRequests'
 	if o12 = ssz.ReadOffset(buf[392:396]); o12 > size || o11 > o12 {
 		return ssz.ErrOffset
 	}
@@ -1920,13 +1920,13 @@ func (b *BeaconBlockBodyElectra) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (12) 'ExecutionRequests'
+	// Field (12) 'SilaRequests'
 	{
 		buf = tail[o12:]
-		if b.ExecutionRequests == nil {
-			b.ExecutionRequests = new(v1.ExecutionRequests)
+		if b.SilaRequests == nil {
+			b.SilaRequests = new(v1.SilaRequests)
 		}
-		if err = b.ExecutionRequests.UnmarshalSSZ(buf); err != nil {
+		if err = b.SilaRequests.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -1970,11 +1970,11 @@ func (b *BeaconBlockBodyElectra) SizeSSZ() (size int) {
 	// Field (11) 'BlobKzgCommitments'
 	size += len(b.BlobKzgCommitments) * 48
 
-	// Field (12) 'ExecutionRequests'
-	if b.ExecutionRequests == nil {
-		b.ExecutionRequests = new(v1.ExecutionRequests)
+	// Field (12) 'SilaRequests'
+	if b.SilaRequests == nil {
+		b.SilaRequests = new(v1.SilaRequests)
 	}
-	size += b.ExecutionRequests.SizeSSZ()
+	size += b.SilaRequests.SizeSSZ()
 
 	return
 }
@@ -2132,8 +2132,8 @@ func (b *BeaconBlockBodyElectra) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		hh.MerkleizeWithMixin(subIndx, numItems, 4096)
 	}
 
-	// Field (12) 'ExecutionRequests'
-	if err = b.ExecutionRequests.HashTreeRootWith(hh); err != nil {
+	// Field (12) 'SilaRequests'
+	if err = b.SilaRequests.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -2478,12 +2478,12 @@ func (b *BlindedBeaconBlockBodyElectra) MarshalSSZTo(buf []byte) (dst []byte, er
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(b.BlobKzgCommitments) * 48
 
-	// Offset (12) 'ExecutionRequests'
+	// Offset (12) 'SilaRequests'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.ExecutionRequests == nil {
-		b.ExecutionRequests = new(v1.ExecutionRequests)
+	if b.SilaRequests == nil {
+		b.SilaRequests = new(v1.SilaRequests)
 	}
-	offset += b.ExecutionRequests.SizeSSZ()
+	offset += b.SilaRequests.SizeSSZ()
 
 	// Field (3) 'ProposerSlashings'
 	if size := len(b.ProposerSlashings); size > 16 {
@@ -2583,8 +2583,8 @@ func (b *BlindedBeaconBlockBodyElectra) MarshalSSZTo(buf []byte) (dst []byte, er
 		dst = append(dst, b.BlobKzgCommitments[ii]...)
 	}
 
-	// Field (12) 'ExecutionRequests'
-	if dst, err = b.ExecutionRequests.MarshalSSZTo(dst); err != nil {
+	// Field (12) 'SilaRequests'
+	if dst, err = b.SilaRequests.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -2674,7 +2674,7 @@ func (b *BlindedBeaconBlockBodyElectra) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrOffset
 	}
 
-	// Offset (12) 'ExecutionRequests'
+	// Offset (12) 'SilaRequests'
 	if o12 = ssz.ReadOffset(buf[392:396]); o12 > size || o11 > o12 {
 		return ssz.ErrOffset
 	}
@@ -2822,13 +2822,13 @@ func (b *BlindedBeaconBlockBodyElectra) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (12) 'ExecutionRequests'
+	// Field (12) 'SilaRequests'
 	{
 		buf = tail[o12:]
-		if b.ExecutionRequests == nil {
-			b.ExecutionRequests = new(v1.ExecutionRequests)
+		if b.SilaRequests == nil {
+			b.SilaRequests = new(v1.SilaRequests)
 		}
-		if err = b.ExecutionRequests.UnmarshalSSZ(buf); err != nil {
+		if err = b.SilaRequests.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -2872,11 +2872,11 @@ func (b *BlindedBeaconBlockBodyElectra) SizeSSZ() (size int) {
 	// Field (11) 'BlobKzgCommitments'
 	size += len(b.BlobKzgCommitments) * 48
 
-	// Field (12) 'ExecutionRequests'
-	if b.ExecutionRequests == nil {
-		b.ExecutionRequests = new(v1.ExecutionRequests)
+	// Field (12) 'SilaRequests'
+	if b.SilaRequests == nil {
+		b.SilaRequests = new(v1.SilaRequests)
 	}
-	size += b.ExecutionRequests.SizeSSZ()
+	size += b.SilaRequests.SizeSSZ()
 
 	return
 }
@@ -3034,8 +3034,8 @@ func (b *BlindedBeaconBlockBodyElectra) HashTreeRootWith(hh *ssz.Hasher) (err er
 		hh.MerkleizeWithMixin(subIndx, numItems, 4096)
 	}
 
-	// Field (12) 'ExecutionRequests'
-	if err = b.ExecutionRequests.HashTreeRootWith(hh); err != nil {
+	// Field (12) 'SilaRequests'
+	if err = b.SilaRequests.HashTreeRootWith(hh); err != nil {
 		return
 	}
 

@@ -26,7 +26,7 @@ func validSilaPayloadBid() *silapb.SilaPayloadBid {
 		ExecutionPayment:      8,
 		BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x05}, 48)},
 		FeeRecipient:          bytes.Repeat([]byte{0x06}, 20),
-		ExecutionRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
+		SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 	}
 }
 

@@ -40,7 +40,7 @@ func (vs *Server) storeSilaPayloadEnvelope(
 	parentRoot := sBlk.Block().ParentRoot()
 	envelope := &silapb.SilaPayloadEnvelope{
 		Payload:               payload,
-		ExecutionRequests:     local.ExecutionRequests,
+		SilaRequests:     local.SilaRequests,
 		BuilderIndex:          params.BeaconConfig().BuilderIndexSelfBuild,
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: parentRoot[:],
@@ -171,11 +171,11 @@ func (vs *Server) PublishSilaPayloadEnvelope(
 	return &emptypb.Empty{}, nil
 }
 
-// setParentExecutionRequests populates the parent_execution_requests field
+// setParentSilaRequests populates the parent_sila_requests field
 // in the block body based on the parent's sila payload envelope.
-func (vs *Server) setParentExecutionRequests(ctx context.Context, sBlk interfaces.SignedBeaconBlock, head state.BeaconState, parentFull bool) error {
+func (vs *Server) setParentSilaRequests(ctx context.Context, sBlk interfaces.SignedBeaconBlock, head state.BeaconState, parentFull bool) error {
 	if head.Version() < version.Gloas {
-		return sBlk.SetParentExecutionRequests(&silaenginev1.ExecutionRequests{})
+		return sBlk.SetParentSilaRequests(&silaenginev1.SilaRequests{})
 	}
 
 	parentRoot := sBlk.Block().ParentRoot()
@@ -184,7 +184,7 @@ func (vs *Server) setParentExecutionRequests(ctx context.Context, sBlk interface
 		return errors.Wrap(err, "could not get parent block slot")
 	}
 	if slots.ToEpoch(parentSlot) < params.BeaconConfig().GloasForkEpoch || !parentFull {
-		return sBlk.SetParentExecutionRequests(&silaenginev1.ExecutionRequests{})
+		return sBlk.SetParentSilaRequests(&silaenginev1.SilaRequests{})
 	}
 
 	// TODO: replace DB lookup with a single-entry cache (blockroot → envelope).
@@ -192,5 +192,5 @@ func (vs *Server) setParentExecutionRequests(ctx context.Context, sBlk interface
 	if err != nil {
 		return errors.Wrap(err, "could not get parent sila payload envelope")
 	}
-	return sBlk.SetParentExecutionRequests(signedEnvelope.Message.ExecutionRequests)
+	return sBlk.SetParentSilaRequests(signedEnvelope.Message.SilaRequests)
 }

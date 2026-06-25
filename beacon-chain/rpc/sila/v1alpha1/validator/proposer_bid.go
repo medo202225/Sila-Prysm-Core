@@ -109,9 +109,9 @@ func (vs *Server) createSelfBuildSilaPayloadBid(
 	}
 
 	parentBlockRoot := block.ParentRoot()
-	executionRequestsRoot, err := local.ExecutionRequests.HashTreeRoot()
+	silaRequestsRoot, err := local.SilaRequests.HashTreeRoot()
 	if err != nil {
-		return nil, errors.Wrap(err, "could not compute execution requests root")
+		return nil, errors.Wrap(err, "could not compute sila requests root")
 	}
 	return &silapb.SilaPayloadBid{
 		ParentBlockHash:       ed.ParentHash(),
@@ -125,6 +125,6 @@ func (vs *Server) createSelfBuildSilaPayloadBid(
 		Value:                 0,
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    local.BlobsBundler.GetKzgCommitments(),
-		ExecutionRequestsRoot: executionRequestsRoot[:],
+		SilaRequestsRoot: silaRequestsRoot[:],
 	}, nil
 }

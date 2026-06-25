@@ -247,7 +247,7 @@ func testSignedSilaPayloadBid(t *testing.T, slot primitives.Slot) *silapb.Signed
 			GasLimit:              30_000_000,
 			Value:                 100,
 			ExecutionPayment:      0,
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: bytes.Repeat([]byte{0x06}, 96),
 	}

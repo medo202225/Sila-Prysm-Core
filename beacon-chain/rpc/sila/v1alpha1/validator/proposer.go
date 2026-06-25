@@ -245,8 +245,8 @@ func (vs *Server) BuildBlockParallel(ctx context.Context, sBlk interfaces.Signed
 			if err := sBlk.SetPayloadAttestations(vs.getPayloadAttestations(ctx, head, sBlk.Block().ParentRoot())); err != nil {
 				log.WithError(err).Error("Could not set payload attestations")
 			}
-			if err := vs.setParentExecutionRequests(ctx, sBlk, head, parentFull); err != nil {
-				log.WithError(err).Error("Could not set parent execution requests")
+			if err := vs.setParentSilaRequests(ctx, sBlk, head, parentFull); err != nil {
+				log.WithError(err).Error("Could not set parent sila requests")
 			}
 		}
 	})

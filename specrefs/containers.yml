@@ -236,7 +236,7 @@
         bls_to_execution_changes: List[SignedBLSToExecutionChange, MAX_BLS_TO_EXECUTION_CHANGES]
         blob_kzg_commitments: List[KZGCommitment, MAX_BLOB_COMMITMENTS_PER_BLOCK]
         # [New in Electra]
-        execution_requests: ExecutionRequests
+        sila_requests: SilaRequests
     </spec>
 
 - name: BeaconBlockBody#gloas
@@ -259,13 +259,13 @@
         # [Modified in Gloas:SIP7732]
         # Removed `blob_kzg_commitments`
         # [Modified in Gloas:SIP7732]
-        # Removed `execution_requests`
+        # Removed `sila_requests`
         # [New in Gloas:SIP7732]
         signed_sila_payload_bid: SignedSilaPayloadBid
         # [New in Gloas:SIP7732]
         payload_attestations: List[PayloadAttestation, MAX_PAYLOAD_ATTESTATIONS]
         # [New in Gloas:SIP7732]
-        parent_execution_requests: ExecutionRequests
+        parent_sila_requests: SilaRequests
     </spec>
 
 - name: BeaconBlockHeader#phase0
@@ -1070,7 +1070,7 @@
         value: Gwei
         execution_payment: Gwei
         blob_kzg_commitments: List[KZGCommitment, MAX_BLOB_COMMITMENTS_PER_BLOCK]
-        execution_requests_root: Root
+        sila_requests_root: Root
     </spec>
 
 - name: SilaPayloadBid#heze
@@ -1089,7 +1089,7 @@
         value: Gwei
         execution_payment: Gwei
         blob_kzg_commitments: List[KZGCommitment, MAX_BLOB_COMMITMENTS_PER_BLOCK]
-        execution_requests_root: Root
+        sila_requests_root: Root
         # [New in Heze:SIP7805]
         inclusion_list_bits: Bitvector[INCLUSION_LIST_COMMITTEE_SIZE]
     </spec>
@@ -1100,7 +1100,7 @@
     <spec ssz_object="SilaPayloadEnvelope" fork="gloas" hash="3df22cd3">
     class SilaPayloadEnvelope(Container):
         payload: SilaPayload
-        execution_requests: ExecutionRequests
+        sila_requests: SilaRequests
         builder_index: BuilderIndex
         beacon_block_root: Root
         parent_beacon_block_root: Root
@@ -1182,13 +1182,13 @@
         excess_blob_gas: uint64
     </spec>
 
-- name: ExecutionRequests#electra
+- name: SilaRequests#electra
   sources:
     - file: proto/silaengine/v1/electra.proto
-      search: message ExecutionRequests {
+      search: message SilaRequests {
   spec: |
-    <spec ssz_object="ExecutionRequests" fork="electra" hash="048c4a44">
-    class ExecutionRequests(Container):
+    <spec ssz_object="SilaRequests" fork="electra" hash="048c4a44">
+    class SilaRequests(Container):
         # [New in Electra:SIP6110]
         deposits: List[DepositRequest, MAX_DEPOSIT_REQUESTS_PER_PAYLOAD]
         # [New in Electra:SIP7002:SIP7251]

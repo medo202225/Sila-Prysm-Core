@@ -126,7 +126,7 @@ type SilaPayloadHeaderDeneb struct {
 // Electra
 // ----------------------------------------------------------------------------
 
-type ExecutionRequests struct {
+type SilaRequests struct {
 	Deposits       []*DepositRequest       `json:"deposits"`
 	Withdrawals    []*WithdrawalRequest    `json:"withdrawals"`
 	Consolidations []*ConsolidationRequest `json:"consolidations"`

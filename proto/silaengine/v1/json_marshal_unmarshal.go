@@ -318,7 +318,7 @@ type GetPayloadV4ResponseJson struct {
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleJSON            `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
-	ExecutionRequests     []hexutil.Bytes            `json:"executionRequests"`
+	SilaRequests     []hexutil.Bytes            `json:"silaRequests"`
 }
 
 type GetPayloadV5ResponseJson struct {
@@ -326,7 +326,7 @@ type GetPayloadV5ResponseJson struct {
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleV2JSON          `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
-	ExecutionRequests     []hexutil.Bytes            `json:"executionRequests"`
+	SilaRequests     []hexutil.Bytes            `json:"silaRequests"`
 }
 
 // SilaPayloadGloasJSON is the JSON representation of SilaPayloadV4 (Amsterdam).
@@ -357,7 +357,7 @@ type GetPayloadV6ResponseJson struct {
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleV2JSON          `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
-	ExecutionRequests     []hexutil.Bytes            `json:"executionRequests"`
+	SilaRequests     []hexutil.Bytes            `json:"silaRequests"`
 }
 
 // SilaPayloadBodyV2 represents the SilaEngine API SilaPayloadBodyV2 type (Amsterdam).
@@ -1367,14 +1367,14 @@ func (e *ExecutionBundleElectra) UnmarshalJSON(enc []byte) error {
 
 	e.ShouldOverrideBuilder = dec.ShouldOverrideBuilder
 
-	requests := make([][]byte, len(dec.ExecutionRequests))
-	for i, request := range dec.ExecutionRequests {
+	requests := make([][]byte, len(dec.SilaRequests))
+	for i, request := range dec.SilaRequests {
 		r := make([]byte, len(request))
 		copy(r, request)
 		requests[i] = r
 	}
 
-	e.ExecutionRequests = requests
+	e.SilaRequests = requests
 
 	return nil
 }
@@ -1498,14 +1498,14 @@ func (e *ExecutionBundleFulu) UnmarshalJSON(enc []byte) error {
 
 	e.ShouldOverrideBuilder = dec.ShouldOverrideBuilder
 
-	requests := make([][]byte, len(dec.ExecutionRequests))
-	for i, request := range dec.ExecutionRequests {
+	requests := make([][]byte, len(dec.SilaRequests))
+	for i, request := range dec.SilaRequests {
 		r := make([]byte, len(request))
 		copy(r, request)
 		requests[i] = r
 	}
 
-	e.ExecutionRequests = requests
+	e.SilaRequests = requests
 
 	return nil
 }
@@ -1740,13 +1740,13 @@ func (e *ExecutionBundleGloas) UnmarshalJSON(enc []byte) error {
 
 	e.ShouldOverrideBuilder = dec.ShouldOverrideBuilder
 
-	requests := make([][]byte, len(dec.ExecutionRequests))
-	for i, request := range dec.ExecutionRequests {
+	requests := make([][]byte, len(dec.SilaRequests))
+	for i, request := range dec.SilaRequests {
 		r := make([]byte, len(request))
 		copy(r, request)
 		requests[i] = r
 	}
-	e.ExecutionRequests = requests
+	e.SilaRequests = requests
 
 	return nil
 }

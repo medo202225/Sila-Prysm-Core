@@ -50,7 +50,7 @@ type SilaEngineClient struct {
 }
 
 // NewPayload --
-func (e *SilaEngineClient) NewPayload(_ context.Context, _ interfaces.ExecutionData, _ []common.Hash, _ *common.Hash, _ *pb.ExecutionRequests) ([]byte, error) {
+func (e *SilaEngineClient) NewPayload(_ context.Context, _ interfaces.ExecutionData, _ []common.Hash, _ *common.Hash, _ *pb.SilaRequests) ([]byte, error) {
 	return e.NewPayloadResp, e.ErrNewPayload
 }
 
@@ -182,7 +182,7 @@ func (e *SilaEngineClient) ReconstructSilaPayloadEnvelope(
 	return &silapb.SignedSilaPayloadEnvelope{
 		Message: &silapb.SilaPayloadEnvelope{
 			Payload:           p,
-			ExecutionRequests: envelope.Message.ExecutionRequests,
+			SilaRequests: envelope.Message.SilaRequests,
 			BuilderIndex:      envelope.Message.BuilderIndex,
 			BeaconBlockRoot:   envelope.Message.BeaconBlockRoot,
 		},

@@ -573,7 +573,7 @@ func NewBeaconStateGloas(options ...func(state *silapb.BeaconStateGloas) error) 
 			PrevRandao:            make([]byte, 32),
 			FeeRecipient:          make([]byte, 20),
 			BlobKzgCommitments:    [][]byte{make([]byte, 48)},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Builders:                     make([]*silapb.Builder, 0),
 		SilaPayloadAvailability: make([]byte, 1024),

@@ -46,10 +46,10 @@ func gloasEnvelopeFixture(t *testing.T, blockRoot [32]byte) (*silapb.BeaconState
 		ExecutionAddress: make([]byte, 20),
 	}}
 
-	emptyRequestsRoot, err := silaenginev1.EmptyExecutionRequestsHashTreeRoot()
+	emptyRequestsRoot, err := silaenginev1.EmptySilaRequestsHashTreeRoot()
 	require.NoError(t, err)
 
-	base.LatestSilaPayloadBid.ExecutionRequestsRoot = emptyRequestsRoot[:]
+	base.LatestSilaPayloadBid.SilaRequestsRoot = emptyRequestsRoot[:]
 	base.LatestSilaPayloadBid.BlobKzgCommitments = nil
 
 	// Build a payload that is consistent with the committed bid and the state.
@@ -78,7 +78,7 @@ func gloasEnvelopeFixture(t *testing.T, blockRoot [32]byte) (*silapb.BeaconState
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: parentBeaconRoot,
 		Payload:               payload,
-		ExecutionRequests:     &silaenginev1.ExecutionRequests{},
+		SilaRequests:     &silaenginev1.SilaRequests{},
 	}
 
 	domain, err := signing.Domain(base.Fork, slots.ToEpoch(slot), cfg.DomainBeaconBuilder, base.GenesisValidatorsRoot)

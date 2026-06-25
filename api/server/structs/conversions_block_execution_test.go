@@ -487,8 +487,8 @@ func TestDepositRequest_ToConsensus_HappyPath(t *testing.T) {
 	require.DeepEqual(t, result.Signature, fillByteSlice(96, 0xdd))
 }
 
-func TestExecutionRequestsFromConsensus_HappyPath(t *testing.T) {
-	er := &silaenginev1.ExecutionRequests{
+func TestSilaRequestsFromConsensus_HappyPath(t *testing.T) {
+	er := &silaenginev1.SilaRequests{
 		Deposits: []*silaenginev1.DepositRequest{
 			{
 				Pubkey:                fillByteSlice(48, 0xba),
@@ -514,7 +514,7 @@ func TestExecutionRequestsFromConsensus_HappyPath(t *testing.T) {
 		},
 	}
 
-	result := ExecutionRequestsFromConsensus(er)
+	result := SilaRequestsFromConsensus(er)
 	require.NotNil(t, result)
 	require.Equal(t, 1, len(result.Deposits))
 	require.Equal(t, "33", result.Deposits[0].Amount)
@@ -524,8 +524,8 @@ func TestExecutionRequestsFromConsensus_HappyPath(t *testing.T) {
 	require.Equal(t, "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", result.Consolidations[0].TargetPubkey)
 }
 
-func TestExecutionRequests_ToConsensus_HappyPath(t *testing.T) {
-	execReq := &ExecutionRequests{
+func TestSilaRequests_ToConsensus_HappyPath(t *testing.T) {
+	execReq := &SilaRequests{
 		Deposits: []*DepositRequest{
 			{
 				Pubkey:                hexutil.Encode(fillByteSlice(48, 0xbb)),

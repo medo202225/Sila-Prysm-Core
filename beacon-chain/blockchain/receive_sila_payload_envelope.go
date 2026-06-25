@@ -215,13 +215,13 @@ func (s *Service) postPayloadTasks(ctx context.Context, envelope interfaces.ROSi
 			s.cfg.PayloadIDCache.Set(proposingSlot, root, pId)
 		}
 	}()
-	if requests := envelope.ExecutionRequests(); requests != nil && len(requests.Deposits) > 0 {
+	if requests := envelope.SilaRequests(); requests != nil && len(requests.Deposits) > 0 {
 		s.prefetchDepositSignatures(requests)
 	}
 	return nil
 }
 
-func (s *Service) prefetchDepositSignatures(requests *silaenginev1.ExecutionRequests) {
+func (s *Service) prefetchDepositSignatures(requests *silaenginev1.SilaRequests) {
 	invalidIdx, err := helpers.BatchVerifyDepositRequestSignatures(s.ctx, requests.Deposits)
 	if err != nil {
 		log.WithError(err).Debug("Could not batch verify deposit signatures for prefetch")
@@ -229,7 +229,7 @@ func (s *Service) prefetchDepositSignatures(requests *silaenginev1.ExecutionRequ
 	}
 	root, err := requests.HashTreeRoot()
 	if err != nil {
-		log.WithError(err).Debug("Could not hash execution requests for deposit sig prefetch")
+		log.WithError(err).Debug("Could not hash sila requests for deposit sig prefetch")
 		return
 	}
 	cache.DepositSig.Put(root, invalidIdx)
@@ -261,7 +261,7 @@ func (s *Service) callNewPayload(
 	payload interfaces.ExecutionData,
 	versionedHashes []common.Hash,
 	parentRoot common.Hash,
-	requests *silaenginev1.ExecutionRequests,
+	requests *silaenginev1.SilaRequests,
 	slot primitives.Slot,
 ) (bool, error) {
 	_, err := s.cfg.SilaEngineCaller.NewPayload(ctx, payload, versionedHashes, &parentRoot, requests)
@@ -297,7 +297,7 @@ func (s *Service) notifyNewEnvelopeFromBlock(ctx context.Context, b blocks.ROBlo
 	for i, c := range sbid.Message.BlobKzgCommitments {
 		versionedHashes[i] = primitives.ConvertKzgCommitmentToVersionedHash(c)
 	}
-	return s.callNewPayload(ctx, payload, versionedHashes, common.Hash(envelope.ParentBeaconBlockRoot()), envelope.ExecutionRequests(), envelope.Slot())
+	return s.callNewPayload(ctx, payload, versionedHashes, common.Hash(envelope.ParentBeaconBlockRoot()), envelope.SilaRequests(), envelope.Slot())
 }
 
 // The returned boolean indicates whether the payload was valid or if it was accepted as syncing (optimistic).
@@ -321,7 +321,7 @@ func (s *Service) notifyNewEnvelope(ctx context.Context, st state.BeaconState, e
 			versionedHashes[i] = primitives.ConvertKzgCommitmentToVersionedHash(c)
 		}
 	}
-	return s.callNewPayload(ctx, payload, versionedHashes, common.Hash(envelope.ParentBeaconBlockRoot()), envelope.ExecutionRequests(), envelope.Slot())
+	return s.callNewPayload(ctx, payload, versionedHashes, common.Hash(envelope.ParentBeaconBlockRoot()), envelope.SilaRequests(), envelope.Slot())
 }
 
 func (s *Service) validateExecutionOnEnvelope(ctx context.Context, st state.BeaconState, envelope interfaces.ROSilaPayloadEnvelope) (bool, error) {

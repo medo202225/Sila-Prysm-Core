@@ -152,10 +152,10 @@ func (h silaPayloadBidGloas) FeeRecipient() [20]byte {
 	return [20]byte(h.payload.FeeRecipient)
 }
 
-// ExecutionRequestsRoot returns the hash tree root of the execution requests.
-func (h silaPayloadBidGloas) ExecutionRequestsRoot() [32]byte {
-	if h.payload == nil || len(h.payload.ExecutionRequestsRoot) < 32 {
+// SilaRequestsRoot returns the hash tree root of the sila requests.
+func (h silaPayloadBidGloas) SilaRequestsRoot() [32]byte {
+	if h.payload == nil || len(h.payload.SilaRequestsRoot) < 32 {
 		return [32]byte{}
 	}
-	return [32]byte(h.payload.ExecutionRequestsRoot)
+	return [32]byte(h.payload.SilaRequestsRoot)
 }

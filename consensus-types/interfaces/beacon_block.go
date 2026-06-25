@@ -68,10 +68,10 @@ type ReadOnlyBeaconBlockBody interface {
 	Execution() (ExecutionData, error)
 	BLSToExecutionChanges() ([]*silapb.SignedBLSToExecutionChange, error)
 	BlobKzgCommitments() ([][]byte, error)
-	ExecutionRequests() (*silaenginev1.ExecutionRequests, error)
+	SilaRequests() (*silaenginev1.SilaRequests, error)
 	PayloadAttestations() ([]*silapb.PayloadAttestation, error)
 	SignedSilaPayloadBid() (*silapb.SignedSilaPayloadBid, error)
-	ParentExecutionRequests() (*silaenginev1.ExecutionRequests, error)
+	ParentSilaRequests() (*silaenginev1.SilaRequests, error)
 }
 
 type SignedBeaconBlock interface {
@@ -93,10 +93,10 @@ type SignedBeaconBlock interface {
 	SetProposerIndex(idx primitives.ValidatorIndex)
 	SetSlot(slot primitives.Slot)
 	SetSignature(sig []byte)
-	SetExecutionRequests(er *silaenginev1.ExecutionRequests) error
+	SetSilaRequests(er *silaenginev1.SilaRequests) error
 	SetPayloadAttestations(pa []*silapb.PayloadAttestation) error
 	SetSignedSilaPayloadBid(header *silapb.SignedSilaPayloadBid) error
-	SetParentExecutionRequests(r *silaenginev1.ExecutionRequests) error
+	SetParentSilaRequests(r *silaenginev1.SilaRequests) error
 	Unblind(e ExecutionData) error
 }
 

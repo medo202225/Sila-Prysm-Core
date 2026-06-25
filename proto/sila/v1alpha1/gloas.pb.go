@@ -38,7 +38,7 @@ type SilaPayloadBid struct {
 	Value                 github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,9,opt,name=value,proto3" json:"value,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	ExecutionPayment      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,10,opt,name=execution_payment,json=executionPayment,proto3" json:"execution_payment,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	BlobKzgCommitments    [][]byte                                                                 `protobuf:"bytes,11,rep,name=blob_kzg_commitments,json=blobKzgCommitments,proto3" json:"blob_kzg_commitments,omitempty" ssz-max:"4096" ssz-size:"?,48"`
-	ExecutionRequestsRoot []byte                                                                   `protobuf:"bytes,12,opt,name=execution_requests_root,json=executionRequestsRoot,proto3" json:"execution_requests_root,omitempty" ssz-size:"32"`
+	SilaRequestsRoot []byte                                                                   `protobuf:"bytes,12,opt,name=sila_requests_root,json=silaRequestsRoot,proto3" json:"sila_requests_root,omitempty" ssz-size:"32"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -150,9 +150,9 @@ func (x *SilaPayloadBid) GetBlobKzgCommitments() [][]byte {
 	return nil
 }
 
-func (x *SilaPayloadBid) GetExecutionRequestsRoot() []byte {
+func (x *SilaPayloadBid) GetSilaRequestsRoot() []byte {
 	if x != nil {
-		return x.ExecutionRequestsRoot
+		return x.SilaRequestsRoot
 	}
 	return nil
 }
@@ -659,7 +659,7 @@ type BeaconBlockBodyGloas struct {
 	BlsToExecutionChanges     []*SignedBLSToExecutionChange `protobuf:"bytes,10,rep,name=bls_to_execution_changes,json=blsToExecutionChanges,proto3" json:"bls_to_execution_changes,omitempty" ssz-max:"16"`
 	SignedSilaPayloadBid *SignedSilaPayloadBid    `protobuf:"bytes,11,opt,name=signed_sila_payload_bid,json=signedSilaPayloadBid,proto3" json:"signed_sila_payload_bid,omitempty"`
 	PayloadAttestations       []*PayloadAttestation         `protobuf:"bytes,12,rep,name=payload_attestations,json=payloadAttestations,proto3" json:"payload_attestations,omitempty" ssz-max:"4"`
-	ParentExecutionRequests   *v1.ExecutionRequests         `protobuf:"bytes,13,opt,name=parent_execution_requests,json=parentExecutionRequests,proto3" json:"parent_execution_requests,omitempty"`
+	ParentSilaRequests   *v1.SilaRequests         `protobuf:"bytes,13,opt,name=parent_sila_requests,json=parentSilaRequests,proto3" json:"parent_sila_requests,omitempty"`
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
@@ -778,9 +778,9 @@ func (x *BeaconBlockBodyGloas) GetPayloadAttestations() []*PayloadAttestation {
 	return nil
 }
 
-func (x *BeaconBlockBodyGloas) GetParentExecutionRequests() *v1.ExecutionRequests {
+func (x *BeaconBlockBodyGloas) GetParentSilaRequests() *v1.SilaRequests {
 	if x != nil {
-		return x.ParentExecutionRequests
+		return x.ParentSilaRequests
 	}
 	return nil
 }
@@ -1604,7 +1604,7 @@ func (x *DataColumnSidecarGloas) GetBeaconBlockRoot() []byte {
 type SilaPayloadEnvelope struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
 	Payload               *v1.SilaPayloadGloas                                                `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
-	ExecutionRequests     *v1.ExecutionRequests                                                    `protobuf:"bytes,2,opt,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
+	SilaRequests     *v1.SilaRequests                                                    `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
 	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	ParentBeaconBlockRoot []byte                                                                   `protobuf:"bytes,5,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
@@ -1649,9 +1649,9 @@ func (x *SilaPayloadEnvelope) GetPayload() *v1.SilaPayloadGloas {
 	return nil
 }
 
-func (x *SilaPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
+func (x *SilaPayloadEnvelope) GetSilaRequests() *v1.SilaRequests {
 	if x != nil {
-		return x.ExecutionRequests
+		return x.SilaRequests
 	}
 	return nil
 }
@@ -1732,7 +1732,7 @@ func (x *SignedSilaPayloadEnvelope) GetSignature() []byte {
 type BlindedSilaPayloadEnvelope struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
 	BlockHash             []byte                                                                   `protobuf:"bytes,1,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
-	ExecutionRequests     *v1.ExecutionRequests                                                    `protobuf:"bytes,2,opt,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
+	SilaRequests     *v1.SilaRequests                                                    `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
 	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	Slot                  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot         `protobuf:"varint,5,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
@@ -1779,9 +1779,9 @@ func (x *BlindedSilaPayloadEnvelope) GetBlockHash() []byte {
 	return nil
 }
 
-func (x *BlindedSilaPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
+func (x *BlindedSilaPayloadEnvelope) GetSilaRequests() *v1.SilaRequests {
 	if x != nil {
-		return x.ExecutionRequests
+		return x.SilaRequests
 	}
 	return nil
 }
@@ -1876,7 +1876,7 @@ func (x *SignedBlindedSilaPayloadEnvelope) GetSignature() []byte {
 type WireBlindedSilaPayloadEnvelope struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
 	PayloadRoot           []byte                                                                   `protobuf:"bytes,1,opt,name=payload_root,json=payloadRoot,proto3" json:"payload_root,omitempty" ssz-size:"32"`
-	ExecutionRequests     *v1.ExecutionRequests                                                    `protobuf:"bytes,2,opt,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
+	SilaRequests     *v1.SilaRequests                                                    `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
 	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	ParentBeaconBlockRoot []byte                                                                   `protobuf:"bytes,5,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
@@ -1921,9 +1921,9 @@ func (x *WireBlindedSilaPayloadEnvelope) GetPayloadRoot() []byte {
 	return nil
 }
 
-func (x *WireBlindedSilaPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
+func (x *WireBlindedSilaPayloadEnvelope) GetSilaRequests() *v1.SilaRequests {
 	if x != nil {
-		return x.ExecutionRequests
+		return x.SilaRequests
 	}
 	return nil
 }
@@ -2907,7 +2907,7 @@ var file_proto_sila_v1alpha1_gloas_proto_goTypes = []any{
 	(*SignedVoluntaryExit)(nil),                       // 30: sila.eth.v1alpha1.SignedVoluntaryExit
 	(*SyncAggregate)(nil),                             // 31: sila.eth.v1alpha1.SyncAggregate
 	(*SignedBLSToExecutionChange)(nil),                // 32: sila.eth.v1alpha1.SignedBLSToExecutionChange
-	(*v1.ExecutionRequests)(nil),                      // 33: sila.silaengine.v1.ExecutionRequests
+	(*v1.SilaRequests)(nil),                      // 33: sila.silaengine.v1.SilaRequests
 	(*Fork)(nil),                                      // 34: sila.eth.v1alpha1.Fork
 	(*BeaconBlockHeader)(nil),                         // 35: sila.eth.v1alpha1.BeaconBlockHeader
 	(*Validator)(nil),                                 // 36: sila.eth.v1alpha1.Validator
@@ -2937,7 +2937,7 @@ var file_proto_sila_v1alpha1_gloas_proto_depIdxs = []int32{
 	32, // 13: sila.eth.v1alpha1.BeaconBlockBodyGloas.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
 	1,  // 14: sila.eth.v1alpha1.BeaconBlockBodyGloas.signed_sila_payload_bid:type_name -> sila.eth.v1alpha1.SignedSilaPayloadBid
 	6,  // 15: sila.eth.v1alpha1.BeaconBlockBodyGloas.payload_attestations:type_name -> sila.eth.v1alpha1.PayloadAttestation
-	33, // 16: sila.eth.v1alpha1.BeaconBlockBodyGloas.parent_execution_requests:type_name -> sila.silaengine.v1.ExecutionRequests
+	33, // 16: sila.eth.v1alpha1.BeaconBlockBodyGloas.parent_sila_requests:type_name -> sila.silaengine.v1.SilaRequests
 	8,  // 17: sila.eth.v1alpha1.SignedBeaconBlockGloas.block:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
 	34, // 18: sila.eth.v1alpha1.BeaconStateGloas.fork:type_name -> sila.eth.v1alpha1.Fork
 	35, // 19: sila.eth.v1alpha1.BeaconStateGloas.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
@@ -2964,11 +2964,11 @@ var file_proto_sila_v1alpha1_gloas_proto_depIdxs = []int32{
 	19, // 40: sila.eth.v1alpha1.SignedSilaPayloadEnvelopeContents.signed_sila_payload_envelope:type_name -> sila.eth.v1alpha1.SignedSilaPayloadEnvelope
 	16, // 41: sila.eth.v1alpha1.BuilderPendingPayment.withdrawal:type_name -> sila.eth.v1alpha1.BuilderPendingWithdrawal
 	44, // 42: sila.eth.v1alpha1.SilaPayloadEnvelope.payload:type_name -> sila.silaengine.v1.SilaPayloadGloas
-	33, // 43: sila.eth.v1alpha1.SilaPayloadEnvelope.execution_requests:type_name -> sila.silaengine.v1.ExecutionRequests
+	33, // 43: sila.eth.v1alpha1.SilaPayloadEnvelope.sila_requests:type_name -> sila.silaengine.v1.SilaRequests
 	18, // 44: sila.eth.v1alpha1.SignedSilaPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.SilaPayloadEnvelope
-	33, // 45: sila.eth.v1alpha1.BlindedSilaPayloadEnvelope.execution_requests:type_name -> sila.silaengine.v1.ExecutionRequests
+	33, // 45: sila.eth.v1alpha1.BlindedSilaPayloadEnvelope.sila_requests:type_name -> sila.silaengine.v1.SilaRequests
 	20, // 46: sila.eth.v1alpha1.SignedBlindedSilaPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.BlindedSilaPayloadEnvelope
-	33, // 47: sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope.execution_requests:type_name -> sila.silaengine.v1.ExecutionRequests
+	33, // 47: sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope.sila_requests:type_name -> sila.silaengine.v1.SilaRequests
 	22, // 48: sila.eth.v1alpha1.SignedWireBlindedSilaPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope
 	49, // [49:49] is the sub-list for method output_type
 	49, // [49:49] is the sub-list for method input_type

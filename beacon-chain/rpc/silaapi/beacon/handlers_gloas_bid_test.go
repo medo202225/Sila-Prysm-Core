@@ -38,7 +38,7 @@ func testJSONSignedBid() *structs.SignedSilaPayloadBid {
 			Value:                 "0",
 			ExecutionPayment:      "0",
 			BlobKzgCommitments:    []string{},
-			ExecutionRequestsRoot: hex32,
+			SilaRequestsRoot: hex32,
 		},
 		Signature: hex96,
 	}
@@ -176,7 +176,7 @@ func TestPublishSignedSilaPayloadBid_SSZ(t *testing.T) {
 			Slot:                  100,
 			Value:                 0,
 			ExecutionPayment:      0,
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: make([]byte, 96),
 	}

@@ -193,7 +193,7 @@ func testSignedSilaPayloadEnvelope(t *testing.T, slot primitives.Slot, builderId
 	return &silapb.SignedSilaPayloadEnvelope{
 		Message: &silapb.SilaPayloadEnvelope{
 			Payload: payload,
-			ExecutionRequests: &silaenginev1.ExecutionRequests{
+			SilaRequests: &silaenginev1.SilaRequests{
 				Deposits: []*silaenginev1.DepositRequest{},
 			},
 			BuilderIndex:          builderIdx,

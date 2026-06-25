@@ -622,7 +622,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				SilaPayloadHeader: ph,
 				BlsToExecutionChanges:  b.blsToExecutionChanges,
 				BlobKzgCommitments:     b.blobKzgCommitments,
-				ExecutionRequests:      b.executionRequests,
+				SilaRequests:      b.silaRequests,
 			}, nil
 		}
 		var p *silaenginev1.SilaPayloadDeneb
@@ -646,7 +646,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			SilaPayload:      p,
 			BlsToExecutionChanges: b.blsToExecutionChanges,
 			BlobKzgCommitments:    b.blobKzgCommitments,
-			ExecutionRequests:     b.executionRequests,
+			SilaRequests:     b.silaRequests,
 		}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
@@ -671,7 +671,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				SilaPayloadHeader: ph,
 				BlsToExecutionChanges:  b.blsToExecutionChanges,
 				BlobKzgCommitments:     b.blobKzgCommitments,
-				ExecutionRequests:      b.executionRequests,
+				SilaRequests:      b.silaRequests,
 			}, nil
 		}
 		var p *silaenginev1.SilaPayloadDeneb
@@ -695,7 +695,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			SilaPayload:      p,
 			BlsToExecutionChanges: b.blsToExecutionChanges,
 			BlobKzgCommitments:    b.blobKzgCommitments,
-			ExecutionRequests:     b.executionRequests,
+			SilaRequests:     b.silaRequests,
 		}, nil
 	case version.Gloas:
 		return &eth.BeaconBlockBodyGloas{
@@ -711,7 +711,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			BlsToExecutionChanges:     b.blsToExecutionChanges,
 			SignedSilaPayloadBid: b.signedSilaPayloadBid,
 			PayloadAttestations:       b.payloadAttestations,
-			ParentExecutionRequests:   b.parentExecutionRequests,
+			ParentSilaRequests:   b.parentSilaRequests,
 		}, nil
 	default:
 		return nil, errors.New("unsupported beacon block body version")
@@ -1323,9 +1323,9 @@ func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlock
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
 	}
-	er := pb.ExecutionRequests
+	er := pb.SilaRequests
 	if er == nil {
-		er = &silaenginev1.ExecutionRequests{}
+		er = &silaenginev1.SilaRequests{}
 	}
 	b := &BeaconBlockBody{
 		version:                  version.Electra,
@@ -1341,7 +1341,7 @@ func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlock
 		silaPayload:         p,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		executionRequests:        er,
+		silaRequests:        er,
 	}
 	return b, nil
 }
@@ -1356,9 +1356,9 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
 	}
-	er := pb.ExecutionRequests
+	er := pb.SilaRequests
 	if er == nil {
-		er = &silaenginev1.ExecutionRequests{}
+		er = &silaenginev1.SilaRequests{}
 	}
 	b := &BeaconBlockBody{
 		version:                  version.Electra,
@@ -1374,7 +1374,7 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 		silaPayloadHeader:   ph,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		executionRequests:        er,
+		silaRequests:        er,
 	}
 	return b, nil
 }
@@ -1467,9 +1467,9 @@ func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBod
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
 	}
-	er := pb.ExecutionRequests
+	er := pb.SilaRequests
 	if er == nil {
-		er = &silaenginev1.ExecutionRequests{}
+		er = &silaenginev1.SilaRequests{}
 	}
 	b := &BeaconBlockBody{
 		version:                  version.Fulu,
@@ -1485,7 +1485,7 @@ func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBod
 		silaPayload:         p,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		executionRequests:        er,
+		silaRequests:        er,
 	}
 	return b, nil
 }
@@ -1500,9 +1500,9 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
 	}
-	er := pb.ExecutionRequests
+	er := pb.SilaRequests
 	if er == nil {
-		er = &silaenginev1.ExecutionRequests{}
+		er = &silaenginev1.SilaRequests{}
 	}
 	b := &BeaconBlockBody{
 		version:                  version.Fulu,
@@ -1518,7 +1518,7 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 		silaPayloadHeader:   ph,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		executionRequests:        er,
+		silaRequests:        er,
 	}
 	return b, nil
 }
@@ -1569,9 +1569,9 @@ func initBlockBodyFromProtoGloas(pb *eth.BeaconBlockBodyGloas) (*BeaconBlockBody
 		return nil, errNilBlockBody
 	}
 
-	per := pb.ParentExecutionRequests
+	per := pb.ParentSilaRequests
 	if per == nil {
-		per = &silaenginev1.ExecutionRequests{}
+		per = &silaenginev1.SilaRequests{}
 	}
 	b := &BeaconBlockBody{
 		version:                   version.Gloas,
@@ -1587,7 +1587,7 @@ func initBlockBodyFromProtoGloas(pb *eth.BeaconBlockBodyGloas) (*BeaconBlockBody
 		blsToExecutionChanges:     pb.BlsToExecutionChanges,
 		signedSilaPayloadBid: pb.SignedSilaPayloadBid,
 		payloadAttestations:       pb.PayloadAttestations,
-		parentExecutionRequests:   per,
+		parentSilaRequests:   per,
 	}
 	return b, nil
 }

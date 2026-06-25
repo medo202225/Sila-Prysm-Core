@@ -119,8 +119,8 @@ func (s *Service) validateSilaPayloadEnvelope(ctx context.Context, pid peer.ID, 
 	if err := v.VerifyPayloadHash(bid); err != nil {
 		return pubsub.ValidationReject, err
 	}
-	// [REJECT] hash_tree_root(envelope.execution_requests) == bid.execution_requests_root.
-	if err := v.VerifyExecutionRequestsRoot(bid); err != nil {
+	// [REJECT] hash_tree_root(envelope.sila_requests) == bid.sila_requests_root.
+	if err := v.VerifySilaRequestsRoot(bid); err != nil {
 		return pubsub.ValidationReject, err
 	}
 

@@ -156,7 +156,7 @@ func copySignedSilaPayloadBid(header *SignedSilaPayloadBid) *SignedSilaPayloadBi
 			Value:                 header.Message.Value,
 			ExecutionPayment:      header.Message.ExecutionPayment,
 			BlobKzgCommitments:    bytesutil.SafeCopy2dBytes(header.Message.BlobKzgCommitments),
-			ExecutionRequestsRoot: bytesutil.SafeCopyBytes(header.Message.ExecutionRequestsRoot),
+			SilaRequestsRoot: bytesutil.SafeCopyBytes(header.Message.SilaRequestsRoot),
 		}
 	}
 	return copied
@@ -190,7 +190,7 @@ func copyBeaconBlockBodyGloas(body *BeaconBlockBodyGloas) *BeaconBlockBodyGloas 
 
 	copied.SignedSilaPayloadBid = copySignedSilaPayloadBid(body.SignedSilaPayloadBid)
 	copied.PayloadAttestations = copyPayloadAttestations(body.PayloadAttestations)
-	copied.ParentExecutionRequests = CopyExecutionRequests(body.ParentExecutionRequests)
+	copied.ParentSilaRequests = CopySilaRequests(body.ParentSilaRequests)
 
 	return copied
 }
@@ -213,7 +213,7 @@ func copySilaPayloadEnvelope(env *SilaPayloadEnvelope) *SilaPayloadEnvelope {
 	}
 	return &SilaPayloadEnvelope{
 		Payload:               env.Payload, // engine proto, not deep copied here
-		ExecutionRequests:     env.ExecutionRequests,
+		SilaRequests:     env.SilaRequests,
 		BuilderIndex:          env.BuilderIndex,
 		BeaconBlockRoot:       bytesutil.SafeCopyBytes(env.BeaconBlockRoot),
 		ParentBeaconBlockRoot: bytesutil.SafeCopyBytes(env.ParentBeaconBlockRoot),
@@ -238,7 +238,7 @@ func copyBlindedSilaPayloadEnvelope(env *BlindedSilaPayloadEnvelope) *BlindedSil
 	}
 	return &BlindedSilaPayloadEnvelope{
 		BlockHash:             bytesutil.SafeCopyBytes(env.BlockHash),
-		ExecutionRequests:     env.ExecutionRequests,
+		SilaRequests:     env.SilaRequests,
 		BuilderIndex:          env.BuilderIndex,
 		BeaconBlockRoot:       bytesutil.SafeCopyBytes(env.BeaconBlockRoot),
 		Slot:                  env.Slot,

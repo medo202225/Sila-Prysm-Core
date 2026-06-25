@@ -134,11 +134,11 @@ func TestApplyDepositForBuilder_InvalidSignatureIgnoresDeposit(t *testing.T) {
 
 func TestPrefetchedDepositSigs_NilOrEmpty(t *testing.T) {
 	require.Equal(t, true, prefetchedDepositSigs(nil) == nil)
-	require.Equal(t, true, prefetchedDepositSigs(&silaenginev1.ExecutionRequests{}) == nil)
+	require.Equal(t, true, prefetchedDepositSigs(&silaenginev1.SilaRequests{}) == nil)
 }
 
 func TestPrefetchedDepositSigs_CacheMiss(t *testing.T) {
-	rqs := &silaenginev1.ExecutionRequests{Deposits: []*silaenginev1.DepositRequest{{
+	rqs := &silaenginev1.SilaRequests{Deposits: []*silaenginev1.DepositRequest{{
 		Pubkey:                make([]byte, 48),
 		WithdrawalCredentials: make([]byte, 32),
 		Signature:             make([]byte, 96),
@@ -148,7 +148,7 @@ func TestPrefetchedDepositSigs_CacheMiss(t *testing.T) {
 
 func TestPrefetchedDepositSigs_CacheHitAllValid(t *testing.T) {
 	cache.DepositSig = cache.NewDepositSigCache()
-	rqs := &silaenginev1.ExecutionRequests{Deposits: []*silaenginev1.DepositRequest{
+	rqs := &silaenginev1.SilaRequests{Deposits: []*silaenginev1.DepositRequest{
 		{Pubkey: make([]byte, 48), WithdrawalCredentials: make([]byte, 32), Signature: make([]byte, 96)},
 		{Pubkey: make([]byte, 48), WithdrawalCredentials: make([]byte, 32), Signature: make([]byte, 96), Amount: 1},
 	}}
@@ -162,7 +162,7 @@ func TestPrefetchedDepositSigs_CacheHitAllValid(t *testing.T) {
 
 func TestPrefetchedDepositSigs_CacheHitMarksInvalid(t *testing.T) {
 	cache.DepositSig = cache.NewDepositSigCache()
-	rqs := &silaenginev1.ExecutionRequests{Deposits: []*silaenginev1.DepositRequest{
+	rqs := &silaenginev1.SilaRequests{Deposits: []*silaenginev1.DepositRequest{
 		{Pubkey: make([]byte, 48), WithdrawalCredentials: make([]byte, 32), Signature: make([]byte, 96)},
 		{Pubkey: make([]byte, 48), WithdrawalCredentials: make([]byte, 32), Signature: make([]byte, 96), Amount: 1},
 		{Pubkey: make([]byte, 48), WithdrawalCredentials: make([]byte, 32), Signature: make([]byte, 96), Amount: 2},
@@ -177,7 +177,7 @@ func TestPrefetchedDepositSigs_CacheHitMarksInvalid(t *testing.T) {
 
 func TestPrefetchedDepositSigs_OutOfRangeIndexReturnsNil(t *testing.T) {
 	cache.DepositSig = cache.NewDepositSigCache()
-	rqs := &silaenginev1.ExecutionRequests{Deposits: []*silaenginev1.DepositRequest{
+	rqs := &silaenginev1.SilaRequests{Deposits: []*silaenginev1.DepositRequest{
 		{Pubkey: make([]byte, 48), WithdrawalCredentials: make([]byte, 32), Signature: make([]byte, 96)},
 	}}
 	root, err := rqs.HashTreeRoot()

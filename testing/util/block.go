@@ -1196,15 +1196,15 @@ func HydrateBeaconBlockBodyElectra(b *silapb.BeaconBlockBodyElectra) *silapb.Bea
 			Withdrawals:   make([]*silaenginev1.Withdrawal, 0),
 		}
 	}
-	b.ExecutionRequests = HydrateExecutionRequests(b.ExecutionRequests)
+	b.SilaRequests = HydrateSilaRequests(b.SilaRequests)
 	return b
 }
 
-// HydrateExecutionRequests fills the execution requests with the correct field
+// HydrateSilaRequests fills the sila requests with the correct field
 // lengths
-func HydrateExecutionRequests(e *silaenginev1.ExecutionRequests) *silaenginev1.ExecutionRequests {
+func HydrateSilaRequests(e *silaenginev1.SilaRequests) *silaenginev1.SilaRequests {
 	if e == nil {
-		e = &silaenginev1.ExecutionRequests{}
+		e = &silaenginev1.SilaRequests{}
 	}
 	if e.Deposits == nil {
 		e.Deposits = make([]*silaenginev1.DepositRequest, 0)
@@ -1283,7 +1283,7 @@ func HydrateBlindedBeaconBlockBodyElectra(b *silapb.BlindedBeaconBlockBodyElectr
 			WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 		}
 	}
-	b.ExecutionRequests = HydrateExecutionRequests(b.ExecutionRequests)
+	b.SilaRequests = HydrateSilaRequests(b.SilaRequests)
 	return b
 }
 
@@ -1401,7 +1401,7 @@ func HydrateBeaconBlockBodyFulu(b *silapb.BeaconBlockBodyElectra) *silapb.Beacon
 			Withdrawals:   make([]*silaenginev1.Withdrawal, 0),
 		}
 	}
-	b.ExecutionRequests = HydrateExecutionRequests(b.ExecutionRequests)
+	b.SilaRequests = HydrateSilaRequests(b.SilaRequests)
 	return b
 }
 
@@ -1470,7 +1470,7 @@ func HydrateBlindedBeaconBlockBodyFulu(b *silapb.BlindedBeaconBlockBodyElectra) 
 			WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 		}
 	}
-	b.ExecutionRequests = HydrateExecutionRequests(b.ExecutionRequests)
+	b.SilaRequests = HydrateSilaRequests(b.SilaRequests)
 	return b
 }
 
@@ -1531,8 +1531,8 @@ func HydrateBeaconBlockBodyGloas(b *silapb.BeaconBlockBodyGloas) *silapb.BeaconB
 	if b.PayloadAttestations == nil {
 		b.PayloadAttestations = make([]*silapb.PayloadAttestation, 0)
 	}
-	if b.ParentExecutionRequests == nil {
-		b.ParentExecutionRequests = &silaenginev1.ExecutionRequests{}
+	if b.ParentSilaRequests == nil {
+		b.ParentSilaRequests = &silaenginev1.SilaRequests{}
 	}
 	return b
 }
@@ -1574,8 +1574,8 @@ func HydrateSilaPayloadBid(b *silapb.SilaPayloadBid) *silapb.SilaPayloadBid {
 	if b.BlobKzgCommitments == nil {
 		b.BlobKzgCommitments = make([][]byte, 0)
 	}
-	if b.ExecutionRequestsRoot == nil {
-		b.ExecutionRequestsRoot = make([]byte, fieldparams.RootLength)
+	if b.SilaRequestsRoot == nil {
+		b.SilaRequestsRoot = make([]byte, fieldparams.RootLength)
 	}
 	return b
 }
@@ -1658,7 +1658,7 @@ func GenerateTestSignedSilaPayloadBid(slot primitives.Slot) *silapb.SignedSilaPa
 			Value:                 1000000,
 			ExecutionPayment:      2000000,
 			BlobKzgCommitments:    [][]byte{blobKzgCommitment},
-			ExecutionRequestsRoot: make([]byte, fieldparams.RootLength),
+			SilaRequestsRoot: make([]byte, fieldparams.RootLength),
 		},
 		Signature: signature,
 	}

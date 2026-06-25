@@ -12,7 +12,7 @@ import (
 
 var depositRequestsSSZHex = "0x706b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077630000000000000000000000000000000000000000000000000000000000007b00000000000000736967000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c801000000000000706b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000776300000000000000000000000000000000000000000000000000000000000090010000000000007369670000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000"
 
-func TestGetDecodedExecutionRequests(t *testing.T) {
+func TestGetDecodedSilaRequests(t *testing.T) {
 	cfg := params.BeaconConfig()
 	t.Run("All requests decode successfully", func(t *testing.T) {
 		depositRequestBytes, err := hexutil.Decode("0x610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" +
@@ -28,11 +28,11 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...),
+			SilaRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...),
 				append([]byte{uint8(silaenginev1.WithdrawalRequestType)}, withdrawalRequestBytes...),
 				append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
 		}
-		requests, err := ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		requests, err := ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.NoError(t, err)
 		require.Equal(t, len(requests.Deposits), 1)
 		require.Equal(t, len(requests.Withdrawals), 1)
@@ -49,15 +49,15 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...), append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
+			SilaRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...), append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
 		}
-		requests, err := ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		requests, err := ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.NoError(t, err)
 		require.Equal(t, len(requests.Deposits), 1)
 		require.Equal(t, len(requests.Withdrawals), 0)
 		require.Equal(t, len(requests.Consolidations), 1)
 	})
-	t.Run("Decode execution requests should fail if ordering is not sorted", func(t *testing.T) {
+	t.Run("Decode sila requests should fail if ordering is not sorted", func(t *testing.T) {
 		depositRequestBytes, err := hexutil.Decode("0x610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" +
 			"620000000000000000000000000000000000000000000000000000000000000000" +
 			"4059730700000063000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" +
@@ -68,9 +68,9 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...), append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...)},
+			SilaRequests: [][]byte{append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...), append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...)},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "invalid execution request type order", err)
 	})
 	t.Run("Requests should error if the request type is shorter than 1 byte", func(t *testing.T) {
@@ -79,9 +79,9 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{}, []byte{}...), append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
+			SilaRequests: [][]byte{append([]byte{}, []byte{}...), append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "invalid execution request, length less than 1", err)
 	})
 	t.Run("a duplicate request should fail", func(t *testing.T) {
@@ -92,9 +92,9 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"6500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040597307000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{uint8(silaenginev1.WithdrawalRequestType)}, withdrawalRequestBytes...), append([]byte{uint8(silaenginev1.WithdrawalRequestType)}, withdrawalRequestBytes2...)},
+			SilaRequests: [][]byte{append([]byte{uint8(silaenginev1.WithdrawalRequestType)}, withdrawalRequestBytes...), append([]byte{uint8(silaenginev1.WithdrawalRequestType)}, withdrawalRequestBytes2...)},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "requests should be in sorted order and unique", err)
 	})
 	t.Run("a duplicate withdrawals ( non 0 request type )request should fail", func(t *testing.T) {
@@ -109,9 +109,9 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"00000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...), append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes2...)},
+			SilaRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes...), append([]byte{uint8(silaenginev1.DepositRequestType)}, depositRequestBytes2...)},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "requests should be in sorted order and unique", err)
 	})
 	t.Run("If a request type is provided, but the request list is shorter than the ssz of 1 request we error", func(t *testing.T) {
@@ -120,9 +120,9 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 			"680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, []byte{}...), append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
+			SilaRequests: [][]byte{append([]byte{uint8(silaenginev1.DepositRequestType)}, []byte{}...), append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, consolidationRequestBytes...)},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "invalid deposit requests SSZ size", err)
 	})
 	t.Run("If deposit requests are over the max allowed per payload then we should error", func(t *testing.T) {
@@ -139,11 +139,11 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 		by, err := silaenginev1.MarshalItems(requests)
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{
+			SilaRequests: [][]byte{
 				append([]byte{uint8(silaenginev1.DepositRequestType)}, by...),
 			},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "invalid deposit requests SSZ size, requests should not be more than the max per payload", err)
 	})
 	t.Run("If withdrawal requests are over the max allowed per payload then we should error", func(t *testing.T) {
@@ -158,11 +158,11 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 		by, err := silaenginev1.MarshalItems(requests)
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{
+			SilaRequests: [][]byte{
 				append([]byte{uint8(silaenginev1.WithdrawalRequestType)}, by...),
 			},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "invalid withdrawal requests SSZ size, requests should not be more than the max per payload", err)
 	})
 	t.Run("If consolidation requests are over the max allowed per payload then we should error", func(t *testing.T) {
@@ -177,19 +177,19 @@ func TestGetDecodedExecutionRequests(t *testing.T) {
 		by, err := silaenginev1.MarshalItems(requests)
 		require.NoError(t, err)
 		ebe := &silaenginev1.ExecutionBundleElectra{
-			ExecutionRequests: [][]byte{
+			SilaRequests: [][]byte{
 				append([]byte{uint8(silaenginev1.ConsolidationRequestType)}, by...),
 			},
 		}
-		_, err = ebe.GetDecodedExecutionRequests(cfg.ExecutionRequestLimits())
+		_, err = ebe.GetDecodedSilaRequests(cfg.ExecutionRequestLimits())
 		require.ErrorContains(t, "invalid consolidation requests SSZ size, requests should not be more than the max per payload", err)
 	})
 }
 
-func TestEncodeExecutionRequests(t *testing.T) {
-	t.Run("Empty execution requests should return an empty response and not nil", func(t *testing.T) {
-		ebe := &silaenginev1.ExecutionRequests{}
-		b, err := silaenginev1.EncodeExecutionRequests(ebe)
+func TestEncodeSilaRequests(t *testing.T) {
+	t.Run("Empty sila requests should return an empty response and not nil", func(t *testing.T) {
+		ebe := &silaenginev1.SilaRequests{}
+		b, err := silaenginev1.EncodeSilaRequests(ebe)
 		require.NoError(t, err)
 		require.NotNil(t, b)
 		require.Equal(t, len(b), 0)
@@ -240,10 +240,10 @@ func TestMarshalItems_OK(t *testing.T) {
 	require.DeepEqual(t, depositRequestsSSZHex, hexutil.Encode(drbs))
 }
 
-func TestEmptyExecutionRequestsHashTreeRoot(t *testing.T) {
-	want, err := (&silaenginev1.ExecutionRequests{}).HashTreeRoot()
+func TestEmptySilaRequestsHashTreeRoot(t *testing.T) {
+	want, err := (&silaenginev1.SilaRequests{}).HashTreeRoot()
 	require.NoError(t, err)
-	got, err := silaenginev1.EmptyExecutionRequestsHashTreeRoot()
+	got, err := silaenginev1.EmptySilaRequestsHashTreeRoot()
 	require.NoError(t, err)
 	require.Equal(t, want, got)
 }

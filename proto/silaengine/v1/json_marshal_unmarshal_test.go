@@ -607,7 +607,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		// Expect no transaction objects in the unmarshaled data.
 		require.Equal(t, 0, len(payloadPb.Transactions))
 	})
-	t.Run("execution bundle electra with deneb payload, blob data, and execution requests", func(t *testing.T) {
+	t.Run("execution bundle electra with deneb payload, blob data, and sila requests", func(t *testing.T) {
 		// TODO #14351: update this test when geth updates
 	})
 

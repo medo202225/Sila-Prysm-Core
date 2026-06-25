@@ -174,12 +174,12 @@ func (b *SignedBeaconBlock) SetBlobKzgCommitments(c [][]byte) error {
 	return nil
 }
 
-// SetExecutionRequests sets the execution requests in the block.
-func (b *SignedBeaconBlock) SetExecutionRequests(req *silaenginev1.ExecutionRequests) error {
+// SetSilaRequests sets the sila requests in the block.
+func (b *SignedBeaconBlock) SetSilaRequests(req *silaenginev1.SilaRequests) error {
 	if b.version < version.Electra || b.version >= version.Gloas {
-		return consensus_types.ErrNotSupported("SetExecutionRequests", b.version)
+		return consensus_types.ErrNotSupported("SetSilaRequests", b.version)
 	}
-	b.block.body.executionRequests = req
+	b.block.body.silaRequests = req
 	return nil
 }
 
@@ -192,12 +192,12 @@ func (b *SignedBeaconBlock) SetPayloadAttestations(pa []*eth.PayloadAttestation)
 	return nil
 }
 
-// SetParentExecutionRequests sets the parent execution requests in the block.
-func (b *SignedBeaconBlock) SetParentExecutionRequests(r *silaenginev1.ExecutionRequests) error {
+// SetParentSilaRequests sets the parent sila requests in the block.
+func (b *SignedBeaconBlock) SetParentSilaRequests(r *silaenginev1.SilaRequests) error {
 	if b.version < version.Gloas {
-		return consensus_types.ErrNotSupported("SetParentExecutionRequests", b.version)
+		return consensus_types.ErrNotSupported("SetParentSilaRequests", b.version)
 	}
-	b.block.body.parentExecutionRequests = r
+	b.block.body.parentSilaRequests = r
 	return nil
 }
 

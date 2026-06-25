@@ -75,7 +75,7 @@ func (s *Service) checkIfProposing(st state.ReadOnlyBeaconState, slot primitives
 
 // computePayloadWithdrawals returns the withdrawals for the next payload.
 // If the parent's payload was delivered (full), it applies the parent's
-// execution requests on a state copy before computing withdrawals.
+// sila requests on a state copy before computing withdrawals.
 // If the parent was empty, it returns the existing payload_expected_withdrawals.
 func (s *Service) computePayloadWithdrawals(ctx context.Context, st state.BeaconState, parentRoot [32]byte, headFull bool) ([]*silaenginev1.Withdrawal, error) {
 	if slots.ToEpoch(s.HeadSlot()) < params.BeaconConfig().GloasForkEpoch {
@@ -93,7 +93,7 @@ func (s *Service) computePayloadWithdrawals(ctx context.Context, st state.Beacon
 	if err != nil {
 		return nil, errors.Wrap(err, "could not get parent sila payload envelope")
 	}
-	if err := coregloas.ApplyParentSilaPayload(ctx, st, envelope.Message.ExecutionRequests); err != nil {
+	if err := coregloas.ApplyParentSilaPayload(ctx, st, envelope.Message.SilaRequests); err != nil {
 		return nil, errors.Wrap(err, "could not apply parent sila payload")
 	}
 	result, err := st.ExpectedWithdrawalsGloas()

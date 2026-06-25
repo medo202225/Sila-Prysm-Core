@@ -44,7 +44,7 @@ func (s stubBlockBody) BLSToExecutionChanges() ([]*silapb.SignedBLSToExecutionCh
 	return nil, nil
 }
 func (s stubBlockBody) BlobKzgCommitments() ([][]byte, error) { return nil, nil }
-func (s stubBlockBody) ExecutionRequests() (*silaenginev1.ExecutionRequests, error) {
+func (s stubBlockBody) SilaRequests() (*silaenginev1.SilaRequests, error) {
 	return nil, nil
 }
 func (s stubBlockBody) PayloadAttestations() ([]*silapb.PayloadAttestation, error) {
@@ -53,7 +53,7 @@ func (s stubBlockBody) PayloadAttestations() ([]*silapb.PayloadAttestation, erro
 func (s stubBlockBody) SignedSilaPayloadBid() (*silapb.SignedSilaPayloadBid, error) {
 	return s.signedBid, nil
 }
-func (s stubBlockBody) ParentExecutionRequests() (*silaenginev1.ExecutionRequests, error) {
+func (s stubBlockBody) ParentSilaRequests() (*silaenginev1.SilaRequests, error) {
 	return nil, nil
 }
 func (s stubBlockBody) MarshalSSZ() ([]byte, error)         { return nil, nil }
@@ -230,7 +230,7 @@ func TestProcessSilaPayloadBid_SelfBuildSuccess(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
@@ -272,7 +272,7 @@ func TestProcessSilaPayloadBid_SelfBuildNonZeroAmountFails(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0xDD}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
@@ -318,7 +318,7 @@ func TestProcessSilaPayloadBid_PendingPaymentAndCacheBid(t *testing.T) {
 		ExecutionPayment:      1,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
@@ -380,7 +380,7 @@ func TestProcessSilaPayloadBid_BuilderNotActive(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0x06}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
@@ -434,7 +434,7 @@ func TestProcessSilaPayloadBid_CannotCoverBid(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
@@ -477,7 +477,7 @@ func TestProcessSilaPayloadBid_InvalidSignature(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	// Use an invalid signature.
 	invalidSig := [96]byte{1}
@@ -512,7 +512,7 @@ func TestProcessSilaPayloadBid_TooManyBlobCommitments(t *testing.T) {
 		Slot:                  slot,
 		BlobKzgCommitments:    tooManyBlobCommitmentsForSlot(slot),
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
@@ -557,7 +557,7 @@ func TestProcessSilaPayloadBid_SlotMismatch(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0xDD}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
@@ -600,7 +600,7 @@ func TestProcessSilaPayloadBid_ParentHashMismatch(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0x55}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
@@ -644,7 +644,7 @@ func TestProcessSilaPayloadBid_ParentRootMismatch(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0x55}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
@@ -687,7 +687,7 @@ func TestProcessSilaPayloadBid_PrevRandaoMismatch(t *testing.T) {
 		ExecutionPayment:      0,
 		BlobKzgCommitments:    blobCommitmentsForSlot(slot, 1),
 		FeeRecipient:          bytes.Repeat([]byte{0x55}, 20),
-		ExecutionRequestsRoot: make([]byte, 32),
+		SilaRequestsRoot: make([]byte, 32),
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)

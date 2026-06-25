@@ -152,7 +152,7 @@ func GenerateFullBlockFulu(bState state.BeaconState, privs []bls.SecretKey, conf
 		}
 	}
 
-	executionRequests := &v1.ExecutionRequests{
+	silaRequests := &v1.SilaRequests{
 		Withdrawals:    withdrawalRequests,
 		Deposits:       depositRequests,
 		Consolidations: consolidationRequests,
@@ -247,7 +247,7 @@ func GenerateFullBlockFulu(bState state.BeaconState, privs []bls.SecretKey, conf
 			SyncAggregate:         newSyncAggregate,
 			SilaPayload:      newSilaPayloadElectra,
 			BlsToExecutionChanges: changes,
-			ExecutionRequests:     executionRequests,
+			SilaRequests:     silaRequests,
 			BlobKzgCommitments:    blobKzgCommitments,
 		},
 	}

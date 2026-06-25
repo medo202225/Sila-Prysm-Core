@@ -161,7 +161,7 @@ func GenerateFullBlockElectra(
 		}
 	}
 
-	executionRequests := &v1.ExecutionRequests{
+	silaRequests := &v1.SilaRequests{
 		Withdrawals:    withdrawalRequests,
 		Deposits:       depositRequests,
 		Consolidations: consolidationRequests,
@@ -251,7 +251,7 @@ func GenerateFullBlockElectra(
 			SyncAggregate:         newSyncAggregate,
 			SilaPayload:      newSilaPayloadElectra,
 			BlsToExecutionChanges: changes,
-			ExecutionRequests:     executionRequests,
+			SilaRequests:     silaRequests,
 		},
 	}
 

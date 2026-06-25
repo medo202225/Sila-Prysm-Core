@@ -375,7 +375,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			Value:                 11,
 			ExecutionPayment:      22,
 			BlobKzgCommitments:    [][]byte{},
-			ExecutionRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
+			SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 		}
 		roBid, err := blocks.WrappedROSilaPayloadBid(bid)
 		require.NoError(t, err)
@@ -393,7 +393,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			Value:                 "11",
 			ExecutionPayment:      "22",
 			BlobKzgCommitments:    []string{},
-			ExecutionRequestsRoot: hexutil.Encode(bid.ExecutionRequestsRoot),
+			SilaRequestsRoot: hexutil.Encode(bid.SilaRequestsRoot),
 		}
 		assert.DeepEqual(t, want, got)
 	})
@@ -411,7 +411,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			Value:                 11,
 			ExecutionPayment:      22,
 			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x06}, 48)},
-			ExecutionRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
+			SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 		}
 		roBid, err := blocks.WrappedROSilaPayloadBid(bid)
 		require.NoError(t, err)
@@ -434,7 +434,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			Value:                 "11",
 			ExecutionPayment:      "22",
 			BlobKzgCommitments:    bkcs,
-			ExecutionRequestsRoot: hexutil.Encode(bid.ExecutionRequestsRoot),
+			SilaRequestsRoot: hexutil.Encode(bid.SilaRequestsRoot),
 		}
 		assert.DeepEqual(t, want, got)
 	})
@@ -506,7 +506,7 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 			Value:                 99,
 			ExecutionPayment:      7,
 			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x16}, 48)},
-			ExecutionRequestsRoot: make([]byte, 32),
+			SilaRequestsRoot: make([]byte, 32),
 		}
 		state.Builders = []*eth.Builder{
 			{

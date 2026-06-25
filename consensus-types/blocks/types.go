@@ -56,10 +56,10 @@ type BeaconBlockBody struct {
 	silaPayloadHeader    interfaces.ExecutionData
 	blsToExecutionChanges     []*eth.SignedBLSToExecutionChange
 	blobKzgCommitments        [][]byte
-	executionRequests         *silaenginev1.ExecutionRequests
+	silaRequests         *silaenginev1.SilaRequests
 	signedSilaPayloadBid *eth.SignedSilaPayloadBid
 	payloadAttestations       []*eth.PayloadAttestation
-	parentExecutionRequests   *silaenginev1.ExecutionRequests
+	parentSilaRequests   *silaenginev1.SilaRequests
 }
 
 var _ interfaces.ReadOnlyBeaconBlockBody = &BeaconBlockBody{}

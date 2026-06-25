@@ -47,7 +47,7 @@ func diffGloasFields(diff *stateDiff, source, target state.ReadOnlyBeaconState) 
 	blockHash := bid.BlockHash()
 	prevRandao := bid.PrevRandao()
 	feeRecipient := bid.FeeRecipient()
-	executionRequestsRoot := bid.ExecutionRequestsRoot()
+	silaRequestsRoot := bid.SilaRequestsRoot()
 	diff.latestSilaPayloadBid = &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentBlockHash[:],
 		ParentBlockRoot:       parentBlockRoot[:],
@@ -60,7 +60,7 @@ func diffGloasFields(diff *stateDiff, source, target state.ReadOnlyBeaconState) 
 		ExecutionPayment:      bid.ExecutionPayment(),
 		BlobKzgCommitments:    bid.BlobKzgCommitments(),
 		FeeRecipient:          feeRecipient[:],
-		ExecutionRequestsRoot: executionRequestsRoot[:],
+		SilaRequestsRoot: silaRequestsRoot[:],
 	}
 
 	// builders (sparse diff: only changed entries).
