@@ -126,7 +126,7 @@ type fetchRequestResponse struct {
 	start        primitives.Slot
 	count        uint64
 	bwb          []blocks.BlockWithROSidecars
-	envelopes    []interfaces.ROSignedExecutionPayloadEnvelope
+	envelopes    []interfaces.ROSignedSilaPayloadEnvelope
 	err          error
 }
 
@@ -302,7 +302,7 @@ func (f *blocksFetcher) handleRequest(ctx context.Context, start primitives.Slot
 		start:     start,
 		count:     count,
 		bwb:       []blocks.BlockWithROSidecars{},
-		envelopes: []interfaces.ROSignedExecutionPayloadEnvelope{},
+		envelopes: []interfaces.ROSignedSilaPayloadEnvelope{},
 		err:       nil,
 	}
 

@@ -10,7 +10,7 @@ import (
 
 type writeOnlyGloasFields interface {
 	// Bids.
-	SetExecutionPayloadBid(h interfaces.ROExecutionPayloadBid) error
+	SetSilaPayloadBid(h interfaces.ROSilaPayloadBid) error
 	SetPTCWindow([]*silapb.PTCs) error
 	RotatePTCWindow([]*silapb.PTCs) error
 
@@ -21,12 +21,12 @@ type writeOnlyGloasFields interface {
 	RotateBuilderPendingPayments() error
 	AppendBuilderPendingWithdrawals([]*silapb.BuilderPendingWithdrawal) error
 
-	// Execution payload availability.
-	UpdateExecutionPayloadAvailabilityAtIndex(idx uint64, val byte) error
+	// Sila payload availability.
+	UpdateSilaPayloadAvailabilityAtIndex(idx uint64, val byte) error
 
 	// Misc.
 	SetLatestBlockHash(hash [32]byte) error
-	SetExecutionPayloadAvailability(index primitives.Slot, available bool) error
+	SetSilaPayloadAvailability(index primitives.Slot, available bool) error
 
 	// Builders.
 	IncreaseBuilderBalance(index primitives.BuilderIndex, amount uint64) error
@@ -38,7 +38,7 @@ type writeOnlyGloasFields interface {
 	SetBuilders([]*silapb.Builder) error
 	SetBuilderPendingPayments([]*silapb.BuilderPendingPayment) error
 	SetBuilderPendingWithdrawals([]*silapb.BuilderPendingWithdrawal) error
-	SetExecutionPayloadAvailabilityVector([]byte) error
+	SetSilaPayloadAvailabilityVector([]byte) error
 
 	// Withdrawals.
 	SetPayloadExpectedWithdrawals(withdrawals []*enginev1.Withdrawal) error
@@ -50,7 +50,7 @@ type writeOnlyGloasFields interface {
 
 type readOnlyGloasFields interface {
 	// Bids.
-	LatestExecutionPayloadBid() (interfaces.ROExecutionPayloadBid, error)
+	LatestSilaPayloadBid() (interfaces.ROSilaPayloadBid, error)
 	PTCWindow() ([]*silapb.PTCs, error)
 	PayloadCommitteeReadOnly(slot primitives.Slot) ([]primitives.ValidatorIndex, error)
 
@@ -72,8 +72,8 @@ type readOnlyGloasFields interface {
 	BuilderPendingBalanceToWithdraw(primitives.BuilderIndex) (uint64, error)
 	IsAttestationSameSlot(blockRoot [32]byte, slot primitives.Slot) (bool, error)
 	BuilderPendingPayment(index uint64) (*silapb.BuilderPendingPayment, error)
-	ExecutionPayloadAvailability(slot primitives.Slot) (uint64, error)
-	ExecutionPayloadAvailabilityVector() ([]byte, error)
+	SilaPayloadAvailability(slot primitives.Slot) (uint64, error)
+	SilaPayloadAvailabilityVector() ([]byte, error)
 	NextWithdrawalBuilderIndex() (primitives.BuilderIndex, error)
 
 	// Withdrawals

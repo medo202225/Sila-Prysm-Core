@@ -513,7 +513,7 @@ func (s *Store) DeleteHistoricalDataBeforeSlot(ctx context.Context, cutoffSlot p
 				return errors.Wrap(err, "could not delete validators")
 			}
 
-			// TODO: execution payload envelopes (Gloas+) are keyed by execution payload
+			// TODO: sila payload envelopes (Gloas+) are keyed by sila payload
 			// block hash, not beacon block root, so they cannot be pruned in this loop.
 			// A separate pruning mechanism is needed (e.g. secondary index or cursor scan).
 
@@ -1332,7 +1332,7 @@ func keyForBlock(blk interfaces.ReadOnlySignedBeaconBlock) ([]byte, error) {
 	v := blk.Version()
 
 	if v >= version.Gloas {
-		// Gloas blocks are never blinded (no execution payload in block body).
+		// Gloas blocks are never blinded (no sila payload in block body).
 		return gloasKey, nil
 	}
 

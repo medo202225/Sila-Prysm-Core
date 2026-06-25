@@ -47,10 +47,10 @@ func TestLatestBlockHash(t *testing.T) {
 	})
 }
 
-func TestLatestExecutionPayloadBid(t *testing.T) {
+func TestLatestSilaPayloadBid(t *testing.T) {
 	t.Run("returns error before gloas", func(t *testing.T) {
 		st := &BeaconState{version: version.Fulu}
-		_, err := st.LatestExecutionPayloadBid()
+		_, err := st.LatestSilaPayloadBid()
 		require.ErrorContains(t, "is not supported", err)
 	})
 }
@@ -538,14 +538,14 @@ func TestBuilderPendingPayment(t *testing.T) {
 	})
 }
 
-func TestExecutionPayloadAvailability(t *testing.T) {
+func TestSilaPayloadAvailability(t *testing.T) {
 	t.Run("unsupported version", func(t *testing.T) {
 		stIface, err := InitializeFromProtoElectra(&silapb.BeaconStateElectra{})
 		require.NoError(t, err)
 		st := stIface.(*BeaconState)
 
-		_, err = st.ExecutionPayloadAvailability(0)
-		require.ErrorContains(t, "ExecutionPayloadAvailability", err)
+		_, err = st.SilaPayloadAvailability(0)
+		require.ErrorContains(t, "SilaPayloadAvailability", err)
 	})
 
 	t.Run("reads expected bit", func(t *testing.T) {
@@ -557,15 +557,15 @@ func TestExecutionPayloadAvailability(t *testing.T) {
 		availability[1] = 0b00000010
 
 		stIface, err := InitializeFromProtoUnsafeGloas(&silapb.BeaconStateGloas{
-			ExecutionPayloadAvailability: availability,
+			SilaPayloadAvailability: availability,
 		})
 		require.NoError(t, err)
 
-		bit, err := stIface.ExecutionPayloadAvailability(slot)
+		bit, err := stIface.SilaPayloadAvailability(slot)
 		require.NoError(t, err)
 		require.Equal(t, uint64(1), bit)
 
-		otherBit, err := stIface.ExecutionPayloadAvailability(8)
+		otherBit, err := stIface.SilaPayloadAvailability(8)
 		require.NoError(t, err)
 		require.Equal(t, uint64(0), otherBit)
 	})
@@ -589,7 +589,7 @@ func TestLatestBlockHashMatchesBidBlockHash(t *testing.T) {
 		hash := bytes.Repeat([]byte{0xAB}, 32)
 		st := &BeaconState{
 			version: version.Gloas,
-			latestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+			latestSilaPayloadBid: &silapb.SilaPayloadBid{
 				BlockHash: hash,
 			},
 			latestBlockHash: hash,
@@ -605,7 +605,7 @@ func TestLatestBlockHashMatchesBidBlockHash(t *testing.T) {
 		other := bytes.Repeat([]byte{0xCD}, 32)
 		st := &BeaconState{
 			version: version.Gloas,
-			latestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+			latestSilaPayloadBid: &silapb.SilaPayloadBid{
 				BlockHash: hash,
 			},
 			latestBlockHash: other,
@@ -957,7 +957,7 @@ func TestWithdrawalsForPayload(t *testing.T) {
 		}
 		// Parent is empty: bid block hash differs from latest block hash.
 		st, err := InitializeFromProtoGloas(&silapb.BeaconStateGloas{
-			LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+			LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 				BlockHash: bytes.Repeat([]byte{0xAA}, 32),
 			},
 			LatestBlockHash:            bytes.Repeat([]byte{0xBB}, 32),
@@ -978,7 +978,7 @@ func TestWithdrawalsForPayload(t *testing.T) {
 		// Parent is full: bid block hash == latest block hash.
 		// With no validators/pending withdrawals, fresh computation returns empty.
 		st, err := InitializeFromProtoGloas(&silapb.BeaconStateGloas{
-			LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+			LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 				BlockHash: hash,
 			},
 			LatestBlockHash:            hash,
@@ -993,29 +993,29 @@ func TestWithdrawalsForPayload(t *testing.T) {
 	})
 }
 
-func TestExecutionPayloadAvailabilityVector(t *testing.T) {
+func TestSilaPayloadAvailabilityVector(t *testing.T) {
 	t.Run("returns error before gloas", func(t *testing.T) {
 		stIface, err := InitializeFromProtoElectra(&silapb.BeaconStateElectra{})
 		require.NoError(t, err)
 		st := stIface.(*BeaconState)
 
-		_, err = st.ExecutionPayloadAvailabilityVector()
-		require.ErrorContains(t, "ExecutionPayloadAvailabilityVector", err)
+		_, err = st.SilaPayloadAvailabilityVector()
+		require.ErrorContains(t, "SilaPayloadAvailabilityVector", err)
 	})
 
 	t.Run("returns copy", func(t *testing.T) {
 		availability := []byte{0xAA, 0xBB, 0xCC}
 		st, err := InitializeFromProtoGloas(&silapb.BeaconStateGloas{
-			ExecutionPayloadAvailability: availability,
+			SilaPayloadAvailability: availability,
 		})
 		require.NoError(t, err)
 
-		got1, err := st.ExecutionPayloadAvailabilityVector()
+		got1, err := st.SilaPayloadAvailabilityVector()
 		require.NoError(t, err)
 		require.DeepEqual(t, availability, got1)
 
 		got1[0] = 0xFF
-		got2, err := st.ExecutionPayloadAvailabilityVector()
+		got2, err := st.SilaPayloadAvailabilityVector()
 		require.NoError(t, err)
 		require.DeepEqual(t, availability, got2)
 	})

@@ -87,7 +87,7 @@ func newGloasStateWithBuilder(t *testing.T, builderIndex primitives.BuilderIndex
 		StateRoots:                   make([][]byte, cfg.SlotsPerHistoricalRoot),
 		RandaoMixes:                  make([][]byte, cfg.EpochsPerHistoricalVector),
 		Slashings:                    make([]uint64, cfg.EpochsPerSlashingsVector),
-		ExecutionPayloadAvailability: make([]byte, cfg.SlotsPerHistoricalRoot/8),
+		SilaPayloadAvailability: make([]byte, cfg.SlotsPerHistoricalRoot/8),
 	}
 
 	for i := range stProto.BlockRoots {

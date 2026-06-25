@@ -290,11 +290,11 @@ type GetBlobsResponse struct {
 	Data                []string `json:"data"` //blobs
 }
 
-type GetExecutionPayloadEnvelopeResponse struct {
+type GetSilaPayloadEnvelopeResponse struct {
 	Version             string                          `json:"version"`
 	ExecutionOptimistic bool                            `json:"execution_optimistic"`
 	Finalized           bool                            `json:"finalized"`
-	Data                *SignedExecutionPayloadEnvelope `json:"data"`
+	Data                *SignedSilaPayloadEnvelope `json:"data"`
 }
 
 type SSZQueryRequest struct {

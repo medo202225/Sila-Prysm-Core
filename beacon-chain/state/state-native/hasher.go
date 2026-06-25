@@ -230,40 +230,40 @@ func ComputeFieldRootsWithHasher(ctx context.Context, state *BeaconState) ([][]b
 	}
 
 	if state.version == version.Bellatrix {
-		// Execution payload root.
-		executionPayloadRoot, err := state.latestExecutionPayloadHeader.HashTreeRoot()
+		// Sila payload root.
+		silaPayloadRoot, err := state.latestSilaPayloadHeader.HashTreeRoot()
 		if err != nil {
 			return nil, err
 		}
-		fieldRoots[types.LatestExecutionPayloadHeader.RealPosition()] = executionPayloadRoot[:]
+		fieldRoots[types.LatestSilaPayloadHeader.RealPosition()] = silaPayloadRoot[:]
 	}
 
 	if state.version == version.Capella {
-		// Execution payload root.
-		executionPayloadRoot, err := state.latestExecutionPayloadHeaderCapella.HashTreeRoot()
+		// Sila payload root.
+		silaPayloadRoot, err := state.latestSilaPayloadHeaderCapella.HashTreeRoot()
 		if err != nil {
 			return nil, err
 		}
-		fieldRoots[types.LatestExecutionPayloadHeaderCapella.RealPosition()] = executionPayloadRoot[:]
+		fieldRoots[types.LatestSilaPayloadHeaderCapella.RealPosition()] = silaPayloadRoot[:]
 	}
 
 	if state.version >= version.Deneb && state.version < version.Gloas {
-		// Execution payload root.
-		executionPayloadRoot, err := state.latestExecutionPayloadHeaderDeneb.HashTreeRoot()
+		// Sila payload root.
+		silaPayloadRoot, err := state.latestSilaPayloadHeaderDeneb.HashTreeRoot()
 		if err != nil {
 			return nil, err
 		}
-		fieldRoots[types.LatestExecutionPayloadHeaderDeneb.RealPosition()] = executionPayloadRoot[:]
+		fieldRoots[types.LatestSilaPayloadHeaderDeneb.RealPosition()] = silaPayloadRoot[:]
 	}
 
 	if state.version >= version.Gloas {
-		// Execution payload bid root for Gloas.
-		bidRoot, err := state.latestExecutionPayloadBid.HashTreeRoot()
+		// Sila payload bid root for Gloas.
+		bidRoot, err := state.latestSilaPayloadBid.HashTreeRoot()
 		if err != nil {
 			return nil, err
 		}
 
-		fieldRoots[types.LatestExecutionPayloadBid.RealPosition()] = bidRoot[:]
+		fieldRoots[types.LatestSilaPayloadBid.RealPosition()] = bidRoot[:]
 	}
 
 	if state.version >= version.Capella {
@@ -351,12 +351,12 @@ func ComputeFieldRootsWithHasher(ctx context.Context, state *BeaconState) ([][]b
 		nextWithdrawalBuilderIndexRoot := ssz.Uint64Root(uint64(state.nextWithdrawalBuilderIndex))
 		fieldRoots[types.NextWithdrawalBuilderIndex.RealPosition()] = nextWithdrawalBuilderIndexRoot[:]
 
-		epaRoot, err := stateutil.ExecutionPayloadAvailabilityRoot(state.executionPayloadAvailability)
+		epaRoot, err := stateutil.SilaPayloadAvailabilityRoot(state.silaPayloadAvailability)
 		if err != nil {
-			return nil, errors.Wrap(err, "could not compute execution payload availability merkleization")
+			return nil, errors.Wrap(err, "could not compute sila payload availability merkleization")
 		}
 
-		fieldRoots[types.ExecutionPayloadAvailability.RealPosition()] = epaRoot[:]
+		fieldRoots[types.SilaPayloadAvailability.RealPosition()] = epaRoot[:]
 
 		bppRoot, err := stateutil.BuilderPendingPaymentsRoot(state.builderPendingPayments)
 		if err != nil {

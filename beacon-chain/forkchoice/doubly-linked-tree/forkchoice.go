@@ -421,7 +421,7 @@ func (f *ForkChoice) FinalizedCheckpoint() *forkchoicetypes.Checkpoint {
 	return f.store.finalizedCheckpoint
 }
 
-// SetOptimisticToInvalid removes a block with an invalid execution payload from fork choice store
+// SetOptimisticToInvalid removes a block with an invalid sila payload from fork choice store
 func (f *ForkChoice) SetOptimisticToInvalid(ctx context.Context, root, parentRoot, parentHash, payloadHash [fieldparams.RootLength]byte) ([][32]byte, error) {
 	return f.store.setOptimisticToInvalid(ctx, root, parentRoot, parentHash, payloadHash)
 }

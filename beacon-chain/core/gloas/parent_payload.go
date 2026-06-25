@@ -12,24 +12,24 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ProcessParentExecutionPayload must run before process_block_header and
-// process_execution_payload_bid, which overwrite the state fields it reads.
+// ProcessParentSilaPayload must run before process_block_header and
+// process_sila_payload_bid, which overwrite the state fields it reads.
 //
-//	<spec fn="process_parent_execution_payload" fork="gloas" hash="defer_payload">
-func ProcessParentExecutionPayload(ctx context.Context, st state.BeaconState, blk interfaces.ReadOnlyBeaconBlock) error {
-	_, span := trace.StartSpan(ctx, "gloas.ProcessParentExecutionPayload")
+//	<spec fn="process_parent_sila_payload" fork="gloas" hash="defer_payload">
+func ProcessParentSilaPayload(ctx context.Context, st state.BeaconState, blk interfaces.ReadOnlyBeaconBlock) error {
+	_, span := trace.StartSpan(ctx, "gloas.ProcessParentSilaPayload")
 	defer span.End()
 
 	body := blk.Body()
-	signedBid, err := body.SignedExecutionPayloadBid()
+	signedBid, err := body.SignedSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "could not get signed execution payload bid")
+		return errors.Wrap(err, "could not get signed sila payload bid")
 	}
 	bid := signedBid.Message
 
-	parentBid, err := st.LatestExecutionPayloadBid()
+	parentBid, err := st.LatestSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "could not get parent execution payload bid")
+		return errors.Wrap(err, "could not get parent sila payload bid")
 	}
 
 	parentExecutionRequests, err := body.ParentExecutionRequests()
@@ -56,22 +56,22 @@ func ProcessParentExecutionPayload(ctx context.Context, st state.BeaconState, bl
 		return errors.Errorf("parent execution requests root mismatch: block=%#x, bid=%#x", requestsRoot, parentBidRequestRoot)
 	}
 
-	return ApplyParentExecutionPayload(ctx, st, parentExecutionRequests)
+	return ApplyParentSilaPayload(ctx, st, parentExecutionRequests)
 }
 
-// ApplyParentExecutionPayload reads parent_bid from state.latest_execution_payload_bid
-// and mutates st. Called by ProcessParentExecutionPayload and by the validator during
+// ApplyParentSilaPayload reads parent_bid from state.latest_sila_payload_bid
+// and mutates st. Called by ProcessParentSilaPayload and by the validator during
 // block production before computing withdrawals.
 //
-//	<spec fn="apply_parent_execution_payload" fork="gloas" hash="defer_payload">
-func ApplyParentExecutionPayload(
+//	<spec fn="apply_parent_sila_payload" fork="gloas" hash="defer_payload">
+func ApplyParentSilaPayload(
 	ctx context.Context,
 	st state.BeaconState,
 	reqs *enginev1.ExecutionRequests,
 ) error {
-	parentBid, err := st.LatestExecutionPayloadBid()
+	parentBid, err := st.LatestSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "could not get latest execution payload bid")
+		return errors.Wrap(err, "could not get latest sila payload bid")
 	}
 	parentSlot := parentBid.Slot()
 
@@ -83,8 +83,8 @@ func ApplyParentExecutionPayload(
 		return errors.Wrap(err, "could not queue builder payment")
 	}
 
-	if err := st.SetExecutionPayloadAvailability(parentSlot, true); err != nil {
-		return errors.Wrap(err, "could not set parent execution payload availability")
+	if err := st.SetSilaPayloadAvailability(parentSlot, true); err != nil {
+		return errors.Wrap(err, "could not set parent sila payload availability")
 	}
 
 	blockHash := parentBid.BlockHash()

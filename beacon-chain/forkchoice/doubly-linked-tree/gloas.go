@@ -42,11 +42,11 @@ func (f *ForkChoice) CanonicalNodeAtSlot(slot primitives.Slot) ([32]byte, bool) 
 }
 
 func (s *Store) resolveParentPayloadStatus(block interfaces.ReadOnlyBeaconBlock, parent **PayloadNode, blockHash *[32]byte) error {
-	sb, err := block.Body().SignedExecutionPayloadBid()
+	sb, err := block.Body().SignedSilaPayloadBid()
 	if err != nil {
 		return err
 	}
-	wb, err := blocks.WrappedROSignedExecutionPayloadBid(sb)
+	wb, err := blocks.WrappedROSignedSilaPayloadBid(sb)
 	if err != nil {
 		return errors.Wrap(err, "failed to wrap signed bid")
 	}
@@ -447,7 +447,7 @@ func (s *Store) nodeTreeDumpV2(ctx context.Context, n *Node, nodes []*forkchoice
 
 // MarkFullNode creates a full payload node for an existing empty node at the
 // given beacon block root. This is used during forkchoice tree reconstruction on
-// startup to mark blocks whose execution payload was delivered. The caller must
+// startup to mark blocks whose sila payload was delivered. The caller must
 // hold the forkchoice write lock.
 func (f *ForkChoice) MarkFullNode(root [32]byte) {
 	s := f.store
@@ -468,7 +468,7 @@ func (f *ForkChoice) MarkFullNode(root [32]byte) {
 }
 
 // InsertPayload inserts a full node into forkchoice after the Gloas fork.
-func (f *ForkChoice) InsertPayload(pe interfaces.ROExecutionPayloadEnvelope) error {
+func (f *ForkChoice) InsertPayload(pe interfaces.ROSilaPayloadEnvelope) error {
 	if pe.IsNil() {
 		return errors.New("cannot insert nil payload")
 	}

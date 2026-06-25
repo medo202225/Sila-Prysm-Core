@@ -14,7 +14,7 @@ import (
 
 const (
 	EventHead                      = "head"
-	EventExecutionPayloadAvailable = "execution_payload_available"
+	EventSilaPayloadAvailable = "sila_payload_available"
 
 	EventError           = "error"
 	EventConnectionError = "connection_error"
@@ -24,7 +24,7 @@ var (
 	_ = EventStreamClient(&EventStream{})
 )
 
-var DefaultEventTopics = []string{EventHead, EventExecutionPayloadAvailable}
+var DefaultEventTopics = []string{EventHead, EventSilaPayloadAvailable}
 
 type EventStreamClient interface {
 	Subscribe(eventsChannel chan<- *Event)

@@ -361,9 +361,9 @@ func TestIndexedAttestation_ToConsensus(t *testing.T) {
 	require.ErrorContains(t, errNilValue.Error(), err)
 }
 
-func TestROExecutionPayloadBidFromConsensus(t *testing.T) {
+func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 	t.Run("empty blobkzg commitments", func(t *testing.T) {
-		bid := &eth.ExecutionPayloadBid{
+		bid := &eth.SilaPayloadBid{
 			ParentBlockHash:       bytes.Repeat([]byte{0x01}, 32),
 			ParentBlockRoot:       bytes.Repeat([]byte{0x02}, 32),
 			BlockHash:             bytes.Repeat([]byte{0x03}, 32),
@@ -377,11 +377,11 @@ func TestROExecutionPayloadBidFromConsensus(t *testing.T) {
 			BlobKzgCommitments:    [][]byte{},
 			ExecutionRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 		}
-		roBid, err := blocks.WrappedROExecutionPayloadBid(bid)
+		roBid, err := blocks.WrappedROSilaPayloadBid(bid)
 		require.NoError(t, err)
 
-		got := ROExecutionPayloadBidFromConsensus(roBid)
-		want := &ExecutionPayloadBid{
+		got := ROSilaPayloadBidFromConsensus(roBid)
+		want := &SilaPayloadBid{
 			ParentBlockHash:       hexutil.Encode(bid.ParentBlockHash),
 			ParentBlockRoot:       hexutil.Encode(bid.ParentBlockRoot),
 			BlockHash:             hexutil.Encode(bid.BlockHash),
@@ -399,7 +399,7 @@ func TestROExecutionPayloadBidFromConsensus(t *testing.T) {
 	})
 
 	t.Run("default", func(t *testing.T) {
-		bid := &eth.ExecutionPayloadBid{
+		bid := &eth.SilaPayloadBid{
 			ParentBlockHash:       bytes.Repeat([]byte{0x01}, 32),
 			ParentBlockRoot:       bytes.Repeat([]byte{0x02}, 32),
 			BlockHash:             bytes.Repeat([]byte{0x03}, 32),
@@ -413,7 +413,7 @@ func TestROExecutionPayloadBidFromConsensus(t *testing.T) {
 			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x06}, 48)},
 			ExecutionRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 		}
-		roBid, err := blocks.WrappedROExecutionPayloadBid(bid)
+		roBid, err := blocks.WrappedROSilaPayloadBid(bid)
 		require.NoError(t, err)
 
 		var bkcs []string
@@ -421,8 +421,8 @@ func TestROExecutionPayloadBidFromConsensus(t *testing.T) {
 			bkcs = append(bkcs, hexutil.Encode(commitment))
 		}
 
-		got := ROExecutionPayloadBidFromConsensus(roBid)
-		want := &ExecutionPayloadBid{
+		got := ROSilaPayloadBidFromConsensus(roBid)
+		want := &SilaPayloadBid{
 			ParentBlockHash:       hexutil.Encode(bid.ParentBlockHash),
 			ParentBlockRoot:       hexutil.Encode(bid.ParentBlockRoot),
 			BlockHash:             hexutil.Encode(bid.BlockHash),
@@ -494,7 +494,7 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 		state.GenesisValidatorsRoot = bytes.Repeat([]byte{0x10}, 32)
 		state.Slot = 5
 		state.ProposerLookahead = []primitives.ValidatorIndex{1, 2}
-		state.LatestExecutionPayloadBid = &eth.ExecutionPayloadBid{
+		state.LatestSilaPayloadBid = &eth.SilaPayloadBid{
 			ParentBlockHash:       bytes.Repeat([]byte{0x11}, 32),
 			ParentBlockRoot:       bytes.Repeat([]byte{0x12}, 32),
 			BlockHash:             bytes.Repeat([]byte{0x13}, 32),
@@ -519,7 +519,7 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 			},
 		}
 		state.NextWithdrawalBuilderIndex = 9
-		state.ExecutionPayloadAvailability = []byte{0x01, 0x02}
+		state.SilaPayloadAvailability = []byte{0x01, 0x02}
 		state.BuilderPendingPayments = []*eth.BuilderPendingPayment{
 			{
 				Weight: 3,
@@ -553,12 +553,12 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 	require.Equal(t, "5", got.Slot)
 	require.DeepEqual(t, []string{"1", "2"}, got.ProposerLookahead)
 	require.Equal(t, "9", got.NextWithdrawalBuilderIndex)
-	require.Equal(t, hexutil.Encode([]byte{0x01, 0x02}), got.ExecutionPayloadAvailability)
+	require.Equal(t, hexutil.Encode([]byte{0x01, 0x02}), got.SilaPayloadAvailability)
 	require.Equal(t, hexutil.Encode(bytes.Repeat([]byte{0x25}, 32)), got.LatestBlockHash)
 
-	require.NotNil(t, got.LatestExecutionPayloadBid)
-	require.Equal(t, "64", got.LatestExecutionPayloadBid.GasLimit)
-	require.Equal(t, hexutil.Encode(bytes.Repeat([]byte{0x11}, 32)), got.LatestExecutionPayloadBid.ParentBlockHash)
+	require.NotNil(t, got.LatestSilaPayloadBid)
+	require.Equal(t, "64", got.LatestSilaPayloadBid.GasLimit)
+	require.Equal(t, hexutil.Encode(bytes.Repeat([]byte{0x11}, 32)), got.LatestSilaPayloadBid.ParentBlockHash)
 
 	require.NotNil(t, got.Builders)
 	require.Equal(t, hexutil.Encode(bytes.Repeat([]byte{0x20}, 48)), got.Builders[0].Pubkey)

@@ -50,9 +50,9 @@ const (
 	// PayloadAttestationMessageReceived is sent after a payload attestation message is received from gossip or rpc.
 	PayloadAttestationMessageReceived = 13
 
-	// ExecutionPayloadGossipReceived is sent after an execution payload envelope has been received from
+	// SilaPayloadGossipReceived is sent after an sila payload envelope has been received from
 	// gossip or API that passes validation rules.
-	ExecutionPayloadGossipReceived = 14
+	SilaPayloadGossipReceived = 14
 
 	// ProposerPreferencesReceived is sent after signed proposer preferences are received from gossip or rpc.
 	ProposerPreferencesReceived = 15
@@ -130,8 +130,8 @@ type PayloadAttestationMessageReceivedData struct {
 	Message *silapb.PayloadAttestationMessage
 }
 
-// ExecutionPayloadGossipReceivedData is the data sent with ExecutionPayloadGossipReceived events.
-type ExecutionPayloadGossipReceivedData struct {
+// SilaPayloadGossipReceivedData is the data sent with SilaPayloadGossipReceived events.
+type SilaPayloadGossipReceivedData struct {
 	Slot         primitives.Slot
 	BuilderIndex primitives.BuilderIndex
 	BlockHash    [32]byte

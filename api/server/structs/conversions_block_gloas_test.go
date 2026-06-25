@@ -14,9 +14,9 @@ import (
 	"github.com/sila-chain/Sila/common/hexutil"
 )
 
-func testEnvelopeProto() *eth.ExecutionPayloadEnvelope {
-	return &eth.ExecutionPayloadEnvelope{
-		Payload: &enginev1.ExecutionPayloadGloas{
+func testEnvelopeProto() *eth.SilaPayloadEnvelope {
+	return &eth.SilaPayloadEnvelope{
+		Payload: &enginev1.SilaPayloadGloas{
 			ParentHash:    fillByteSlice(common.HashLength, 0xaa),
 			FeeRecipient:  fillByteSlice(20, 0xbb),
 			StateRoot:     fillByteSlice(32, 0xcc),
@@ -34,9 +34,9 @@ func testEnvelopeProto() *eth.ExecutionPayloadEnvelope {
 	}
 }
 
-func TestExecutionPayloadEnvelopeFromConsensus(t *testing.T) {
+func TestSilaPayloadEnvelopeFromConsensus(t *testing.T) {
 	env := testEnvelopeProto()
-	result, err := ExecutionPayloadEnvelopeFromConsensus(env)
+	result, err := SilaPayloadEnvelopeFromConsensus(env)
 	require.NoError(t, err)
 	require.NotNil(t, result.Payload)
 	require.Equal(t, hexutil.Encode(env.Payload.ParentHash), result.Payload.ParentHash)
@@ -47,16 +47,16 @@ func TestExecutionPayloadEnvelopeFromConsensus(t *testing.T) {
 	require.NotNil(t, result.ExecutionRequests)
 }
 
-func TestExecutionPayloadEnvelopeFromConsensus_NilRequests(t *testing.T) {
+func TestSilaPayloadEnvelopeFromConsensus_NilRequests(t *testing.T) {
 	env := testEnvelopeProto()
 	env.ExecutionRequests = nil
-	result, err := ExecutionPayloadEnvelopeFromConsensus(env)
+	result, err := SilaPayloadEnvelopeFromConsensus(env)
 	require.NoError(t, err)
 	require.Equal(t, (*ExecutionRequests)(nil), result.ExecutionRequests)
 }
 
-func testWireBlindedProto() *eth.WireBlindedExecutionPayloadEnvelope {
-	return &eth.WireBlindedExecutionPayloadEnvelope{
+func testWireBlindedProto() *eth.WireBlindedSilaPayloadEnvelope {
+	return &eth.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           fillByteSlice(32, 0x55),
 		ExecutionRequests:     &enginev1.ExecutionRequests{},
 		BuilderIndex:          7,
@@ -67,8 +67,8 @@ func testWireBlindedProto() *eth.WireBlindedExecutionPayloadEnvelope {
 
 // HTR(blinded) must equal HTR(full) so the validator signature stays valid against either form.
 func TestWireBlindedHTRMatchesFull(t *testing.T) {
-	full := &eth.ExecutionPayloadEnvelope{
-		Payload: &enginev1.ExecutionPayloadGloas{
+	full := &eth.SilaPayloadEnvelope{
+		Payload: &enginev1.SilaPayloadGloas{
 			ParentHash:    fillByteSlice(32, 0x01),
 			FeeRecipient:  fillByteSlice(20, 0x02),
 			StateRoot:     fillByteSlice(32, 0x03),
@@ -98,30 +98,30 @@ func TestWireBlindedHTRMatchesFull(t *testing.T) {
 	// SSZ roundtrip.
 	enc, err := blinded.MarshalSSZ()
 	require.NoError(t, err)
-	decoded := &eth.WireBlindedExecutionPayloadEnvelope{}
+	decoded := &eth.WireBlindedSilaPayloadEnvelope{}
 	require.NoError(t, decoded.UnmarshalSSZ(enc))
 	rtHTR, err := decoded.HashTreeRoot()
 	require.NoError(t, err)
 	require.Equal(t, fullHTR, rtHTR)
 
 	// Signed wrapper SSZ roundtrip.
-	signedBlinded, err := SignedWireBlindedFromFull(&eth.SignedExecutionPayloadEnvelope{
+	signedBlinded, err := SignedWireBlindedFromFull(&eth.SignedSilaPayloadEnvelope{
 		Message:   full,
 		Signature: fillByteSlice(96, 0x0b),
 	})
 	require.NoError(t, err)
 	signedEnc, err := signedBlinded.MarshalSSZ()
 	require.NoError(t, err)
-	decodedSigned := &eth.SignedWireBlindedExecutionPayloadEnvelope{}
+	decodedSigned := &eth.SignedWireBlindedSilaPayloadEnvelope{}
 	require.NoError(t, decodedSigned.UnmarshalSSZ(signedEnc))
 	rtBlindedHTR, err := decodedSigned.Message.HashTreeRoot()
 	require.NoError(t, err)
 	require.Equal(t, fullHTR, rtBlindedHTR)
 }
 
-func TestBlindedExecutionPayloadEnvelopeFromConsensus(t *testing.T) {
+func TestBlindedSilaPayloadEnvelopeFromConsensus(t *testing.T) {
 	b := testWireBlindedProto()
-	result, err := BlindedExecutionPayloadEnvelopeFromConsensus(b)
+	result, err := BlindedSilaPayloadEnvelopeFromConsensus(b)
 	require.NoError(t, err)
 	require.Equal(t, hexutil.Encode(b.PayloadRoot), result.PayloadRoot)
 	require.Equal(t, "7", result.BuilderIndex)
@@ -130,14 +130,14 @@ func TestBlindedExecutionPayloadEnvelopeFromConsensus(t *testing.T) {
 	require.NotNil(t, result.ExecutionRequests)
 }
 
-func TestBlindedExecutionPayloadEnvelopeFromConsensus_Nil(t *testing.T) {
-	_, err := BlindedExecutionPayloadEnvelopeFromConsensus(nil)
+func TestBlindedSilaPayloadEnvelopeFromConsensus_Nil(t *testing.T) {
+	_, err := BlindedSilaPayloadEnvelopeFromConsensus(nil)
 	require.NotNil(t, err)
 }
 
-func TestBlindedExecutionPayloadEnvelope_ToConsensusRoundTrip(t *testing.T) {
+func TestBlindedSilaPayloadEnvelope_ToConsensusRoundTrip(t *testing.T) {
 	b := testWireBlindedProto()
-	api, err := BlindedExecutionPayloadEnvelopeFromConsensus(b)
+	api, err := BlindedSilaPayloadEnvelopeFromConsensus(b)
 	require.NoError(t, err)
 	back, err := api.ToConsensus()
 	require.NoError(t, err)
@@ -148,21 +148,21 @@ func TestBlindedExecutionPayloadEnvelope_ToConsensusRoundTrip(t *testing.T) {
 	require.NotNil(t, back.ExecutionRequests)
 }
 
-func TestSignedBlindedExecutionPayloadEnvelope_ToConsensus(t *testing.T) {
-	msg, err := BlindedExecutionPayloadEnvelopeFromConsensus(testWireBlindedProto())
+func TestSignedBlindedSilaPayloadEnvelope_ToConsensus(t *testing.T) {
+	msg, err := BlindedSilaPayloadEnvelopeFromConsensus(testWireBlindedProto())
 	require.NoError(t, err)
 	sig := fillByteSlice(96, 0x66)
-	signed := &SignedBlindedExecutionPayloadEnvelope{Message: msg, Signature: hexutil.Encode(sig)}
+	signed := &SignedBlindedSilaPayloadEnvelope{Message: msg, Signature: hexutil.Encode(sig)}
 	result, err := signed.ToConsensus()
 	require.NoError(t, err)
 	require.NotNil(t, result.Message)
 	require.DeepEqual(t, sig, result.Signature)
 }
 
-func TestSignedBlindedExecutionPayloadEnvelope_ToConsensus_BadSignature(t *testing.T) {
-	msg, err := BlindedExecutionPayloadEnvelopeFromConsensus(testWireBlindedProto())
+func TestSignedBlindedSilaPayloadEnvelope_ToConsensus_BadSignature(t *testing.T) {
+	msg, err := BlindedSilaPayloadEnvelopeFromConsensus(testWireBlindedProto())
 	require.NoError(t, err)
-	signed := &SignedBlindedExecutionPayloadEnvelope{Message: msg, Signature: "0xdead"}
+	signed := &SignedBlindedSilaPayloadEnvelope{Message: msg, Signature: "0xdead"}
 	_, err = signed.ToConsensus()
 	require.NotNil(t, err)
 }
@@ -177,8 +177,8 @@ func TestBlockContentsGloasFromConsensus(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, result.Block)
 	require.NotNil(t, result.Block.Body)
-	require.NotNil(t, result.ExecutionPayloadEnvelope)
-	require.Equal(t, hexutil.Encode(env.BeaconBlockRoot), result.ExecutionPayloadEnvelope.BeaconBlockRoot)
+	require.NotNil(t, result.SilaPayloadEnvelope)
+	require.Equal(t, hexutil.Encode(env.BeaconBlockRoot), result.SilaPayloadEnvelope.BeaconBlockRoot)
 	require.Equal(t, 1, len(result.KzgProofs))
 	require.Equal(t, hexutil.Encode(proofs[0]), result.KzgProofs[0])
 	require.Equal(t, 1, len(result.Blobs))

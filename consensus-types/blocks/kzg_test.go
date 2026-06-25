@@ -49,7 +49,7 @@ func buildTestKzgsAndBody(t *testing.T) ([][]byte, interfaces.ReadOnlyBeaconBloc
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+		SilaPayload: &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -208,7 +208,7 @@ func Benchmark_MerkleProofKZGCommitment(b *testing.B) {
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+		SilaPayload: &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -253,7 +253,7 @@ func Test_VerifyKZGInclusionProof(t *testing.T) {
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+		SilaPayload: &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),

@@ -12,17 +12,17 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-// SubmitSignedExecutionPayloadBid broadcasts a signed execution payload bid
+// SubmitSignedSilaPayloadBid broadcasts a signed sila payload bid
 // to the P2P gossip network.
-func (vs *Server) SubmitSignedExecutionPayloadBid(
+func (vs *Server) SubmitSignedSilaPayloadBid(
 	ctx context.Context,
-	req *silapb.SignedExecutionPayloadBid,
+	req *silapb.SignedSilaPayloadBid,
 ) (*emptypb.Empty, error) {
-	ctx, span := trace.StartSpan(ctx, "ValidatorServer.SubmitSignedExecutionPayloadBid")
+	ctx, span := trace.StartSpan(ctx, "ValidatorServer.SubmitSignedSilaPayloadBid")
 	defer span.End()
 
 	if req == nil || req.Message == nil {
-		return nil, status.Errorf(codes.InvalidArgument, "signed execution payload bid is nil")
+		return nil, status.Errorf(codes.InvalidArgument, "signed sila payload bid is nil")
 	}
 
 	if vs.SyncChecker.Syncing() {
@@ -31,11 +31,11 @@ func (vs *Server) SubmitSignedExecutionPayloadBid(
 
 	if slots.ToEpoch(req.Message.Slot) < params.BeaconConfig().GloasForkEpoch {
 		return nil, status.Errorf(codes.InvalidArgument,
-			"execution payload bids are not supported before Gloas fork (slot %d)", req.Message.Slot)
+			"sila payload bids are not supported before Gloas fork (slot %d)", req.Message.Slot)
 	}
 
 	if err := vs.P2P.Broadcast(ctx, req); err != nil {
-		return nil, status.Errorf(codes.Internal, "could not broadcast signed execution payload bid: %v", err)
+		return nil, status.Errorf(codes.Internal, "could not broadcast signed sila payload bid: %v", err)
 	}
 
 	return &emptypb.Empty{}, nil

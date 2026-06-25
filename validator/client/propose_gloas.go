@@ -16,17 +16,17 @@ import (
 	"github.com/pkg/errors"
 )
 
-// signExecutionPayloadEnvelope signs the execution payload envelope using the
+// signSilaPayloadEnvelope signs the sila payload envelope using the
 // proposer's key. The envelope is signed with DomainBeaconBuilder since it is
 // a builder artifact — even in the self-build case where the proposer acts as
 // their own builder.
-func (v *validator) signExecutionPayloadEnvelope(
+func (v *validator) signSilaPayloadEnvelope(
 	ctx context.Context,
 	pubKey [fieldparams.BLSPubkeyLength]byte,
 	slot primitives.Slot,
-	envelope *silapb.ExecutionPayloadEnvelope,
-) (*silapb.SignedExecutionPayloadEnvelope, error) {
-	ctx, span := trace.StartSpan(ctx, "validator.signExecutionPayloadEnvelope")
+	envelope *silapb.SilaPayloadEnvelope,
+) (*silapb.SignedSilaPayloadEnvelope, error) {
+	ctx, span := trace.StartSpan(ctx, "validator.signSilaPayloadEnvelope")
 	defer span.End()
 
 	epoch := slots.ToEpoch(slot)
@@ -48,16 +48,16 @@ func (v *validator) signExecutionPayloadEnvelope(
 		PublicKey:       pubKey[:],
 		SigningRoot:     signingRoot[:],
 		SignatureDomain: domain.SignatureDomain,
-		Object: &validatorpb.SignRequest_ExecutionPayloadEnvelope{
-			ExecutionPayloadEnvelope: envelope,
+		Object: &validatorpb.SignRequest_SilaPayloadEnvelope{
+			SilaPayloadEnvelope: envelope,
 		},
 		SigningSlot: slot,
 	})
 	if err != nil {
-		return nil, errors.Wrap(err, "could not sign execution payload envelope")
+		return nil, errors.Wrap(err, "could not sign sila payload envelope")
 	}
 
-	return &silapb.SignedExecutionPayloadEnvelope{
+	return &silapb.SignedSilaPayloadEnvelope{
 		Message:   envelope,
 		Signature: sig.Marshal(),
 	}, nil
@@ -73,12 +73,12 @@ func (v *validator) proposeSelfBuildEnvelope(
 		return nil
 	}
 
-	bid, err := blk.Block().Body().SignedExecutionPayloadBid()
+	bid, err := blk.Block().Body().SignedSilaPayloadBid()
 	if err != nil {
 		return err
 	}
 	if bid == nil || bid.Message == nil {
-		return errors.New("no execution payload bid found in block body")
+		return errors.New("no sila payload bid found in block body")
 	}
 	if bid.Message.BuilderIndex != params.BeaconConfig().BuilderIndexSelfBuild {
 		// only used for self build
@@ -90,10 +90,10 @@ func (v *validator) proposeSelfBuildEnvelope(
 		return errors.Wrap(err, "could not compute beacon block root")
 	}
 
-	full, blinded, err := v.validatorClient.GetExecutionPayloadEnvelope(ctx, slot, blockRoot)
+	full, blinded, err := v.validatorClient.GetSilaPayloadEnvelope(ctx, slot, blockRoot)
 	if err != nil {
 		validatorSelfBuildEnvelopeSubmissionTotal.WithLabelValues("failed").Inc()
-		return errors.Wrap(err, "failed to get execution payload envelope for self-build")
+		return errors.Wrap(err, "failed to get sila payload envelope for self-build")
 	}
 
 	// Stateful REST returns only the blinded envelope (BN reconstructs the full from its cache);
@@ -107,15 +107,15 @@ func (v *validator) proposeSelfBuildEnvelope(
 		return nil
 	}
 
-	signedEnvelope, err := v.signExecutionPayloadEnvelope(ctx, pubKey, slot, full)
+	signedEnvelope, err := v.signSilaPayloadEnvelope(ctx, pubKey, slot, full)
 	if err != nil {
 		validatorSelfBuildEnvelopeSubmissionTotal.WithLabelValues("failed").Inc()
-		return errors.Wrap(err, "could not sign execution payload envelope")
+		return errors.Wrap(err, "could not sign sila payload envelope")
 	}
 
-	if _, err := v.validatorClient.PublishExecutionPayloadEnvelope(ctx, signedEnvelope); err != nil {
+	if _, err := v.validatorClient.PublishSilaPayloadEnvelope(ctx, signedEnvelope); err != nil {
 		validatorSelfBuildEnvelopeSubmissionTotal.WithLabelValues("failed").Inc()
-		return errors.Wrap(err, "failed to publish execution payload envelope")
+		return errors.Wrap(err, "failed to publish sila payload envelope")
 	}
 	validatorSelfBuildEnvelopeSubmissionTotal.WithLabelValues("success").Inc()
 
@@ -129,10 +129,10 @@ func (v *validator) publishSelfBuildBlinded(
 	ctx context.Context,
 	pubKey [fieldparams.BLSPubkeyLength]byte,
 	slot primitives.Slot,
-	blinded *silapb.WireBlindedExecutionPayloadEnvelope,
+	blinded *silapb.WireBlindedSilaPayloadEnvelope,
 ) error {
 	if blinded == nil {
-		return errors.New("nil blinded execution payload envelope")
+		return errors.New("nil blinded sila payload envelope")
 	}
 	epoch := slots.ToEpoch(slot)
 	domain, err := v.domainData(ctx, epoch, params.BeaconConfig().DomainBeaconBuilder[:])
@@ -153,11 +153,11 @@ func (v *validator) publishSelfBuildBlinded(
 		SigningSlot:     slot,
 	})
 	if err != nil {
-		return errors.Wrap(err, "could not sign blinded execution payload envelope")
+		return errors.Wrap(err, "could not sign blinded sila payload envelope")
 	}
-	signed := &silapb.SignedWireBlindedExecutionPayloadEnvelope{Message: blinded, Signature: sig.Marshal()}
-	if _, err := v.validatorClient.PublishBlindedExecutionPayloadEnvelope(ctx, signed); err != nil {
-		return errors.Wrap(err, "failed to publish blinded execution payload envelope")
+	signed := &silapb.SignedWireBlindedSilaPayloadEnvelope{Message: blinded, Signature: sig.Marshal()}
+	if _, err := v.validatorClient.PublishBlindedSilaPayloadEnvelope(ctx, signed); err != nil {
+		return errors.Wrap(err, "failed to publish blinded sila payload envelope")
 	}
 	return nil
 }

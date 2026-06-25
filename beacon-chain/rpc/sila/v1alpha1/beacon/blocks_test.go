@@ -486,7 +486,7 @@ func TestServer_ListBeaconBlocks_Pagination(t *testing.T) {
 	})
 	t.Run("bellatrix block", func(t *testing.T) {
 		resetFn := features.InitWithReset(&features.Flags{
-			SaveFullExecutionPayloads: true,
+			SaveFullSilaPayloads: true,
 		})
 		defer resetFn()
 		blk := util.NewBeaconBlockBellatrix()
@@ -514,7 +514,7 @@ func TestServer_ListBeaconBlocks_Pagination(t *testing.T) {
 	})
 	t.Run("capella block", func(t *testing.T) {
 		resetFn := features.InitWithReset(&features.Flags{
-			SaveFullExecutionPayloads: true,
+			SaveFullSilaPayloads: true,
 		})
 		defer resetFn()
 		blk := util.NewBeaconBlockCapella()

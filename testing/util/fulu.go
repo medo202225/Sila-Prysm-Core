@@ -30,7 +30,7 @@ type fuluBlockGenerator struct {
 	sk        bls.SecretKey
 	proposer  primitives.ValidatorIndex
 	valRoot   []byte
-	payload   *enginev1.ExecutionPayloadDeneb
+	payload   *enginev1.SilaPayloadDeneb
 }
 
 func WithFuluProposerSigning(idx primitives.ValidatorIndex, sk bls.SecretKey, valRoot []byte) FuluBlockGeneratorOption {
@@ -42,7 +42,7 @@ func WithFuluProposerSigning(idx primitives.ValidatorIndex, sk bls.SecretKey, va
 	}
 }
 
-func WithFuluPayload(p *enginev1.ExecutionPayloadDeneb) FuluBlockGeneratorOption {
+func WithFuluPayload(p *enginev1.SilaPayloadDeneb) FuluBlockGeneratorOption {
 	return func(g *fuluBlockGenerator) {
 		g.payload = p
 	}
@@ -87,7 +87,7 @@ func GenerateTestFuluBlockWithSidecars(t *testing.T, blobCount int, options ...F
 
 		blockHash := bytesutil.ToBytes32([]byte("foo"))
 
-		generator.payload = &enginev1.ExecutionPayloadDeneb{
+		generator.payload = &enginev1.SilaPayloadDeneb{
 			ParentHash:    bytesutil.PadTo([]byte("parentHash"), fieldparams.RootLength),
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     bytesutil.PadTo([]byte("stateRoot"), fieldparams.RootLength),
@@ -109,7 +109,7 @@ func GenerateTestFuluBlockWithSidecars(t *testing.T, blobCount int, options ...F
 	}
 
 	block := NewBeaconBlockFulu()
-	block.Block.Body.ExecutionPayload = generator.payload
+	block.Block.Body.SilaPayload = generator.payload
 	block.Block.Slot = generator.slot
 	block.Block.ParentRoot = generator.parent[:]
 	block.Block.ProposerIndex = generator.proposer

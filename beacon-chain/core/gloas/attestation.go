@@ -21,7 +21,7 @@ import (
 //	    payload_matches = True
 //	else:
 //	    slot_index = data.slot % SLOTS_PER_HISTORICAL_ROOT
-//	    payload_index = state.execution_payload_availability[slot_index]
+//	    payload_index = state.sila_payload_availability[slot_index]
 //	    payload_matches = data.index == payload_index
 func MatchingPayload(
 	beaconState state.ReadOnlyBeaconState,
@@ -44,9 +44,9 @@ func MatchingPayload(
 		return true, nil
 	}
 
-	executionPayloadAvail, err := beaconState.ExecutionPayloadAvailability(slot)
+	silaPayloadAvail, err := beaconState.SilaPayloadAvailability(slot)
 	if err != nil {
-		return false, errors.Wrap(err, "failed to get execution payload availability status")
+		return false, errors.Wrap(err, "failed to get sila payload availability status")
 	}
-	return executionPayloadAvail == committeeIndex, nil
+	return silaPayloadAvail == committeeIndex, nil
 }

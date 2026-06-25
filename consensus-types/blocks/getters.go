@@ -185,9 +185,9 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 	}
 
 	if b.version >= version.Fulu {
-		p, ok := payload.Proto().(*enginev1.ExecutionPayloadDeneb)
+		p, ok := payload.Proto().(*enginev1.SilaPayloadDeneb)
 		if !ok {
-			return nil, fmt.Errorf("%T is not an execution payload header of Deneb version", p)
+			return nil, fmt.Errorf("%T is not an sila payload header of Deneb version", p)
 		}
 		header, err := PayloadToHeaderFulu(payload)
 		if err != nil {
@@ -211,7 +211,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						Deposits:               b.block.body.deposits,
 						VoluntaryExits:         b.block.body.voluntaryExits,
 						SyncAggregate:          b.block.body.syncAggregate,
-						ExecutionPayloadHeader: header,
+						SilaPayloadHeader: header,
 						BlsToExecutionChanges:  b.block.body.blsToExecutionChanges,
 						BlobKzgCommitments:     b.block.body.blobKzgCommitments,
 						ExecutionRequests:      b.block.body.executionRequests,
@@ -222,9 +222,9 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 	}
 
 	if b.version >= version.Electra {
-		p, ok := payload.Proto().(*enginev1.ExecutionPayloadDeneb)
+		p, ok := payload.Proto().(*enginev1.SilaPayloadDeneb)
 		if !ok {
-			return nil, fmt.Errorf("%T is not an execution payload header of Deneb version", p)
+			return nil, fmt.Errorf("%T is not an sila payload header of Deneb version", p)
 		}
 		header, err := PayloadToHeaderElectra(payload)
 		if err != nil {
@@ -247,7 +247,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						Deposits:               b.block.body.deposits,
 						VoluntaryExits:         b.block.body.voluntaryExits,
 						SyncAggregate:          b.block.body.syncAggregate,
-						ExecutionPayloadHeader: header,
+						SilaPayloadHeader: header,
 						BlsToExecutionChanges:  b.block.body.blsToExecutionChanges,
 						BlobKzgCommitments:     b.block.body.blobKzgCommitments,
 						ExecutionRequests:      b.block.body.executionRequests,
@@ -258,7 +258,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 	}
 
 	switch p := payload.Proto().(type) {
-	case *enginev1.ExecutionPayload:
+	case *enginev1.SilaPayload:
 		header, err := PayloadToHeader(payload)
 		if err != nil {
 			return nil, errors.Wrap(err, "payload to header")
@@ -280,12 +280,12 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						Deposits:               b.block.body.deposits,
 						VoluntaryExits:         b.block.body.voluntaryExits,
 						SyncAggregate:          b.block.body.syncAggregate,
-						ExecutionPayloadHeader: header,
+						SilaPayloadHeader: header,
 					},
 				},
 				Signature: b.signature[:],
 			})
-	case *enginev1.ExecutionPayloadCapella:
+	case *enginev1.SilaPayloadCapella:
 		header, err := PayloadToHeaderCapella(payload)
 		if err != nil {
 			return nil, err
@@ -307,13 +307,13 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						Deposits:               b.block.body.deposits,
 						VoluntaryExits:         b.block.body.voluntaryExits,
 						SyncAggregate:          b.block.body.syncAggregate,
-						ExecutionPayloadHeader: header,
+						SilaPayloadHeader: header,
 						BlsToExecutionChanges:  b.block.body.blsToExecutionChanges,
 					},
 				},
 				Signature: b.signature[:],
 			})
-	case *enginev1.ExecutionPayloadDeneb:
+	case *enginev1.SilaPayloadDeneb:
 		header, err := PayloadToHeaderDeneb(payload)
 		if err != nil {
 			return nil, errors.Wrap(err, "payload to header deneb")
@@ -335,7 +335,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 						Deposits:               b.block.body.deposits,
 						VoluntaryExits:         b.block.body.voluntaryExits,
 						SyncAggregate:          b.block.body.syncAggregate,
-						ExecutionPayloadHeader: header,
+						SilaPayloadHeader: header,
 						BlsToExecutionChanges:  b.block.body.blsToExecutionChanges,
 						BlobKzgCommitments:     b.block.body.blobKzgCommitments,
 					},
@@ -343,7 +343,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 				Signature: b.signature[:],
 			})
 	default:
-		return nil, fmt.Errorf("%T is not an execution payload header", p)
+		return nil, fmt.Errorf("%T is not an sila payload header", p)
 	}
 }
 
@@ -382,7 +382,7 @@ func (b *SignedBeaconBlock) Version() int {
 
 // IsBlinded metadata on whether a block is blinded
 func (b *SignedBeaconBlock) IsBlinded() bool {
-	return b.version < version.Gloas && b.version >= version.Bellatrix && b.block.body.executionPayload == nil
+	return b.version < version.Gloas && b.version >= version.Bellatrix && b.block.body.silaPayload == nil
 }
 
 // Header converts the underlying protobuf object from blinded block to header format.
@@ -727,7 +727,7 @@ func (b *BeaconBlock) IsNil() bool {
 
 // IsBlinded checks if the beacon block is a blinded block.
 func (b *BeaconBlock) IsBlinded() bool {
-	return b.version < version.Gloas && b.version >= version.Bellatrix && b.body.executionPayload == nil
+	return b.version < version.Gloas && b.version >= version.Bellatrix && b.body.silaPayload == nil
 }
 
 // Version of the underlying protobuf object.
@@ -1243,15 +1243,15 @@ func (b *BeaconBlockBody) SyncAggregate() (*eth.SyncAggregate, error) {
 	return b.syncAggregate, nil
 }
 
-// Execution returns the execution payload of the block body.
+// Execution returns the sila payload of the block body.
 func (b *BeaconBlockBody) Execution() (interfaces.ExecutionData, error) {
 	if b.version <= version.Altair || b.version >= version.Gloas {
 		return nil, consensus_types.ErrNotSupported("Execution", b.version)
 	}
 	if b.IsBlinded() {
-		return b.executionPayloadHeader, nil
+		return b.silaPayloadHeader, nil
 	}
-	return b.executionPayload, nil
+	return b.silaPayload, nil
 }
 
 func (b *BeaconBlockBody) BLSToExecutionChanges() ([]*eth.SignedBLSToExecutionChange, error) {
@@ -1264,7 +1264,7 @@ func (b *BeaconBlockBody) BLSToExecutionChanges() ([]*eth.SignedBLSToExecutionCh
 // BlobKzgCommitments returns the blob kzg commitments in the block.
 func (b *BeaconBlockBody) BlobKzgCommitments() ([][]byte, error) {
 	if b.version >= version.Gloas {
-		signedBid, err := b.SignedExecutionPayloadBid()
+		signedBid, err := b.SignedSilaPayloadBid()
 		if err != nil {
 			return nil, err
 		}
@@ -1295,12 +1295,12 @@ func (b *BeaconBlockBody) PayloadAttestations() ([]*eth.PayloadAttestation, erro
 	return nil, consensus_types.ErrNotSupported("PayloadAttestations", b.version)
 }
 
-// SignedExecutionPayloadBid returns the signed execution payload header in the block.
-func (b *BeaconBlockBody) SignedExecutionPayloadBid() (*eth.SignedExecutionPayloadBid, error) {
+// SignedSilaPayloadBid returns the signed sila payload header in the block.
+func (b *BeaconBlockBody) SignedSilaPayloadBid() (*eth.SignedSilaPayloadBid, error) {
 	if b.version >= version.Gloas {
-		return b.signedExecutionPayloadBid, nil
+		return b.signedSilaPayloadBid, nil
 	}
-	return nil, consensus_types.ErrNotSupported("SignedExecutionPayloadBid", b.version)
+	return nil, consensus_types.ErrNotSupported("SignedSilaPayloadBid", b.version)
 }
 
 // ParentExecutionRequests returns the parent's deferred execution requests.
@@ -1361,5 +1361,5 @@ func (b *BeaconBlockBody) HashTreeRoot() ([field_params.RootLength]byte, error) 
 
 // IsBlinded checks if the beacon block body is a blinded block body.
 func (b *BeaconBlockBody) IsBlinded() bool {
-	return b.version < version.Gloas && b.version >= version.Bellatrix && b.executionPayload == nil
+	return b.version < version.Gloas && b.version >= version.Bellatrix && b.silaPayload == nil
 }

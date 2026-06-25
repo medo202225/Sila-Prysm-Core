@@ -164,9 +164,9 @@ func WriteLightClientFinalityUpdateChunk(stream libp2pcore.Stream, tor blockchai
 	return err
 }
 
-// WriteExecutionPayloadEnvelopeChunk writes execution payload envelope chunk object to stream.
+// WriteSilaPayloadEnvelopeChunk writes sila payload envelope chunk object to stream.
 // response_chunk  ::= <result> | <context-bytes> | <encoding-dependent-header> | <encoded-payload>
-func WriteExecutionPayloadEnvelopeChunk(stream libp2pcore.Stream, encoding encoder.NetworkEncoding, envelope *silapb.SignedExecutionPayloadEnvelope) error {
+func WriteSilaPayloadEnvelopeChunk(stream libp2pcore.Stream, encoding encoder.NetworkEncoding, envelope *silapb.SignedSilaPayloadEnvelope) error {
 	if _, err := stream.Write([]byte{responseCodeSuccess}); err != nil {
 		return err
 	}

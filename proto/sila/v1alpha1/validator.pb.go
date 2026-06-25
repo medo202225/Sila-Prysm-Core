@@ -3348,27 +3348,27 @@ func (x *PTCDuty) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_ty
 }
 
 // Deprecated: Marked as deprecated in proto/sila/v1alpha1/validator.proto.
-type ExecutionPayloadEnvelopeRequest struct {
+type SilaPayloadEnvelopeRequest struct {
 	state         protoimpl.MessageState                                           `protogen:"open.v1"`
 	Slot          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadEnvelopeRequest) Reset() {
-	*x = ExecutionPayloadEnvelopeRequest{}
+func (x *SilaPayloadEnvelopeRequest) Reset() {
+	*x = SilaPayloadEnvelopeRequest{}
 	mi := &file_proto_sila_v1alpha1_validator_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadEnvelopeRequest) String() string {
+func (x *SilaPayloadEnvelopeRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadEnvelopeRequest) ProtoMessage() {}
+func (*SilaPayloadEnvelopeRequest) ProtoMessage() {}
 
-func (x *ExecutionPayloadEnvelopeRequest) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadEnvelopeRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_validator_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3380,12 +3380,12 @@ func (x *ExecutionPayloadEnvelopeRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadEnvelopeRequest.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadEnvelopeRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadEnvelopeRequest.ProtoReflect.Descriptor instead.
+func (*SilaPayloadEnvelopeRequest) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_validator_proto_rawDescGZIP(), []int{57}
 }
 
-func (x *ExecutionPayloadEnvelopeRequest) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
+func (x *SilaPayloadEnvelopeRequest) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
@@ -3393,27 +3393,27 @@ func (x *ExecutionPayloadEnvelopeRequest) GetSlot() github_com_sila_chain_Sila_S
 }
 
 // Deprecated: Marked as deprecated in proto/sila/v1alpha1/validator.proto.
-type ExecutionPayloadEnvelopeResponse struct {
+type SilaPayloadEnvelopeResponse struct {
 	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Envelope      *ExecutionPayloadEnvelope `protobuf:"bytes,1,opt,name=envelope,proto3" json:"envelope,omitempty"`
+	Envelope      *SilaPayloadEnvelope `protobuf:"bytes,1,opt,name=envelope,proto3" json:"envelope,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadEnvelopeResponse) Reset() {
-	*x = ExecutionPayloadEnvelopeResponse{}
+func (x *SilaPayloadEnvelopeResponse) Reset() {
+	*x = SilaPayloadEnvelopeResponse{}
 	mi := &file_proto_sila_v1alpha1_validator_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadEnvelopeResponse) String() string {
+func (x *SilaPayloadEnvelopeResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadEnvelopeResponse) ProtoMessage() {}
+func (*SilaPayloadEnvelopeResponse) ProtoMessage() {}
 
-func (x *ExecutionPayloadEnvelopeResponse) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadEnvelopeResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_validator_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3425,12 +3425,12 @@ func (x *ExecutionPayloadEnvelopeResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadEnvelopeResponse.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadEnvelopeResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadEnvelopeResponse.ProtoReflect.Descriptor instead.
+func (*SilaPayloadEnvelopeResponse) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_validator_proto_rawDescGZIP(), []int{58}
 }
 
-func (x *ExecutionPayloadEnvelopeResponse) GetEnvelope() *ExecutionPayloadEnvelope {
+func (x *SilaPayloadEnvelopeResponse) GetEnvelope() *SilaPayloadEnvelope {
 	if x != nil {
 		return x.Envelope
 	}
@@ -5387,8 +5387,8 @@ var file_proto_sila_v1alpha1_validator_proto_goTypes = []any{
 	(*PTCDutiesRequest)(nil),                                   // 55: sila.eth.v1alpha1.PTCDutiesRequest
 	(*PTCDutiesResponse)(nil),                                  // 56: sila.eth.v1alpha1.PTCDutiesResponse
 	(*PTCDuty)(nil),                                            // 57: sila.eth.v1alpha1.PTCDuty
-	(*ExecutionPayloadEnvelopeRequest)(nil),                    // 58: sila.eth.v1alpha1.ExecutionPayloadEnvelopeRequest
-	(*ExecutionPayloadEnvelopeResponse)(nil),                   // 59: sila.eth.v1alpha1.ExecutionPayloadEnvelopeResponse
+	(*SilaPayloadEnvelopeRequest)(nil),                    // 58: sila.eth.v1alpha1.SilaPayloadEnvelopeRequest
+	(*SilaPayloadEnvelopeResponse)(nil),                   // 59: sila.eth.v1alpha1.SilaPayloadEnvelopeResponse
 	(*PayloadAttestationDataRequest)(nil),                      // 60: sila.eth.v1alpha1.PayloadAttestationDataRequest
 	(*ValidatorActivationResponse_Status)(nil),                 // 61: sila.eth.v1alpha1.ValidatorActivationResponse.Status
 	(*DutiesResponse_Duty)(nil),                                // 62: sila.eth.v1alpha1.DutiesResponse.Duty
@@ -5409,7 +5409,7 @@ var file_proto_sila_v1alpha1_validator_proto_goTypes = []any{
 	(*SignedAggregateAttestationAndProof)(nil),                 // 77: sila.eth.v1alpha1.SignedAggregateAttestationAndProof
 	(*SignedAggregateAttestationAndProofElectra)(nil),          // 78: sila.eth.v1alpha1.SignedAggregateAttestationAndProofElectra
 	(*SyncCommitteeMessage)(nil),                               // 79: sila.eth.v1alpha1.SyncCommitteeMessage
-	(*ExecutionPayloadEnvelope)(nil),                           // 80: sila.eth.v1alpha1.ExecutionPayloadEnvelope
+	(*SilaPayloadEnvelope)(nil),                           // 80: sila.eth.v1alpha1.SilaPayloadEnvelope
 	(*emptypb.Empty)(nil),                                      // 81: google.protobuf.Empty
 	(*GenericSignedBeaconBlock)(nil),                           // 82: sila.eth.v1alpha1.GenericSignedBeaconBlock
 	(*Attestation)(nil),                                        // 83: sila.eth.v1alpha1.Attestation
@@ -5417,10 +5417,10 @@ var file_proto_sila_v1alpha1_validator_proto_goTypes = []any{
 	(*SignedVoluntaryExit)(nil),                                // 85: sila.eth.v1alpha1.SignedVoluntaryExit
 	(*SignedContributionAndProof)(nil),                         // 86: sila.eth.v1alpha1.SignedContributionAndProof
 	(*SignedValidatorRegistrationsV1)(nil),                     // 87: sila.eth.v1alpha1.SignedValidatorRegistrationsV1
-	(*SignedExecutionPayloadEnvelope)(nil),                     // 88: sila.eth.v1alpha1.SignedExecutionPayloadEnvelope
+	(*SignedSilaPayloadEnvelope)(nil),                     // 88: sila.eth.v1alpha1.SignedSilaPayloadEnvelope
 	(*PayloadAttestationMessage)(nil),                          // 89: sila.eth.v1alpha1.PayloadAttestationMessage
 	(*SubmitSignedProposerPreferencesRequest)(nil),             // 90: sila.eth.v1alpha1.SubmitSignedProposerPreferencesRequest
-	(*SignedExecutionPayloadBid)(nil),                          // 91: sila.eth.v1alpha1.SignedExecutionPayloadBid
+	(*SignedSilaPayloadBid)(nil),                          // 91: sila.eth.v1alpha1.SignedSilaPayloadBid
 	(*GenericBeaconBlock)(nil),                                 // 92: sila.eth.v1alpha1.GenericBeaconBlock
 	(*AttestationData)(nil),                                    // 93: sila.eth.v1alpha1.AttestationData
 	(*SyncCommitteeContribution)(nil),                          // 94: sila.eth.v1alpha1.SyncCommitteeContribution
@@ -5455,7 +5455,7 @@ var file_proto_sila_v1alpha1_validator_proto_depIdxs = []int32{
 	51, // 25: sila.eth.v1alpha1.ProposerDutiesResponse.duties:type_name -> sila.eth.v1alpha1.ProposerDutyV2
 	54, // 26: sila.eth.v1alpha1.SyncCommitteeDutiesResponse.duties:type_name -> sila.eth.v1alpha1.SyncCommitteeDuty
 	57, // 27: sila.eth.v1alpha1.PTCDutiesResponse.duties:type_name -> sila.eth.v1alpha1.PTCDuty
-	80, // 28: sila.eth.v1alpha1.ExecutionPayloadEnvelopeResponse.envelope:type_name -> sila.eth.v1alpha1.ExecutionPayloadEnvelope
+	80, // 28: sila.eth.v1alpha1.SilaPayloadEnvelopeResponse.envelope:type_name -> sila.eth.v1alpha1.SilaPayloadEnvelope
 	16, // 29: sila.eth.v1alpha1.ValidatorActivationResponse.Status.status:type_name -> sila.eth.v1alpha1.ValidatorStatusResponse
 	0,  // 30: sila.eth.v1alpha1.DutiesResponse.Duty.status:type_name -> sila.eth.v1alpha1.ValidatorStatus
 	0,  // 31: sila.eth.v1alpha1.DutiesV2Response.Duty.status:type_name -> sila.eth.v1alpha1.ValidatorStatus
@@ -5495,12 +5495,12 @@ var file_proto_sila_v1alpha1_validator_proto_depIdxs = []int32{
 	87, // 65: sila.eth.v1alpha1.BeaconNodeValidator.SubmitValidatorRegistrations:input_type -> sila.eth.v1alpha1.SignedValidatorRegistrationsV1
 	43, // 66: sila.eth.v1alpha1.BeaconNodeValidator.AssignValidatorToSubnet:input_type -> sila.eth.v1alpha1.AssignValidatorToSubnetRequest
 	44, // 67: sila.eth.v1alpha1.BeaconNodeValidator.AggregatedSigAndAggregationBits:input_type -> sila.eth.v1alpha1.AggregatedSigAndAggregationBitsRequest
-	58, // 68: sila.eth.v1alpha1.BeaconNodeValidator.GetExecutionPayloadEnvelope:input_type -> sila.eth.v1alpha1.ExecutionPayloadEnvelopeRequest
-	88, // 69: sila.eth.v1alpha1.BeaconNodeValidator.PublishExecutionPayloadEnvelope:input_type -> sila.eth.v1alpha1.SignedExecutionPayloadEnvelope
+	58, // 68: sila.eth.v1alpha1.BeaconNodeValidator.GetSilaPayloadEnvelope:input_type -> sila.eth.v1alpha1.SilaPayloadEnvelopeRequest
+	88, // 69: sila.eth.v1alpha1.BeaconNodeValidator.PublishSilaPayloadEnvelope:input_type -> sila.eth.v1alpha1.SignedSilaPayloadEnvelope
 	60, // 70: sila.eth.v1alpha1.BeaconNodeValidator.PayloadAttestationData:input_type -> sila.eth.v1alpha1.PayloadAttestationDataRequest
 	89, // 71: sila.eth.v1alpha1.BeaconNodeValidator.SubmitPayloadAttestation:input_type -> sila.eth.v1alpha1.PayloadAttestationMessage
 	90, // 72: sila.eth.v1alpha1.BeaconNodeValidator.SubmitSignedProposerPreferences:input_type -> sila.eth.v1alpha1.SubmitSignedProposerPreferencesRequest
-	91, // 73: sila.eth.v1alpha1.BeaconNodeValidator.SubmitSignedExecutionPayloadBid:input_type -> sila.eth.v1alpha1.SignedExecutionPayloadBid
+	91, // 73: sila.eth.v1alpha1.BeaconNodeValidator.SubmitSignedSilaPayloadBid:input_type -> sila.eth.v1alpha1.SignedSilaPayloadBid
 	20, // 74: sila.eth.v1alpha1.BeaconNodeValidator.GetDuties:output_type -> sila.eth.v1alpha1.DutiesResponse
 	21, // 75: sila.eth.v1alpha1.BeaconNodeValidator.GetDutiesV2:output_type -> sila.eth.v1alpha1.DutiesV2Response
 	47, // 76: sila.eth.v1alpha1.BeaconNodeValidator.GetAttesterDuties:output_type -> sila.eth.v1alpha1.AttesterDutiesResponse
@@ -5537,12 +5537,12 @@ var file_proto_sila_v1alpha1_validator_proto_depIdxs = []int32{
 	81, // 107: sila.eth.v1alpha1.BeaconNodeValidator.SubmitValidatorRegistrations:output_type -> google.protobuf.Empty
 	81, // 108: sila.eth.v1alpha1.BeaconNodeValidator.AssignValidatorToSubnet:output_type -> google.protobuf.Empty
 	45, // 109: sila.eth.v1alpha1.BeaconNodeValidator.AggregatedSigAndAggregationBits:output_type -> sila.eth.v1alpha1.AggregatedSigAndAggregationBitsResponse
-	59, // 110: sila.eth.v1alpha1.BeaconNodeValidator.GetExecutionPayloadEnvelope:output_type -> sila.eth.v1alpha1.ExecutionPayloadEnvelopeResponse
-	81, // 111: sila.eth.v1alpha1.BeaconNodeValidator.PublishExecutionPayloadEnvelope:output_type -> google.protobuf.Empty
+	59, // 110: sila.eth.v1alpha1.BeaconNodeValidator.GetSilaPayloadEnvelope:output_type -> sila.eth.v1alpha1.SilaPayloadEnvelopeResponse
+	81, // 111: sila.eth.v1alpha1.BeaconNodeValidator.PublishSilaPayloadEnvelope:output_type -> google.protobuf.Empty
 	95, // 112: sila.eth.v1alpha1.BeaconNodeValidator.PayloadAttestationData:output_type -> sila.eth.v1alpha1.PayloadAttestationData
 	81, // 113: sila.eth.v1alpha1.BeaconNodeValidator.SubmitPayloadAttestation:output_type -> google.protobuf.Empty
 	81, // 114: sila.eth.v1alpha1.BeaconNodeValidator.SubmitSignedProposerPreferences:output_type -> google.protobuf.Empty
-	81, // 115: sila.eth.v1alpha1.BeaconNodeValidator.SubmitSignedExecutionPayloadBid:output_type -> google.protobuf.Empty
+	81, // 115: sila.eth.v1alpha1.BeaconNodeValidator.SubmitSignedSilaPayloadBid:output_type -> google.protobuf.Empty
 	74, // [74:116] is the sub-list for method output_type
 	32, // [32:74] is the sub-list for method input_type
 	32, // [32:32] is the sub-list for extension type_name
@@ -5675,9 +5675,9 @@ type BeaconNodeValidatorClient interface {
 	// Deprecated: Do not use.
 	AggregatedSigAndAggregationBits(ctx context.Context, in *AggregatedSigAndAggregationBitsRequest, opts ...grpc.CallOption) (*AggregatedSigAndAggregationBitsResponse, error)
 	// Deprecated: Do not use.
-	GetExecutionPayloadEnvelope(ctx context.Context, in *ExecutionPayloadEnvelopeRequest, opts ...grpc.CallOption) (*ExecutionPayloadEnvelopeResponse, error)
+	GetSilaPayloadEnvelope(ctx context.Context, in *SilaPayloadEnvelopeRequest, opts ...grpc.CallOption) (*SilaPayloadEnvelopeResponse, error)
 	// Deprecated: Do not use.
-	PublishExecutionPayloadEnvelope(ctx context.Context, in *SignedExecutionPayloadEnvelope, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PublishSilaPayloadEnvelope(ctx context.Context, in *SignedSilaPayloadEnvelope, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Deprecated: Do not use.
 	PayloadAttestationData(ctx context.Context, in *PayloadAttestationDataRequest, opts ...grpc.CallOption) (*PayloadAttestationData, error)
 	// Deprecated: Do not use.
@@ -5685,7 +5685,7 @@ type BeaconNodeValidatorClient interface {
 	// Deprecated: Do not use.
 	SubmitSignedProposerPreferences(ctx context.Context, in *SubmitSignedProposerPreferencesRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Deprecated: Do not use.
-	SubmitSignedExecutionPayloadBid(ctx context.Context, in *SignedExecutionPayloadBid, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SubmitSignedSilaPayloadBid(ctx context.Context, in *SignedSilaPayloadBid, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type beaconNodeValidatorClient struct {
@@ -6149,9 +6149,9 @@ func (c *beaconNodeValidatorClient) AggregatedSigAndAggregationBits(ctx context.
 }
 
 // Deprecated: Do not use.
-func (c *beaconNodeValidatorClient) GetExecutionPayloadEnvelope(ctx context.Context, in *ExecutionPayloadEnvelopeRequest, opts ...grpc.CallOption) (*ExecutionPayloadEnvelopeResponse, error) {
-	out := new(ExecutionPayloadEnvelopeResponse)
-	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconNodeValidator/GetExecutionPayloadEnvelope", in, out, opts...)
+func (c *beaconNodeValidatorClient) GetSilaPayloadEnvelope(ctx context.Context, in *SilaPayloadEnvelopeRequest, opts ...grpc.CallOption) (*SilaPayloadEnvelopeResponse, error) {
+	out := new(SilaPayloadEnvelopeResponse)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconNodeValidator/GetSilaPayloadEnvelope", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -6159,9 +6159,9 @@ func (c *beaconNodeValidatorClient) GetExecutionPayloadEnvelope(ctx context.Cont
 }
 
 // Deprecated: Do not use.
-func (c *beaconNodeValidatorClient) PublishExecutionPayloadEnvelope(ctx context.Context, in *SignedExecutionPayloadEnvelope, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *beaconNodeValidatorClient) PublishSilaPayloadEnvelope(ctx context.Context, in *SignedSilaPayloadEnvelope, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconNodeValidator/PublishExecutionPayloadEnvelope", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconNodeValidator/PublishSilaPayloadEnvelope", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -6199,9 +6199,9 @@ func (c *beaconNodeValidatorClient) SubmitSignedProposerPreferences(ctx context.
 }
 
 // Deprecated: Do not use.
-func (c *beaconNodeValidatorClient) SubmitSignedExecutionPayloadBid(ctx context.Context, in *SignedExecutionPayloadBid, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *beaconNodeValidatorClient) SubmitSignedSilaPayloadBid(ctx context.Context, in *SignedSilaPayloadBid, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconNodeValidator/SubmitSignedExecutionPayloadBid", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconNodeValidator/SubmitSignedSilaPayloadBid", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -6283,9 +6283,9 @@ type BeaconNodeValidatorServer interface {
 	// Deprecated: Do not use.
 	AggregatedSigAndAggregationBits(context.Context, *AggregatedSigAndAggregationBitsRequest) (*AggregatedSigAndAggregationBitsResponse, error)
 	// Deprecated: Do not use.
-	GetExecutionPayloadEnvelope(context.Context, *ExecutionPayloadEnvelopeRequest) (*ExecutionPayloadEnvelopeResponse, error)
+	GetSilaPayloadEnvelope(context.Context, *SilaPayloadEnvelopeRequest) (*SilaPayloadEnvelopeResponse, error)
 	// Deprecated: Do not use.
-	PublishExecutionPayloadEnvelope(context.Context, *SignedExecutionPayloadEnvelope) (*emptypb.Empty, error)
+	PublishSilaPayloadEnvelope(context.Context, *SignedSilaPayloadEnvelope) (*emptypb.Empty, error)
 	// Deprecated: Do not use.
 	PayloadAttestationData(context.Context, *PayloadAttestationDataRequest) (*PayloadAttestationData, error)
 	// Deprecated: Do not use.
@@ -6293,7 +6293,7 @@ type BeaconNodeValidatorServer interface {
 	// Deprecated: Do not use.
 	SubmitSignedProposerPreferences(context.Context, *SubmitSignedProposerPreferencesRequest) (*emptypb.Empty, error)
 	// Deprecated: Do not use.
-	SubmitSignedExecutionPayloadBid(context.Context, *SignedExecutionPayloadBid) (*emptypb.Empty, error)
+	SubmitSignedSilaPayloadBid(context.Context, *SignedSilaPayloadBid) (*emptypb.Empty, error)
 }
 
 // UnimplementedBeaconNodeValidatorServer can be embedded to have forward compatible implementations.
@@ -6408,11 +6408,11 @@ func (*UnimplementedBeaconNodeValidatorServer) AssignValidatorToSubnet(context.C
 func (*UnimplementedBeaconNodeValidatorServer) AggregatedSigAndAggregationBits(context.Context, *AggregatedSigAndAggregationBitsRequest) (*AggregatedSigAndAggregationBitsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AggregatedSigAndAggregationBits not implemented")
 }
-func (*UnimplementedBeaconNodeValidatorServer) GetExecutionPayloadEnvelope(context.Context, *ExecutionPayloadEnvelopeRequest) (*ExecutionPayloadEnvelopeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExecutionPayloadEnvelope not implemented")
+func (*UnimplementedBeaconNodeValidatorServer) GetSilaPayloadEnvelope(context.Context, *SilaPayloadEnvelopeRequest) (*SilaPayloadEnvelopeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSilaPayloadEnvelope not implemented")
 }
-func (*UnimplementedBeaconNodeValidatorServer) PublishExecutionPayloadEnvelope(context.Context, *SignedExecutionPayloadEnvelope) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PublishExecutionPayloadEnvelope not implemented")
+func (*UnimplementedBeaconNodeValidatorServer) PublishSilaPayloadEnvelope(context.Context, *SignedSilaPayloadEnvelope) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishSilaPayloadEnvelope not implemented")
 }
 func (*UnimplementedBeaconNodeValidatorServer) PayloadAttestationData(context.Context, *PayloadAttestationDataRequest) (*PayloadAttestationData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PayloadAttestationData not implemented")
@@ -6423,8 +6423,8 @@ func (*UnimplementedBeaconNodeValidatorServer) SubmitPayloadAttestation(context.
 func (*UnimplementedBeaconNodeValidatorServer) SubmitSignedProposerPreferences(context.Context, *SubmitSignedProposerPreferencesRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubmitSignedProposerPreferences not implemented")
 }
-func (*UnimplementedBeaconNodeValidatorServer) SubmitSignedExecutionPayloadBid(context.Context, *SignedExecutionPayloadBid) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitSignedExecutionPayloadBid not implemented")
+func (*UnimplementedBeaconNodeValidatorServer) SubmitSignedSilaPayloadBid(context.Context, *SignedSilaPayloadBid) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitSignedSilaPayloadBid not implemented")
 }
 
 func RegisterBeaconNodeValidatorServer(s *grpc.Server, srv BeaconNodeValidatorServer) {
@@ -7091,38 +7091,38 @@ func _BeaconNodeValidator_AggregatedSigAndAggregationBits_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BeaconNodeValidator_GetExecutionPayloadEnvelope_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExecutionPayloadEnvelopeRequest)
+func _BeaconNodeValidator_GetSilaPayloadEnvelope_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SilaPayloadEnvelopeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BeaconNodeValidatorServer).GetExecutionPayloadEnvelope(ctx, in)
+		return srv.(BeaconNodeValidatorServer).GetSilaPayloadEnvelope(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sila.eth.v1alpha1.BeaconNodeValidator/GetExecutionPayloadEnvelope",
+		FullMethod: "/sila.eth.v1alpha1.BeaconNodeValidator/GetSilaPayloadEnvelope",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconNodeValidatorServer).GetExecutionPayloadEnvelope(ctx, req.(*ExecutionPayloadEnvelopeRequest))
+		return srv.(BeaconNodeValidatorServer).GetSilaPayloadEnvelope(ctx, req.(*SilaPayloadEnvelopeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BeaconNodeValidator_PublishExecutionPayloadEnvelope_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignedExecutionPayloadEnvelope)
+func _BeaconNodeValidator_PublishSilaPayloadEnvelope_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignedSilaPayloadEnvelope)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BeaconNodeValidatorServer).PublishExecutionPayloadEnvelope(ctx, in)
+		return srv.(BeaconNodeValidatorServer).PublishSilaPayloadEnvelope(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sila.eth.v1alpha1.BeaconNodeValidator/PublishExecutionPayloadEnvelope",
+		FullMethod: "/sila.eth.v1alpha1.BeaconNodeValidator/PublishSilaPayloadEnvelope",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconNodeValidatorServer).PublishExecutionPayloadEnvelope(ctx, req.(*SignedExecutionPayloadEnvelope))
+		return srv.(BeaconNodeValidatorServer).PublishSilaPayloadEnvelope(ctx, req.(*SignedSilaPayloadEnvelope))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7181,20 +7181,20 @@ func _BeaconNodeValidator_SubmitSignedProposerPreferences_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BeaconNodeValidator_SubmitSignedExecutionPayloadBid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignedExecutionPayloadBid)
+func _BeaconNodeValidator_SubmitSignedSilaPayloadBid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignedSilaPayloadBid)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BeaconNodeValidatorServer).SubmitSignedExecutionPayloadBid(ctx, in)
+		return srv.(BeaconNodeValidatorServer).SubmitSignedSilaPayloadBid(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sila.eth.v1alpha1.BeaconNodeValidator/SubmitSignedExecutionPayloadBid",
+		FullMethod: "/sila.eth.v1alpha1.BeaconNodeValidator/SubmitSignedSilaPayloadBid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconNodeValidatorServer).SubmitSignedExecutionPayloadBid(ctx, req.(*SignedExecutionPayloadBid))
+		return srv.(BeaconNodeValidatorServer).SubmitSignedSilaPayloadBid(ctx, req.(*SignedSilaPayloadBid))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7332,12 +7332,12 @@ var _BeaconNodeValidator_serviceDesc = grpc.ServiceDesc{
 			Handler:    _BeaconNodeValidator_AggregatedSigAndAggregationBits_Handler,
 		},
 		{
-			MethodName: "GetExecutionPayloadEnvelope",
-			Handler:    _BeaconNodeValidator_GetExecutionPayloadEnvelope_Handler,
+			MethodName: "GetSilaPayloadEnvelope",
+			Handler:    _BeaconNodeValidator_GetSilaPayloadEnvelope_Handler,
 		},
 		{
-			MethodName: "PublishExecutionPayloadEnvelope",
-			Handler:    _BeaconNodeValidator_PublishExecutionPayloadEnvelope_Handler,
+			MethodName: "PublishSilaPayloadEnvelope",
+			Handler:    _BeaconNodeValidator_PublishSilaPayloadEnvelope_Handler,
 		},
 		{
 			MethodName: "PayloadAttestationData",
@@ -7352,8 +7352,8 @@ var _BeaconNodeValidator_serviceDesc = grpc.ServiceDesc{
 			Handler:    _BeaconNodeValidator_SubmitSignedProposerPreferences_Handler,
 		},
 		{
-			MethodName: "SubmitSignedExecutionPayloadBid",
-			Handler:    _BeaconNodeValidator_SubmitSignedExecutionPayloadBid_Handler,
+			MethodName: "SubmitSignedSilaPayloadBid",
+			Handler:    _BeaconNodeValidator_SubmitSignedSilaPayloadBid_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

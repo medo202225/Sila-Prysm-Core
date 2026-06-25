@@ -68,11 +68,11 @@ const (
 	// DataColumnSidecarsByRangeName is the name for the DataColumnSidecarsByRange v1 message topic.
 	DataColumnSidecarsByRangeName = "/data_column_sidecars_by_range"
 
-	// ExecutionPayloadEnvelopesByRootName is the name for the ExecutionPayloadEnvelopesByRoot v1 message topic.
-	ExecutionPayloadEnvelopesByRootName = "/execution_payload_envelopes_by_root"
+	// SilaPayloadEnvelopesByRootName is the name for the SilaPayloadEnvelopesByRoot v1 message topic.
+	SilaPayloadEnvelopesByRootName = "/sila_payload_envelopes_by_root"
 
-	// ExecutionPayloadEnvelopesByRangeName is the name for the ExecutionPayloadEnvelopesByRange v1 message topic.
-	ExecutionPayloadEnvelopesByRangeName = "/execution_payload_envelopes_by_range"
+	// SilaPayloadEnvelopesByRangeName is the name for the SilaPayloadEnvelopesByRange v1 message topic.
+	SilaPayloadEnvelopesByRangeName = "/sila_payload_envelopes_by_range"
 )
 
 const (
@@ -112,13 +112,13 @@ const (
 	// RPCDataColumnSidecarsByRangeTopicV1 is a topic for requesting data column sidecars by their slot.
 	// /sila/beacon_chain/req/data_column_sidecars_by_range/1 - New in Fulu.
 	RPCDataColumnSidecarsByRangeTopicV1 = protocolPrefix + DataColumnSidecarsByRangeName + SchemaVersionV1
-	// RPCExecutionPayloadEnvelopesByRootTopicV1 is a topic for requesting execution payload envelopes by their beacon block root.
-	// /sila/beacon_chain/req/execution_payload_envelopes_by_root/1 - New in Gloas.
-	RPCExecutionPayloadEnvelopesByRootTopicV1 = protocolPrefix + ExecutionPayloadEnvelopesByRootName + SchemaVersionV1
-	// RPCExecutionPayloadEnvelopesByRangeTopicV1 is a topic for requesting execution payload envelopes
+	// RPCSilaPayloadEnvelopesByRootTopicV1 is a topic for requesting sila payload envelopes by their beacon block root.
+	// /sila/beacon_chain/req/sila_payload_envelopes_by_root/1 - New in Gloas.
+	RPCSilaPayloadEnvelopesByRootTopicV1 = protocolPrefix + SilaPayloadEnvelopesByRootName + SchemaVersionV1
+	// RPCSilaPayloadEnvelopesByRangeTopicV1 is a topic for requesting sila payload envelopes
 	// in the slot range [start_slot, start_slot + count). New in Gloas.
-	// /sila/beacon_chain/req/execution_payload_envelopes_by_range/1/
-	RPCExecutionPayloadEnvelopesByRangeTopicV1 = protocolPrefix + ExecutionPayloadEnvelopesByRangeName + SchemaVersionV1
+	// /sila/beacon_chain/req/sila_payload_envelopes_by_range/1/
+	RPCSilaPayloadEnvelopesByRangeTopicV1 = protocolPrefix + SilaPayloadEnvelopesByRangeName + SchemaVersionV1
 
 	// V2 RPC Topics
 	// RPCStatusTopicV2 defines the v1 topic for the status rpc method.
@@ -181,14 +181,14 @@ var (
 		// DataColumnSidecarsByRange v1 Message
 		RPCDataColumnSidecarsByRangeTopicV1: new(pb.DataColumnSidecarsByRangeRequest),
 
-		// ExecutionPayloadEnvelopesByRange v1 Message
-		RPCExecutionPayloadEnvelopesByRangeTopicV1: new(pb.ExecutionPayloadEnvelopesByRangeRequest),
+		// SilaPayloadEnvelopesByRange v1 Message
+		RPCSilaPayloadEnvelopesByRangeTopicV1: new(pb.SilaPayloadEnvelopesByRangeRequest),
 
 		// DataColumnSidecarsByRoot v1 Message
 		RPCDataColumnSidecarsByRootTopicV1: p2ptypes.DataColumnsByRootIdentifiers{},
 
-		// ExecutionPayloadEnvelopesByRoot v1 Message
-		RPCExecutionPayloadEnvelopesByRootTopicV1: new(p2ptypes.ExecutionPayloadEnvelopesByRootReq),
+		// SilaPayloadEnvelopesByRoot v1 Message
+		RPCSilaPayloadEnvelopesByRootTopicV1: new(p2ptypes.SilaPayloadEnvelopesByRootReq),
 	}
 
 	// Maps all registered protocol prefixes.
@@ -212,8 +212,8 @@ var (
 		LightClientOptimisticUpdateName:      true,
 		DataColumnSidecarsByRootName:         true,
 		DataColumnSidecarsByRangeName:        true,
-		ExecutionPayloadEnvelopesByRootName:  true,
-		ExecutionPayloadEnvelopesByRangeName: true,
+		SilaPayloadEnvelopesByRootName:  true,
+		SilaPayloadEnvelopesByRangeName: true,
 	}
 
 	// Maps all the RPC messages which are to updated in altair.

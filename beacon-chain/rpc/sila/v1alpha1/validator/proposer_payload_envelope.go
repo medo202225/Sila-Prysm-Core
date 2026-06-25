@@ -24,9 +24,9 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-// storeExecutionPayloadEnvelope creates and caches the execution payload envelope
+// storeSilaPayloadEnvelope creates and caches the sila payload envelope
 // after the block is fully built (state root set). If postBlockState is non-nil,
-func (vs *Server) storeExecutionPayloadEnvelope(
+func (vs *Server) storeSilaPayloadEnvelope(
 	sBlk interfaces.SignedBeaconBlock,
 	local *consensusblocks.GetPayloadResponse,
 ) error {
@@ -35,10 +35,10 @@ func (vs *Server) storeExecutionPayloadEnvelope(
 		return errors.Wrap(err, "could not compute block hash tree root")
 	}
 
-	payload := extractExecutionPayloadGloas(local)
+	payload := extractSilaPayloadGloas(local)
 
 	parentRoot := sBlk.Block().ParentRoot()
-	envelope := &silapb.ExecutionPayloadEnvelope{
+	envelope := &silapb.SilaPayloadEnvelope{
 		Payload:               payload,
 		ExecutionRequests:     local.ExecutionRequests,
 		BuilderIndex:          params.BeaconConfig().BuilderIndexSelfBuild,
@@ -59,32 +59,32 @@ func (vs *Server) storeExecutionPayloadEnvelope(
 		}
 	}
 
-	vs.ExecutionPayloadEnvelopeCache.Set(&cache.ExecutionPayloadContents{
+	vs.SilaPayloadEnvelopeCache.Set(&cache.SilaPayloadContents{
 		Envelope:    envelope,
 		DataColumns: roSidecars,
 	})
 	return nil
 }
 
-func extractExecutionPayloadGloas(local *consensusblocks.GetPayloadResponse) *enginev1.ExecutionPayloadGloas {
+func extractSilaPayloadGloas(local *consensusblocks.GetPayloadResponse) *enginev1.SilaPayloadGloas {
 	if local == nil || local.ExecutionData == nil || local.ExecutionData.IsNil() {
 		return nil
 	}
-	if p, ok := local.ExecutionData.Proto().(*enginev1.ExecutionPayloadGloas); ok {
+	if p, ok := local.ExecutionData.Proto().(*enginev1.SilaPayloadGloas); ok {
 		return p
 	}
 	return nil
 }
 
-// GetExecutionPayloadEnvelope implements the gRPC endpoint:
-// /sila/v1alpha1/validator/execution_payload_envelope/{slot}/{builder_index}
-// It returns the stored execution payload envelope for a slot/builder and, for
+// GetSilaPayloadEnvelope implements the gRPC endpoint:
+// /sila/v1alpha1/validator/sila_payload_envelope/{slot}/{builder_index}
+// It returns the stored sila payload envelope for a slot/builder and, for
 // self-build envelopes, computes the post-payload state root on demand.
-func (vs *Server) GetExecutionPayloadEnvelope(
+func (vs *Server) GetSilaPayloadEnvelope(
 	ctx context.Context,
-	req *silapb.ExecutionPayloadEnvelopeRequest,
-) (*silapb.ExecutionPayloadEnvelopeResponse, error) {
-	_, span := trace.StartSpan(ctx, "ProposerServer.GetExecutionPayloadEnvelope")
+	req *silapb.SilaPayloadEnvelopeRequest,
+) (*silapb.SilaPayloadEnvelopeResponse, error) {
+	_, span := trace.StartSpan(ctx, "ProposerServer.GetSilaPayloadEnvelope")
 	defer span.End()
 
 	if req == nil {
@@ -94,29 +94,29 @@ func (vs *Server) GetExecutionPayloadEnvelope(
 
 	if slots.ToEpoch(req.Slot) < params.BeaconConfig().GloasForkEpoch {
 		return nil, status.Errorf(codes.InvalidArgument,
-			"execution payload envelopes are not supported before Gloas fork (slot %d)", req.Slot)
+			"sila payload envelopes are not supported before Gloas fork (slot %d)", req.Slot)
 	}
 
-	contents, ok := vs.ExecutionPayloadEnvelopeCache.Contents()
+	contents, ok := vs.SilaPayloadEnvelopeCache.Contents()
 	if !ok || contents.Envelope.Payload.SlotNumber != req.Slot {
 		return nil, status.Errorf(codes.NotFound,
-			"execution payload envelope not found for slot %d", req.Slot)
+			"sila payload envelope not found for slot %d", req.Slot)
 	}
 
-	return &silapb.ExecutionPayloadEnvelopeResponse{
+	return &silapb.SilaPayloadEnvelopeResponse{
 		Envelope: contents.Envelope,
 	}, nil
 }
 
-// PublishExecutionPayloadEnvelope validates and broadcasts a signed execution payload envelope.
-// This is called by validators after signing the envelope retrieved from GetExecutionPayloadEnvelope.
+// PublishSilaPayloadEnvelope validates and broadcasts a signed sila payload envelope.
+// This is called by validators after signing the envelope retrieved from GetSilaPayloadEnvelope.
 //
-// gRPC endpoint: POST /sila/v1alpha1/validator/execution_payload_envelope
-func (vs *Server) PublishExecutionPayloadEnvelope(
+// gRPC endpoint: POST /sila/v1alpha1/validator/sila_payload_envelope
+func (vs *Server) PublishSilaPayloadEnvelope(
 	ctx context.Context,
-	req *silapb.SignedExecutionPayloadEnvelope,
+	req *silapb.SignedSilaPayloadEnvelope,
 ) (*emptypb.Empty, error) {
-	ctx, span := trace.StartSpan(ctx, "ProposerServer.PublishExecutionPayloadEnvelope")
+	ctx, span := trace.StartSpan(ctx, "ProposerServer.PublishSilaPayloadEnvelope")
 	defer span.End()
 
 	if req == nil || req.Message == nil || req.Message.Payload == nil {
@@ -126,7 +126,7 @@ func (vs *Server) PublishExecutionPayloadEnvelope(
 	envSlot := primitives.Slot(req.Message.Payload.SlotNumber)
 	if slots.ToEpoch(envSlot) < params.BeaconConfig().GloasForkEpoch {
 		return nil, status.Errorf(codes.InvalidArgument,
-			"execution payload envelopes are not supported before Gloas fork (slot %d)", envSlot)
+			"sila payload envelopes are not supported before Gloas fork (slot %d)", envSlot)
 	}
 
 	beaconBlockRoot := bytesutil.ToBytes32(req.Message.BeaconBlockRoot)
@@ -141,11 +141,11 @@ func (vs *Server) PublishExecutionPayloadEnvelope(
 		"builderIndex":    req.Message.BuilderIndex,
 		"beaconBlockRoot": fmt.Sprintf("%#x", beaconBlockRoot[:8]),
 	})
-	log.Info("Publishing signed execution payload envelope")
+	log.Info("Publishing signed sila payload envelope")
 
 	// Broadcast sidecars BEFORE receiving the envelope so the DA check sees them.
 	// Slot guard avoids broadcasting cached sidecars from an unrelated slot.
-	if contents, ok := vs.ExecutionPayloadEnvelopeCache.Contents(); ok &&
+	if contents, ok := vs.SilaPayloadEnvelopeCache.Contents(); ok &&
 		contents.Envelope.Payload.SlotNumber == envSlot && len(contents.DataColumns) > 0 {
 		log.WithField("columns", len(contents.DataColumns)).Debug("Broadcasting Gloas data column sidecars")
 		if err := vs.broadcastAndReceiveDataColumns(ctx, contents.DataColumns); err != nil {
@@ -154,25 +154,25 @@ func (vs *Server) PublishExecutionPayloadEnvelope(
 	}
 
 	if err := vs.P2P.Broadcast(ctx, req); err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to broadcast execution payload envelope: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to broadcast sila payload envelope: %v", err)
 	}
 
-	roSigned, err := consensusblocks.WrappedROSignedExecutionPayloadEnvelope(req)
+	roSigned, err := consensusblocks.WrappedROSignedSilaPayloadEnvelope(req)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "could not wrap signed envelope: %v", err)
 	}
-	if err := vs.ExecutionPayloadEnvelopeReceiver.ReceiveExecutionPayloadEnvelope(ctx, roSigned); err != nil {
+	if err := vs.SilaPayloadEnvelopeReceiver.ReceiveSilaPayloadEnvelope(ctx, roSigned); err != nil {
 		// Broadcast already succeeded; import failed. REST maps Aborted -> 202 (beacon-APIs #580).
-		return nil, status.Errorf(codes.Aborted, "failed to receive execution payload envelope: %v", err)
+		return nil, status.Errorf(codes.Aborted, "failed to receive sila payload envelope: %v", err)
 	}
 
-	log.Info("Successfully published execution payload envelope")
+	log.Info("Successfully published sila payload envelope")
 
 	return &emptypb.Empty{}, nil
 }
 
 // setParentExecutionRequests populates the parent_execution_requests field
-// in the block body based on the parent's execution payload envelope.
+// in the block body based on the parent's sila payload envelope.
 func (vs *Server) setParentExecutionRequests(ctx context.Context, sBlk interfaces.SignedBeaconBlock, head state.BeaconState, parentFull bool) error {
 	if head.Version() < version.Gloas {
 		return sBlk.SetParentExecutionRequests(&enginev1.ExecutionRequests{})
@@ -188,9 +188,9 @@ func (vs *Server) setParentExecutionRequests(ctx context.Context, sBlk interface
 	}
 
 	// TODO: replace DB lookup with a single-entry cache (blockroot → envelope).
-	signedEnvelope, err := vs.BeaconDB.ExecutionPayloadEnvelope(ctx, parentRoot)
+	signedEnvelope, err := vs.BeaconDB.SilaPayloadEnvelope(ctx, parentRoot)
 	if err != nil {
-		return errors.Wrap(err, "could not get parent execution payload envelope")
+		return errors.Wrap(err, "could not get parent sila payload envelope")
 	}
 	return sBlk.SetParentExecutionRequests(signedEnvelope.Message.ExecutionRequests)
 }

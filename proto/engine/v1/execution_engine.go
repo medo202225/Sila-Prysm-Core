@@ -68,11 +68,11 @@ func (cr *ConsolidationRequest) Copy() *ConsolidationRequest {
 }
 
 // Copy -- Deneb
-func (payload *ExecutionPayloadDeneb) Copy() *ExecutionPayloadDeneb {
+func (payload *SilaPayloadDeneb) Copy() *SilaPayloadDeneb {
 	if payload == nil {
 		return nil
 	}
-	return &ExecutionPayloadDeneb{
+	return &SilaPayloadDeneb{
 		ParentHash:    bytesutil.SafeCopyBytes(payload.ParentHash),
 		FeeRecipient:  bytesutil.SafeCopyBytes(payload.FeeRecipient),
 		StateRoot:     bytesutil.SafeCopyBytes(payload.StateRoot),
@@ -94,12 +94,12 @@ func (payload *ExecutionPayloadDeneb) Copy() *ExecutionPayloadDeneb {
 }
 
 // Copy -- Capella
-func (payload *ExecutionPayloadCapella) Copy() *ExecutionPayloadCapella {
+func (payload *SilaPayloadCapella) Copy() *SilaPayloadCapella {
 	if payload == nil {
 		return nil
 	}
 
-	return &ExecutionPayloadCapella{
+	return &SilaPayloadCapella{
 		ParentHash:    bytesutil.SafeCopyBytes(payload.ParentHash),
 		FeeRecipient:  bytesutil.SafeCopyBytes(payload.FeeRecipient),
 		StateRoot:     bytesutil.SafeCopyBytes(payload.StateRoot),
@@ -119,12 +119,12 @@ func (payload *ExecutionPayloadCapella) Copy() *ExecutionPayloadCapella {
 }
 
 // Copy -- Bellatrix
-func (payload *ExecutionPayload) Copy() *ExecutionPayload {
+func (payload *SilaPayload) Copy() *SilaPayload {
 	if payload == nil {
 		return nil
 	}
 
-	return &ExecutionPayload{
+	return &SilaPayload{
 		ParentHash:    bytesutil.SafeCopyBytes(payload.ParentHash),
 		FeeRecipient:  bytesutil.SafeCopyBytes(payload.FeeRecipient),
 		StateRoot:     bytesutil.SafeCopyBytes(payload.StateRoot),
@@ -143,11 +143,11 @@ func (payload *ExecutionPayload) Copy() *ExecutionPayload {
 }
 
 // Copy -- Deneb
-func (payload *ExecutionPayloadHeaderDeneb) Copy() *ExecutionPayloadHeaderDeneb {
+func (payload *SilaPayloadHeaderDeneb) Copy() *SilaPayloadHeaderDeneb {
 	if payload == nil {
 		return nil
 	}
-	return &ExecutionPayloadHeaderDeneb{
+	return &SilaPayloadHeaderDeneb{
 		ParentHash:       bytesutil.SafeCopyBytes(payload.ParentHash),
 		FeeRecipient:     bytesutil.SafeCopyBytes(payload.FeeRecipient),
 		StateRoot:        bytesutil.SafeCopyBytes(payload.StateRoot),
@@ -169,11 +169,11 @@ func (payload *ExecutionPayloadHeaderDeneb) Copy() *ExecutionPayloadHeaderDeneb 
 }
 
 // Copy -- Capella
-func (payload *ExecutionPayloadHeaderCapella) Copy() *ExecutionPayloadHeaderCapella {
+func (payload *SilaPayloadHeaderCapella) Copy() *SilaPayloadHeaderCapella {
 	if payload == nil {
 		return nil
 	}
-	return &ExecutionPayloadHeaderCapella{
+	return &SilaPayloadHeaderCapella{
 		ParentHash:       bytesutil.SafeCopyBytes(payload.ParentHash),
 		FeeRecipient:     bytesutil.SafeCopyBytes(payload.FeeRecipient),
 		StateRoot:        bytesutil.SafeCopyBytes(payload.StateRoot),
@@ -193,11 +193,11 @@ func (payload *ExecutionPayloadHeaderCapella) Copy() *ExecutionPayloadHeaderCape
 }
 
 // Copy -- Bellatrix
-func (payload *ExecutionPayloadHeader) Copy() *ExecutionPayloadHeader {
+func (payload *SilaPayloadHeader) Copy() *SilaPayloadHeader {
 	if payload == nil {
 		return nil
 	}
-	return &ExecutionPayloadHeader{
+	return &SilaPayloadHeader{
 		ParentHash:       bytesutil.SafeCopyBytes(payload.ParentHash),
 		FeeRecipient:     bytesutil.SafeCopyBytes(payload.FeeRecipient),
 		StateRoot:        bytesutil.SafeCopyBytes(payload.StateRoot),

@@ -23,7 +23,7 @@ import (
 )
 
 type stubBlockBody struct {
-	signedBid *silapb.SignedExecutionPayloadBid
+	signedBid *silapb.SignedSilaPayloadBid
 }
 
 func (s stubBlockBody) Version() int                                 { return version.Gloas }
@@ -50,7 +50,7 @@ func (s stubBlockBody) ExecutionRequests() (*enginev1.ExecutionRequests, error) 
 func (s stubBlockBody) PayloadAttestations() ([]*silapb.PayloadAttestation, error) {
 	return nil, nil
 }
-func (s stubBlockBody) SignedExecutionPayloadBid() (*silapb.SignedExecutionPayloadBid, error) {
+func (s stubBlockBody) SignedSilaPayloadBid() (*silapb.SignedSilaPayloadBid, error) {
 	return s.signedBid, nil
 }
 func (s stubBlockBody) ParentExecutionRequests() (*enginev1.ExecutionRequests, error) {
@@ -174,7 +174,7 @@ func buildGloasState(t *testing.T, slot primitives.Slot, proposerIdx primitives.
 	return st.(*state_native.BeaconState)
 }
 
-func signBid(t *testing.T, sk common.SecretKey, bid *silapb.ExecutionPayloadBid, fork *silapb.Fork, genesisRoot [32]byte) [96]byte {
+func signBid(t *testing.T, sk common.SecretKey, bid *silapb.SilaPayloadBid, fork *silapb.Fork, genesisRoot [32]byte) [96]byte {
 	t.Helper()
 	epoch := slots.ToEpoch(primitives.Slot(bid.Slot))
 	domain, err := signing.Domain(fork, epoch, params.BeaconConfig().DomainBeaconBuilder, genesisRoot[:])
@@ -209,7 +209,7 @@ func tooManyBlobCommitmentsForSlot(slot primitives.Slot) [][]byte {
 	return commitments
 }
 
-func TestProcessExecutionPayloadBid_SelfBuildSuccess(t *testing.T) {
+func TestProcessSilaPayloadBid_SelfBuildSuccess(t *testing.T) {
 	slot := primitives.Slot(12)
 	proposerIdx := primitives.ValidatorIndex(0)
 	builderIdx := params.BeaconConfig().BuilderIndexSelfBuild
@@ -218,7 +218,7 @@ func TestProcessExecutionPayloadBid_SelfBuildSuccess(t *testing.T) {
 	pubKey := [48]byte{}
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinActivationBalance+1000, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xCC}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xDD}, 32),
@@ -232,7 +232,7 @@ func TestProcessExecutionPayloadBid_SelfBuildSuccess(t *testing.T) {
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
 		ExecutionRequestsRoot: make([]byte, 32),
 	}
-	signed := &silapb.SignedExecutionPayloadBid{
+	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
 		Signature: common.InfiniteSignature[:],
 	}
@@ -245,7 +245,7 @@ func TestProcessExecutionPayloadBid_SelfBuildSuccess(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	require.NoError(t, ProcessExecutionPayloadBid(state, block))
+	require.NoError(t, ProcessSilaPayloadBid(state, block))
 
 	stateProto, ok := state.ToProto().(*silapb.BeaconStateGloas)
 	require.Equal(t, true, ok)
@@ -253,7 +253,7 @@ func TestProcessExecutionPayloadBid_SelfBuildSuccess(t *testing.T) {
 	require.Equal(t, primitives.Gwei(0), stateProto.BuilderPendingPayments[slotIndex].Withdrawal.Amount)
 }
 
-func TestProcessExecutionPayloadBid_SelfBuildNonZeroAmountFails(t *testing.T) {
+func TestProcessSilaPayloadBid_SelfBuildNonZeroAmountFails(t *testing.T) {
 	slot := primitives.Slot(2)
 	proposerIdx := primitives.ValidatorIndex(0)
 	builderIdx := params.BeaconConfig().BuilderIndexSelfBuild
@@ -261,7 +261,7 @@ func TestProcessExecutionPayloadBid_SelfBuildNonZeroAmountFails(t *testing.T) {
 	latestHash := [32]byte{1}
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinActivationBalance+1000, randao, latestHash, [48]byte{})
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xAA}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xBB}, 32),
@@ -274,7 +274,7 @@ func TestProcessExecutionPayloadBid_SelfBuildNonZeroAmountFails(t *testing.T) {
 		FeeRecipient:          bytes.Repeat([]byte{0xDD}, 20),
 		ExecutionRequestsRoot: make([]byte, 32),
 	}
-	signed := &silapb.SignedExecutionPayloadBid{
+	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
 		Signature: common.InfiniteSignature[:],
 	}
@@ -286,11 +286,11 @@ func TestProcessExecutionPayloadBid_SelfBuildNonZeroAmountFails(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err := ProcessExecutionPayloadBid(state, block)
+	err := ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "self-build amount must be zero", err)
 }
 
-func TestProcessExecutionPayloadBid_PendingPaymentAndCacheBid(t *testing.T) {
+func TestProcessSilaPayloadBid_PendingPaymentAndCacheBid(t *testing.T) {
 	slot := primitives.Slot(8)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -306,7 +306,7 @@ func TestProcessExecutionPayloadBid_PendingPaymentAndCacheBid(t *testing.T) {
 	balance := params.BeaconConfig().MinActivationBalance + 1_000_000
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, balance, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xCC}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xDD}, 32),
@@ -323,7 +323,7 @@ func TestProcessExecutionPayloadBid_PendingPaymentAndCacheBid(t *testing.T) {
 
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{
+	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
 		Signature: sig[:],
 	}
@@ -336,19 +336,19 @@ func TestProcessExecutionPayloadBid_PendingPaymentAndCacheBid(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	require.NoError(t, ProcessExecutionPayloadBid(state, block))
+	require.NoError(t, ProcessSilaPayloadBid(state, block))
 
 	stateProto, ok := state.ToProto().(*silapb.BeaconStateGloas)
 	require.Equal(t, true, ok)
 	slotIndex := params.BeaconConfig().SlotsPerEpoch + (slot % params.BeaconConfig().SlotsPerEpoch)
 	require.Equal(t, primitives.Gwei(500_000), stateProto.BuilderPendingPayments[slotIndex].Withdrawal.Amount)
 
-	require.NotNil(t, stateProto.LatestExecutionPayloadBid)
-	require.Equal(t, primitives.BuilderIndex(1), stateProto.LatestExecutionPayloadBid.BuilderIndex)
-	require.Equal(t, primitives.Gwei(500_000), stateProto.LatestExecutionPayloadBid.Value)
+	require.NotNil(t, stateProto.LatestSilaPayloadBid)
+	require.Equal(t, primitives.BuilderIndex(1), stateProto.LatestSilaPayloadBid.BuilderIndex)
+	require.Equal(t, primitives.Gwei(500_000), stateProto.LatestSilaPayloadBid.Value)
 }
 
-func TestProcessExecutionPayloadBid_BuilderNotActive(t *testing.T) {
+func TestProcessSilaPayloadBid_BuilderNotActive(t *testing.T) {
 	slot := primitives.Slot(4)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -368,7 +368,7 @@ func TestProcessExecutionPayloadBid_BuilderNotActive(t *testing.T) {
 	require.NoError(t, err)
 	state = stateIface.(*state_native.BeaconState)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0x03}, 32),
 		BlockHash:             bytes.Repeat([]byte{0x04}, 32),
@@ -384,7 +384,7 @@ func TestProcessExecutionPayloadBid_BuilderNotActive(t *testing.T) {
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: sig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: sig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -393,11 +393,11 @@ func TestProcessExecutionPayloadBid_BuilderNotActive(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "is not active", err)
 }
 
-func TestProcessExecutionPayloadBid_CannotCoverBid(t *testing.T) {
+func TestProcessSilaPayloadBid_CannotCoverBid(t *testing.T) {
 	slot := primitives.Slot(5)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -422,7 +422,7 @@ func TestProcessExecutionPayloadBid_CannotCoverBid(t *testing.T) {
 	require.NoError(t, err)
 	state = stateIface.(*state_native.BeaconState)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xCC}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xDD}, 32),
@@ -438,7 +438,7 @@ func TestProcessExecutionPayloadBid_CannotCoverBid(t *testing.T) {
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: sig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: sig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -447,11 +447,11 @@ func TestProcessExecutionPayloadBid_CannotCoverBid(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "cannot cover bid amount", err)
 }
 
-func TestProcessExecutionPayloadBid_InvalidSignature(t *testing.T) {
+func TestProcessSilaPayloadBid_InvalidSignature(t *testing.T) {
 	slot := primitives.Slot(6)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -465,7 +465,7 @@ func TestProcessExecutionPayloadBid_InvalidSignature(t *testing.T) {
 
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinDepositAmount+1000, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xCC}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xDD}, 32),
@@ -481,7 +481,7 @@ func TestProcessExecutionPayloadBid_InvalidSignature(t *testing.T) {
 	}
 	// Use an invalid signature.
 	invalidSig := [96]byte{1}
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: invalidSig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: invalidSig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -490,11 +490,11 @@ func TestProcessExecutionPayloadBid_InvalidSignature(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "bid signature validation failed", err)
 }
 
-func TestProcessExecutionPayloadBid_TooManyBlobCommitments(t *testing.T) {
+func TestProcessSilaPayloadBid_TooManyBlobCommitments(t *testing.T) {
 	slot := primitives.Slot(9)
 	proposerIdx := primitives.ValidatorIndex(0)
 	builderIdx := params.BeaconConfig().BuilderIndexSelfBuild
@@ -503,7 +503,7 @@ func TestProcessExecutionPayloadBid_TooManyBlobCommitments(t *testing.T) {
 	pubKey := [48]byte{}
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinActivationBalance+1000, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xCC}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xDD}, 32),
@@ -514,7 +514,7 @@ func TestProcessExecutionPayloadBid_TooManyBlobCommitments(t *testing.T) {
 		FeeRecipient:          bytes.Repeat([]byte{0xFF}, 20),
 		ExecutionRequestsRoot: make([]byte, 32),
 	}
-	signed := &silapb.SignedExecutionPayloadBid{
+	signed := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
 		Signature: common.InfiniteSignature[:],
 	}
@@ -527,11 +527,11 @@ func TestProcessExecutionPayloadBid_TooManyBlobCommitments(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err := ProcessExecutionPayloadBid(state, block)
+	err := ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "blob KZG commitments over max", err)
 }
 
-func TestProcessExecutionPayloadBid_SlotMismatch(t *testing.T) {
+func TestProcessSilaPayloadBid_SlotMismatch(t *testing.T) {
 	slot := primitives.Slot(10)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -545,7 +545,7 @@ func TestProcessExecutionPayloadBid_SlotMismatch(t *testing.T) {
 
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinDepositAmount+1000, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0xAA}, 32),
 		BlockHash:             bytes.Repeat([]byte{0xBB}, 32),
@@ -561,7 +561,7 @@ func TestProcessExecutionPayloadBid_SlotMismatch(t *testing.T) {
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: sig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: sig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -570,11 +570,11 @@ func TestProcessExecutionPayloadBid_SlotMismatch(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "bid slot", err)
 }
 
-func TestProcessExecutionPayloadBid_ParentHashMismatch(t *testing.T) {
+func TestProcessSilaPayloadBid_ParentHashMismatch(t *testing.T) {
 	slot := primitives.Slot(11)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -588,7 +588,7 @@ func TestProcessExecutionPayloadBid_ParentHashMismatch(t *testing.T) {
 
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinDepositAmount+1000, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       bytes.Repeat([]byte{0x11}, 32), // mismatch
 		ParentBlockRoot:       bytes.Repeat([]byte{0x22}, 32),
 		BlockHash:             bytes.Repeat([]byte{0x33}, 32),
@@ -604,7 +604,7 @@ func TestProcessExecutionPayloadBid_ParentHashMismatch(t *testing.T) {
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: sig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: sig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -613,11 +613,11 @@ func TestProcessExecutionPayloadBid_ParentHashMismatch(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "parent block hash mismatch", err)
 }
 
-func TestProcessExecutionPayloadBid_ParentRootMismatch(t *testing.T) {
+func TestProcessSilaPayloadBid_ParentRootMismatch(t *testing.T) {
 	slot := primitives.Slot(12)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -632,7 +632,7 @@ func TestProcessExecutionPayloadBid_ParentRootMismatch(t *testing.T) {
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinDepositAmount+1000, randao, latestHash, pubKey)
 
 	parentRoot := bytes.Repeat([]byte{0x22}, 32)
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       parentRoot,
 		BlockHash:             bytes.Repeat([]byte{0x33}, 32),
@@ -648,7 +648,7 @@ func TestProcessExecutionPayloadBid_ParentRootMismatch(t *testing.T) {
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: sig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: sig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -657,11 +657,11 @@ func TestProcessExecutionPayloadBid_ParentRootMismatch(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "parent block root mismatch", err)
 }
 
-func TestProcessExecutionPayloadBid_PrevRandaoMismatch(t *testing.T) {
+func TestProcessSilaPayloadBid_PrevRandaoMismatch(t *testing.T) {
 	slot := primitives.Slot(13)
 	builderIdx := primitives.BuilderIndex(1)
 	proposerIdx := primitives.ValidatorIndex(2)
@@ -675,7 +675,7 @@ func TestProcessExecutionPayloadBid_PrevRandaoMismatch(t *testing.T) {
 
 	state := buildGloasState(t, slot, proposerIdx, builderIdx, params.BeaconConfig().MinDepositAmount+1000, randao, latestHash, pubKey)
 
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       latestHash[:],
 		ParentBlockRoot:       bytes.Repeat([]byte{0x22}, 32),
 		BlockHash:             bytes.Repeat([]byte{0x33}, 32),
@@ -691,7 +691,7 @@ func TestProcessExecutionPayloadBid_PrevRandaoMismatch(t *testing.T) {
 	}
 	genesis := bytesutil.ToBytes32(state.GenesisValidatorsRoot())
 	sig := signBid(t, sk, bid, state.Fork(), genesis)
-	signed := &silapb.SignedExecutionPayloadBid{Message: bid, Signature: sig[:]}
+	signed := &silapb.SignedSilaPayloadBid{Message: bid, Signature: sig[:]}
 	block := stubBlock{
 		slot:       slot,
 		proposer:   proposerIdx,
@@ -700,6 +700,6 @@ func TestProcessExecutionPayloadBid_PrevRandaoMismatch(t *testing.T) {
 		v:          version.Gloas,
 	}
 
-	err = ProcessExecutionPayloadBid(state, block)
+	err = ProcessSilaPayloadBid(state, block)
 	require.ErrorContains(t, "prev randao mismatch", err)
 }

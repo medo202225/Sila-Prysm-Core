@@ -1007,7 +1007,7 @@ type BeaconStateBellatrix struct {
 	InactivityScores             []uint64                                                         `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
 	CurrentSyncCommittee         *SyncCommittee                                                   `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
 	NextSyncCommittee            *SyncCommittee                                                   `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestExecutionPayloadHeader *v1.ExecutionPayloadHeader                                       `protobuf:"bytes,10001,opt,name=latest_execution_payload_header,json=latestExecutionPayloadHeader,proto3" json:"latest_execution_payload_header,omitempty"`
+	LatestSilaPayloadHeader *v1.SilaPayloadHeader                                       `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -1210,9 +1210,9 @@ func (x *BeaconStateBellatrix) GetNextSyncCommittee() *SyncCommittee {
 	return nil
 }
 
-func (x *BeaconStateBellatrix) GetLatestExecutionPayloadHeader() *v1.ExecutionPayloadHeader {
+func (x *BeaconStateBellatrix) GetLatestSilaPayloadHeader() *v1.SilaPayloadHeader {
 	if x != nil {
-		return x.LatestExecutionPayloadHeader
+		return x.LatestSilaPayloadHeader
 	}
 	return nil
 }
@@ -1243,7 +1243,7 @@ type BeaconStateCapella struct {
 	InactivityScores             []uint64                                                                   `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
 	CurrentSyncCommittee         *SyncCommittee                                                             `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
 	NextSyncCommittee            *SyncCommittee                                                             `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestExecutionPayloadHeader *v1.ExecutionPayloadHeaderCapella                                          `protobuf:"bytes,10001,opt,name=latest_execution_payload_header,json=latestExecutionPayloadHeader,proto3" json:"latest_execution_payload_header,omitempty"`
+	LatestSilaPayloadHeader *v1.SilaPayloadHeaderCapella                                          `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
 	NextWithdrawalIndex          uint64                                                                     `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	HistoricalSummaries          []*HistoricalSummary                                                       `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
@@ -1449,9 +1449,9 @@ func (x *BeaconStateCapella) GetNextSyncCommittee() *SyncCommittee {
 	return nil
 }
 
-func (x *BeaconStateCapella) GetLatestExecutionPayloadHeader() *v1.ExecutionPayloadHeaderCapella {
+func (x *BeaconStateCapella) GetLatestSilaPayloadHeader() *v1.SilaPayloadHeaderCapella {
 	if x != nil {
-		return x.LatestExecutionPayloadHeader
+		return x.LatestSilaPayloadHeader
 	}
 	return nil
 }
@@ -1503,7 +1503,7 @@ type BeaconStateDeneb struct {
 	InactivityScores             []uint64                                                                   `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
 	CurrentSyncCommittee         *SyncCommittee                                                             `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
 	NextSyncCommittee            *SyncCommittee                                                             `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestExecutionPayloadHeader *v1.ExecutionPayloadHeaderDeneb                                            `protobuf:"bytes,10001,opt,name=latest_execution_payload_header,json=latestExecutionPayloadHeader,proto3" json:"latest_execution_payload_header,omitempty"`
+	LatestSilaPayloadHeader *v1.SilaPayloadHeaderDeneb                                            `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
 	NextWithdrawalIndex          uint64                                                                     `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	HistoricalSummaries          []*HistoricalSummary                                                       `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
@@ -1709,9 +1709,9 @@ func (x *BeaconStateDeneb) GetNextSyncCommittee() *SyncCommittee {
 	return nil
 }
 
-func (x *BeaconStateDeneb) GetLatestExecutionPayloadHeader() *v1.ExecutionPayloadHeaderDeneb {
+func (x *BeaconStateDeneb) GetLatestSilaPayloadHeader() *v1.SilaPayloadHeaderDeneb {
 	if x != nil {
-		return x.LatestExecutionPayloadHeader
+		return x.LatestSilaPayloadHeader
 	}
 	return nil
 }
@@ -1763,7 +1763,7 @@ type BeaconStateElectra struct {
 	InactivityScores              []uint64                                                                   `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
 	CurrentSyncCommittee          *SyncCommittee                                                             `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
 	NextSyncCommittee             *SyncCommittee                                                             `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestExecutionPayloadHeader  *v1.ExecutionPayloadHeaderDeneb                                            `protobuf:"bytes,10001,opt,name=latest_execution_payload_header,json=latestExecutionPayloadHeader,proto3" json:"latest_execution_payload_header,omitempty"`
+	LatestSilaPayloadHeader  *v1.SilaPayloadHeaderDeneb                                            `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
 	NextWithdrawalIndex           uint64                                                                     `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	HistoricalSummaries           []*HistoricalSummary                                                       `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
@@ -1978,9 +1978,9 @@ func (x *BeaconStateElectra) GetNextSyncCommittee() *SyncCommittee {
 	return nil
 }
 
-func (x *BeaconStateElectra) GetLatestExecutionPayloadHeader() *v1.ExecutionPayloadHeaderDeneb {
+func (x *BeaconStateElectra) GetLatestSilaPayloadHeader() *v1.SilaPayloadHeaderDeneb {
 	if x != nil {
-		return x.LatestExecutionPayloadHeader
+		return x.LatestSilaPayloadHeader
 	}
 	return nil
 }
@@ -2095,7 +2095,7 @@ type BeaconStateFulu struct {
 	InactivityScores              []uint64                                                                     `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
 	CurrentSyncCommittee          *SyncCommittee                                                               `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
 	NextSyncCommittee             *SyncCommittee                                                               `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestExecutionPayloadHeader  *v1.ExecutionPayloadHeaderDeneb                                              `protobuf:"bytes,10001,opt,name=latest_execution_payload_header,json=latestExecutionPayloadHeader,proto3" json:"latest_execution_payload_header,omitempty"`
+	LatestSilaPayloadHeader  *v1.SilaPayloadHeaderDeneb                                              `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
 	NextWithdrawalIndex           uint64                                                                       `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex   `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	HistoricalSummaries           []*HistoricalSummary                                                         `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
@@ -2311,9 +2311,9 @@ func (x *BeaconStateFulu) GetNextSyncCommittee() *SyncCommittee {
 	return nil
 }
 
-func (x *BeaconStateFulu) GetLatestExecutionPayloadHeader() *v1.ExecutionPayloadHeaderDeneb {
+func (x *BeaconStateFulu) GetLatestSilaPayloadHeader() *v1.SilaPayloadHeaderDeneb {
 	if x != nil {
-		return x.LatestExecutionPayloadHeader
+		return x.LatestSilaPayloadHeader
 	}
 	return nil
 }
@@ -3583,10 +3583,10 @@ var file_proto_sila_v1alpha1_beacon_state_proto_goTypes = []any{
 	(*Checkpoint)(nil),                       // 20: sila.eth.v1alpha1.Checkpoint
 	(*AttestationData)(nil),                  // 21: sila.eth.v1alpha1.AttestationData
 	(*SyncCommittee)(nil),                    // 22: sila.eth.v1alpha1.SyncCommittee
-	(*v1.ExecutionPayloadHeader)(nil),        // 23: sila.engine.v1.ExecutionPayloadHeader
-	(*v1.ExecutionPayloadHeaderCapella)(nil), // 24: sila.engine.v1.ExecutionPayloadHeaderCapella
+	(*v1.SilaPayloadHeader)(nil),        // 23: sila.engine.v1.SilaPayloadHeader
+	(*v1.SilaPayloadHeaderCapella)(nil), // 24: sila.engine.v1.SilaPayloadHeaderCapella
 	(*HistoricalSummary)(nil),                // 25: sila.eth.v1alpha1.HistoricalSummary
-	(*v1.ExecutionPayloadHeaderDeneb)(nil),   // 26: sila.engine.v1.ExecutionPayloadHeaderDeneb
+	(*v1.SilaPayloadHeaderDeneb)(nil),   // 26: sila.engine.v1.SilaPayloadHeaderDeneb
 	(*PendingDeposit)(nil),                   // 27: sila.eth.v1alpha1.PendingDeposit
 	(*PendingPartialWithdrawal)(nil),         // 28: sila.eth.v1alpha1.PendingPartialWithdrawal
 	(*PendingConsolidation)(nil),             // 29: sila.eth.v1alpha1.PendingConsolidation
@@ -3624,7 +3624,7 @@ var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
 	20, // 29: sila.eth.v1alpha1.BeaconStateBellatrix.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
 	22, // 30: sila.eth.v1alpha1.BeaconStateBellatrix.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	22, // 31: sila.eth.v1alpha1.BeaconStateBellatrix.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
-	23, // 32: sila.eth.v1alpha1.BeaconStateBellatrix.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeader
+	23, // 32: sila.eth.v1alpha1.BeaconStateBellatrix.latest_sila_payload_header:type_name -> sila.engine.v1.SilaPayloadHeader
 	16, // 33: sila.eth.v1alpha1.BeaconStateCapella.fork:type_name -> sila.eth.v1alpha1.Fork
 	17, // 34: sila.eth.v1alpha1.BeaconStateCapella.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
 	18, // 35: sila.eth.v1alpha1.BeaconStateCapella.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
@@ -3635,7 +3635,7 @@ var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
 	20, // 40: sila.eth.v1alpha1.BeaconStateCapella.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
 	22, // 41: sila.eth.v1alpha1.BeaconStateCapella.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	22, // 42: sila.eth.v1alpha1.BeaconStateCapella.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
-	24, // 43: sila.eth.v1alpha1.BeaconStateCapella.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderCapella
+	24, // 43: sila.eth.v1alpha1.BeaconStateCapella.latest_sila_payload_header:type_name -> sila.engine.v1.SilaPayloadHeaderCapella
 	25, // 44: sila.eth.v1alpha1.BeaconStateCapella.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
 	16, // 45: sila.eth.v1alpha1.BeaconStateDeneb.fork:type_name -> sila.eth.v1alpha1.Fork
 	17, // 46: sila.eth.v1alpha1.BeaconStateDeneb.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
@@ -3647,7 +3647,7 @@ var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
 	20, // 52: sila.eth.v1alpha1.BeaconStateDeneb.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
 	22, // 53: sila.eth.v1alpha1.BeaconStateDeneb.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	22, // 54: sila.eth.v1alpha1.BeaconStateDeneb.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
-	26, // 55: sila.eth.v1alpha1.BeaconStateDeneb.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	26, // 55: sila.eth.v1alpha1.BeaconStateDeneb.latest_sila_payload_header:type_name -> sila.engine.v1.SilaPayloadHeaderDeneb
 	25, // 56: sila.eth.v1alpha1.BeaconStateDeneb.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
 	16, // 57: sila.eth.v1alpha1.BeaconStateElectra.fork:type_name -> sila.eth.v1alpha1.Fork
 	17, // 58: sila.eth.v1alpha1.BeaconStateElectra.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
@@ -3659,7 +3659,7 @@ var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
 	20, // 64: sila.eth.v1alpha1.BeaconStateElectra.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
 	22, // 65: sila.eth.v1alpha1.BeaconStateElectra.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	22, // 66: sila.eth.v1alpha1.BeaconStateElectra.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
-	26, // 67: sila.eth.v1alpha1.BeaconStateElectra.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	26, // 67: sila.eth.v1alpha1.BeaconStateElectra.latest_sila_payload_header:type_name -> sila.engine.v1.SilaPayloadHeaderDeneb
 	25, // 68: sila.eth.v1alpha1.BeaconStateElectra.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
 	27, // 69: sila.eth.v1alpha1.BeaconStateElectra.pending_deposits:type_name -> sila.eth.v1alpha1.PendingDeposit
 	28, // 70: sila.eth.v1alpha1.BeaconStateElectra.pending_partial_withdrawals:type_name -> sila.eth.v1alpha1.PendingPartialWithdrawal
@@ -3674,7 +3674,7 @@ var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
 	20, // 79: sila.eth.v1alpha1.BeaconStateFulu.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
 	22, // 80: sila.eth.v1alpha1.BeaconStateFulu.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	22, // 81: sila.eth.v1alpha1.BeaconStateFulu.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
-	26, // 82: sila.eth.v1alpha1.BeaconStateFulu.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	26, // 82: sila.eth.v1alpha1.BeaconStateFulu.latest_sila_payload_header:type_name -> sila.engine.v1.SilaPayloadHeaderDeneb
 	25, // 83: sila.eth.v1alpha1.BeaconStateFulu.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
 	27, // 84: sila.eth.v1alpha1.BeaconStateFulu.pending_deposits:type_name -> sila.eth.v1alpha1.PendingDeposit
 	28, // 85: sila.eth.v1alpha1.BeaconStateFulu.pending_partial_withdrawals:type_name -> sila.eth.v1alpha1.PendingPartialWithdrawal

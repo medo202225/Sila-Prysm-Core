@@ -238,18 +238,18 @@ var (
 			Help: "The maximum number of blobs allowed in a block.",
 		},
 	)
-	beaconExecutionPayloadEnvelopeValidTotal = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "beacon_execution_payload_envelope_valid_total",
-		Help: "Count the number of execution payload envelopes that were processed successfully.",
+	beaconSilaPayloadEnvelopeValidTotal = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "beacon_sila_payload_envelope_valid_total",
+		Help: "Count the number of sila payload envelopes that were processed successfully.",
 	})
-	beaconExecutionPayloadEnvelopeInvalidTotal = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "beacon_execution_payload_envelope_invalid_total",
-		Help: "Count the number of execution payload envelopes that failed processing.",
+	beaconSilaPayloadEnvelopeInvalidTotal = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "beacon_sila_payload_envelope_invalid_total",
+		Help: "Count the number of sila payload envelopes that failed processing.",
 	})
-	beaconExecutionPayloadEnvelopeProcessingDurationSeconds = promauto.NewHistogram(
+	beaconSilaPayloadEnvelopeProcessingDurationSeconds = promauto.NewHistogram(
 		prometheus.HistogramOpts{
-			Name:    "beacon_execution_payload_envelope_processing_duration_seconds",
-			Help:    "Captures end-to-end processing time for execution payload envelopes.",
+			Name:    "beacon_sila_payload_envelope_processing_duration_seconds",
+			Help:    "Captures end-to-end processing time for sila payload envelopes.",
 			Buckets: prometheus.DefBuckets,
 		},
 	)

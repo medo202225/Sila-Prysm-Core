@@ -54,8 +54,8 @@ func GenerateProtoGloasBeaconBlock() *silapb.BeaconBlockGloas {
 				SyncCommitteeSignature: FillByteSlice(96, 101),
 			},
 			BlsToExecutionChanges: []*silapb.SignedBLSToExecutionChange{},
-			SignedExecutionPayloadBid: &silapb.SignedExecutionPayloadBid{
-				Message: &silapb.ExecutionPayloadBid{
+			SignedSilaPayloadBid: &silapb.SignedSilaPayloadBid{
+				Message: &silapb.SilaPayloadBid{
 					ParentBlockHash:       FillByteSlice(32, 110),
 					ParentBlockRoot:       FillByteSlice(32, 111),
 					BlockHash:             FillByteSlice(32, 112),
@@ -123,8 +123,8 @@ func GenerateJsonGloasBeaconBlock() *structs.BeaconBlockGloas {
 				SyncCommitteeSignature: hexutil.Encode(FillByteSlice(96, 101)),
 			},
 			BLSToExecutionChanges: []*structs.SignedBLSToExecutionChange{},
-			SignedExecutionPayloadBid: &structs.SignedExecutionPayloadBid{
-				Message: &structs.ExecutionPayloadBid{
+			SignedSilaPayloadBid: &structs.SignedSilaPayloadBid{
+				Message: &structs.SilaPayloadBid{
 					ParentBlockHash:       hexutil.Encode(FillByteSlice(32, 110)),
 					ParentBlockRoot:       hexutil.Encode(FillByteSlice(32, 111)),
 					BlockHash:             hexutil.Encode(FillByteSlice(32, 112)),
@@ -145,9 +145,9 @@ func GenerateJsonGloasBeaconBlock() *structs.BeaconBlockGloas {
 	}
 }
 
-func GenerateProtoExecutionPayloadEnvelope() *silapb.ExecutionPayloadEnvelope {
-	return &silapb.ExecutionPayloadEnvelope{
-		Payload: &enginev1.ExecutionPayloadGloas{
+func GenerateProtoSilaPayloadEnvelope() *silapb.SilaPayloadEnvelope {
+	return &silapb.SilaPayloadEnvelope{
+		Payload: &enginev1.SilaPayloadGloas{
 			ParentHash:    FillByteSlice(32, 200),
 			FeeRecipient:  FillByteSlice(20, 201),
 			StateRoot:     FillByteSlice(32, 202),

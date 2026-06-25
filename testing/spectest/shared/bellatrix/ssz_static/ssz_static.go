@@ -34,10 +34,10 @@ func customHtr(t *testing.T, htrs []common.HTR, object any) []common.HTR {
 func unmarshalledSSZ(t *testing.T, serializedBytes []byte, folderName string) (any, error) {
 	var obj any
 	switch folderName {
-	case "ExecutionPayload":
-		obj = &enginev1.ExecutionPayload{}
-	case "ExecutionPayloadHeader":
-		obj = &enginev1.ExecutionPayloadHeader{}
+	case "SilaPayload":
+		obj = &enginev1.SilaPayload{}
+	case "SilaPayloadHeader":
+		obj = &enginev1.SilaPayloadHeader{}
 	case "Attestation":
 		obj = &silapb.Attestation{}
 	case "AttestationData":

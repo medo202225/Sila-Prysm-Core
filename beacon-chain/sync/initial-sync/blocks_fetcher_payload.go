@@ -21,9 +21,9 @@ import (
 // It ignores the first block in the slice
 func checkAllBlocksBuildOnEmpty(blks []blocks.BlockWithROSidecars) error {
 	b := blks[0].Block
-	s, err := b.Block().Body().SignedExecutionPayloadBid()
+	s, err := b.Block().Body().SignedSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "get execution payload bid from block")
+		return errors.Wrap(err, "get sila payload bid from block")
 	}
 	firstBid := s.Message
 	for i := 1; i < len(blks); i++ {
@@ -34,9 +34,9 @@ func checkAllBlocksBuildOnEmpty(blks []blocks.BlockWithROSidecars) error {
 		if next.Block().ParentRoot() != b.Root() {
 			return fmt.Errorf("block with root %#x does not descend from %#x", next.Root(), b.Root())
 		}
-		nextSignedBid, err := next.Block().Body().SignedExecutionPayloadBid()
+		nextSignedBid, err := next.Block().Body().SignedSilaPayloadBid()
 		if err != nil {
-			return errors.Wrap(err, "get execution payload bid from block")
+			return errors.Wrap(err, "get sila payload bid from block")
 		}
 		if !bytes.Equal(nextSignedBid.Message.ParentBlockHash, firstBid.ParentBlockHash) {
 			return fmt.Errorf("block with root %#x does not build on top of the empty block", next.Root())
@@ -121,7 +121,7 @@ func (f *blocksFetcher) validatePayloadBlockConsistency(r *fetchRequestResponse)
 	}
 }
 
-// fetchPayloads fetches execution payload envelopes correponding to blocks in
+// fetchPayloads fetches sila payload envelopes correponding to blocks in
 // `response.bwb`.
 // `pid` is the initial peer to request payload from (usually the peer from which the block originated).
 // `peers` is a list of peers to use for the request payloads if `pid` fails.
@@ -166,7 +166,7 @@ func (f *blocksFetcher) fetchPayloads(ctx context.Context, r *fetchRequestRespon
 	f.validatePayloadBlockConsistency(r)
 }
 
-// fetchPayloadEnvelopesFromPeer fetches execution payload envelopes by range,
+// fetchPayloadEnvelopesFromPeer fetches sila payload envelopes by range,
 // trying pid first, then falling back to other peers.
 func (f *blocksFetcher) fetchPayloadEnvelopesFromPeer(
 	ctx context.Context,
@@ -174,11 +174,11 @@ func (f *blocksFetcher) fetchPayloadEnvelopesFromPeer(
 	count uint64,
 	pid peer.ID,
 	peers []peer.ID,
-) ([]interfaces.ROSignedExecutionPayloadEnvelope, peer.ID, error) {
+) ([]interfaces.ROSignedSilaPayloadEnvelope, peer.ID, error) {
 	ctx, span := trace.StartSpan(ctx, "initialsync.fetchPayloadEnvelopesFromPeer")
 	defer span.End()
 
-	req := &p2ppb.ExecutionPayloadEnvelopesByRangeRequest{
+	req := &p2ppb.SilaPayloadEnvelopesByRangeRequest{
 		StartSlot: start,
 		Count:     count,
 	}
@@ -189,7 +189,7 @@ func (f *blocksFetcher) fetchPayloadEnvelopesFromPeer(
 	peers = append(bestPeers, peers...)
 	peers = dedupPeers(peers)
 	for _, p := range peers {
-		envelopes, err := silasync.SendExecutionPayloadEnvelopesByRangeRequest(ctx, f.clock, f.p2p, p, f.ctxMap, req)
+		envelopes, err := silasync.SendSilaPayloadEnvelopesByRangeRequest(ctx, f.clock, f.p2p, p, f.ctxMap, req)
 		if err != nil {
 			log.WithFields(logrus.Fields{
 				"peer":      p,
@@ -202,9 +202,9 @@ func (f *blocksFetcher) fetchPayloadEnvelopesFromPeer(
 			continue
 		}
 		f.p2p.Peers().Scorers().BlockProviderScorer().Touch(p)
-		roEnvelopes := make([]interfaces.ROSignedExecutionPayloadEnvelope, 0, len(envelopes))
+		roEnvelopes := make([]interfaces.ROSignedSilaPayloadEnvelope, 0, len(envelopes))
 		for _, env := range envelopes {
-			wrapped, err := blocks.WrappedROSignedExecutionPayloadEnvelope(env)
+			wrapped, err := blocks.WrappedROSignedSilaPayloadEnvelope(env)
 			if err != nil {
 				log.WithField("peer", p).WithError(err).Debug("Invalid payload envelope in response")
 				continue

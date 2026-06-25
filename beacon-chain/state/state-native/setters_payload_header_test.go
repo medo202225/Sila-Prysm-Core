@@ -12,30 +12,30 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
-func TestSetLatestExecutionPayloadHeader(t *testing.T) {
+func TestSetLatestSilaPayloadHeader(t *testing.T) {
 	versionOffset := version.Bellatrix // PayloadHeader only applies in Bellatrix and beyond.
 	payloads := []interfaces.ExecutionData{
 		func() interfaces.ExecutionData {
-			e := util.NewBeaconBlockBellatrix().Block.Body.ExecutionPayload
-			ee, err := blocks.WrappedExecutionPayload(e)
+			e := util.NewBeaconBlockBellatrix().Block.Body.SilaPayload
+			ee, err := blocks.WrappedSilaPayload(e)
 			require.NoError(t, err)
 			return ee
 		}(),
 		func() interfaces.ExecutionData {
-			e := util.NewBeaconBlockCapella().Block.Body.ExecutionPayload
-			ee, err := blocks.WrappedExecutionPayloadCapella(e)
+			e := util.NewBeaconBlockCapella().Block.Body.SilaPayload
+			ee, err := blocks.WrappedSilaPayloadCapella(e)
 			require.NoError(t, err)
 			return ee
 		}(),
 		func() interfaces.ExecutionData {
-			e := util.NewBeaconBlockDeneb().Block.Body.ExecutionPayload
-			ee, err := blocks.WrappedExecutionPayloadDeneb(e)
+			e := util.NewBeaconBlockDeneb().Block.Body.SilaPayload
+			ee, err := blocks.WrappedSilaPayloadDeneb(e)
 			require.NoError(t, err)
 			return ee
 		}(),
 		func() interfaces.ExecutionData {
-			e := util.NewBeaconBlockElectra().Block.Body.ExecutionPayload
-			ee, err := blocks.WrappedExecutionPayloadDeneb(e)
+			e := util.NewBeaconBlockElectra().Block.Body.SilaPayload
+			ee, err := blocks.WrappedSilaPayloadDeneb(e)
 			require.NoError(t, err)
 			return ee
 		}(),
@@ -43,26 +43,26 @@ func TestSetLatestExecutionPayloadHeader(t *testing.T) {
 
 	payloadHeaders := []interfaces.ExecutionData{
 		func() interfaces.ExecutionData {
-			e := util.NewBlindedBeaconBlockBellatrix().Block.Body.ExecutionPayloadHeader
-			ee, err := blocks.WrappedExecutionPayloadHeader(e)
+			e := util.NewBlindedBeaconBlockBellatrix().Block.Body.SilaPayloadHeader
+			ee, err := blocks.WrappedSilaPayloadHeader(e)
 			require.NoError(t, err)
 			return ee
 		}(),
 		func() interfaces.ExecutionData {
-			e := util.NewBlindedBeaconBlockCapella().Block.Body.ExecutionPayloadHeader
-			ee, err := blocks.WrappedExecutionPayloadHeaderCapella(e)
+			e := util.NewBlindedBeaconBlockCapella().Block.Body.SilaPayloadHeader
+			ee, err := blocks.WrappedSilaPayloadHeaderCapella(e)
 			require.NoError(t, err)
 			return ee
 		}(),
 		func() interfaces.ExecutionData {
-			e := util.NewBlindedBeaconBlockDeneb().Message.Body.ExecutionPayloadHeader
-			ee, err := blocks.WrappedExecutionPayloadHeaderDeneb(e)
+			e := util.NewBlindedBeaconBlockDeneb().Message.Body.SilaPayloadHeader
+			ee, err := blocks.WrappedSilaPayloadHeaderDeneb(e)
 			require.NoError(t, err)
 			return ee
 		}(),
 		func() interfaces.ExecutionData {
-			e := util.NewBlindedBeaconBlockElectra().Message.Body.ExecutionPayloadHeader
-			ee, err := blocks.WrappedExecutionPayloadHeaderDeneb(e)
+			e := util.NewBlindedBeaconBlockElectra().Message.Body.SilaPayloadHeader
+			ee, err := blocks.WrappedSilaPayloadHeaderDeneb(e)
 			require.NoError(t, err)
 			return ee
 		}(),
@@ -72,7 +72,7 @@ func TestSetLatestExecutionPayloadHeader(t *testing.T) {
 		for i, p := range payloads {
 			t.Run(version.String(i+versionOffset), func(t *testing.T) {
 				s := state_native.EmptyStateFromVersion(t, i+versionOffset)
-				require.NoError(t, s.SetLatestExecutionPayloadHeader(p))
+				require.NoError(t, s.SetLatestSilaPayloadHeader(p))
 			})
 		}
 	})
@@ -81,7 +81,7 @@ func TestSetLatestExecutionPayloadHeader(t *testing.T) {
 		for i, ph := range payloadHeaders {
 			t.Run(version.String(i+versionOffset), func(t *testing.T) {
 				s := state_native.EmptyStateFromVersion(t, i+versionOffset)
-				require.NoError(t, s.SetLatestExecutionPayloadHeader(ph))
+				require.NoError(t, s.SetLatestSilaPayloadHeader(ph))
 			})
 		}
 	})
@@ -103,9 +103,9 @@ func TestSetLatestExecutionPayloadHeader(t *testing.T) {
 				t.Run(fmt.Sprintf("%s state with %s payload", version.String(i+versionOffset), version.String(j+versionOffset)), func(t *testing.T) {
 					s := state_native.EmptyStateFromVersion(t, i+versionOffset)
 					p := payloads[j]
-					require.ErrorContains(t, "wrong state version", s.SetLatestExecutionPayloadHeader(p))
+					require.ErrorContains(t, "wrong state version", s.SetLatestSilaPayloadHeader(p))
 					ph := payloadHeaders[j]
-					require.ErrorContains(t, "wrong state version", s.SetLatestExecutionPayloadHeader(ph))
+					require.ErrorContains(t, "wrong state version", s.SetLatestSilaPayloadHeader(ph))
 				})
 			}
 		}

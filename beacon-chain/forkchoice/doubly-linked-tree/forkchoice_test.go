@@ -35,7 +35,7 @@ func prepareForkchoiceState(
 		ParentRoot: parentRoot[:],
 	}
 
-	executionHeader := &enginev1.ExecutionPayloadHeader{
+	executionHeader := &enginev1.SilaPayloadHeader{
 		BlockHash: payloadHash[:],
 	}
 
@@ -52,7 +52,7 @@ func prepareForkchoiceState(
 		RandaoMixes:                  make([][]byte, params.BeaconConfig().EpochsPerHistoricalVector),
 		CurrentJustifiedCheckpoint:   justifiedCheckpoint,
 		FinalizedCheckpoint:          finalizedCheckpoint,
-		LatestExecutionPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: executionHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 
@@ -65,7 +65,7 @@ func prepareForkchoiceState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					BlockHash: payloadHash[:],
 				},
 			},
@@ -1001,13 +1001,13 @@ func prepareBellatrixForkchoiceStateWithGasLimit(
 	gasLimit uint64,
 ) (state.BeaconState, blocks.ROBlock, error) {
 	blockHeader := &silapb.BeaconBlockHeader{ParentRoot: parentRoot[:]}
-	executionHeader := &enginev1.ExecutionPayloadHeader{BlockHash: payloadHash[:], GasLimit: gasLimit}
+	executionHeader := &enginev1.SilaPayloadHeader{BlockHash: payloadHash[:], GasLimit: gasLimit}
 	base := &silapb.BeaconStateBellatrix{
 		Slot:                         slot,
 		RandaoMixes:                  make([][]byte, params.BeaconConfig().EpochsPerHistoricalVector),
 		CurrentJustifiedCheckpoint:   &silapb.Checkpoint{},
 		FinalizedCheckpoint:          &silapb.Checkpoint{},
-		LatestExecutionPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: executionHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 	st, err := state_native.InitializeFromProtoBellatrix(base)
@@ -1019,7 +1019,7 @@ func prepareBellatrixForkchoiceStateWithGasLimit(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{BlockHash: payloadHash[:], GasLimit: gasLimit},
+				SilaPayload: &enginev1.SilaPayload{BlockHash: payloadHash[:], GasLimit: gasLimit},
 			},
 		},
 	}

@@ -52,9 +52,9 @@ import (
 //	        current_sync_committee=pre.current_sync_committee,
 //	        next_sync_committee=pre.next_sync_committee,
 //	        # [Modified in Gloas:SIP7732]
-//	        # Removed `latest_execution_payload_header`
+//	        # Removed `latest_sila_payload_header`
 //	        # [New in Gloas:SIP7732]
-//	        latest_block_hash=pre.latest_execution_payload_header.block_hash,
+//	        latest_block_hash=pre.latest_sila_payload_header.block_hash,
 //	        next_withdrawal_index=pre.next_withdrawal_index,
 //	        next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
 //	        historical_summaries=pre.historical_summaries,
@@ -73,15 +73,15 @@ import (
 //	        # [New in Gloas:SIP7732]
 //	        next_withdrawal_builder_index=BuilderIndex(0),
 //	        # [New in Gloas:SIP7732]
-//	        execution_payload_availability=[0b1 for _ in range(SLOTS_PER_HISTORICAL_ROOT)],
+//	        sila_payload_availability=[0b1 for _ in range(SLOTS_PER_HISTORICAL_ROOT)],
 //	        # [New in Gloas:SIP7732]
 //	        builder_pending_payments=[BuilderPendingPayment() for _ in range(2 * SLOTS_PER_EPOCH)],
 //	        # [New in Gloas:SIP7732]
 //	        builder_pending_withdrawals=[],
 //	        # [New in Gloas:SIP7732]
-//	        latest_execution_payload_bid=ExecutionPayloadBid(
-//	            block_hash=pre.latest_execution_payload_header.block_hash,
-//	            gas_limit=pre.latest_execution_payload_header.gas_limit,
+//	        latest_sila_payload_bid=SilaPayloadBid(
+//	            block_hash=pre.latest_sila_payload_header.block_hash,
+//	            gas_limit=pre.latest_sila_payload_header.gas_limit,
 //	            execution_requests_root=hash_tree_root(ExecutionRequests()),
 //	        ),
 //	        # [New in Gloas:SIP7732]
@@ -96,9 +96,9 @@ import (
 //	    return post
 //	</spec>
 //
-//	<spec fn="process_execution_payload_bid" fork="gloas" hash="823c9f3a">
-//	def process_execution_payload_bid(state: BeaconState, block: BeaconBlock) -> None:
-//	    signed_bid = block.body.signed_execution_payload_bid
+//	<spec fn="process_sila_payload_bid" fork="gloas" hash="823c9f3a">
+//	def process_sila_payload_bid(state: BeaconState, block: BeaconBlock) -> None:
+//	    signed_bid = block.body.signed_sila_payload_bid
 //	    bid = signed_bid.message
 //	    builder_index = bid.builder_index
 //	    amount = bid.value
@@ -113,7 +113,7 @@ import (
 //	        # Verify that the builder has funds to cover the bid
 //	        assert can_builder_cover_bid(state, builder_index, amount)
 //	        # Verify that the bid signature is valid
-//	        assert verify_execution_payload_bid_signature(state, signed_bid)
+//	        assert verify_sila_payload_bid_signature(state, signed_bid)
 //
 //	    # Verify commitments are under limit
 //	    assert (
@@ -142,8 +142,8 @@ import (
 //	            pending_payment
 //	        )
 //
-//	    # Cache the signed execution payload bid
-//	    state.latest_execution_payload_bid = bid
+//	    # Cache the signed sila payload bid
+//	    state.latest_sila_payload_bid = bid
 //	</spec>
 func UpgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 	s, err := upgradeToGloas(beaconState)
@@ -238,7 +238,7 @@ func upgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 	if err != nil {
 		return nil, err
 	}
-	payloadHeader, err := beaconState.LatestExecutionPayloadHeader()
+	payloadHeader, err := beaconState.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -295,9 +295,9 @@ func upgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 		return nil, err
 	}
 
-	executionPayloadAvailability := make([]byte, int((params.BeaconConfig().SlotsPerHistoricalRoot+7)/8))
-	for i := range executionPayloadAvailability {
-		executionPayloadAvailability[i] = 0xff
+	silaPayloadAvailability := make([]byte, int((params.BeaconConfig().SlotsPerHistoricalRoot+7)/8))
+	for i := range silaPayloadAvailability {
+		silaPayloadAvailability[i] = 0xff
 	}
 
 	builderPendingPayments := make([]*silapb.BuilderPendingPayment, int(params.BeaconConfig().SlotsPerEpoch*2))
@@ -343,7 +343,7 @@ func upgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 		InactivityScores:            inactivityScores,
 		CurrentSyncCommittee:        currentSyncCommittee,
 		NextSyncCommittee:           nextSyncCommittee,
-		LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 			BlockHash:             payloadHeader.BlockHash(),
 			GasLimit:              payloadHeader.GasLimit(),
 			FeeRecipient:          make([]byte, fieldparams.FeeRecipientLength),
@@ -367,7 +367,7 @@ func upgradeToGloas(beaconState state.BeaconState) (state.BeaconState, error) {
 		ProposerLookahead:             proposerLookahead,
 		Builders:                      []*silapb.Builder{},
 		NextWithdrawalBuilderIndex:    primitives.BuilderIndex(0),
-		ExecutionPayloadAvailability:  executionPayloadAvailability,
+		SilaPayloadAvailability:  silaPayloadAvailability,
 		BuilderPendingPayments:        builderPendingPayments,
 		BuilderPendingWithdrawals:     []*silapb.BuilderPendingWithdrawal{},
 		LatestBlockHash:               payloadHeader.BlockHash(),

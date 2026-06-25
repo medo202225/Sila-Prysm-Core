@@ -244,7 +244,7 @@ func cliActionRequestBlocks(cliCtx *cli.Context) error {
 			case errors.Is(err, consensus_types.ErrUnsupportedField):
 				continue
 			case err != nil:
-				log.WithError(err).Error("Could not read transactions block execution payload")
+				log.WithError(err).Error("Could not read transactions block sila payload")
 				continue
 			default:
 			}
@@ -254,7 +254,7 @@ func cliActionRequestBlocks(cliCtx *cli.Context) error {
 			"numBlocks":                           len(blocks),
 			"peer":                                pr.String(),
 			"timeFromSendingToProcessingResponse": end,
-			"totalBlocksWithExecutionPayloads":    totalExecutionBlocks,
+			"totalBlocksWithSilaPayloads":    totalExecutionBlocks,
 		}).Info("Received blocks from peer")
 	}
 	return nil

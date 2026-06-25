@@ -952,7 +952,7 @@ func buildGloasStateForFlags(t *testing.T, stateSlot, slot primitives.Slot, targ
 		BlockRoots:                   blockRoots,
 		StateRoots:                   stateRoots,
 		RandaoMixes:                  randaoMixes,
-		ExecutionPayloadAvailability: execPayloadAvailability,
+		SilaPayloadAvailability: execPayloadAvailability,
 		CurrentJustifiedCheckpoint:   justified,
 		PreviousJustifiedCheckpoint:  justified,
 		Validators: []*silapb.Validator{

@@ -304,7 +304,7 @@ func (s *ChainService) ReceiveBlockInitialSync(ctx context.Context, block interf
 }
 
 // ReceiveBlockBatch processes blocks in batches from initial-sync.
-func (s *ChainService) ReceiveBlockBatch(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedExecutionPayloadEnvelope, _ das.AvailabilityChecker) error {
+func (s *ChainService) ReceiveBlockBatch(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedSilaPayloadEnvelope, _ das.AvailabilityChecker) error {
 	if s.State == nil {
 		return ErrNilState
 	}
@@ -619,7 +619,7 @@ func (s *ChainService) InForkchoice(root [32]byte) bool {
 	return !s.NotFinalized
 }
 
-// BlockHash mocks the execution payload block hash lookup for a beacon block root.
+// BlockHash mocks the sila payload block hash lookup for a beacon block root.
 func (s *ChainService) BlockHash(root [32]byte) ([32]byte, error) {
 	if s.ForkchoiceBlockHashes != nil {
 		if blockHash, ok := s.ForkchoiceBlockHashes[root]; ok {
@@ -671,7 +671,7 @@ func prepareForkchoiceState(
 		ParentRoot: parentRoot[:],
 	}
 
-	executionHeader := &enginev1.ExecutionPayloadHeader{
+	executionHeader := &enginev1.SilaPayloadHeader{
 		BlockHash: payloadHash[:],
 	}
 
@@ -681,7 +681,7 @@ func prepareForkchoiceState(
 		BlockRoots:                   make([][]byte, 1),
 		CurrentJustifiedCheckpoint:   justified,
 		FinalizedCheckpoint:          finalized,
-		LatestExecutionPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: executionHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 
@@ -695,7 +695,7 @@ func prepareForkchoiceState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					BlockHash: payloadHash[:],
 				},
 			},
@@ -836,7 +836,7 @@ func (s *ChainService) InsertNode(ctx context.Context, st state.BeaconState, blo
 }
 
 // InsertPayload mocks the same method in the chain service
-func (s *ChainService) InsertPayload(pe interfaces.ROExecutionPayloadEnvelope) error {
+func (s *ChainService) InsertPayload(pe interfaces.ROSilaPayloadEnvelope) error {
 	if s.ForkChoiceStore != nil {
 		return s.ForkChoiceStore.InsertPayload(pe)
 	}
@@ -921,8 +921,8 @@ func (c *ChainService) PtcLookupState(_ context.Context, _ [32]byte, _ primitive
 	return c.State, nil
 }
 
-// ReceiveExecutionPayloadEnvelope implements the same method in the chain service.
-func (c *ChainService) ReceiveExecutionPayloadEnvelope(_ context.Context, _ interfaces.ROSignedExecutionPayloadEnvelope) error {
+// ReceiveSilaPayloadEnvelope implements the same method in the chain service.
+func (c *ChainService) ReceiveSilaPayloadEnvelope(_ context.Context, _ interfaces.ROSignedSilaPayloadEnvelope) error {
 	return c.ReceivePayloadEnvelopeErr
 }
 
@@ -934,7 +934,7 @@ func (s *ChainService) ParentPayloadReady(_ interfaces.ReadOnlyBeaconBlock) bool
 	return true
 }
 
-// GasLimit mocks the execution payload gas limit lookup for a beacon block root.
+// GasLimit mocks the sila payload gas limit lookup for a beacon block root.
 func (s *ChainService) GasLimit(root [32]byte) (uint64, error) {
 	if s.ForkchoiceGasLimits != nil {
 		if gasLimit, ok := s.ForkchoiceGasLimits[root]; ok {

@@ -51,8 +51,8 @@ func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandle
 			p2p.RPCBlobSidecarsByRangeTopicV1:              s.blobSidecarsByRangeRPCHandler,
 			p2p.RPCDataColumnSidecarsByRootTopicV1:         s.dataColumnSidecarByRootRPCHandler,
 			p2p.RPCDataColumnSidecarsByRangeTopicV1:        s.dataColumnSidecarsByRangeRPCHandler,
-			p2p.RPCExecutionPayloadEnvelopesByRootTopicV1:  s.executionPayloadEnvelopesByRootRPCHandler,  // Added in Gloas
-			p2p.RPCExecutionPayloadEnvelopesByRangeTopicV1: s.executionPayloadEnvelopesByRangeRPCHandler, // Added in Gloas
+			p2p.RPCSilaPayloadEnvelopesByRootTopicV1:  s.silaPayloadEnvelopesByRootRPCHandler,  // Added in Gloas
+			p2p.RPCSilaPayloadEnvelopesByRangeTopicV1: s.silaPayloadEnvelopesByRangeRPCHandler, // Added in Gloas
 		}, nil
 	}
 

@@ -29,7 +29,7 @@ func TestProcessSlot_GloasClearsNextPayloadAvailability(t *testing.T) {
 	require.NoError(t, err)
 
 	post := st.ToProto().(*silapb.BeaconStateGloas)
-	require.Equal(t, byte(0xFF)&^bitMask, post.ExecutionPayloadAvailability[byteIdx])
+	require.Equal(t, byte(0xFF)&^bitMask, post.SilaPayloadAvailability[byteIdx])
 }
 
 func TestProcessSlot_GloasClearsNextPayloadAvailability_Wrap(t *testing.T) {
@@ -42,7 +42,7 @@ func TestProcessSlot_GloasClearsNextPayloadAvailability_Wrap(t *testing.T) {
 	require.NoError(t, err)
 
 	post := st.ToProto().(*silapb.BeaconStateGloas)
-	require.Equal(t, byte(0xFE), post.ExecutionPayloadAvailability[0])
+	require.Equal(t, byte(0xFE), post.SilaPayloadAvailability[0])
 }
 
 func TestProcessSlot_GloasAvailabilityUpdateError(t *testing.T) {
@@ -55,7 +55,7 @@ func TestProcessSlot_GloasAvailabilityUpdateError(t *testing.T) {
 	idx := uint64((slot + 1) % cfg.SlotsPerHistoricalRoot)
 	byteIdx := idx / 8
 	require.EqualError(t, err, fmt.Sprintf(
-		"bit index %d (byte index %d) out of range for execution payload availability length %d",
+		"bit index %d (byte index %d) out of range for sila payload availability length %d",
 		idx, byteIdx, len(availability),
 	))
 }
@@ -70,9 +70,9 @@ func newGloasState(t *testing.T, slot primitives.Slot, availability []byte) stat
 		BlockRoots:                   make([][]byte, cfg.SlotsPerHistoricalRoot),
 		StateRoots:                   make([][]byte, cfg.SlotsPerHistoricalRoot),
 		RandaoMixes:                  make([][]byte, fieldparams.RandaoMixesLength),
-		ExecutionPayloadAvailability: availability,
+		SilaPayloadAvailability: availability,
 		BuilderPendingPayments:       make([]*silapb.BuilderPendingPayment, int(cfg.SlotsPerEpoch*2)),
-		LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 			ParentBlockHash:       make([]byte, 32),
 			ParentBlockRoot:       make([]byte, 32),
 			BlockHash:             make([]byte, 32),

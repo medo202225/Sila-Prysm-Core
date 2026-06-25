@@ -7,13 +7,13 @@ import (
 	ssz "github.com/sila-chain/fastssz"
 )
 
-// MarshalSSZ ssz marshals the ExecutionPayloadBid object
-func (e *ExecutionPayloadBid) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadBid object
+func (e *SilaPayloadBid) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadBid object to a target array
-func (e *ExecutionPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadBid object to a target array
+func (e *SilaPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(224)
 
@@ -94,8 +94,8 @@ func (e *ExecutionPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadBid object
-func (e *ExecutionPayloadBid) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadBid object
+func (e *SilaPayloadBid) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 224 {
@@ -183,8 +183,8 @@ func (e *ExecutionPayloadBid) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadBid object
-func (e *ExecutionPayloadBid) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadBid object
+func (e *SilaPayloadBid) SizeSSZ() (size int) {
 	size = 224
 
 	// Field (10) 'BlobKzgCommitments'
@@ -193,13 +193,13 @@ func (e *ExecutionPayloadBid) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadBid object
-func (e *ExecutionPayloadBid) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadBid object
+func (e *SilaPayloadBid) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadBid object with a hasher
-func (e *ExecutionPayloadBid) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadBid object with a hasher
+func (e *SilaPayloadBid) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentBlockHash'
@@ -282,20 +282,20 @@ func (e *ExecutionPayloadBid) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the SignedExecutionPayloadBid object
-func (s *SignedExecutionPayloadBid) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SignedSilaPayloadBid object
+func (s *SignedSilaPayloadBid) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(s)
 }
 
-// MarshalSSZTo ssz marshals the SignedExecutionPayloadBid object to a target array
-func (s *SignedExecutionPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SignedSilaPayloadBid object to a target array
+func (s *SignedSilaPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(100)
 
 	// Offset (0) 'Message'
 	dst = ssz.WriteOffset(dst, offset)
 	if s.Message == nil {
-		s.Message = new(ExecutionPayloadBid)
+		s.Message = new(SilaPayloadBid)
 	}
 	offset += s.Message.SizeSSZ()
 
@@ -314,8 +314,8 @@ func (s *SignedExecutionPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err er
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the SignedExecutionPayloadBid object
-func (s *SignedExecutionPayloadBid) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SignedSilaPayloadBid object
+func (s *SignedSilaPayloadBid) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 100 {
@@ -344,7 +344,7 @@ func (s *SignedExecutionPayloadBid) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:]
 		if s.Message == nil {
-			s.Message = new(ExecutionPayloadBid)
+			s.Message = new(SilaPayloadBid)
 		}
 		if err = s.Message.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -353,26 +353,26 @@ func (s *SignedExecutionPayloadBid) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the SignedExecutionPayloadBid object
-func (s *SignedExecutionPayloadBid) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SignedSilaPayloadBid object
+func (s *SignedSilaPayloadBid) SizeSSZ() (size int) {
 	size = 100
 
 	// Field (0) 'Message'
 	if s.Message == nil {
-		s.Message = new(ExecutionPayloadBid)
+		s.Message = new(SilaPayloadBid)
 	}
 	size += s.Message.SizeSSZ()
 
 	return
 }
 
-// HashTreeRoot ssz hashes the SignedExecutionPayloadBid object
-func (s *SignedExecutionPayloadBid) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SignedSilaPayloadBid object
+func (s *SignedSilaPayloadBid) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(s)
 }
 
-// HashTreeRootWith ssz hashes the SignedExecutionPayloadBid object with a hasher
-func (s *SignedExecutionPayloadBid) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SignedSilaPayloadBid object with a hasher
+func (s *SignedSilaPayloadBid) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Message'
@@ -1090,12 +1090,12 @@ func (b *BeaconBlockBodyGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) 
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(b.BlsToExecutionChanges) * 172
 
-	// Offset (10) 'SignedExecutionPayloadBid'
+	// Offset (10) 'SignedSilaPayloadBid'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.SignedExecutionPayloadBid == nil {
-		b.SignedExecutionPayloadBid = new(SignedExecutionPayloadBid)
+	if b.SignedSilaPayloadBid == nil {
+		b.SignedSilaPayloadBid = new(SignedSilaPayloadBid)
 	}
-	offset += b.SignedExecutionPayloadBid.SizeSSZ()
+	offset += b.SignedSilaPayloadBid.SizeSSZ()
 
 	// Offset (11) 'PayloadAttestations'
 	dst = ssz.WriteOffset(dst, offset)
@@ -1188,8 +1188,8 @@ func (b *BeaconBlockBodyGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) 
 		}
 	}
 
-	// Field (10) 'SignedExecutionPayloadBid'
-	if dst, err = b.SignedExecutionPayloadBid.MarshalSSZTo(dst); err != nil {
+	// Field (10) 'SignedSilaPayloadBid'
+	if dst, err = b.SignedSilaPayloadBid.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -1285,7 +1285,7 @@ func (b *BeaconBlockBodyGloas) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrOffset
 	}
 
-	// Offset (10) 'SignedExecutionPayloadBid'
+	// Offset (10) 'SignedSilaPayloadBid'
 	if o10 = ssz.ReadOffset(buf[384:388]); o10 > size || o9 > o10 {
 		return ssz.ErrOffset
 	}
@@ -1416,13 +1416,13 @@ func (b *BeaconBlockBodyGloas) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (10) 'SignedExecutionPayloadBid'
+	// Field (10) 'SignedSilaPayloadBid'
 	{
 		buf = tail[o10:o11]
-		if b.SignedExecutionPayloadBid == nil {
-			b.SignedExecutionPayloadBid = new(SignedExecutionPayloadBid)
+		if b.SignedSilaPayloadBid == nil {
+			b.SignedSilaPayloadBid = new(SignedSilaPayloadBid)
 		}
-		if err = b.SignedExecutionPayloadBid.UnmarshalSSZ(buf); err != nil {
+		if err = b.SignedSilaPayloadBid.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -1486,11 +1486,11 @@ func (b *BeaconBlockBodyGloas) SizeSSZ() (size int) {
 	// Field (9) 'BlsToExecutionChanges'
 	size += len(b.BlsToExecutionChanges) * 172
 
-	// Field (10) 'SignedExecutionPayloadBid'
-	if b.SignedExecutionPayloadBid == nil {
-		b.SignedExecutionPayloadBid = new(SignedExecutionPayloadBid)
+	// Field (10) 'SignedSilaPayloadBid'
+	if b.SignedSilaPayloadBid == nil {
+		b.SignedSilaPayloadBid = new(SignedSilaPayloadBid)
 	}
-	size += b.SignedExecutionPayloadBid.SizeSSZ()
+	size += b.SignedSilaPayloadBid.SizeSSZ()
 
 	// Field (11) 'PayloadAttestations'
 	size += len(b.PayloadAttestations) * 202
@@ -1633,8 +1633,8 @@ func (b *BeaconBlockBodyGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		hh.MerkleizeWithMixin(subIndx, num, 16)
 	}
 
-	// Field (10) 'SignedExecutionPayloadBid'
-	if err = b.SignedExecutionPayloadBid.HashTreeRootWith(hh); err != nil {
+	// Field (10) 'SignedSilaPayloadBid'
+	if err = b.SignedSilaPayloadBid.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -2008,12 +2008,12 @@ func (b *BeaconStateGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	// Field (39) 'NextWithdrawalBuilderIndex'
 	dst = ssz.MarshalUint(dst, b.NextWithdrawalBuilderIndex)
 
-	// Field (40) 'ExecutionPayloadAvailability'
-	if size := len(b.ExecutionPayloadAvailability); size != 1024 {
-		err = ssz.ErrBytesLengthFn("--.ExecutionPayloadAvailability", size, 1024)
+	// Field (40) 'SilaPayloadAvailability'
+	if size := len(b.SilaPayloadAvailability); size != 1024 {
+		err = ssz.ErrBytesLengthFn("--.SilaPayloadAvailability", size, 1024)
 		return
 	}
-	dst = append(dst, b.ExecutionPayloadAvailability...)
+	dst = append(dst, b.SilaPayloadAvailability...)
 
 	// Field (41) 'BuilderPendingPayments'
 	if size := len(b.BuilderPendingPayments); size != 64 {
@@ -2030,12 +2030,12 @@ func (b *BeaconStateGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(b.BuilderPendingWithdrawals) * 36
 
-	// Offset (43) 'LatestExecutionPayloadBid'
+	// Offset (43) 'LatestSilaPayloadBid'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.LatestExecutionPayloadBid == nil {
-		b.LatestExecutionPayloadBid = new(ExecutionPayloadBid)
+	if b.LatestSilaPayloadBid == nil {
+		b.LatestSilaPayloadBid = new(SilaPayloadBid)
 	}
-	offset += b.LatestExecutionPayloadBid.SizeSSZ()
+	offset += b.LatestSilaPayloadBid.SizeSSZ()
 
 	// Offset (44) 'PayloadExpectedWithdrawals'
 	dst = ssz.WriteOffset(dst, offset)
@@ -2185,8 +2185,8 @@ func (b *BeaconStateGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		}
 	}
 
-	// Field (43) 'LatestExecutionPayloadBid'
-	if dst, err = b.LatestExecutionPayloadBid.MarshalSSZTo(dst); err != nil {
+	// Field (43) 'LatestSilaPayloadBid'
+	if dst, err = b.LatestSilaPayloadBid.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -2436,11 +2436,11 @@ func (b *BeaconStateGloas) UnmarshalSSZ(buf []byte) error {
 	// Field (39) 'NextWithdrawalBuilderIndex'
 	b.NextWithdrawalBuilderIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex](buf[2737257:2737265])
 
-	// Field (40) 'ExecutionPayloadAvailability'
-	if cap(b.ExecutionPayloadAvailability) == 0 {
-		b.ExecutionPayloadAvailability = make([]byte, 0, len(buf[2737265:2738289]))
+	// Field (40) 'SilaPayloadAvailability'
+	if cap(b.SilaPayloadAvailability) == 0 {
+		b.SilaPayloadAvailability = make([]byte, 0, len(buf[2737265:2738289]))
 	}
-	b.ExecutionPayloadAvailability = append(b.ExecutionPayloadAvailability, buf[2737265:2738289]...)
+	b.SilaPayloadAvailability = append(b.SilaPayloadAvailability, buf[2737265:2738289]...)
 
 	// Field (41) 'BuilderPendingPayments'
 	b.BuilderPendingPayments = make([]*BuilderPendingPayment, 64)
@@ -2458,7 +2458,7 @@ func (b *BeaconStateGloas) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrOffset
 	}
 
-	// Offset (43) 'LatestExecutionPayloadBid'
+	// Offset (43) 'LatestSilaPayloadBid'
 	if o43 = ssz.ReadOffset(buf[2741109:2741113]); o43 > size || o42 > o43 {
 		return ssz.ErrOffset
 	}
@@ -2689,13 +2689,13 @@ func (b *BeaconStateGloas) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (43) 'LatestExecutionPayloadBid'
+	// Field (43) 'LatestSilaPayloadBid'
 	{
 		buf = tail[o43:o44]
-		if b.LatestExecutionPayloadBid == nil {
-			b.LatestExecutionPayloadBid = new(ExecutionPayloadBid)
+		if b.LatestSilaPayloadBid == nil {
+			b.LatestSilaPayloadBid = new(SilaPayloadBid)
 		}
-		if err = b.LatestExecutionPayloadBid.UnmarshalSSZ(buf); err != nil {
+		if err = b.LatestSilaPayloadBid.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -2763,11 +2763,11 @@ func (b *BeaconStateGloas) SizeSSZ() (size int) {
 	// Field (42) 'BuilderPendingWithdrawals'
 	size += len(b.BuilderPendingWithdrawals) * 36
 
-	// Field (43) 'LatestExecutionPayloadBid'
-	if b.LatestExecutionPayloadBid == nil {
-		b.LatestExecutionPayloadBid = new(ExecutionPayloadBid)
+	// Field (43) 'LatestSilaPayloadBid'
+	if b.LatestSilaPayloadBid == nil {
+		b.LatestSilaPayloadBid = new(SilaPayloadBid)
 	}
-	size += b.LatestExecutionPayloadBid.SizeSSZ()
+	size += b.LatestSilaPayloadBid.SizeSSZ()
 
 	// Field (44) 'PayloadExpectedWithdrawals'
 	size += len(b.PayloadExpectedWithdrawals) * 44
@@ -3145,12 +3145,12 @@ func (b *BeaconStateGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	// Field (39) 'NextWithdrawalBuilderIndex'
 	ssz.PutUint(hh, b.NextWithdrawalBuilderIndex)
 
-	// Field (40) 'ExecutionPayloadAvailability'
-	if size := len(b.ExecutionPayloadAvailability); size != 1024 {
-		err = ssz.ErrBytesLengthFn("--.ExecutionPayloadAvailability", size, 1024)
+	// Field (40) 'SilaPayloadAvailability'
+	if size := len(b.SilaPayloadAvailability); size != 1024 {
+		err = ssz.ErrBytesLengthFn("--.SilaPayloadAvailability", size, 1024)
 		return
 	}
-	hh.PutBytes(b.ExecutionPayloadAvailability)
+	hh.PutBytes(b.SilaPayloadAvailability)
 
 	// Field (41) 'BuilderPendingPayments'
 	{
@@ -3179,8 +3179,8 @@ func (b *BeaconStateGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		hh.MerkleizeWithMixin(subIndx, num, 1048576)
 	}
 
-	// Field (43) 'LatestExecutionPayloadBid'
-	if err = b.LatestExecutionPayloadBid.HashTreeRootWith(hh); err != nil {
+	// Field (43) 'LatestSilaPayloadBid'
+	if err = b.LatestSilaPayloadBid.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -3302,12 +3302,12 @@ func (b *BeaconBlockContentsGloas) MarshalSSZTo(buf []byte) (dst []byte, err err
 	}
 	offset += b.Block.SizeSSZ()
 
-	// Offset (1) 'ExecutionPayloadEnvelope'
+	// Offset (1) 'SilaPayloadEnvelope'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.ExecutionPayloadEnvelope == nil {
-		b.ExecutionPayloadEnvelope = new(ExecutionPayloadEnvelope)
+	if b.SilaPayloadEnvelope == nil {
+		b.SilaPayloadEnvelope = new(SilaPayloadEnvelope)
 	}
-	offset += b.ExecutionPayloadEnvelope.SizeSSZ()
+	offset += b.SilaPayloadEnvelope.SizeSSZ()
 
 	// Offset (2) 'KzgProofs'
 	dst = ssz.WriteOffset(dst, offset)
@@ -3322,8 +3322,8 @@ func (b *BeaconBlockContentsGloas) MarshalSSZTo(buf []byte) (dst []byte, err err
 		return
 	}
 
-	// Field (1) 'ExecutionPayloadEnvelope'
-	if dst, err = b.ExecutionPayloadEnvelope.MarshalSSZTo(dst); err != nil {
+	// Field (1) 'SilaPayloadEnvelope'
+	if dst, err = b.SilaPayloadEnvelope.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -3376,7 +3376,7 @@ func (b *BeaconBlockContentsGloas) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrInvalidVariableOffset
 	}
 
-	// Offset (1) 'ExecutionPayloadEnvelope'
+	// Offset (1) 'SilaPayloadEnvelope'
 	if o1 = ssz.ReadOffset(buf[4:8]); o1 > size || o0 > o1 {
 		return ssz.ErrOffset
 	}
@@ -3402,13 +3402,13 @@ func (b *BeaconBlockContentsGloas) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (1) 'ExecutionPayloadEnvelope'
+	// Field (1) 'SilaPayloadEnvelope'
 	{
 		buf = tail[o1:o2]
-		if b.ExecutionPayloadEnvelope == nil {
-			b.ExecutionPayloadEnvelope = new(ExecutionPayloadEnvelope)
+		if b.SilaPayloadEnvelope == nil {
+			b.SilaPayloadEnvelope = new(SilaPayloadEnvelope)
 		}
-		if err = b.ExecutionPayloadEnvelope.UnmarshalSSZ(buf); err != nil {
+		if err = b.SilaPayloadEnvelope.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -3457,11 +3457,11 @@ func (b *BeaconBlockContentsGloas) SizeSSZ() (size int) {
 	}
 	size += b.Block.SizeSSZ()
 
-	// Field (1) 'ExecutionPayloadEnvelope'
-	if b.ExecutionPayloadEnvelope == nil {
-		b.ExecutionPayloadEnvelope = new(ExecutionPayloadEnvelope)
+	// Field (1) 'SilaPayloadEnvelope'
+	if b.SilaPayloadEnvelope == nil {
+		b.SilaPayloadEnvelope = new(SilaPayloadEnvelope)
 	}
-	size += b.ExecutionPayloadEnvelope.SizeSSZ()
+	size += b.SilaPayloadEnvelope.SizeSSZ()
 
 	// Field (2) 'KzgProofs'
 	size += len(b.KzgProofs) * 48
@@ -3486,8 +3486,8 @@ func (b *BeaconBlockContentsGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) 
 		return
 	}
 
-	// Field (1) 'ExecutionPayloadEnvelope'
-	if err = b.ExecutionPayloadEnvelope.HashTreeRootWith(hh); err != nil {
+	// Field (1) 'SilaPayloadEnvelope'
+	if err = b.SilaPayloadEnvelope.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -3533,22 +3533,22 @@ func (b *BeaconBlockContentsGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) 
 	return
 }
 
-// MarshalSSZ ssz marshals the SignedExecutionPayloadEnvelopeContents object
-func (s *SignedExecutionPayloadEnvelopeContents) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SignedSilaPayloadEnvelopeContents object
+func (s *SignedSilaPayloadEnvelopeContents) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(s)
 }
 
-// MarshalSSZTo ssz marshals the SignedExecutionPayloadEnvelopeContents object to a target array
-func (s *SignedExecutionPayloadEnvelopeContents) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SignedSilaPayloadEnvelopeContents object to a target array
+func (s *SignedSilaPayloadEnvelopeContents) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(12)
 
-	// Offset (0) 'SignedExecutionPayloadEnvelope'
+	// Offset (0) 'SignedSilaPayloadEnvelope'
 	dst = ssz.WriteOffset(dst, offset)
-	if s.SignedExecutionPayloadEnvelope == nil {
-		s.SignedExecutionPayloadEnvelope = new(SignedExecutionPayloadEnvelope)
+	if s.SignedSilaPayloadEnvelope == nil {
+		s.SignedSilaPayloadEnvelope = new(SignedSilaPayloadEnvelope)
 	}
-	offset += s.SignedExecutionPayloadEnvelope.SizeSSZ()
+	offset += s.SignedSilaPayloadEnvelope.SizeSSZ()
 
 	// Offset (1) 'KzgProofs'
 	dst = ssz.WriteOffset(dst, offset)
@@ -3558,8 +3558,8 @@ func (s *SignedExecutionPayloadEnvelopeContents) MarshalSSZTo(buf []byte) (dst [
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(s.Blobs) * 131072
 
-	// Field (0) 'SignedExecutionPayloadEnvelope'
-	if dst, err = s.SignedExecutionPayloadEnvelope.MarshalSSZTo(dst); err != nil {
+	// Field (0) 'SignedSilaPayloadEnvelope'
+	if dst, err = s.SignedSilaPayloadEnvelope.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -3592,8 +3592,8 @@ func (s *SignedExecutionPayloadEnvelopeContents) MarshalSSZTo(buf []byte) (dst [
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the SignedExecutionPayloadEnvelopeContents object
-func (s *SignedExecutionPayloadEnvelopeContents) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SignedSilaPayloadEnvelopeContents object
+func (s *SignedSilaPayloadEnvelopeContents) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 12 {
@@ -3603,7 +3603,7 @@ func (s *SignedExecutionPayloadEnvelopeContents) UnmarshalSSZ(buf []byte) error 
 	tail := buf
 	var o0, o1, o2 uint64
 
-	// Offset (0) 'SignedExecutionPayloadEnvelope'
+	// Offset (0) 'SignedSilaPayloadEnvelope'
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
@@ -3622,13 +3622,13 @@ func (s *SignedExecutionPayloadEnvelopeContents) UnmarshalSSZ(buf []byte) error 
 		return ssz.ErrOffset
 	}
 
-	// Field (0) 'SignedExecutionPayloadEnvelope'
+	// Field (0) 'SignedSilaPayloadEnvelope'
 	{
 		buf = tail[o0:o1]
-		if s.SignedExecutionPayloadEnvelope == nil {
-			s.SignedExecutionPayloadEnvelope = new(SignedExecutionPayloadEnvelope)
+		if s.SignedSilaPayloadEnvelope == nil {
+			s.SignedSilaPayloadEnvelope = new(SignedSilaPayloadEnvelope)
 		}
-		if err = s.SignedExecutionPayloadEnvelope.UnmarshalSSZ(buf); err != nil {
+		if err = s.SignedSilaPayloadEnvelope.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -3667,15 +3667,15 @@ func (s *SignedExecutionPayloadEnvelopeContents) UnmarshalSSZ(buf []byte) error 
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the SignedExecutionPayloadEnvelopeContents object
-func (s *SignedExecutionPayloadEnvelopeContents) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SignedSilaPayloadEnvelopeContents object
+func (s *SignedSilaPayloadEnvelopeContents) SizeSSZ() (size int) {
 	size = 12
 
-	// Field (0) 'SignedExecutionPayloadEnvelope'
-	if s.SignedExecutionPayloadEnvelope == nil {
-		s.SignedExecutionPayloadEnvelope = new(SignedExecutionPayloadEnvelope)
+	// Field (0) 'SignedSilaPayloadEnvelope'
+	if s.SignedSilaPayloadEnvelope == nil {
+		s.SignedSilaPayloadEnvelope = new(SignedSilaPayloadEnvelope)
 	}
-	size += s.SignedExecutionPayloadEnvelope.SizeSSZ()
+	size += s.SignedSilaPayloadEnvelope.SizeSSZ()
 
 	// Field (1) 'KzgProofs'
 	size += len(s.KzgProofs) * 48
@@ -3686,17 +3686,17 @@ func (s *SignedExecutionPayloadEnvelopeContents) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the SignedExecutionPayloadEnvelopeContents object
-func (s *SignedExecutionPayloadEnvelopeContents) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SignedSilaPayloadEnvelopeContents object
+func (s *SignedSilaPayloadEnvelopeContents) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(s)
 }
 
-// HashTreeRootWith ssz hashes the SignedExecutionPayloadEnvelopeContents object with a hasher
-func (s *SignedExecutionPayloadEnvelopeContents) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SignedSilaPayloadEnvelopeContents object with a hasher
+func (s *SignedSilaPayloadEnvelopeContents) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
-	// Field (0) 'SignedExecutionPayloadEnvelope'
-	if err = s.SignedExecutionPayloadEnvelope.HashTreeRootWith(hh); err != nil {
+	// Field (0) 'SignedSilaPayloadEnvelope'
+	if err = s.SignedSilaPayloadEnvelope.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -4102,20 +4102,20 @@ func (d *DataColumnSidecarGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadEnvelope object
-func (e *ExecutionPayloadEnvelope) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadEnvelope object
+func (e *SilaPayloadEnvelope) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadEnvelope object to a target array
-func (e *ExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadEnvelope object to a target array
+func (e *SilaPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(80)
 
 	// Offset (0) 'Payload'
 	dst = ssz.WriteOffset(dst, offset)
 	if e.Payload == nil {
-		e.Payload = new(v1.ExecutionPayloadGloas)
+		e.Payload = new(v1.SilaPayloadGloas)
 	}
 	offset += e.Payload.SizeSSZ()
 
@@ -4156,8 +4156,8 @@ func (e *ExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err err
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadEnvelope object
-func (e *ExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadEnvelope object
+func (e *SilaPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 80 {
@@ -4200,7 +4200,7 @@ func (e *ExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:o1]
 		if e.Payload == nil {
-			e.Payload = new(v1.ExecutionPayloadGloas)
+			e.Payload = new(v1.SilaPayloadGloas)
 		}
 		if err = e.Payload.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -4220,13 +4220,13 @@ func (e *ExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadEnvelope object
-func (e *ExecutionPayloadEnvelope) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadEnvelope object
+func (e *SilaPayloadEnvelope) SizeSSZ() (size int) {
 	size = 80
 
 	// Field (0) 'Payload'
 	if e.Payload == nil {
-		e.Payload = new(v1.ExecutionPayloadGloas)
+		e.Payload = new(v1.SilaPayloadGloas)
 	}
 	size += e.Payload.SizeSSZ()
 
@@ -4239,13 +4239,13 @@ func (e *ExecutionPayloadEnvelope) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadEnvelope object
-func (e *ExecutionPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadEnvelope object
+func (e *SilaPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadEnvelope object with a hasher
-func (e *ExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadEnvelope object with a hasher
+func (e *SilaPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Payload'
@@ -4279,20 +4279,20 @@ func (e *ExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) 
 	return
 }
 
-// MarshalSSZ ssz marshals the SignedExecutionPayloadEnvelope object
-func (s *SignedExecutionPayloadEnvelope) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SignedSilaPayloadEnvelope object
+func (s *SignedSilaPayloadEnvelope) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(s)
 }
 
-// MarshalSSZTo ssz marshals the SignedExecutionPayloadEnvelope object to a target array
-func (s *SignedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SignedSilaPayloadEnvelope object to a target array
+func (s *SignedSilaPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(100)
 
 	// Offset (0) 'Message'
 	dst = ssz.WriteOffset(dst, offset)
 	if s.Message == nil {
-		s.Message = new(ExecutionPayloadEnvelope)
+		s.Message = new(SilaPayloadEnvelope)
 	}
 	offset += s.Message.SizeSSZ()
 
@@ -4311,8 +4311,8 @@ func (s *SignedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, e
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the SignedExecutionPayloadEnvelope object
-func (s *SignedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SignedSilaPayloadEnvelope object
+func (s *SignedSilaPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 100 {
@@ -4341,7 +4341,7 @@ func (s *SignedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:]
 		if s.Message == nil {
-			s.Message = new(ExecutionPayloadEnvelope)
+			s.Message = new(SilaPayloadEnvelope)
 		}
 		if err = s.Message.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -4350,26 +4350,26 @@ func (s *SignedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the SignedExecutionPayloadEnvelope object
-func (s *SignedExecutionPayloadEnvelope) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SignedSilaPayloadEnvelope object
+func (s *SignedSilaPayloadEnvelope) SizeSSZ() (size int) {
 	size = 100
 
 	// Field (0) 'Message'
 	if s.Message == nil {
-		s.Message = new(ExecutionPayloadEnvelope)
+		s.Message = new(SilaPayloadEnvelope)
 	}
 	size += s.Message.SizeSSZ()
 
 	return
 }
 
-// HashTreeRoot ssz hashes the SignedExecutionPayloadEnvelope object
-func (s *SignedExecutionPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SignedSilaPayloadEnvelope object
+func (s *SignedSilaPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(s)
 }
 
-// HashTreeRootWith ssz hashes the SignedExecutionPayloadEnvelope object with a hasher
-func (s *SignedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SignedSilaPayloadEnvelope object with a hasher
+func (s *SignedSilaPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Message'
@@ -4388,13 +4388,13 @@ func (s *SignedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err e
 	return
 }
 
-// MarshalSSZ ssz marshals the BlindedExecutionPayloadEnvelope object
-func (b *BlindedExecutionPayloadEnvelope) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the BlindedSilaPayloadEnvelope object
+func (b *BlindedSilaPayloadEnvelope) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(b)
 }
 
-// MarshalSSZTo ssz marshals the BlindedExecutionPayloadEnvelope object to a target array
-func (b *BlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the BlindedSilaPayloadEnvelope object to a target array
+func (b *BlindedSilaPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(148)
 
@@ -4447,8 +4447,8 @@ func (b *BlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, 
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the BlindedExecutionPayloadEnvelope object
-func (b *BlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the BlindedSilaPayloadEnvelope object
+func (b *BlindedSilaPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 148 {
@@ -4510,8 +4510,8 @@ func (b *BlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the BlindedExecutionPayloadEnvelope object
-func (b *BlindedExecutionPayloadEnvelope) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the BlindedSilaPayloadEnvelope object
+func (b *BlindedSilaPayloadEnvelope) SizeSSZ() (size int) {
 	size = 148
 
 	// Field (1) 'ExecutionRequests'
@@ -4523,13 +4523,13 @@ func (b *BlindedExecutionPayloadEnvelope) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the BlindedExecutionPayloadEnvelope object
-func (b *BlindedExecutionPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the BlindedSilaPayloadEnvelope object
+func (b *BlindedSilaPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(b)
 }
 
-// HashTreeRootWith ssz hashes the BlindedExecutionPayloadEnvelope object with a hasher
-func (b *BlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the BlindedSilaPayloadEnvelope object with a hasher
+func (b *BlindedSilaPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'BlockHash'
@@ -4575,20 +4575,20 @@ func (b *BlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err 
 	return
 }
 
-// MarshalSSZ ssz marshals the SignedBlindedExecutionPayloadEnvelope object
-func (s *SignedBlindedExecutionPayloadEnvelope) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SignedBlindedSilaPayloadEnvelope object
+func (s *SignedBlindedSilaPayloadEnvelope) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(s)
 }
 
-// MarshalSSZTo ssz marshals the SignedBlindedExecutionPayloadEnvelope object to a target array
-func (s *SignedBlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SignedBlindedSilaPayloadEnvelope object to a target array
+func (s *SignedBlindedSilaPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(100)
 
 	// Offset (0) 'Message'
 	dst = ssz.WriteOffset(dst, offset)
 	if s.Message == nil {
-		s.Message = new(BlindedExecutionPayloadEnvelope)
+		s.Message = new(BlindedSilaPayloadEnvelope)
 	}
 	offset += s.Message.SizeSSZ()
 
@@ -4607,8 +4607,8 @@ func (s *SignedBlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the SignedBlindedExecutionPayloadEnvelope object
-func (s *SignedBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SignedBlindedSilaPayloadEnvelope object
+func (s *SignedBlindedSilaPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 100 {
@@ -4637,7 +4637,7 @@ func (s *SignedBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:]
 		if s.Message == nil {
-			s.Message = new(BlindedExecutionPayloadEnvelope)
+			s.Message = new(BlindedSilaPayloadEnvelope)
 		}
 		if err = s.Message.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -4646,26 +4646,26 @@ func (s *SignedBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the SignedBlindedExecutionPayloadEnvelope object
-func (s *SignedBlindedExecutionPayloadEnvelope) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SignedBlindedSilaPayloadEnvelope object
+func (s *SignedBlindedSilaPayloadEnvelope) SizeSSZ() (size int) {
 	size = 100
 
 	// Field (0) 'Message'
 	if s.Message == nil {
-		s.Message = new(BlindedExecutionPayloadEnvelope)
+		s.Message = new(BlindedSilaPayloadEnvelope)
 	}
 	size += s.Message.SizeSSZ()
 
 	return
 }
 
-// HashTreeRoot ssz hashes the SignedBlindedExecutionPayloadEnvelope object
-func (s *SignedBlindedExecutionPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SignedBlindedSilaPayloadEnvelope object
+func (s *SignedBlindedSilaPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(s)
 }
 
-// HashTreeRootWith ssz hashes the SignedBlindedExecutionPayloadEnvelope object with a hasher
-func (s *SignedBlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SignedBlindedSilaPayloadEnvelope object with a hasher
+func (s *SignedBlindedSilaPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Message'
@@ -4684,13 +4684,13 @@ func (s *SignedBlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher)
 	return
 }
 
-// MarshalSSZ ssz marshals the WireBlindedExecutionPayloadEnvelope object
-func (w *WireBlindedExecutionPayloadEnvelope) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the WireBlindedSilaPayloadEnvelope object
+func (w *WireBlindedSilaPayloadEnvelope) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(w)
 }
 
-// MarshalSSZTo ssz marshals the WireBlindedExecutionPayloadEnvelope object to a target array
-func (w *WireBlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the WireBlindedSilaPayloadEnvelope object to a target array
+func (w *WireBlindedSilaPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(108)
 
@@ -4733,8 +4733,8 @@ func (w *WireBlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []by
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the WireBlindedExecutionPayloadEnvelope object
-func (w *WireBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the WireBlindedSilaPayloadEnvelope object
+func (w *WireBlindedSilaPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 108 {
@@ -4787,8 +4787,8 @@ func (w *WireBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the WireBlindedExecutionPayloadEnvelope object
-func (w *WireBlindedExecutionPayloadEnvelope) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the WireBlindedSilaPayloadEnvelope object
+func (w *WireBlindedSilaPayloadEnvelope) SizeSSZ() (size int) {
 	size = 108
 
 	// Field (1) 'ExecutionRequests'
@@ -4800,13 +4800,13 @@ func (w *WireBlindedExecutionPayloadEnvelope) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the WireBlindedExecutionPayloadEnvelope object
-func (w *WireBlindedExecutionPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the WireBlindedSilaPayloadEnvelope object
+func (w *WireBlindedSilaPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(w)
 }
 
-// HashTreeRootWith ssz hashes the WireBlindedExecutionPayloadEnvelope object with a hasher
-func (w *WireBlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the WireBlindedSilaPayloadEnvelope object with a hasher
+func (w *WireBlindedSilaPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'PayloadRoot'
@@ -4842,20 +4842,20 @@ func (w *WireBlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (
 	return
 }
 
-// MarshalSSZ ssz marshals the SignedWireBlindedExecutionPayloadEnvelope object
-func (s *SignedWireBlindedExecutionPayloadEnvelope) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SignedWireBlindedSilaPayloadEnvelope object
+func (s *SignedWireBlindedSilaPayloadEnvelope) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(s)
 }
 
-// MarshalSSZTo ssz marshals the SignedWireBlindedExecutionPayloadEnvelope object to a target array
-func (s *SignedWireBlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SignedWireBlindedSilaPayloadEnvelope object to a target array
+func (s *SignedWireBlindedSilaPayloadEnvelope) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(100)
 
 	// Offset (0) 'Message'
 	dst = ssz.WriteOffset(dst, offset)
 	if s.Message == nil {
-		s.Message = new(WireBlindedExecutionPayloadEnvelope)
+		s.Message = new(WireBlindedSilaPayloadEnvelope)
 	}
 	offset += s.Message.SizeSSZ()
 
@@ -4874,8 +4874,8 @@ func (s *SignedWireBlindedExecutionPayloadEnvelope) MarshalSSZTo(buf []byte) (ds
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the SignedWireBlindedExecutionPayloadEnvelope object
-func (s *SignedWireBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SignedWireBlindedSilaPayloadEnvelope object
+func (s *SignedWireBlindedSilaPayloadEnvelope) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 100 {
@@ -4904,7 +4904,7 @@ func (s *SignedWireBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) err
 	{
 		buf = tail[o0:]
 		if s.Message == nil {
-			s.Message = new(WireBlindedExecutionPayloadEnvelope)
+			s.Message = new(WireBlindedSilaPayloadEnvelope)
 		}
 		if err = s.Message.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -4913,26 +4913,26 @@ func (s *SignedWireBlindedExecutionPayloadEnvelope) UnmarshalSSZ(buf []byte) err
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the SignedWireBlindedExecutionPayloadEnvelope object
-func (s *SignedWireBlindedExecutionPayloadEnvelope) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SignedWireBlindedSilaPayloadEnvelope object
+func (s *SignedWireBlindedSilaPayloadEnvelope) SizeSSZ() (size int) {
 	size = 100
 
 	// Field (0) 'Message'
 	if s.Message == nil {
-		s.Message = new(WireBlindedExecutionPayloadEnvelope)
+		s.Message = new(WireBlindedSilaPayloadEnvelope)
 	}
 	size += s.Message.SizeSSZ()
 
 	return
 }
 
-// HashTreeRoot ssz hashes the SignedWireBlindedExecutionPayloadEnvelope object
-func (s *SignedWireBlindedExecutionPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SignedWireBlindedSilaPayloadEnvelope object
+func (s *SignedWireBlindedSilaPayloadEnvelope) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(s)
 }
 
-// HashTreeRootWith ssz hashes the SignedWireBlindedExecutionPayloadEnvelope object with a hasher
-func (s *SignedWireBlindedExecutionPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SignedWireBlindedSilaPayloadEnvelope object with a hasher
+func (s *SignedWireBlindedSilaPayloadEnvelope) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Message'

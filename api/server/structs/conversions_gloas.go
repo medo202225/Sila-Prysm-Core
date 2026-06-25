@@ -14,7 +14,7 @@ import (
 	"github.com/sila-chain/Sila/common/hexutil"
 )
 
-func ROExecutionPayloadBidFromConsensus(b interfaces.ROExecutionPayloadBid) *ExecutionPayloadBid {
+func ROSilaPayloadBidFromConsensus(b interfaces.ROSilaPayloadBid) *SilaPayloadBid {
 	if b == nil {
 		return nil
 	}
@@ -30,7 +30,7 @@ func ROExecutionPayloadBidFromConsensus(b interfaces.ROExecutionPayloadBid) *Exe
 		blobKzgCommitments = append(blobKzgCommitments, hexutil.Encode(commitment))
 	}
 	erRoot := b.ExecutionRequestsRoot()
-	return &ExecutionPayloadBid{
+	return &SilaPayloadBid{
 		ParentBlockHash:       hexutil.Encode(pbh[:]),
 		ParentBlockRoot:       hexutil.Encode(pbr[:]),
 		BlockHash:             hexutil.Encode(bh[:]),

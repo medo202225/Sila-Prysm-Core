@@ -36,7 +36,7 @@ var (
 	)
 	errParseCount = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "execution_parse_error_count",
-		Help: "The number of errors that occurred while parsing execution payload",
+		Help: "The number of errors that occurred while parsing sila payload",
 	})
 	errInvalidRequestCount = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "execution_invalid_request_count",
@@ -70,12 +70,12 @@ var (
 		Name: "execution_server_error_count",
 		Help: "The number of errors that occurred due to server error",
 	})
-	reconstructedExecutionPayloadCount = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "reconstructed_execution_payload_count",
-		Help: "Count the number of execution payloads that are reconstructed using JSON-RPC from payload headers",
+	reconstructedSilaPayloadCount = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "reconstructed_sila_payload_count",
+		Help: "Count the number of sila payloads that are reconstructed using JSON-RPC from payload headers",
 	})
 	errRequestTooLargeCount = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "execution_payload_bodies_count",
+		Name: "sila_payload_bodies_count",
 		Help: "The number of requested payload bodies is too large",
 	})
 )

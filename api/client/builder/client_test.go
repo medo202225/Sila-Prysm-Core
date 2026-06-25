@@ -616,7 +616,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, api.JsonMediaType, r.Header.Get("Accept"))
 				return &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(bytes.NewBufferString(testExampleExecutionPayload)),
+					Body:       io.NopCloser(bytes.NewBufferString(testExampleSilaPayload)),
 					Request:    r.Clone(ctx),
 				}, nil
 			}),
@@ -642,9 +642,9 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, "bellatrix", r.Header.Get(api.VersionHeader))
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Content-Type"))
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Accept"))
-				epr := &ExecutionPayloadResponse{}
-				require.NoError(t, json.Unmarshal([]byte(testExampleExecutionPayload), epr))
-				ep := &structs.ExecutionPayload{}
+				epr := &SilaPayloadResponse{}
+				require.NoError(t, json.Unmarshal([]byte(testExampleSilaPayload), epr))
+				ep := &structs.SilaPayload{}
 				require.NoError(t, json.Unmarshal(epr.Data, ep))
 				pro, err := ep.ToConsensus()
 				require.NoError(t, err)
@@ -684,7 +684,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, api.JsonMediaType, r.Header.Get("Accept"))
 				return &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(bytes.NewBufferString(testExampleExecutionPayloadCapella)),
+					Body:       io.NopCloser(bytes.NewBufferString(testExampleSilaPayloadCapella)),
 					Request:    r.Clone(ctx),
 				}, nil
 			}),
@@ -712,9 +712,9 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, "capella", r.Header.Get(api.VersionHeader))
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Content-Type"))
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Accept"))
-				epr := &ExecutionPayloadResponse{}
-				require.NoError(t, json.Unmarshal([]byte(testExampleExecutionPayloadCapella), epr))
-				ep := &structs.ExecutionPayloadCapella{}
+				epr := &SilaPayloadResponse{}
+				require.NoError(t, json.Unmarshal([]byte(testExampleSilaPayloadCapella), epr))
+				ep := &structs.SilaPayloadCapella{}
 				require.NoError(t, json.Unmarshal(epr.Data, ep))
 				pro, err := ep.ToConsensus()
 				require.NoError(t, err)
@@ -763,7 +763,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.DeepEqual(t, block, test)
 				return &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(bytes.NewBufferString(testExampleExecutionPayloadDeneb)),
+					Body:       io.NopCloser(bytes.NewBufferString(testExampleSilaPayloadDeneb)),
 					Request:    r.Clone(ctx),
 				}, nil
 			}),
@@ -796,10 +796,10 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Content-Type"))
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Accept"))
 				epr := &ExecPayloadResponseDeneb{}
-				require.NoError(t, json.Unmarshal([]byte(testExampleExecutionPayloadDeneb), epr))
+				require.NoError(t, json.Unmarshal([]byte(testExampleSilaPayloadDeneb), epr))
 				pro, blob, err := epr.ToProto()
 				require.NoError(t, err)
-				combined := &v1.ExecutionPayloadDenebAndBlobsBundle{
+				combined := &v1.SilaPayloadDenebAndBlobsBundle{
 					Payload:     pro,
 					BlobsBundle: blob,
 				}
@@ -850,7 +850,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.DeepEqual(t, block, test)
 				return &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(bytes.NewBufferString(testExampleExecutionPayloadDeneb)),
+					Body:       io.NopCloser(bytes.NewBufferString(testExampleSilaPayloadDeneb)),
 					Request:    r.Clone(ctx),
 				}, nil
 			}),
@@ -883,10 +883,10 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Content-Type"))
 				require.Equal(t, api.OctetStreamMediaType, r.Header.Get("Accept"))
 				epr := &ExecPayloadResponseDeneb{}
-				require.NoError(t, json.Unmarshal([]byte(testExampleExecutionPayloadDeneb), epr))
+				require.NoError(t, json.Unmarshal([]byte(testExampleSilaPayloadDeneb), epr))
 				pro, blob, err := epr.ToProto()
 				require.NoError(t, err)
-				combined := &v1.ExecutionPayloadDenebAndBlobsBundle{
+				combined := &v1.SilaPayloadDenebAndBlobsBundle{
 					Payload:     pro,
 					BlobsBundle: blob,
 				}
@@ -927,7 +927,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 				require.Equal(t, postBlindedBeaconBlockPath, r.URL.Path)
 				return &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(bytes.NewBufferString(testExampleExecutionPayloadCapella)), // send a Capella payload
+					Body:       io.NopCloser(bytes.NewBufferString(testExampleSilaPayloadCapella)), // send a Capella payload
 					Request:    r.Clone(ctx),
 				}, nil
 			}),
@@ -942,7 +942,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 		require.ErrorIs(t, err, errResponseVersionMismatch)
 	})
 	t.Run("not blinded", func(t *testing.T) {
-		sbb, err := blocks.NewSignedBeaconBlock(&eth.SignedBeaconBlockBellatrix{Block: &eth.BeaconBlockBellatrix{Body: &eth.BeaconBlockBodyBellatrix{ExecutionPayload: &v1.ExecutionPayload{}}}})
+		sbb, err := blocks.NewSignedBeaconBlock(&eth.SignedBeaconBlockBellatrix{Block: &eth.BeaconBlockBellatrix{Body: &eth.BeaconBlockBodyBellatrix{SilaPayload: &v1.SilaPayload{}}}})
 		require.NoError(t, err)
 		_, _, err = (&Client{}).SubmitBlindedBlock(ctx, sbb)
 		require.ErrorIs(t, err, errNotBlinded)
@@ -1075,7 +1075,7 @@ func testSignedBlindedBeaconBlockBellatrix(t *testing.T) *eth.SignedBlindedBeaco
 					SyncCommitteeSignature: make([]byte, 96),
 					SyncCommitteeBits:      make(bitfield.Bitvector512, 64),
 				},
-				ExecutionPayloadHeader: &v1.ExecutionPayloadHeader{
+				SilaPayloadHeader: &v1.SilaPayloadHeader{
 					ParentHash:       ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 					FeeRecipient:     ezDecode(t, "0xabcf8e0d4e9587369b2301d0790347320302cc09"),
 					StateRoot:        ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
@@ -1223,7 +1223,7 @@ func testSignedBlindedBeaconBlockCapella(t *testing.T) *eth.SignedBlindedBeaconB
 					SyncCommitteeSignature: make([]byte, 96),
 					SyncCommitteeBits:      make(bitfield.Bitvector512, 64),
 				},
-				ExecutionPayloadHeader: &v1.ExecutionPayloadHeaderCapella{
+				SilaPayloadHeader: &v1.SilaPayloadHeaderCapella{
 					ParentHash:       ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 					FeeRecipient:     ezDecode(t, "0xabcf8e0d4e9587369b2301d0790347320302cc09"),
 					StateRoot:        ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
@@ -1376,7 +1376,7 @@ func testSignedBlindedBeaconBlockDeneb(t *testing.T) *eth.SignedBlindedBeaconBlo
 					SyncCommitteeSignature: make([]byte, 96),
 					SyncCommitteeBits:      ezDecode(t, "0x6451e9f951ebf05edc01de67e593484b672877054f055903ff0df1a1a945cf30ca26bb4d4b154f94a1bc776bcf5d0efb3603e1f9b8ee2499ccdcfe2a18cef458"),
 				},
-				ExecutionPayloadHeader: &v1.ExecutionPayloadHeaderDeneb{
+				SilaPayloadHeader: &v1.SilaPayloadHeaderDeneb{
 					ParentHash:       ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 					FeeRecipient:     ezDecode(t, "0xabcf8e0d4e9587369b2301d0790347320302cc09"),
 					StateRoot:        ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
@@ -1533,7 +1533,7 @@ func testSignedBlindedBeaconBlockElectra(t *testing.T) *eth.SignedBlindedBeaconB
 					SyncCommitteeBits:      ezDecode(t, "0x6451e9f951ebf05edc01de67e593484b672877054f055903ff0df1a1a945cf30ca26bb4d4b154f94a1bc776bcf5d0efb3603e1f9b8ee2499ccdcfe2a18cef458"),
 				},
 				ExecutionRequests: &v1.ExecutionRequests{},
-				ExecutionPayloadHeader: &v1.ExecutionPayloadHeaderDeneb{
+				SilaPayloadHeader: &v1.SilaPayloadHeaderDeneb{
 					ParentHash:       ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 					FeeRecipient:     ezDecode(t, "0xabcf8e0d4e9587369b2301d0790347320302cc09"),
 					StateRoot:        ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
@@ -1652,7 +1652,7 @@ func TestRequestLogger(t *testing.T) {
 			require.Equal(t, getStatus, r.URL.Path)
 			return &http.Response{
 				StatusCode: http.StatusOK,
-				Body:       io.NopCloser(bytes.NewBufferString(testExampleExecutionPayload)),
+				Body:       io.NopCloser(bytes.NewBufferString(testExampleSilaPayload)),
 				Request:    r.Clone(ctx),
 			}, nil
 		}),
@@ -1717,7 +1717,7 @@ func TestParseBlindedBlockResponseSSZ_WithBlobsBundleV2(t *testing.T) {
 	c := &Client{sszEnabled: true}
 
 	// Create test payload
-	payload := &v1.ExecutionPayloadDeneb{
+	payload := &v1.SilaPayloadDeneb{
 		ParentHash:    make([]byte, 32),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -1744,9 +1744,9 @@ func TestParseBlindedBlockResponseSSZ_WithBlobsBundleV2(t *testing.T) {
 		Blobs:          [][]byte{make([]byte, 131072), make([]byte, 131072)},
 	}
 
-	// Test Fulu version (should use ExecutionPayloadDenebAndBlobsBundleV2)
+	// Test Fulu version (should use SilaPayloadDenebAndBlobsBundleV2)
 	t.Run("Fulu version with BlobsBundleV2", func(t *testing.T) {
-		payloadAndBlobsV2 := &v1.ExecutionPayloadDenebAndBlobsBundleV2{
+		payloadAndBlobsV2 := &v1.SilaPayloadDenebAndBlobsBundleV2{
 			Payload:     payload,
 			BlobsBundle: bundleV2,
 		}
@@ -1775,7 +1775,7 @@ func TestParseBlindedBlockResponseSSZ_WithBlobsBundleV2(t *testing.T) {
 			Blobs:          bundleV2.Blobs,
 		}
 
-		payloadAndBlobs := &v1.ExecutionPayloadDenebAndBlobsBundle{
+		payloadAndBlobs := &v1.SilaPayloadDenebAndBlobsBundle{
 			Payload:     payload,
 			BlobsBundle: regularBundle,
 		}

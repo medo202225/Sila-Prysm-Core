@@ -52,7 +52,7 @@ type BlockProcessor interface {
 
 // PayloadProcessor processes a payload envelope
 type PayloadProcessor interface {
-	InsertPayload(interfaces.ROExecutionPayloadEnvelope) error
+	InsertPayload(interfaces.ROSilaPayloadEnvelope) error
 }
 
 // AttestationProcessor processes the attestation that's used for accounting fork choice.

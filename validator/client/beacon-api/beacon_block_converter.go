@@ -217,78 +217,78 @@ func (c beaconApiBeaconBlockConverter) ConvertRESTBellatrixBlockToProto(block *s
 		return nil, errors.Wrap(err, "failed to get the altair fields of the bellatrix block")
 	}
 
-	if block.Body.ExecutionPayload == nil {
-		return nil, errors.New("execution payload is nil")
+	if block.Body.SilaPayload == nil {
+		return nil, errors.New("sila payload is nil")
 	}
 
-	parentHash, err := hexutil.Decode(block.Body.ExecutionPayload.ParentHash)
+	parentHash, err := hexutil.Decode(block.Body.SilaPayload.ParentHash)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload parent hash `%s`", block.Body.ExecutionPayload.ParentHash)
+		return nil, errors.Wrapf(err, "failed to decode sila payload parent hash `%s`", block.Body.SilaPayload.ParentHash)
 	}
 
-	feeRecipient, err := hexutil.Decode(block.Body.ExecutionPayload.FeeRecipient)
+	feeRecipient, err := hexutil.Decode(block.Body.SilaPayload.FeeRecipient)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload fee recipient `%s`", block.Body.ExecutionPayload.FeeRecipient)
+		return nil, errors.Wrapf(err, "failed to decode sila payload fee recipient `%s`", block.Body.SilaPayload.FeeRecipient)
 	}
 
-	stateRoot, err := hexutil.Decode(block.Body.ExecutionPayload.StateRoot)
+	stateRoot, err := hexutil.Decode(block.Body.SilaPayload.StateRoot)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload state root `%s`", block.Body.ExecutionPayload.StateRoot)
+		return nil, errors.Wrapf(err, "failed to decode sila payload state root `%s`", block.Body.SilaPayload.StateRoot)
 	}
 
-	receiptsRoot, err := hexutil.Decode(block.Body.ExecutionPayload.ReceiptsRoot)
+	receiptsRoot, err := hexutil.Decode(block.Body.SilaPayload.ReceiptsRoot)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload receipts root `%s`", block.Body.ExecutionPayload.ReceiptsRoot)
+		return nil, errors.Wrapf(err, "failed to decode sila payload receipts root `%s`", block.Body.SilaPayload.ReceiptsRoot)
 	}
 
-	logsBloom, err := hexutil.Decode(block.Body.ExecutionPayload.LogsBloom)
+	logsBloom, err := hexutil.Decode(block.Body.SilaPayload.LogsBloom)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload logs bloom `%s`", block.Body.ExecutionPayload.LogsBloom)
+		return nil, errors.Wrapf(err, "failed to decode sila payload logs bloom `%s`", block.Body.SilaPayload.LogsBloom)
 	}
 
-	prevRandao, err := hexutil.Decode(block.Body.ExecutionPayload.PrevRandao)
+	prevRandao, err := hexutil.Decode(block.Body.SilaPayload.PrevRandao)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload prev randao `%s`", block.Body.ExecutionPayload.PrevRandao)
+		return nil, errors.Wrapf(err, "failed to decode sila payload prev randao `%s`", block.Body.SilaPayload.PrevRandao)
 	}
 
-	blockNumber, err := strconv.ParseUint(block.Body.ExecutionPayload.BlockNumber, 10, 64)
+	blockNumber, err := strconv.ParseUint(block.Body.SilaPayload.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse execution payload block number `%s`", block.Body.ExecutionPayload.BlockNumber)
+		return nil, errors.Wrapf(err, "failed to parse sila payload block number `%s`", block.Body.SilaPayload.BlockNumber)
 	}
 
-	gasLimit, err := strconv.ParseUint(block.Body.ExecutionPayload.GasLimit, 10, 64)
+	gasLimit, err := strconv.ParseUint(block.Body.SilaPayload.GasLimit, 10, 64)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse execution payload gas limit `%s`", block.Body.ExecutionPayload.GasLimit)
+		return nil, errors.Wrapf(err, "failed to parse sila payload gas limit `%s`", block.Body.SilaPayload.GasLimit)
 	}
 
-	gasUsed, err := strconv.ParseUint(block.Body.ExecutionPayload.GasUsed, 10, 64)
+	gasUsed, err := strconv.ParseUint(block.Body.SilaPayload.GasUsed, 10, 64)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse execution payload gas used `%s`", block.Body.ExecutionPayload.GasUsed)
+		return nil, errors.Wrapf(err, "failed to parse sila payload gas used `%s`", block.Body.SilaPayload.GasUsed)
 	}
 
-	timestamp, err := strconv.ParseUint(block.Body.ExecutionPayload.Timestamp, 10, 64)
+	timestamp, err := strconv.ParseUint(block.Body.SilaPayload.Timestamp, 10, 64)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse execution payload timestamp `%s`", block.Body.ExecutionPayload.Timestamp)
+		return nil, errors.Wrapf(err, "failed to parse sila payload timestamp `%s`", block.Body.SilaPayload.Timestamp)
 	}
 
-	extraData, err := hexutil.Decode(block.Body.ExecutionPayload.ExtraData)
+	extraData, err := hexutil.Decode(block.Body.SilaPayload.ExtraData)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload extra data `%s`", block.Body.ExecutionPayload.ExtraData)
+		return nil, errors.Wrapf(err, "failed to decode sila payload extra data `%s`", block.Body.SilaPayload.ExtraData)
 	}
 
 	baseFeePerGas := new(big.Int)
-	if _, ok := baseFeePerGas.SetString(block.Body.ExecutionPayload.BaseFeePerGas, 10); !ok {
-		return nil, errors.Errorf("failed to parse execution payload base fee per gas `%s`", block.Body.ExecutionPayload.BaseFeePerGas)
+	if _, ok := baseFeePerGas.SetString(block.Body.SilaPayload.BaseFeePerGas, 10); !ok {
+		return nil, errors.Errorf("failed to parse sila payload base fee per gas `%s`", block.Body.SilaPayload.BaseFeePerGas)
 	}
 
-	blockHash, err := hexutil.Decode(block.Body.ExecutionPayload.BlockHash)
+	blockHash, err := hexutil.Decode(block.Body.SilaPayload.BlockHash)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to decode execution payload block hash `%s`", block.Body.ExecutionPayload.BlockHash)
+		return nil, errors.Wrapf(err, "failed to decode sila payload block hash `%s`", block.Body.SilaPayload.BlockHash)
 	}
 
-	transactions, err := convertTransactionsToProto(block.Body.ExecutionPayload.Transactions)
+	transactions, err := convertTransactionsToProto(block.Body.SilaPayload.Transactions)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to get execution payload transactions")
+		return nil, errors.Wrap(err, "failed to get sila payload transactions")
 	}
 
 	return &silapb.BeaconBlockBellatrix{
@@ -306,7 +306,7 @@ func (c beaconApiBeaconBlockConverter) ConvertRESTBellatrixBlockToProto(block *s
 			Deposits:          altairBlock.Body.Deposits,
 			VoluntaryExits:    altairBlock.Body.VoluntaryExits,
 			SyncAggregate:     altairBlock.Body.SyncAggregate,
-			ExecutionPayload: &enginev1.ExecutionPayload{
+			SilaPayload: &enginev1.SilaPayload{
 				ParentHash:    parentHash,
 				FeeRecipient:  feeRecipient,
 				StateRoot:     stateRoot,
@@ -332,8 +332,8 @@ func (c beaconApiBeaconBlockConverter) ConvertRESTCapellaBlockToProto(block *str
 		return nil, errors.New("block body is nil")
 	}
 
-	if block.Body.ExecutionPayload == nil {
-		return nil, errors.New("execution payload is nil")
+	if block.Body.SilaPayload == nil {
+		return nil, errors.New("sila payload is nil")
 	}
 
 	// Call convertRESTBellatrixBlockToProto to set the bellatrix fields because all the error handling and the heavy
@@ -353,21 +353,21 @@ func (c beaconApiBeaconBlockConverter) ConvertRESTCapellaBlockToProto(block *str
 			Deposits:          block.Body.Deposits,
 			VoluntaryExits:    block.Body.VoluntaryExits,
 			SyncAggregate:     block.Body.SyncAggregate,
-			ExecutionPayload: &structs.ExecutionPayload{
-				ParentHash:    block.Body.ExecutionPayload.ParentHash,
-				FeeRecipient:  block.Body.ExecutionPayload.FeeRecipient,
-				StateRoot:     block.Body.ExecutionPayload.StateRoot,
-				ReceiptsRoot:  block.Body.ExecutionPayload.ReceiptsRoot,
-				LogsBloom:     block.Body.ExecutionPayload.LogsBloom,
-				PrevRandao:    block.Body.ExecutionPayload.PrevRandao,
-				BlockNumber:   block.Body.ExecutionPayload.BlockNumber,
-				GasLimit:      block.Body.ExecutionPayload.GasLimit,
-				GasUsed:       block.Body.ExecutionPayload.GasUsed,
-				Timestamp:     block.Body.ExecutionPayload.Timestamp,
-				ExtraData:     block.Body.ExecutionPayload.ExtraData,
-				BaseFeePerGas: block.Body.ExecutionPayload.BaseFeePerGas,
-				BlockHash:     block.Body.ExecutionPayload.BlockHash,
-				Transactions:  block.Body.ExecutionPayload.Transactions,
+			SilaPayload: &structs.SilaPayload{
+				ParentHash:    block.Body.SilaPayload.ParentHash,
+				FeeRecipient:  block.Body.SilaPayload.FeeRecipient,
+				StateRoot:     block.Body.SilaPayload.StateRoot,
+				ReceiptsRoot:  block.Body.SilaPayload.ReceiptsRoot,
+				LogsBloom:     block.Body.SilaPayload.LogsBloom,
+				PrevRandao:    block.Body.SilaPayload.PrevRandao,
+				BlockNumber:   block.Body.SilaPayload.BlockNumber,
+				GasLimit:      block.Body.SilaPayload.GasLimit,
+				GasUsed:       block.Body.SilaPayload.GasUsed,
+				Timestamp:     block.Body.SilaPayload.Timestamp,
+				ExtraData:     block.Body.SilaPayload.ExtraData,
+				BaseFeePerGas: block.Body.SilaPayload.BaseFeePerGas,
+				BlockHash:     block.Body.SilaPayload.BlockHash,
+				Transactions:  block.Body.SilaPayload.Transactions,
 			},
 		},
 	})
@@ -375,7 +375,7 @@ func (c beaconApiBeaconBlockConverter) ConvertRESTCapellaBlockToProto(block *str
 		return nil, errors.Wrap(err, "failed to get the bellatrix fields of the capella block")
 	}
 
-	withdrawals, err := convertWithdrawalsToProto(block.Body.ExecutionPayload.Withdrawals)
+	withdrawals, err := convertWithdrawalsToProto(block.Body.SilaPayload.Withdrawals)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get withdrawals")
 	}
@@ -400,21 +400,21 @@ func (c beaconApiBeaconBlockConverter) ConvertRESTCapellaBlockToProto(block *str
 			Deposits:          bellatrixBlock.Body.Deposits,
 			VoluntaryExits:    bellatrixBlock.Body.VoluntaryExits,
 			SyncAggregate:     bellatrixBlock.Body.SyncAggregate,
-			ExecutionPayload: &enginev1.ExecutionPayloadCapella{
-				ParentHash:    bellatrixBlock.Body.ExecutionPayload.ParentHash,
-				FeeRecipient:  bellatrixBlock.Body.ExecutionPayload.FeeRecipient,
-				StateRoot:     bellatrixBlock.Body.ExecutionPayload.StateRoot,
-				ReceiptsRoot:  bellatrixBlock.Body.ExecutionPayload.ReceiptsRoot,
-				LogsBloom:     bellatrixBlock.Body.ExecutionPayload.LogsBloom,
-				PrevRandao:    bellatrixBlock.Body.ExecutionPayload.PrevRandao,
-				BlockNumber:   bellatrixBlock.Body.ExecutionPayload.BlockNumber,
-				GasLimit:      bellatrixBlock.Body.ExecutionPayload.GasLimit,
-				GasUsed:       bellatrixBlock.Body.ExecutionPayload.GasUsed,
-				Timestamp:     bellatrixBlock.Body.ExecutionPayload.Timestamp,
-				ExtraData:     bellatrixBlock.Body.ExecutionPayload.ExtraData,
-				BaseFeePerGas: bellatrixBlock.Body.ExecutionPayload.BaseFeePerGas,
-				BlockHash:     bellatrixBlock.Body.ExecutionPayload.BlockHash,
-				Transactions:  bellatrixBlock.Body.ExecutionPayload.Transactions,
+			SilaPayload: &enginev1.SilaPayloadCapella{
+				ParentHash:    bellatrixBlock.Body.SilaPayload.ParentHash,
+				FeeRecipient:  bellatrixBlock.Body.SilaPayload.FeeRecipient,
+				StateRoot:     bellatrixBlock.Body.SilaPayload.StateRoot,
+				ReceiptsRoot:  bellatrixBlock.Body.SilaPayload.ReceiptsRoot,
+				LogsBloom:     bellatrixBlock.Body.SilaPayload.LogsBloom,
+				PrevRandao:    bellatrixBlock.Body.SilaPayload.PrevRandao,
+				BlockNumber:   bellatrixBlock.Body.SilaPayload.BlockNumber,
+				GasLimit:      bellatrixBlock.Body.SilaPayload.GasLimit,
+				GasUsed:       bellatrixBlock.Body.SilaPayload.GasUsed,
+				Timestamp:     bellatrixBlock.Body.SilaPayload.Timestamp,
+				ExtraData:     bellatrixBlock.Body.SilaPayload.ExtraData,
+				BaseFeePerGas: bellatrixBlock.Body.SilaPayload.BaseFeePerGas,
+				BlockHash:     bellatrixBlock.Body.SilaPayload.BlockHash,
+				Transactions:  bellatrixBlock.Body.SilaPayload.Transactions,
 				Withdrawals:   withdrawals,
 			},
 			BlsToExecutionChanges: blsToExecutionChanges,

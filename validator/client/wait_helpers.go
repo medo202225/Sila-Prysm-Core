@@ -46,7 +46,7 @@ func (v *validator) waitUntilSlotComponent(ctx context.Context, slot primitives.
 	}
 }
 
-// waitForPayloadAvailableOrDeadline blocks until the execution_payload_available
+// waitForPayloadAvailableOrDeadline blocks until the sila_payload_available
 // event for slot is received or the payload attestation deadline is reached,
 // whichever comes first.
 func (v *validator) waitForPayloadAvailableOrDeadline(ctx context.Context, slot primitives.Slot) {

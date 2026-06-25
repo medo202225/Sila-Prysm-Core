@@ -22,7 +22,7 @@ import (
 // Bellatrix
 // ----------------------------------------------------------------------------
 
-func ExecutionPayloadFromConsensus(payload *enginev1.ExecutionPayload) (*ExecutionPayload, error) {
+func SilaPayloadFromConsensus(payload *enginev1.SilaPayload) (*SilaPayload, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
@@ -32,7 +32,7 @@ func ExecutionPayloadFromConsensus(payload *enginev1.ExecutionPayload) (*Executi
 		transactions[i] = hexutil.Encode(tx)
 	}
 
-	return &ExecutionPayload{
+	return &SilaPayload{
 		ParentHash:    hexutil.Encode(payload.ParentHash),
 		FeeRecipient:  hexutil.Encode(payload.FeeRecipient),
 		StateRoot:     hexutil.Encode(payload.StateRoot),
@@ -50,74 +50,74 @@ func ExecutionPayloadFromConsensus(payload *enginev1.ExecutionPayload) (*Executi
 	}, nil
 }
 
-func (e *ExecutionPayload) ToConsensus() (*enginev1.ExecutionPayload, error) {
+func (e *SilaPayload) ToConsensus() (*enginev1.SilaPayload, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayload")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayload")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ParentHash")
+		return nil, server.NewDecodeError(err, "SilaPayload.ParentHash")
 	}
 	payloadFeeRecipient, err := bytesutil.DecodeHexWithLength(e.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.FeeRecipient")
+		return nil, server.NewDecodeError(err, "SilaPayload.FeeRecipient")
 	}
 	payloadStateRoot, err := bytesutil.DecodeHexWithLength(e.StateRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.StateRoot")
+		return nil, server.NewDecodeError(err, "SilaPayload.StateRoot")
 	}
 	payloadReceiptsRoot, err := bytesutil.DecodeHexWithLength(e.ReceiptsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ReceiptsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayload.ReceiptsRoot")
 	}
 	payloadLogsBloom, err := bytesutil.DecodeHexWithLength(e.LogsBloom, fieldparams.LogsBloomLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.LogsBloom")
+		return nil, server.NewDecodeError(err, "SilaPayload.LogsBloom")
 	}
 	payloadPrevRandao, err := bytesutil.DecodeHexWithLength(e.PrevRandao, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.PrevRandao")
+		return nil, server.NewDecodeError(err, "SilaPayload.PrevRandao")
 	}
 	payloadBlockNumber, err := strconv.ParseUint(e.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlockNumber")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlockNumber")
 	}
 	payloadGasLimit, err := strconv.ParseUint(e.GasLimit, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.GasLimit")
+		return nil, server.NewDecodeError(err, "SilaPayload.GasLimit")
 	}
 	payloadGasUsed, err := strconv.ParseUint(e.GasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.GasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayload.GasUsed")
 	}
 	payloadTimestamp, err := strconv.ParseUint(e.Timestamp, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Timestamp")
+		return nil, server.NewDecodeError(err, "SilaPayload.Timestamp")
 	}
 	payloadExtraData, err := bytesutil.DecodeHexWithMaxLength(e.ExtraData, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ExtraData")
+		return nil, server.NewDecodeError(err, "SilaPayload.ExtraData")
 	}
 	payloadBaseFeePerGas, err := bytesutil.Uint256ToSSZBytes(e.BaseFeePerGas)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BaseFeePerGas")
+		return nil, server.NewDecodeError(err, "SilaPayload.BaseFeePerGas")
 	}
 	payloadBlockHash, err := bytesutil.DecodeHexWithLength(e.BlockHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlockHash")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlockHash")
 	}
 	err = slice.VerifyMaxLength(e.Transactions, fieldparams.MaxTxsPerPayloadLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Transactions")
+		return nil, server.NewDecodeError(err, "SilaPayload.Transactions")
 	}
 	payloadTxs := make([][]byte, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		payloadTxs[i], err = bytesutil.DecodeHexWithMaxLength(tx, fieldparams.MaxBytesPerTxLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Transactions[%d]", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Transactions[%d]", i))
 		}
 	}
-	return &enginev1.ExecutionPayload{
+	return &enginev1.SilaPayload{
 		ParentHash:    payloadParentHash,
 		FeeRecipient:  payloadFeeRecipient,
 		StateRoot:     payloadStateRoot,
@@ -135,20 +135,20 @@ func (e *ExecutionPayload) ToConsensus() (*enginev1.ExecutionPayload, error) {
 	}, nil
 }
 
-func (r *ExecutionPayload) PayloadProto() (proto.Message, error) {
+func (r *SilaPayload) PayloadProto() (proto.Message, error) {
 	if r == nil {
-		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil execution payload")
+		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil sila payload")
 	}
 	return r.ToConsensus()
 }
 
-func ExecutionPayloadHeaderFromConsensus(payload *enginev1.ExecutionPayloadHeader) (*ExecutionPayloadHeader, error) {
+func SilaPayloadHeaderFromConsensus(payload *enginev1.SilaPayloadHeader) (*SilaPayloadHeader, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
 	}
 
-	return &ExecutionPayloadHeader{
+	return &SilaPayloadHeader{
 		ParentHash:       hexutil.Encode(payload.ParentHash),
 		FeeRecipient:     hexutil.Encode(payload.FeeRecipient),
 		StateRoot:        hexutil.Encode(payload.StateRoot),
@@ -166,68 +166,68 @@ func ExecutionPayloadHeaderFromConsensus(payload *enginev1.ExecutionPayloadHeade
 	}, nil
 }
 
-func (e *ExecutionPayloadHeader) ToConsensus() (*enginev1.ExecutionPayloadHeader, error) {
+func (e *SilaPayloadHeader) ToConsensus() (*enginev1.SilaPayloadHeader, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayloadHeader")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayloadHeader")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ParentHash")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ParentHash")
 	}
 	payloadFeeRecipient, err := bytesutil.DecodeHexWithLength(e.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.FeeRecipient")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.FeeRecipient")
 	}
 	payloadStateRoot, err := bytesutil.DecodeHexWithLength(e.StateRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.StateRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.StateRoot")
 	}
 	payloadReceiptsRoot, err := bytesutil.DecodeHexWithLength(e.ReceiptsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ReceiptsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ReceiptsRoot")
 	}
 	payloadLogsBloom, err := bytesutil.DecodeHexWithLength(e.LogsBloom, fieldparams.LogsBloomLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.LogsBloom")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.LogsBloom")
 	}
 	payloadPrevRandao, err := bytesutil.DecodeHexWithLength(e.PrevRandao, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.PrevRandao")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.PrevRandao")
 	}
 	payloadBlockNumber, err := strconv.ParseUint(e.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BlockNumber")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BlockNumber")
 	}
 	payloadGasLimit, err := strconv.ParseUint(e.GasLimit, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.GasLimit")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.GasLimit")
 	}
 	payloadGasUsed, err := strconv.ParseUint(e.GasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.GasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.GasUsed")
 	}
 	payloadTimestamp, err := strconv.ParseUint(e.Timestamp, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.Timestamp")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.Timestamp")
 	}
 	payloadExtraData, err := bytesutil.DecodeHexWithMaxLength(e.ExtraData, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ExtraData")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ExtraData")
 	}
 	payloadBaseFeePerGas, err := bytesutil.Uint256ToSSZBytes(e.BaseFeePerGas)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BaseFeePerGas")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BaseFeePerGas")
 	}
 	payloadBlockHash, err := bytesutil.DecodeHexWithLength(e.BlockHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BlockHash")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BlockHash")
 	}
 	payloadTxsRoot, err := bytesutil.DecodeHexWithLength(e.TransactionsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.TransactionsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.TransactionsRoot")
 	}
 
-	return &enginev1.ExecutionPayloadHeader{
+	return &enginev1.SilaPayloadHeader{
 		ParentHash:       payloadParentHash,
 		FeeRecipient:     payloadFeeRecipient,
 		StateRoot:        payloadStateRoot,
@@ -249,7 +249,7 @@ func (e *ExecutionPayloadHeader) ToConsensus() (*enginev1.ExecutionPayloadHeader
 // Capella
 // ----------------------------------------------------------------------------
 
-func ExecutionPayloadCapellaFromConsensus(payload *enginev1.ExecutionPayloadCapella) (*ExecutionPayloadCapella, error) {
+func SilaPayloadCapellaFromConsensus(payload *enginev1.SilaPayloadCapella) (*SilaPayloadCapella, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
@@ -259,7 +259,7 @@ func ExecutionPayloadCapellaFromConsensus(payload *enginev1.ExecutionPayloadCape
 		transactions[i] = hexutil.Encode(tx)
 	}
 
-	return &ExecutionPayloadCapella{
+	return &SilaPayloadCapella{
 		ParentHash:    hexutil.Encode(payload.ParentHash),
 		FeeRecipient:  hexutil.Encode(payload.FeeRecipient),
 		StateRoot:     hexutil.Encode(payload.StateRoot),
@@ -278,94 +278,94 @@ func ExecutionPayloadCapellaFromConsensus(payload *enginev1.ExecutionPayloadCape
 	}, nil
 }
 
-func (e *ExecutionPayloadCapella) ToConsensus() (*enginev1.ExecutionPayloadCapella, error) {
+func (e *SilaPayloadCapella) ToConsensus() (*enginev1.SilaPayloadCapella, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayload")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayload")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ParentHash")
+		return nil, server.NewDecodeError(err, "SilaPayload.ParentHash")
 	}
 	payloadFeeRecipient, err := bytesutil.DecodeHexWithLength(e.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.FeeRecipient")
+		return nil, server.NewDecodeError(err, "SilaPayload.FeeRecipient")
 	}
 	payloadStateRoot, err := bytesutil.DecodeHexWithLength(e.StateRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.StateRoot")
+		return nil, server.NewDecodeError(err, "SilaPayload.StateRoot")
 	}
 	payloadReceiptsRoot, err := bytesutil.DecodeHexWithLength(e.ReceiptsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ReceiptsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayload.ReceiptsRoot")
 	}
 	payloadLogsBloom, err := bytesutil.DecodeHexWithLength(e.LogsBloom, fieldparams.LogsBloomLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.LogsBloom")
+		return nil, server.NewDecodeError(err, "SilaPayload.LogsBloom")
 	}
 	payloadPrevRandao, err := bytesutil.DecodeHexWithLength(e.PrevRandao, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.PrevRandao")
+		return nil, server.NewDecodeError(err, "SilaPayload.PrevRandao")
 	}
 	payloadBlockNumber, err := strconv.ParseUint(e.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlockNumber")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlockNumber")
 	}
 	payloadGasLimit, err := strconv.ParseUint(e.GasLimit, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.GasLimit")
+		return nil, server.NewDecodeError(err, "SilaPayload.GasLimit")
 	}
 	payloadGasUsed, err := strconv.ParseUint(e.GasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.GasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayload.GasUsed")
 	}
 	payloadTimestamp, err := strconv.ParseUint(e.Timestamp, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Timestamp")
+		return nil, server.NewDecodeError(err, "SilaPayload.Timestamp")
 	}
 	payloadExtraData, err := bytesutil.DecodeHexWithMaxLength(e.ExtraData, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ExtraData")
+		return nil, server.NewDecodeError(err, "SilaPayload.ExtraData")
 	}
 	payloadBaseFeePerGas, err := bytesutil.Uint256ToSSZBytes(e.BaseFeePerGas)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BaseFeePerGas")
+		return nil, server.NewDecodeError(err, "SilaPayload.BaseFeePerGas")
 	}
 	payloadBlockHash, err := bytesutil.DecodeHexWithLength(e.BlockHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlockHash")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlockHash")
 	}
 	err = slice.VerifyMaxLength(e.Transactions, fieldparams.MaxTxsPerPayloadLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Transactions")
+		return nil, server.NewDecodeError(err, "SilaPayload.Transactions")
 	}
 	payloadTxs := make([][]byte, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		payloadTxs[i], err = bytesutil.DecodeHexWithMaxLength(tx, fieldparams.MaxBytesPerTxLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Transactions[%d]", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Transactions[%d]", i))
 		}
 	}
 	err = slice.VerifyMaxLength(e.Withdrawals, fieldparams.MaxWithdrawalsPerPayload)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Withdrawals")
+		return nil, server.NewDecodeError(err, "SilaPayload.Withdrawals")
 	}
 	withdrawals := make([]*enginev1.Withdrawal, len(e.Withdrawals))
 	for i, w := range e.Withdrawals {
 		withdrawalIndex, err := strconv.ParseUint(w.WithdrawalIndex, 10, 64)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].WithdrawalIndex", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].WithdrawalIndex", i))
 		}
 		validatorIndex, err := strconv.ParseUint(w.ValidatorIndex, 10, 64)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].ValidatorIndex", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ValidatorIndex", i))
 		}
 		address, err := bytesutil.DecodeHexWithLength(w.ExecutionAddress, common.AddressLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].ExecutionAddress", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ExecutionAddress", i))
 		}
 		amount, err := strconv.ParseUint(w.Amount, 10, 64)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].Amount", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].Amount", i))
 		}
 		withdrawals[i] = &enginev1.Withdrawal{
 			Index:          withdrawalIndex,
@@ -374,7 +374,7 @@ func (e *ExecutionPayloadCapella) ToConsensus() (*enginev1.ExecutionPayloadCapel
 			Amount:         amount,
 		}
 	}
-	return &enginev1.ExecutionPayloadCapella{
+	return &enginev1.SilaPayloadCapella{
 		ParentHash:    payloadParentHash,
 		FeeRecipient:  payloadFeeRecipient,
 		StateRoot:     payloadStateRoot,
@@ -393,20 +393,20 @@ func (e *ExecutionPayloadCapella) ToConsensus() (*enginev1.ExecutionPayloadCapel
 	}, nil
 }
 
-func (p *ExecutionPayloadCapella) PayloadProto() (proto.Message, error) {
+func (p *SilaPayloadCapella) PayloadProto() (proto.Message, error) {
 	if p == nil {
-		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil capella execution payload")
+		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil capella sila payload")
 	}
 	return p.ToConsensus()
 }
 
-func ExecutionPayloadHeaderCapellaFromConsensus(payload *enginev1.ExecutionPayloadHeaderCapella) (*ExecutionPayloadHeaderCapella, error) {
+func SilaPayloadHeaderCapellaFromConsensus(payload *enginev1.SilaPayloadHeaderCapella) (*SilaPayloadHeaderCapella, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
 	}
 
-	return &ExecutionPayloadHeaderCapella{
+	return &SilaPayloadHeaderCapella{
 		ParentHash:       hexutil.Encode(payload.ParentHash),
 		FeeRecipient:     hexutil.Encode(payload.FeeRecipient),
 		StateRoot:        hexutil.Encode(payload.StateRoot),
@@ -425,71 +425,71 @@ func ExecutionPayloadHeaderCapellaFromConsensus(payload *enginev1.ExecutionPaylo
 	}, nil
 }
 
-func (e *ExecutionPayloadHeaderCapella) ToConsensus() (*enginev1.ExecutionPayloadHeaderCapella, error) {
+func (e *SilaPayloadHeaderCapella) ToConsensus() (*enginev1.SilaPayloadHeaderCapella, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayloadHeader")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayloadHeader")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ParentHash")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ParentHash")
 	}
 	payloadFeeRecipient, err := bytesutil.DecodeHexWithLength(e.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.FeeRecipient")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.FeeRecipient")
 	}
 	payloadStateRoot, err := bytesutil.DecodeHexWithLength(e.StateRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.StateRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.StateRoot")
 	}
 	payloadReceiptsRoot, err := bytesutil.DecodeHexWithLength(e.ReceiptsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ReceiptsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ReceiptsRoot")
 	}
 	payloadLogsBloom, err := bytesutil.DecodeHexWithLength(e.LogsBloom, fieldparams.LogsBloomLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.LogsBloom")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.LogsBloom")
 	}
 	payloadPrevRandao, err := bytesutil.DecodeHexWithLength(e.PrevRandao, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.PrevRandao")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.PrevRandao")
 	}
 	payloadBlockNumber, err := strconv.ParseUint(e.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BlockNumber")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BlockNumber")
 	}
 	payloadGasLimit, err := strconv.ParseUint(e.GasLimit, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.GasLimit")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.GasLimit")
 	}
 	payloadGasUsed, err := strconv.ParseUint(e.GasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.GasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.GasUsed")
 	}
 	payloadTimestamp, err := strconv.ParseUint(e.Timestamp, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.Timestamp")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.Timestamp")
 	}
 	payloadExtraData, err := bytesutil.DecodeHexWithMaxLength(e.ExtraData, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ExtraData")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ExtraData")
 	}
 	payloadBaseFeePerGas, err := bytesutil.Uint256ToSSZBytes(e.BaseFeePerGas)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BaseFeePerGas")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BaseFeePerGas")
 	}
 	payloadBlockHash, err := bytesutil.DecodeHexWithMaxLength(e.BlockHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BlockHash")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BlockHash")
 	}
 	payloadTxsRoot, err := bytesutil.DecodeHexWithMaxLength(e.TransactionsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.TransactionsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.TransactionsRoot")
 	}
 	payloadWithdrawalsRoot, err := bytesutil.DecodeHexWithMaxLength(e.WithdrawalsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.WithdrawalsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.WithdrawalsRoot")
 	}
-	return &enginev1.ExecutionPayloadHeaderCapella{
+	return &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       payloadParentHash,
 		FeeRecipient:     payloadFeeRecipient,
 		StateRoot:        payloadStateRoot,
@@ -512,7 +512,7 @@ func (e *ExecutionPayloadHeaderCapella) ToConsensus() (*enginev1.ExecutionPayloa
 // Deneb
 // ----------------------------------------------------------------------------
 
-func ExecutionPayloadDenebFromConsensus(payload *enginev1.ExecutionPayloadDeneb) (*ExecutionPayloadDeneb, error) {
+func SilaPayloadDenebFromConsensus(payload *enginev1.SilaPayloadDeneb) (*SilaPayloadDeneb, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
@@ -522,7 +522,7 @@ func ExecutionPayloadDenebFromConsensus(payload *enginev1.ExecutionPayloadDeneb)
 		transactions[i] = hexutil.Encode(tx)
 	}
 
-	return &ExecutionPayloadDeneb{
+	return &SilaPayloadDeneb{
 		ParentHash:    hexutil.Encode(payload.ParentHash),
 		FeeRecipient:  hexutil.Encode(payload.FeeRecipient),
 		StateRoot:     hexutil.Encode(payload.StateRoot),
@@ -543,94 +543,94 @@ func ExecutionPayloadDenebFromConsensus(payload *enginev1.ExecutionPayloadDeneb)
 	}, nil
 }
 
-func (e *ExecutionPayloadDeneb) ToConsensus() (*enginev1.ExecutionPayloadDeneb, error) {
+func (e *SilaPayloadDeneb) ToConsensus() (*enginev1.SilaPayloadDeneb, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayload")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayload")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ParentHash")
+		return nil, server.NewDecodeError(err, "SilaPayload.ParentHash")
 	}
 	payloadFeeRecipient, err := bytesutil.DecodeHexWithLength(e.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.FeeRecipient")
+		return nil, server.NewDecodeError(err, "SilaPayload.FeeRecipient")
 	}
 	payloadStateRoot, err := bytesutil.DecodeHexWithLength(e.StateRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.StateRoot")
+		return nil, server.NewDecodeError(err, "SilaPayload.StateRoot")
 	}
 	payloadReceiptsRoot, err := bytesutil.DecodeHexWithLength(e.ReceiptsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ReceiptsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayload.ReceiptsRoot")
 	}
 	payloadLogsBloom, err := bytesutil.DecodeHexWithLength(e.LogsBloom, fieldparams.LogsBloomLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.LogsBloom")
+		return nil, server.NewDecodeError(err, "SilaPayload.LogsBloom")
 	}
 	payloadPrevRandao, err := bytesutil.DecodeHexWithLength(e.PrevRandao, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.PrevRandao")
+		return nil, server.NewDecodeError(err, "SilaPayload.PrevRandao")
 	}
 	payloadBlockNumber, err := strconv.ParseUint(e.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlockNumber")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlockNumber")
 	}
 	payloadGasLimit, err := strconv.ParseUint(e.GasLimit, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.GasLimit")
+		return nil, server.NewDecodeError(err, "SilaPayload.GasLimit")
 	}
 	payloadGasUsed, err := strconv.ParseUint(e.GasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.GasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayload.GasUsed")
 	}
 	payloadTimestamp, err := strconv.ParseUint(e.Timestamp, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.Timestamp")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.Timestamp")
 	}
 	payloadExtraData, err := bytesutil.DecodeHexWithMaxLength(e.ExtraData, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ExtraData")
+		return nil, server.NewDecodeError(err, "SilaPayload.ExtraData")
 	}
 	payloadBaseFeePerGas, err := bytesutil.Uint256ToSSZBytes(e.BaseFeePerGas)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BaseFeePerGas")
+		return nil, server.NewDecodeError(err, "SilaPayload.BaseFeePerGas")
 	}
 	payloadBlockHash, err := bytesutil.DecodeHexWithLength(e.BlockHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlockHash")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlockHash")
 	}
 	err = slice.VerifyMaxLength(e.Transactions, fieldparams.MaxTxsPerPayloadLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Transactions")
+		return nil, server.NewDecodeError(err, "SilaPayload.Transactions")
 	}
 	txs := make([][]byte, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		txs[i], err = bytesutil.DecodeHexWithMaxLength(tx, fieldparams.MaxBytesPerTxLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Transactions[%d]", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Transactions[%d]", i))
 		}
 	}
 	err = slice.VerifyMaxLength(e.Withdrawals, fieldparams.MaxWithdrawalsPerPayload)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.Withdrawals")
+		return nil, server.NewDecodeError(err, "SilaPayload.Withdrawals")
 	}
 	withdrawals := make([]*enginev1.Withdrawal, len(e.Withdrawals))
 	for i, w := range e.Withdrawals {
 		withdrawalIndex, err := strconv.ParseUint(w.WithdrawalIndex, 10, 64)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].WithdrawalIndex", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].WithdrawalIndex", i))
 		}
 		validatorIndex, err := strconv.ParseUint(w.ValidatorIndex, 10, 64)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].ValidatorIndex", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ValidatorIndex", i))
 		}
 		address, err := bytesutil.DecodeHexWithLength(w.ExecutionAddress, common.AddressLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].ExecutionAddress", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ExecutionAddress", i))
 		}
 		amount, err := strconv.ParseUint(w.Amount, 10, 64)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("ExecutionPayload.Withdrawals[%d].Amount", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].Amount", i))
 		}
 		withdrawals[i] = &enginev1.Withdrawal{
 			Index:          withdrawalIndex,
@@ -642,13 +642,13 @@ func (e *ExecutionPayloadDeneb) ToConsensus() (*enginev1.ExecutionPayloadDeneb, 
 
 	payloadBlobGasUsed, err := strconv.ParseUint(e.BlobGasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlobGasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlobGasUsed")
 	}
 	payloadExcessBlobGas, err := strconv.ParseUint(e.ExcessBlobGas, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ExcessBlobGas")
+		return nil, server.NewDecodeError(err, "SilaPayload.ExcessBlobGas")
 	}
-	return &enginev1.ExecutionPayloadDeneb{
+	return &enginev1.SilaPayloadDeneb{
 		ParentHash:    payloadParentHash,
 		FeeRecipient:  payloadFeeRecipient,
 		StateRoot:     payloadStateRoot,
@@ -669,13 +669,13 @@ func (e *ExecutionPayloadDeneb) ToConsensus() (*enginev1.ExecutionPayloadDeneb, 
 	}, nil
 }
 
-func ExecutionPayloadHeaderDenebFromConsensus(payload *enginev1.ExecutionPayloadHeaderDeneb) (*ExecutionPayloadHeaderDeneb, error) {
+func SilaPayloadHeaderDenebFromConsensus(payload *enginev1.SilaPayloadHeaderDeneb) (*SilaPayloadHeaderDeneb, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
 	}
 
-	return &ExecutionPayloadHeaderDeneb{
+	return &SilaPayloadHeaderDeneb{
 		ParentHash:       hexutil.Encode(payload.ParentHash),
 		FeeRecipient:     hexutil.Encode(payload.FeeRecipient),
 		StateRoot:        hexutil.Encode(payload.StateRoot),
@@ -696,79 +696,79 @@ func ExecutionPayloadHeaderDenebFromConsensus(payload *enginev1.ExecutionPayload
 	}, nil
 }
 
-func (e *ExecutionPayloadHeaderDeneb) ToConsensus() (*enginev1.ExecutionPayloadHeaderDeneb, error) {
+func (e *SilaPayloadHeaderDeneb) ToConsensus() (*enginev1.SilaPayloadHeaderDeneb, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayloadHeader")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayloadHeader")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ParentHash")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ParentHash")
 	}
 	payloadFeeRecipient, err := bytesutil.DecodeHexWithLength(e.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.FeeRecipient")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.FeeRecipient")
 	}
 	payloadStateRoot, err := bytesutil.DecodeHexWithLength(e.StateRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.StateRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.StateRoot")
 	}
 	payloadReceiptsRoot, err := bytesutil.DecodeHexWithLength(e.ReceiptsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ReceiptsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ReceiptsRoot")
 	}
 	payloadLogsBloom, err := bytesutil.DecodeHexWithLength(e.LogsBloom, fieldparams.LogsBloomLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.LogsBloom")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.LogsBloom")
 	}
 	payloadPrevRandao, err := bytesutil.DecodeHexWithLength(e.PrevRandao, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.PrevRandao")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.PrevRandao")
 	}
 	payloadBlockNumber, err := strconv.ParseUint(e.BlockNumber, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BlockNumber")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BlockNumber")
 	}
 	payloadGasLimit, err := strconv.ParseUint(e.GasLimit, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.GasLimit")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.GasLimit")
 	}
 	payloadGasUsed, err := strconv.ParseUint(e.GasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.GasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.GasUsed")
 	}
 	payloadTimestamp, err := strconv.ParseUint(e.Timestamp, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.Timestamp")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.Timestamp")
 	}
 	payloadExtraData, err := bytesutil.DecodeHexWithMaxLength(e.ExtraData, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.ExtraData")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.ExtraData")
 	}
 	payloadBaseFeePerGas, err := bytesutil.Uint256ToSSZBytes(e.BaseFeePerGas)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BaseFeePerGas")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BaseFeePerGas")
 	}
 	payloadBlockHash, err := bytesutil.DecodeHexWithLength(e.BlockHash, common.HashLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.BlockHash")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.BlockHash")
 	}
 	payloadTxsRoot, err := bytesutil.DecodeHexWithLength(e.TransactionsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.TransactionsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.TransactionsRoot")
 	}
 	payloadWithdrawalsRoot, err := bytesutil.DecodeHexWithLength(e.WithdrawalsRoot, fieldparams.RootLength)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayloadHeader.WithdrawalsRoot")
+		return nil, server.NewDecodeError(err, "SilaPayloadHeader.WithdrawalsRoot")
 	}
 	payloadBlobGasUsed, err := strconv.ParseUint(e.BlobGasUsed, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.BlobGasUsed")
+		return nil, server.NewDecodeError(err, "SilaPayload.BlobGasUsed")
 	}
 	payloadExcessBlobGas, err := strconv.ParseUint(e.ExcessBlobGas, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayload.ExcessBlobGas")
+		return nil, server.NewDecodeError(err, "SilaPayload.ExcessBlobGas")
 	}
-	return &enginev1.ExecutionPayloadHeaderDeneb{
+	return &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       payloadParentHash,
 		FeeRecipient:     payloadFeeRecipient,
 		StateRoot:        payloadStateRoot,
@@ -794,8 +794,8 @@ func (e *ExecutionPayloadHeaderDeneb) ToConsensus() (*enginev1.ExecutionPayloadH
 // ----------------------------------------------------------------------------
 
 var (
-	ExecutionPayloadElectraFromConsensus       = ExecutionPayloadDenebFromConsensus
-	ExecutionPayloadHeaderElectraFromConsensus = ExecutionPayloadHeaderDenebFromConsensus
+	SilaPayloadElectraFromConsensus       = SilaPayloadDenebFromConsensus
+	SilaPayloadHeaderElectraFromConsensus = SilaPayloadHeaderDenebFromConsensus
 )
 
 func WithdrawalRequestsFromConsensus(ws []*enginev1.WithdrawalRequest) []*WithdrawalRequest {
@@ -984,12 +984,12 @@ func (e *ExecutionRequests) ToConsensus() (*enginev1.ExecutionRequests, error) {
 // ----------------------------------------------------------------------------
 
 var (
-	ExecutionPayloadFuluFromConsensus       = ExecutionPayloadDenebFromConsensus
-	ExecutionPayloadHeaderFuluFromConsensus = ExecutionPayloadHeaderDenebFromConsensus
+	SilaPayloadFuluFromConsensus       = SilaPayloadDenebFromConsensus
+	SilaPayloadHeaderFuluFromConsensus = SilaPayloadHeaderDenebFromConsensus
 	BeaconBlockFuluFromConsensus            = BeaconBlockElectraFromConsensus
 )
 
-func ExecutionPayloadGloasFromConsensus(payload *enginev1.ExecutionPayloadGloas) (*ExecutionPayloadGloas, error) {
+func SilaPayloadGloasFromConsensus(payload *enginev1.SilaPayloadGloas) (*SilaPayloadGloas, error) {
 	baseFeePerGas, err := sszBytesToUint256String(payload.BaseFeePerGas)
 	if err != nil {
 		return nil, err
@@ -999,7 +999,7 @@ func ExecutionPayloadGloasFromConsensus(payload *enginev1.ExecutionPayloadGloas)
 		transactions[i] = hexutil.Encode(tx)
 	}
 
-	return &ExecutionPayloadGloas{
+	return &SilaPayloadGloas{
 		ParentHash:      hexutil.Encode(payload.ParentHash),
 		FeeRecipient:    hexutil.Encode(payload.FeeRecipient),
 		StateRoot:       hexutil.Encode(payload.StateRoot),
@@ -1022,9 +1022,9 @@ func ExecutionPayloadGloasFromConsensus(payload *enginev1.ExecutionPayloadGloas)
 	}, nil
 }
 
-func (e *ExecutionPayloadGloas) ToConsensus() (*enginev1.ExecutionPayloadGloas, error) {
+func (e *SilaPayloadGloas) ToConsensus() (*enginev1.SilaPayloadGloas, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayloadGloas")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayloadGloas")
 	}
 	payloadParentHash, err := bytesutil.DecodeHexWithLength(e.ParentHash, common.HashLength)
 	if err != nil {
@@ -1137,7 +1137,7 @@ func (e *ExecutionPayloadGloas) ToConsensus() (*enginev1.ExecutionPayloadGloas, 
 	if err != nil {
 		return nil, server.NewDecodeError(err, "SlotNumber")
 	}
-	return &enginev1.ExecutionPayloadGloas{
+	return &enginev1.SilaPayloadGloas{
 		ParentHash:      payloadParentHash,
 		FeeRecipient:    payloadFeeRecipient,
 		StateRoot:       payloadStateRoot,

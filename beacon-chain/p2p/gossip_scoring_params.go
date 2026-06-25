@@ -150,8 +150,8 @@ func (s *Service) topicScoreParams(topic string) (*pubsub.TopicScoreParams, erro
 	case strings.Contains(topic, GossipPayloadAttestationMessageMessage):
 		// TODO: Revisit scoring params for payload attestation gossip.
 		return defaultBlockTopicParams(), nil
-	case strings.Contains(topic, GossipExecutionPayloadEnvelopeMessage):
-		// TODO: Revisit scoring params for execution payload envelope gossip.
+	case strings.Contains(topic, GossipSilaPayloadEnvelopeMessage):
+		// TODO: Revisit scoring params for sila payload envelope gossip.
 		return defaultBlockTopicParams(), nil
 	case strings.Contains(topic, GossipSignedProposerPreferencesMessage):
 		// TODO: Revisit scoring params for signed proposer preferences gossip.

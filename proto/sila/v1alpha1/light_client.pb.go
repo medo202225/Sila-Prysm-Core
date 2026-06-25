@@ -647,7 +647,7 @@ func (x *LightClientOptimisticUpdateCapella) GetSignatureSlot() github_com_sila_
 type LightClientHeaderCapella struct {
 	state           protoimpl.MessageState            `protogen:"open.v1"`
 	Beacon          *BeaconBlockHeader                `protobuf:"bytes,1,opt,name=beacon,proto3" json:"beacon,omitempty"`
-	Execution       *v1.ExecutionPayloadHeaderCapella `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution       *v1.SilaPayloadHeaderCapella `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
 	ExecutionBranch [][]byte                          `protobuf:"bytes,3,rep,name=execution_branch,json=executionBranch,proto3" json:"execution_branch,omitempty" ssz-size:"4,32"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -690,7 +690,7 @@ func (x *LightClientHeaderCapella) GetBeacon() *BeaconBlockHeader {
 	return nil
 }
 
-func (x *LightClientHeaderCapella) GetExecution() *v1.ExecutionPayloadHeaderCapella {
+func (x *LightClientHeaderCapella) GetExecution() *v1.SilaPayloadHeaderCapella {
 	if x != nil {
 		return x.Execution
 	}
@@ -995,7 +995,7 @@ func (x *LightClientOptimisticUpdateDeneb) GetSignatureSlot() github_com_sila_ch
 type LightClientHeaderDeneb struct {
 	state           protoimpl.MessageState          `protogen:"open.v1"`
 	Beacon          *BeaconBlockHeader              `protobuf:"bytes,1,opt,name=beacon,proto3" json:"beacon,omitempty"`
-	Execution       *v1.ExecutionPayloadHeaderDeneb `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution       *v1.SilaPayloadHeaderDeneb `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
 	ExecutionBranch [][]byte                        `protobuf:"bytes,3,rep,name=execution_branch,json=executionBranch,proto3" json:"execution_branch,omitempty" ssz-size:"4,32"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -1038,7 +1038,7 @@ func (x *LightClientHeaderDeneb) GetBeacon() *BeaconBlockHeader {
 	return nil
 }
 
-func (x *LightClientHeaderDeneb) GetExecution() *v1.ExecutionPayloadHeaderDeneb {
+func (x *LightClientHeaderDeneb) GetExecution() *v1.SilaPayloadHeaderDeneb {
 	if x != nil {
 		return x.Execution
 	}
@@ -1766,8 +1766,8 @@ var file_proto_sila_v1alpha1_light_client_proto_goTypes = []any{
 	(*SyncCommittee)(nil),                      // 18: sila.eth.v1alpha1.SyncCommittee
 	(*SyncAggregate)(nil),                      // 19: sila.eth.v1alpha1.SyncAggregate
 	(*BeaconBlockHeader)(nil),                  // 20: sila.eth.v1alpha1.BeaconBlockHeader
-	(*v1.ExecutionPayloadHeaderCapella)(nil),   // 21: sila.engine.v1.ExecutionPayloadHeaderCapella
-	(*v1.ExecutionPayloadHeaderDeneb)(nil),     // 22: sila.engine.v1.ExecutionPayloadHeaderDeneb
+	(*v1.SilaPayloadHeaderCapella)(nil),   // 21: sila.engine.v1.SilaPayloadHeaderCapella
+	(*v1.SilaPayloadHeaderDeneb)(nil),     // 22: sila.engine.v1.SilaPayloadHeaderDeneb
 }
 var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
 	4,  // 0: sila.eth.v1alpha1.LightClientBootstrapAltair.header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
@@ -1794,7 +1794,7 @@ var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
 	9,  // 21: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
 	19, // 22: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
 	20, // 23: sila.eth.v1alpha1.LightClientHeaderCapella.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
-	21, // 24: sila.eth.v1alpha1.LightClientHeaderCapella.execution:type_name -> sila.engine.v1.ExecutionPayloadHeaderCapella
+	21, // 24: sila.eth.v1alpha1.LightClientHeaderCapella.execution:type_name -> sila.engine.v1.SilaPayloadHeaderCapella
 	14, // 25: sila.eth.v1alpha1.LightClientBootstrapDeneb.header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
 	18, // 26: sila.eth.v1alpha1.LightClientBootstrapDeneb.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	14, // 27: sila.eth.v1alpha1.LightClientUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
@@ -1807,7 +1807,7 @@ var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
 	14, // 34: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
 	19, // 35: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
 	20, // 36: sila.eth.v1alpha1.LightClientHeaderDeneb.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
-	22, // 37: sila.eth.v1alpha1.LightClientHeaderDeneb.execution:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	22, // 37: sila.eth.v1alpha1.LightClientHeaderDeneb.execution:type_name -> sila.engine.v1.SilaPayloadHeaderDeneb
 	14, // 38: sila.eth.v1alpha1.LightClientBootstrapElectra.header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
 	18, // 39: sila.eth.v1alpha1.LightClientBootstrapElectra.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	14, // 40: sila.eth.v1alpha1.LightClientUpdateElectra.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb

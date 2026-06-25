@@ -41,10 +41,10 @@ func unmarshalledSSZ(t *testing.T, serializedBytes []byte, folderName string) (a
 
 	switch folderName {
 	// Gloas specific types
-	case "ExecutionPayloadBid":
-		obj = &silapb.ExecutionPayloadBid{}
-	case "SignedExecutionPayloadBid":
-		obj = &silapb.SignedExecutionPayloadBid{}
+	case "SilaPayloadBid":
+		obj = &silapb.SilaPayloadBid{}
+	case "SignedSilaPayloadBid":
+		obj = &silapb.SignedSilaPayloadBid{}
 	case "PayloadAttestationData":
 		obj = &silapb.PayloadAttestationData{}
 	case "PayloadAttestation":
@@ -63,10 +63,10 @@ func unmarshalledSSZ(t *testing.T, serializedBytes []byte, folderName string) (a
 		obj = &silapb.BuilderPendingPayment{}
 	case "BuilderPendingWithdrawal":
 		obj = &silapb.BuilderPendingWithdrawal{}
-	case "ExecutionPayloadEnvelope":
-		obj = &silapb.ExecutionPayloadEnvelope{}
-	case "SignedExecutionPayloadEnvelope":
-		obj = &silapb.SignedExecutionPayloadEnvelope{}
+	case "SilaPayloadEnvelope":
+		obj = &silapb.SilaPayloadEnvelope{}
+	case "SignedSilaPayloadEnvelope":
+		obj = &silapb.SignedSilaPayloadEnvelope{}
 	case "ForkChoiceNode":
 		t.Skip("Not a consensus type")
 	case "IndexedPayloadAttestation":
@@ -77,10 +77,10 @@ func unmarshalledSSZ(t *testing.T, serializedBytes []byte, folderName string) (a
 		t.Skip("p2p-only type; not part of the consensus state transition")
 
 	// Standard types that also exist in gloas
-	case "ExecutionPayload":
-		obj = &enginev1.ExecutionPayloadGloas{}
-	case "ExecutionPayloadHeader":
-		obj = &enginev1.ExecutionPayloadHeaderDeneb{}
+	case "SilaPayload":
+		obj = &enginev1.SilaPayloadGloas{}
+	case "SilaPayloadHeader":
+		obj = &enginev1.SilaPayloadHeaderDeneb{}
 	case "Attestation":
 		obj = &silapb.AttestationElectra{}
 	case "AttestationData":

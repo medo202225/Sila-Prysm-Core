@@ -82,14 +82,14 @@ func (f FieldIndex) String() string {
 		return "currentSyncCommittee"
 	case NextSyncCommittee:
 		return "nextSyncCommittee"
-	case LatestExecutionPayloadHeader:
-		return "latestExecutionPayloadHeader"
-	case LatestExecutionPayloadHeaderCapella:
-		return "latestExecutionPayloadHeaderCapella"
-	case LatestExecutionPayloadHeaderDeneb:
-		return "latestExecutionPayloadHeaderDeneb"
-	case LatestExecutionPayloadBid:
-		return "latestExecutionPayloadBid"
+	case LatestSilaPayloadHeader:
+		return "latestSilaPayloadHeader"
+	case LatestSilaPayloadHeaderCapella:
+		return "latestSilaPayloadHeaderCapella"
+	case LatestSilaPayloadHeaderDeneb:
+		return "latestSilaPayloadHeaderDeneb"
+	case LatestSilaPayloadBid:
+		return "latestSilaPayloadBid"
 	case NextWithdrawalIndex:
 		return "nextWithdrawalIndex"
 	case NextWithdrawalValidatorIndex:
@@ -120,8 +120,8 @@ func (f FieldIndex) String() string {
 		return "builders"
 	case NextWithdrawalBuilderIndex:
 		return "nextWithdrawalBuilderIndex"
-	case ExecutionPayloadAvailability:
-		return "executionPayloadAvailability"
+	case SilaPayloadAvailability:
+		return "silaPayloadAvailability"
 	case BuilderPendingPayments:
 		return "builderPendingPayments"
 	case BuilderPendingWithdrawals:
@@ -189,7 +189,7 @@ func (f FieldIndex) RealPosition() int {
 		return 22
 	case NextSyncCommittee:
 		return 23
-	case LatestExecutionPayloadHeader, LatestExecutionPayloadHeaderCapella, LatestExecutionPayloadHeaderDeneb, LatestBlockHash:
+	case LatestSilaPayloadHeader, LatestSilaPayloadHeaderCapella, LatestSilaPayloadHeaderDeneb, LatestBlockHash:
 		return 24
 	case NextWithdrawalIndex:
 		return 25
@@ -221,13 +221,13 @@ func (f FieldIndex) RealPosition() int {
 		return 38
 	case NextWithdrawalBuilderIndex:
 		return 39
-	case ExecutionPayloadAvailability:
+	case SilaPayloadAvailability:
 		return 40
 	case BuilderPendingPayments:
 		return 41
 	case BuilderPendingWithdrawals:
 		return 42
-	case LatestExecutionPayloadBid:
+	case LatestSilaPayloadBid:
 		return 43
 	case PayloadExpectedWithdrawals:
 		return 44
@@ -282,10 +282,10 @@ const (
 	InactivityScores
 	CurrentSyncCommittee
 	NextSyncCommittee
-	LatestExecutionPayloadHeader
-	LatestExecutionPayloadHeaderCapella
-	LatestExecutionPayloadHeaderDeneb
-	LatestExecutionPayloadBid // Gloas: SIP-7732
+	LatestSilaPayloadHeader
+	LatestSilaPayloadHeaderCapella
+	LatestSilaPayloadHeaderDeneb
+	LatestSilaPayloadBid // Gloas: SIP-7732
 	NextWithdrawalIndex
 	NextWithdrawalValidatorIndex
 	HistoricalSummaries
@@ -301,7 +301,7 @@ const (
 	ProposerLookahead             // Fulu: SIP-7917
 	Builders                      // Gloas: SIP-7732
 	NextWithdrawalBuilderIndex    // Gloas: SIP-7732
-	ExecutionPayloadAvailability  // Gloas: SIP-7732
+	SilaPayloadAvailability  // Gloas: SIP-7732
 	BuilderPendingPayments        // Gloas: SIP-7732
 	BuilderPendingWithdrawals     // Gloas: SIP-7732
 	LatestBlockHash               // Gloas: SIP-7732

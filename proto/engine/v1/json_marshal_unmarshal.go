@@ -266,7 +266,7 @@ func (w *Withdrawal) UnmarshalJSON(enc []byte) error {
 	return nil
 }
 
-type executionPayloadJSON struct {
+type silaPayloadJSON struct {
 	ParentHash    *common.Hash    `json:"parentHash"`
 	FeeRecipient  *common.Address `json:"feeRecipient"`
 	StateRoot     *common.Hash    `json:"stateRoot"`
@@ -284,11 +284,11 @@ type executionPayloadJSON struct {
 }
 
 type GetPayloadV2ResponseJson struct {
-	ExecutionPayload *ExecutionPayloadCapellaJSON `json:"executionPayload"`
+	SilaPayload *SilaPayloadCapellaJSON `json:"silaPayload"`
 	BlockValue       string                       `json:"blockValue"`
 }
 
-type ExecutionPayloadCapellaJSON struct {
+type SilaPayloadCapellaJSON struct {
 	ParentHash    *common.Hash    `json:"parentHash"`
 	FeeRecipient  *common.Address `json:"feeRecipient"`
 	StateRoot     *common.Hash    `json:"stateRoot"`
@@ -307,14 +307,14 @@ type ExecutionPayloadCapellaJSON struct {
 }
 
 type GetPayloadV3ResponseJson struct {
-	ExecutionPayload      *ExecutionPayloadDenebJSON `json:"executionPayload"`
+	SilaPayload      *SilaPayloadDenebJSON `json:"silaPayload"`
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleJSON            `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
 }
 
 type GetPayloadV4ResponseJson struct {
-	ExecutionPayload      *ExecutionPayloadDenebJSON `json:"executionPayload"`
+	SilaPayload      *SilaPayloadDenebJSON `json:"silaPayload"`
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleJSON            `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
@@ -322,15 +322,15 @@ type GetPayloadV4ResponseJson struct {
 }
 
 type GetPayloadV5ResponseJson struct {
-	ExecutionPayload      *ExecutionPayloadDenebJSON `json:"executionPayload"`
+	SilaPayload      *SilaPayloadDenebJSON `json:"silaPayload"`
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleV2JSON          `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
 	ExecutionRequests     []hexutil.Bytes            `json:"executionRequests"`
 }
 
-// ExecutionPayloadGloasJSON is the JSON representation of ExecutionPayloadV4 (Amsterdam).
-type ExecutionPayloadGloasJSON struct {
+// SilaPayloadGloasJSON is the JSON representation of SilaPayloadV4 (Amsterdam).
+type SilaPayloadGloasJSON struct {
 	ParentHash      *common.Hash    `json:"parentHash"`
 	FeeRecipient    *common.Address `json:"feeRecipient"`
 	StateRoot       *common.Hash    `json:"stateRoot"`
@@ -353,22 +353,22 @@ type ExecutionPayloadGloasJSON struct {
 }
 
 type GetPayloadV6ResponseJson struct {
-	ExecutionPayload      *ExecutionPayloadGloasJSON `json:"executionPayload"`
+	SilaPayload      *SilaPayloadGloasJSON `json:"silaPayload"`
 	BlockValue            string                     `json:"blockValue"`
 	BlobsBundle           *BlobBundleV2JSON          `json:"blobsBundle"`
 	ShouldOverrideBuilder bool                       `json:"shouldOverrideBuilder"`
 	ExecutionRequests     []hexutil.Bytes            `json:"executionRequests"`
 }
 
-// ExecutionPayloadBodyV2 represents the engine API ExecutionPayloadBodyV2 type (Amsterdam).
-type ExecutionPayloadBodyV2 struct {
+// SilaPayloadBodyV2 represents the engine API SilaPayloadBodyV2 type (Amsterdam).
+type SilaPayloadBodyV2 struct {
 	Transactions    []hexutil.Bytes `json:"transactions"`
 	Withdrawals     []*Withdrawal   `json:"withdrawals"`
 	BlockAccessList *hexutil.Bytes  `json:"blockAccessList"`
 }
 
-// ExecutionPayloadBody represents the engine API ExecutionPayloadV1 or ExecutionPayloadV2 type.
-type ExecutionPayloadBody struct {
+// SilaPayloadBody represents the engine API SilaPayloadV1 or SilaPayloadV2 type.
+type SilaPayloadBody struct {
 	Transactions          []hexutil.Bytes          `json:"transactions"`
 	Withdrawals           []*Withdrawal            `json:"withdrawals"`
 	WithdrawalRequests    []WithdrawalRequestV1    `json:"withdrawalRequests"`
@@ -376,7 +376,7 @@ type ExecutionPayloadBody struct {
 	ConsolidationRequests []ConsolidationRequestV1 `json:"consolidationRequests"`
 }
 
-type ExecutionPayloadDenebJSON struct {
+type SilaPayloadDenebJSON struct {
 	ParentHash    *common.Hash    `json:"parentHash"`
 	FeeRecipient  *common.Address `json:"feeRecipient"`
 	StateRoot     *common.Hash    `json:"stateRoot"`
@@ -476,7 +476,7 @@ func (r ConsolidationRequestV1) Validate() error {
 }
 
 // MarshalJSON --
-func (e *ExecutionPayload) MarshalJSON() ([]byte, error) {
+func (e *SilaPayload) MarshalJSON() ([]byte, error) {
 	transactions := make([]hexutil.Bytes, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		transactions[i] = tx
@@ -494,7 +494,7 @@ func (e *ExecutionPayload) MarshalJSON() ([]byte, error) {
 	timeStamp := hexutil.Uint64(e.Timestamp)
 	recipient := common.BytesToAddress(e.FeeRecipient)
 	logsBloom := hexutil.Bytes(e.LogsBloom)
-	return json.Marshal(executionPayloadJSON{
+	return json.Marshal(silaPayloadJSON{
 		ParentHash:    &pHash,
 		FeeRecipient:  &recipient,
 		StateRoot:     &sRoot,
@@ -513,7 +513,7 @@ func (e *ExecutionPayload) MarshalJSON() ([]byte, error) {
 }
 
 // MarshalJSON --
-func (e *ExecutionPayloadCapella) MarshalJSON() ([]byte, error) {
+func (e *SilaPayloadCapella) MarshalJSON() ([]byte, error) {
 	transactions := make([]hexutil.Bytes, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		transactions[i] = tx
@@ -535,7 +535,7 @@ func (e *ExecutionPayloadCapella) MarshalJSON() ([]byte, error) {
 	if withdrawals == nil {
 		withdrawals = make([]*Withdrawal, 0)
 	}
-	return json.Marshal(ExecutionPayloadCapellaJSON{
+	return json.Marshal(SilaPayloadCapellaJSON{
 		ParentHash:    &pHash,
 		FeeRecipient:  &recipient,
 		StateRoot:     &sRoot,
@@ -555,52 +555,52 @@ func (e *ExecutionPayloadCapella) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON --
-func (e *ExecutionPayload) UnmarshalJSON(enc []byte) error {
-	dec := executionPayloadJSON{}
+func (e *SilaPayload) UnmarshalJSON(enc []byte) error {
+	dec := silaPayloadJSON{}
 	if err := json.Unmarshal(enc, &dec); err != nil {
 		return err
 	}
 
 	if dec.ParentHash == nil {
-		return errors.New("missing required field 'parentHash' for ExecutionPayload")
+		return errors.New("missing required field 'parentHash' for SilaPayload")
 	}
 	if dec.FeeRecipient == nil {
-		return errors.New("missing required field 'feeRecipient' for ExecutionPayload")
+		return errors.New("missing required field 'feeRecipient' for SilaPayload")
 	}
 	if dec.StateRoot == nil {
-		return errors.New("missing required field 'stateRoot' for ExecutionPayload")
+		return errors.New("missing required field 'stateRoot' for SilaPayload")
 	}
 	if dec.ReceiptsRoot == nil {
 		return errors.New("missing required field 'receiptsRoot' for ExecutableDataV1")
 	}
 	if dec.LogsBloom == nil {
-		return errors.New("missing required field 'logsBloom' for ExecutionPayload")
+		return errors.New("missing required field 'logsBloom' for SilaPayload")
 	}
 	if dec.PrevRandao == nil {
-		return errors.New("missing required field 'prevRandao' for ExecutionPayload")
+		return errors.New("missing required field 'prevRandao' for SilaPayload")
 	}
 	if dec.ExtraData == nil {
-		return errors.New("missing required field 'extraData' for ExecutionPayload")
+		return errors.New("missing required field 'extraData' for SilaPayload")
 	}
 	if dec.BlockHash == nil {
-		return errors.New("missing required field 'blockHash' for ExecutionPayload")
+		return errors.New("missing required field 'blockHash' for SilaPayload")
 	}
 	if dec.Transactions == nil {
-		return errors.New("missing required field 'transactions' for ExecutionPayload")
+		return errors.New("missing required field 'transactions' for SilaPayload")
 	}
 	if dec.BlockNumber == nil {
-		return errors.New("missing required field 'blockNumber' for ExecutionPayload")
+		return errors.New("missing required field 'blockNumber' for SilaPayload")
 	}
 	if dec.Timestamp == nil {
-		return errors.New("missing required field 'timestamp' for ExecutionPayload")
+		return errors.New("missing required field 'timestamp' for SilaPayload")
 	}
 	if dec.GasUsed == nil {
-		return errors.New("missing required field 'gasUsed' for ExecutionPayload")
+		return errors.New("missing required field 'gasUsed' for SilaPayload")
 	}
 	if dec.GasLimit == nil {
-		return errors.New("missing required field 'gasLimit' for ExecutionPayload")
+		return errors.New("missing required field 'gasLimit' for SilaPayload")
 	}
-	*e = ExecutionPayload{}
+	*e = SilaPayload{}
 	e.ParentHash = dec.ParentHash.Bytes()
 	e.FeeRecipient = dec.FeeRecipient.Bytes()
 	e.StateRoot = dec.StateRoot.Bytes()
@@ -627,82 +627,82 @@ func (e *ExecutionPayload) UnmarshalJSON(enc []byte) error {
 }
 
 // UnmarshalJSON --
-func (e *ExecutionPayloadCapellaWithValue) UnmarshalJSON(enc []byte) error {
+func (e *SilaPayloadCapellaWithValue) UnmarshalJSON(enc []byte) error {
 	dec := GetPayloadV2ResponseJson{}
 	if err := json.Unmarshal(enc, &dec); err != nil {
 		return err
 	}
-	if dec.ExecutionPayload == nil {
-		return errors.New("missing required field 'executionPayload' for ExecutionPayloadWithValue")
+	if dec.SilaPayload == nil {
+		return errors.New("missing required field 'silaPayload' for SilaPayloadWithValue")
 	}
 
-	if dec.ExecutionPayload.ParentHash == nil {
-		return errors.New("missing required field 'parentHash' for ExecutionPayload")
+	if dec.SilaPayload.ParentHash == nil {
+		return errors.New("missing required field 'parentHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.FeeRecipient == nil {
-		return errors.New("missing required field 'feeRecipient' for ExecutionPayload")
+	if dec.SilaPayload.FeeRecipient == nil {
+		return errors.New("missing required field 'feeRecipient' for SilaPayload")
 	}
-	if dec.ExecutionPayload.StateRoot == nil {
-		return errors.New("missing required field 'stateRoot' for ExecutionPayload")
+	if dec.SilaPayload.StateRoot == nil {
+		return errors.New("missing required field 'stateRoot' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ReceiptsRoot == nil {
+	if dec.SilaPayload.ReceiptsRoot == nil {
 		return errors.New("missing required field 'receiptsRoot' for ExecutableDataV1")
 	}
-	if dec.ExecutionPayload.LogsBloom == nil {
-		return errors.New("missing required field 'logsBloom' for ExecutionPayload")
+	if dec.SilaPayload.LogsBloom == nil {
+		return errors.New("missing required field 'logsBloom' for SilaPayload")
 	}
-	if dec.ExecutionPayload.PrevRandao == nil {
-		return errors.New("missing required field 'prevRandao' for ExecutionPayload")
+	if dec.SilaPayload.PrevRandao == nil {
+		return errors.New("missing required field 'prevRandao' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExtraData == nil {
-		return errors.New("missing required field 'extraData' for ExecutionPayload")
+	if dec.SilaPayload.ExtraData == nil {
+		return errors.New("missing required field 'extraData' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockHash == nil {
-		return errors.New("missing required field 'blockHash' for ExecutionPayload")
+	if dec.SilaPayload.BlockHash == nil {
+		return errors.New("missing required field 'blockHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Transactions == nil {
-		return errors.New("missing required field 'transactions' for ExecutionPayload")
+	if dec.SilaPayload.Transactions == nil {
+		return errors.New("missing required field 'transactions' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockNumber == nil {
-		return errors.New("missing required field 'blockNumber' for ExecutionPayload")
+	if dec.SilaPayload.BlockNumber == nil {
+		return errors.New("missing required field 'blockNumber' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Timestamp == nil {
-		return errors.New("missing required field 'timestamp' for ExecutionPayload")
+	if dec.SilaPayload.Timestamp == nil {
+		return errors.New("missing required field 'timestamp' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasUsed == nil {
-		return errors.New("missing required field 'gasUsed' for ExecutionPayload")
+	if dec.SilaPayload.GasUsed == nil {
+		return errors.New("missing required field 'gasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasLimit == nil {
-		return errors.New("missing required field 'gasLimit' for ExecutionPayload")
+	if dec.SilaPayload.GasLimit == nil {
+		return errors.New("missing required field 'gasLimit' for SilaPayload")
 	}
 
-	*e = ExecutionPayloadCapellaWithValue{Payload: &ExecutionPayloadCapella{}}
-	e.Payload.ParentHash = dec.ExecutionPayload.ParentHash.Bytes()
-	e.Payload.FeeRecipient = dec.ExecutionPayload.FeeRecipient.Bytes()
-	e.Payload.StateRoot = dec.ExecutionPayload.StateRoot.Bytes()
-	e.Payload.ReceiptsRoot = dec.ExecutionPayload.ReceiptsRoot.Bytes()
-	e.Payload.LogsBloom = *dec.ExecutionPayload.LogsBloom
-	e.Payload.PrevRandao = dec.ExecutionPayload.PrevRandao.Bytes()
-	e.Payload.BlockNumber = uint64(*dec.ExecutionPayload.BlockNumber)
-	e.Payload.GasLimit = uint64(*dec.ExecutionPayload.GasLimit)
-	e.Payload.GasUsed = uint64(*dec.ExecutionPayload.GasUsed)
-	e.Payload.Timestamp = uint64(*dec.ExecutionPayload.Timestamp)
-	e.Payload.ExtraData = dec.ExecutionPayload.ExtraData
-	baseFee, err := hexutil.DecodeBig(dec.ExecutionPayload.BaseFeePerGas)
+	*e = SilaPayloadCapellaWithValue{Payload: &SilaPayloadCapella{}}
+	e.Payload.ParentHash = dec.SilaPayload.ParentHash.Bytes()
+	e.Payload.FeeRecipient = dec.SilaPayload.FeeRecipient.Bytes()
+	e.Payload.StateRoot = dec.SilaPayload.StateRoot.Bytes()
+	e.Payload.ReceiptsRoot = dec.SilaPayload.ReceiptsRoot.Bytes()
+	e.Payload.LogsBloom = *dec.SilaPayload.LogsBloom
+	e.Payload.PrevRandao = dec.SilaPayload.PrevRandao.Bytes()
+	e.Payload.BlockNumber = uint64(*dec.SilaPayload.BlockNumber)
+	e.Payload.GasLimit = uint64(*dec.SilaPayload.GasLimit)
+	e.Payload.GasUsed = uint64(*dec.SilaPayload.GasUsed)
+	e.Payload.Timestamp = uint64(*dec.SilaPayload.Timestamp)
+	e.Payload.ExtraData = dec.SilaPayload.ExtraData
+	baseFee, err := hexutil.DecodeBig(dec.SilaPayload.BaseFeePerGas)
 	if err != nil {
 		return err
 	}
 	e.Payload.BaseFeePerGas = bytesutil.PadTo(bytesutil.ReverseByteOrder(baseFee.Bytes()), fieldparams.RootLength)
-	e.Payload.BlockHash = dec.ExecutionPayload.BlockHash.Bytes()
-	transactions := make([][]byte, len(dec.ExecutionPayload.Transactions))
-	for i, tx := range dec.ExecutionPayload.Transactions {
+	e.Payload.BlockHash = dec.SilaPayload.BlockHash.Bytes()
+	transactions := make([][]byte, len(dec.SilaPayload.Transactions))
+	for i, tx := range dec.SilaPayload.Transactions {
 		transactions[i] = tx
 	}
 	e.Payload.Transactions = transactions
-	if dec.ExecutionPayload.Withdrawals == nil {
-		dec.ExecutionPayload.Withdrawals = make([]*Withdrawal, 0)
+	if dec.SilaPayload.Withdrawals == nil {
+		dec.SilaPayload.Withdrawals = make([]*Withdrawal, 0)
 	}
-	e.Payload.Withdrawals = dec.ExecutionPayload.Withdrawals
+	e.Payload.Withdrawals = dec.SilaPayload.Withdrawals
 
 	v, err := hexutil.DecodeBig(dec.BlockValue)
 	if err != nil {
@@ -967,7 +967,7 @@ type BlobAndProofJson struct {
 }
 
 // MarshalJSON --
-func (e *ExecutionPayloadDeneb) MarshalJSON() ([]byte, error) {
+func (e *SilaPayloadDeneb) MarshalJSON() ([]byte, error) {
 	transactions := make([]hexutil.Bytes, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		transactions[i] = tx
@@ -992,7 +992,7 @@ func (e *ExecutionPayloadDeneb) MarshalJSON() ([]byte, error) {
 	blobGasUsed := hexutil.Uint64(e.BlobGasUsed)
 	excessBlobGas := hexutil.Uint64(e.ExcessBlobGas)
 
-	return json.Marshal(ExecutionPayloadDenebJSON{
+	return json.Marshal(SilaPayloadDenebJSON{
 		ParentHash:    &pHash,
 		FeeRecipient:  &recipient,
 		StateRoot:     &sRoot,
@@ -1126,89 +1126,89 @@ func ProtoConsolidationRequestsToJson(reqs []*ConsolidationRequest) []Consolidat
 	return j
 }
 
-func (e *ExecutionPayloadDenebWithValueAndBlobsBundle) UnmarshalJSON(enc []byte) error {
+func (e *SilaPayloadDenebWithValueAndBlobsBundle) UnmarshalJSON(enc []byte) error {
 	dec := GetPayloadV3ResponseJson{}
 	if err := json.Unmarshal(enc, &dec); err != nil {
 		return err
 	}
 
-	if dec.ExecutionPayload.ParentHash == nil {
-		return errors.New("missing required field 'parentHash' for ExecutionPayload")
+	if dec.SilaPayload.ParentHash == nil {
+		return errors.New("missing required field 'parentHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.FeeRecipient == nil {
-		return errors.New("missing required field 'feeRecipient' for ExecutionPayload")
+	if dec.SilaPayload.FeeRecipient == nil {
+		return errors.New("missing required field 'feeRecipient' for SilaPayload")
 	}
-	if dec.ExecutionPayload.StateRoot == nil {
-		return errors.New("missing required field 'stateRoot' for ExecutionPayload")
+	if dec.SilaPayload.StateRoot == nil {
+		return errors.New("missing required field 'stateRoot' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ReceiptsRoot == nil {
+	if dec.SilaPayload.ReceiptsRoot == nil {
 		return errors.New("missing required field 'receiptsRoot' for ExecutableDataV1")
 	}
-	if dec.ExecutionPayload.LogsBloom == nil {
-		return errors.New("missing required field 'logsBloom' for ExecutionPayload")
+	if dec.SilaPayload.LogsBloom == nil {
+		return errors.New("missing required field 'logsBloom' for SilaPayload")
 	}
-	if dec.ExecutionPayload.PrevRandao == nil {
-		return errors.New("missing required field 'prevRandao' for ExecutionPayload")
+	if dec.SilaPayload.PrevRandao == nil {
+		return errors.New("missing required field 'prevRandao' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExtraData == nil {
-		return errors.New("missing required field 'extraData' for ExecutionPayload")
+	if dec.SilaPayload.ExtraData == nil {
+		return errors.New("missing required field 'extraData' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockHash == nil {
-		return errors.New("missing required field 'blockHash' for ExecutionPayload")
+	if dec.SilaPayload.BlockHash == nil {
+		return errors.New("missing required field 'blockHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Transactions == nil {
-		return errors.New("missing required field 'transactions' for ExecutionPayload")
+	if dec.SilaPayload.Transactions == nil {
+		return errors.New("missing required field 'transactions' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockNumber == nil {
-		return errors.New("missing required field 'blockNumber' for ExecutionPayload")
+	if dec.SilaPayload.BlockNumber == nil {
+		return errors.New("missing required field 'blockNumber' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Timestamp == nil {
-		return errors.New("missing required field 'timestamp' for ExecutionPayload")
+	if dec.SilaPayload.Timestamp == nil {
+		return errors.New("missing required field 'timestamp' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasUsed == nil {
-		return errors.New("missing required field 'gasUsed' for ExecutionPayload")
+	if dec.SilaPayload.GasUsed == nil {
+		return errors.New("missing required field 'gasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasLimit == nil {
-		return errors.New("missing required field 'gasLimit' for ExecutionPayload")
+	if dec.SilaPayload.GasLimit == nil {
+		return errors.New("missing required field 'gasLimit' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlobGasUsed == nil {
-		return errors.New("missing required field 'blobGasUsed' for ExecutionPayload")
+	if dec.SilaPayload.BlobGasUsed == nil {
+		return errors.New("missing required field 'blobGasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExcessBlobGas == nil {
-		return errors.New("missing required field 'excessBlobGas' for ExecutionPayload")
+	if dec.SilaPayload.ExcessBlobGas == nil {
+		return errors.New("missing required field 'excessBlobGas' for SilaPayload")
 	}
 
-	*e = ExecutionPayloadDenebWithValueAndBlobsBundle{Payload: &ExecutionPayloadDeneb{}}
-	e.Payload.ParentHash = dec.ExecutionPayload.ParentHash.Bytes()
-	e.Payload.FeeRecipient = dec.ExecutionPayload.FeeRecipient.Bytes()
-	e.Payload.StateRoot = dec.ExecutionPayload.StateRoot.Bytes()
-	e.Payload.ReceiptsRoot = dec.ExecutionPayload.ReceiptsRoot.Bytes()
-	e.Payload.LogsBloom = *dec.ExecutionPayload.LogsBloom
-	e.Payload.PrevRandao = dec.ExecutionPayload.PrevRandao.Bytes()
-	e.Payload.BlockNumber = uint64(*dec.ExecutionPayload.BlockNumber)
-	e.Payload.GasLimit = uint64(*dec.ExecutionPayload.GasLimit)
-	e.Payload.GasUsed = uint64(*dec.ExecutionPayload.GasUsed)
-	e.Payload.Timestamp = uint64(*dec.ExecutionPayload.Timestamp)
-	e.Payload.ExtraData = dec.ExecutionPayload.ExtraData
-	baseFee, err := hexutil.DecodeBig(dec.ExecutionPayload.BaseFeePerGas)
+	*e = SilaPayloadDenebWithValueAndBlobsBundle{Payload: &SilaPayloadDeneb{}}
+	e.Payload.ParentHash = dec.SilaPayload.ParentHash.Bytes()
+	e.Payload.FeeRecipient = dec.SilaPayload.FeeRecipient.Bytes()
+	e.Payload.StateRoot = dec.SilaPayload.StateRoot.Bytes()
+	e.Payload.ReceiptsRoot = dec.SilaPayload.ReceiptsRoot.Bytes()
+	e.Payload.LogsBloom = *dec.SilaPayload.LogsBloom
+	e.Payload.PrevRandao = dec.SilaPayload.PrevRandao.Bytes()
+	e.Payload.BlockNumber = uint64(*dec.SilaPayload.BlockNumber)
+	e.Payload.GasLimit = uint64(*dec.SilaPayload.GasLimit)
+	e.Payload.GasUsed = uint64(*dec.SilaPayload.GasUsed)
+	e.Payload.Timestamp = uint64(*dec.SilaPayload.Timestamp)
+	e.Payload.ExtraData = dec.SilaPayload.ExtraData
+	baseFee, err := hexutil.DecodeBig(dec.SilaPayload.BaseFeePerGas)
 	if err != nil {
 		return err
 	}
 	e.Payload.BaseFeePerGas = bytesutil.PadTo(bytesutil.ReverseByteOrder(baseFee.Bytes()), fieldparams.RootLength)
 
-	e.Payload.ExcessBlobGas = uint64(*dec.ExecutionPayload.ExcessBlobGas)
-	e.Payload.BlobGasUsed = uint64(*dec.ExecutionPayload.BlobGasUsed)
+	e.Payload.ExcessBlobGas = uint64(*dec.SilaPayload.ExcessBlobGas)
+	e.Payload.BlobGasUsed = uint64(*dec.SilaPayload.BlobGasUsed)
 
-	e.Payload.BlockHash = dec.ExecutionPayload.BlockHash.Bytes()
-	transactions := make([][]byte, len(dec.ExecutionPayload.Transactions))
-	for i, tx := range dec.ExecutionPayload.Transactions {
+	e.Payload.BlockHash = dec.SilaPayload.BlockHash.Bytes()
+	transactions := make([][]byte, len(dec.SilaPayload.Transactions))
+	for i, tx := range dec.SilaPayload.Transactions {
 		transactions[i] = tx
 	}
 	e.Payload.Transactions = transactions
-	if dec.ExecutionPayload.Withdrawals == nil {
-		dec.ExecutionPayload.Withdrawals = make([]*Withdrawal, 0)
+	if dec.SilaPayload.Withdrawals == nil {
+		dec.SilaPayload.Withdrawals = make([]*Withdrawal, 0)
 	}
-	e.Payload.Withdrawals = dec.ExecutionPayload.Withdrawals
+	e.Payload.Withdrawals = dec.SilaPayload.Withdrawals
 
 	v, err := hexutil.DecodeBig(dec.BlockValue)
 	if err != nil {
@@ -1254,83 +1254,83 @@ func (e *ExecutionBundleElectra) UnmarshalJSON(enc []byte) error {
 		return err
 	}
 
-	if dec.ExecutionPayload.ParentHash == nil {
-		return errors.New("missing required field 'parentHash' for ExecutionPayload")
+	if dec.SilaPayload.ParentHash == nil {
+		return errors.New("missing required field 'parentHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.FeeRecipient == nil {
-		return errors.New("missing required field 'feeRecipient' for ExecutionPayload")
+	if dec.SilaPayload.FeeRecipient == nil {
+		return errors.New("missing required field 'feeRecipient' for SilaPayload")
 	}
-	if dec.ExecutionPayload.StateRoot == nil {
-		return errors.New("missing required field 'stateRoot' for ExecutionPayload")
+	if dec.SilaPayload.StateRoot == nil {
+		return errors.New("missing required field 'stateRoot' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ReceiptsRoot == nil {
+	if dec.SilaPayload.ReceiptsRoot == nil {
 		return errors.New("missing required field 'receiptsRoot' for ExecutableDataV1")
 	}
-	if dec.ExecutionPayload.LogsBloom == nil {
-		return errors.New("missing required field 'logsBloom' for ExecutionPayload")
+	if dec.SilaPayload.LogsBloom == nil {
+		return errors.New("missing required field 'logsBloom' for SilaPayload")
 	}
-	if dec.ExecutionPayload.PrevRandao == nil {
-		return errors.New("missing required field 'prevRandao' for ExecutionPayload")
+	if dec.SilaPayload.PrevRandao == nil {
+		return errors.New("missing required field 'prevRandao' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExtraData == nil {
-		return errors.New("missing required field 'extraData' for ExecutionPayload")
+	if dec.SilaPayload.ExtraData == nil {
+		return errors.New("missing required field 'extraData' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockHash == nil {
-		return errors.New("missing required field 'blockHash' for ExecutionPayload")
+	if dec.SilaPayload.BlockHash == nil {
+		return errors.New("missing required field 'blockHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Transactions == nil {
-		return errors.New("missing required field 'transactions' for ExecutionPayload")
+	if dec.SilaPayload.Transactions == nil {
+		return errors.New("missing required field 'transactions' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockNumber == nil {
-		return errors.New("missing required field 'blockNumber' for ExecutionPayload")
+	if dec.SilaPayload.BlockNumber == nil {
+		return errors.New("missing required field 'blockNumber' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Timestamp == nil {
-		return errors.New("missing required field 'timestamp' for ExecutionPayload")
+	if dec.SilaPayload.Timestamp == nil {
+		return errors.New("missing required field 'timestamp' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasUsed == nil {
-		return errors.New("missing required field 'gasUsed' for ExecutionPayload")
+	if dec.SilaPayload.GasUsed == nil {
+		return errors.New("missing required field 'gasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasLimit == nil {
-		return errors.New("missing required field 'gasLimit' for ExecutionPayload")
+	if dec.SilaPayload.GasLimit == nil {
+		return errors.New("missing required field 'gasLimit' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlobGasUsed == nil {
-		return errors.New("missing required field 'blobGasUsed' for ExecutionPayload")
+	if dec.SilaPayload.BlobGasUsed == nil {
+		return errors.New("missing required field 'blobGasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExcessBlobGas == nil {
-		return errors.New("missing required field 'excessBlobGas' for ExecutionPayload")
+	if dec.SilaPayload.ExcessBlobGas == nil {
+		return errors.New("missing required field 'excessBlobGas' for SilaPayload")
 	}
 
-	*e = ExecutionBundleElectra{Payload: &ExecutionPayloadDeneb{}}
-	e.Payload.ParentHash = dec.ExecutionPayload.ParentHash.Bytes()
-	e.Payload.FeeRecipient = dec.ExecutionPayload.FeeRecipient.Bytes()
-	e.Payload.StateRoot = dec.ExecutionPayload.StateRoot.Bytes()
-	e.Payload.ReceiptsRoot = dec.ExecutionPayload.ReceiptsRoot.Bytes()
-	e.Payload.LogsBloom = *dec.ExecutionPayload.LogsBloom
-	e.Payload.PrevRandao = dec.ExecutionPayload.PrevRandao.Bytes()
-	e.Payload.BlockNumber = uint64(*dec.ExecutionPayload.BlockNumber)
-	e.Payload.GasLimit = uint64(*dec.ExecutionPayload.GasLimit)
-	e.Payload.GasUsed = uint64(*dec.ExecutionPayload.GasUsed)
-	e.Payload.Timestamp = uint64(*dec.ExecutionPayload.Timestamp)
-	e.Payload.ExtraData = dec.ExecutionPayload.ExtraData
-	baseFee, err := hexutil.DecodeBig(dec.ExecutionPayload.BaseFeePerGas)
+	*e = ExecutionBundleElectra{Payload: &SilaPayloadDeneb{}}
+	e.Payload.ParentHash = dec.SilaPayload.ParentHash.Bytes()
+	e.Payload.FeeRecipient = dec.SilaPayload.FeeRecipient.Bytes()
+	e.Payload.StateRoot = dec.SilaPayload.StateRoot.Bytes()
+	e.Payload.ReceiptsRoot = dec.SilaPayload.ReceiptsRoot.Bytes()
+	e.Payload.LogsBloom = *dec.SilaPayload.LogsBloom
+	e.Payload.PrevRandao = dec.SilaPayload.PrevRandao.Bytes()
+	e.Payload.BlockNumber = uint64(*dec.SilaPayload.BlockNumber)
+	e.Payload.GasLimit = uint64(*dec.SilaPayload.GasLimit)
+	e.Payload.GasUsed = uint64(*dec.SilaPayload.GasUsed)
+	e.Payload.Timestamp = uint64(*dec.SilaPayload.Timestamp)
+	e.Payload.ExtraData = dec.SilaPayload.ExtraData
+	baseFee, err := hexutil.DecodeBig(dec.SilaPayload.BaseFeePerGas)
 	if err != nil {
 		return err
 	}
 	e.Payload.BaseFeePerGas = bytesutil.PadTo(bytesutil.ReverseByteOrder(baseFee.Bytes()), fieldparams.RootLength)
 
-	e.Payload.ExcessBlobGas = uint64(*dec.ExecutionPayload.ExcessBlobGas)
-	e.Payload.BlobGasUsed = uint64(*dec.ExecutionPayload.BlobGasUsed)
+	e.Payload.ExcessBlobGas = uint64(*dec.SilaPayload.ExcessBlobGas)
+	e.Payload.BlobGasUsed = uint64(*dec.SilaPayload.BlobGasUsed)
 
-	e.Payload.BlockHash = dec.ExecutionPayload.BlockHash.Bytes()
-	transactions := make([][]byte, len(dec.ExecutionPayload.Transactions))
-	for i, tx := range dec.ExecutionPayload.Transactions {
+	e.Payload.BlockHash = dec.SilaPayload.BlockHash.Bytes()
+	transactions := make([][]byte, len(dec.SilaPayload.Transactions))
+	for i, tx := range dec.SilaPayload.Transactions {
 		transactions[i] = tx
 	}
 	e.Payload.Transactions = transactions
-	if dec.ExecutionPayload.Withdrawals == nil {
-		dec.ExecutionPayload.Withdrawals = make([]*Withdrawal, 0)
+	if dec.SilaPayload.Withdrawals == nil {
+		dec.SilaPayload.Withdrawals = make([]*Withdrawal, 0)
 	}
-	e.Payload.Withdrawals = dec.ExecutionPayload.Withdrawals
+	e.Payload.Withdrawals = dec.SilaPayload.Withdrawals
 
 	v, err := hexutil.DecodeBig(dec.BlockValue)
 	if err != nil {
@@ -1385,83 +1385,83 @@ func (e *ExecutionBundleFulu) UnmarshalJSON(enc []byte) error {
 		return err
 	}
 
-	if dec.ExecutionPayload.ParentHash == nil {
-		return errors.New("missing required field 'parentHash' for ExecutionPayload")
+	if dec.SilaPayload.ParentHash == nil {
+		return errors.New("missing required field 'parentHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.FeeRecipient == nil {
-		return errors.New("missing required field 'feeRecipient' for ExecutionPayload")
+	if dec.SilaPayload.FeeRecipient == nil {
+		return errors.New("missing required field 'feeRecipient' for SilaPayload")
 	}
-	if dec.ExecutionPayload.StateRoot == nil {
-		return errors.New("missing required field 'stateRoot' for ExecutionPayload")
+	if dec.SilaPayload.StateRoot == nil {
+		return errors.New("missing required field 'stateRoot' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ReceiptsRoot == nil {
+	if dec.SilaPayload.ReceiptsRoot == nil {
 		return errors.New("missing required field 'receiptsRoot' for ExecutableDataV1")
 	}
-	if dec.ExecutionPayload.LogsBloom == nil {
-		return errors.New("missing required field 'logsBloom' for ExecutionPayload")
+	if dec.SilaPayload.LogsBloom == nil {
+		return errors.New("missing required field 'logsBloom' for SilaPayload")
 	}
-	if dec.ExecutionPayload.PrevRandao == nil {
-		return errors.New("missing required field 'prevRandao' for ExecutionPayload")
+	if dec.SilaPayload.PrevRandao == nil {
+		return errors.New("missing required field 'prevRandao' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExtraData == nil {
-		return errors.New("missing required field 'extraData' for ExecutionPayload")
+	if dec.SilaPayload.ExtraData == nil {
+		return errors.New("missing required field 'extraData' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockHash == nil {
-		return errors.New("missing required field 'blockHash' for ExecutionPayload")
+	if dec.SilaPayload.BlockHash == nil {
+		return errors.New("missing required field 'blockHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Transactions == nil {
-		return errors.New("missing required field 'transactions' for ExecutionPayload")
+	if dec.SilaPayload.Transactions == nil {
+		return errors.New("missing required field 'transactions' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockNumber == nil {
-		return errors.New("missing required field 'blockNumber' for ExecutionPayload")
+	if dec.SilaPayload.BlockNumber == nil {
+		return errors.New("missing required field 'blockNumber' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Timestamp == nil {
-		return errors.New("missing required field 'timestamp' for ExecutionPayload")
+	if dec.SilaPayload.Timestamp == nil {
+		return errors.New("missing required field 'timestamp' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasUsed == nil {
-		return errors.New("missing required field 'gasUsed' for ExecutionPayload")
+	if dec.SilaPayload.GasUsed == nil {
+		return errors.New("missing required field 'gasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasLimit == nil {
-		return errors.New("missing required field 'gasLimit' for ExecutionPayload")
+	if dec.SilaPayload.GasLimit == nil {
+		return errors.New("missing required field 'gasLimit' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlobGasUsed == nil {
-		return errors.New("missing required field 'blobGasUsed' for ExecutionPayload")
+	if dec.SilaPayload.BlobGasUsed == nil {
+		return errors.New("missing required field 'blobGasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExcessBlobGas == nil {
-		return errors.New("missing required field 'excessBlobGas' for ExecutionPayload")
+	if dec.SilaPayload.ExcessBlobGas == nil {
+		return errors.New("missing required field 'excessBlobGas' for SilaPayload")
 	}
 
-	*e = ExecutionBundleFulu{Payload: &ExecutionPayloadDeneb{}}
-	e.Payload.ParentHash = dec.ExecutionPayload.ParentHash.Bytes()
-	e.Payload.FeeRecipient = dec.ExecutionPayload.FeeRecipient.Bytes()
-	e.Payload.StateRoot = dec.ExecutionPayload.StateRoot.Bytes()
-	e.Payload.ReceiptsRoot = dec.ExecutionPayload.ReceiptsRoot.Bytes()
-	e.Payload.LogsBloom = *dec.ExecutionPayload.LogsBloom
-	e.Payload.PrevRandao = dec.ExecutionPayload.PrevRandao.Bytes()
-	e.Payload.BlockNumber = uint64(*dec.ExecutionPayload.BlockNumber)
-	e.Payload.GasLimit = uint64(*dec.ExecutionPayload.GasLimit)
-	e.Payload.GasUsed = uint64(*dec.ExecutionPayload.GasUsed)
-	e.Payload.Timestamp = uint64(*dec.ExecutionPayload.Timestamp)
-	e.Payload.ExtraData = dec.ExecutionPayload.ExtraData
-	baseFee, err := hexutil.DecodeBig(dec.ExecutionPayload.BaseFeePerGas)
+	*e = ExecutionBundleFulu{Payload: &SilaPayloadDeneb{}}
+	e.Payload.ParentHash = dec.SilaPayload.ParentHash.Bytes()
+	e.Payload.FeeRecipient = dec.SilaPayload.FeeRecipient.Bytes()
+	e.Payload.StateRoot = dec.SilaPayload.StateRoot.Bytes()
+	e.Payload.ReceiptsRoot = dec.SilaPayload.ReceiptsRoot.Bytes()
+	e.Payload.LogsBloom = *dec.SilaPayload.LogsBloom
+	e.Payload.PrevRandao = dec.SilaPayload.PrevRandao.Bytes()
+	e.Payload.BlockNumber = uint64(*dec.SilaPayload.BlockNumber)
+	e.Payload.GasLimit = uint64(*dec.SilaPayload.GasLimit)
+	e.Payload.GasUsed = uint64(*dec.SilaPayload.GasUsed)
+	e.Payload.Timestamp = uint64(*dec.SilaPayload.Timestamp)
+	e.Payload.ExtraData = dec.SilaPayload.ExtraData
+	baseFee, err := hexutil.DecodeBig(dec.SilaPayload.BaseFeePerGas)
 	if err != nil {
 		return err
 	}
 	e.Payload.BaseFeePerGas = bytesutil.PadTo(bytesutil.ReverseByteOrder(baseFee.Bytes()), fieldparams.RootLength)
 
-	e.Payload.ExcessBlobGas = uint64(*dec.ExecutionPayload.ExcessBlobGas)
-	e.Payload.BlobGasUsed = uint64(*dec.ExecutionPayload.BlobGasUsed)
+	e.Payload.ExcessBlobGas = uint64(*dec.SilaPayload.ExcessBlobGas)
+	e.Payload.BlobGasUsed = uint64(*dec.SilaPayload.BlobGasUsed)
 
-	e.Payload.BlockHash = dec.ExecutionPayload.BlockHash.Bytes()
-	transactions := make([][]byte, len(dec.ExecutionPayload.Transactions))
-	for i, tx := range dec.ExecutionPayload.Transactions {
+	e.Payload.BlockHash = dec.SilaPayload.BlockHash.Bytes()
+	transactions := make([][]byte, len(dec.SilaPayload.Transactions))
+	for i, tx := range dec.SilaPayload.Transactions {
 		transactions[i] = tx
 	}
 	e.Payload.Transactions = transactions
-	if dec.ExecutionPayload.Withdrawals == nil {
-		dec.ExecutionPayload.Withdrawals = make([]*Withdrawal, 0)
+	if dec.SilaPayload.Withdrawals == nil {
+		dec.SilaPayload.Withdrawals = make([]*Withdrawal, 0)
 	}
-	e.Payload.Withdrawals = dec.ExecutionPayload.Withdrawals
+	e.Payload.Withdrawals = dec.SilaPayload.Withdrawals
 
 	v, err := hexutil.DecodeBig(dec.BlockValue)
 	if err != nil {
@@ -1562,7 +1562,7 @@ func (b *BlobAndProofV2) UnmarshalJSON(enc []byte) error {
 	return nil
 }
 
-func (e *ExecutionPayloadGloas) MarshalJSON() ([]byte, error) {
+func (e *SilaPayloadGloas) MarshalJSON() ([]byte, error) {
 	transactions := make([]hexutil.Bytes, len(e.Transactions))
 	for i, tx := range e.Transactions {
 		transactions[i] = tx
@@ -1589,7 +1589,7 @@ func (e *ExecutionPayloadGloas) MarshalJSON() ([]byte, error) {
 	bal := hexutil.Bytes(e.BlockAccessList)
 	slotNumber := hexutil.Uint64(e.SlotNumber)
 
-	return json.Marshal(ExecutionPayloadGloasJSON{
+	return json.Marshal(SilaPayloadGloasJSON{
 		ParentHash:      &pHash,
 		FeeRecipient:    &recipient,
 		StateRoot:       &sRoot,
@@ -1618,92 +1618,92 @@ func (e *ExecutionBundleGloas) UnmarshalJSON(enc []byte) error {
 		return err
 	}
 
-	if dec.ExecutionPayload.ParentHash == nil {
-		return errors.New("missing required field 'parentHash' for ExecutionPayload")
+	if dec.SilaPayload.ParentHash == nil {
+		return errors.New("missing required field 'parentHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.FeeRecipient == nil {
-		return errors.New("missing required field 'feeRecipient' for ExecutionPayload")
+	if dec.SilaPayload.FeeRecipient == nil {
+		return errors.New("missing required field 'feeRecipient' for SilaPayload")
 	}
-	if dec.ExecutionPayload.StateRoot == nil {
-		return errors.New("missing required field 'stateRoot' for ExecutionPayload")
+	if dec.SilaPayload.StateRoot == nil {
+		return errors.New("missing required field 'stateRoot' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ReceiptsRoot == nil {
-		return errors.New("missing required field 'receiptsRoot' for ExecutionPayload")
+	if dec.SilaPayload.ReceiptsRoot == nil {
+		return errors.New("missing required field 'receiptsRoot' for SilaPayload")
 	}
-	if dec.ExecutionPayload.LogsBloom == nil {
-		return errors.New("missing required field 'logsBloom' for ExecutionPayload")
+	if dec.SilaPayload.LogsBloom == nil {
+		return errors.New("missing required field 'logsBloom' for SilaPayload")
 	}
-	if dec.ExecutionPayload.PrevRandao == nil {
-		return errors.New("missing required field 'prevRandao' for ExecutionPayload")
+	if dec.SilaPayload.PrevRandao == nil {
+		return errors.New("missing required field 'prevRandao' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExtraData == nil {
-		return errors.New("missing required field 'extraData' for ExecutionPayload")
+	if dec.SilaPayload.ExtraData == nil {
+		return errors.New("missing required field 'extraData' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockHash == nil {
-		return errors.New("missing required field 'blockHash' for ExecutionPayload")
+	if dec.SilaPayload.BlockHash == nil {
+		return errors.New("missing required field 'blockHash' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Transactions == nil {
-		return errors.New("missing required field 'transactions' for ExecutionPayload")
+	if dec.SilaPayload.Transactions == nil {
+		return errors.New("missing required field 'transactions' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlockNumber == nil {
-		return errors.New("missing required field 'blockNumber' for ExecutionPayload")
+	if dec.SilaPayload.BlockNumber == nil {
+		return errors.New("missing required field 'blockNumber' for SilaPayload")
 	}
-	if dec.ExecutionPayload.Timestamp == nil {
-		return errors.New("missing required field 'timestamp' for ExecutionPayload")
+	if dec.SilaPayload.Timestamp == nil {
+		return errors.New("missing required field 'timestamp' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasUsed == nil {
-		return errors.New("missing required field 'gasUsed' for ExecutionPayload")
+	if dec.SilaPayload.GasUsed == nil {
+		return errors.New("missing required field 'gasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.GasLimit == nil {
-		return errors.New("missing required field 'gasLimit' for ExecutionPayload")
+	if dec.SilaPayload.GasLimit == nil {
+		return errors.New("missing required field 'gasLimit' for SilaPayload")
 	}
-	if dec.ExecutionPayload.BlobGasUsed == nil {
-		return errors.New("missing required field 'blobGasUsed' for ExecutionPayload")
+	if dec.SilaPayload.BlobGasUsed == nil {
+		return errors.New("missing required field 'blobGasUsed' for SilaPayload")
 	}
-	if dec.ExecutionPayload.ExcessBlobGas == nil {
-		return errors.New("missing required field 'excessBlobGas' for ExecutionPayload")
+	if dec.SilaPayload.ExcessBlobGas == nil {
+		return errors.New("missing required field 'excessBlobGas' for SilaPayload")
 	}
-	if dec.ExecutionPayload.SlotNumber == nil {
-		return errors.New("missing required field 'slotNumber' for ExecutionPayload")
+	if dec.SilaPayload.SlotNumber == nil {
+		return errors.New("missing required field 'slotNumber' for SilaPayload")
 	}
 
-	*e = ExecutionBundleGloas{Payload: &ExecutionPayloadGloas{}}
-	e.Payload.ParentHash = dec.ExecutionPayload.ParentHash.Bytes()
-	e.Payload.FeeRecipient = dec.ExecutionPayload.FeeRecipient.Bytes()
-	e.Payload.StateRoot = dec.ExecutionPayload.StateRoot.Bytes()
-	e.Payload.ReceiptsRoot = dec.ExecutionPayload.ReceiptsRoot.Bytes()
-	e.Payload.LogsBloom = *dec.ExecutionPayload.LogsBloom
-	e.Payload.PrevRandao = dec.ExecutionPayload.PrevRandao.Bytes()
-	e.Payload.BlockNumber = uint64(*dec.ExecutionPayload.BlockNumber)
-	e.Payload.GasLimit = uint64(*dec.ExecutionPayload.GasLimit)
-	e.Payload.GasUsed = uint64(*dec.ExecutionPayload.GasUsed)
-	e.Payload.Timestamp = uint64(*dec.ExecutionPayload.Timestamp)
-	e.Payload.ExtraData = dec.ExecutionPayload.ExtraData
-	baseFee, err := hexutil.DecodeBig(dec.ExecutionPayload.BaseFeePerGas)
+	*e = ExecutionBundleGloas{Payload: &SilaPayloadGloas{}}
+	e.Payload.ParentHash = dec.SilaPayload.ParentHash.Bytes()
+	e.Payload.FeeRecipient = dec.SilaPayload.FeeRecipient.Bytes()
+	e.Payload.StateRoot = dec.SilaPayload.StateRoot.Bytes()
+	e.Payload.ReceiptsRoot = dec.SilaPayload.ReceiptsRoot.Bytes()
+	e.Payload.LogsBloom = *dec.SilaPayload.LogsBloom
+	e.Payload.PrevRandao = dec.SilaPayload.PrevRandao.Bytes()
+	e.Payload.BlockNumber = uint64(*dec.SilaPayload.BlockNumber)
+	e.Payload.GasLimit = uint64(*dec.SilaPayload.GasLimit)
+	e.Payload.GasUsed = uint64(*dec.SilaPayload.GasUsed)
+	e.Payload.Timestamp = uint64(*dec.SilaPayload.Timestamp)
+	e.Payload.ExtraData = dec.SilaPayload.ExtraData
+	baseFee, err := hexutil.DecodeBig(dec.SilaPayload.BaseFeePerGas)
 	if err != nil {
 		return err
 	}
 	e.Payload.BaseFeePerGas = bytesutil.PadTo(bytesutil.ReverseByteOrder(baseFee.Bytes()), fieldparams.RootLength)
 
-	e.Payload.ExcessBlobGas = uint64(*dec.ExecutionPayload.ExcessBlobGas)
-	e.Payload.BlobGasUsed = uint64(*dec.ExecutionPayload.BlobGasUsed)
+	e.Payload.ExcessBlobGas = uint64(*dec.SilaPayload.ExcessBlobGas)
+	e.Payload.BlobGasUsed = uint64(*dec.SilaPayload.BlobGasUsed)
 
-	e.Payload.BlockHash = dec.ExecutionPayload.BlockHash.Bytes()
-	transactions := make([][]byte, len(dec.ExecutionPayload.Transactions))
-	for i, tx := range dec.ExecutionPayload.Transactions {
+	e.Payload.BlockHash = dec.SilaPayload.BlockHash.Bytes()
+	transactions := make([][]byte, len(dec.SilaPayload.Transactions))
+	for i, tx := range dec.SilaPayload.Transactions {
 		transactions[i] = tx
 	}
 	e.Payload.Transactions = transactions
-	if dec.ExecutionPayload.Withdrawals == nil {
-		dec.ExecutionPayload.Withdrawals = make([]*Withdrawal, 0)
+	if dec.SilaPayload.Withdrawals == nil {
+		dec.SilaPayload.Withdrawals = make([]*Withdrawal, 0)
 	}
-	e.Payload.Withdrawals = dec.ExecutionPayload.Withdrawals
+	e.Payload.Withdrawals = dec.SilaPayload.Withdrawals
 
-	if dec.ExecutionPayload.BlockAccessList == nil {
-		return errors.New("missing required field 'blockAccessList' for ExecutionPayload")
+	if dec.SilaPayload.BlockAccessList == nil {
+		return errors.New("missing required field 'blockAccessList' for SilaPayload")
 	}
-	e.Payload.BlockAccessList = *dec.ExecutionPayload.BlockAccessList
-	e.Payload.SlotNumber = primitives.Slot(*dec.ExecutionPayload.SlotNumber)
+	e.Payload.BlockAccessList = *dec.SilaPayload.BlockAccessList
+	e.Payload.SlotNumber = primitives.Slot(*dec.SilaPayload.SlotNumber)
 
 	v, err := hexutil.DecodeBig(dec.BlockValue)
 	if err != nil {

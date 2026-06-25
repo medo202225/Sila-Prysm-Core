@@ -41,7 +41,7 @@ var epochsSinceFinalityExpandCache = primitives.Epoch(4)
 // BlockReceiver interface defines the methods of chain service for receiving and processing new blocks.
 type BlockReceiver interface {
 	ReceiveBlock(ctx context.Context, block interfaces.ReadOnlySignedBeaconBlock, blockRoot [32]byte, avs das.AvailabilityChecker) error
-	ReceiveBlockBatch(ctx context.Context, blocks []blocks.ROBlock, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error
+	ReceiveBlockBatch(ctx context.Context, blocks []blocks.ROBlock, envelopes []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error
 	HasBlock(ctx context.Context, root [32]byte) bool
 	RecentBlockSlot(root [32]byte) (primitives.Slot, error)
 	BlockBeingSynced([32]byte) bool
@@ -384,7 +384,7 @@ func (s *Service) executePostFinalizationTasks(ctx context.Context, finalizedSta
 // ReceiveBlockBatch processes the whole block batch at once, assuming the block batch is linear ,transitioning
 // the state, performing batch verification of all collected signatures and then performing the appropriate
 // actions for a block post-transition.
-func (s *Service) ReceiveBlockBatch(ctx context.Context, blocks []blocks.ROBlock, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error {
+func (s *Service) ReceiveBlockBatch(ctx context.Context, blocks []blocks.ROBlock, envelopes []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error {
 	ctx, span := trace.StartSpan(ctx, "blockChain.ReceiveBlockBatch")
 	defer span.End()
 
@@ -433,12 +433,12 @@ func (s *Service) ReceiveBlockBatch(ctx context.Context, blocks []blocks.ROBlock
 		return err
 	}
 	for _, e := range envelopes {
-		protoEnv, ok := e.Proto().(*silapb.SignedExecutionPayloadEnvelope)
+		protoEnv, ok := e.Proto().(*silapb.SignedSilaPayloadEnvelope)
 		if !ok {
 			return errors.New("could not type assert signed envelope to proto")
 		}
-		if err := s.cfg.BeaconDB.SaveExecutionPayloadEnvelope(ctx, protoEnv); err != nil {
-			return errors.Wrap(err, "could not save execution payload envelope")
+		if err := s.cfg.BeaconDB.SaveSilaPayloadEnvelope(ctx, protoEnv); err != nil {
+			return errors.Wrap(err, "could not save sila payload envelope")
 		}
 	}
 	finalized := s.cfg.ForkChoiceStore.FinalizedCheckpoint()
@@ -671,7 +671,7 @@ func (s *Service) sendBlockAttestationsToSlasher(signed interfaces.ReadOnlySigne
 	}
 }
 
-// validateExecutionOnBlock notifies the engine of the incoming block execution payload and returns true if the payload is valid
+// validateExecutionOnBlock notifies the engine of the incoming block sila payload and returns true if the payload is valid
 func (s *Service) validateExecutionOnBlock(ctx context.Context, ver int, header interfaces.ExecutionData, block blocks.ROBlock) (bool, error) {
 	isValidPayload, err := s.notifyNewPayload(ctx, ver, header, block)
 	if err != nil {

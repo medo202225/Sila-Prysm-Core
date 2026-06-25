@@ -94,8 +94,8 @@ type PTCDuty struct {
 // ProduceBlockV3Response is a wrapper json object for the returned block from the ProduceBlockV3 endpoint
 type ProduceBlockV3Response struct {
 	Version                 string          `json:"version"`
-	ExecutionPayloadBlinded bool            `json:"execution_payload_blinded"`
-	ExecutionPayloadValue   string          `json:"execution_payload_value"`
+	SilaPayloadBlinded bool            `json:"sila_payload_blinded"`
+	SilaPayloadValue   string          `json:"sila_payload_value"`
 	ConsensusBlockValue     string          `json:"consensus_block_value"`
 	Data                    json.RawMessage `json:"data"` // represents the block values based on the version
 }
@@ -104,7 +104,7 @@ type ProduceBlockV3Response struct {
 type ProduceBlockV4Response struct {
 	Version                  string          `json:"version"`
 	ConsensusBlockValue      string          `json:"consensus_block_value"`
-	ExecutionPayloadIncluded bool            `json:"execution_payload_included"`
+	SilaPayloadIncluded bool            `json:"sila_payload_included"`
 	Data                     json.RawMessage `json:"data"`
 }
 
@@ -164,9 +164,9 @@ type ValidatorParticipation struct {
 	PreviousEpochHeadAttestingGwei   string `json:"previous_epoch_head_attesting_gwei"`
 }
 
-type GetValidatorBlindedExecutionPayloadEnvelopeResponse struct {
+type GetValidatorBlindedSilaPayloadEnvelopeResponse struct {
 	Version string                           `json:"version"`
-	Data    *BlindedExecutionPayloadEnvelope `json:"data"`
+	Data    *BlindedSilaPayloadEnvelope `json:"data"`
 }
 
 type ActiveSetChanges struct {

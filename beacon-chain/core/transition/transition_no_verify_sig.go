@@ -344,8 +344,8 @@ func ProcessBlockNoVerifyAnySig(
 //	    for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:SIP7251]
 //	    for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
 //	    # [New in Electra:SIP7002:SIP7251]
-//	    for_ops(body.execution_payload.withdrawal_requests, process_execution_layer_withdrawal_request)
-//	    for_ops(body.execution_payload.deposit_requests, process_deposit_requests)  # [New in Electra:SIP6110]
+//	    for_ops(body.sila_payload.withdrawal_requests, process_execution_layer_withdrawal_request)
+//	    for_ops(body.sila_payload.deposit_requests, process_deposit_requests)  # [New in Electra:SIP6110]
 //	    for_ops(body.consolidations, process_consolidation)  # [New in Electra:SIP7251]
 func ProcessOperationsNoVerifyAttsSigs(
 	ctx context.Context,
@@ -405,7 +405,7 @@ func ProcessOperationsNoVerifyAttsSigs(
 //
 //	process_block_header(state, block)
 //	if is_execution_enabled(state, block.body):
-//	    process_execution_payload(state, block.body.execution_payload, EXECUTION_ENGINE)  # [New in Bellatrix]
+//	    process_sila_payload(state, block.body.sila_payload, EXECUTION_ENGINE)  # [New in Bellatrix]
 //	process_randao(state, block.body)
 //	process_sila_execution_data(state, block.body)
 //	process_operations(state, block.body)
@@ -425,8 +425,8 @@ func ProcessBlockForStateRoot(
 	body := blk.Body()
 
 	if state.Version() >= version.Gloas {
-		if err := gloas.ProcessParentExecutionPayload(ctx, state, blk); err != nil {
-			return nil, errors.Wrap(err, "could not process parent execution payload")
+		if err := gloas.ProcessParentSilaPayload(ctx, state, blk); err != nil {
+			return nil, errors.Wrap(err, "could not process parent sila payload")
 		}
 	}
 
@@ -445,14 +445,14 @@ func ProcessBlockForStateRoot(
 		// <spec fn="process_block" fork="gloas" hash="a911a43e">
 		// def process_block(state: BeaconState, block: BeaconBlock) -> None:
 		//     # [New in Gloas:SIP7732]
-		//     process_parent_execution_payload(state, block)
+		//     process_parent_sila_payload(state, block)
 		//     process_block_header(state, block)
 		//     # [Modified in Gloas:SIP7732]
 		//     process_withdrawals(state)
 		//     # [Modified in Gloas:SIP7732]
-		//     # Removed `process_execution_payload`
+		//     # Removed `process_sila_payload`
 		//     # [New in Gloas:SIP7732]
-		//     process_execution_payload_bid(state, block)
+		//     process_sila_payload_bid(state, block)
 		//     process_randao(state, block.body)
 		//     process_sila_execution_data(state, block.body)
 		//     # [Modified in Gloas:SIP7732]
@@ -462,8 +462,8 @@ func ProcessBlockForStateRoot(
 		if err := gloas.ProcessWithdrawals(state); err != nil {
 			return nil, errors.Wrap(ErrProcessWithdrawalsFailed, err.Error())
 		}
-		if err := gloas.ProcessExecutionPayloadBid(state, blk); err != nil {
-			return nil, errors.Wrap(err, "could not process execution payload bid")
+		if err := gloas.ProcessSilaPayloadBid(state, blk); err != nil {
+			return nil, errors.Wrap(err, "could not process sila payload bid")
 		}
 	} else {
 		enabled, err := b.IsExecutionEnabled(state, blk.Body())

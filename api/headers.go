@@ -4,10 +4,10 @@ import "net/http"
 
 const (
 	VersionHeader                  = "Eth-Consensus-Version"
-	ExecutionPayloadBlindedHeader  = "Eth-Execution-Payload-Blinded"
-	ExecutionPayloadValueHeader    = "Eth-Execution-Payload-Value"
+	SilaPayloadBlindedHeader  = "Sila-Payload-Blinded"
+	SilaPayloadValueHeader    = "Sila-Payload-Value"
 	ConsensusBlockValueHeader      = "Eth-Consensus-Block-Value"
-	ExecutionPayloadIncludedHeader = "Eth-Execution-Payload-Included"
+	SilaPayloadIncludedHeader = "Sila-Payload-Included"
 	JsonMediaType                  = "application/json"
 	OctetStreamMediaType           = "application/octet-stream"
 	EventStreamMediaType           = "text/event-stream"

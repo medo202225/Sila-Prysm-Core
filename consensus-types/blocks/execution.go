@@ -14,54 +14,54 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-// executionPayload is a convenience wrapper around a beacon block body's execution payload data structure
+// silaPayload is a convenience wrapper around a beacon block body's sila payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayload struct {
-	p *enginev1.ExecutionPayload
+type silaPayload struct {
+	p *enginev1.SilaPayload
 }
 
-// NewWrappedExecutionData creates an appropriate execution payload wrapper based on the incoming type.
+// NewWrappedExecutionData creates an appropriate sila payload wrapper based on the incoming type.
 func NewWrappedExecutionData(v proto.Message) (interfaces.ExecutionData, error) {
 	if v == nil {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
 	switch pbStruct := v.(type) {
-	case *enginev1.ExecutionPayload:
-		return WrappedExecutionPayload(pbStruct)
-	case *enginev1.ExecutionPayloadCapella:
-		return WrappedExecutionPayloadCapella(pbStruct)
-	case *enginev1.ExecutionPayloadCapellaWithValue:
-		return WrappedExecutionPayloadCapella(pbStruct.Payload)
-	case *enginev1.ExecutionPayloadDeneb:
-		return WrappedExecutionPayloadDeneb(pbStruct)
-	case *enginev1.ExecutionPayloadDenebWithValueAndBlobsBundle:
-		return WrappedExecutionPayloadDeneb(pbStruct.Payload)
+	case *enginev1.SilaPayload:
+		return WrappedSilaPayload(pbStruct)
+	case *enginev1.SilaPayloadCapella:
+		return WrappedSilaPayloadCapella(pbStruct)
+	case *enginev1.SilaPayloadCapellaWithValue:
+		return WrappedSilaPayloadCapella(pbStruct.Payload)
+	case *enginev1.SilaPayloadDeneb:
+		return WrappedSilaPayloadDeneb(pbStruct)
+	case *enginev1.SilaPayloadDenebWithValueAndBlobsBundle:
+		return WrappedSilaPayloadDeneb(pbStruct.Payload)
 	case *enginev1.ExecutionBundleElectra:
 		// note: no payload changes in electra so using deneb
-		return WrappedExecutionPayloadDeneb(pbStruct.Payload)
+		return WrappedSilaPayloadDeneb(pbStruct.Payload)
 	case *enginev1.ExecutionBundleFulu:
-		return WrappedExecutionPayloadDeneb(pbStruct.Payload)
-	case *enginev1.ExecutionPayloadGloas:
-		return WrappedExecutionPayloadGloas(pbStruct)
+		return WrappedSilaPayloadDeneb(pbStruct.Payload)
+	case *enginev1.SilaPayloadGloas:
+		return WrappedSilaPayloadGloas(pbStruct)
 	case *enginev1.ExecutionBundleGloas:
-		return WrappedExecutionPayloadGloas(pbStruct.Payload)
-	case *enginev1.ExecutionPayloadHeader:
-		return WrappedExecutionPayloadHeader(pbStruct)
-	case *enginev1.ExecutionPayloadHeaderCapella:
-		return WrappedExecutionPayloadHeaderCapella(pbStruct)
-	case *enginev1.ExecutionPayloadHeaderDeneb:
-		return WrappedExecutionPayloadHeaderDeneb(pbStruct)
+		return WrappedSilaPayloadGloas(pbStruct.Payload)
+	case *enginev1.SilaPayloadHeader:
+		return WrappedSilaPayloadHeader(pbStruct)
+	case *enginev1.SilaPayloadHeaderCapella:
+		return WrappedSilaPayloadHeaderCapella(pbStruct)
+	case *enginev1.SilaPayloadHeaderDeneb:
+		return WrappedSilaPayloadHeaderDeneb(pbStruct)
 	default:
 		return nil, errors.Wrapf(ErrUnsupportedVersion, "type %T", pbStruct)
 	}
 }
 
-var _ interfaces.ExecutionData = &executionPayload{}
+var _ interfaces.ExecutionData = &silaPayload{}
 
-// WrappedExecutionPayload is a constructor which wraps a protobuf execution payload into an interface.
-func WrappedExecutionPayload(p *enginev1.ExecutionPayload) (interfaces.ExecutionData, error) {
-	w := executionPayload{p: p}
+// WrappedSilaPayload is a constructor which wraps a protobuf sila payload into an interface.
+func WrappedSilaPayload(p *enginev1.SilaPayload) (interfaces.ExecutionData, error) {
+	w := silaPayload{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -69,162 +69,162 @@ func WrappedExecutionPayload(p *enginev1.ExecutionPayload) (interfaces.Execution
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayload) IsNil() bool {
+func (e silaPayload) IsNil() bool {
 	return e.p == nil
 }
 
 // IsBlinded returns true if the underlying data is blinded.
-func (executionPayload) IsBlinded() bool {
+func (silaPayload) IsBlinded() bool {
 	return false
 }
 
 // MarshalSSZ --
-func (e executionPayload) MarshalSSZ() ([]byte, error) {
+func (e silaPayload) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayload) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayload) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayload) SizeSSZ() int {
+func (e silaPayload) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayload) UnmarshalSSZ(buf []byte) error {
+func (e silaPayload) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayload) HashTreeRoot() ([32]byte, error) {
+func (e silaPayload) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayload) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayload) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayload) Proto() proto.Message {
+func (e silaPayload) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayload) ParentHash() []byte {
+func (e silaPayload) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayload) FeeRecipient() []byte {
+func (e silaPayload) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayload) StateRoot() []byte {
+func (e silaPayload) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayload) ReceiptsRoot() []byte {
+func (e silaPayload) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayload) LogsBloom() []byte {
+func (e silaPayload) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayload) PrevRandao() []byte {
+func (e silaPayload) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayload) BlockNumber() uint64 {
+func (e silaPayload) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayload) GasLimit() uint64 {
+func (e silaPayload) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayload) GasUsed() uint64 {
+func (e silaPayload) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayload) Timestamp() uint64 {
+func (e silaPayload) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayload) ExtraData() []byte {
+func (e silaPayload) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayload) BaseFeePerGas() []byte {
+func (e silaPayload) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayload) BlockHash() []byte {
+func (e silaPayload) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (e executionPayload) Transactions() ([][]byte, error) {
+func (e silaPayload) Transactions() ([][]byte, error) {
 	return e.p.Transactions, nil
 }
 
 // TransactionsRoot --
-func (executionPayload) TransactionsRoot() ([]byte, error) {
+func (silaPayload) TransactionsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // Withdrawals --
-func (executionPayload) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (silaPayload) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // WithdrawalsRoot --
-func (executionPayload) WithdrawalsRoot() ([]byte, error) {
+func (silaPayload) WithdrawalsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlockAccessList --
-func (executionPayload) BlockAccessList() ([]byte, error) {
+func (silaPayload) BlockAccessList() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlobGasUsed --
-func (e executionPayload) BlobGasUsed() (uint64, error) {
+func (e silaPayload) BlobGasUsed() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
 // ExcessBlobGas --
-func (e executionPayload) ExcessBlobGas() (uint64, error) {
+func (e silaPayload) ExcessBlobGas() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
-// executionPayloadHeader is a convenience wrapper around a blinded beacon block body's execution header data structure
+// silaPayloadHeader is a convenience wrapper around a blinded beacon block body's execution header data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayloadHeader struct {
-	p *enginev1.ExecutionPayloadHeader
+type silaPayloadHeader struct {
+	p *enginev1.SilaPayloadHeader
 }
 
-var _ interfaces.ExecutionData = &executionPayloadHeader{}
+var _ interfaces.ExecutionData = &silaPayloadHeader{}
 
-// WrappedExecutionPayloadHeader is a constructor which wraps a protobuf execution header into an interface.
-func WrappedExecutionPayloadHeader(p *enginev1.ExecutionPayloadHeader) (interfaces.ExecutionData, error) {
-	w := executionPayloadHeader{p: p}
+// WrappedSilaPayloadHeader is a constructor which wraps a protobuf execution header into an interface.
+func WrappedSilaPayloadHeader(p *enginev1.SilaPayloadHeader) (interfaces.ExecutionData, error) {
+	w := silaPayloadHeader{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -232,152 +232,152 @@ func WrappedExecutionPayloadHeader(p *enginev1.ExecutionPayloadHeader) (interfac
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayloadHeader) IsNil() bool {
+func (e silaPayloadHeader) IsNil() bool {
 	return e.p == nil
 }
 
 // IsBlinded returns true if the underlying data is a header.
-func (executionPayloadHeader) IsBlinded() bool {
+func (silaPayloadHeader) IsBlinded() bool {
 	return true
 }
 
 // MarshalSSZ --
-func (e executionPayloadHeader) MarshalSSZ() ([]byte, error) {
+func (e silaPayloadHeader) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayloadHeader) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayloadHeader) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayloadHeader) SizeSSZ() int {
+func (e silaPayloadHeader) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayloadHeader) UnmarshalSSZ(buf []byte) error {
+func (e silaPayloadHeader) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayloadHeader) HashTreeRoot() ([32]byte, error) {
+func (e silaPayloadHeader) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayloadHeader) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayloadHeader) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayloadHeader) Proto() proto.Message {
+func (e silaPayloadHeader) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayloadHeader) ParentHash() []byte {
+func (e silaPayloadHeader) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayloadHeader) FeeRecipient() []byte {
+func (e silaPayloadHeader) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayloadHeader) StateRoot() []byte {
+func (e silaPayloadHeader) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayloadHeader) ReceiptsRoot() []byte {
+func (e silaPayloadHeader) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayloadHeader) LogsBloom() []byte {
+func (e silaPayloadHeader) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayloadHeader) PrevRandao() []byte {
+func (e silaPayloadHeader) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayloadHeader) BlockNumber() uint64 {
+func (e silaPayloadHeader) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayloadHeader) GasLimit() uint64 {
+func (e silaPayloadHeader) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayloadHeader) GasUsed() uint64 {
+func (e silaPayloadHeader) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayloadHeader) Timestamp() uint64 {
+func (e silaPayloadHeader) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayloadHeader) ExtraData() []byte {
+func (e silaPayloadHeader) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayloadHeader) BaseFeePerGas() []byte {
+func (e silaPayloadHeader) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayloadHeader) BlockHash() []byte {
+func (e silaPayloadHeader) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (executionPayloadHeader) Transactions() ([][]byte, error) {
+func (silaPayloadHeader) Transactions() ([][]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // TransactionsRoot --
-func (e executionPayloadHeader) TransactionsRoot() ([]byte, error) {
+func (e silaPayloadHeader) TransactionsRoot() ([]byte, error) {
 	return e.p.TransactionsRoot, nil
 }
 
 // Withdrawals --
-func (executionPayloadHeader) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (silaPayloadHeader) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // WithdrawalsRoot --
-func (executionPayloadHeader) WithdrawalsRoot() ([]byte, error) {
+func (silaPayloadHeader) WithdrawalsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlockAccessList --
-func (executionPayloadHeader) BlockAccessList() ([]byte, error) {
+func (silaPayloadHeader) BlockAccessList() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlobGasUsed --
-func (e executionPayloadHeader) BlobGasUsed() (uint64, error) {
+func (e silaPayloadHeader) BlobGasUsed() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
 // ExcessBlobGas --
-func (e executionPayloadHeader) ExcessBlobGas() (uint64, error) {
+func (e silaPayloadHeader) ExcessBlobGas() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
-// PayloadToHeader converts `payload` into execution payload header format.
-func PayloadToHeader(payload interfaces.ExecutionData) (*enginev1.ExecutionPayloadHeader, error) {
+// PayloadToHeader converts `payload` into sila payload header format.
+func PayloadToHeader(payload interfaces.ExecutionData) (*enginev1.SilaPayloadHeader, error) {
 	txs, err := payload.Transactions()
 	if err != nil {
 		return nil, err
@@ -386,7 +386,7 @@ func PayloadToHeader(payload interfaces.ExecutionData) (*enginev1.ExecutionPaylo
 	if err != nil {
 		return nil, err
 	}
-	return &enginev1.ExecutionPayloadHeader{
+	return &enginev1.SilaPayloadHeader{
 		ParentHash:       bytesutil.SafeCopyBytes(payload.ParentHash()),
 		FeeRecipient:     bytesutil.SafeCopyBytes(payload.FeeRecipient()),
 		StateRoot:        bytesutil.SafeCopyBytes(payload.StateRoot()),
@@ -404,18 +404,18 @@ func PayloadToHeader(payload interfaces.ExecutionData) (*enginev1.ExecutionPaylo
 	}, nil
 }
 
-// executionPayloadCapella is a convenience wrapper around a beacon block body's execution payload data structure
+// silaPayloadCapella is a convenience wrapper around a beacon block body's sila payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayloadCapella struct {
-	p *enginev1.ExecutionPayloadCapella
+type silaPayloadCapella struct {
+	p *enginev1.SilaPayloadCapella
 }
 
-var _ interfaces.ExecutionData = &executionPayloadCapella{}
+var _ interfaces.ExecutionData = &silaPayloadCapella{}
 
-// WrappedExecutionPayloadCapella is a constructor which wraps a protobuf execution payload into an interface.
-func WrappedExecutionPayloadCapella(p *enginev1.ExecutionPayloadCapella) (interfaces.ExecutionData, error) {
-	w := executionPayloadCapella{p: p}
+// WrappedSilaPayloadCapella is a constructor which wraps a protobuf sila payload into an interface.
+func WrappedSilaPayloadCapella(p *enginev1.SilaPayloadCapella) (interfaces.ExecutionData, error) {
+	w := silaPayloadCapella{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -423,162 +423,162 @@ func WrappedExecutionPayloadCapella(p *enginev1.ExecutionPayloadCapella) (interf
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayloadCapella) IsNil() bool {
+func (e silaPayloadCapella) IsNil() bool {
 	return e.p == nil
 }
 
 // IsBlinded returns true if the underlying data is blinded.
-func (executionPayloadCapella) IsBlinded() bool {
+func (silaPayloadCapella) IsBlinded() bool {
 	return false
 }
 
 // MarshalSSZ --
-func (e executionPayloadCapella) MarshalSSZ() ([]byte, error) {
+func (e silaPayloadCapella) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayloadCapella) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayloadCapella) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayloadCapella) SizeSSZ() int {
+func (e silaPayloadCapella) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayloadCapella) UnmarshalSSZ(buf []byte) error {
+func (e silaPayloadCapella) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayloadCapella) HashTreeRoot() ([32]byte, error) {
+func (e silaPayloadCapella) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayloadCapella) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayloadCapella) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayloadCapella) Proto() proto.Message {
+func (e silaPayloadCapella) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayloadCapella) ParentHash() []byte {
+func (e silaPayloadCapella) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayloadCapella) FeeRecipient() []byte {
+func (e silaPayloadCapella) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayloadCapella) StateRoot() []byte {
+func (e silaPayloadCapella) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayloadCapella) ReceiptsRoot() []byte {
+func (e silaPayloadCapella) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayloadCapella) LogsBloom() []byte {
+func (e silaPayloadCapella) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayloadCapella) PrevRandao() []byte {
+func (e silaPayloadCapella) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayloadCapella) BlockNumber() uint64 {
+func (e silaPayloadCapella) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayloadCapella) GasLimit() uint64 {
+func (e silaPayloadCapella) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayloadCapella) GasUsed() uint64 {
+func (e silaPayloadCapella) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayloadCapella) Timestamp() uint64 {
+func (e silaPayloadCapella) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayloadCapella) ExtraData() []byte {
+func (e silaPayloadCapella) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayloadCapella) BaseFeePerGas() []byte {
+func (e silaPayloadCapella) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayloadCapella) BlockHash() []byte {
+func (e silaPayloadCapella) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (e executionPayloadCapella) Transactions() ([][]byte, error) {
+func (e silaPayloadCapella) Transactions() ([][]byte, error) {
 	return e.p.Transactions, nil
 }
 
 // TransactionsRoot --
-func (executionPayloadCapella) TransactionsRoot() ([]byte, error) {
+func (silaPayloadCapella) TransactionsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // Withdrawals --
-func (e executionPayloadCapella) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (e silaPayloadCapella) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return e.p.Withdrawals, nil
 }
 
 // WithdrawalsRoot --
-func (executionPayloadCapella) WithdrawalsRoot() ([]byte, error) {
+func (silaPayloadCapella) WithdrawalsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlockAccessList --
-func (executionPayloadCapella) BlockAccessList() ([]byte, error) {
+func (silaPayloadCapella) BlockAccessList() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlobGasUsed --
-func (e executionPayloadCapella) BlobGasUsed() (uint64, error) {
+func (e silaPayloadCapella) BlobGasUsed() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
 // ExcessBlobGas --
-func (e executionPayloadCapella) ExcessBlobGas() (uint64, error) {
+func (e silaPayloadCapella) ExcessBlobGas() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
-// executionPayloadHeaderCapella is a convenience wrapper around a blinded beacon block body's execution header data structure
+// silaPayloadHeaderCapella is a convenience wrapper around a blinded beacon block body's execution header data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayloadHeaderCapella struct {
-	p *enginev1.ExecutionPayloadHeaderCapella
+type silaPayloadHeaderCapella struct {
+	p *enginev1.SilaPayloadHeaderCapella
 }
 
-var _ interfaces.ExecutionData = &executionPayloadHeaderCapella{}
+var _ interfaces.ExecutionData = &silaPayloadHeaderCapella{}
 
-// WrappedExecutionPayloadHeaderCapella is a constructor which wraps a protobuf execution header into an interface.
-func WrappedExecutionPayloadHeaderCapella(p *enginev1.ExecutionPayloadHeaderCapella) (interfaces.ExecutionData, error) {
-	w := executionPayloadHeaderCapella{p: p}
+// WrappedSilaPayloadHeaderCapella is a constructor which wraps a protobuf execution header into an interface.
+func WrappedSilaPayloadHeaderCapella(p *enginev1.SilaPayloadHeaderCapella) (interfaces.ExecutionData, error) {
+	w := silaPayloadHeaderCapella{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -586,152 +586,152 @@ func WrappedExecutionPayloadHeaderCapella(p *enginev1.ExecutionPayloadHeaderCape
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayloadHeaderCapella) IsNil() bool {
+func (e silaPayloadHeaderCapella) IsNil() bool {
 	return e.p == nil
 }
 
 // IsBlinded returns true if the underlying data is blinded.
-func (executionPayloadHeaderCapella) IsBlinded() bool {
+func (silaPayloadHeaderCapella) IsBlinded() bool {
 	return true
 }
 
 // MarshalSSZ --
-func (e executionPayloadHeaderCapella) MarshalSSZ() ([]byte, error) {
+func (e silaPayloadHeaderCapella) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayloadHeaderCapella) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayloadHeaderCapella) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayloadHeaderCapella) SizeSSZ() int {
+func (e silaPayloadHeaderCapella) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayloadHeaderCapella) UnmarshalSSZ(buf []byte) error {
+func (e silaPayloadHeaderCapella) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayloadHeaderCapella) HashTreeRoot() ([32]byte, error) {
+func (e silaPayloadHeaderCapella) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayloadHeaderCapella) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayloadHeaderCapella) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayloadHeaderCapella) Proto() proto.Message {
+func (e silaPayloadHeaderCapella) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayloadHeaderCapella) ParentHash() []byte {
+func (e silaPayloadHeaderCapella) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayloadHeaderCapella) FeeRecipient() []byte {
+func (e silaPayloadHeaderCapella) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayloadHeaderCapella) StateRoot() []byte {
+func (e silaPayloadHeaderCapella) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayloadHeaderCapella) ReceiptsRoot() []byte {
+func (e silaPayloadHeaderCapella) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayloadHeaderCapella) LogsBloom() []byte {
+func (e silaPayloadHeaderCapella) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayloadHeaderCapella) PrevRandao() []byte {
+func (e silaPayloadHeaderCapella) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayloadHeaderCapella) BlockNumber() uint64 {
+func (e silaPayloadHeaderCapella) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayloadHeaderCapella) GasLimit() uint64 {
+func (e silaPayloadHeaderCapella) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayloadHeaderCapella) GasUsed() uint64 {
+func (e silaPayloadHeaderCapella) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayloadHeaderCapella) Timestamp() uint64 {
+func (e silaPayloadHeaderCapella) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayloadHeaderCapella) ExtraData() []byte {
+func (e silaPayloadHeaderCapella) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayloadHeaderCapella) BaseFeePerGas() []byte {
+func (e silaPayloadHeaderCapella) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayloadHeaderCapella) BlockHash() []byte {
+func (e silaPayloadHeaderCapella) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (executionPayloadHeaderCapella) Transactions() ([][]byte, error) {
+func (silaPayloadHeaderCapella) Transactions() ([][]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // TransactionsRoot --
-func (e executionPayloadHeaderCapella) TransactionsRoot() ([]byte, error) {
+func (e silaPayloadHeaderCapella) TransactionsRoot() ([]byte, error) {
 	return e.p.TransactionsRoot, nil
 }
 
 // Withdrawals --
-func (executionPayloadHeaderCapella) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (silaPayloadHeaderCapella) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // WithdrawalsRoot --
-func (e executionPayloadHeaderCapella) WithdrawalsRoot() ([]byte, error) {
+func (e silaPayloadHeaderCapella) WithdrawalsRoot() ([]byte, error) {
 	return e.p.WithdrawalsRoot, nil
 }
 
 // BlockAccessList --
-func (executionPayloadHeaderCapella) BlockAccessList() ([]byte, error) {
+func (silaPayloadHeaderCapella) BlockAccessList() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlobGasUsed --
-func (e executionPayloadHeaderCapella) BlobGasUsed() (uint64, error) {
+func (e silaPayloadHeaderCapella) BlobGasUsed() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
 // ExcessBlobGas --
-func (e executionPayloadHeaderCapella) ExcessBlobGas() (uint64, error) {
+func (e silaPayloadHeaderCapella) ExcessBlobGas() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
-// PayloadToHeaderCapella converts `payload` into execution payload header format.
-func PayloadToHeaderCapella(payload interfaces.ExecutionData) (*enginev1.ExecutionPayloadHeaderCapella, error) {
+// PayloadToHeaderCapella converts `payload` into sila payload header format.
+func PayloadToHeaderCapella(payload interfaces.ExecutionData) (*enginev1.SilaPayloadHeaderCapella, error) {
 	txs, err := payload.Transactions()
 	if err != nil {
 		return nil, err
@@ -749,7 +749,7 @@ func PayloadToHeaderCapella(payload interfaces.ExecutionData) (*enginev1.Executi
 		return nil, err
 	}
 
-	return &enginev1.ExecutionPayloadHeaderCapella{
+	return &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       bytesutil.SafeCopyBytes(payload.ParentHash()),
 		FeeRecipient:     bytesutil.SafeCopyBytes(payload.FeeRecipient()),
 		StateRoot:        bytesutil.SafeCopyBytes(payload.StateRoot()),
@@ -768,8 +768,8 @@ func PayloadToHeaderCapella(payload interfaces.ExecutionData) (*enginev1.Executi
 	}, nil
 }
 
-// PayloadToHeaderDeneb converts `payload` into execution payload header format.
-func PayloadToHeaderDeneb(payload interfaces.ExecutionData) (*enginev1.ExecutionPayloadHeaderDeneb, error) {
+// PayloadToHeaderDeneb converts `payload` into sila payload header format.
+func PayloadToHeaderDeneb(payload interfaces.ExecutionData) (*enginev1.SilaPayloadHeaderDeneb, error) {
 	txs, err := payload.Transactions()
 	if err != nil {
 		return nil, err
@@ -795,7 +795,7 @@ func PayloadToHeaderDeneb(payload interfaces.ExecutionData) (*enginev1.Execution
 		return nil, err
 	}
 
-	return &enginev1.ExecutionPayloadHeaderDeneb{
+	return &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       bytesutil.SafeCopyBytes(payload.ParentHash()),
 		FeeRecipient:     bytesutil.SafeCopyBytes(payload.FeeRecipient()),
 		StateRoot:        bytesutil.SafeCopyBytes(payload.StateRoot()),
@@ -881,18 +881,18 @@ func IsEmptyExecutionData(data interfaces.ExecutionData) (bool, error) {
 	return true, nil
 }
 
-// executionPayloadHeaderDeneb is a convenience wrapper around a blinded beacon block body's execution header data structure.
+// silaPayloadHeaderDeneb is a convenience wrapper around a blinded beacon block body's execution header data structure.
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayloadHeaderDeneb struct {
-	p *enginev1.ExecutionPayloadHeaderDeneb
+type silaPayloadHeaderDeneb struct {
+	p *enginev1.SilaPayloadHeaderDeneb
 }
 
-var _ interfaces.ExecutionData = &executionPayloadHeaderDeneb{}
+var _ interfaces.ExecutionData = &silaPayloadHeaderDeneb{}
 
-// WrappedExecutionPayloadHeaderDeneb is a constructor which wraps a protobuf execution header into an interface.
-func WrappedExecutionPayloadHeaderDeneb(p *enginev1.ExecutionPayloadHeaderDeneb) (interfaces.ExecutionData, error) {
-	w := executionPayloadHeaderDeneb{p: p}
+// WrappedSilaPayloadHeaderDeneb is a constructor which wraps a protobuf execution header into an interface.
+func WrappedSilaPayloadHeaderDeneb(p *enginev1.SilaPayloadHeaderDeneb) (interfaces.ExecutionData, error) {
+	w := silaPayloadHeaderDeneb{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -900,162 +900,162 @@ func WrappedExecutionPayloadHeaderDeneb(p *enginev1.ExecutionPayloadHeaderDeneb)
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayloadHeaderDeneb) IsNil() bool {
+func (e silaPayloadHeaderDeneb) IsNil() bool {
 	return e.p == nil
 }
 
 // MarshalSSZ --
-func (e executionPayloadHeaderDeneb) MarshalSSZ() ([]byte, error) {
+func (e silaPayloadHeaderDeneb) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayloadHeaderDeneb) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayloadHeaderDeneb) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayloadHeaderDeneb) SizeSSZ() int {
+func (e silaPayloadHeaderDeneb) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayloadHeaderDeneb) UnmarshalSSZ(buf []byte) error {
+func (e silaPayloadHeaderDeneb) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayloadHeaderDeneb) HashTreeRoot() ([32]byte, error) {
+func (e silaPayloadHeaderDeneb) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayloadHeaderDeneb) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayloadHeaderDeneb) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayloadHeaderDeneb) Proto() proto.Message {
+func (e silaPayloadHeaderDeneb) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayloadHeaderDeneb) ParentHash() []byte {
+func (e silaPayloadHeaderDeneb) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayloadHeaderDeneb) FeeRecipient() []byte {
+func (e silaPayloadHeaderDeneb) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayloadHeaderDeneb) StateRoot() []byte {
+func (e silaPayloadHeaderDeneb) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayloadHeaderDeneb) ReceiptsRoot() []byte {
+func (e silaPayloadHeaderDeneb) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayloadHeaderDeneb) LogsBloom() []byte {
+func (e silaPayloadHeaderDeneb) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayloadHeaderDeneb) PrevRandao() []byte {
+func (e silaPayloadHeaderDeneb) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayloadHeaderDeneb) BlockNumber() uint64 {
+func (e silaPayloadHeaderDeneb) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayloadHeaderDeneb) GasLimit() uint64 {
+func (e silaPayloadHeaderDeneb) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayloadHeaderDeneb) GasUsed() uint64 {
+func (e silaPayloadHeaderDeneb) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayloadHeaderDeneb) Timestamp() uint64 {
+func (e silaPayloadHeaderDeneb) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayloadHeaderDeneb) ExtraData() []byte {
+func (e silaPayloadHeaderDeneb) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayloadHeaderDeneb) BaseFeePerGas() []byte {
+func (e silaPayloadHeaderDeneb) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayloadHeaderDeneb) BlockHash() []byte {
+func (e silaPayloadHeaderDeneb) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (executionPayloadHeaderDeneb) Transactions() ([][]byte, error) {
+func (silaPayloadHeaderDeneb) Transactions() ([][]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // TransactionsRoot --
-func (e executionPayloadHeaderDeneb) TransactionsRoot() ([]byte, error) {
+func (e silaPayloadHeaderDeneb) TransactionsRoot() ([]byte, error) {
 	return e.p.TransactionsRoot, nil
 }
 
 // Withdrawals --
-func (e executionPayloadHeaderDeneb) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (e silaPayloadHeaderDeneb) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // WithdrawalsRoot --
-func (e executionPayloadHeaderDeneb) WithdrawalsRoot() ([]byte, error) {
+func (e silaPayloadHeaderDeneb) WithdrawalsRoot() ([]byte, error) {
 	return e.p.WithdrawalsRoot, nil
 }
 
 // BlockAccessList --
-func (executionPayloadHeaderDeneb) BlockAccessList() ([]byte, error) {
+func (silaPayloadHeaderDeneb) BlockAccessList() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlobGasUsed --
-func (e executionPayloadHeaderDeneb) BlobGasUsed() (uint64, error) {
+func (e silaPayloadHeaderDeneb) BlobGasUsed() (uint64, error) {
 	return e.p.BlobGasUsed, nil
 }
 
 // ExcessBlobGas --
-func (e executionPayloadHeaderDeneb) ExcessBlobGas() (uint64, error) {
+func (e silaPayloadHeaderDeneb) ExcessBlobGas() (uint64, error) {
 	return e.p.ExcessBlobGas, nil
 }
 
 // IsBlinded returns true if the underlying data is blinded.
-func (e executionPayloadHeaderDeneb) IsBlinded() bool {
+func (e silaPayloadHeaderDeneb) IsBlinded() bool {
 	return true
 }
 
-// executionPayloadDeneb is a convenience wrapper around a beacon block body's execution payload data structure
+// silaPayloadDeneb is a convenience wrapper around a beacon block body's sila payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayloadDeneb struct {
-	p *enginev1.ExecutionPayloadDeneb
+type silaPayloadDeneb struct {
+	p *enginev1.SilaPayloadDeneb
 }
 
-var _ interfaces.ExecutionData = &executionPayloadDeneb{}
+var _ interfaces.ExecutionData = &silaPayloadDeneb{}
 
-// WrappedExecutionPayloadDeneb is a constructor which wraps a protobuf execution payload into an interface.
-func WrappedExecutionPayloadDeneb(p *enginev1.ExecutionPayloadDeneb) (interfaces.ExecutionData, error) {
-	w := executionPayloadDeneb{p: p}
+// WrappedSilaPayloadDeneb is a constructor which wraps a protobuf sila payload into an interface.
+func WrappedSilaPayloadDeneb(p *enginev1.SilaPayloadDeneb) (interfaces.ExecutionData, error) {
+	w := silaPayloadDeneb{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -1063,160 +1063,160 @@ func WrappedExecutionPayloadDeneb(p *enginev1.ExecutionPayloadDeneb) (interfaces
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayloadDeneb) IsNil() bool {
+func (e silaPayloadDeneb) IsNil() bool {
 	return e.p == nil
 }
 
 // MarshalSSZ --
-func (e executionPayloadDeneb) MarshalSSZ() ([]byte, error) {
+func (e silaPayloadDeneb) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayloadDeneb) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayloadDeneb) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayloadDeneb) SizeSSZ() int {
+func (e silaPayloadDeneb) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayloadDeneb) UnmarshalSSZ(buf []byte) error {
+func (e silaPayloadDeneb) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayloadDeneb) HashTreeRoot() ([32]byte, error) {
+func (e silaPayloadDeneb) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayloadDeneb) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayloadDeneb) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayloadDeneb) Proto() proto.Message {
+func (e silaPayloadDeneb) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayloadDeneb) ParentHash() []byte {
+func (e silaPayloadDeneb) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayloadDeneb) FeeRecipient() []byte {
+func (e silaPayloadDeneb) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayloadDeneb) StateRoot() []byte {
+func (e silaPayloadDeneb) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayloadDeneb) ReceiptsRoot() []byte {
+func (e silaPayloadDeneb) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayloadDeneb) LogsBloom() []byte {
+func (e silaPayloadDeneb) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayloadDeneb) PrevRandao() []byte {
+func (e silaPayloadDeneb) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayloadDeneb) BlockNumber() uint64 {
+func (e silaPayloadDeneb) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayloadDeneb) GasLimit() uint64 {
+func (e silaPayloadDeneb) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayloadDeneb) GasUsed() uint64 {
+func (e silaPayloadDeneb) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayloadDeneb) Timestamp() uint64 {
+func (e silaPayloadDeneb) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayloadDeneb) ExtraData() []byte {
+func (e silaPayloadDeneb) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayloadDeneb) BaseFeePerGas() []byte {
+func (e silaPayloadDeneb) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayloadDeneb) BlockHash() []byte {
+func (e silaPayloadDeneb) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (e executionPayloadDeneb) Transactions() ([][]byte, error) {
+func (e silaPayloadDeneb) Transactions() ([][]byte, error) {
 	return e.p.Transactions, nil
 }
 
 // TransactionsRoot --
-func (e executionPayloadDeneb) TransactionsRoot() ([]byte, error) {
+func (e silaPayloadDeneb) TransactionsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // Withdrawals --
-func (e executionPayloadDeneb) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (e silaPayloadDeneb) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return e.p.Withdrawals, nil
 }
 
 // WithdrawalsRoot --
-func (e executionPayloadDeneb) WithdrawalsRoot() ([]byte, error) {
+func (e silaPayloadDeneb) WithdrawalsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlockAccessList --
-func (executionPayloadDeneb) BlockAccessList() ([]byte, error) {
+func (silaPayloadDeneb) BlockAccessList() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
-func (e executionPayloadDeneb) BlobGasUsed() (uint64, error) {
+func (e silaPayloadDeneb) BlobGasUsed() (uint64, error) {
 	return e.p.BlobGasUsed, nil
 }
 
-func (e executionPayloadDeneb) ExcessBlobGas() (uint64, error) {
+func (e silaPayloadDeneb) ExcessBlobGas() (uint64, error) {
 	return e.p.ExcessBlobGas, nil
 }
 
 // IsBlinded returns true if the underlying data is blinded.
-func (e executionPayloadDeneb) IsBlinded() bool {
+func (e silaPayloadDeneb) IsBlinded() bool {
 	return false
 }
 
-// executionPayloadGloas is a convenience wrapper around a beacon block body's execution payload data structure
+// silaPayloadGloas is a convenience wrapper around a beacon block body's sila payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
-type executionPayloadGloas struct {
-	p *enginev1.ExecutionPayloadGloas
+type silaPayloadGloas struct {
+	p *enginev1.SilaPayloadGloas
 }
 
-var _ interfaces.ExecutionData = &executionPayloadGloas{}
+var _ interfaces.ExecutionData = &silaPayloadGloas{}
 
-// WrappedExecutionPayloadGloas is a constructor which wraps a protobuf execution payload into an interface.
-func WrappedExecutionPayloadGloas(p *enginev1.ExecutionPayloadGloas) (interfaces.ExecutionData, error) {
-	w := executionPayloadGloas{p: p}
+// WrappedSilaPayloadGloas is a constructor which wraps a protobuf sila payload into an interface.
+func WrappedSilaPayloadGloas(p *enginev1.SilaPayloadGloas) (interfaces.ExecutionData, error) {
+	w := silaPayloadGloas{p: p}
 	if w.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
@@ -1224,146 +1224,146 @@ func WrappedExecutionPayloadGloas(p *enginev1.ExecutionPayloadGloas) (interfaces
 }
 
 // IsNil checks if the underlying data is nil.
-func (e executionPayloadGloas) IsNil() bool {
+func (e silaPayloadGloas) IsNil() bool {
 	return e.p == nil
 }
 
 // MarshalSSZ --
-func (e executionPayloadGloas) MarshalSSZ() ([]byte, error) {
+func (e silaPayloadGloas) MarshalSSZ() ([]byte, error) {
 	return e.p.MarshalSSZ()
 }
 
 // MarshalSSZTo --
-func (e executionPayloadGloas) MarshalSSZTo(dst []byte) ([]byte, error) {
+func (e silaPayloadGloas) MarshalSSZTo(dst []byte) ([]byte, error) {
 	return e.p.MarshalSSZTo(dst)
 }
 
 // SizeSSZ --
-func (e executionPayloadGloas) SizeSSZ() int {
+func (e silaPayloadGloas) SizeSSZ() int {
 	return e.p.SizeSSZ()
 }
 
 // UnmarshalSSZ --
-func (e executionPayloadGloas) UnmarshalSSZ(buf []byte) error {
+func (e silaPayloadGloas) UnmarshalSSZ(buf []byte) error {
 	return e.p.UnmarshalSSZ(buf)
 }
 
 // HashTreeRoot --
-func (e executionPayloadGloas) HashTreeRoot() ([32]byte, error) {
+func (e silaPayloadGloas) HashTreeRoot() ([32]byte, error) {
 	return e.p.HashTreeRoot()
 }
 
 // HashTreeRootWith --
-func (e executionPayloadGloas) HashTreeRootWith(hh *fastssz.Hasher) error {
+func (e silaPayloadGloas) HashTreeRootWith(hh *fastssz.Hasher) error {
 	return e.p.HashTreeRootWith(hh)
 }
 
 // Proto --
-func (e executionPayloadGloas) Proto() proto.Message {
+func (e silaPayloadGloas) Proto() proto.Message {
 	return e.p
 }
 
 // ParentHash --
-func (e executionPayloadGloas) ParentHash() []byte {
+func (e silaPayloadGloas) ParentHash() []byte {
 	return e.p.ParentHash
 }
 
 // FeeRecipient --
-func (e executionPayloadGloas) FeeRecipient() []byte {
+func (e silaPayloadGloas) FeeRecipient() []byte {
 	return e.p.FeeRecipient
 }
 
 // StateRoot --
-func (e executionPayloadGloas) StateRoot() []byte {
+func (e silaPayloadGloas) StateRoot() []byte {
 	return e.p.StateRoot
 }
 
 // ReceiptsRoot --
-func (e executionPayloadGloas) ReceiptsRoot() []byte {
+func (e silaPayloadGloas) ReceiptsRoot() []byte {
 	return e.p.ReceiptsRoot
 }
 
 // LogsBloom --
-func (e executionPayloadGloas) LogsBloom() []byte {
+func (e silaPayloadGloas) LogsBloom() []byte {
 	return e.p.LogsBloom
 }
 
 // PrevRandao --
-func (e executionPayloadGloas) PrevRandao() []byte {
+func (e silaPayloadGloas) PrevRandao() []byte {
 	return e.p.PrevRandao
 }
 
 // BlockNumber --
-func (e executionPayloadGloas) BlockNumber() uint64 {
+func (e silaPayloadGloas) BlockNumber() uint64 {
 	return e.p.BlockNumber
 }
 
 // GasLimit --
-func (e executionPayloadGloas) GasLimit() uint64 {
+func (e silaPayloadGloas) GasLimit() uint64 {
 	return e.p.GasLimit
 }
 
 // GasUsed --
-func (e executionPayloadGloas) GasUsed() uint64 {
+func (e silaPayloadGloas) GasUsed() uint64 {
 	return e.p.GasUsed
 }
 
 // Timestamp --
-func (e executionPayloadGloas) Timestamp() uint64 {
+func (e silaPayloadGloas) Timestamp() uint64 {
 	return e.p.Timestamp
 }
 
 // ExtraData --
-func (e executionPayloadGloas) ExtraData() []byte {
+func (e silaPayloadGloas) ExtraData() []byte {
 	return e.p.ExtraData
 }
 
 // BaseFeePerGas --
-func (e executionPayloadGloas) BaseFeePerGas() []byte {
+func (e silaPayloadGloas) BaseFeePerGas() []byte {
 	return e.p.BaseFeePerGas
 }
 
 // BlockHash --
-func (e executionPayloadGloas) BlockHash() []byte {
+func (e silaPayloadGloas) BlockHash() []byte {
 	return e.p.BlockHash
 }
 
 // Transactions --
-func (e executionPayloadGloas) Transactions() ([][]byte, error) {
+func (e silaPayloadGloas) Transactions() ([][]byte, error) {
 	return e.p.Transactions, nil
 }
 
 // TransactionsRoot --
-func (executionPayloadGloas) TransactionsRoot() ([]byte, error) {
+func (silaPayloadGloas) TransactionsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // Withdrawals --
-func (e executionPayloadGloas) Withdrawals() ([]*enginev1.Withdrawal, error) {
+func (e silaPayloadGloas) Withdrawals() ([]*enginev1.Withdrawal, error) {
 	return e.p.Withdrawals, nil
 }
 
 // WithdrawalsRoot --
-func (executionPayloadGloas) WithdrawalsRoot() ([]byte, error) {
+func (silaPayloadGloas) WithdrawalsRoot() ([]byte, error) {
 	return nil, consensus_types.ErrUnsupportedField
 }
 
 // BlockAccessList --
-func (e executionPayloadGloas) BlockAccessList() ([]byte, error) {
+func (e silaPayloadGloas) BlockAccessList() ([]byte, error) {
 	return e.p.BlockAccessList, nil
 }
 
 // BlobGasUsed --
-func (e executionPayloadGloas) BlobGasUsed() (uint64, error) {
+func (e silaPayloadGloas) BlobGasUsed() (uint64, error) {
 	return e.p.BlobGasUsed, nil
 }
 
 // ExcessBlobGas --
-func (e executionPayloadGloas) ExcessBlobGas() (uint64, error) {
+func (e silaPayloadGloas) ExcessBlobGas() (uint64, error) {
 	return e.p.ExcessBlobGas, nil
 }
 
 // IsBlinded returns true if the underlying data is blinded.
-func (e executionPayloadGloas) IsBlinded() bool {
+func (e silaPayloadGloas) IsBlinded() bool {
 	return false
 }

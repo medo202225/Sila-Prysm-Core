@@ -119,7 +119,7 @@
   spec: |
     <spec dataclass="GetPayloadResponse" fork="bellatrix" hash="e1adf40d">
     class GetPayloadResponse:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
     </spec>
 
 - name: GetPayloadResponse#capella
@@ -131,7 +131,7 @@
   spec: |
     <spec dataclass="GetPayloadResponse" fork="capella" hash="72cc3a23">
     class GetPayloadResponse:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
         block_value: uint256
     </spec>
 
@@ -144,7 +144,7 @@
   spec: |
     <spec dataclass="GetPayloadResponse" fork="deneb" hash="56d9f50e">
     class GetPayloadResponse:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
         block_value: uint256
         # [New in Deneb:SIP4844]
         blobs_bundle: BlobsBundle
@@ -159,7 +159,7 @@
   spec: |
     <spec dataclass="GetPayloadResponse" fork="electra" hash="4ad01138">
     class GetPayloadResponse:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
         block_value: uint256
         blobs_bundle: BlobsBundle
         # [New in Electra]
@@ -175,7 +175,7 @@
   spec: |
     <spec dataclass="GetPayloadResponse" fork="fulu" hash="3ed4ae9e">
     class GetPayloadResponse:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
         block_value: uint256
         # [Modified in Fulu:SIP7594]
         blobs_bundle: BlobsBundle
@@ -260,7 +260,7 @@
   spec: |
     <spec dataclass="NewPayloadRequest" fork="bellatrix" hash="cbd668dc">
     class NewPayloadRequest:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
     </spec>
 
 - name: NewPayloadRequest#deneb
@@ -270,7 +270,7 @@
   spec: |
     <spec dataclass="NewPayloadRequest" fork="deneb" hash="a61cff05">
     class NewPayloadRequest:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
         versioned_hashes: Sequence[VersionedHash]
         parent_beacon_block_root: Root
     </spec>
@@ -282,7 +282,7 @@
   spec: |
     <spec dataclass="NewPayloadRequest" fork="electra" hash="366a2e72">
     class NewPayloadRequest:
-        execution_payload: ExecutionPayload
+        sila_payload: SilaPayload
         versioned_hashes: Sequence[VersionedHash]
         parent_beacon_block_root: Root
         # [New in Electra]
@@ -554,7 +554,7 @@
         latest_messages: Dict[ValidatorIndex, LatestMessage] = field(default_factory=dict)
         unrealized_justifications: Dict[Root, Checkpoint] = field(default_factory=dict)
         # [New in Gloas:SIP7732]
-        payloads: Dict[Root, ExecutionPayloadEnvelope] = field(default_factory=dict)
+        payloads: Dict[Root, SilaPayloadEnvelope] = field(default_factory=dict)
         # [New in Gloas:SIP7732]
         payload_timeliness_vote: Dict[Root, list[Optional[boolean]]] = field(default_factory=dict)
         # [New in Gloas:SIP7732]
@@ -582,7 +582,7 @@
         checkpoint_states: Dict[Checkpoint, BeaconState] = field(default_factory=dict)
         latest_messages: Dict[ValidatorIndex, LatestMessage] = field(default_factory=dict)
         unrealized_justifications: Dict[Root, Checkpoint] = field(default_factory=dict)
-        payloads: Dict[Root, ExecutionPayloadEnvelope] = field(default_factory=dict)
+        payloads: Dict[Root, SilaPayloadEnvelope] = field(default_factory=dict)
         payload_timeliness_vote: Dict[Root, list[Optional[boolean]]] = field(default_factory=dict)
         payload_data_availability_vote: Dict[Root, list[Optional[boolean]]] = field(
             default_factory=dict

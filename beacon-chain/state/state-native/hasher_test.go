@@ -179,9 +179,9 @@ func TestComputeFieldRootsWithHasher_Bellatrix(t *testing.T) {
 	require.NoError(t, beaconState.SetInactivityScores([]uint64{1, 2, 3}))
 	require.NoError(t, beaconState.SetCurrentSyncCommittee(syncCommittee("current")))
 	require.NoError(t, beaconState.SetNextSyncCommittee(syncCommittee("next")))
-	wrappedHeader, err := blocks.WrappedExecutionPayloadHeader(executionPayloadHeader())
+	wrappedHeader, err := blocks.WrappedSilaPayloadHeader(silaPayloadHeader())
 	require.NoError(t, err)
-	require.NoError(t, beaconState.SetLatestExecutionPayloadHeader(wrappedHeader))
+	require.NoError(t, beaconState.SetLatestSilaPayloadHeader(wrappedHeader))
 
 	nativeState, ok := beaconState.(*statenative.BeaconState)
 	require.Equal(t, true, ok)
@@ -253,9 +253,9 @@ func TestComputeFieldRootsWithHasher_Capella(t *testing.T) {
 	require.NoError(t, beaconState.SetInactivityScores([]uint64{1, 2, 3}))
 	require.NoError(t, beaconState.SetCurrentSyncCommittee(syncCommittee("current")))
 	require.NoError(t, beaconState.SetNextSyncCommittee(syncCommittee("next")))
-	wrappedHeader, err := blocks.WrappedExecutionPayloadHeaderCapella(executionPayloadHeaderCapella())
+	wrappedHeader, err := blocks.WrappedSilaPayloadHeaderCapella(silaPayloadHeaderCapella())
 	require.NoError(t, err)
-	require.NoError(t, beaconState.SetLatestExecutionPayloadHeader(wrappedHeader))
+	require.NoError(t, beaconState.SetLatestSilaPayloadHeader(wrappedHeader))
 	require.NoError(t, beaconState.SetNextWithdrawalIndex(123))
 	require.NoError(t, beaconState.SetNextWithdrawalValidatorIndex(123))
 	require.NoError(t, beaconState.AppendHistoricalSummaries(&silapb.HistoricalSummary{
@@ -410,7 +410,7 @@ func syncCommittee(prefix string) *silapb.SyncCommittee {
 	}
 }
 
-func executionPayloadHeader() *enginev1.ExecutionPayloadHeader {
+func silaPayloadHeader() *enginev1.SilaPayloadHeader {
 	ph := bytesutil.ToBytes32([]byte("parent"))
 	fr := bytesutil.PadTo([]byte("fee"), 20)
 	sr := bytesutil.ToBytes32([]byte("state"))
@@ -421,7 +421,7 @@ func executionPayloadHeader() *enginev1.ExecutionPayloadHeader {
 	bf := bytesutil.ToBytes32([]byte("base"))
 	bh := bytesutil.ToBytes32([]byte("block"))
 	tr := bytesutil.ToBytes32([]byte("transactions"))
-	return &enginev1.ExecutionPayloadHeader{
+	return &enginev1.SilaPayloadHeader{
 		ParentHash:       ph[:],
 		FeeRecipient:     fr,
 		StateRoot:        sr[:],
@@ -439,7 +439,7 @@ func executionPayloadHeader() *enginev1.ExecutionPayloadHeader {
 	}
 }
 
-func executionPayloadHeaderCapella() *enginev1.ExecutionPayloadHeaderCapella {
+func silaPayloadHeaderCapella() *enginev1.SilaPayloadHeaderCapella {
 	ph := bytesutil.ToBytes32([]byte("parent"))
 	fr := bytesutil.PadTo([]byte("fee"), 20)
 	sr := bytesutil.ToBytes32([]byte("state"))
@@ -451,7 +451,7 @@ func executionPayloadHeaderCapella() *enginev1.ExecutionPayloadHeaderCapella {
 	bh := bytesutil.ToBytes32([]byte("block"))
 	tr := bytesutil.ToBytes32([]byte("transactions"))
 	wr := bytesutil.ToBytes32([]byte("withdrawals"))
-	return &enginev1.ExecutionPayloadHeaderCapella{
+	return &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       ph[:],
 		FeeRecipient:     fr,
 		StateRoot:        sr[:],

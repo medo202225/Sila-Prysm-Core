@@ -4,12 +4,12 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 )
 
-// Copy creates a deep copy of ExecutionPayloadBid.
-func (header *ExecutionPayloadBid) Copy() *ExecutionPayloadBid {
+// Copy creates a deep copy of SilaPayloadBid.
+func (header *SilaPayloadBid) Copy() *SilaPayloadBid {
 	if header == nil {
 		return nil
 	}
-	return &ExecutionPayloadBid{
+	return &SilaPayloadBid{
 		ParentBlockHash:       bytesutil.SafeCopyBytes(header.ParentBlockHash),
 		ParentBlockRoot:       bytesutil.SafeCopyBytes(header.ParentBlockRoot),
 		BlockHash:             bytesutil.SafeCopyBytes(header.BlockHash),

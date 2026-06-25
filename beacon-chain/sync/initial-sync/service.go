@@ -42,7 +42,7 @@ var _ runtime.Service = (*Service)(nil)
 // blockchainService defines the interface for interaction with block chain service.
 type blockchainService interface {
 	blockchain.BlockReceiver
-	blockchain.ExecutionPayloadEnvelopeReceiver
+	blockchain.SilaPayloadEnvelopeReceiver
 	blockchain.ChainInfoFetcher
 }
 

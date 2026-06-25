@@ -217,7 +217,7 @@ var (
 		prometheus.CounterOpts{
 			Namespace: "validator",
 			Name:      "self_build_envelope_submission_total",
-			Help:      "The number of self-build execution payload envelope submissions by result.",
+			Help:      "The number of self-build sila payload envelope submissions by result.",
 		},
 		[]string{"result"},
 	)

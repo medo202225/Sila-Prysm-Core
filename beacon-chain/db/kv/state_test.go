@@ -69,7 +69,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 				st, err := util.NewBeaconStateBellatrix()
 				require.NoError(t, err)
 				require.NoError(t, st.SetSlot(100))
-				p, err := blocks.WrappedExecutionPayloadHeader(&enginev1.ExecutionPayloadHeader{
+				p, err := blocks.WrappedSilaPayloadHeader(&enginev1.SilaPayloadHeader{
 					ParentHash:       make([]byte, 32),
 					FeeRecipient:     make([]byte, 20),
 					StateRoot:        make([]byte, 32),
@@ -82,7 +82,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 					TransactionsRoot: make([]byte, 32),
 				})
 				require.NoError(t, err)
-				require.NoError(t, st.SetLatestExecutionPayloadHeader(p))
+				require.NoError(t, st.SetLatestSilaPayloadHeader(p))
 				return st
 			},
 			rootSeed: 'B',
@@ -93,7 +93,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 				st, err := util.NewBeaconStateCapella()
 				require.NoError(t, err)
 				require.NoError(t, st.SetSlot(100))
-				p, err := blocks.WrappedExecutionPayloadHeaderCapella(&enginev1.ExecutionPayloadHeaderCapella{
+				p, err := blocks.WrappedSilaPayloadHeaderCapella(&enginev1.SilaPayloadHeaderCapella{
 					ParentHash:       make([]byte, 32),
 					FeeRecipient:     make([]byte, 20),
 					StateRoot:        make([]byte, 32),
@@ -107,7 +107,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 					WithdrawalsRoot:  make([]byte, 32),
 				})
 				require.NoError(t, err)
-				require.NoError(t, st.SetLatestExecutionPayloadHeader(p))
+				require.NoError(t, st.SetLatestSilaPayloadHeader(p))
 				return st
 			},
 			rootSeed: 'C',
@@ -118,7 +118,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 				st, err := util.NewBeaconStateDeneb()
 				require.NoError(t, err)
 				require.NoError(t, st.SetSlot(100))
-				p, err := blocks.WrappedExecutionPayloadHeaderDeneb(&enginev1.ExecutionPayloadHeaderDeneb{
+				p, err := blocks.WrappedSilaPayloadHeaderDeneb(&enginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, 32),
 					FeeRecipient:     make([]byte, 20),
 					StateRoot:        make([]byte, 32),
@@ -132,7 +132,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 					WithdrawalsRoot:  make([]byte, 32),
 				})
 				require.NoError(t, err)
-				require.NoError(t, st.SetLatestExecutionPayloadHeader(p))
+				require.NoError(t, st.SetLatestSilaPayloadHeader(p))
 				return st
 			},
 			rootSeed: 'D',
@@ -143,7 +143,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 				st, err := util.NewBeaconStateElectra()
 				require.NoError(t, err)
 				require.NoError(t, st.SetSlot(100))
-				p, err := blocks.WrappedExecutionPayloadHeaderDeneb(&enginev1.ExecutionPayloadHeaderDeneb{
+				p, err := blocks.WrappedSilaPayloadHeaderDeneb(&enginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, 32),
 					FeeRecipient:     make([]byte, 20),
 					StateRoot:        make([]byte, 32),
@@ -157,7 +157,7 @@ func TestState_CanSaveRetrieve(t *testing.T) {
 					WithdrawalsRoot:  make([]byte, 32),
 				})
 				require.NoError(t, err)
-				require.NoError(t, st.SetLatestExecutionPayloadHeader(p))
+				require.NoError(t, st.SetLatestSilaPayloadHeader(p))
 				return st
 			},
 			rootSeed: 'E',

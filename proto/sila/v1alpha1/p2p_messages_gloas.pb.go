@@ -23,7 +23,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ExecutionPayloadEnvelopesByRangeRequest struct {
+type SilaPayloadEnvelopesByRangeRequest struct {
 	state         protoimpl.MessageState                                           `protogen:"open.v1"`
 	StartSlot     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
@@ -31,20 +31,20 @@ type ExecutionPayloadEnvelopesByRangeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadEnvelopesByRangeRequest) Reset() {
-	*x = ExecutionPayloadEnvelopesByRangeRequest{}
+func (x *SilaPayloadEnvelopesByRangeRequest) Reset() {
+	*x = SilaPayloadEnvelopesByRangeRequest{}
 	mi := &file_proto_sila_v1alpha1_p2p_messages_gloas_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadEnvelopesByRangeRequest) String() string {
+func (x *SilaPayloadEnvelopesByRangeRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadEnvelopesByRangeRequest) ProtoMessage() {}
+func (*SilaPayloadEnvelopesByRangeRequest) ProtoMessage() {}
 
-func (x *ExecutionPayloadEnvelopesByRangeRequest) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadEnvelopesByRangeRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_p2p_messages_gloas_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -56,19 +56,19 @@ func (x *ExecutionPayloadEnvelopesByRangeRequest) ProtoReflect() protoreflect.Me
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadEnvelopesByRangeRequest.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadEnvelopesByRangeRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadEnvelopesByRangeRequest.ProtoReflect.Descriptor instead.
+func (*SilaPayloadEnvelopesByRangeRequest) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_p2p_messages_gloas_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ExecutionPayloadEnvelopesByRangeRequest) GetStartSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
+func (x *SilaPayloadEnvelopesByRangeRequest) GetStartSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.StartSlot
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *ExecutionPayloadEnvelopesByRangeRequest) GetCount() uint64 {
+func (x *SilaPayloadEnvelopesByRangeRequest) GetCount() uint64 {
 	if x != nil {
 		return x.Count
 	}
@@ -122,7 +122,7 @@ func file_proto_sila_v1alpha1_p2p_messages_gloas_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_p2p_messages_gloas_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_sila_v1alpha1_p2p_messages_gloas_proto_goTypes = []any{
-	(*ExecutionPayloadEnvelopesByRangeRequest)(nil), // 0: sila.eth.v1alpha1.ExecutionPayloadEnvelopesByRangeRequest
+	(*SilaPayloadEnvelopesByRangeRequest)(nil), // 0: sila.eth.v1alpha1.SilaPayloadEnvelopesByRangeRequest
 }
 var file_proto_sila_v1alpha1_p2p_messages_gloas_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

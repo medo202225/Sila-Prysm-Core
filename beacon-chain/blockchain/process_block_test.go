@@ -1011,7 +1011,7 @@ func Test_getStateVersionAndPayload(t *testing.T) {
 		name    string
 		st      state.BeaconState
 		version int
-		header  *enginev1.ExecutionPayloadHeader
+		header  *enginev1.SilaPayloadHeader
 	}{
 		{
 			name: "phase 0 state",
@@ -1020,7 +1020,7 @@ func Test_getStateVersionAndPayload(t *testing.T) {
 				return s
 			}(),
 			version: version.Phase0,
-			header:  (*enginev1.ExecutionPayloadHeader)(nil),
+			header:  (*enginev1.SilaPayloadHeader)(nil),
 		},
 		{
 			name: "altair state",
@@ -1029,21 +1029,21 @@ func Test_getStateVersionAndPayload(t *testing.T) {
 				return s
 			}(),
 			version: version.Altair,
-			header:  (*enginev1.ExecutionPayloadHeader)(nil),
+			header:  (*enginev1.SilaPayloadHeader)(nil),
 		},
 		{
 			name: "bellatrix state",
 			st: func() state.BeaconState {
 				s, _ := util.DeterministicGenesisStateBellatrix(t, 1)
-				wrappedHeader, err := consensusblocks.WrappedExecutionPayloadHeader(&enginev1.ExecutionPayloadHeader{
+				wrappedHeader, err := consensusblocks.WrappedSilaPayloadHeader(&enginev1.SilaPayloadHeader{
 					BlockNumber: 1,
 				})
 				require.NoError(t, err)
-				require.NoError(t, s.SetLatestExecutionPayloadHeader(wrappedHeader))
+				require.NoError(t, s.SetLatestSilaPayloadHeader(wrappedHeader))
 				return s
 			}(),
 			version: version.Bellatrix,
-			header: &enginev1.ExecutionPayloadHeader{
+			header: &enginev1.SilaPayloadHeader{
 				BlockNumber: 1,
 			},
 		},
@@ -1054,7 +1054,7 @@ func Test_getStateVersionAndPayload(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, tt.version, ver)
 			if header != nil {
-				protoHeader, ok := header.Proto().(*enginev1.ExecutionPayloadHeader)
+				protoHeader, ok := header.Proto().(*enginev1.SilaPayloadHeader)
 				require.Equal(t, true, ok)
 				require.DeepEqual(t, tt.header, protoHeader)
 			}
@@ -1078,7 +1078,7 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 		name         string
 		stateVersion int
 		header       interfaces.ExecutionData
-		payload      *enginev1.ExecutionPayload
+		payload      *enginev1.SilaPayload
 		errString    string
 	}{
 		{
@@ -1089,7 +1089,7 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 		{
 			name:         "state older than Bellatrix, empty payload",
 			stateVersion: 1,
-			payload: &enginev1.ExecutionPayload{
+			payload: &enginev1.SilaPayload{
 				ParentHash:    make([]byte, fieldparams.RootLength),
 				FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1105,7 +1105,7 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 		{
 			name:         "state older than Bellatrix, non empty payload",
 			stateVersion: 1,
-			payload: &enginev1.ExecutionPayload{
+			payload: &enginev1.SilaPayload{
 				ParentHash: aHash[:],
 			},
 		},
@@ -1117,7 +1117,7 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 		{
 			name:         "state is Bellatrix, empty payload",
 			stateVersion: 2,
-			payload: &enginev1.ExecutionPayload{
+			payload: &enginev1.SilaPayload{
 				ParentHash:    make([]byte, fieldparams.RootLength),
 				FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1131,11 +1131,11 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 		{
 			name:         "state is Bellatrix, non empty payload, empty header",
 			stateVersion: 2,
-			payload: &enginev1.ExecutionPayload{
+			payload: &enginev1.SilaPayload{
 				ParentHash: aHash[:],
 			},
 			header: func() interfaces.ExecutionData {
-				h, err := consensusblocks.WrappedExecutionPayloadHeader(&enginev1.ExecutionPayloadHeader{
+				h, err := consensusblocks.WrappedSilaPayloadHeader(&enginev1.SilaPayloadHeader{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1154,11 +1154,11 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 		{
 			name:         "state is Bellatrix, non empty payload, non empty header",
 			stateVersion: 2,
-			payload: &enginev1.ExecutionPayload{
+			payload: &enginev1.SilaPayload{
 				ParentHash: aHash[:],
 			},
 			header: func() interfaces.ExecutionData {
-				h, err := consensusblocks.WrappedExecutionPayloadHeader(&enginev1.ExecutionPayloadHeader{
+				h, err := consensusblocks.WrappedSilaPayloadHeader(&enginev1.SilaPayloadHeader{
 					BlockNumber: 1,
 				})
 				require.NoError(t, err)
@@ -1183,7 +1183,7 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 			}
 			service.cfg.ExecutionEngineCaller = e
 			b := util.HydrateSignedBeaconBlockBellatrix(&silapb.SignedBeaconBlockBellatrix{})
-			b.Block.Body.ExecutionPayload = tt.payload
+			b.Block.Body.SilaPayload = tt.payload
 			blk, err := consensusblocks.NewSignedBeaconBlock(b)
 			require.NoError(t, err)
 			err = service.validateMergeTransitionBlock(ctx, tt.stateVersion, tt.header, blk)
@@ -1528,7 +1528,7 @@ func TestStore_NoViableHead_NewPayload(t *testing.T) {
 
 	sjc := validHeadState.CurrentJustifiedCheckpoint()
 	require.Equal(t, primitives.Epoch(0), sjc.Epoch)
-	lvh := b.Block.Body.ExecutionPayload.ParentHash
+	lvh := b.Block.Body.SilaPayload.ParentHash
 	// check our head
 	require.Equal(t, firstInvalidRoot, service.cfg.ForkChoiceStore.CachedHeadRoot())
 	isBlock18OptimisticAfterImport, err := service.IsOptimisticForRoot(ctx, firstInvalidRoot)
@@ -1707,7 +1707,7 @@ func TestStore_NoViableHead_Liveness(t *testing.T) {
 	// be the LVH
 	validHeadState, err := service.HeadState(ctx)
 	require.NoError(t, err)
-	lvh := b.Block.Body.ExecutionPayload.BlockHash
+	lvh := b.Block.Body.SilaPayload.BlockHash
 	validjc := validHeadState.CurrentJustifiedCheckpoint()
 	require.Equal(t, primitives.Epoch(0), validjc.Epoch)
 
@@ -1971,7 +1971,7 @@ func TestNoViableHead_Reboot(t *testing.T) {
 	// be the LVH
 	validHeadState, err := service.HeadState(ctx)
 	require.NoError(t, err)
-	lvh := b.Block.Body.ExecutionPayload.BlockHash
+	lvh := b.Block.Body.SilaPayload.BlockHash
 	validjc := validHeadState.CurrentJustifiedCheckpoint()
 	require.Equal(t, primitives.Epoch(0), validjc.Epoch)
 

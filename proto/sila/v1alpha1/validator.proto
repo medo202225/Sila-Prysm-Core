@@ -227,7 +227,7 @@ service BeaconNodeValidator {
   }
 
   // PrepareBeaconProposer submits fee recipient information to be used when
-  // preparing block proposal execution payloads.
+  // preparing block proposal sila payloads.
   rpc PrepareBeaconProposer(PrepareBeaconProposerRequest)
       returns (google.protobuf.Empty) {
     option deprecated = true;
@@ -480,31 +480,31 @@ service BeaconNodeValidator {
   // Gloas Fork Endpoints
   // ==========================================================================
 
-  // GetExecutionPayloadEnvelope retrieves a cached execution payload envelope
+  // GetSilaPayloadEnvelope retrieves a cached sila payload envelope
   // for the given slot and builder index. This is called by validators after
   // receiving a Gloas block to get the envelope they need to sign and broadcast.
   //
   // The envelope is cached by the beacon node during block production and
-  // contains the full execution payload that corresponds to the bid in the block.
-  rpc GetExecutionPayloadEnvelope(ExecutionPayloadEnvelopeRequest)
-      returns (ExecutionPayloadEnvelopeResponse) {
+  // contains the full sila payload that corresponds to the bid in the block.
+  rpc GetSilaPayloadEnvelope(SilaPayloadEnvelopeRequest)
+      returns (SilaPayloadEnvelopeResponse) {
     option deprecated = true;
     option (google.api.http) = {
-      get : "/sila/v1alpha1/validator/execution_payload_envelope/{slot}"
+      get : "/sila/v1alpha1/validator/sila_payload_envelope/{slot}"
     };
   }
 
-  // PublishExecutionPayloadEnvelope broadcasts a signed execution payload envelope
+  // PublishSilaPayloadEnvelope broadcasts a signed sila payload envelope
   // to the P2P network. This is called by validators after signing the envelope
-  // retrieved from GetExecutionPayloadEnvelope.
+  // retrieved from GetSilaPayloadEnvelope.
   //
   // The beacon node validates the envelope signature and broadcasts it to peers
-  // via the execution_payload_envelope gossip topic.
-  rpc PublishExecutionPayloadEnvelope(SignedExecutionPayloadEnvelope)
+  // via the sila_payload_envelope gossip topic.
+  rpc PublishSilaPayloadEnvelope(SignedSilaPayloadEnvelope)
       returns (google.protobuf.Empty) {
     option deprecated = true;
     option (google.api.http) = {
-      post : "/sila/v1alpha1/validator/execution_payload_envelope"
+      post : "/sila/v1alpha1/validator/sila_payload_envelope"
       body : "*"
     };
   }
@@ -539,13 +539,13 @@ service BeaconNodeValidator {
     };
   }
 
-  // SubmitSignedExecutionPayloadBid broadcasts a signed execution payload bid
+  // SubmitSignedSilaPayloadBid broadcasts a signed sila payload bid
   // to the P2P gossip network.
-  rpc SubmitSignedExecutionPayloadBid(SignedExecutionPayloadBid)
+  rpc SubmitSignedSilaPayloadBid(SignedSilaPayloadBid)
       returns (google.protobuf.Empty) {
     option deprecated = true;
     option (google.api.http) = {
-      post : "/sila/v1alpha1/validator/execution_payload_bid"
+      post : "/sila/v1alpha1/validator/sila_payload_bid"
       body : "*"
     };
   }
@@ -1462,26 +1462,26 @@ message PTCDuty {
 // Gloas Fork Messages
 // =============================================================================
 
-// ExecutionPayloadEnvelopeRequest is the request for retrieving a cached
-// execution payload envelope from the beacon node. This is only used for
+// SilaPayloadEnvelopeRequest is the request for retrieving a cached
+// sila payload envelope from the beacon node. This is only used for
 // self-build envelopes.
-message ExecutionPayloadEnvelopeRequest {
+message SilaPayloadEnvelopeRequest {
   option deprecated = true;
 
-  // The slot for which to retrieve the execution payload envelope.
+  // The slot for which to retrieve the sila payload envelope.
   uint64 slot = 1 [
     (sila.eth.ext.cast_type) =
         "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"
   ];
 }
 
-// ExecutionPayloadEnvelopeResponse is the response containing the cached
-// execution payload envelope.
-message ExecutionPayloadEnvelopeResponse {
+// SilaPayloadEnvelopeResponse is the response containing the cached
+// sila payload envelope.
+message SilaPayloadEnvelopeResponse {
   option deprecated = true;
 
-  // The execution payload envelope for the requested slot and builder.
-  ExecutionPayloadEnvelope envelope = 1;
+  // The sila payload envelope for the requested slot and builder.
+  SilaPayloadEnvelope envelope = 1;
 }
 
 // PayloadAttestationDataRequest is the request for retrieving payload

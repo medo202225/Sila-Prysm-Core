@@ -42,7 +42,7 @@ func (c *beaconApiValidatorClient) beaconBlock(ctx context.Context, slot primiti
 		if err != nil {
 			return nil, errors.Wrap(err, fmt.Sprintf("unsupported header version %s", header.Get(api.VersionHeader)))
 		}
-		isBlindedRaw := header.Get(api.ExecutionPayloadBlindedHeader)
+		isBlindedRaw := header.Get(api.SilaPayloadBlindedHeader)
 		isBlinded, err := strconv.ParseBool(isBlindedRaw)
 		if err != nil {
 			return nil, err
@@ -56,7 +56,7 @@ func (c *beaconApiValidatorClient) beaconBlock(ctx context.Context, slot primiti
 		}
 		return processBlockJSONResponse(
 			produceBlockV3ResponseJson.Version,
-			produceBlockV3ResponseJson.ExecutionPayloadBlinded,
+			produceBlockV3ResponseJson.SilaPayloadBlinded,
 			json.NewDecoder(bytes.NewReader(produceBlockV3ResponseJson.Data)),
 		)
 	}
@@ -70,7 +70,7 @@ func (c *beaconApiValidatorClient) beaconBlockV4(ctx context.Context, slot primi
 		return nil, errors.Wrap(err, "could not get v4 beacon block")
 	}
 
-	payloadIncluded := header.Get(api.ExecutionPayloadIncludedHeader) == "true"
+	payloadIncluded := header.Get(api.SilaPayloadIncludedHeader) == "true"
 	isSSZ := strings.Contains(header.Get("Content-Type"), api.OctetStreamMediaType)
 
 	// JSON is only acceptable when the response carries the block alone. The
@@ -87,8 +87,8 @@ func (c *beaconApiValidatorClient) beaconBlockV4(ctx context.Context, slot primi
 			if err := contents.UnmarshalSSZ(data); err != nil {
 				return nil, errors.Wrap(err, "failed to unmarshal gloas block contents SSZ")
 			}
-			if c.stateless && contents.ExecutionPayloadEnvelope != nil {
-				c.envelopeCache.Add(slot, contents.ExecutionPayloadEnvelope, contents.Blobs, contents.KzgProofs)
+			if c.stateless && contents.SilaPayloadEnvelope != nil {
+				c.envelopeCache.Add(slot, contents.SilaPayloadEnvelope, contents.Blobs, contents.KzgProofs)
 			}
 			return &silapb.GenericBeaconBlock{Block: &silapb.GenericBeaconBlock_Gloas{Gloas: contents.Block}}, nil
 		}

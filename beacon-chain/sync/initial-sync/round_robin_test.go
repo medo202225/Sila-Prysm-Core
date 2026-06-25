@@ -472,7 +472,7 @@ func TestService_processBlockBatch(t *testing.T) {
 			currBlockRoot = blk1Root
 		}
 
-		cbnormal := func(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error {
+		cbnormal := func(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error {
 			assert.NoError(t, s.cfg.Chain.ReceiveBlockBatch(ctx, blks, nil, avs))
 			return nil
 		}
@@ -481,7 +481,7 @@ func TestService_processBlockBatch(t *testing.T) {
 		assert.NoError(t, err)
 		require.Equal(t, uint64(len(batch)), count)
 
-		cbnil := func(ctx context.Context, blocks []blocks.ROBlock, _ []interfaces.ROSignedExecutionPayloadEnvelope, _ das.AvailabilityChecker) error {
+		cbnil := func(ctx context.Context, blocks []blocks.ROBlock, _ []interfaces.ROSignedSilaPayloadEnvelope, _ das.AvailabilityChecker) error {
 			return nil
 		}
 
@@ -556,7 +556,7 @@ func TestService_processBatchedBlocksReturnsFilteredCount(t *testing.T) {
 	}
 
 	// Process slots 1–5 so they are in the DB and head advances to slot 5.
-	cb := func(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error {
+	cb := func(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error {
 		return s.cfg.Chain.ReceiveBlockBatch(ctx, blks, nil, avs)
 	}
 	count, err := s.processBatchedBlocks(ctx, allBlocks[:5], nil, cb)
@@ -769,7 +769,7 @@ func TestService_ValidUnprocessed(t *testing.T) {
 	retBlocks, _, err := validUnprocessed(t.Context(), batch, nil, 2, func(ctx context.Context, block blocks.ROBlock) bool {
 		// Ignore first 2 blocks in the batch.
 		return block.Block().Slot() <= 2
-	}, func(_ context.Context, _ interfaces.ROSignedExecutionPayloadEnvelope) bool {
+	}, func(_ context.Context, _ interfaces.ROSignedSilaPayloadEnvelope) bool {
 		return false
 	})
 	require.NoError(t, err)
@@ -914,7 +914,7 @@ func TestService_processBlocksWithDataColumns(t *testing.T) {
 			counter: ratecounter.NewRateCounter(counterSeconds * time.Second),
 		}
 
-		receiverFunc := func(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error {
+		receiverFunc := func(ctx context.Context, blks []blocks.ROBlock, _ []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error {
 			require.Equal(t, 1, len(blks))
 			return nil
 		}

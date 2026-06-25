@@ -78,7 +78,7 @@ var (
 		types.NextSyncCommittee,
 	}
 
-	bellatrixFields = append(altairFields, types.LatestExecutionPayloadHeader)
+	bellatrixFields = append(altairFields, types.LatestSilaPayloadHeader)
 
 	withdrawalAndHistoricalSummaryFields = []types.FieldIndex{
 		types.NextWithdrawalIndex,
@@ -88,13 +88,13 @@ var (
 
 	capellaFields = slices.Concat(
 		altairFields,
-		[]types.FieldIndex{types.LatestExecutionPayloadHeaderCapella},
+		[]types.FieldIndex{types.LatestSilaPayloadHeaderCapella},
 		withdrawalAndHistoricalSummaryFields,
 	)
 
 	denebFields = slices.Concat(
 		altairFields,
-		[]types.FieldIndex{types.LatestExecutionPayloadHeaderDeneb},
+		[]types.FieldIndex{types.LatestSilaPayloadHeaderDeneb},
 		withdrawalAndHistoricalSummaryFields,
 	)
 
@@ -123,10 +123,10 @@ var (
 	gloasAdditionalFields = []types.FieldIndex{
 		types.Builders,
 		types.NextWithdrawalBuilderIndex,
-		types.ExecutionPayloadAvailability,
+		types.SilaPayloadAvailability,
 		types.BuilderPendingPayments,
 		types.BuilderPendingWithdrawals,
-		types.LatestExecutionPayloadBid,
+		types.LatestSilaPayloadBid,
 		types.PayloadExpectedWithdrawals,
 		types.PTCWindow,
 	}
@@ -159,7 +159,7 @@ const (
 	denebSharedFieldRefCount     = 7
 	electraSharedFieldRefCount   = 10
 	fuluSharedFieldRefCount      = 11
-	gloasSharedFieldRefCount     = 14 // Adds Builders + BuilderPendingWithdrawals + PTCWindow to the shared-ref set and LatestExecutionPayloadHeader is removed
+	gloasSharedFieldRefCount     = 14 // Adds Builders + BuilderPendingWithdrawals + PTCWindow to the shared-ref set and LatestSilaPayloadHeader is removed
 )
 
 // InitializeFromProtoPhase0 the beacon state from a protobuf representation.
@@ -390,7 +390,7 @@ func InitializeFromProtoUnsafeBellatrix(st *silapb.BeaconStateBellatrix) (state.
 		finalizedCheckpoint:          st.FinalizedCheckpoint,
 		currentSyncCommittee:         st.CurrentSyncCommittee,
 		nextSyncCommittee:            st.NextSyncCommittee,
-		latestExecutionPayloadHeader: st.LatestExecutionPayloadHeader,
+		latestSilaPayloadHeader: st.LatestSilaPayloadHeader,
 
 		id: types.Enumerator.Inc(),
 
@@ -430,7 +430,7 @@ func InitializeFromProtoUnsafeBellatrix(st *silapb.BeaconStateBellatrix) (state.
 	b.sharedFieldReferences[types.Slashings] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PreviousEpochParticipationBits] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.CurrentEpochParticipationBits] = stateutil.NewRef(1)
-	b.sharedFieldReferences[types.LatestExecutionPayloadHeader] = stateutil.NewRef(1) // New in Bellatrix.
+	b.sharedFieldReferences[types.LatestSilaPayloadHeader] = stateutil.NewRef(1) // New in Bellatrix.
 
 	state.Count.Inc()
 	// Finalizer runs when dst is being destroyed in garbage collection.
@@ -471,7 +471,7 @@ func InitializeFromProtoUnsafeCapella(st *silapb.BeaconStateCapella) (state.Beac
 		finalizedCheckpoint:                 st.FinalizedCheckpoint,
 		currentSyncCommittee:                st.CurrentSyncCommittee,
 		nextSyncCommittee:                   st.NextSyncCommittee,
-		latestExecutionPayloadHeaderCapella: st.LatestExecutionPayloadHeader,
+		latestSilaPayloadHeaderCapella: st.LatestSilaPayloadHeader,
 		nextWithdrawalIndex:                 st.NextWithdrawalIndex,
 		nextWithdrawalValidatorIndex:        st.NextWithdrawalValidatorIndex,
 		historicalSummaries:                 st.HistoricalSummaries,
@@ -514,7 +514,7 @@ func InitializeFromProtoUnsafeCapella(st *silapb.BeaconStateCapella) (state.Beac
 	b.sharedFieldReferences[types.Slashings] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PreviousEpochParticipationBits] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.CurrentEpochParticipationBits] = stateutil.NewRef(1)
-	b.sharedFieldReferences[types.LatestExecutionPayloadHeaderCapella] = stateutil.NewRef(1) // New in Capella.
+	b.sharedFieldReferences[types.LatestSilaPayloadHeaderCapella] = stateutil.NewRef(1) // New in Capella.
 	b.sharedFieldReferences[types.HistoricalSummaries] = stateutil.NewRef(1)                 // New in Capella.
 
 	state.Count.Inc()
@@ -556,7 +556,7 @@ func InitializeFromProtoUnsafeDeneb(st *silapb.BeaconStateDeneb) (state.BeaconSt
 		finalizedCheckpoint:               st.FinalizedCheckpoint,
 		currentSyncCommittee:              st.CurrentSyncCommittee,
 		nextSyncCommittee:                 st.NextSyncCommittee,
-		latestExecutionPayloadHeaderDeneb: st.LatestExecutionPayloadHeader,
+		latestSilaPayloadHeaderDeneb: st.LatestSilaPayloadHeader,
 		nextWithdrawalIndex:               st.NextWithdrawalIndex,
 		nextWithdrawalValidatorIndex:      st.NextWithdrawalValidatorIndex,
 		historicalSummaries:               st.HistoricalSummaries,
@@ -597,7 +597,7 @@ func InitializeFromProtoUnsafeDeneb(st *silapb.BeaconStateDeneb) (state.BeaconSt
 	b.sharedFieldReferences[types.Slashings] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PreviousEpochParticipationBits] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.CurrentEpochParticipationBits] = stateutil.NewRef(1)
-	b.sharedFieldReferences[types.LatestExecutionPayloadHeaderDeneb] = stateutil.NewRef(1) // New in Deneb.
+	b.sharedFieldReferences[types.LatestSilaPayloadHeaderDeneb] = stateutil.NewRef(1) // New in Deneb.
 	b.sharedFieldReferences[types.HistoricalSummaries] = stateutil.NewRef(1)
 
 	state.Count.Inc()
@@ -639,7 +639,7 @@ func InitializeFromProtoUnsafeElectra(st *silapb.BeaconStateElectra) (state.Beac
 		finalizedCheckpoint:               st.FinalizedCheckpoint,
 		currentSyncCommittee:              st.CurrentSyncCommittee,
 		nextSyncCommittee:                 st.NextSyncCommittee,
-		latestExecutionPayloadHeaderDeneb: st.LatestExecutionPayloadHeader,
+		latestSilaPayloadHeaderDeneb: st.LatestSilaPayloadHeader,
 		nextWithdrawalIndex:               st.NextWithdrawalIndex,
 		nextWithdrawalValidatorIndex:      st.NextWithdrawalValidatorIndex,
 		historicalSummaries:               st.HistoricalSummaries,
@@ -689,7 +689,7 @@ func InitializeFromProtoUnsafeElectra(st *silapb.BeaconStateElectra) (state.Beac
 	b.sharedFieldReferences[types.Slashings] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PreviousEpochParticipationBits] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.CurrentEpochParticipationBits] = stateutil.NewRef(1)
-	b.sharedFieldReferences[types.LatestExecutionPayloadHeaderDeneb] = stateutil.NewRef(1)
+	b.sharedFieldReferences[types.LatestSilaPayloadHeaderDeneb] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.HistoricalSummaries] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PendingDeposits] = stateutil.NewRef(1)           // New in Electra.
 	b.sharedFieldReferences[types.PendingPartialWithdrawals] = stateutil.NewRef(1) // New in Electra.
@@ -743,7 +743,7 @@ func InitializeFromProtoUnsafeFulu(st *silapb.BeaconStateFulu) (state.BeaconStat
 		finalizedCheckpoint:               st.FinalizedCheckpoint,
 		currentSyncCommittee:              st.CurrentSyncCommittee,
 		nextSyncCommittee:                 st.NextSyncCommittee,
-		latestExecutionPayloadHeaderDeneb: st.LatestExecutionPayloadHeader,
+		latestSilaPayloadHeaderDeneb: st.LatestSilaPayloadHeader,
 		nextWithdrawalIndex:               st.NextWithdrawalIndex,
 		nextWithdrawalValidatorIndex:      st.NextWithdrawalValidatorIndex,
 		historicalSummaries:               st.HistoricalSummaries,
@@ -794,7 +794,7 @@ func InitializeFromProtoUnsafeFulu(st *silapb.BeaconStateFulu) (state.BeaconStat
 	b.sharedFieldReferences[types.Slashings] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PreviousEpochParticipationBits] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.CurrentEpochParticipationBits] = stateutil.NewRef(1)
-	b.sharedFieldReferences[types.LatestExecutionPayloadHeaderDeneb] = stateutil.NewRef(1)
+	b.sharedFieldReferences[types.LatestSilaPayloadHeaderDeneb] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.HistoricalSummaries] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PendingDeposits] = stateutil.NewRef(1)
 	b.sharedFieldReferences[types.PendingPartialWithdrawals] = stateutil.NewRef(1)
@@ -858,10 +858,10 @@ func InitializeFromProtoUnsafeGloas(st *silapb.BeaconStateGloas) (state.BeaconSt
 		pendingPartialWithdrawals:     st.PendingPartialWithdrawals,
 		pendingConsolidations:         st.PendingConsolidations,
 		proposerLookahead:             proposerLookahead,
-		latestExecutionPayloadBid:     st.LatestExecutionPayloadBid,
+		latestSilaPayloadBid:     st.LatestSilaPayloadBid,
 		builders:                      st.Builders,
 		nextWithdrawalBuilderIndex:    st.NextWithdrawalBuilderIndex,
-		executionPayloadAvailability:  st.ExecutionPayloadAvailability,
+		silaPayloadAvailability:  st.SilaPayloadAvailability,
 		builderPendingPayments:        st.BuilderPendingPayments,
 		builderPendingWithdrawals:     st.BuilderPendingWithdrawals,
 		latestBlockHash:               st.LatestBlockHash,
@@ -996,12 +996,12 @@ func (b *BeaconState) Copy() state.BeaconState {
 		finalizedCheckpoint:                 b.finalizedCheckpointVal(),
 		currentSyncCommittee:                b.currentSyncCommitteeVal(),
 		nextSyncCommittee:                   b.nextSyncCommitteeVal(),
-		latestExecutionPayloadHeader:        b.latestExecutionPayloadHeader.Copy(),
-		latestExecutionPayloadHeaderCapella: b.latestExecutionPayloadHeaderCapella.Copy(),
-		latestExecutionPayloadHeaderDeneb:   b.latestExecutionPayloadHeaderDeneb.Copy(),
-		latestExecutionPayloadBid:           b.latestExecutionPayloadBid.Copy(),
+		latestSilaPayloadHeader:        b.latestSilaPayloadHeader.Copy(),
+		latestSilaPayloadHeaderCapella: b.latestSilaPayloadHeaderCapella.Copy(),
+		latestSilaPayloadHeaderDeneb:   b.latestSilaPayloadHeaderDeneb.Copy(),
+		latestSilaPayloadBid:           b.latestSilaPayloadBid.Copy(),
 		nextWithdrawalBuilderIndex:          b.nextWithdrawalBuilderIndex,
-		executionPayloadAvailability:        b.executionPayloadAvailabilityVal(),
+		silaPayloadAvailability:        b.silaPayloadAvailabilityVal(),
 		builderPendingPayments:              b.builderPendingPaymentsVal(),
 		builderPendingWithdrawals:           b.builderPendingWithdrawalsVal(),
 		latestBlockHash:                     b.latestBlockHashVal(),
@@ -1241,7 +1241,7 @@ func (b *BeaconState) RecordStateMetrics() {
 
 func recordGloasStateMetrics(b *BeaconState) {
 	if b.version < version.Gloas {
-		gloasExecutionPayloadAvailabilityRatio.Set(0)
+		gloasSilaPayloadAvailabilityRatio.Set(0)
 		gloasBuilderPendingWithdrawalsCount.Set(0)
 		gloasBuilderPendingWithdrawalsGwei.Set(0)
 		gloasPayloadExpectedWithdrawalsCount.Set(0)
@@ -1252,18 +1252,18 @@ func recordGloasStateMetrics(b *BeaconState) {
 
 	slotsPerHistoricalRoot := uint64(params.BeaconConfig().SlotsPerHistoricalRoot)
 	if slotsPerHistoricalRoot == 0 {
-		gloasExecutionPayloadAvailabilityRatio.Set(0)
+		gloasSilaPayloadAvailabilityRatio.Set(0)
 	} else {
 		availableCount := 0
-		for i, availabilityByte := range b.executionPayloadAvailability {
-			if i == len(b.executionPayloadAvailability)-1 && slotsPerHistoricalRoot%8 != 0 {
+		for i, availabilityByte := range b.silaPayloadAvailability {
+			if i == len(b.silaPayloadAvailability)-1 && slotsPerHistoricalRoot%8 != 0 {
 				mask := byte((1 << (slotsPerHistoricalRoot % 8)) - 1)
 				availableCount += bits.OnesCount8(availabilityByte & mask)
 				continue
 			}
 			availableCount += bits.OnesCount8(availabilityByte)
 		}
-		gloasExecutionPayloadAvailabilityRatio.Set(float64(availableCount) / float64(slotsPerHistoricalRoot))
+		gloasSilaPayloadAvailabilityRatio.Set(float64(availableCount) / float64(slotsPerHistoricalRoot))
 	}
 
 	var pendingWithdrawalsGwei uint64
@@ -1401,12 +1401,12 @@ func (b *BeaconState) rootSelector(ctx context.Context, field types.FieldIndex) 
 		return stateutil.SyncCommitteeRoot(b.currentSyncCommittee)
 	case types.NextSyncCommittee:
 		return stateutil.SyncCommitteeRoot(b.nextSyncCommittee)
-	case types.LatestExecutionPayloadHeader:
-		return b.latestExecutionPayloadHeader.HashTreeRoot()
-	case types.LatestExecutionPayloadHeaderCapella:
-		return b.latestExecutionPayloadHeaderCapella.HashTreeRoot()
-	case types.LatestExecutionPayloadHeaderDeneb:
-		return b.latestExecutionPayloadHeaderDeneb.HashTreeRoot()
+	case types.LatestSilaPayloadHeader:
+		return b.latestSilaPayloadHeader.HashTreeRoot()
+	case types.LatestSilaPayloadHeaderCapella:
+		return b.latestSilaPayloadHeaderCapella.HashTreeRoot()
+	case types.LatestSilaPayloadHeaderDeneb:
+		return b.latestSilaPayloadHeaderDeneb.HashTreeRoot()
 	case types.NextWithdrawalIndex:
 		return ssz.Uint64Root(b.nextWithdrawalIndex), nil
 	case types.NextWithdrawalValidatorIndex:
@@ -1433,14 +1433,14 @@ func (b *BeaconState) rootSelector(ctx context.Context, field types.FieldIndex) 
 		return stateutil.PendingConsolidationsRoot(b.pendingConsolidations)
 	case types.ProposerLookahead:
 		return stateutil.ProposerLookaheadRoot(b.proposerLookahead)
-	case types.LatestExecutionPayloadBid:
-		return b.latestExecutionPayloadBid.HashTreeRoot()
+	case types.LatestSilaPayloadBid:
+		return b.latestSilaPayloadBid.HashTreeRoot()
 	case types.Builders:
 		return stateutil.BuildersRoot(b.builders)
 	case types.NextWithdrawalBuilderIndex:
 		return ssz.Uint64Root(uint64(b.nextWithdrawalBuilderIndex)), nil
-	case types.ExecutionPayloadAvailability:
-		return stateutil.ExecutionPayloadAvailabilityRoot(b.executionPayloadAvailability)
+	case types.SilaPayloadAvailability:
+		return stateutil.SilaPayloadAvailabilityRoot(b.silaPayloadAvailability)
 
 	case types.BuilderPendingPayments:
 		return stateutil.BuilderPendingPaymentsRoot(b.builderPendingPayments)

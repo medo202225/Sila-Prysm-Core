@@ -1552,7 +1552,7 @@ func TestService_isBlockQueueable(t *testing.T) {
 	assert.Equal(t, true, result)
 }
 
-func TestValidateBeaconBlockPubSub_ValidExecutionPayload(t *testing.T) {
+func TestValidateBeaconBlockPubSub_ValidSilaPayload(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	params.BeaconConfig().InitializeForkSchedule()
 	db := dbtest.SetupDB(t)
@@ -1576,12 +1576,12 @@ func TestValidateBeaconBlockPubSub_ValidExecutionPayload(t *testing.T) {
 	msg.Block.ParentRoot = bRoot[:]
 	msg.Block.Slot = 1
 	msg.Block.ProposerIndex = proposerIdx
-	msg.Block.Body.ExecutionPayload.Timestamp = uint64(now.Unix()) + params.BeaconConfig().SecondsPerSlot
-	msg.Block.Body.ExecutionPayload.GasUsed = 10
-	msg.Block.Body.ExecutionPayload.GasLimit = 11
-	msg.Block.Body.ExecutionPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
-	msg.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
-	msg.Block.Body.ExecutionPayload.Transactions = append(msg.Block.Body.ExecutionPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
+	msg.Block.Body.SilaPayload.Timestamp = uint64(now.Unix()) + params.BeaconConfig().SecondsPerSlot
+	msg.Block.Body.SilaPayload.GasUsed = 10
+	msg.Block.Body.SilaPayload.GasLimit = 11
+	msg.Block.Body.SilaPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
+	msg.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
+	msg.Block.Body.SilaPayload.Transactions = append(msg.Block.Body.SilaPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
 	msg.Signature, err = signing.ComputeDomainAndSign(beaconState, 0, msg.Block, params.BeaconConfig().DomainBeaconProposer, privKeys[proposerIdx])
 	require.NoError(t, err)
 
@@ -1667,12 +1667,12 @@ func TestValidateBeaconBlockPubSub_InvalidPayloadTimestamp(t *testing.T) {
 	msg.Block.ParentRoot = bRoot[:]
 	msg.Block.Slot = 1
 	msg.Block.ProposerIndex = proposerIdx
-	msg.Block.Body.ExecutionPayload.Timestamp = uint64(presentTime - 600) // add an invalid timestamp
-	msg.Block.Body.ExecutionPayload.GasUsed = 10
-	msg.Block.Body.ExecutionPayload.GasLimit = 11
-	msg.Block.Body.ExecutionPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
-	msg.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
-	msg.Block.Body.ExecutionPayload.Transactions = append(msg.Block.Body.ExecutionPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
+	msg.Block.Body.SilaPayload.Timestamp = uint64(presentTime - 600) // add an invalid timestamp
+	msg.Block.Body.SilaPayload.GasUsed = 10
+	msg.Block.Body.SilaPayload.GasLimit = 11
+	msg.Block.Body.SilaPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
+	msg.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
+	msg.Block.Body.SilaPayload.Transactions = append(msg.Block.Body.SilaPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
 	msg.Signature, err = signing.ComputeDomainAndSign(beaconState, 0, msg.Block, params.BeaconConfig().DomainBeaconProposer, privKeys[proposerIdx])
 	require.NoError(t, err)
 
@@ -1781,12 +1781,12 @@ func Test_validateBellatrixBeaconBlockParentValidation(t *testing.T) {
 	msg.Block.ParentRoot = bRoot[:]
 	msg.Block.Slot = 1
 	msg.Block.ProposerIndex = proposerIdx
-	msg.Block.Body.ExecutionPayload.Timestamp = uint64(beaconState.GenesisTime().Add(time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second).Unix())
-	msg.Block.Body.ExecutionPayload.GasUsed = 10
-	msg.Block.Body.ExecutionPayload.GasLimit = 11
-	msg.Block.Body.ExecutionPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
-	msg.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
-	msg.Block.Body.ExecutionPayload.Transactions = append(msg.Block.Body.ExecutionPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
+	msg.Block.Body.SilaPayload.Timestamp = uint64(beaconState.GenesisTime().Add(time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second).Unix())
+	msg.Block.Body.SilaPayload.GasUsed = 10
+	msg.Block.Body.SilaPayload.GasLimit = 11
+	msg.Block.Body.SilaPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
+	msg.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
+	msg.Block.Body.SilaPayload.Transactions = append(msg.Block.Body.SilaPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
 	msg.Signature, err = signing.ComputeDomainAndSign(beaconState, 0, msg.Block, params.BeaconConfig().DomainBeaconProposer, privKeys[proposerIdx])
 	require.NoError(t, err)
 
@@ -1840,12 +1840,12 @@ func Test_validateBeaconBlockProcessingWhenParentIsOptimistic(t *testing.T) {
 	msg.Block.ParentRoot = bRoot[:]
 	msg.Block.Slot = 1
 	msg.Block.ProposerIndex = proposerIdx
-	msg.Block.Body.ExecutionPayload.Timestamp = uint64(beaconState.GenesisTime().Add(time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second).Unix())
-	msg.Block.Body.ExecutionPayload.GasUsed = 10
-	msg.Block.Body.ExecutionPayload.GasLimit = 11
-	msg.Block.Body.ExecutionPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
-	msg.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
-	msg.Block.Body.ExecutionPayload.Transactions = append(msg.Block.Body.ExecutionPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
+	msg.Block.Body.SilaPayload.Timestamp = uint64(beaconState.GenesisTime().Add(time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second).Unix())
+	msg.Block.Body.SilaPayload.GasUsed = 10
+	msg.Block.Body.SilaPayload.GasLimit = 11
+	msg.Block.Body.SilaPayload.BlockHash = bytesutil.PadTo([]byte("blockHash"), 32)
+	msg.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte("parentHash"), 32)
+	msg.Block.Body.SilaPayload.Transactions = append(msg.Block.Body.SilaPayload.Transactions, []byte("transaction 1"), []byte("transaction 2"))
 	msg.Signature, err = signing.ComputeDomainAndSign(beaconState, 0, msg.Block, params.BeaconConfig().DomainBeaconProposer, privKeys[proposerIdx])
 	require.NoError(t, err)
 

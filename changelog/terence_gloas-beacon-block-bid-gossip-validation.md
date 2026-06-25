@@ -1,3 +1,3 @@
 ### Added
 
-- Add Gloas beacon block gossip validation for execution payload bids
+- Add Gloas beacon block gossip validation for sila payload bids

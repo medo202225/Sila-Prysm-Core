@@ -427,7 +427,7 @@ func prepareForkchoiceState(
 		ParentRoot: parentRoot[:],
 	}
 
-	executionHeader := &enginev1.ExecutionPayloadHeader{
+	executionHeader := &enginev1.SilaPayloadHeader{
 		BlockHash: payloadHash[:],
 	}
 
@@ -437,7 +437,7 @@ func prepareForkchoiceState(
 		BlockRoots:                   make([][]byte, 1),
 		CurrentJustifiedCheckpoint:   justified,
 		FinalizedCheckpoint:          finalized,
-		LatestExecutionPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: executionHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 
@@ -451,7 +451,7 @@ func prepareForkchoiceState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &eth.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					BlockHash: payloadHash[:],
 				},
 			},

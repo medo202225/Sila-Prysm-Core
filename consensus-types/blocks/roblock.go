@@ -22,7 +22,7 @@ func (b ROBlock) Root() [32]byte {
 
 // ParentHash returns the parent hash of a beacon block post-Gloas
 func (b ROBlock) ParentHash() ([32]byte, error) {
-	s, err := b.Block().Body().SignedExecutionPayloadBid()
+	s, err := b.Block().Body().SignedSilaPayloadBid()
 	if err != nil {
 		return [32]byte{}, err
 	}

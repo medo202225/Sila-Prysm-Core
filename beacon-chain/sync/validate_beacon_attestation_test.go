@@ -732,7 +732,7 @@ func Test_validateGloasCommitteeIndex(t *testing.T) {
 			blockSlot:       9,
 			hasBadPayload:   true,
 			wantResult:      pubsub.ValidationReject,
-			wantErr:         "execution payload for attested block is invalid",
+			wantErr:         "sila payload for attested block is invalid",
 		},
 		{
 			name:            "committee index 1 different-slot without full node should ignore",
@@ -741,7 +741,7 @@ func Test_validateGloasCommitteeIndex(t *testing.T) {
 			blockSlot:       9,
 			hasFullNode:     false,
 			wantResult:      pubsub.ValidationIgnore,
-			wantErr:         "execution payload for attested block has not been seen",
+			wantErr:         "sila payload for attested block has not been seen",
 		},
 		{
 			name:            "committee index 1 different-slot with full node should accept",

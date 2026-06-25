@@ -164,7 +164,7 @@ func (s *Server) GetBlockV2(w http.ResponseWriter, r *http.Request) {
 	if blk.Version() >= version.Bellatrix && blk.IsBlinded() {
 		blk, err = s.ExecutionReconstructor.ReconstructFullBlock(ctx, blk)
 		if err != nil {
-			httputil.HandleError(w, errors.Wrapf(err, "could not reconstruct full execution payload to create signed beacon block").Error(), http.StatusBadRequest)
+			httputil.HandleError(w, errors.Wrapf(err, "could not reconstruct full sila payload to create signed beacon block").Error(), http.StatusBadRequest)
 			return
 		}
 	}

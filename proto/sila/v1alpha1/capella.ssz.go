@@ -329,12 +329,12 @@ func (b *BeaconBlockBodyCapella) MarshalSSZTo(buf []byte) (dst []byte, err error
 		return
 	}
 
-	// Offset (9) 'ExecutionPayload'
+	// Offset (9) 'SilaPayload'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = new(v1.ExecutionPayloadCapella)
+	if b.SilaPayload == nil {
+		b.SilaPayload = new(v1.SilaPayloadCapella)
 	}
-	offset += b.ExecutionPayload.SizeSSZ()
+	offset += b.SilaPayload.SizeSSZ()
 
 	// Offset (10) 'BlsToExecutionChanges'
 	dst = ssz.WriteOffset(dst, offset)
@@ -409,8 +409,8 @@ func (b *BeaconBlockBodyCapella) MarshalSSZTo(buf []byte) (dst []byte, err error
 		}
 	}
 
-	// Field (9) 'ExecutionPayload'
-	if dst, err = b.ExecutionPayload.MarshalSSZTo(dst); err != nil {
+	// Field (9) 'SilaPayload'
+	if dst, err = b.SilaPayload.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -496,7 +496,7 @@ func (b *BeaconBlockBodyCapella) UnmarshalSSZ(buf []byte) error {
 		return err
 	}
 
-	// Offset (9) 'ExecutionPayload'
+	// Offset (9) 'SilaPayload'
 	if o9 = ssz.ReadOffset(buf[380:384]); o9 > size || o7 > o9 {
 		return ssz.ErrOffset
 	}
@@ -604,13 +604,13 @@ func (b *BeaconBlockBodyCapella) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (9) 'ExecutionPayload'
+	// Field (9) 'SilaPayload'
 	{
 		buf = tail[o9:o10]
-		if b.ExecutionPayload == nil {
-			b.ExecutionPayload = new(v1.ExecutionPayloadCapella)
+		if b.SilaPayload == nil {
+			b.SilaPayload = new(v1.SilaPayloadCapella)
 		}
-		if err = b.ExecutionPayload.UnmarshalSSZ(buf); err != nil {
+		if err = b.SilaPayload.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -660,11 +660,11 @@ func (b *BeaconBlockBodyCapella) SizeSSZ() (size int) {
 	// Field (7) 'VoluntaryExits'
 	size += len(b.VoluntaryExits) * 112
 
-	// Field (9) 'ExecutionPayload'
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = new(v1.ExecutionPayloadCapella)
+	// Field (9) 'SilaPayload'
+	if b.SilaPayload == nil {
+		b.SilaPayload = new(v1.SilaPayloadCapella)
 	}
-	size += b.ExecutionPayload.SizeSSZ()
+	size += b.SilaPayload.SizeSSZ()
 
 	// Field (10) 'BlsToExecutionChanges'
 	size += len(b.BlsToExecutionChanges) * 172
@@ -785,8 +785,8 @@ func (b *BeaconBlockBodyCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 
-	// Field (9) 'ExecutionPayload'
-	if err = b.ExecutionPayload.HashTreeRootWith(hh); err != nil {
+	// Field (9) 'SilaPayload'
+	if err = b.SilaPayload.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -1132,12 +1132,12 @@ func (b *BlindedBeaconBlockBodyCapella) MarshalSSZTo(buf []byte) (dst []byte, er
 		return
 	}
 
-	// Offset (9) 'ExecutionPayloadHeader'
+	// Offset (9) 'SilaPayloadHeader'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderCapella)
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = new(v1.SilaPayloadHeaderCapella)
 	}
-	offset += b.ExecutionPayloadHeader.SizeSSZ()
+	offset += b.SilaPayloadHeader.SizeSSZ()
 
 	// Offset (10) 'BlsToExecutionChanges'
 	dst = ssz.WriteOffset(dst, offset)
@@ -1212,8 +1212,8 @@ func (b *BlindedBeaconBlockBodyCapella) MarshalSSZTo(buf []byte) (dst []byte, er
 		}
 	}
 
-	// Field (9) 'ExecutionPayloadHeader'
-	if dst, err = b.ExecutionPayloadHeader.MarshalSSZTo(dst); err != nil {
+	// Field (9) 'SilaPayloadHeader'
+	if dst, err = b.SilaPayloadHeader.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -1299,7 +1299,7 @@ func (b *BlindedBeaconBlockBodyCapella) UnmarshalSSZ(buf []byte) error {
 		return err
 	}
 
-	// Offset (9) 'ExecutionPayloadHeader'
+	// Offset (9) 'SilaPayloadHeader'
 	if o9 = ssz.ReadOffset(buf[380:384]); o9 > size || o7 > o9 {
 		return ssz.ErrOffset
 	}
@@ -1407,13 +1407,13 @@ func (b *BlindedBeaconBlockBodyCapella) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (9) 'ExecutionPayloadHeader'
+	// Field (9) 'SilaPayloadHeader'
 	{
 		buf = tail[o9:o10]
-		if b.ExecutionPayloadHeader == nil {
-			b.ExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderCapella)
+		if b.SilaPayloadHeader == nil {
+			b.SilaPayloadHeader = new(v1.SilaPayloadHeaderCapella)
 		}
-		if err = b.ExecutionPayloadHeader.UnmarshalSSZ(buf); err != nil {
+		if err = b.SilaPayloadHeader.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -1463,11 +1463,11 @@ func (b *BlindedBeaconBlockBodyCapella) SizeSSZ() (size int) {
 	// Field (7) 'VoluntaryExits'
 	size += len(b.VoluntaryExits) * 112
 
-	// Field (9) 'ExecutionPayloadHeader'
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderCapella)
+	// Field (9) 'SilaPayloadHeader'
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = new(v1.SilaPayloadHeaderCapella)
 	}
-	size += b.ExecutionPayloadHeader.SizeSSZ()
+	size += b.SilaPayloadHeader.SizeSSZ()
 
 	// Field (10) 'BlsToExecutionChanges'
 	size += len(b.BlsToExecutionChanges) * 172
@@ -1588,8 +1588,8 @@ func (b *BlindedBeaconBlockBodyCapella) HashTreeRootWith(hh *ssz.Hasher) (err er
 		return
 	}
 
-	// Field (9) 'ExecutionPayloadHeader'
-	if err = b.ExecutionPayloadHeader.HashTreeRootWith(hh); err != nil {
+	// Field (9) 'SilaPayloadHeader'
+	if err = b.SilaPayloadHeader.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -1735,7 +1735,7 @@ func (b *BuilderBidCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	// Offset (0) 'Header'
 	dst = ssz.WriteOffset(dst, offset)
 	if b.Header == nil {
-		b.Header = new(v1.ExecutionPayloadHeaderCapella)
+		b.Header = new(v1.SilaPayloadHeaderCapella)
 	}
 	offset += b.Header.SizeSSZ()
 
@@ -1797,7 +1797,7 @@ func (b *BuilderBidCapella) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:]
 		if b.Header == nil {
-			b.Header = new(v1.ExecutionPayloadHeaderCapella)
+			b.Header = new(v1.SilaPayloadHeaderCapella)
 		}
 		if err = b.Header.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -1812,7 +1812,7 @@ func (b *BuilderBidCapella) SizeSSZ() (size int) {
 
 	// Field (0) 'Header'
 	if b.Header == nil {
-		b.Header = new(v1.ExecutionPayloadHeaderCapella)
+		b.Header = new(v1.SilaPayloadHeaderCapella)
 	}
 	size += b.Header.SizeSSZ()
 
@@ -2106,12 +2106,12 @@ func (b *BeaconStateCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		return
 	}
 
-	// Offset (24) 'LatestExecutionPayloadHeader'
+	// Offset (24) 'LatestSilaPayloadHeader'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.LatestExecutionPayloadHeader == nil {
-		b.LatestExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderCapella)
+	if b.LatestSilaPayloadHeader == nil {
+		b.LatestSilaPayloadHeader = new(v1.SilaPayloadHeaderCapella)
 	}
-	offset += b.LatestExecutionPayloadHeader.SizeSSZ()
+	offset += b.LatestSilaPayloadHeader.SizeSSZ()
 
 	// Field (25) 'NextWithdrawalIndex'
 	dst = ssz.MarshalUint(dst, b.NextWithdrawalIndex)
@@ -2190,8 +2190,8 @@ func (b *BeaconStateCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		dst = ssz.MarshalUint(dst, b.InactivityScores[ii])
 	}
 
-	// Field (24) 'LatestExecutionPayloadHeader'
-	if dst, err = b.LatestExecutionPayloadHeader.MarshalSSZTo(dst); err != nil {
+	// Field (24) 'LatestSilaPayloadHeader'
+	if dst, err = b.LatestSilaPayloadHeader.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -2377,7 +2377,7 @@ func (b *BeaconStateCapella) UnmarshalSSZ(buf []byte) error {
 		return err
 	}
 
-	// Offset (24) 'LatestExecutionPayloadHeader'
+	// Offset (24) 'LatestSilaPayloadHeader'
 	if o24 = ssz.ReadOffset(buf[2736629:2736633]); o24 > size || o21 > o24 {
 		return ssz.ErrOffset
 	}
@@ -2495,13 +2495,13 @@ func (b *BeaconStateCapella) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (24) 'LatestExecutionPayloadHeader'
+	// Field (24) 'LatestSilaPayloadHeader'
 	{
 		buf = tail[o24:o27]
-		if b.LatestExecutionPayloadHeader == nil {
-			b.LatestExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderCapella)
+		if b.LatestSilaPayloadHeader == nil {
+			b.LatestSilaPayloadHeader = new(v1.SilaPayloadHeaderCapella)
 		}
-		if err = b.LatestExecutionPayloadHeader.UnmarshalSSZ(buf); err != nil {
+		if err = b.LatestSilaPayloadHeader.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -2551,11 +2551,11 @@ func (b *BeaconStateCapella) SizeSSZ() (size int) {
 	// Field (21) 'InactivityScores'
 	size += len(b.InactivityScores) * 8
 
-	// Field (24) 'LatestExecutionPayloadHeader'
-	if b.LatestExecutionPayloadHeader == nil {
-		b.LatestExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderCapella)
+	// Field (24) 'LatestSilaPayloadHeader'
+	if b.LatestSilaPayloadHeader == nil {
+		b.LatestSilaPayloadHeader = new(v1.SilaPayloadHeaderCapella)
 	}
-	size += b.LatestExecutionPayloadHeader.SizeSSZ()
+	size += b.LatestSilaPayloadHeader.SizeSSZ()
 
 	// Field (27) 'HistoricalSummaries'
 	size += len(b.HistoricalSummaries) * 64
@@ -2806,8 +2806,8 @@ func (b *BeaconStateCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 
-	// Field (24) 'LatestExecutionPayloadHeader'
-	if err = b.LatestExecutionPayloadHeader.HashTreeRootWith(hh); err != nil {
+	// Field (24) 'LatestSilaPayloadHeader'
+	if err = b.LatestSilaPayloadHeader.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
@@ -3580,7 +3580,7 @@ func (l *LightClientHeaderCapella) MarshalSSZTo(buf []byte) (dst []byte, err err
 	// Offset (1) 'Execution'
 	dst = ssz.WriteOffset(dst, offset)
 	if l.Execution == nil {
-		l.Execution = new(v1.ExecutionPayloadHeaderCapella)
+		l.Execution = new(v1.SilaPayloadHeaderCapella)
 	}
 	offset += l.Execution.SizeSSZ()
 
@@ -3646,7 +3646,7 @@ func (l *LightClientHeaderCapella) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o1:]
 		if l.Execution == nil {
-			l.Execution = new(v1.ExecutionPayloadHeaderCapella)
+			l.Execution = new(v1.SilaPayloadHeaderCapella)
 		}
 		if err = l.Execution.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -3661,7 +3661,7 @@ func (l *LightClientHeaderCapella) SizeSSZ() (size int) {
 
 	// Field (1) 'Execution'
 	if l.Execution == nil {
-		l.Execution = new(v1.ExecutionPayloadHeaderCapella)
+		l.Execution = new(v1.SilaPayloadHeaderCapella)
 	}
 	size += l.Execution.SizeSSZ()
 

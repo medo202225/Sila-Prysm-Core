@@ -90,7 +90,7 @@ type Config struct {
 	AttestationReceiver              blockchain.AttestationReceiver
 	BlockReceiver                    blockchain.BlockReceiver
 	PayloadAttestationReceiver       blockchain.PayloadAttestationReceiver
-	ExecutionPayloadEnvelopeReceiver blockchain.ExecutionPayloadEnvelopeReceiver
+	SilaPayloadEnvelopeReceiver blockchain.SilaPayloadEnvelopeReceiver
 	BlobReceiver                     blockchain.BlobReceiver
 	DataColumnReceiver               blockchain.DataColumnReceiver
 	ExecutionChainService            execution.Chain
@@ -128,9 +128,9 @@ type Config struct {
 	DataColumnStorage                *filesystem.DataColumnStorage
 	TrackedValidatorsCache           *cache.TrackedValidatorsCache
 	ProposerPreferencesCache         *cache.ProposerPreferencesCache
-	HighestBidCache                  *cache.HighestExecutionPayloadBidCache
+	HighestBidCache                  *cache.HighestSilaPayloadBidCache
 	PayloadIDCache                   *cache.PayloadIDCache
-	ExecutionPayloadEnvelopeCache    *cache.ExecutionPayloadEnvelopeCache
+	SilaPayloadEnvelopeCache    *cache.SilaPayloadEnvelopeCache
 	LCStore                          *lightClient.Store
 	GraffitiInfo                     *execution.GraffitiInfo
 }
@@ -250,7 +250,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		BlockReceiver:                    s.cfg.BlockReceiver,
 		PayloadAttestationPool:           s.cfg.PayloadAttestationPool,
 		PayloadAttestationReceiver:       s.cfg.PayloadAttestationReceiver,
-		ExecutionPayloadEnvelopeReceiver: s.cfg.ExecutionPayloadEnvelopeReceiver,
+		SilaPayloadEnvelopeReceiver: s.cfg.SilaPayloadEnvelopeReceiver,
 		BlobReceiver:                     s.cfg.BlobReceiver,
 		DataColumnReceiver:               s.cfg.DataColumnReceiver,
 		MockSilaExecutionVotes:                    s.cfg.MockSilaExecutionVotes,
@@ -270,7 +270,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		ProposerPreferencesCache:         s.cfg.ProposerPreferencesCache,
 		HighestBidCache:                  s.cfg.HighestBidCache,
 		PayloadIDCache:                   s.cfg.PayloadIDCache,
-		ExecutionPayloadEnvelopeCache:    s.cfg.ExecutionPayloadEnvelopeCache,
+		SilaPayloadEnvelopeCache:    s.cfg.SilaPayloadEnvelopeCache,
 		AttestationStateFetcher:          s.cfg.AttestationReceiver,
 		GraffitiInfo:                     s.cfg.GraffitiInfo,
 	}

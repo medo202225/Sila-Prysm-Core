@@ -217,7 +217,7 @@ func GenerateProtoBellatrixBeaconBlock() *silapb.BeaconBlockBellatrix {
 				SyncCommitteeBits:      FillByteSlice(64, 110),
 				SyncCommitteeSignature: FillByteSlice(96, 111),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayload{
+			SilaPayload: &enginev1.SilaPayload{
 				ParentHash:    FillByteSlice(32, 112),
 				FeeRecipient:  FillByteSlice(20, 113),
 				StateRoot:     FillByteSlice(32, 114),
@@ -450,7 +450,7 @@ func GenerateProtoBlindedBellatrixBeaconBlock() *silapb.BlindedBeaconBlockBellat
 				SyncCommitteeBits:      FillByteSlice(64, 110),
 				SyncCommitteeSignature: FillByteSlice(96, 111),
 			},
-			ExecutionPayloadHeader: &enginev1.ExecutionPayloadHeader{
+			SilaPayloadHeader: &enginev1.SilaPayloadHeader{
 				ParentHash:       FillByteSlice(32, 112),
 				FeeRecipient:     FillByteSlice(20, 113),
 				StateRoot:        FillByteSlice(32, 114),
@@ -680,7 +680,7 @@ func GenerateJsonBellatrixBeaconBlock() *structs.BeaconBlockBellatrix {
 				SyncCommitteeBits:      FillEncodedByteSlice(64, 110),
 				SyncCommitteeSignature: FillEncodedByteSlice(96, 111),
 			},
-			ExecutionPayload: &structs.ExecutionPayload{
+			SilaPayload: &structs.SilaPayload{
 				ParentHash:    FillEncodedByteSlice(32, 112),
 				FeeRecipient:  FillEncodedByteSlice(20, 113),
 				StateRoot:     FillEncodedByteSlice(32, 114),
@@ -913,7 +913,7 @@ func GenerateJsonBlindedBellatrixBeaconBlock() *structs.BlindedBeaconBlockBellat
 				SyncCommitteeBits:      FillEncodedByteSlice(64, 110),
 				SyncCommitteeSignature: FillEncodedByteSlice(96, 111),
 			},
-			ExecutionPayloadHeader: &structs.ExecutionPayloadHeader{
+			SilaPayloadHeader: &structs.SilaPayloadHeader{
 				ParentHash:       FillEncodedByteSlice(32, 112),
 				FeeRecipient:     FillEncodedByteSlice(20, 113),
 				StateRoot:        FillEncodedByteSlice(32, 114),

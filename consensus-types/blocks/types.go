@@ -16,8 +16,8 @@ var (
 )
 
 var (
-	errPayloadWrongType       = errors.New("execution payload has wrong type")
-	errPayloadHeaderWrongType = errors.New("execution payload header has wrong type")
+	errPayloadWrongType       = errors.New("sila payload has wrong type")
+	errPayloadHeaderWrongType = errors.New("sila payload header has wrong type")
 )
 
 const (
@@ -52,12 +52,12 @@ type BeaconBlockBody struct {
 	deposits                  []*eth.Deposit
 	voluntaryExits            []*eth.SignedVoluntaryExit
 	syncAggregate             *eth.SyncAggregate
-	executionPayload          interfaces.ExecutionData
-	executionPayloadHeader    interfaces.ExecutionData
+	silaPayload          interfaces.ExecutionData
+	silaPayloadHeader    interfaces.ExecutionData
 	blsToExecutionChanges     []*eth.SignedBLSToExecutionChange
 	blobKzgCommitments        [][]byte
 	executionRequests         *enginev1.ExecutionRequests
-	signedExecutionPayloadBid *eth.SignedExecutionPayloadBid
+	signedSilaPayloadBid *eth.SignedSilaPayloadBid
 	payloadAttestations       []*eth.PayloadAttestation
 	parentExecutionRequests   *enginev1.ExecutionRequests
 }

@@ -15,44 +15,44 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// setExecutionPayloadBid selects the best execution payload bid for the block.
+// setSilaPayloadBid selects the best sila payload bid for the block.
 // When selfBuildOnly is false it compares the highest P2P bid from the cache
 // against the local EL block value and uses whichever is greater.
 // Returns true when a self-build bid was selected (the caller must cache the
-// execution payload envelope); false when a remote P2P bid was used.
-func (vs *Server) setExecutionPayloadBid(
+// sila payload envelope); false when a remote P2P bid was used.
+func (vs *Server) setSilaPayloadBid(
 	ctx context.Context,
 	sBlk interfaces.SignedBeaconBlock,
 	local *consensusblocks.GetPayloadResponse,
 	selfBuildOnly bool,
 ) (bool, error) {
-	_, span := trace.StartSpan(ctx, "ProposerServer.setExecutionPayloadBid")
+	_, span := trace.StartSpan(ctx, "ProposerServer.setSilaPayloadBid")
 	defer span.End()
 
 	if local == nil || local.ExecutionData == nil {
-		return false, errors.New("local execution payload is nil")
+		return false, errors.New("local sila payload is nil")
 	}
 
 	if cached := vs.winningP2PBid(sBlk, local, selfBuildOnly); cached != nil {
-		if err := sBlk.SetSignedExecutionPayloadBid(cached); err != nil {
-			return false, errors.Wrap(err, "could not set cached P2P execution payload bid")
+		if err := sBlk.SetSignedSilaPayloadBid(cached); err != nil {
+			return false, errors.Wrap(err, "could not set cached P2P sila payload bid")
 		}
 		return false, nil
 	}
 
 	// Fall back to self-build bid.
-	bid, err := vs.createSelfBuildExecutionPayloadBid(local, sBlk.Block())
+	bid, err := vs.createSelfBuildSilaPayloadBid(local, sBlk.Block())
 	if err != nil {
-		return false, errors.Wrap(err, "could not create execution payload bid")
+		return false, errors.Wrap(err, "could not create sila payload bid")
 	}
 
 	// Per spec, self-build bids must use G2 point-at-infinity as the signature.
-	signedBid := &silapb.SignedExecutionPayloadBid{
+	signedBid := &silapb.SignedSilaPayloadBid{
 		Message:   bid,
 		Signature: common.InfiniteSignature[:],
 	}
-	if err := sBlk.SetSignedExecutionPayloadBid(signedBid); err != nil {
-		return false, errors.Wrap(err, "could not set signed execution payload bid")
+	if err := sBlk.SetSignedSilaPayloadBid(signedBid); err != nil {
+		return false, errors.Wrap(err, "could not set signed sila payload bid")
 	}
 
 	return true, nil
@@ -63,7 +63,7 @@ func (vs *Server) winningP2PBid(
 	sBlk interfaces.SignedBeaconBlock,
 	local *consensusblocks.GetPayloadResponse,
 	selfBuildOnly bool,
-) *silapb.SignedExecutionPayloadBid {
+) *silapb.SignedSilaPayloadBid {
 	if selfBuildOnly || vs.HighestBidCache == nil {
 		return nil
 	}
@@ -92,17 +92,17 @@ func (vs *Server) winningP2PBid(
 		"builderIndex":     cached.Message.BuilderIndex,
 		"builderValueGwei": builderValueGwei,
 		"localValueGwei":   localValueGwei,
-	}).Info("Using P2P execution payload bid over self-build")
+	}).Info("Using P2P sila payload bid over self-build")
 	return cached
 }
 
-// createSelfBuildExecutionPayloadBid creates an ExecutionPayloadBid for self-building,
+// createSelfBuildSilaPayloadBid creates an SilaPayloadBid for self-building,
 // where the proposer acts as its own builder. Per spec, the bid value must be zero
 // and the builder index must be BUILDER_INDEX_SELF_BUILD.
-func (vs *Server) createSelfBuildExecutionPayloadBid(
+func (vs *Server) createSelfBuildSilaPayloadBid(
 	local *consensusblocks.GetPayloadResponse,
 	block interfaces.ReadOnlyBeaconBlock,
-) (*silapb.ExecutionPayloadBid, error) {
+) (*silapb.SilaPayloadBid, error) {
 	ed := local.ExecutionData
 	if ed == nil || ed.IsNil() {
 		return nil, errors.New("execution data is nil")
@@ -113,7 +113,7 @@ func (vs *Server) createSelfBuildExecutionPayloadBid(
 	if err != nil {
 		return nil, errors.Wrap(err, "could not compute execution requests root")
 	}
-	return &silapb.ExecutionPayloadBid{
+	return &silapb.SilaPayloadBid{
 		ParentBlockHash:       ed.ParentHash(),
 		ParentBlockRoot:       bytesutil.SafeCopyBytes(parentBlockRoot[:]),
 		BlockHash:             ed.BlockHash(),

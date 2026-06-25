@@ -12,7 +12,7 @@ type Step struct {
 	PowBlock                  *string         `json:"pow_block"`
 	Check                     *Check          `json:"checks"`
 	DataColumns               []*string       `json:"columns"`
-	ExecutionPayload          *string         `json:"execution_payload"`
+	SilaPayload          *string         `json:"sila_payload"`
 	PayloadAttestationMessage *string         `json:"payload_attestation_message"`
 }
 

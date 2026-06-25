@@ -127,7 +127,7 @@ func (s *Service) validateBeaconBlockPubSub(ctx context.Context, pid peer.ID, ms
 		log.WithError(err).WithFields(getBlockFields(blk)).Debug("Received block with an invalid parent")
 		return pubsub.ValidationReject, err
 	}
-	if res, err := s.validateExecutionPayloadBidParentValid(ctx, blk.Block()); err != nil {
+	if res, err := s.validateSilaPayloadBidParentValid(ctx, blk.Block()); err != nil {
 		return res, err
 	}
 
@@ -207,7 +207,7 @@ func (s *Service) validateBeaconBlockPubSub(ctx context.Context, pid peer.ID, ms
 		log.WithError(err).WithFields(getBlockFields(blk)).Debug("Could not identify parent for block")
 		return pubsub.ValidationIgnore, err
 	}
-	if res, err := s.validateExecutionPayloadBidParentSeen(ctx, blk.Block()); res == pubsub.ValidationIgnore {
+	if res, err := s.validateSilaPayloadBidParentSeen(ctx, blk.Block()); res == pubsub.ValidationIgnore {
 		if sigRes, sigErr := s.verifyPendingBlockSignature(ctx, blk, blockRoot); sigErr != nil {
 			log.WithError(sigErr).WithFields(getBlockFields(blk)).Debug("Could not verify block signature")
 			return sigRes, sigErr
@@ -224,7 +224,7 @@ func (s *Service) validateBeaconBlockPubSub(ctx context.Context, pid peer.ID, ms
 		return pubsub.ValidationIgnore, err
 	}
 
-	if res, err := s.validateExecutionPayloadBid(ctx, blk.Block()); err != nil {
+	if res, err := s.validateSilaPayloadBid(ctx, blk.Block()); err != nil {
 		if res == pubsub.ValidationReject {
 			s.setBadBlock(ctx, blockRoot)
 		}
@@ -426,15 +426,15 @@ func validateDenebBeaconBlock(blk interfaces.ReadOnlyBeaconBlock) error {
 // spec code:
 //
 //	If the execution is enabled for the block -- i.e. is_execution_enabled(state, block.body) then validate the following:
-//	   [REJECT] The block's execution payload timestamp is correct with respect to the slot --
-//	   i.e. execution_payload.timestamp == compute_timestamp_at_slot(state, block.slot).
+//	   [REJECT] The block's sila payload timestamp is correct with respect to the slot --
+//	   i.e. sila_payload.timestamp == compute_timestamp_at_slot(state, block.slot).
 //
-//	   If execution_payload verification of block's parent by an execution node is not complete:
+//	   If sila_payload verification of block's parent by an execution node is not complete:
 //	      [REJECT] The block's parent (defined by block.parent_root) passes all validation (excluding execution
-//	       node verification of the block.body.execution_payload).
+//	       node verification of the block.body.sila_payload).
 //	   otherwise:
 //	      [IGNORE] The block's parent (defined by block.parent_root) passes all validation (including execution
-//	       node verification of the block.body.execution_payload).
+//	       node verification of the block.body.sila_payload).
 func (s *Service) validateBellatrixBeaconBlock(ctx context.Context, verifyingState state.ReadOnlyBeaconState, blk interfaces.ReadOnlyBeaconBlock) error {
 	if blk.Version() >= version.Gloas {
 		return nil
@@ -463,7 +463,7 @@ func (s *Service) validateBellatrixBeaconBlock(ctx context.Context, verifyingSta
 		return err
 	}
 	if payload == nil || payload.IsNil() {
-		return errors.New("execution payload is nil")
+		return errors.New("sila payload is nil")
 	}
 	if payload.Timestamp() != uint64(t.Unix()) {
 		return errors.New("incorrect timestamp")

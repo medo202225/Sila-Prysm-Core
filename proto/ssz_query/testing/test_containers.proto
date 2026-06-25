@@ -138,7 +138,7 @@ message VariableTestContainer {
   ];
 
   // 2D bytes list - test list of bytelists.
-  // e.g., ExecutionPayload.transactions
+  // e.g., SilaPayload.transactions
   repeated bytes nested_list_field = 8 [
     (sila.eth.ext.ssz_size) = "?,?",
     (sila.eth.ext.ssz_max) = "100,50"

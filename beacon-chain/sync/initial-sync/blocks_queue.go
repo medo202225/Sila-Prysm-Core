@@ -100,7 +100,7 @@ type blocksQueueFetchedData struct {
 	blocksFrom peer.ID
 	blobsFrom  peer.ID
 	bwb        []blocks.BlockWithROSidecars
-	envelopes  []interfaces.ROSignedExecutionPayloadEnvelope
+	envelopes  []interfaces.ROSignedSilaPayloadEnvelope
 }
 
 // newBlocksQueue creates initialized priority queue.

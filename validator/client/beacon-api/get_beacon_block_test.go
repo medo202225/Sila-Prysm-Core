@@ -254,7 +254,7 @@ func TestGetBeaconBlock_SSZ_BellatrixValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"bellatrix"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -296,7 +296,7 @@ func TestGetBeaconBlock_SSZ_BlindedBellatrixValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"bellatrix"},
-			api.ExecutionPayloadBlindedHeader: []string{"true"},
+			api.SilaPayloadBlindedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -338,7 +338,7 @@ func TestGetBeaconBlock_SSZ_CapellaValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"capella"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -380,7 +380,7 @@ func TestGetBeaconBlock_SSZ_BlindedCapellaValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"capella"},
-			api.ExecutionPayloadBlindedHeader: []string{"true"},
+			api.SilaPayloadBlindedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -422,7 +422,7 @@ func TestGetBeaconBlock_SSZ_DenebValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"deneb"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -464,7 +464,7 @@ func TestGetBeaconBlock_SSZ_BlindedDenebValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"deneb"},
-			api.ExecutionPayloadBlindedHeader: []string{"true"},
+			api.SilaPayloadBlindedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -506,7 +506,7 @@ func TestGetBeaconBlock_SSZ_ElectraValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"electra"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -548,7 +548,7 @@ func TestGetBeaconBlock_SSZ_BlindedElectraValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"electra"},
-			api.ExecutionPayloadBlindedHeader: []string{"true"},
+			api.SilaPayloadBlindedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -590,7 +590,7 @@ func TestGetBeaconBlock_SSZ_FuluValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"fulu"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -632,7 +632,7 @@ func TestGetBeaconBlock_SSZ_BlindedFuluValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"fulu"},
-			api.ExecutionPayloadBlindedHeader: []string{"true"},
+			api.SilaPayloadBlindedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -670,7 +670,7 @@ func TestGetBeaconBlock_SSZ_UnsupportedVersion(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"unsupported"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -703,7 +703,7 @@ func TestGetBeaconBlock_SSZ_InvalidBlindedHeader(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"bellatrix"},
-			api.ExecutionPayloadBlindedHeader: []string{"invalid"},
+			api.SilaPayloadBlindedHeader: []string{"invalid"},
 		},
 		nil,
 	).Times(1)
@@ -736,7 +736,7 @@ func TestGetBeaconBlock_SSZ_InvalidVersionHeader(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"invalid"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -794,7 +794,7 @@ func TestGetBeaconBlock_SSZ_Phase0Valid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"phase0"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -836,7 +836,7 @@ func TestGetBeaconBlock_SSZ_AltairValid(t *testing.T) {
 		http.Header{
 			"Content-Type":                    []string{api.OctetStreamMediaType},
 			api.VersionHeader:                 []string{"altair"},
-			api.ExecutionPayloadBlindedHeader: []string{"false"},
+			api.SilaPayloadBlindedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
@@ -915,7 +915,7 @@ func TestGetBeaconBlock_BellatrixValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "bellatrix",
-		ExecutionPayloadBlinded: false,
+		SilaPayloadBlinded: false,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -960,7 +960,7 @@ func TestGetBeaconBlock_BlindedBellatrixValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "bellatrix",
-		ExecutionPayloadBlinded: true,
+		SilaPayloadBlinded: true,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1005,7 +1005,7 @@ func TestGetBeaconBlock_CapellaValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "capella",
-		ExecutionPayloadBlinded: false,
+		SilaPayloadBlinded: false,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1050,7 +1050,7 @@ func TestGetBeaconBlock_BlindedCapellaValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "capella",
-		ExecutionPayloadBlinded: true,
+		SilaPayloadBlinded: true,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1095,7 +1095,7 @@ func TestGetBeaconBlock_FuluValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "fulu",
-		ExecutionPayloadBlinded: false,
+		SilaPayloadBlinded: false,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1140,7 +1140,7 @@ func TestGetBeaconBlock_BlindedFuluValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "fulu",
-		ExecutionPayloadBlinded: true,
+		SilaPayloadBlinded: true,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1185,7 +1185,7 @@ func TestGetBeaconBlock_DenebValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "deneb",
-		ExecutionPayloadBlinded: false,
+		SilaPayloadBlinded: false,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1230,7 +1230,7 @@ func TestGetBeaconBlock_BlindedDenebValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "deneb",
-		ExecutionPayloadBlinded: true,
+		SilaPayloadBlinded: true,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1275,7 +1275,7 @@ func TestGetBeaconBlock_ElectraValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "electra",
-		ExecutionPayloadBlinded: false,
+		SilaPayloadBlinded: false,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1320,7 +1320,7 @@ func TestGetBeaconBlock_BlindedElectraValid(t *testing.T) {
 
 	b, err := json.Marshal(structs.ProduceBlockV3Response{
 		Version:                 "electra",
-		ExecutionPayloadBlinded: true,
+		SilaPayloadBlinded: true,
 		Data:                    bytes,
 	})
 	require.NoError(t, err)
@@ -1364,7 +1364,7 @@ func TestGetBeaconBlock_GloasValid_SSZ_WithPayload(t *testing.T) {
 	proto := testhelpers.GenerateProtoGloasBeaconBlock()
 	contents := &silapb.BeaconBlockContentsGloas{
 		Block:                    proto,
-		ExecutionPayloadEnvelope: testhelpers.GenerateProtoExecutionPayloadEnvelope(),
+		SilaPayloadEnvelope: testhelpers.GenerateProtoSilaPayloadEnvelope(),
 	}
 	sszBytes, err := contents.MarshalSSZ()
 	require.NoError(t, err)
@@ -1384,7 +1384,7 @@ func TestGetBeaconBlock_GloasValid_SSZ_WithPayload(t *testing.T) {
 		http.Header{
 			"Content-Type":                     []string{api.OctetStreamMediaType},
 			api.VersionHeader:                  []string{"gloas"},
-			api.ExecutionPayloadIncludedHeader: []string{"true"},
+			api.SilaPayloadIncludedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -1392,7 +1392,7 @@ func TestGetBeaconBlock_GloasValid_SSZ_WithPayload(t *testing.T) {
 	validatorClient := &beaconApiValidatorClient{
 		handler:       handler,
 		stateless:     true,
-		envelopeCache: newExecutionPayloadEnvelopeCache(),
+		envelopeCache: newSilaPayloadEnvelopeCache(),
 	}
 	beaconBlock, err := validatorClient.beaconBlock(ctx, slot, randaoReveal, graffiti)
 	require.NoError(t, err)
@@ -1406,7 +1406,7 @@ func TestGetBeaconBlock_GloasValid_SSZ_WithPayload(t *testing.T) {
 	assert.DeepEqual(t, expectedBeaconBlock, beaconBlock)
 	cached, _, _ := validatorClient.envelopeCache.Take(slot)
 	require.NotNil(t, cached)
-	assert.DeepEqual(t, contents.ExecutionPayloadEnvelope.BeaconBlockRoot, cached.BeaconBlockRoot)
+	assert.DeepEqual(t, contents.SilaPayloadEnvelope.BeaconBlockRoot, cached.BeaconBlockRoot)
 }
 
 func TestGetBeaconBlock_GloasValid_SSZ_WithoutPayload(t *testing.T) {
@@ -1433,14 +1433,14 @@ func TestGetBeaconBlock_GloasValid_SSZ_WithoutPayload(t *testing.T) {
 		http.Header{
 			"Content-Type":                     []string{api.OctetStreamMediaType},
 			api.VersionHeader:                  []string{"gloas"},
-			api.ExecutionPayloadIncludedHeader: []string{"false"},
+			api.SilaPayloadIncludedHeader: []string{"false"},
 		},
 		nil,
 	).Times(1)
 
 	validatorClient := &beaconApiValidatorClient{
 		handler:       handler,
-		envelopeCache: newExecutionPayloadEnvelopeCache(),
+		envelopeCache: newSilaPayloadEnvelopeCache(),
 	}
 	beaconBlock, err := validatorClient.beaconBlock(ctx, slot, randaoReveal, graffiti)
 	require.NoError(t, err)
@@ -1471,7 +1471,7 @@ func TestGetBeaconBlock_GloasValid_JSON_WithoutPayload(t *testing.T) {
 	b, err := json.Marshal(structs.ProduceBlockV4Response{
 		Version:                  "gloas",
 		ConsensusBlockValue:      "0",
-		ExecutionPayloadIncluded: false,
+		SilaPayloadIncluded: false,
 		Data:                     dataBytes,
 	})
 	require.NoError(t, err)
@@ -1487,7 +1487,7 @@ func TestGetBeaconBlock_GloasValid_JSON_WithoutPayload(t *testing.T) {
 
 	validatorClient := &beaconApiValidatorClient{
 		handler:       handler,
-		envelopeCache: newExecutionPayloadEnvelopeCache(),
+		envelopeCache: newSilaPayloadEnvelopeCache(),
 	}
 	beaconBlock, err := validatorClient.beaconBlock(t.Context(), slot, randaoReveal, graffiti)
 	require.NoError(t, err)
@@ -1512,7 +1512,7 @@ func TestGetBeaconBlock_GloasRejectsJSONWithPayload(t *testing.T) {
 		[]byte("{}"),
 		http.Header{
 			"Content-Type":                     []string{"application/json"},
-			api.ExecutionPayloadIncludedHeader: []string{"true"},
+			api.SilaPayloadIncludedHeader: []string{"true"},
 		},
 		nil,
 	).Times(1)
@@ -1520,7 +1520,7 @@ func TestGetBeaconBlock_GloasRejectsJSONWithPayload(t *testing.T) {
 	validatorClient := &beaconApiValidatorClient{
 		handler:       handler,
 		stateless:     true,
-		envelopeCache: newExecutionPayloadEnvelopeCache(),
+		envelopeCache: newSilaPayloadEnvelopeCache(),
 	}
 	_, err := validatorClient.beaconBlock(t.Context(), slot, randaoReveal, graffiti)
 	assert.ErrorContains(t, "must be SSZ", err)

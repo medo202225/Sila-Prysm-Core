@@ -127,7 +127,7 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		DataColumnTopic,
 		PayloadAttestationMessageTopic,
 		ProposerPreferencesTopic,
-		ExecutionPayloadGossipTopic,
+		SilaPayloadGossipTopic,
 	})
 	require.NoError(t, err)
 	ro, err := blocks.NewROBlob(util.HydrateBlobSidecar(&eth.BlobSidecar{}))
@@ -348,8 +348,8 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 			},
 		},
 		{
-			Type: operation.ExecutionPayloadGossipReceived,
-			Data: &operation.ExecutionPayloadGossipReceivedData{
+			Type: operation.SilaPayloadGossipReceived,
+			Data: &operation.SilaPayloadGossipReceivedData{
 				Slot:         1,
 				BuilderIndex: 2,
 				BlockHash:    [32]byte{'h'},
@@ -475,8 +475,8 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 			FinalizedCheckpointTopic,
 			ChainReorgTopic,
 			BlockTopic,
-			ExecutionPayloadAvailableTopic,
-			ExecutionPayloadTopic,
+			SilaPayloadAvailableTopic,
+			SilaPayloadTopic,
 		})
 		require.NoError(t, err)
 		request := topics.testHttpRequest(testSync.ctx, t)
@@ -530,15 +530,15 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 				},
 			},
 			{
-				Type: statefeed.ExecutionPayloadAvailable,
-				Data: &statefeed.ExecutionPayloadAvailableData{
+				Type: statefeed.SilaPayloadAvailable,
+				Data: &statefeed.SilaPayloadAvailableData{
 					Slot:      10,
 					BlockRoot: [32]byte{0x9a},
 				},
 			},
 			{
-				Type: statefeed.ExecutionPayloadProcessed,
-				Data: &statefeed.ExecutionPayloadProcessedData{
+				Type: statefeed.SilaPayloadProcessed,
+				Data: &statefeed.SilaPayloadProcessedData{
 					Slot:         11,
 					BuilderIndex: 12,
 					BlockHash:    [32]byte{0xbb},

@@ -303,7 +303,7 @@ func topLevelRoots(body interfaces.ReadOnlyBeaconBlockBody) ([][]byte, error) {
 	}
 	copy(layer[8], root[:])
 
-	// Execution Payload
+	// Sila Payload
 	ep, err := body.Execution()
 	if err != nil {
 		return nil, err

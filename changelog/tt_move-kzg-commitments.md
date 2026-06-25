@@ -1,3 +1,3 @@
 ### Changed
 
-- Moved blob KZG commitments into `ExecutionPayloadBid` and removed them from `ExecutionPayloadEnvelope` for Gloas.
+- Moved blob KZG commitments into `SilaPayloadBid` and removed them from `SilaPayloadEnvelope` for Gloas.

@@ -78,27 +78,27 @@ func TestClient_IPC(t *testing.T) {
 	params.OverrideBeaconConfig(cfg)
 
 	t.Run(GetPayloadMethod, func(t *testing.T) {
-		want, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		want, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		payloadId := [8]byte{1}
 		resp, err := srv.GetPayload(ctx, payloadId, 1)
 		require.NoError(t, err)
 		require.Equal(t, false, resp.OverrideBuilder)
 		pbs := resp.ExecutionData.Proto()
-		resPb, ok := pbs.(*pb.ExecutionPayload)
+		resPb, ok := pbs.(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		require.NoError(t, err)
 		require.DeepEqual(t, want, resPb)
 	})
 	t.Run(GetPayloadMethodV2, func(t *testing.T) {
-		want, ok := fix["ExecutionPayloadCapellaWithValue"].(*pb.ExecutionPayloadCapellaWithValue)
+		want, ok := fix["SilaPayloadCapellaWithValue"].(*pb.SilaPayloadCapellaWithValue)
 		require.Equal(t, true, ok)
 		payloadId := [8]byte{1}
 		resp, err := srv.GetPayload(ctx, payloadId, params.BeaconConfig().SlotsPerEpoch)
 		require.NoError(t, err)
 		require.Equal(t, false, resp.OverrideBuilder)
 		pbs := resp.ExecutionData.Proto()
-		resPb, ok := pbs.(*pb.ExecutionPayloadCapella)
+		resPb, ok := pbs.(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
 		require.DeepEqual(t, want, resPb)
 	})
@@ -125,9 +125,9 @@ func TestClient_IPC(t *testing.T) {
 	t.Run(NewPayloadMethod, func(t *testing.T) {
 		want, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
-		req, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		req, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
-		wrappedPayload, err := blocks.WrappedExecutionPayload(req)
+		wrappedPayload, err := blocks.WrappedSilaPayload(req)
 		require.NoError(t, err)
 		latestValidHash, err := srv.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.NoError(t, err)
@@ -136,9 +136,9 @@ func TestClient_IPC(t *testing.T) {
 	t.Run(NewPayloadMethodV2, func(t *testing.T) {
 		want, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
-		req, ok := fix["ExecutionPayloadCapella"].(*pb.ExecutionPayloadCapella)
+		req, ok := fix["SilaPayloadCapella"].(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
-		wrappedPayload, err := blocks.WrappedExecutionPayloadCapella(req)
+		wrappedPayload, err := blocks.WrappedSilaPayloadCapella(req)
 		require.NoError(t, err)
 		latestValidHash, err := srv.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.NoError(t, err)
@@ -175,7 +175,7 @@ func TestClient_HTTP(t *testing.T) {
 
 	t.Run(GetPayloadMethod, func(t *testing.T) {
 		payloadId := [8]byte{1}
-		want, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		want, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
@@ -215,13 +215,13 @@ func TestClient_HTTP(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, false, resp.OverrideBuilder)
 		pbs := resp.ExecutionData.Proto()
-		pbStruct, ok := pbs.(*pb.ExecutionPayload)
+		pbStruct, ok := pbs.(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		require.DeepEqual(t, want, pbStruct)
 	})
 	t.Run(GetPayloadMethodV2, func(t *testing.T) {
 		payloadId := [8]byte{1}
-		want, ok := fix["ExecutionPayloadCapellaWithValue"].(*pb.GetPayloadV2ResponseJson)
+		want, ok := fix["SilaPayloadCapellaWithValue"].(*pb.GetPayloadV2ResponseJson)
 		require.Equal(t, true, ok)
 		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
@@ -261,20 +261,20 @@ func TestClient_HTTP(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, false, resp.OverrideBuilder)
 		pbs := resp.ExecutionData.Proto()
-		ep, ok := pbs.(*pb.ExecutionPayloadCapella)
+		ep, ok := pbs.(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
-		require.DeepEqual(t, want.ExecutionPayload.BlockHash.Bytes(), ep.BlockHash)
-		require.DeepEqual(t, want.ExecutionPayload.StateRoot.Bytes(), ep.StateRoot)
-		require.DeepEqual(t, want.ExecutionPayload.ParentHash.Bytes(), ep.ParentHash)
-		require.DeepEqual(t, want.ExecutionPayload.FeeRecipient.Bytes(), ep.FeeRecipient)
-		require.DeepEqual(t, want.ExecutionPayload.PrevRandao.Bytes(), ep.PrevRandao)
-		require.DeepEqual(t, want.ExecutionPayload.ParentHash.Bytes(), ep.ParentHash)
+		require.DeepEqual(t, want.SilaPayload.BlockHash.Bytes(), ep.BlockHash)
+		require.DeepEqual(t, want.SilaPayload.StateRoot.Bytes(), ep.StateRoot)
+		require.DeepEqual(t, want.SilaPayload.ParentHash.Bytes(), ep.ParentHash)
+		require.DeepEqual(t, want.SilaPayload.FeeRecipient.Bytes(), ep.FeeRecipient)
+		require.DeepEqual(t, want.SilaPayload.PrevRandao.Bytes(), ep.PrevRandao)
+		require.DeepEqual(t, want.SilaPayload.ParentHash.Bytes(), ep.ParentHash)
 
 		require.Equal(t, primitives.Gwei(1236), primitives.WeiToGwei(resp.Bid))
 	})
 	t.Run(GetPayloadMethodV3, func(t *testing.T) {
 		payloadId := [8]byte{1}
-		want, ok := fix["ExecutionPayloadDenebWithValue"].(*pb.GetPayloadV3ResponseJson)
+		want, ok := fix["SilaPayloadDenebWithValue"].(*pb.GetPayloadV3ResponseJson)
 		require.Equal(t, true, ok)
 		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
@@ -596,55 +596,55 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, []byte(nil), validHash)
 	})
 	t.Run(NewPayloadMethod+" VALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		execPayload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		want, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadSetup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayload(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.NoError(t, err)
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethodV2+" VALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadCapella"].(*pb.ExecutionPayloadCapella)
+		execPayload, ok := fix["SilaPayloadCapella"].(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
 		want, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV2Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadCapella(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadCapella(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.NoError(t, err)
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethodV3+" VALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV3Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{'a'}, nil)
 		require.NoError(t, err)
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethodV4+" VALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		requests := &pb.ExecutionRequests{
 			Deposits: []*pb.DepositRequest{
@@ -677,55 +677,55 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethod+" SYNCING status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		execPayload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		want, ok := fix["SyncingStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadSetup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayload(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, ErrAcceptedSyncingPayloadStatus, err)
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethodV2+" SYNCING status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadCapella"].(*pb.ExecutionPayloadCapella)
+		execPayload, ok := fix["SilaPayloadCapella"].(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
 		want, ok := fix["SyncingStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV2Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadCapella(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadCapella(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, ErrAcceptedSyncingPayloadStatus, err)
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethodV3+" SYNCING status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["SyncingStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV3Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{'a'}, nil)
 		require.ErrorIs(t, ErrAcceptedSyncingPayloadStatus, err)
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethodV4+" SYNCING status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["SyncingStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		requests := &pb.ExecutionRequests{
 			Deposits: []*pb.DepositRequest{
@@ -758,54 +758,54 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethod+" INVALID_BLOCK_HASH status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		execPayload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidBlockHashStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadSetup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayload(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, ErrInvalidBlockHashPayloadStatus, err)
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethodV2+" INVALID_BLOCK_HASH status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadCapella"].(*pb.ExecutionPayloadCapella)
+		execPayload, ok := fix["SilaPayloadCapella"].(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidBlockHashStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV2Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadCapella(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadCapella(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, ErrInvalidBlockHashPayloadStatus, err)
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethodV3+" INVALID_BLOCK_HASH status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidBlockHashStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV3Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{'a'}, nil)
 		require.ErrorIs(t, ErrInvalidBlockHashPayloadStatus, err)
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethodV4+" INVALID_BLOCK_HASH status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidBlockHashStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		requests := &pb.ExecutionRequests{
 			Deposits: []*pb.DepositRequest{
@@ -838,55 +838,55 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(NewPayloadMethod+" INVALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		execPayload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadSetup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayload(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, ErrInvalidPayloadStatus, err)
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethodV2+" INVALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadCapella"].(*pb.ExecutionPayloadCapella)
+		execPayload, ok := fix["SilaPayloadCapella"].(*pb.SilaPayloadCapella)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV2Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadCapella(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadCapella(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, ErrInvalidPayloadStatus, err)
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethodV3+" INVALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadV3Setup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{'a'}, nil)
 		require.ErrorIs(t, ErrInvalidPayloadStatus, err)
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethodV4+" INVALID status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayloadDeneb"].(*pb.ExecutionPayloadDeneb)
+		execPayload, ok := fix["SilaPayloadDeneb"].(*pb.SilaPayloadDeneb)
 		require.Equal(t, true, ok)
 		want, ok := fix["InvalidStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayloadDeneb(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayloadDeneb(execPayload)
 		require.NoError(t, err)
 		requests := &pb.ExecutionRequests{
 			Deposits: []*pb.DepositRequest{
@@ -919,14 +919,14 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, want.LatestValidHash, resp)
 	})
 	t.Run(NewPayloadMethod+" UNKNOWN status", func(t *testing.T) {
-		execPayload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		execPayload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 		want, ok := fix["UnknownStatus"].(*pb.PayloadStatus)
 		require.Equal(t, true, ok)
 		client := newPayloadSetup(t, want, execPayload)
 
 		// We call the RPC method via HTTP and expect a proper result.
-		wrappedPayload, err := blocks.WrappedExecutionPayload(execPayload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(execPayload)
 		require.NoError(t, err)
 		resp, err := client.NewPayload(ctx, wrappedPayload, []common.Hash{}, &common.Hash{}, nil)
 		require.ErrorIs(t, err, ErrUnknownPayloadStatus)
@@ -1112,13 +1112,13 @@ func TestReconstructFullBellatrixBlock(t *testing.T) {
 		_, err = service.ReconstructFullBlock(ctx, wrapped)
 		require.ErrorContains(t, want, err)
 	})
-	t.Run("pre-merge execution payload", func(t *testing.T) {
+	t.Run("pre-merge sila payload", func(t *testing.T) {
 		service := &Service{}
 		bellatrixBlock := util.NewBlindedBeaconBlockBellatrix()
 		wanted := util.NewBeaconBlockBellatrix()
 		wanted.Block.Slot = 1
 		// Make sure block hash is the zero hash.
-		bellatrixBlock.Block.Body.ExecutionPayloadHeader.BlockHash = make([]byte, 32)
+		bellatrixBlock.Block.Body.SilaPayloadHeader.BlockHash = make([]byte, 32)
 		bellatrixBlock.Block.Slot = 1
 		wrapped, err := blocks.NewSignedBeaconBlock(bellatrixBlock)
 		require.NoError(t, err)
@@ -1130,7 +1130,7 @@ func TestReconstructFullBellatrixBlock(t *testing.T) {
 	})
 	t.Run("properly reconstructs block with correct payload", func(t *testing.T) {
 		fix := fixtures()
-		payload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		payload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 
 		jsonPayload := make(map[string]any)
@@ -1148,7 +1148,7 @@ func TestReconstructFullBellatrixBlock(t *testing.T) {
 		payload.Transactions = encodedBinaryTxs
 		jsonPayload["transactions"] = []hexutil.Bytes{encodedBinaryTxs[0]}
 
-		wrappedPayload, err := blocks.WrappedExecutionPayload(payload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(payload)
 		require.NoError(t, err)
 		header, err := blocks.PayloadToHeader(wrappedPayload)
 		require.NoError(t, err)
@@ -1175,7 +1175,7 @@ func TestReconstructFullBellatrixBlock(t *testing.T) {
 		service.rpcClient = rpcClient
 		blindedBlock := util.NewBlindedBeaconBlockBellatrix()
 
-		blindedBlock.Block.Body.ExecutionPayloadHeader = header
+		blindedBlock.Block.Body.SilaPayloadHeader = header
 		wrapped, err := blocks.NewSignedBeaconBlock(blindedBlock)
 		require.NoError(t, err)
 		reconstructed, err := service.ReconstructFullBlock(ctx, wrapped)
@@ -1204,13 +1204,13 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		_, err = service.ReconstructFullBellatrixBlockBatch(ctx, []interfaces.ReadOnlySignedBeaconBlock{wrapped})
 		require.ErrorContains(t, want, err)
 	})
-	t.Run("pre-merge execution payload", func(t *testing.T) {
+	t.Run("pre-merge sila payload", func(t *testing.T) {
 		service := &Service{}
 		bellatrixBlock := util.NewBlindedBeaconBlockBellatrix()
 		wanted := util.NewBeaconBlockBellatrix()
 		wanted.Block.Slot = 1
 		// Make sure block hash is the zero hash.
-		bellatrixBlock.Block.Body.ExecutionPayloadHeader.BlockHash = make([]byte, 32)
+		bellatrixBlock.Block.Body.SilaPayloadHeader.BlockHash = make([]byte, 32)
 		bellatrixBlock.Block.Slot = 1
 		wrapped, err := blocks.NewSignedBeaconBlock(bellatrixBlock)
 		require.NoError(t, err)
@@ -1222,7 +1222,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 	})
 	t.Run("properly reconstructs block batch with correct payload", func(t *testing.T) {
 		fix := fixtures()
-		payload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		payload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 
 		jsonPayload := make(map[string]any)
@@ -1240,7 +1240,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		payload.Transactions = encodedBinaryTxs
 		jsonPayload["transactions"] = []hexutil.Bytes{encodedBinaryTxs[0]}
 
-		wrappedPayload, err := blocks.WrappedExecutionPayload(payload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(payload)
 		require.NoError(t, err)
 		header, err := blocks.PayloadToHeader(wrappedPayload)
 		require.NoError(t, err)
@@ -1249,7 +1249,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		wanted := util.NewBeaconBlockBellatrix()
 		wanted.Block.Slot = 1
 		// Make sure block hash is the zero hash.
-		bellatrixBlock.Block.Body.ExecutionPayloadHeader.BlockHash = make([]byte, 32)
+		bellatrixBlock.Block.Body.SilaPayloadHeader.BlockHash = make([]byte, 32)
 		bellatrixBlock.Block.Slot = 1
 		wrappedEmpty, err := blocks.NewSignedBeaconBlock(bellatrixBlock)
 		require.NoError(t, err)
@@ -1280,7 +1280,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		service.rpcClient = rpcClient
 		blindedBlock := util.NewBlindedBeaconBlockBellatrix()
 
-		blindedBlock.Block.Body.ExecutionPayloadHeader = header
+		blindedBlock.Block.Body.SilaPayloadHeader = header
 		wrapped, err := blocks.NewSignedBeaconBlock(blindedBlock)
 		require.NoError(t, err)
 
@@ -1297,7 +1297,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 	})
 	t.Run("handles invalid response from EL", func(t *testing.T) {
 		fix := fixtures()
-		payload, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+		payload, ok := fix["SilaPayload"].(*pb.SilaPayload)
 		require.Equal(t, true, ok)
 
 		jsonPayload := make(map[string]any)
@@ -1315,7 +1315,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		payload.Transactions = encodedBinaryTxs
 		jsonPayload["transactions"] = []hexutil.Bytes{encodedBinaryTxs[0]}
 
-		wrappedPayload, err := blocks.WrappedExecutionPayload(payload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(payload)
 		require.NoError(t, err)
 		header, err := blocks.PayloadToHeader(wrappedPayload)
 		require.NoError(t, err)
@@ -1324,7 +1324,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		wanted := util.NewBeaconBlockBellatrix()
 		wanted.Block.Slot = 1
 		// Make sure block hash is the zero hash.
-		bellatrixBlock.Block.Body.ExecutionPayloadHeader.BlockHash = make([]byte, 32)
+		bellatrixBlock.Block.Body.SilaPayloadHeader.BlockHash = make([]byte, 32)
 		bellatrixBlock.Block.Slot = 1
 		wrappedEmpty, err := blocks.NewSignedBeaconBlock(bellatrixBlock)
 		require.NoError(t, err)
@@ -1353,7 +1353,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		service.rpcClient = rpcClient
 		blindedBlock := util.NewBlindedBeaconBlockBellatrix()
 
-		blindedBlock.Block.Body.ExecutionPayloadHeader = header
+		blindedBlock.Block.Body.SilaPayloadHeader = header
 		wrapped, err := blocks.NewSignedBeaconBlock(blindedBlock)
 		require.NoError(t, err)
 		copiedWrapped, err := wrapped.Copy()
@@ -1674,12 +1674,12 @@ func fixtures() map[string]any {
 	s := fixturesStruct()
 	return map[string]any{
 		"ExecutionBlock":                    s.ExecutionBlock,
-		"ExecutionPayloadBody":              s.ExecutionPayloadBody,
-		"ExecutionPayload":                  s.ExecutionPayload,
-		"ExecutionPayloadCapella":           s.ExecutionPayloadCapella,
-		"ExecutionPayloadDeneb":             s.ExecutionPayloadDeneb,
-		"ExecutionPayloadCapellaWithValue":  s.ExecutionPayloadWithValueCapella,
-		"ExecutionPayloadDenebWithValue":    s.ExecutionPayloadWithValueDeneb,
+		"SilaPayloadBody":              s.SilaPayloadBody,
+		"SilaPayload":                  s.SilaPayload,
+		"SilaPayloadCapella":           s.SilaPayloadCapella,
+		"SilaPayloadDeneb":             s.SilaPayloadDeneb,
+		"SilaPayloadCapellaWithValue":  s.SilaPayloadWithValueCapella,
+		"SilaPayloadDenebWithValue":    s.SilaPayloadWithValueDeneb,
 		"ExecutionBundleElectra":            s.ExecutionBundleElectra,
 		"ExecutionBundleFulu":               s.ExecutionBundleFulu,
 		"ValidPayloadStatus":                s.ValidPayloadStatus,
@@ -1700,7 +1700,7 @@ func fixturesStruct() *payloadFixtures {
 	bar := bytesutil.PadTo([]byte("bar"), 20)
 	baz := bytesutil.PadTo([]byte("baz"), 256)
 	baseFeePerGas := big.NewInt(12345)
-	executionPayloadFixture := &pb.ExecutionPayload{
+	silaPayloadFixture := &pb.SilaPayload{
 		ParentHash:    foo[:],
 		FeeRecipient:  bar,
 		StateRoot:     foo[:],
@@ -1716,11 +1716,11 @@ func fixturesStruct() *payloadFixtures {
 		BlockHash:     foo[:],
 		Transactions:  [][]byte{foo[:]},
 	}
-	executionPayloadBodyFixture := &pb.ExecutionPayloadBody{
+	silaPayloadBodyFixture := &pb.SilaPayloadBody{
 		Transactions: []hexutil.Bytes{foo[:]},
 		Withdrawals:  []*pb.Withdrawal{},
 	}
-	executionPayloadFixtureCapella := &pb.ExecutionPayloadCapella{
+	silaPayloadFixtureCapella := &pb.SilaPayloadCapella{
 		ParentHash:    foo[:],
 		FeeRecipient:  bar,
 		StateRoot:     foo[:],
@@ -1737,7 +1737,7 @@ func fixturesStruct() *payloadFixtures {
 		Transactions:  [][]byte{foo[:]},
 		Withdrawals:   []*pb.Withdrawal{},
 	}
-	emptyExecutionPayloadDeneb := &pb.ExecutionPayloadDeneb{
+	emptySilaPayloadDeneb := &pb.SilaPayloadDeneb{
 		ParentHash:    foo[:],
 		FeeRecipient:  bar,
 		StateRoot:     foo[:],
@@ -1754,22 +1754,22 @@ func fixturesStruct() *payloadFixtures {
 		BlobGasUsed:   2,
 		ExcessBlobGas: 3,
 	}
-	executionPayloadFixtureDeneb := &pb.ExecutionPayloadDeneb{
-		ParentHash:    emptyExecutionPayloadDeneb.ParentHash,
-		FeeRecipient:  emptyExecutionPayloadDeneb.FeeRecipient,
-		StateRoot:     emptyExecutionPayloadDeneb.StateRoot,
-		ReceiptsRoot:  emptyExecutionPayloadDeneb.ReceiptsRoot,
-		LogsBloom:     emptyExecutionPayloadDeneb.LogsBloom,
-		PrevRandao:    emptyExecutionPayloadDeneb.PrevRandao,
-		BlockNumber:   emptyExecutionPayloadDeneb.BlockNumber,
-		GasLimit:      emptyExecutionPayloadDeneb.GasLimit,
-		GasUsed:       emptyExecutionPayloadDeneb.GasUsed,
-		Timestamp:     emptyExecutionPayloadDeneb.Timestamp,
-		ExtraData:     emptyExecutionPayloadDeneb.ExtraData,
-		BaseFeePerGas: emptyExecutionPayloadDeneb.BaseFeePerGas,
-		BlockHash:     emptyExecutionPayloadDeneb.BlockHash,
-		BlobGasUsed:   emptyExecutionPayloadDeneb.BlobGasUsed,
-		ExcessBlobGas: emptyExecutionPayloadDeneb.ExcessBlobGas,
+	silaPayloadFixtureDeneb := &pb.SilaPayloadDeneb{
+		ParentHash:    emptySilaPayloadDeneb.ParentHash,
+		FeeRecipient:  emptySilaPayloadDeneb.FeeRecipient,
+		StateRoot:     emptySilaPayloadDeneb.StateRoot,
+		ReceiptsRoot:  emptySilaPayloadDeneb.ReceiptsRoot,
+		LogsBloom:     emptySilaPayloadDeneb.LogsBloom,
+		PrevRandao:    emptySilaPayloadDeneb.PrevRandao,
+		BlockNumber:   emptySilaPayloadDeneb.BlockNumber,
+		GasLimit:      emptySilaPayloadDeneb.GasLimit,
+		GasUsed:       emptySilaPayloadDeneb.GasUsed,
+		Timestamp:     emptySilaPayloadDeneb.Timestamp,
+		ExtraData:     emptySilaPayloadDeneb.ExtraData,
+		BaseFeePerGas: emptySilaPayloadDeneb.BaseFeePerGas,
+		BlockHash:     emptySilaPayloadDeneb.BlockHash,
+		BlobGasUsed:   emptySilaPayloadDeneb.BlobGasUsed,
+		ExcessBlobGas: emptySilaPayloadDeneb.ExcessBlobGas,
 		// added on top of the empty payload
 		Transactions: [][]byte{foo[:]},
 		Withdrawals:  []*pb.Withdrawal{},
@@ -1820,8 +1820,8 @@ func fixturesStruct() *payloadFixtures {
 		}
 	}
 	hexUint := hexutil.Uint64(1)
-	executionPayloadWithValueFixtureCapella := &pb.GetPayloadV2ResponseJson{
-		ExecutionPayload: &pb.ExecutionPayloadCapellaJSON{
+	silaPayloadWithValueFixtureCapella := &pb.GetPayloadV2ResponseJson{
+		SilaPayload: &pb.SilaPayloadCapellaJSON{
 			ParentHash:    &common.Hash{'a'},
 			FeeRecipient:  &common.Address{'b'},
 			StateRoot:     &common.Hash{'c'},
@@ -1841,9 +1841,9 @@ func fixturesStruct() *payloadFixtures {
 	}
 	bgu := hexutil.Uint64(2)
 	ebg := hexutil.Uint64(3)
-	executionPayloadWithValueFixtureDeneb := &pb.GetPayloadV3ResponseJson{
+	silaPayloadWithValueFixtureDeneb := &pb.GetPayloadV3ResponseJson{
 		ShouldOverrideBuilder: true,
-		ExecutionPayload: &pb.ExecutionPayloadDenebJSON{
+		SilaPayload: &pb.SilaPayloadDenebJSON{
 			ParentHash:    &common.Hash{'a'},
 			FeeRecipient:  &common.Address{'b'},
 			StateRoot:     &common.Hash{'c'},
@@ -1889,7 +1889,7 @@ func fixturesStruct() *payloadFixtures {
 	}
 	executionBundleFixtureElectra := &pb.GetPayloadV4ResponseJson{
 		ShouldOverrideBuilder: true,
-		ExecutionPayload: &pb.ExecutionPayloadDenebJSON{
+		SilaPayload: &pb.SilaPayloadDenebJSON{
 			ParentHash:    &common.Hash{'a'},
 			FeeRecipient:  &common.Address{'b'},
 			StateRoot:     &common.Hash{'c'},
@@ -1919,7 +1919,7 @@ func fixturesStruct() *payloadFixtures {
 	}
 	executionBundleFixtureFulu := &pb.GetPayloadV5ResponseJson{
 		ShouldOverrideBuilder: true,
-		ExecutionPayload: &pb.ExecutionPayloadDenebJSON{
+		SilaPayload: &pb.SilaPayloadDenebJSON{
 			ParentHash:    &common.Hash{'a'},
 			FeeRecipient:  &common.Address{'b'},
 			StateRoot:     &common.Hash{'c'},
@@ -2033,13 +2033,13 @@ func fixturesStruct() *payloadFixtures {
 	}
 	return &payloadFixtures{
 		ExecutionBlock:                    executionBlock,
-		ExecutionPayloadBody:              executionPayloadBodyFixture,
-		ExecutionPayload:                  executionPayloadFixture,
-		ExecutionPayloadCapella:           executionPayloadFixtureCapella,
-		ExecutionPayloadDeneb:             executionPayloadFixtureDeneb,
-		EmptyExecutionPayloadDeneb:        emptyExecutionPayloadDeneb,
-		ExecutionPayloadWithValueCapella:  executionPayloadWithValueFixtureCapella,
-		ExecutionPayloadWithValueDeneb:    executionPayloadWithValueFixtureDeneb,
+		SilaPayloadBody:              silaPayloadBodyFixture,
+		SilaPayload:                  silaPayloadFixture,
+		SilaPayloadCapella:           silaPayloadFixtureCapella,
+		SilaPayloadDeneb:             silaPayloadFixtureDeneb,
+		EmptySilaPayloadDeneb:        emptySilaPayloadDeneb,
+		SilaPayloadWithValueCapella:  silaPayloadWithValueFixtureCapella,
+		SilaPayloadWithValueDeneb:    silaPayloadWithValueFixtureDeneb,
 		ExecutionBundleElectra:            executionBundleFixtureElectra,
 		ExecutionBundleFulu:               executionBundleFixtureFulu,
 		ValidPayloadStatus:                validStatus,
@@ -2058,13 +2058,13 @@ func fixturesStruct() *payloadFixtures {
 
 type payloadFixtures struct {
 	ExecutionBlock                    *pb.ExecutionBlock
-	ExecutionPayloadBody              *pb.ExecutionPayloadBody
-	ExecutionPayload                  *pb.ExecutionPayload
-	ExecutionPayloadCapella           *pb.ExecutionPayloadCapella
-	EmptyExecutionPayloadDeneb        *pb.ExecutionPayloadDeneb
-	ExecutionPayloadDeneb             *pb.ExecutionPayloadDeneb
-	ExecutionPayloadWithValueCapella  *pb.GetPayloadV2ResponseJson
-	ExecutionPayloadWithValueDeneb    *pb.GetPayloadV3ResponseJson
+	SilaPayloadBody              *pb.SilaPayloadBody
+	SilaPayload                  *pb.SilaPayload
+	SilaPayloadCapella           *pb.SilaPayloadCapella
+	EmptySilaPayloadDeneb        *pb.SilaPayloadDeneb
+	SilaPayloadDeneb             *pb.SilaPayloadDeneb
+	SilaPayloadWithValueCapella  *pb.GetPayloadV2ResponseJson
+	SilaPayloadWithValueDeneb    *pb.GetPayloadV3ResponseJson
 	ExecutionBundleElectra            *pb.GetPayloadV4ResponseJson
 	ExecutionBundleFulu               *pb.GetPayloadV5ResponseJson
 	ValidPayloadStatus                *pb.PayloadStatus
@@ -2179,9 +2179,9 @@ func (*testEngineService) GetBlockByNumber(
 
 func (*testEngineService) GetPayloadV1(
 	_ context.Context, _ pb.PayloadIDBytes,
-) *pb.ExecutionPayload {
+) *pb.SilaPayload {
 	fix := fixtures()
-	item, ok := fix["ExecutionPayload"].(*pb.ExecutionPayload)
+	item, ok := fix["SilaPayload"].(*pb.SilaPayload)
 	if !ok {
 		panic("not found")
 	}
@@ -2190,9 +2190,9 @@ func (*testEngineService) GetPayloadV1(
 
 func (*testEngineService) GetPayloadV2(
 	_ context.Context, _ pb.PayloadIDBytes,
-) *pb.ExecutionPayloadCapellaWithValue {
+) *pb.SilaPayloadCapellaWithValue {
 	fix := fixtures()
-	item, ok := fix["ExecutionPayloadCapellaWithValue"].(*pb.ExecutionPayloadCapellaWithValue)
+	item, ok := fix["SilaPayloadCapellaWithValue"].(*pb.SilaPayloadCapellaWithValue)
 	if !ok {
 		panic("not found")
 	}
@@ -2224,7 +2224,7 @@ func (*testEngineService) ForkchoiceUpdatedV2(
 }
 
 func (*testEngineService) NewPayloadV1(
-	_ context.Context, _ *pb.ExecutionPayload,
+	_ context.Context, _ *pb.SilaPayload,
 ) *pb.PayloadStatus {
 	fix := fixtures()
 	item, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
@@ -2235,7 +2235,7 @@ func (*testEngineService) NewPayloadV1(
 }
 
 func (*testEngineService) NewPayloadV2(
-	_ context.Context, _ *pb.ExecutionPayloadCapella,
+	_ context.Context, _ *pb.SilaPayloadCapella,
 ) *pb.PayloadStatus {
 	fix := fixtures()
 	item, ok := fix["ValidPayloadStatus"].(*pb.PayloadStatus)
@@ -2323,7 +2323,7 @@ func forkchoiceUpdateSetupV2(t *testing.T, fcs *pb.ForkchoiceState, att *pb.Payl
 	return service
 }
 
-func newPayloadSetup(t *testing.T, status *pb.PayloadStatus, payload *pb.ExecutionPayload) *Service {
+func newPayloadSetup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaPayload) *Service {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		defer func() {
@@ -2357,7 +2357,7 @@ func newPayloadSetup(t *testing.T, status *pb.PayloadStatus, payload *pb.Executi
 	return service
 }
 
-func newPayloadV2Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.ExecutionPayloadCapella) *Service {
+func newPayloadV2Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaPayloadCapella) *Service {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		defer func() {
@@ -2391,7 +2391,7 @@ func newPayloadV2Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.Execu
 	return service
 }
 
-func newPayloadV3Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.ExecutionPayloadDeneb) *Service {
+func newPayloadV3Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaPayloadDeneb) *Service {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		defer func() {
@@ -2425,7 +2425,7 @@ func newPayloadV3Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.Execu
 	return service
 }
 
-func newPayloadV4Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.ExecutionPayloadDeneb, requests *pb.ExecutionRequests) *Service {
+func newPayloadV4Setup(t *testing.T, status *pb.PayloadStatus, payload *pb.SilaPayloadDeneb, requests *pb.ExecutionRequests) *Service {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		defer func() {
@@ -2492,8 +2492,8 @@ func TestReconstructBlindedBlockBatch(t *testing.T) {
 		blk, _ := util.GenerateTestDenebBlockWithSidecar(t, [32]byte{}, slot, 0)
 		cli, srv := newMockEngine(t)
 		srv.registerDefault(func(msg *jsonrpcMessage, w http.ResponseWriter, req *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{nil}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			silaPayloadBodies := []*pb.SilaPayloadBody{nil}
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 
 		blinded, err := blk.ToBlinded()

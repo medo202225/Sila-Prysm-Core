@@ -15,7 +15,7 @@ func Test_logStateTransitionData(t *testing.T) {
 	payloadBlk := &silapb.BeaconBlockBellatrix{
 		Body: &silapb.BeaconBlockBodyBellatrix{
 			SyncAggregate: &silapb.SyncAggregate{},
-			ExecutionPayload: &enginev1.ExecutionPayload{
+			SilaPayload: &enginev1.SilaPayload{
 				BlockHash:    []byte{1, 2, 3},
 				Transactions: [][]byte{{}, {}},
 			},

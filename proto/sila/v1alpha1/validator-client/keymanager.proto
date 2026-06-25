@@ -84,7 +84,7 @@ message SignRequest {
 
     // Gloas objects.
     sila.eth.v1alpha1.BeaconBlockGloas block_gloas = 123;
-    sila.eth.v1alpha1.ExecutionPayloadEnvelope execution_payload_envelope = 124;
+    sila.eth.v1alpha1.SilaPayloadEnvelope sila_payload_envelope = 124;
     sila.eth.v1alpha1.PayloadAttestationData payload_attestation_data = 125;
     sila.eth.v1alpha1.ProposerPreferences proposer_preference = 126;
   }

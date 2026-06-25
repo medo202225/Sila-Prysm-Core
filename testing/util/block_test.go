@@ -398,9 +398,9 @@ func TestGenerateTestPayloadAttestations(t *testing.T) {
 	}
 }
 
-func TestGenerateTestSignedExecutionPayloadBid(t *testing.T) {
+func TestGenerateTestSignedSilaPayloadBid(t *testing.T) {
 	slot := primitives.Slot(456)
-	bid := GenerateTestSignedExecutionPayloadBid(slot)
+	bid := GenerateTestSignedSilaPayloadBid(slot)
 
 	require.NotNil(t, bid)
 	require.NotNil(t, bid.Message)

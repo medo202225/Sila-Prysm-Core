@@ -904,15 +904,15 @@ func (v *validator) ProcessEvent(ctx context.Context, event *eventClient.Event) 
 				log.WithError(err).Error("Failed to check dependent roots")
 			}
 		}
-	case eventClient.EventExecutionPayloadAvailable:
-		payloadEvent := &structs.ExecutionPayloadAvailableEvent{}
+	case eventClient.EventSilaPayloadAvailable:
+		payloadEvent := &structs.SilaPayloadAvailableEvent{}
 		if err := json.Unmarshal(event.Data, payloadEvent); err != nil {
-			log.WithError(err).Error("Failed to unmarshal execution payload event into JSON")
+			log.WithError(err).Error("Failed to unmarshal sila payload event into JSON")
 			return
 		}
 		uintSlot, err := strconv.ParseUint(payloadEvent.Slot, 10, 64)
 		if err != nil {
-			log.WithError(err).Error("Failed to parse execution payload event slot")
+			log.WithError(err).Error("Failed to parse sila payload event slot")
 			return
 		}
 		v.payloadAvailability.notify(primitives.Slot(uintSlot))

@@ -31,7 +31,7 @@ type Server struct {
 	OptimisticModeFetcher         blockchain.OptimisticModeFetcher
 	SyncCommitteePool             synccommittee.Pool
 	V1Alpha1Server                eth.BeaconNodeValidatorServer
-	ExecutionPayloadEnvelopeCache *cache.ExecutionPayloadEnvelopeCache
+	SilaPayloadEnvelopeCache *cache.SilaPayloadEnvelopeCache
 	ChainInfoFetcher              blockchain.ChainInfoFetcher
 	BeaconDB                      db.HeadAccessDatabase
 	BlockBuilder                  builder.BlockBuilder

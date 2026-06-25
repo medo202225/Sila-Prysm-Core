@@ -85,7 +85,7 @@ func TestMatchingPayload(t *testing.T) {
 		stIface, err := state_native.InitializeFromProtoGloas(&silapb.BeaconStateGloas{
 			Slot:                         6,
 			BlockRoots:                   blockRoots,
-			ExecutionPayloadAvailability: availability,
+			SilaPayloadAvailability: availability,
 			Fork: &silapb.Fork{
 				CurrentVersion:  bytes.Repeat([]byte{0x66}, 4),
 				PreviousVersion: bytes.Repeat([]byte{0x66}, 4),

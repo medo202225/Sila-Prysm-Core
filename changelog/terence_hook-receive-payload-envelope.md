@@ -1,3 +1,3 @@
 ### Added
 
-- Hook receive payload to proposer RPC's PublishExecutionPayloadEnvelope
+- Hook receive payload to proposer RPC's PublishSilaPayloadEnvelope

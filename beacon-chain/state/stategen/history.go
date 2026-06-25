@@ -42,17 +42,17 @@ type CanonicalHistory struct {
 	cache CachedGetter
 }
 
-func (c *CanonicalHistory) executionPayloadEnvelope(
+func (c *CanonicalHistory) silaPayloadEnvelope(
 	ctx context.Context,
 	blockRoot [32]byte,
-) (*silapb.SignedBlindedExecutionPayloadEnvelope, error) {
+) (*silapb.SignedBlindedSilaPayloadEnvelope, error) {
 	reader, ok := c.h.(interface {
-		ExecutionPayloadEnvelope(ctx context.Context, blockRoot [32]byte) (*silapb.SignedBlindedExecutionPayloadEnvelope, error)
+		SilaPayloadEnvelope(ctx context.Context, blockRoot [32]byte) (*silapb.SignedBlindedSilaPayloadEnvelope, error)
 	})
 	if !ok {
 		return nil, nil
 	}
-	return reader.ExecutionPayloadEnvelope(ctx, blockRoot)
+	return reader.SilaPayloadEnvelope(ctx, blockRoot)
 }
 
 func (c *CanonicalHistory) ReplayerForSlot(target primitives.Slot) Replayer {

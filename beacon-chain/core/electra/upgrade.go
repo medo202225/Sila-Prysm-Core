@@ -38,7 +38,7 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 	if err != nil {
 		return nil, err
 	}
-	payloadHeader, err := beaconState.LatestExecutionPayloadHeader()
+	payloadHeader, err := beaconState.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 		InactivityScores:            inactivityScores,
 		CurrentSyncCommittee:        currentSyncCommittee,
 		NextSyncCommittee:           nextSyncCommittee,
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       payloadHeader.ParentHash(),
 			FeeRecipient:     payloadHeader.FeeRecipient(),
 			StateRoot:        payloadHeader.StateRoot(),
@@ -146,7 +146,7 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 // def upgrade_to_electra(pre: deneb.BeaconState) -> BeaconState:
 //
 //	epoch = deneb.get_current_epoch(pre)
-//	latest_execution_payload_header = pre.latest_execution_payload_header
+//	latest_sila_payload_header = pre.latest_sila_payload_header
 //
 //	earliest_exit_epoch = compute_activation_exit_epoch(get_current_epoch(pre))
 //	for validator in pre.validators:
@@ -195,7 +195,7 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 //	    current_sync_committee=pre.current_sync_committee,
 //	    next_sync_committee=pre.next_sync_committee,
 //	    # Execution-layer
-//	    latest_execution_payload_header=latest_execution_payload_header,  # [Modified in Electra:SIP6110:SIP7002]
+//	    latest_sila_payload_header=latest_sila_payload_header,  # [Modified in Electra:SIP6110:SIP7002]
 //	    # Withdrawals
 //	    next_withdrawal_index=pre.next_withdrawal_index,
 //	    next_withdrawal_validator_index=pre.next_withdrawal_validator_index,

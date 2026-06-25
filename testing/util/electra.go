@@ -30,10 +30,10 @@ type electraBlockGenerator struct {
 	sk       bls.SecretKey
 	proposer primitives.ValidatorIndex
 	valRoot  []byte
-	payload  *enginev1.ExecutionPayloadDeneb
+	payload  *enginev1.SilaPayloadDeneb
 }
 
-func WithElectraPayload(p *enginev1.ExecutionPayloadDeneb) ElectraBlockGeneratorOption {
+func WithElectraPayload(p *enginev1.SilaPayloadDeneb) ElectraBlockGeneratorOption {
 	return func(g *electraBlockGenerator) {
 		g.payload = p
 	}
@@ -70,7 +70,7 @@ func GenerateTestElectraBlockWithSidecar(t *testing.T, parent [32]byte, slot pri
 		logsBloom := bytesutil.PadTo([]byte("logs"), fieldparams.LogsBloomLength)
 		receiptsRoot := bytesutil.PadTo([]byte("receiptsRoot"), fieldparams.RootLength)
 		parentHash := bytesutil.PadTo([]byte("parentHash"), fieldparams.RootLength)
-		g.payload = &enginev1.ExecutionPayloadDeneb{
+		g.payload = &enginev1.SilaPayloadDeneb{
 			ParentHash:    parentHash,
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     stateRoot,
@@ -92,7 +92,7 @@ func GenerateTestElectraBlockWithSidecar(t *testing.T, parent [32]byte, slot pri
 	}
 
 	block := NewBeaconBlockElectra()
-	block.Block.Body.ExecutionPayload = g.payload
+	block.Block.Body.SilaPayload = g.payload
 	block.Block.Slot = g.slot
 	block.Block.ParentRoot = g.parent[:]
 	block.Block.ProposerIndex = g.proposer

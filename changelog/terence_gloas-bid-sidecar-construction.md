@@ -1,3 +1,3 @@
 ### Added
 
-- Construct data column sidecars from execution payload bid in Gloas blocks.
+- Construct data column sidecars from sila payload bid in Gloas blocks.

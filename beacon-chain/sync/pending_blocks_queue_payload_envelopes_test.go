@@ -24,10 +24,10 @@ import (
 	"github.com/libp2p/go-libp2p/core/network"
 )
 
-func makeSignedEnvelope(root [32]byte, slot primitives.Slot) *silapb.SignedExecutionPayloadEnvelope {
-	return &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload: &enginev1.ExecutionPayloadGloas{
+func makeSignedEnvelope(root [32]byte, slot primitives.Slot) *silapb.SignedSilaPayloadEnvelope {
+	return &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload: &enginev1.SilaPayloadGloas{
 				ParentHash:    make([]byte, fieldparams.RootLength),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, fieldparams.RootLength),
@@ -57,7 +57,7 @@ func newEnvelopeFetchService(t *testing.T, p1 p2p.P2P) *Service {
 			chain:    chain,
 			clock:    startup.NewClock(chain.Genesis, chain.ValidatorsRoot),
 		},
-		pendingPayloadEnvelopes: make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes: make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 	}
 	ctxMap, err := ContextByteVersionsForValRoot(chain.ValidatorsRoot)
 	require.NoError(t, err)
@@ -84,16 +84,16 @@ func TestFetchAndQueuePayloadEnvelopesForRoots_QueuesWithoutPendingBlock(t *test
 	root := [32]byte{0xAA}
 	env := makeSignedEnvelope(root, 1)
 
-	protocolID := fmt.Sprintf("%s/ssz_snappy", p2p.RPCExecutionPayloadEnvelopesByRootTopicV1)
+	protocolID := fmt.Sprintf("%s/ssz_snappy", p2p.RPCSilaPayloadEnvelopesByRootTopicV1)
 	var wg sync.WaitGroup
 	wg.Add(1)
 	p2.SetStreamHandler(protocolID, func(stream network.Stream) {
 		defer wg.Done()
-		req := new(p2ptypes.ExecutionPayloadEnvelopesByRootReq)
+		req := new(p2ptypes.SilaPayloadEnvelopesByRootReq)
 		assert.NoError(t, p2.Encoding().DecodeWithMaxLength(stream, req))
 		require.Equal(t, 1, len(*req))
 		assert.Equal(t, root, (*req)[0])
-		assert.NoError(t, WriteExecutionPayloadEnvelopeChunk(stream, p2.Encoding(), env))
+		assert.NoError(t, WriteSilaPayloadEnvelopeChunk(stream, p2.Encoding(), env))
 		assert.NoError(t, stream.CloseWrite())
 	})
 
@@ -126,7 +126,7 @@ func TestFetchAndQueuePayloadEnvelopesForRoots_PreGloasNoRequest(t *testing.T) {
 
 	r := newEnvelopeFetchService(t, p1)
 
-	protocolID := fmt.Sprintf("%s/ssz_snappy", p2p.RPCExecutionPayloadEnvelopesByRootTopicV1)
+	protocolID := fmt.Sprintf("%s/ssz_snappy", p2p.RPCSilaPayloadEnvelopesByRootTopicV1)
 	p2.SetStreamHandler(protocolID, func(network.Stream) {
 		t.Error("envelope request should not be sent before Gloas")
 	})
@@ -153,9 +153,9 @@ func TestFetchAndQueuePayloadEnvelopesForRoots_SkipsRootAlreadyInDB(t *testing.T
 
 	root := bytesutil.ToBytes32([]byte{0xCC})
 	env := makeSignedEnvelope(root, 1)
-	require.NoError(t, r.cfg.beaconDB.SaveExecutionPayloadEnvelope(t.Context(), env))
+	require.NoError(t, r.cfg.beaconDB.SaveSilaPayloadEnvelope(t.Context(), env))
 
-	protocolID := fmt.Sprintf("%s/ssz_snappy", p2p.RPCExecutionPayloadEnvelopesByRootTopicV1)
+	protocolID := fmt.Sprintf("%s/ssz_snappy", p2p.RPCSilaPayloadEnvelopesByRootTopicV1)
 	p2.SetStreamHandler(protocolID, func(network.Stream) {
 		t.Error("no request should be sent for a root already present in the DB")
 	})

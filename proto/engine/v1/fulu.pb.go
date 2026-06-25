@@ -23,7 +23,7 @@ const (
 
 type ExecutionBundleFulu struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Payload               *ExecutionPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload               *SilaPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundleV2         `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
@@ -62,7 +62,7 @@ func (*ExecutionBundleFulu) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_fulu_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ExecutionBundleFulu) GetPayload() *ExecutionPayloadDeneb {
+func (x *ExecutionBundleFulu) GetPayload() *SilaPayloadDeneb {
 	if x != nil {
 		return x.Payload
 	}
@@ -99,7 +99,7 @@ func (x *ExecutionBundleFulu) GetExecutionRequests() [][]byte {
 
 type ExecutionBundleGloas struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Payload               *ExecutionPayloadGloas `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload               *SilaPayloadGloas `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundleV2         `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
@@ -138,7 +138,7 @@ func (*ExecutionBundleGloas) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_fulu_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ExecutionBundleGloas) GetPayload() *ExecutionPayloadGloas {
+func (x *ExecutionBundleGloas) GetPayload() *SilaPayloadGloas {
 	if x != nil {
 		return x.Payload
 	}
@@ -246,14 +246,14 @@ var file_proto_engine_v1_fulu_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_engine_v1_fulu_proto_goTypes = []any{
 	(*ExecutionBundleFulu)(nil),   // 0: sila.engine.v1.ExecutionBundleFulu
 	(*ExecutionBundleGloas)(nil),  // 1: sila.engine.v1.ExecutionBundleGloas
-	(*ExecutionPayloadDeneb)(nil), // 2: sila.engine.v1.ExecutionPayloadDeneb
+	(*SilaPayloadDeneb)(nil), // 2: sila.engine.v1.SilaPayloadDeneb
 	(*BlobsBundleV2)(nil),         // 3: sila.engine.v1.BlobsBundleV2
-	(*ExecutionPayloadGloas)(nil), // 4: sila.engine.v1.ExecutionPayloadGloas
+	(*SilaPayloadGloas)(nil), // 4: sila.engine.v1.SilaPayloadGloas
 }
 var file_proto_engine_v1_fulu_proto_depIdxs = []int32{
-	2, // 0: sila.engine.v1.ExecutionBundleFulu.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	2, // 0: sila.engine.v1.ExecutionBundleFulu.payload:type_name -> sila.engine.v1.SilaPayloadDeneb
 	3, // 1: sila.engine.v1.ExecutionBundleFulu.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
-	4, // 2: sila.engine.v1.ExecutionBundleGloas.payload:type_name -> sila.engine.v1.ExecutionPayloadGloas
+	4, // 2: sila.engine.v1.ExecutionBundleGloas.payload:type_name -> sila.engine.v1.SilaPayloadGloas
 	3, // 3: sila.engine.v1.ExecutionBundleGloas.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type

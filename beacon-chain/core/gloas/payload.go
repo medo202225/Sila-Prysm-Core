@@ -15,23 +15,23 @@ import (
 	"github.com/pkg/errors"
 )
 
-// VerifyExecutionPayloadEnvelope is a verification function called by fork-choice when
-// importing a signed execution payload. It verifies the payload against the
+// VerifySilaPayloadEnvelope is a verification function called by fork-choice when
+// importing a signed sila payload. It verifies the payload against the
 // execution engine without processing execution requests or updating state.
-// Actual state mutations are deferred to process_parent_execution_payload in
+// Actual state mutations are deferred to process_parent_sila_payload in
 // the next block.
 //
-//	<spec fn="verify_execution_payload_envelope" fork="gloas" hash="450a2b1c">
-//	def verify_execution_payload_envelope(
+//	<spec fn="verify_sila_payload_envelope" fork="gloas" hash="450a2b1c">
+//	def verify_sila_payload_envelope(
 //	    state: BeaconState,
-//	    signed_envelope: SignedExecutionPayloadEnvelope,
+//	    signed_envelope: SignedSilaPayloadEnvelope,
 //	    execution_engine: ExecutionEngine,
 //	) -> None:
 //	    envelope = signed_envelope.message
 //	    payload = envelope.payload
 //
 //	    # Verify signature
-//	    assert verify_execution_payload_envelope_signature(state, signed_envelope)
+//	    assert verify_sila_payload_envelope_signature(state, signed_envelope)
 //
 //	    # Verify consistency with the beacon block
 //	    header = copy(state.latest_block_header)
@@ -40,21 +40,21 @@ import (
 //	    assert envelope.parent_beacon_block_root == state.latest_block_header.parent_root
 //
 //	    # Verify consistency with the committed bid
-//	    bid = state.latest_execution_payload_bid
+//	    bid = state.latest_sila_payload_bid
 //	    assert envelope.builder_index == bid.builder_index
 //	    assert payload.prev_randao == bid.prev_randao
 //	    assert payload.gas_limit == bid.gas_limit
 //	    assert payload.block_hash == bid.block_hash
 //	    assert hash_tree_root(envelope.execution_requests) == bid.execution_requests_root
 //
-//	    # Verify the execution payload is valid
+//	    # Verify the sila payload is valid
 //	    assert payload.slot_number == state.slot
 //	    assert payload.parent_hash == state.latest_block_hash
 //	    assert payload.timestamp == compute_time_at_slot(state, state.slot)
 //	    assert hash_tree_root(payload.withdrawals) == hash_tree_root(state.payload_expected_withdrawals)
 //	    assert execution_engine.verify_and_notify_new_payload(
 //	        NewPayloadRequest(
-//	            execution_payload=payload,
+//	            sila_payload=payload,
 //	            versioned_hashes=[
 //	                kzg_commitment_to_versioned_hash(commitment)
 //	                for commitment in bid.blob_kzg_commitments
@@ -64,12 +64,12 @@ import (
 //	        )
 //	    )
 //	</spec>
-func VerifyExecutionPayloadEnvelope(
+func VerifySilaPayloadEnvelope(
 	ctx context.Context,
 	st state.BeaconState,
-	signedEnvelope interfaces.ROSignedExecutionPayloadEnvelope,
+	signedEnvelope interfaces.ROSignedSilaPayloadEnvelope,
 ) error {
-	if err := verifyExecutionPayloadEnvelopeSignature(st, signedEnvelope); err != nil {
+	if err := verifySilaPayloadEnvelopeSignature(st, signedEnvelope); err != nil {
 		return errors.Wrap(err, "signature verification failed")
 	}
 
@@ -81,15 +81,15 @@ func VerifyExecutionPayloadEnvelope(
 	return validatePayloadConsistency(ctx, st, envelope)
 }
 
-// VerifyExecutionPayloadEnvelopeWithDeferredSig is the init-sync entry point: extract
+// VerifySilaPayloadEnvelopeWithDeferredSig is the init-sync entry point: extract
 // the signature for deferred batch verification and validate consistency.
 // No state mutations are performed.
-func VerifyExecutionPayloadEnvelopeWithDeferredSig(
+func VerifySilaPayloadEnvelopeWithDeferredSig(
 	ctx context.Context,
 	st state.BeaconState,
-	signedEnvelope interfaces.ROSignedExecutionPayloadEnvelope,
+	signedEnvelope interfaces.ROSignedSilaPayloadEnvelope,
 ) (*bls.SignatureBatch, error) {
-	sigBatch, err := ExecutionPayloadEnvelopeSignatureBatch(st, signedEnvelope)
+	sigBatch, err := SilaPayloadEnvelopeSignatureBatch(st, signedEnvelope)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not extract envelope signature batch")
 	}
@@ -107,7 +107,7 @@ func VerifyExecutionPayloadEnvelopeWithDeferredSig(
 
 // validatePayloadConsistency checks that the envelope and payload are consistent
 // with the beacon block header, the committed bid, and the current state.
-func validatePayloadConsistency(ctx context.Context, st state.BeaconState, envelope interfaces.ROExecutionPayloadEnvelope) error {
+func validatePayloadConsistency(ctx context.Context, st state.BeaconState, envelope interfaces.ROSilaPayloadEnvelope) error {
 	if envelope.Slot() != st.Slot() {
 		return errors.Errorf("envelope slot does not match state slot: envelope=%d, state=%d", envelope.Slot(), st.Slot())
 	}
@@ -121,12 +121,12 @@ func validatePayloadConsistency(ctx context.Context, st state.BeaconState, envel
 		return errors.Errorf("envelope parent beacon block root does not match state latest block header parent root: envelope=%#x, state=%#x", envelopeParent, header.ParentRoot)
 	}
 
-	latestBid, err := st.LatestExecutionPayloadBid()
+	latestBid, err := st.LatestSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "could not get latest execution payload bid")
+		return errors.Wrap(err, "could not get latest sila payload bid")
 	}
 	if latestBid == nil {
-		return errors.New("latest execution payload bid is nil")
+		return errors.New("latest sila payload bid is nil")
 	}
 	if envelope.BuilderIndex() != latestBid.BuilderIndex() {
 		return errors.Errorf("envelope builder index does not match committed bid builder index: envelope=%d, bid=%d", envelope.BuilderIndex(), latestBid.BuilderIndex())
@@ -144,7 +144,7 @@ func validatePayloadConsistency(ctx context.Context, st state.BeaconState, envel
 
 	payload, err := envelope.Execution()
 	if err != nil {
-		return errors.Wrap(err, "could not get execution payload from envelope")
+		return errors.Wrap(err, "could not get sila payload from envelope")
 	}
 	latestBidPrevRandao := latestBid.PrevRandao()
 	if !bytes.Equal(payload.PrevRandao(), latestBidPrevRandao[:]) {
@@ -192,11 +192,11 @@ func validatePayloadConsistency(ctx context.Context, st state.BeaconState, envel
 	return nil
 }
 
-// ExecutionPayloadEnvelopeSignatureBatch extracts the BLS signature from a signed execution payload
+// SilaPayloadEnvelopeSignatureBatch extracts the BLS signature from a signed sila payload
 // envelope as a SignatureBatch for deferred batch verification.
-func ExecutionPayloadEnvelopeSignatureBatch(
+func SilaPayloadEnvelopeSignatureBatch(
 	st state.BeaconState,
-	signedEnvelope interfaces.ROSignedExecutionPayloadEnvelope,
+	signedEnvelope interfaces.ROSignedSilaPayloadEnvelope,
 ) (*bls.SignatureBatch, error) {
 	envelope, err := signedEnvelope.Envelope()
 	if err != nil {
@@ -230,15 +230,15 @@ func ExecutionPayloadEnvelopeSignatureBatch(
 		Signatures:   [][]byte{signatureBytes[:]},
 		PublicKeys:   []bls.PublicKey{publicKey},
 		Messages:     [][32]byte{signingRoot},
-		Descriptions: []string{"execution payload envelope signature"},
+		Descriptions: []string{"sila payload envelope signature"},
 	}, nil
 }
 
-// verifyExecutionPayloadEnvelopeSignature verifies the BLS signature on a signed execution payload envelope.
+// verifySilaPayloadEnvelopeSignature verifies the BLS signature on a signed sila payload envelope.
 //
-//	<spec fn="verify_execution_payload_envelope_signature" fork="gloas" style="full" hash="49483ae2">
-//	def verify_execution_payload_envelope_signature(
-//	    state: BeaconState, signed_envelope: SignedExecutionPayloadEnvelope
+//	<spec fn="verify_sila_payload_envelope_signature" fork="gloas" style="full" hash="49483ae2">
+//	def verify_sila_payload_envelope_signature(
+//	    state: BeaconState, signed_envelope: SignedSilaPayloadEnvelope
 //	) -> bool:
 //	    builder_index = signed_envelope.message.builder_index
 //	    if builder_index == BUILDER_INDEX_SELF_BUILD:
@@ -252,7 +252,7 @@ func ExecutionPayloadEnvelopeSignatureBatch(
 //	    )
 //	    return bls.Verify(pubkey, signing_root, signed_envelope.signature)
 //	</spec>
-func verifyExecutionPayloadEnvelopeSignature(st state.BeaconState, signedEnvelope interfaces.ROSignedExecutionPayloadEnvelope) error {
+func verifySilaPayloadEnvelopeSignature(st state.BeaconState, signedEnvelope interfaces.ROSignedSilaPayloadEnvelope) error {
 	envelope, err := signedEnvelope.Envelope()
 	if err != nil {
 		return fmt.Errorf("failed to get envelope: %w", err)

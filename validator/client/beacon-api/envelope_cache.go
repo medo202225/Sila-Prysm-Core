@@ -7,27 +7,27 @@ import (
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
-// envelopeContents bundles the cached execution payload envelope with the raw
+// envelopeContents bundles the cached sila payload envelope with the raw
 // blobs and KZG proofs returned from /sila/v4/validator/blocks?include_payload=true,
 // so the stateless publish path can submit them together to the beacon node.
 type envelopeContents struct {
-	envelope  *silapb.ExecutionPayloadEnvelope
+	envelope  *silapb.SilaPayloadEnvelope
 	blobs     [][]byte
 	kzgProofs [][]byte
 }
 
-// executionPayloadEnvelopeCache is a small slot-keyed cache used by the
-// stateless block production path to carry the execution payload envelope and
+// silaPayloadEnvelopeCache is a small slot-keyed cache used by the
+// stateless block production path to carry the sila payload envelope and
 // its associated blob data from the /sila/v4/validator/blocks response to the
 // self-build envelope publisher, avoiding a redundant
-// /sila/v1/validator/execution_payload_envelopes fetch.
-type executionPayloadEnvelopeCache struct {
+// /sila/v1/validator/sila_payload_envelopes fetch.
+type silaPayloadEnvelopeCache struct {
 	mu      sync.Mutex
 	entries map[primitives.Slot]*envelopeContents
 }
 
-func newExecutionPayloadEnvelopeCache() *executionPayloadEnvelopeCache {
-	return &executionPayloadEnvelopeCache{
+func newSilaPayloadEnvelopeCache() *silaPayloadEnvelopeCache {
+	return &silaPayloadEnvelopeCache{
 		entries: make(map[primitives.Slot]*envelopeContents),
 	}
 }
@@ -37,7 +37,7 @@ func newExecutionPayloadEnvelopeCache() *executionPayloadEnvelopeCache {
 // entry belongs to an aborted proposal and will never be consumed. No-op on a
 // nil receiver so callers that construct the client without initializing the
 // cache (e.g. tests exercising unrelated paths) do not panic.
-func (c *executionPayloadEnvelopeCache) Add(slot primitives.Slot, envelope *silapb.ExecutionPayloadEnvelope, blobs, kzgProofs [][]byte) {
+func (c *silaPayloadEnvelopeCache) Add(slot primitives.Slot, envelope *silapb.SilaPayloadEnvelope, blobs, kzgProofs [][]byte) {
 	if c == nil {
 		return
 	}
@@ -54,7 +54,7 @@ func (c *executionPayloadEnvelopeCache) Add(slot primitives.Slot, envelope *sila
 // peek returns the cached envelope and blob data for the slot without removing
 // the entry. Used by the envelope-fetch path so the entry stays available for
 // the subsequent publish call.
-func (c *executionPayloadEnvelopeCache) peek(slot primitives.Slot) (*silapb.ExecutionPayloadEnvelope, [][]byte, [][]byte) {
+func (c *silaPayloadEnvelopeCache) peek(slot primitives.Slot) (*silapb.SilaPayloadEnvelope, [][]byte, [][]byte) {
 	if c == nil {
 		return nil, nil, nil
 	}
@@ -71,7 +71,7 @@ func (c *executionPayloadEnvelopeCache) peek(slot primitives.Slot) (*silapb.Exec
 // Take returns the cached envelope and blob data for the given slot and removes
 // the entry from the cache. Returns nils if no entry is present or the receiver
 // is nil.
-func (c *executionPayloadEnvelopeCache) Take(slot primitives.Slot) (*silapb.ExecutionPayloadEnvelope, [][]byte, [][]byte) {
+func (c *silaPayloadEnvelopeCache) Take(slot primitives.Slot) (*silapb.SilaPayloadEnvelope, [][]byte, [][]byte) {
 	if c == nil {
 		return nil, nil, nil
 	}
@@ -87,7 +87,7 @@ func (c *executionPayloadEnvelopeCache) Take(slot primitives.Slot) (*silapb.Exec
 }
 
 // evictOlderThan drops any entries strictly older than slot. Caller must hold c.mu.
-func (c *executionPayloadEnvelopeCache) evictOlderThan(slot primitives.Slot) {
+func (c *silaPayloadEnvelopeCache) evictOlderThan(slot primitives.Slot) {
 	for s := range c.entries {
 		if s < slot {
 			delete(c.entries, s)

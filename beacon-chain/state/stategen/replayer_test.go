@@ -17,7 +17,7 @@ type envelopeCountingHistory struct {
 	envelopeCalls int
 }
 
-func (h *envelopeCountingHistory) ExecutionPayloadEnvelope(_ context.Context, _ [32]byte) (*silapb.SignedBlindedExecutionPayloadEnvelope, error) {
+func (h *envelopeCountingHistory) SilaPayloadEnvelope(_ context.Context, _ [32]byte) (*silapb.SignedBlindedSilaPayloadEnvelope, error) {
 	h.envelopeCalls++
 	return nil, nil
 }
@@ -98,7 +98,7 @@ func TestReplayBlocks(t *testing.T) {
 	// so there are multiple differences compared to the "db" state that applies all blocks
 }
 
-func TestReplayerBlocks_SkipsExecutionPayloadEnvelopeLookup_PreGloas(t *testing.T) {
+func TestReplayerBlocks_SkipsSilaPayloadEnvelopeLookup_PreGloas(t *testing.T) {
 	ctx := t.Context()
 	specs := []mockHistorySpec{
 		{slot: 1, canonicalBlock: true},

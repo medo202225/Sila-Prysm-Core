@@ -25,7 +25,7 @@ func RunWithdrawalsTest(t *testing.T, config string, fork string, sszToBlock SSZ
 	for _, folder := range testFolders {
 		t.Run(folder.Name(), func(t *testing.T) {
 			folderPath := path.Join(testsFolderPath, folder.Name())
-			payloadFile, err := util.BazelFileBytes(folderPath, "execution_payload.ssz_snappy")
+			payloadFile, err := util.BazelFileBytes(folderPath, "sila_payload.ssz_snappy")
 			require.NoError(t, err)
 			payloadSSZ, err := snappy.Decode(nil /* dst */, payloadFile)
 			require.NoError(t, err, "Failed to decompress")
@@ -41,7 +41,7 @@ func RunWithdrawalsTest(t *testing.T, config string, fork string, sszToBlock SSZ
 				if err != nil {
 					return nil, err
 				}
-				p, err := consensusblocks.WrappedExecutionPayloadCapella(&enginev1.ExecutionPayloadCapella{Withdrawals: withdrawals})
+				p, err := consensusblocks.WrappedSilaPayloadCapella(&enginev1.SilaPayloadCapella{Withdrawals: withdrawals})
 				require.NoError(t, err)
 				return blocks.ProcessWithdrawals(s, p)
 			})

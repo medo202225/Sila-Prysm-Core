@@ -86,7 +86,7 @@ func SlashingsRoot(slashings []uint64) ([32]byte, error) {
 	return BitwiseMerkleize(slashingChunks, uint64(len(slashingChunks)), uint64(len(slashingChunks)))
 }
 
-// TransactionsRoot computes the HTR for the Transactions' property of the ExecutionPayload
+// TransactionsRoot computes the HTR for the Transactions' property of the SilaPayload
 func TransactionsRoot(txs [][]byte) ([32]byte, error) {
 	transactions := make([]Transaction, len(txs))
 	for i, tx := range txs {

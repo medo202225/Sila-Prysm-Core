@@ -153,8 +153,8 @@ var Buckets = [][]byte{
 	feeRecipientBucket,
 	registrationBucket,
 	custodyBucket,
-	executionPayloadEnvelopesBucket,
-	executionPayloadEnvelopeBlockHashBucket,
+	silaPayloadEnvelopesBucket,
+	silaPayloadEnvelopeBlockHashBucket,
 }
 
 // KVStoreOption is a functional option that modifies a kv.Store.
@@ -360,7 +360,7 @@ func (s *Store) setupBlockStorageType(ctx context.Context) error {
 	}
 	err = blocks.BeaconBlockIsNil(headBlock)
 	isNilBlk := err != nil
-	saveFull := features.Get().SaveFullExecutionPayloads
+	saveFull := features.Get().SaveFullSilaPayloads
 
 	var saveBlinded bool
 	if err := s.db.Update(func(tx *bolt.Tx) error {
@@ -390,14 +390,14 @@ func (s *Store) setupBlockStorageType(ctx context.Context) error {
 		return err
 	}
 
-	// If the user wants to save full execution payloads but their database is saving blinded blocks only,
+	// If the user wants to save full sila payloads but their database is saving blinded blocks only,
 	// we then throw an error as the node should not start.
 	if saveFull && saveBlinded {
 		return fmt.Errorf(
 			"cannot use the %s flag with this existing database, as it has already been initialized to only store "+
-				"execution payload headers (aka blinded beacon blocks). If you want to use this flag, you must re-sync your node with a fresh "+
+				"sila payload headers (aka blinded beacon blocks). If you want to use this flag, you must re-sync your node with a fresh "+
 				"database. We recommend using checkpoint sync https://github.com/sila-chain/Sila-Consensus-Core",
-			features.SaveFullExecutionPayloads.Name,
+			features.SaveFullSilaPayloads.Name,
 		)
 	}
 	if saveFull {

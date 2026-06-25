@@ -54,6 +54,6 @@ type Server struct {
 	ForkchoiceFetcher       blockchain.ForkchoiceFetcher
 	CoreService             *core.Service
 	AttestationStateFetcher blockchain.AttestationStateFetcher
-	// ExecutionPayloadEnvelopeCache reconstructs the full envelope in the blinded publish flow.
-	ExecutionPayloadEnvelopeCache *cache.ExecutionPayloadEnvelopeCache
+	// SilaPayloadEnvelopeCache reconstructs the full envelope in the blinded publish flow.
+	SilaPayloadEnvelopeCache *cache.SilaPayloadEnvelopeCache
 }

@@ -44,7 +44,7 @@ func prepareForkchoiceState(
 		ParentRoot: parentRoot[:],
 	}
 
-	executionHeader := &enginev1.ExecutionPayloadHeader{
+	executionHeader := &enginev1.SilaPayloadHeader{
 		BlockHash: payloadHash[:],
 	}
 
@@ -54,7 +54,7 @@ func prepareForkchoiceState(
 		BlockRoots:                   make([][]byte, 1),
 		CurrentJustifiedCheckpoint:   justified,
 		FinalizedCheckpoint:          finalized,
-		LatestExecutionPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: executionHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 
@@ -68,7 +68,7 @@ func prepareForkchoiceState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					BlockHash: payloadHash[:],
 				},
 			},
@@ -652,8 +652,8 @@ func TestParentPayloadReady(t *testing.T) {
 
 	t.Run("parent not in forkchoice", func(t *testing.T) {
 		unknownParent := [32]byte{99}
-		bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-			Message: &silapb.ExecutionPayloadBid{
+		bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+			Message: &silapb.SilaPayloadBid{
 				BlockHash:       []byte{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				ParentBlockHash: parentBlockHash[:],
 			},
@@ -662,7 +662,7 @@ func TestParentPayloadReady(t *testing.T) {
 			Block: &silapb.BeaconBlockGloas{
 				Slot:       2,
 				ParentRoot: unknownParent[:],
-				Body:       &silapb.BeaconBlockBodyGloas{SignedExecutionPayloadBid: bid},
+				Body:       &silapb.BeaconBlockBodyGloas{SignedSilaPayloadBid: bid},
 			},
 		})
 		wsb, err := blocks.NewSignedBeaconBlock(blk)
@@ -672,8 +672,8 @@ func TestParentPayloadReady(t *testing.T) {
 
 	t.Run("builds on empty", func(t *testing.T) {
 		differentHash := [32]byte{99}
-		bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-			Message: &silapb.ExecutionPayloadBid{
+		bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+			Message: &silapb.SilaPayloadBid{
 				BlockHash:       []byte{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				ParentBlockHash: differentHash[:],
 			},
@@ -682,7 +682,7 @@ func TestParentPayloadReady(t *testing.T) {
 			Block: &silapb.BeaconBlockGloas{
 				Slot:       2,
 				ParentRoot: parentRoot[:],
-				Body:       &silapb.BeaconBlockBodyGloas{SignedExecutionPayloadBid: bid},
+				Body:       &silapb.BeaconBlockBodyGloas{SignedSilaPayloadBid: bid},
 			},
 		})
 		wsb, err := blocks.NewSignedBeaconBlock(blk)
@@ -691,8 +691,8 @@ func TestParentPayloadReady(t *testing.T) {
 	})
 
 	t.Run("builds on full without payload", func(t *testing.T) {
-		bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-			Message: &silapb.ExecutionPayloadBid{
+		bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+			Message: &silapb.SilaPayloadBid{
 				BlockHash:       []byte{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				ParentBlockHash: parentBlockHash[:],
 			},
@@ -701,7 +701,7 @@ func TestParentPayloadReady(t *testing.T) {
 			Block: &silapb.BeaconBlockGloas{
 				Slot:       2,
 				ParentRoot: parentRoot[:],
-				Body:       &silapb.BeaconBlockBodyGloas{SignedExecutionPayloadBid: bid},
+				Body:       &silapb.BeaconBlockBodyGloas{SignedSilaPayloadBid: bid},
 			},
 		})
 		wsb, err := blocks.NewSignedBeaconBlock(blk)
@@ -710,16 +710,16 @@ func TestParentPayloadReady(t *testing.T) {
 	})
 
 	t.Run("builds on full with payload", func(t *testing.T) {
-		pe, err := blocks.WrappedROExecutionPayloadEnvelope(&silapb.ExecutionPayloadEnvelope{
+		pe, err := blocks.WrappedROSilaPayloadEnvelope(&silapb.SilaPayloadEnvelope{
 			BeaconBlockRoot:       parentRoot[:],
 			ParentBeaconBlockRoot: make([]byte, 32),
-			Payload:               &enginev1.ExecutionPayloadGloas{},
+			Payload:               &enginev1.SilaPayloadGloas{},
 		})
 		require.NoError(t, err)
 		require.NoError(t, fcs.InsertPayload(pe))
 
-		bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-			Message: &silapb.ExecutionPayloadBid{
+		bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+			Message: &silapb.SilaPayloadBid{
 				BlockHash:       []byte{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				ParentBlockHash: parentBlockHash[:],
 			},
@@ -728,7 +728,7 @@ func TestParentPayloadReady(t *testing.T) {
 			Block: &silapb.BeaconBlockGloas{
 				Slot:       2,
 				ParentRoot: parentRoot[:],
-				Body:       &silapb.BeaconBlockBodyGloas{SignedExecutionPayloadBid: bid},
+				Body:       &silapb.BeaconBlockBodyGloas{SignedSilaPayloadBid: bid},
 			},
 		})
 		wsb, err := blocks.NewSignedBeaconBlock(blk)

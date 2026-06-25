@@ -1171,7 +1171,7 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 		} else {
 			require.NoError(l.T, err)
 		}
-		execution := &v11.ExecutionPayloadHeaderCapella{
+		execution := &v11.SilaPayloadHeaderCapella{
 			ParentHash:       payloadInterface.ParentHash(),
 			FeeRecipient:     payloadInterface.FeeRecipient(),
 			StateRoot:        payloadInterface.StateRoot(),
@@ -1193,12 +1193,12 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 		require.NoError(l.T, err)
 		require.DeepSSZEqual(l.T, execution, updateAttestedHeaderExecution.Proto(), "Attested Block Execution is not equal")
 
-		executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
+		silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
 		require.NoError(l.T, err)
 		updateAttestedHeaderExecutionBranch, err := header.ExecutionBranch()
 		require.NoError(l.T, err)
 		for i, leaf := range updateAttestedHeaderExecutionBranch {
-			require.DeepSSZEqual(l.T, executionPayloadProof[i], leaf[:], "Leaf is not equal")
+			require.DeepSSZEqual(l.T, silaPayloadProof[i], leaf[:], "Leaf is not equal")
 		}
 	}
 
@@ -1225,7 +1225,7 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 		} else {
 			require.NoError(l.T, err)
 		}
-		execution := &v11.ExecutionPayloadHeaderDeneb{
+		execution := &v11.SilaPayloadHeaderDeneb{
 			ParentHash:       payloadInterface.ParentHash(),
 			FeeRecipient:     payloadInterface.FeeRecipient(),
 			StateRoot:        payloadInterface.StateRoot(),
@@ -1247,12 +1247,12 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 		require.NoError(l.T, err)
 		require.DeepSSZEqual(l.T, execution, updateAttestedHeaderExecution.Proto(), "Attested Block Execution is not equal")
 
-		executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
+		silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
 		require.NoError(l.T, err)
 		updateAttestedHeaderExecutionBranch, err := header.ExecutionBranch()
 		require.NoError(l.T, err)
 		for i, leaf := range updateAttestedHeaderExecutionBranch {
-			require.DeepSSZEqual(l.T, executionPayloadProof[i], leaf[:], "Leaf is not equal")
+			require.DeepSSZEqual(l.T, silaPayloadProof[i], leaf[:], "Leaf is not equal")
 		}
 	}
 }

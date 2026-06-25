@@ -32,7 +32,7 @@ type denebBlockGenerator struct {
 	sk       bls.SecretKey
 	proposer primitives.ValidatorIndex
 	valRoot  []byte
-	payload  *enginev1.ExecutionPayloadDeneb
+	payload  *enginev1.SilaPayloadDeneb
 }
 
 func WithProposerSigning(idx primitives.ValidatorIndex, sk bls.SecretKey, valRoot []byte) DenebBlockGeneratorOption {
@@ -51,7 +51,7 @@ func WithProposer(idx primitives.ValidatorIndex) DenebBlockGeneratorOption {
 	}
 }
 
-func WithPayloadSetter(p *enginev1.ExecutionPayloadDeneb) DenebBlockGeneratorOption {
+func WithPayloadSetter(p *enginev1.SilaPayloadDeneb) DenebBlockGeneratorOption {
 	return func(g *denebBlockGenerator) {
 		g.payload = p
 	}
@@ -95,7 +95,7 @@ func GenerateTestDenebBlockWithSidecar(t *testing.T, parent [32]byte, slot primi
 		logsBloom := bytesutil.PadTo([]byte("logs"), fieldparams.LogsBloomLength)
 		receiptsRoot := bytesutil.PadTo([]byte("receiptsRoot"), fieldparams.RootLength)
 		parentHash := bytesutil.PadTo([]byte("parentHash"), fieldparams.RootLength)
-		g.payload = &enginev1.ExecutionPayloadDeneb{
+		g.payload = &enginev1.SilaPayloadDeneb{
 			ParentHash:    parentHash,
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     stateRoot,
@@ -117,7 +117,7 @@ func GenerateTestDenebBlockWithSidecar(t *testing.T, parent [32]byte, slot primi
 	}
 
 	block := NewBeaconBlockDeneb()
-	block.Block.Body.ExecutionPayload = g.payload
+	block.Block.Body.SilaPayload = g.payload
 	block.Block.Slot = g.slot
 	block.Block.ParentRoot = g.parent[:]
 	block.Block.ProposerIndex = g.proposer

@@ -61,7 +61,7 @@ func prepareGloasForkchoiceState(
 		CurrentJustifiedCheckpoint: justifiedCheckpoint,
 		FinalizedCheckpoint:        finalizedCheckpoint,
 		LatestBlockHeader:          blockHeader,
-		LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 			BlockHash:             blockHash[:],
 			ParentBlockHash:       parentBlockHash[:],
 			ParentBlockRoot:       make([]byte, 32),
@@ -72,7 +72,7 @@ func prepareGloasForkchoiceState(
 		},
 		Builders:                     make([]*silapb.Builder, 0),
 		BuilderPendingPayments:       builderPendingPayments,
-		ExecutionPayloadAvailability: make([]byte, 1024),
+		SilaPayloadAvailability: make([]byte, 1024),
 		LatestBlockHash:              make([]byte, 32),
 		PayloadExpectedWithdrawals:   make([]*enginev1.Withdrawal, 0),
 		ProposerLookahead:            make([]primitives.ValidatorIndex, 64),
@@ -83,8 +83,8 @@ func prepareGloasForkchoiceState(
 		return nil, blocks.ROBlock{}, err
 	}
 
-	bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			BlockHash:       blockHash[:],
 			ParentBlockHash: parentBlockHash[:],
 		},
@@ -95,7 +95,7 @@ func prepareGloasForkchoiceState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyGloas{
-				SignedExecutionPayloadBid: bid,
+				SignedSilaPayloadBid: bid,
 			},
 		},
 	})
@@ -133,7 +133,7 @@ func testGloasState(t *testing.T, slot primitives.Slot, parentRoot [32]byte, blo
 			DepositRoot: make([]byte, 32),
 			BlockHash:   make([]byte, 32),
 		},
-		LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 			BlockHash:             blockHash[:],
 			ParentBlockHash:       make([]byte, 32),
 			ParentBlockRoot:       make([]byte, 32),
@@ -144,14 +144,14 @@ func testGloasState(t *testing.T, slot primitives.Slot, parentRoot [32]byte, blo
 		},
 		Builders:                     make([]*silapb.Builder, 0),
 		BuilderPendingPayments:       builderPendingPayments,
-		ExecutionPayloadAvailability: make([]byte, 1024),
+		SilaPayloadAvailability: make([]byte, 1024),
 		LatestBlockHash:              make([]byte, 32),
 		PayloadExpectedWithdrawals:   make([]*enginev1.Withdrawal, 0),
 		ProposerLookahead:            make([]primitives.ValidatorIndex, 64),
 	}
 
-	bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			BlockHash:       blockHash[:],
 			ParentBlockHash: make([]byte, 32),
 		},
@@ -161,17 +161,17 @@ func testGloasState(t *testing.T, slot primitives.Slot, parentRoot [32]byte, blo
 		Block: &silapb.BeaconBlockGloas{
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
-			Body:       &silapb.BeaconBlockBodyGloas{SignedExecutionPayloadBid: bid},
+			Body:       &silapb.BeaconBlockBodyGloas{SignedSilaPayloadBid: bid},
 		},
 	})
 	return base, blk
 }
 
-func testSignedEnvelope(t *testing.T, blockRoot [32]byte, slot primitives.Slot, blockHash []byte) *silapb.SignedExecutionPayloadEnvelope {
+func testSignedEnvelope(t *testing.T, blockRoot [32]byte, slot primitives.Slot, blockHash []byte) *silapb.SignedSilaPayloadEnvelope {
 	t.Helper()
-	return &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload: &enginev1.ExecutionPayloadGloas{
+	return &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload: &enginev1.SilaPayloadGloas{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),
@@ -219,12 +219,12 @@ func TestGetPayloadEnvelopePrestate_UnknownRoot(t *testing.T) {
 	s, _ := setupGloasService(t, &mockExecution.EngineClient{})
 	ctx := t.Context()
 	unknownRoot := bytesutil.ToBytes32([]byte("unknown"))
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       unknownRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{},
+		Payload:               &enginev1.SilaPayloadGloas{},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 	_, err = s.getPayloadEnvelopePrestate(ctx, envelope)
 	require.ErrorContains(t, "not found in forkchoice", err)
@@ -241,12 +241,12 @@ func TestGetPayloadEnvelopePrestate_OK(t *testing.T) {
 	base, blk := testGloasState(t, 1, parentRoot, blockHash)
 	insertGloasBlock(t, s, base, blk, blockRoot)
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{},
+		Payload:               &enginev1.SilaPayloadGloas{},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 	st, err := s.getPayloadEnvelopePrestate(ctx, envelope)
 	require.NoError(t, err)
@@ -265,13 +265,13 @@ func TestNotifyNewEnvelope_Valid(t *testing.T) {
 	st, err := state_native.InitializeFromProtoUnsafeGloas(base)
 	require.NoError(t, err)
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{BlockHash: blockHash[:]},
+		Payload:               &enginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
 		ExecutionRequests:     &enginev1.ExecutionRequests{},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
 	isValid, err := s.notifyNewEnvelope(ctx, st, envelope)
@@ -293,13 +293,13 @@ func TestNotifyNewEnvelope_Syncing(t *testing.T) {
 	st, err := state_native.InitializeFromProtoUnsafeGloas(base)
 	require.NoError(t, err)
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{BlockHash: blockHash[:]},
+		Payload:               &enginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
 		ExecutionRequests:     &enginev1.ExecutionRequests{},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
 	isValid, err := s.notifyNewEnvelope(ctx, st, envelope)
@@ -321,13 +321,13 @@ func TestNotifyNewEnvelope_Invalid(t *testing.T) {
 	st, err := state_native.InitializeFromProtoUnsafeGloas(base)
 	require.NoError(t, err)
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{BlockHash: blockHash[:]},
+		Payload:               &enginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
 		ExecutionRequests:     &enginev1.ExecutionRequests{},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
 	_, err = s.notifyNewEnvelope(ctx, st, envelope)
@@ -446,13 +446,13 @@ func TestSavePostPayload(t *testing.T) {
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
 
 	protoEnv := testSignedEnvelope(t, blockRoot, 1, blockHash[:])
-	signed, err := blocks.WrappedROSignedExecutionPayloadEnvelope(protoEnv)
+	signed, err := blocks.WrappedROSignedSilaPayloadEnvelope(protoEnv)
 	require.NoError(t, err)
 
 	require.NoError(t, s.savePostPayload(ctx, signed))
 
 	// Verify the envelope was saved in the DB.
-	require.Equal(t, true, s.cfg.BeaconDB.HasExecutionPayloadEnvelope(ctx, blockRoot))
+	require.Equal(t, true, s.cfg.BeaconDB.HasSilaPayloadEnvelope(ctx, blockRoot))
 }
 
 func TestValidateExecutionOnEnvelope_Valid(t *testing.T) {
@@ -467,13 +467,13 @@ func TestValidateExecutionOnEnvelope_Valid(t *testing.T) {
 	st, err := state_native.InitializeFromProtoUnsafeGloas(base)
 	require.NoError(t, err)
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{BlockHash: blockHash[:], ParentHash: make([]byte, 32)},
+		Payload:               &enginev1.SilaPayloadGloas{BlockHash: blockHash[:], ParentHash: make([]byte, 32)},
 		ExecutionRequests:     &enginev1.ExecutionRequests{},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
 	isValid, err := s.validateExecutionOnEnvelope(ctx, st, envelope)
@@ -493,12 +493,12 @@ func TestPostPayloadTasks_NotHead(t *testing.T) {
 	st, err := state_native.InitializeFromProtoUnsafeGloas(base)
 	require.NoError(t, err)
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       root[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{BlockHash: blockHash[:]},
+		Payload:               &enginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
 	require.NoError(t, s.postPayloadTasks(ctx, envelope, st, root, headRoot))
@@ -523,12 +523,12 @@ func TestPostPayloadTasks_DoesNotMutateHead(t *testing.T) {
 	s.head = &head{root: root, block: signed, state: st, slot: 1}
 	s.head.state = oldSt
 
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       root[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{BlockHash: blockHash[:], ParentHash: make([]byte, 32)},
+		Payload:               &enginev1.SilaPayloadGloas{BlockHash: blockHash[:], ParentHash: make([]byte, 32)},
 	}
-	envelope, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
 	require.NoError(t, s.postPayloadTasks(ctx, envelope, st, root, root))

@@ -21,12 +21,12 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func testJSONSignedBid() *structs.SignedExecutionPayloadBid {
+func testJSONSignedBid() *structs.SignedSilaPayloadBid {
 	hex32 := "0x" + strings.Repeat("00", 32)
 	hex20 := "0x" + strings.Repeat("00", 20)
 	hex96 := "0x" + strings.Repeat("00", 96)
-	return &structs.SignedExecutionPayloadBid{
-		Message: &structs.ExecutionPayloadBid{
+	return &structs.SignedSilaPayloadBid{
+		Message: &structs.SilaPayloadBid{
 			ParentBlockHash:       hex32,
 			ParentBlockRoot:       hex32,
 			BlockHash:             hex32,
@@ -44,56 +44,56 @@ func testJSONSignedBid() *structs.SignedExecutionPayloadBid {
 	}
 }
 
-func TestPublishSignedExecutionPayloadBid_NoVersionHeader(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_NoVersionHeader(t *testing.T) {
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
 		HeadFetcher:           &chainMock.ChainService{},
 		TimeFetcher:           &chainMock.ChainService{},
 		OptimisticModeFetcher: &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", nil)
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", nil)
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("header is required")))
 }
 
-func TestPublishSignedExecutionPayloadBid_EmptyBody(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_EmptyBody(t *testing.T) {
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
 		HeadFetcher:           &chainMock.ChainService{},
 		TimeFetcher:           &chainMock.ChainService{},
 		OptimisticModeFetcher: &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", nil)
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", nil)
 	req.Header.Set(api.VersionHeader, "gloas")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("No data submitted")))
 }
 
-func TestPublishSignedExecutionPayloadBid_Syncing(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_Syncing(t *testing.T) {
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: true},
 		HeadFetcher:           &chainMock.ChainService{},
 		TimeFetcher:           &chainMock.ChainService{},
 		OptimisticModeFetcher: &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", nil)
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", nil)
 	req.Header.Set(api.VersionHeader, "gloas")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusServiceUnavailable, w.Code)
 }
 
-func TestPublishSignedExecutionPayloadBid_JSON(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_JSON(t *testing.T) {
 	broadcaster := &p2pMock.MockBroadcaster{}
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
@@ -107,54 +107,54 @@ func TestPublishSignedExecutionPayloadBid_JSON(t *testing.T) {
 	body, err := json.Marshal(bid)
 	require.NoError(t, err)
 
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, "gloas")
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 	require.Equal(t, 1, len(broadcaster.BroadcastMessages))
 }
 
-func TestPublishSignedExecutionPayloadBid_MalformedJSON(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_MalformedJSON(t *testing.T) {
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
 		HeadFetcher:           &chainMock.ChainService{},
 		TimeFetcher:           &chainMock.ChainService{},
 		OptimisticModeFetcher: &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", bytes.NewReader([]byte("{bad json")))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", bytes.NewReader([]byte("{bad json")))
 	req.Header.Set(api.VersionHeader, "gloas")
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("Could not decode request body")))
 }
 
-func TestPublishSignedExecutionPayloadBid_InvalidSSZ(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_InvalidSSZ(t *testing.T) {
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
 		HeadFetcher:           &chainMock.ChainService{},
 		TimeFetcher:           &chainMock.ChainService{},
 		OptimisticModeFetcher: &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", bytes.NewReader([]byte{0x01, 0x02}))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", bytes.NewReader([]byte{0x01, 0x02}))
 	req.Header.Set(api.VersionHeader, "gloas")
 	req.Header.Set("Content-Type", "application/octet-stream")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("Could not unmarshal SSZ")))
 }
 
-func TestPublishSignedExecutionPayloadBid_SSZ(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_SSZ(t *testing.T) {
 	broadcaster := &p2pMock.MockBroadcaster{}
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
@@ -164,8 +164,8 @@ func TestPublishSignedExecutionPayloadBid_SSZ(t *testing.T) {
 		Broadcaster:           broadcaster,
 	}
 
-	bid := &silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	bid := &silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			ParentBlockHash:       make([]byte, 32),
 			ParentBlockRoot:       make([]byte, 32),
 			BlockHash:             make([]byte, 32),
@@ -183,13 +183,13 @@ func TestPublishSignedExecutionPayloadBid_SSZ(t *testing.T) {
 	sszBytes, err := bid.MarshalSSZ()
 	require.NoError(t, err)
 
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", bytes.NewReader(sszBytes))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", bytes.NewReader(sszBytes))
 	req.Header.Set(api.VersionHeader, "gloas")
 	req.Header.Set("Content-Type", "application/octet-stream")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 	require.Equal(t, 1, len(broadcaster.BroadcastMessages))
 }
@@ -201,7 +201,7 @@ func (e *errorBroadcaster) Broadcast(_ context.Context, _ proto.Message) error {
 	return fmt.Errorf("broadcast failed")
 }
 
-func TestPublishSignedExecutionPayloadBid_BroadcastError(t *testing.T) {
+func TestPublishSignedSilaPayloadBid_BroadcastError(t *testing.T) {
 	s := &Server{
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
 		HeadFetcher:           &chainMock.ChainService{},
@@ -214,13 +214,13 @@ func TestPublishSignedExecutionPayloadBid_BroadcastError(t *testing.T) {
 	body, err := json.Marshal(bid)
 	require.NoError(t, err)
 
-	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/execution_payload/bid", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v2/beacon/sila_payload/bid", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, "gloas")
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishSignedExecutionPayloadBid(w, req)
+	s.PublishSignedSilaPayloadBid(w, req)
 	require.Equal(t, http.StatusInternalServerError, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("Could not broadcast")))
 }

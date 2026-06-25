@@ -130,7 +130,7 @@ func executeStateTransitionStateGen(
 		}
 	}
 	if signed.Block().Version() >= version.Gloas {
-		signedBid, bidErr := signed.Block().Body().SignedExecutionPayloadBid()
+		signedBid, bidErr := signed.Block().Body().SignedSilaPayloadBid()
 		if bidErr == nil && signedBid != nil && signedBid.Message != nil && len(signedBid.Message.ParentBlockHash) == 32 {
 			fields["bidParentBlockHash"] = fmt.Sprintf("%#x", [32]byte(signedBid.Message.ParentBlockHash))
 		}

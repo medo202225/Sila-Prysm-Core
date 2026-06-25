@@ -193,8 +193,8 @@ func (vs *Server) getParentState(ctx context.Context, slot primitives.Slot) (sta
 
 func (vs *Server) BuildBlockParallel(ctx context.Context, sBlk interfaces.SignedBeaconBlock, head state.BeaconState, skipMevBoost bool, builderBoostFactor primitives.Gwei, parentFull bool) (*silapb.GenericBeaconBlock, error) {
 	if sBlk.Version() >= version.Gloas && parentFull {
-		if err := vs.applyParentExecutionPayloadToHead(ctx, head, sBlk.Block().ParentRoot()); err != nil {
-			return nil, status.Errorf(codes.Internal, "Could not apply parent execution payload: %v", err)
+		if err := vs.applyParentSilaPayloadToHead(ctx, head, sBlk.Block().ParentRoot()); err != nil {
+			return nil, status.Errorf(codes.Internal, "Could not apply parent sila payload: %v", err)
 		}
 	}
 
@@ -266,9 +266,9 @@ func (vs *Server) BuildBlockParallel(ctx context.Context, sBlk interfaces.Signed
 			// There's no reason to try to get a builder bid if local override is true.
 			var builderBid builderapi.Bid
 			if !(local.OverrideBuilder || skipMevBoost) {
-				latestHeader, err := head.LatestExecutionPayloadHeader()
+				latestHeader, err := head.LatestSilaPayloadHeader()
 				if err != nil {
-					return nil, status.Errorf(codes.Internal, "Could not get latest execution payload header: %v", err)
+					return nil, status.Errorf(codes.Internal, "Could not get latest sila payload header: %v", err)
 				}
 				parentGasLimit := latestHeader.GasLimit()
 				builderBid, err = vs.getBuilderPayloadAndBlobs(ctx, sBlk.Block().Slot(), sBlk.Block().ProposerIndex(), parentGasLimit)
@@ -284,7 +284,7 @@ func (vs *Server) BuildBlockParallel(ctx context.Context, sBlk interfaces.Signed
 			}
 		} else {
 			selfBuildOnly := local.OverrideBuilder || skipMevBoost
-			selfBuildEnvelope, err = vs.setExecutionPayloadBid(ctx, sBlk, local, selfBuildOnly)
+			selfBuildEnvelope, err = vs.setSilaPayloadBid(ctx, sBlk, local, selfBuildOnly)
 			if err != nil {
 				return nil, status.Errorf(codes.Internal, "Could not set execution data for Gloas: %v", err)
 			}
@@ -299,10 +299,10 @@ func (vs *Server) BuildBlockParallel(ctx context.Context, sBlk interfaces.Signed
 	}
 	sBlk.SetStateRoot(sr)
 
-	// For Gloas self-build, cache the execution payload envelope now that the block is fully built.
+	// For Gloas self-build, cache the sila payload envelope now that the block is fully built.
 	if sBlk.Version() >= version.Gloas && selfBuildEnvelope {
-		if err := vs.storeExecutionPayloadEnvelope(sBlk, local); err != nil {
-			return nil, status.Errorf(codes.Internal, "Could not build execution payload envelope: %v", err)
+		if err := vs.storeSilaPayloadEnvelope(sBlk, local); err != nil {
+			return nil, status.Errorf(codes.Internal, "Could not build sila payload envelope: %v", err)
 		}
 	}
 

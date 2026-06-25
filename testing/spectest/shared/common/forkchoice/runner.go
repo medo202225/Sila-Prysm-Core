@@ -206,15 +206,15 @@ func runTest(t *testing.T, config string, fork int, basePath string) { // nolint
 					if step.PayloadStatus != nil {
 						require.NoError(t, builder.SetPayloadStatus(step.PayloadStatus))
 					}
-					if step.ExecutionPayload != nil {
-						envFile, err := util.BazelFileBytes(testsFolderPath, folder.Name(), fmt.Sprint(*step.ExecutionPayload, ".ssz_snappy"))
+					if step.SilaPayload != nil {
+						envFile, err := util.BazelFileBytes(testsFolderPath, folder.Name(), fmt.Sprint(*step.SilaPayload, ".ssz_snappy"))
 						require.NoError(t, err)
 						envSSZ, err := snappy.Decode(nil /* dst */, envFile)
 						require.NoError(t, err)
-						signed := &silapb.SignedExecutionPayloadEnvelope{}
+						signed := &silapb.SignedSilaPayloadEnvelope{}
 						require.NoError(t, signed.UnmarshalSSZ(envSSZ), "Failed to unmarshal signed envelope")
 						expectValid := step.Valid == nil || *step.Valid
-						builder.ExecutionPayloadEnvelope(t, signed, expectValid)
+						builder.SilaPayloadEnvelope(t, signed, expectValid)
 					}
 					runPayloadAttestationStep(t, step, folder, testsFolderPath, builder)
 					if step.PowBlock != nil {

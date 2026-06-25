@@ -27,7 +27,7 @@ type reconstructionBatch map[[32]byte]uint64
 
 type blindedBlockReconstructor struct {
 	orderedBlocks []*blockWithHeader
-	bodies        map[[32]byte]*pb.ExecutionPayloadBody
+	bodies        map[[32]byte]*pb.SilaPayloadBody
 	batches       map[string]reconstructionBatch
 }
 
@@ -45,7 +45,7 @@ func reconstructBlindedBlockBatch(ctx context.Context, client RPCClient, sbb []i
 func newBlindedBlockReconstructor(sbb []interfaces.ReadOnlySignedBeaconBlock) (*blindedBlockReconstructor, error) {
 	r := &blindedBlockReconstructor{
 		orderedBlocks: make([]*blockWithHeader, 0, len(sbb)),
-		bodies:        make(map[[32]byte]*pb.ExecutionPayloadBody),
+		bodies:        make(map[[32]byte]*pb.SilaPayloadBody),
 	}
 	for i := range sbb {
 		if err := r.addToBatch(sbb[i]); err != nil {
@@ -67,7 +67,7 @@ func (r *blindedBlockReconstructor) addToBatch(b interfaces.ReadOnlySignedBeacon
 		return err
 	}
 	if header == nil || header.IsNil() {
-		return errors.New("execution payload header in blinded block was nil")
+		return errors.New("sila payload header in blinded block was nil")
 	}
 	r.orderedBlocks = append(r.orderedBlocks, &blockWithHeader{block: b, header: header})
 	blockHash := bytesutil.ToBytes32(header.BlockHash())
@@ -156,7 +156,7 @@ func computeRanges(hbns []hashBlockNumber) []byRangeReq {
 }
 
 func (r *blindedBlockReconstructor) requestBodiesByRange(ctx context.Context, client RPCClient, method string, req byRangeReq) error {
-	result := make([]*pb.ExecutionPayloadBody, 0)
+	result := make([]*pb.SilaPayloadBody, 0)
 	if err := client.CallContext(ctx, &result, method, hexutil.EncodeUint64(req.start), hexutil.EncodeUint64(req.count)); err != nil {
 		return err
 	}
@@ -184,7 +184,7 @@ func (r *blindedBlockReconstructor) requestBodiesByHash(ctx context.Context, cli
 		}
 		hashes = append(hashes, h)
 	}
-	result := make([]*pb.ExecutionPayloadBody, 0)
+	result := make([]*pb.SilaPayloadBody, 0)
 	if err := client.CallContext(ctx, &result, method, hashes); err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (r *blindedBlockReconstructor) requestBodiesByHash(ctx context.Context, cli
 func (r *blindedBlockReconstructor) payloadForHeader(header interfaces.ExecutionData, v int) (proto.Message, error) {
 	bodyKey := bytesutil.ToBytes32(header.BlockHash())
 	if bodyKey == params.BeaconConfig().ZeroHash {
-		payload, err := EmptyExecutionPayload(v)
+		payload, err := EmptySilaPayload(v)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to reconstruct payload for body hash %#x", bodyKey)
 		}
@@ -230,9 +230,9 @@ func (r *blindedBlockReconstructor) unblinded() ([]interfaces.SignedBeaconBlock,
 		if err != nil {
 			return nil, err
 		}
-		full, err := blocks.BuildSignedBeaconBlockFromExecutionPayload(blk, payload)
+		full, err := blocks.BuildSignedBeaconBlockFromSilaPayload(blk, payload)
 		if err != nil {
-			return nil, errors.Wrapf(err, "failed to build full block from execution payload for block hash %#x", header.BlockHash())
+			return nil, errors.Wrapf(err, "failed to build full block from sila payload for block hash %#x", header.BlockHash())
 		}
 		unblinded[i] = full
 	}

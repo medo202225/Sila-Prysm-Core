@@ -18,7 +18,7 @@ func (c *beaconApiValidatorClient) payloadAttestationData(ctx context.Context, s
 	endpoint := fmt.Sprintf("/sila/v1/validator/payload_attestation_data/%d", slot)
 	var resp structs.GetPayloadAttestationDataResponse
 	if err := c.handler.Get(ctx, endpoint, &resp); err != nil {
-		return nil, errors.Wrap(err, "could not get execution payload attestation data")
+		return nil, errors.Wrap(err, "could not get sila payload attestation data")
 	}
 	if resp.Data == nil {
 		return nil, errors.New("payload attestation data is nil")

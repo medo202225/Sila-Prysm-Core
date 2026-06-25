@@ -98,8 +98,8 @@ type SignedProposerPreferencesVerifier interface {
 // able to mock Initializer.NewSignedProposerPreferencesVerifier without complex setup.
 type NewSignedProposerPreferencesVerifier func(p *silapb.SignedProposerPreferences, reqs []Requirement) SignedProposerPreferencesVerifier
 
-// ExecutionPayloadBidVerifier defines the methods implemented by the ROSignedExecutionPayloadBid verifier.
-type ExecutionPayloadBidVerifier interface {
+// SilaPayloadBidVerifier defines the methods implemented by the ROSignedSilaPayloadBid verifier.
+type SilaPayloadBidVerifier interface {
 	VerifyCurrentOrNextSlot() error
 	VerifyBuilderActive(state.ReadOnlyBeaconState) error
 	VerifyExecutionPaymentZero() error
@@ -113,6 +113,6 @@ type ExecutionPayloadBidVerifier interface {
 	SatisfyRequirement(Requirement)
 }
 
-// NewExecutionPayloadBidVerifier is a function signature that can be used by code that needs to be
-// able to mock Initializer.NewExecutionPayloadBidVerifier without complex setup.
-type NewExecutionPayloadBidVerifier func(b interfaces.ROSignedExecutionPayloadBid, reqs []Requirement) ExecutionPayloadBidVerifier
+// NewSilaPayloadBidVerifier is a function signature that can be used by code that needs to be
+// able to mock Initializer.NewSilaPayloadBidVerifier without complex setup.
+type NewSilaPayloadBidVerifier func(b interfaces.ROSignedSilaPayloadBid, reqs []Requirement) SilaPayloadBidVerifier

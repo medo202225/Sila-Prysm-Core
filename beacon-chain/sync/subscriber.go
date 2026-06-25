@@ -345,18 +345,18 @@ func (s *Service) registerSubscribers(nse params.NetworkScheduleEntry) bool {
 
 		s.spawn(func() {
 			s.subscribe(
-				p2p.ExecutionPayloadEnvelopeTopicFormat,
-				s.validateExecutionPayloadEnvelope,
-				s.executionPayloadEnvelopeSubscriber,
+				p2p.SilaPayloadEnvelopeTopicFormat,
+				s.validateSilaPayloadEnvelope,
+				s.silaPayloadEnvelopeSubscriber,
 				nse,
 			)
 		})
 
 		s.spawn(func() {
 			s.subscribe(
-				p2p.ExecutionPayloadBidTopicFormat,
-				s.validateExecutionPayloadBidGossip,
-				s.executionPayloadBidSubscriber,
+				p2p.SilaPayloadBidTopicFormat,
+				s.validateSilaPayloadBidGossip,
+				s.silaPayloadBidSubscriber,
 				nse,
 			)
 		})

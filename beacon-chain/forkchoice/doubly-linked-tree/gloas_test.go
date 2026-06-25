@@ -67,7 +67,7 @@ func prepareGloasForkchoiceState(
 		CurrentJustifiedCheckpoint: justifiedCheckpoint,
 		FinalizedCheckpoint:        finalizedCheckpoint,
 		LatestBlockHeader:          blockHeader,
-		LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 			BlockHash:             blockHash[:],
 			ParentBlockHash:       parentBlockHash[:],
 			ParentBlockRoot:       make([]byte, 32),
@@ -78,7 +78,7 @@ func prepareGloasForkchoiceState(
 		},
 		Builders:                     make([]*silapb.Builder, 0),
 		BuilderPendingPayments:       builderPendingPayments,
-		ExecutionPayloadAvailability: make([]byte, 1024),
+		SilaPayloadAvailability: make([]byte, 1024),
 		LatestBlockHash:              make([]byte, 32),
 		PayloadExpectedWithdrawals:   make([]*enginev1.Withdrawal, 0),
 		ProposerLookahead:            make([]primitives.ValidatorIndex, 64),
@@ -89,8 +89,8 @@ func prepareGloasForkchoiceState(
 		return nil, blocks.ROBlock{}, err
 	}
 
-	bid := util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			BlockHash:       blockHash[:],
 			ParentBlockHash: parentBlockHash[:],
 		},
@@ -101,7 +101,7 @@ func prepareGloasForkchoiceState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyGloas{
-				SignedExecutionPayloadBid: bid,
+				SignedSilaPayloadBid: bid,
 			},
 		},
 	})
@@ -116,13 +116,13 @@ func prepareGloasForkchoiceState(
 
 func prepareGloasForkchoicePayload(
 	blockRoot [32]byte,
-) (interfaces.ROExecutionPayloadEnvelope, error) {
-	env := &silapb.ExecutionPayloadEnvelope{
+) (interfaces.ROSilaPayloadEnvelope, error) {
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{},
+		Payload:               &enginev1.SilaPayloadGloas{},
 	}
-	return blocks.WrappedROExecutionPayloadEnvelope(env)
+	return blocks.WrappedROSilaPayloadEnvelope(env)
 }
 
 func TestInsertGloasBlock_EmptyNodeOnly(t *testing.T) {
@@ -1866,12 +1866,12 @@ func TestGasLimit_GloasEmptyNodeWalksToFullAncestor(t *testing.T) {
 	require.NoError(t, f.InsertNode(ctx, st, roblock))
 
 	const gl = uint64(42_000_000)
-	env := &silapb.ExecutionPayloadEnvelope{
+	env := &silapb.SilaPayloadEnvelope{
 		BeaconBlockRoot:       rootA[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
-		Payload:               &enginev1.ExecutionPayloadGloas{GasLimit: gl},
+		Payload:               &enginev1.SilaPayloadGloas{GasLimit: gl},
 	}
-	pe, err := blocks.WrappedROExecutionPayloadEnvelope(env)
+	pe, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 	require.NoError(t, f.InsertPayload(pe))
 

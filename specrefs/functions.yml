@@ -216,17 +216,17 @@
                 store.optimistic_header = store.finalized_header
     </spec>
 
-- name: apply_parent_execution_payload#gloas
+- name: apply_parent_sila_payload#gloas
   sources:
     - file: beacon-chain/core/gloas/parent_payload.go
-      search: func ApplyParentExecutionPayload(
+      search: func ApplyParentSilaPayload(
   spec: |
-    <spec fn="apply_parent_execution_payload" fork="gloas" hash="44874701">
-    def apply_parent_execution_payload(
+    <spec fn="apply_parent_sila_payload" fork="gloas" hash="44874701">
+    def apply_parent_sila_payload(
         state: BeaconState,
         requests: ExecutionRequests,
     ) -> None:
-        parent_bid = state.latest_execution_payload_bid
+        parent_bid = state.latest_sila_payload_bid
         parent_slot = parent_bid.slot
         parent_epoch = compute_epoch_at_slot(parent_slot)
 
@@ -259,7 +259,7 @@
             )
 
         # Update parent payload availability and latest block hash
-        state.execution_payload_availability[parent_slot % SLOTS_PER_HISTORICAL_ROOT] = 0b1
+        state.sila_payload_availability[parent_slot % SLOTS_PER_HISTORICAL_ROOT] = 0b1
         state.latest_block_hash = parent_bid.block_hash
     </spec>
 
@@ -339,8 +339,8 @@
         epoch = compute_epoch_at_slot(block.message.slot)
 
         if epoch >= CAPELLA_FORK_EPOCH:
-            payload = block.message.body.execution_payload
-            execution_header = ExecutionPayloadHeader(
+            payload = block.message.body.sila_payload
+            execution_header = SilaPayloadHeader(
                 parent_hash=payload.parent_hash,
                 fee_recipient=payload.fee_recipient,
                 state_root=payload.state_root,
@@ -358,14 +358,14 @@
                 withdrawals_root=hash_tree_root(payload.withdrawals),
             )
             execution_branch = ExecutionBranch(
-                compute_merkle_proof(block.message.body, EXECUTION_PAYLOAD_GINDEX)
+                compute_merkle_proof(block.message.body, SILA_PAYLOAD_GINDEX)
             )
         else:
             # Note that during fork transitions, `finalized_header` may still point to earlier forks.
-            # While Bellatrix blocks also contain an `ExecutionPayload` (minus `withdrawals_root`),
+            # While Bellatrix blocks also contain an `SilaPayload` (minus `withdrawals_root`),
             # it was not included in the corresponding light client data. To ensure compatibility
             # with legacy data going through `upgrade_lc_header_to_capella`, leave out execution data.
-            execution_header = ExecutionPayloadHeader()
+            execution_header = SilaPayloadHeader()
             execution_branch = ExecutionBranch()
 
         return LightClientHeader(
@@ -391,8 +391,8 @@
         epoch = compute_epoch_at_slot(block.message.slot)
 
         if epoch >= CAPELLA_FORK_EPOCH:
-            payload = block.message.body.execution_payload
-            execution_header = ExecutionPayloadHeader(
+            payload = block.message.body.sila_payload
+            execution_header = SilaPayloadHeader(
                 parent_hash=payload.parent_hash,
                 fee_recipient=payload.fee_recipient,
                 state_root=payload.state_root,
@@ -416,14 +416,14 @@
                 execution_header.excess_blob_gas = payload.excess_blob_gas
 
             execution_branch = ExecutionBranch(
-                compute_merkle_proof(block.message.body, EXECUTION_PAYLOAD_GINDEX)
+                compute_merkle_proof(block.message.body, SILA_PAYLOAD_GINDEX)
             )
         else:
             # Note that during fork transitions, `finalized_header` may still point to earlier forks.
-            # While Bellatrix blocks also contain an `ExecutionPayload` (minus `withdrawals_root`),
+            # While Bellatrix blocks also contain an `SilaPayload` (minus `withdrawals_root`),
             # it was not included in the corresponding light client data. To ensure compatibility
             # with legacy data going through `upgrade_lc_header_to_capella`, leave out execution data.
-            execution_header = ExecutionPayloadHeader()
+            execution_header = SilaPayloadHeader()
             execution_branch = ExecutionBranch()
 
         return LightClientHeader(
@@ -449,13 +449,13 @@
         # [Modified in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
             execution_block_hash = (
-                block.message.body.signed_execution_payload_bid.message.parent_block_hash
+                block.message.body.signed_sila_payload_bid.message.parent_block_hash
             )
             execution_branch = ExecutionBranch(
                 compute_merkle_proof(block.message.body, EXECUTION_BLOCK_HASH_GINDEX_GLOAS)
             )
         elif epoch >= DENEB_FORK_EPOCH:
-            execution_block_hash = block.message.body.execution_payload.block_hash
+            execution_block_hash = block.message.body.sila_payload.block_hash
             execution_branch = ExecutionBranch(
                 normalize_merkle_branch(
                     compute_merkle_proof(block.message.body, EXECUTION_BLOCK_HASH_GINDEX_DENEB),
@@ -463,7 +463,7 @@
                 )
             )
         elif epoch >= CAPELLA_FORK_EPOCH:
-            execution_block_hash = block.message.body.execution_payload.block_hash
+            execution_block_hash = block.message.body.sila_payload.block_hash
             execution_branch = ExecutionBranch(
                 normalize_merkle_branch(
                     compute_merkle_proof(block.message.body, EXECUTION_BLOCK_HASH_GINDEX),
@@ -472,7 +472,7 @@
             )
         else:
             # Note that during fork transitions, `finalized_header` may still point to earlier forks.
-            # While Bellatrix blocks also contain an `ExecutionPayload` (minus `withdrawals_root`),
+            # While Bellatrix blocks also contain an `SilaPayload` (minus `withdrawals_root`),
             # it was not included in the corresponding light client data. To ensure compatibility
             # with legacy data going through `upgrade_lc_header_to_capella`, leave out execution data.
             execution_block_hash = Hash32()
@@ -2586,7 +2586,7 @@
             payload_matches = True
         else:
             slot_index = data.slot % SLOTS_PER_HISTORICAL_ROOT
-            payload_index = state.execution_payload_availability[slot_index]
+            payload_index = state.sila_payload_availability[slot_index]
             payload_matches = data.index == payload_index
 
         # Matching head
@@ -3807,38 +3807,38 @@
         )
     </spec>
 
-- name: get_execution_payload#bellatrix
+- name: get_sila_payload#bellatrix
   sources: []
   spec: |
-    <spec fn="get_execution_payload" fork="bellatrix" hash="abcc202e">
-    def get_execution_payload(
+    <spec fn="get_sila_payload" fork="bellatrix" hash="abcc202e">
+    def get_sila_payload(
         payload_id: Optional[PayloadId], execution_engine: ExecutionEngine
-    ) -> ExecutionPayload:
+    ) -> SilaPayload:
         if payload_id is None:
             # Pre-merge, empty payload
-            return ExecutionPayload()
+            return SilaPayload()
         else:
-            return execution_engine.get_payload(payload_id).execution_payload
+            return execution_engine.get_payload(payload_id).sila_payload
     </spec>
 
-- name: get_execution_payload_bid_signature#gloas
+- name: get_sila_payload_bid_signature#gloas
   sources: []
   spec: |
-    <spec fn="get_execution_payload_bid_signature" fork="gloas" hash="c09cbb78">
-    def get_execution_payload_bid_signature(
-        state: BeaconState, bid: ExecutionPayloadBid, privkey: int
+    <spec fn="get_sila_payload_bid_signature" fork="gloas" hash="c09cbb78">
+    def get_sila_payload_bid_signature(
+        state: BeaconState, bid: SilaPayloadBid, privkey: int
     ) -> BLSSignature:
         domain = get_domain(state, DOMAIN_BEACON_BUILDER, compute_epoch_at_slot(bid.slot))
         signing_root = compute_signing_root(bid, domain)
         return bls.Sign(privkey, signing_root)
     </spec>
 
-- name: get_execution_payload_envelope_signature#gloas
+- name: get_sila_payload_envelope_signature#gloas
   sources: []
   spec: |
-    <spec fn="get_execution_payload_envelope_signature" fork="gloas" hash="7291faa5">
-    def get_execution_payload_envelope_signature(
-        state: BeaconState, envelope: ExecutionPayloadEnvelope, privkey: int
+    <spec fn="get_sila_payload_envelope_signature" fork="gloas" hash="7291faa5">
+    def get_sila_payload_envelope_signature(
+        state: BeaconState, envelope: SilaPayloadEnvelope, privkey: int
     ) -> BLSSignature:
         domain = get_domain(state, DOMAIN_BEACON_BUILDER, compute_epoch_at_slot(state.slot))
         signing_root = compute_signing_root(envelope, domain)
@@ -4682,7 +4682,7 @@
 
         # [Modified in Deneb]
         if epoch >= CAPELLA_FORK_EPOCH:
-            execution_header = capella.ExecutionPayloadHeader(
+            execution_header = capella.SilaPayloadHeader(
                 parent_hash=header.execution.parent_hash,
                 fee_recipient=header.execution.fee_recipient,
                 state_root=header.execution.state_root,
@@ -4717,7 +4717,7 @@
 
         # [Modified in Deneb]
         if epoch >= CAPELLA_FORK_EPOCH:
-            execution_header = capella.ExecutionPayloadHeader(
+            execution_header = capella.SilaPayloadHeader(
                 parent_hash=header.execution.parent_hash,
                 fee_recipient=header.execution.fee_recipient,
                 state_root=header.execution.state_root,
@@ -4753,18 +4753,18 @@
         # [Modified in Gloas:SIP7732]
         if epoch >= DENEB_FORK_EPOCH:
             if header.beacon.slot == GENESIS_SLOT:
-                return hash_tree_root(deneb.ExecutionPayloadHeader())
-            BLOCK_HASH_GINDEX = get_generalized_index(deneb.ExecutionPayloadHeader, "block_hash")
+                return hash_tree_root(deneb.SilaPayloadHeader())
+            BLOCK_HASH_GINDEX = get_generalized_index(deneb.SilaPayloadHeader, "block_hash")
         elif epoch >= CAPELLA_FORK_EPOCH:
             if header.beacon.slot == GENESIS_SLOT:
-                return hash_tree_root(capella.ExecutionPayloadHeader())
-            BLOCK_HASH_GINDEX = get_generalized_index(capella.ExecutionPayloadHeader, "block_hash")
+                return hash_tree_root(capella.SilaPayloadHeader())
+            BLOCK_HASH_GINDEX = get_generalized_index(capella.SilaPayloadHeader, "block_hash")
         else:
             return Root()
 
         # [Modified in Gloas:SIP7732]
         inner = header.execution_branch[
-            : len(header.execution_branch) - floorlog2(EXECUTION_PAYLOAD_GINDEX)
+            : len(header.execution_branch) - floorlog2(SILA_PAYLOAD_GINDEX)
         ]
         return compute_merkle_branch_root(
             leaf=Bytes32(header.execution_block_hash),
@@ -4992,8 +4992,8 @@
     <spec fn="get_parent_payload_status" fork="gloas" hash="4ab82d16">
     def get_parent_payload_status(store: Store, block: BeaconBlock) -> PayloadStatus:
         parent = store.blocks[block.parent_root]
-        parent_block_hash = block.body.signed_execution_payload_bid.message.parent_block_hash
-        message_block_hash = parent.body.signed_execution_payload_bid.message.block_hash
+        parent_block_hash = block.body.signed_sila_payload_bid.message.parent_block_hash
+        message_block_hash = parent.body.signed_sila_payload_bid.message.block_hash
         return PAYLOAD_STATUS_FULL if parent_block_hash == message_block_hash else PAYLOAD_STATUS_EMPTY
     </spec>
 
@@ -5356,7 +5356,7 @@
     <spec fn="get_safe_execution_block_hash" fork="bellatrix" hash="ccd5f801">
     def get_safe_execution_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
         safe_block = fcr_store.store.blocks[fcr_store.confirmed_root]
-        return safe_block.body.execution_payload.block_hash
+        return safe_block.body.sila_payload.block_hash
     </spec>
 
 - name: get_safe_execution_block_hash#gloas
@@ -5366,7 +5366,7 @@
     def get_safe_execution_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
         safe_block = fcr_store.store.blocks[fcr_store.confirmed_root]
         # [Modified in Gloas:SIP7732]
-        return safe_block.body.signed_execution_payload_bid.message.parent_block_hash
+        return safe_block.body.signed_sila_payload_bid.message.parent_block_hash
     </spec>
 
 - name: get_safety_threshold#altair
@@ -5614,7 +5614,7 @@
 
 - name: get_terminal_pow_block#bellatrix
   sources:
-    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer_execution_payload.go
+    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer_sila_payload.go
       search: func (vs *Server) getTerminalBlockHashIfExists(
   spec: |
     <spec fn="get_terminal_pow_block" fork="bellatrix" hash="8ead2ad2">
@@ -6651,7 +6651,7 @@
   spec: |
     <spec fn="is_execution_block" fork="bellatrix" hash="26be0b84">
     def is_execution_block(block: BeaconBlock) -> bool:
-        return block.body.execution_payload != ExecutionPayload()
+        return block.body.sila_payload != SilaPayload()
     </spec>
 
 - name: is_execution_enabled#bellatrix
@@ -6858,7 +6858,7 @@
   spec: |
     <spec fn="is_merge_transition_block" fork="bellatrix" hash="f0b5e2a0">
     def is_merge_transition_block(state: BeaconState, body: BeaconBlockBody) -> bool:
-        return not is_merge_transition_complete(state) and body.execution_payload != ExecutionPayload()
+        return not is_merge_transition_complete(state) and body.sila_payload != SilaPayload()
     </spec>
 
 - name: is_merge_transition_complete#bellatrix
@@ -6868,7 +6868,7 @@
   spec: |
     <spec fn="is_merge_transition_complete" fork="bellatrix" hash="b13c98c6">
     def is_merge_transition_complete(state: BeaconState) -> bool:
-        return state.latest_execution_payload_header != ExecutionPayloadHeader()
+        return state.latest_sila_payload_header != SilaPayloadHeader()
     </spec>
 
 - name: is_next_sync_committee_known#altair
@@ -7044,7 +7044,7 @@
     <spec fn="is_payload_inclusion_list_satisfied" fork="heze" hash="2f119ca9">
     def is_payload_inclusion_list_satisfied(store: Store, root: Root) -> bool:
         """
-        Return whether the execution payload for the beacon block with root ``root``
+        Return whether the sila payload for the beacon block with root ``root``
         satisfied the inclusion list constraints, and was locally determined to be available.
         """
         # The beacon block root must be known
@@ -7064,9 +7064,9 @@
     <spec fn="is_payload_verified" fork="gloas" hash="8ddb7023">
     def is_payload_verified(store: Store, root: Root) -> bool:
         """
-        Return whether the execution payload envelope for the beacon block with
+        Return whether the sila payload envelope for the beacon block with
         root ``root`` has been locally delivered and verified via
-        ``on_execution_payload_envelope``.
+        ``on_sila_payload_envelope``.
         """
         return root in store.payloads
     </spec>
@@ -7334,15 +7334,15 @@
 
         if epoch < CAPELLA_FORK_EPOCH:
             return (
-                header.execution == ExecutionPayloadHeader()
+                header.execution == SilaPayloadHeader()
                 and header.execution_branch == ExecutionBranch()
             )
 
         return is_valid_merkle_branch(
             leaf=get_lc_execution_root(header),
             branch=header.execution_branch,
-            depth=floorlog2(EXECUTION_PAYLOAD_GINDEX),
-            index=get_subtree_index(EXECUTION_PAYLOAD_GINDEX),
+            depth=floorlog2(SILA_PAYLOAD_GINDEX),
+            index=get_subtree_index(SILA_PAYLOAD_GINDEX),
             root=header.beacon.body_root,
         )
     </spec>
@@ -7363,15 +7363,15 @@
 
         if epoch < CAPELLA_FORK_EPOCH:
             return (
-                header.execution == ExecutionPayloadHeader()
+                header.execution == SilaPayloadHeader()
                 and header.execution_branch == ExecutionBranch()
             )
 
         return is_valid_merkle_branch(
             leaf=get_lc_execution_root(header),
             branch=header.execution_branch,
-            depth=floorlog2(EXECUTION_PAYLOAD_GINDEX),
-            index=get_subtree_index(EXECUTION_PAYLOAD_GINDEX),
+            depth=floorlog2(SILA_PAYLOAD_GINDEX),
+            index=get_subtree_index(SILA_PAYLOAD_GINDEX),
             root=header.beacon.body_root,
         )
     </spec>
@@ -8014,7 +8014,7 @@
         assert block.parent_root in store.block_states
 
         # If this block builds on the parent's full payload, that payload must
-        # have been verified by on_execution_payload_envelope
+        # have been verified by on_sila_payload_envelope
         if is_parent_node_full(store, block):
             assert is_payload_verified(store, block.parent_root)
 
@@ -8063,15 +8063,15 @@
         compute_pulled_up_tip(store, block_root)
     </spec>
 
-- name: on_execution_payload_envelope#gloas
+- name: on_sila_payload_envelope#gloas
   sources: []
   spec: |
-    <spec fn="on_execution_payload_envelope" fork="gloas" hash="c28e6c12">
-    def on_execution_payload_envelope(
-        store: Store, signed_envelope: SignedExecutionPayloadEnvelope
+    <spec fn="on_sila_payload_envelope" fork="gloas" hash="c28e6c12">
+    def on_sila_payload_envelope(
+        store: Store, signed_envelope: SignedSilaPayloadEnvelope
     ) -> None:
         """
-        Run ``on_execution_payload_envelope`` upon receiving a new execution payload envelope.
+        Run ``on_sila_payload_envelope`` upon receiving a new sila payload envelope.
         """
         envelope = signed_envelope.message
         # The corresponding beacon block root needs to be known
@@ -8083,22 +8083,22 @@
 
         state = store.block_states[envelope.beacon_block_root]
 
-        # Verify the execution payload envelope
-        verify_execution_payload_envelope(state, signed_envelope, EXECUTION_ENGINE)
+        # Verify the sila payload envelope
+        verify_sila_payload_envelope(state, signed_envelope, EXECUTION_ENGINE)
 
-        # Add execution payload envelope to the store
+        # Add sila payload envelope to the store
         store.payloads[envelope.beacon_block_root] = envelope
     </spec>
 
-- name: on_execution_payload_envelope#heze
+- name: on_sila_payload_envelope#heze
   sources: []
   spec: |
-    <spec fn="on_execution_payload_envelope" fork="heze" hash="eca893ad">
-    def on_execution_payload_envelope(
-        store: Store, signed_envelope: SignedExecutionPayloadEnvelope
+    <spec fn="on_sila_payload_envelope" fork="heze" hash="eca893ad">
+    def on_sila_payload_envelope(
+        store: Store, signed_envelope: SignedSilaPayloadEnvelope
     ) -> None:
         """
-        Run ``on_execution_payload_envelope`` upon receiving a new execution payload envelope.
+        Run ``on_sila_payload_envelope`` upon receiving a new sila payload envelope.
         """
         envelope = signed_envelope.message
         # The corresponding beacon block root needs to be known
@@ -8110,8 +8110,8 @@
 
         state = store.block_states[envelope.beacon_block_root]
 
-        # Verify the execution payload envelope
-        verify_execution_payload_envelope(state, signed_envelope, EXECUTION_ENGINE)
+        # Verify the sila payload envelope
+        verify_sila_payload_envelope(state, signed_envelope, EXECUTION_ENGINE)
 
         # [New in Heze:SIP7805]
         # Check if this payload satisfies the inclusion list constraints
@@ -8120,7 +8120,7 @@
             store, state, envelope.beacon_block_root, envelope.payload, EXECUTION_ENGINE
         )
 
-        # Add execution payload envelope to the store
+        # Add sila payload envelope to the store
         store.payloads[envelope.beacon_block_root] = envelope
     </spec>
 
@@ -8271,7 +8271,7 @@
     <spec fn="payload_timeliness" fork="gloas" hash="4490a649">
     def payload_timeliness(store: Store, root: Root, timely: bool) -> bool:
         """
-        Return whether the execution payload for the beacon block with root ``root``
+        Return whether the sila payload for the beacon block with root ``root``
         is considered ``timely`` (or not, when ``timely`` is ``False``), taking into
         consideration local availability and PTC votes.
         """
@@ -8287,11 +8287,11 @@
         return sum(vote is timely for vote in votes) > PAYLOAD_TIMELY_THRESHOLD
     </spec>
 
-- name: prepare_execution_payload#bellatrix
+- name: prepare_sila_payload#bellatrix
   sources: []
   spec: |
-    <spec fn="prepare_execution_payload" fork="bellatrix" hash="da7b5dbb">
-    def prepare_execution_payload(
+    <spec fn="prepare_sila_payload" fork="bellatrix" hash="da7b5dbb">
+    def prepare_sila_payload(
         state: BeaconState,
         safe_block_hash: Hash32,
         finalized_block_hash: Hash32,
@@ -8317,7 +8317,7 @@
             parent_hash = terminal_pow_block.block_hash
         else:
             # Post-merge, normal payload
-            parent_hash = state.latest_execution_payload_header.block_hash
+            parent_hash = state.latest_sila_payload_header.block_hash
 
         # Set the forkchoice head and initiate the payload build process
         payload_attributes = PayloadAttributes(
@@ -8333,11 +8333,11 @@
         )
     </spec>
 
-- name: prepare_execution_payload#capella
+- name: prepare_sila_payload#capella
   sources: []
   spec: |
-    <spec fn="prepare_execution_payload" fork="capella" hash="bdb15c3f">
-    def prepare_execution_payload(
+    <spec fn="prepare_sila_payload" fork="capella" hash="bdb15c3f">
+    def prepare_sila_payload(
         state: BeaconState,
         safe_block_hash: Hash32,
         finalized_block_hash: Hash32,
@@ -8348,7 +8348,7 @@
     ) -> Optional[PayloadId]:
         # [Modified in Capella]
         # Removed `is_merge_transition_complete` check
-        parent_hash = state.latest_execution_payload_header.block_hash
+        parent_hash = state.latest_sila_payload_header.block_hash
 
         # Set the forkchoice head and initiate the payload build process
         payload_attributes = PayloadAttributes(
@@ -8366,19 +8366,19 @@
         )
     </spec>
 
-- name: prepare_execution_payload#deneb
+- name: prepare_sila_payload#deneb
   sources: []
   spec: |
-    <spec fn="prepare_execution_payload" fork="deneb" hash="c617aa1b">
-    def prepare_execution_payload(
+    <spec fn="prepare_sila_payload" fork="deneb" hash="c617aa1b">
+    def prepare_sila_payload(
         state: BeaconState,
         safe_block_hash: Hash32,
         finalized_block_hash: Hash32,
         suggested_fee_recipient: ExecutionAddress,
         execution_engine: ExecutionEngine,
     ) -> Optional[PayloadId]:
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        parent_hash = state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        parent_hash = state.latest_sila_payload_header.block_hash
 
         # Set the forkchoice head and initiate the payload build process
         payload_attributes = PayloadAttributes(
@@ -8397,19 +8397,19 @@
         )
     </spec>
 
-- name: prepare_execution_payload#electra
+- name: prepare_sila_payload#electra
   sources: []
   spec: |
-    <spec fn="prepare_execution_payload" fork="electra" hash="c617aa1b">
-    def prepare_execution_payload(
+    <spec fn="prepare_sila_payload" fork="electra" hash="c617aa1b">
+    def prepare_sila_payload(
         state: BeaconState,
         safe_block_hash: Hash32,
         finalized_block_hash: Hash32,
         suggested_fee_recipient: ExecutionAddress,
         execution_engine: ExecutionEngine,
     ) -> Optional[PayloadId]:
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        parent_hash = state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        parent_hash = state.latest_sila_payload_header.block_hash
 
         # Set the forkchoice head and initiate the payload build process
         payload_attributes = PayloadAttributes(
@@ -8428,11 +8428,11 @@
         )
     </spec>
 
-- name: prepare_execution_payload#heze
+- name: prepare_sila_payload#heze
   sources: []
   spec: |
-    <spec fn="prepare_execution_payload" fork="heze" hash="3531eee1">
-    def prepare_execution_payload(
+    <spec fn="prepare_sila_payload" fork="heze" hash="3531eee1">
+    def prepare_sila_payload(
         store: Store,
         head: ForkChoiceNode,
         state: BeaconState,
@@ -8442,13 +8442,13 @@
         target_gas_limit: uint64,
         execution_engine: ExecutionEngine,
     ) -> Optional[PayloadId]:
-        parent_bid = state.latest_execution_payload_bid
+        parent_bid = state.latest_sila_payload_bid
         if should_build_on_full(store, head):
             envelope = store.payloads[head.root]
             # Make a copy of the state to avoid mutability issues
             state = copy(state)
             # Apply parent payload before computing withdrawals
-            apply_parent_execution_payload(state, envelope.execution_requests)
+            apply_parent_sila_payload(state, envelope.execution_requests)
             withdrawals = get_expected_withdrawals(state).withdrawals
             head_block_hash = parent_bid.block_hash
         else:
@@ -8815,7 +8815,7 @@
         process_block_header(state, block)
         if is_execution_enabled(state, block.body):
             # [New in Bellatrix]
-            process_execution_payload(state, block.body, EXECUTION_ENGINE)
+            process_sila_payload(state, block.body, EXECUTION_ENGINE)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
         process_operations(state, block.body)
@@ -8833,9 +8833,9 @@
         # [Modified in Capella]
         # Removed `is_execution_enabled` call
         # [New in Capella]
-        process_withdrawals(state, block.body.execution_payload)
+        process_withdrawals(state, block.body.sila_payload)
         # [Modified in Capella]
-        process_execution_payload(state, block.body, EXECUTION_ENGINE)
+        process_sila_payload(state, block.body, EXECUTION_ENGINE)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
         # [Modified in Capella]
@@ -8852,9 +8852,9 @@
     def process_block(state: BeaconState, block: BeaconBlock) -> None:
         process_block_header(state, block)
         # [Modified in Electra:SIP7251]
-        process_withdrawals(state, block.body.execution_payload)
+        process_withdrawals(state, block.body.sila_payload)
         # [Modified in Electra:SIP6110]
-        process_execution_payload(state, block.body, EXECUTION_ENGINE)
+        process_sila_payload(state, block.body, EXECUTION_ENGINE)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
         # [Modified in Electra:SIP6110:SIP7002:SIP7549:SIP7251]
@@ -8868,8 +8868,8 @@
     <spec fn="process_block" fork="fulu" hash="78fb0372">
     def process_block(state: BeaconState, block: BeaconBlock) -> None:
         process_block_header(state, block)
-        process_withdrawals(state, block.body.execution_payload)
-        process_execution_payload(state, block.body, EXECUTION_ENGINE)
+        process_withdrawals(state, block.body.sila_payload)
+        process_sila_payload(state, block.body, EXECUTION_ENGINE)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
         # [Modified in Fulu]
@@ -8883,14 +8883,14 @@
     <spec fn="process_block" fork="gloas" hash="a911a43e">
     def process_block(state: BeaconState, block: BeaconBlock) -> None:
         # [New in Gloas:SIP7732]
-        process_parent_execution_payload(state, block)
+        process_parent_sila_payload(state, block)
         process_block_header(state, block)
         # [Modified in Gloas:SIP7732]
         process_withdrawals(state)
         # [Modified in Gloas:SIP7732]
-        # Removed `process_execution_payload`
+        # Removed `process_sila_payload`
         # [New in Gloas:SIP7732]
-        process_execution_payload_bid(state, block)
+        process_sila_payload_bid(state, block)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
         # [Modified in Gloas:SIP7732]
@@ -9428,30 +9428,30 @@
             state.sila_execution_data_votes = []
     </spec>
 
-- name: process_execution_payload#bellatrix
+- name: process_sila_payload#bellatrix
   sources:
     - file: beacon-chain/core/blocks/payload.go
       search: func ProcessPayload(
   spec: |
-    <spec fn="process_execution_payload" fork="bellatrix" hash="d1d1e466">
-    def process_execution_payload(
+    <spec fn="process_sila_payload" fork="bellatrix" hash="d1d1e466">
+    def process_sila_payload(
         state: BeaconState, body: BeaconBlockBody, execution_engine: ExecutionEngine
     ) -> None:
-        payload = body.execution_payload
+        payload = body.sila_payload
 
-        # Verify consistency of the parent hash with respect to the previous execution payload header
+        # Verify consistency of the parent hash with respect to the previous sila payload header
         if is_merge_transition_complete(state):
-            assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+            assert payload.parent_hash == state.latest_sila_payload_header.block_hash
         # Verify prev_randao
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert execution_engine.verify_and_notify_new_payload(
-            NewPayloadRequest(execution_payload=payload)
+            NewPayloadRequest(sila_payload=payload)
         )
-        # Cache execution payload header
-        state.latest_execution_payload_header = ExecutionPayloadHeader(
+        # Cache sila payload header
+        state.latest_sila_payload_header = SilaPayloadHeader(
             parent_hash=payload.parent_hash,
             fee_recipient=payload.fee_recipient,
             state_root=payload.state_root,
@@ -9469,30 +9469,30 @@
         )
     </spec>
 
-- name: process_execution_payload#capella
+- name: process_sila_payload#capella
   sources:
     - file: beacon-chain/core/blocks/payload.go
       search: func ProcessPayload(
   spec: |
-    <spec fn="process_execution_payload" fork="capella" hash="8da02dfc">
-    def process_execution_payload(
+    <spec fn="process_sila_payload" fork="capella" hash="8da02dfc">
+    def process_sila_payload(
         state: BeaconState, body: BeaconBlockBody, execution_engine: ExecutionEngine
     ) -> None:
-        payload = body.execution_payload
+        payload = body.sila_payload
         # [Modified in Capella]
         # Removed `is_merge_transition_complete` check
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        assert payload.parent_hash == state.latest_sila_payload_header.block_hash
         # Verify prev_randao
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert execution_engine.verify_and_notify_new_payload(
-            NewPayloadRequest(execution_payload=payload)
+            NewPayloadRequest(sila_payload=payload)
         )
-        # Cache execution payload header
-        state.latest_execution_payload_header = ExecutionPayloadHeader(
+        # Cache sila payload header
+        state.latest_sila_payload_header = SilaPayloadHeader(
             parent_hash=payload.parent_hash,
             fee_recipient=payload.fee_recipient,
             state_root=payload.state_root,
@@ -9512,19 +9512,19 @@
         )
     </spec>
 
-- name: process_execution_payload#deneb
+- name: process_sila_payload#deneb
   sources:
     - file: beacon-chain/core/blocks/payload.go
       search: func ProcessPayload(
   spec: |
-    <spec fn="process_execution_payload" fork="deneb" hash="5e93d3cd">
-    def process_execution_payload(
+    <spec fn="process_sila_payload" fork="deneb" hash="5e93d3cd">
+    def process_sila_payload(
         state: BeaconState, body: BeaconBlockBody, execution_engine: ExecutionEngine
     ) -> None:
-        payload = body.execution_payload
+        payload = body.sila_payload
 
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        assert payload.parent_hash == state.latest_sila_payload_header.block_hash
         # Verify prev_randao
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
@@ -9539,10 +9539,10 @@
             kzg_commitment_to_versioned_hash(commitment) for commitment in body.blob_kzg_commitments
         ]
 
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert execution_engine.verify_and_notify_new_payload(
             NewPayloadRequest(
-                execution_payload=payload,
+                sila_payload=payload,
                 # [New in Deneb:SIP4844]
                 versioned_hashes=versioned_hashes,
                 # [New in Deneb:SIP4788]
@@ -9550,8 +9550,8 @@
             )
         )
 
-        # Cache execution payload header
-        state.latest_execution_payload_header = ExecutionPayloadHeader(
+        # Cache sila payload header
+        state.latest_sila_payload_header = SilaPayloadHeader(
             parent_hash=payload.parent_hash,
             fee_recipient=payload.fee_recipient,
             state_root=payload.state_root,
@@ -9574,19 +9574,19 @@
         )
     </spec>
 
-- name: process_execution_payload#electra
+- name: process_sila_payload#electra
   sources:
     - file: beacon-chain/core/blocks/payload.go
       search: func ProcessPayload(
   spec: |
-    <spec fn="process_execution_payload" fork="electra" hash="078e4a6c">
-    def process_execution_payload(
+    <spec fn="process_sila_payload" fork="electra" hash="078e4a6c">
+    def process_sila_payload(
         state: BeaconState, body: BeaconBlockBody, execution_engine: ExecutionEngine
     ) -> None:
-        payload = body.execution_payload
+        payload = body.sila_payload
 
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        assert payload.parent_hash == state.latest_sila_payload_header.block_hash
         # Verify prev_randao
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
@@ -9600,10 +9600,10 @@
             kzg_commitment_to_versioned_hash(commitment) for commitment in body.blob_kzg_commitments
         ]
 
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert execution_engine.verify_and_notify_new_payload(
             NewPayloadRequest(
-                execution_payload=payload,
+                sila_payload=payload,
                 versioned_hashes=versioned_hashes,
                 parent_beacon_block_root=state.latest_block_header.parent_root,
                 # [New in Electra]
@@ -9611,8 +9611,8 @@
             )
         )
 
-        # Cache execution payload header
-        state.latest_execution_payload_header = ExecutionPayloadHeader(
+        # Cache sila payload header
+        state.latest_sila_payload_header = SilaPayloadHeader(
             parent_hash=payload.parent_hash,
             fee_recipient=payload.fee_recipient,
             state_root=payload.state_root,
@@ -9633,19 +9633,19 @@
         )
     </spec>
 
-- name: process_execution_payload#fulu
+- name: process_sila_payload#fulu
   sources:
     - file: beacon-chain/core/blocks/payload.go
       search: func ProcessPayload(
   spec: |
-    <spec fn="process_execution_payload" fork="fulu" hash="adc1f5c6">
-    def process_execution_payload(
+    <spec fn="process_sila_payload" fork="fulu" hash="adc1f5c6">
+    def process_sila_payload(
         state: BeaconState, body: BeaconBlockBody, execution_engine: ExecutionEngine
     ) -> None:
-        payload = body.execution_payload
+        payload = body.sila_payload
 
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        assert payload.parent_hash == state.latest_sila_payload_header.block_hash
         # Verify prev_randao
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
@@ -9662,18 +9662,18 @@
             kzg_commitment_to_versioned_hash(commitment) for commitment in body.blob_kzg_commitments
         ]
 
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert execution_engine.verify_and_notify_new_payload(
             NewPayloadRequest(
-                execution_payload=payload,
+                sila_payload=payload,
                 versioned_hashes=versioned_hashes,
                 parent_beacon_block_root=state.latest_block_header.parent_root,
                 execution_requests=body.execution_requests,
             )
         )
 
-        # Cache execution payload header
-        state.latest_execution_payload_header = ExecutionPayloadHeader(
+        # Cache sila payload header
+        state.latest_sila_payload_header = SilaPayloadHeader(
             parent_hash=payload.parent_hash,
             fee_recipient=payload.fee_recipient,
             state_root=payload.state_root,
@@ -9694,17 +9694,17 @@
         )
     </spec>
 
-- name: process_execution_payload#gloas
+- name: process_sila_payload#gloas
   sources: []
   spec: |
-    <spec fn="process_execution_payload" fork="gloas" hash="adc1f5c6">
-    def process_execution_payload(
+    <spec fn="process_sila_payload" fork="gloas" hash="adc1f5c6">
+    def process_sila_payload(
         state: BeaconState, body: BeaconBlockBody, execution_engine: ExecutionEngine
     ) -> None:
-        payload = body.execution_payload
+        payload = body.sila_payload
 
-        # Verify consistency of the parent hash with respect to the previous execution payload header
-        assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+        # Verify consistency of the parent hash with respect to the previous sila payload header
+        assert payload.parent_hash == state.latest_sila_payload_header.block_hash
         # Verify prev_randao
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
@@ -9721,18 +9721,18 @@
             kzg_commitment_to_versioned_hash(commitment) for commitment in body.blob_kzg_commitments
         ]
 
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert execution_engine.verify_and_notify_new_payload(
             NewPayloadRequest(
-                execution_payload=payload,
+                sila_payload=payload,
                 versioned_hashes=versioned_hashes,
                 parent_beacon_block_root=state.latest_block_header.parent_root,
                 execution_requests=body.execution_requests,
             )
         )
 
-        # Cache execution payload header
-        state.latest_execution_payload_header = ExecutionPayloadHeader(
+        # Cache sila payload header
+        state.latest_sila_payload_header = SilaPayloadHeader(
             parent_hash=payload.parent_hash,
             fee_recipient=payload.fee_recipient,
             state_root=payload.state_root,
@@ -9753,12 +9753,12 @@
         )
     </spec>
 
-- name: process_execution_payload_bid#gloas
+- name: process_sila_payload_bid#gloas
   sources: []
   spec: |
-    <spec fn="process_execution_payload_bid" fork="gloas" hash="823c9f3a">
-    def process_execution_payload_bid(state: BeaconState, block: BeaconBlock) -> None:
-        signed_bid = block.body.signed_execution_payload_bid
+    <spec fn="process_sila_payload_bid" fork="gloas" hash="823c9f3a">
+    def process_sila_payload_bid(state: BeaconState, block: BeaconBlock) -> None:
+        signed_bid = block.body.signed_sila_payload_bid
         bid = signed_bid.message
         builder_index = bid.builder_index
         amount = bid.value
@@ -9773,7 +9773,7 @@
             # Verify that the builder has funds to cover the bid
             assert can_builder_cover_bid(state, builder_index, amount)
             # Verify that the bid signature is valid
-            assert verify_execution_payload_bid_signature(state, signed_bid)
+            assert verify_sila_payload_bid_signature(state, signed_bid)
 
         # Verify commitments are under limit
         assert (
@@ -9802,8 +9802,8 @@
                 pending_payment
             )
 
-        # Cache the signed execution payload bid
-        state.latest_execution_payload_bid = bid
+        # Cache the signed sila payload bid
+        state.latest_sila_payload_bid = bid
     </spec>
 
 - name: process_historical_roots_update#phase0
@@ -10203,15 +10203,15 @@
         for_ops(body.payload_attestations, process_payload_attestation)
     </spec>
 
-- name: process_parent_execution_payload#gloas
+- name: process_parent_sila_payload#gloas
   sources:
     - file: beacon-chain/core/gloas/parent_payload.go
-      search: func ProcessParentExecutionPayload(
+      search: func ProcessParentSilaPayload(
   spec: |
-    <spec fn="process_parent_execution_payload" fork="gloas" hash="e5d997a4">
-    def process_parent_execution_payload(state: BeaconState, block: BeaconBlock) -> None:
-        bid = block.body.signed_execution_payload_bid.message
-        parent_bid = state.latest_execution_payload_bid
+    <spec fn="process_parent_sila_payload" fork="gloas" hash="e5d997a4">
+    def process_parent_sila_payload(state: BeaconState, block: BeaconBlock) -> None:
+        bid = block.body.signed_sila_payload_bid.message
+        parent_bid = state.latest_sila_payload_bid
         requests = block.body.parent_execution_requests
 
         if bid.parent_block_hash != parent_bid.block_hash:
@@ -10221,7 +10221,7 @@
 
         # Parent was FULL -- verify the bid commitment and apply the payload
         assert hash_tree_root(requests) == parent_bid.execution_requests_root
-        apply_parent_execution_payload(state, requests)
+        apply_parent_sila_payload(state, requests)
     </spec>
 
 - name: process_participation_flag_updates#altair
@@ -10915,7 +10915,7 @@
         state.block_roots[state.slot % SLOTS_PER_HISTORICAL_ROOT] = previous_block_root
         # [New in Gloas:SIP7732]
         # Unset the next payload availability
-        state.execution_payload_availability[(state.slot + 1) % SLOTS_PER_HISTORICAL_ROOT] = 0b0
+        state.sila_payload_availability[(state.slot + 1) % SLOTS_PER_HISTORICAL_ROOT] = 0b0
     </spec>
 
 - name: process_slots#phase0
@@ -11251,7 +11251,7 @@
       search: func ProcessWithdrawals(
   spec: |
     <spec fn="process_withdrawals" fork="capella" hash="47327ef6">
-    def process_withdrawals(state: BeaconState, payload: ExecutionPayload) -> None:
+    def process_withdrawals(state: BeaconState, payload: SilaPayload) -> None:
         # Get expected withdrawals
         expected = get_expected_withdrawals(state)
         assert payload.withdrawals == expected.withdrawals
@@ -11270,7 +11270,7 @@
       search: func ProcessWithdrawals(
   spec: |
     <spec fn="process_withdrawals" fork="electra" hash="24a50daa">
-    def process_withdrawals(state: BeaconState, payload: ExecutionPayload) -> None:
+    def process_withdrawals(state: BeaconState, payload: SilaPayload) -> None:
         # Get expected withdrawals
         expected = get_expected_withdrawals(state)
         assert payload.withdrawals == expected.withdrawals
@@ -11296,7 +11296,7 @@
     ) -> None:
         # [New in Gloas:SIP7732]
         # Return early if the parent block is empty
-        if state.latest_block_hash != state.latest_execution_payload_bid.block_hash:
+        if state.latest_block_hash != state.latest_sila_payload_bid.block_hash:
             return
 
         # Get expected withdrawals
@@ -11383,7 +11383,7 @@
         store: Store,
         state: BeaconState,
         root: Root,
-        payload: ExecutionPayload,
+        payload: SilaPayload,
         execution_engine: ExecutionEngine,
     ) -> None:
         inclusion_list_transactions = get_inclusion_list_transactions(
@@ -12119,7 +12119,7 @@
     def upgrade_lc_header_to_capella(pre: altair.LightClientHeader) -> LightClientHeader:
         return LightClientHeader(
             beacon=pre.beacon,
-            execution=ExecutionPayloadHeader(),
+            execution=SilaPayloadHeader(),
             execution_branch=ExecutionBranch(),
         )
     </spec>
@@ -12131,7 +12131,7 @@
     def upgrade_lc_header_to_deneb(pre: capella.LightClientHeader) -> LightClientHeader:
         return LightClientHeader(
             beacon=pre.beacon,
-            execution=ExecutionPayloadHeader(
+            execution=SilaPayloadHeader(
                 parent_hash=pre.execution.parent_hash,
                 fee_recipient=pre.execution.fee_recipient,
                 state_root=pre.execution.state_root,
@@ -12179,7 +12179,7 @@
         epoch = compute_epoch_at_slot(pre.beacon.slot)
 
         if epoch >= DENEB_FORK_EPOCH:
-            BLOCK_HASH_GINDEX = get_generalized_index(deneb.ExecutionPayloadHeader, "block_hash")
+            BLOCK_HASH_GINDEX = get_generalized_index(deneb.SilaPayloadHeader, "block_hash")
             return LightClientHeader(
                 beacon=pre.beacon,
                 execution_block_hash=pre.execution.block_hash,
@@ -12193,7 +12193,7 @@
             )
 
         if epoch >= CAPELLA_FORK_EPOCH:
-            execution_header = capella.ExecutionPayloadHeader(
+            execution_header = capella.SilaPayloadHeader(
                 parent_hash=pre.execution.parent_hash,
                 fee_recipient=pre.execution.fee_recipient,
                 state_root=pre.execution.state_root,
@@ -12210,7 +12210,7 @@
                 transactions_root=pre.execution.transactions_root,
                 withdrawals_root=pre.execution.withdrawals_root,
             )
-            BLOCK_HASH_GINDEX = get_generalized_index(capella.ExecutionPayloadHeader, "block_hash")
+            BLOCK_HASH_GINDEX = get_generalized_index(capella.SilaPayloadHeader, "block_hash")
             return LightClientHeader(
                 beacon=pre.beacon,
                 execution_block_hash=pre.execution.block_hash,
@@ -12517,7 +12517,7 @@
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
             # [New in Bellatrix]
-            latest_execution_payload_header=ExecutionPayloadHeader(),
+            latest_sila_payload_header=SilaPayloadHeader(),
         )
 
         return post
@@ -12531,21 +12531,21 @@
     <spec fn="upgrade_to_capella" fork="capella" hash="673c74f0">
     def upgrade_to_capella(pre: bellatrix.BeaconState) -> BeaconState:
         epoch = bellatrix.get_current_epoch(pre)
-        latest_execution_payload_header = ExecutionPayloadHeader(
-            parent_hash=pre.latest_execution_payload_header.parent_hash,
-            fee_recipient=pre.latest_execution_payload_header.fee_recipient,
-            state_root=pre.latest_execution_payload_header.state_root,
-            receipts_root=pre.latest_execution_payload_header.receipts_root,
-            logs_bloom=pre.latest_execution_payload_header.logs_bloom,
-            prev_randao=pre.latest_execution_payload_header.prev_randao,
-            block_number=pre.latest_execution_payload_header.block_number,
-            gas_limit=pre.latest_execution_payload_header.gas_limit,
-            gas_used=pre.latest_execution_payload_header.gas_used,
-            timestamp=pre.latest_execution_payload_header.timestamp,
-            extra_data=pre.latest_execution_payload_header.extra_data,
-            base_fee_per_gas=pre.latest_execution_payload_header.base_fee_per_gas,
-            block_hash=pre.latest_execution_payload_header.block_hash,
-            transactions_root=pre.latest_execution_payload_header.transactions_root,
+        latest_sila_payload_header = SilaPayloadHeader(
+            parent_hash=pre.latest_sila_payload_header.parent_hash,
+            fee_recipient=pre.latest_sila_payload_header.fee_recipient,
+            state_root=pre.latest_sila_payload_header.state_root,
+            receipts_root=pre.latest_sila_payload_header.receipts_root,
+            logs_bloom=pre.latest_sila_payload_header.logs_bloom,
+            prev_randao=pre.latest_sila_payload_header.prev_randao,
+            block_number=pre.latest_sila_payload_header.block_number,
+            gas_limit=pre.latest_sila_payload_header.gas_limit,
+            gas_used=pre.latest_sila_payload_header.gas_used,
+            timestamp=pre.latest_sila_payload_header.timestamp,
+            extra_data=pre.latest_sila_payload_header.extra_data,
+            base_fee_per_gas=pre.latest_sila_payload_header.base_fee_per_gas,
+            block_hash=pre.latest_sila_payload_header.block_hash,
+            transactions_root=pre.latest_sila_payload_header.transactions_root,
             # [New in Capella]
             withdrawals_root=Root(),
         )
@@ -12578,7 +12578,7 @@
             inactivity_scores=pre.inactivity_scores,
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
-            latest_execution_payload_header=latest_execution_payload_header,
+            latest_sila_payload_header=latest_sila_payload_header,
             # [New in Capella]
             next_withdrawal_index=WithdrawalIndex(0),
             # [New in Capella]
@@ -12598,22 +12598,22 @@
     <spec fn="upgrade_to_deneb" fork="deneb" hash="0c371849">
     def upgrade_to_deneb(pre: capella.BeaconState) -> BeaconState:
         epoch = capella.get_current_epoch(pre)
-        latest_execution_payload_header = ExecutionPayloadHeader(
-            parent_hash=pre.latest_execution_payload_header.parent_hash,
-            fee_recipient=pre.latest_execution_payload_header.fee_recipient,
-            state_root=pre.latest_execution_payload_header.state_root,
-            receipts_root=pre.latest_execution_payload_header.receipts_root,
-            logs_bloom=pre.latest_execution_payload_header.logs_bloom,
-            prev_randao=pre.latest_execution_payload_header.prev_randao,
-            block_number=pre.latest_execution_payload_header.block_number,
-            gas_limit=pre.latest_execution_payload_header.gas_limit,
-            gas_used=pre.latest_execution_payload_header.gas_used,
-            timestamp=pre.latest_execution_payload_header.timestamp,
-            extra_data=pre.latest_execution_payload_header.extra_data,
-            base_fee_per_gas=pre.latest_execution_payload_header.base_fee_per_gas,
-            block_hash=pre.latest_execution_payload_header.block_hash,
-            transactions_root=pre.latest_execution_payload_header.transactions_root,
-            withdrawals_root=pre.latest_execution_payload_header.withdrawals_root,
+        latest_sila_payload_header = SilaPayloadHeader(
+            parent_hash=pre.latest_sila_payload_header.parent_hash,
+            fee_recipient=pre.latest_sila_payload_header.fee_recipient,
+            state_root=pre.latest_sila_payload_header.state_root,
+            receipts_root=pre.latest_sila_payload_header.receipts_root,
+            logs_bloom=pre.latest_sila_payload_header.logs_bloom,
+            prev_randao=pre.latest_sila_payload_header.prev_randao,
+            block_number=pre.latest_sila_payload_header.block_number,
+            gas_limit=pre.latest_sila_payload_header.gas_limit,
+            gas_used=pre.latest_sila_payload_header.gas_used,
+            timestamp=pre.latest_sila_payload_header.timestamp,
+            extra_data=pre.latest_sila_payload_header.extra_data,
+            base_fee_per_gas=pre.latest_sila_payload_header.base_fee_per_gas,
+            block_hash=pre.latest_sila_payload_header.block_hash,
+            transactions_root=pre.latest_sila_payload_header.transactions_root,
+            withdrawals_root=pre.latest_sila_payload_header.withdrawals_root,
             # [New in Deneb:SIP4844]
             blob_gas_used=uint64(0),
             # [New in Deneb:SIP4844]
@@ -12650,7 +12650,7 @@
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
             # [Modified in Deneb:SIP4844]
-            latest_execution_payload_header=latest_execution_payload_header,
+            latest_sila_payload_header=latest_sila_payload_header,
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
             historical_summaries=pre.historical_summaries,
@@ -12704,7 +12704,7 @@
             inactivity_scores=pre.inactivity_scores,
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
-            latest_execution_payload_header=pre.latest_execution_payload_header,
+            latest_sila_payload_header=pre.latest_sila_payload_header,
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
             historical_summaries=pre.historical_summaries,
@@ -12806,7 +12806,7 @@
             inactivity_scores=pre.inactivity_scores,
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
-            latest_execution_payload_header=pre.latest_execution_payload_header,
+            latest_sila_payload_header=pre.latest_sila_payload_header,
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
             historical_summaries=pre.historical_summaries,
@@ -12864,9 +12864,9 @@
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
             # [Modified in Gloas:SIP7732]
-            # Removed `latest_execution_payload_header`
+            # Removed `latest_sila_payload_header`
             # [New in Gloas:SIP7732]
-            latest_block_hash=pre.latest_execution_payload_header.block_hash,
+            latest_block_hash=pre.latest_sila_payload_header.block_hash,
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
             historical_summaries=pre.historical_summaries,
@@ -12885,15 +12885,15 @@
             # [New in Gloas:SIP7732]
             next_withdrawal_builder_index=BuilderIndex(0),
             # [New in Gloas:SIP7732]
-            execution_payload_availability=[0b1 for _ in range(SLOTS_PER_HISTORICAL_ROOT)],
+            sila_payload_availability=[0b1 for _ in range(SLOTS_PER_HISTORICAL_ROOT)],
             # [New in Gloas:SIP7732]
             builder_pending_payments=[BuilderPendingPayment() for _ in range(2 * SLOTS_PER_EPOCH)],
             # [New in Gloas:SIP7732]
             builder_pending_withdrawals=[],
             # [New in Gloas:SIP7732]
-            latest_execution_payload_bid=ExecutionPayloadBid(
-                block_hash=pre.latest_execution_payload_header.block_hash,
-                gas_limit=pre.latest_execution_payload_header.gas_limit,
+            latest_sila_payload_bid=SilaPayloadBid(
+                block_hash=pre.latest_sila_payload_header.block_hash,
+                gas_limit=pre.latest_sila_payload_header.gas_limit,
                 execution_requests_root=hash_tree_root(ExecutionRequests()),
             ),
             # [New in Gloas:SIP7732]
@@ -12914,19 +12914,19 @@
     <spec fn="upgrade_to_heze" fork="heze" hash="df21a261">
     def upgrade_to_heze(pre: gloas.BeaconState) -> BeaconState:
         epoch = gloas.get_current_epoch(pre)
-        latest_execution_payload_bid = ExecutionPayloadBid(
-            parent_block_hash=pre.latest_execution_payload_bid.parent_block_hash,
-            parent_block_root=pre.latest_execution_payload_bid.parent_block_root,
-            block_hash=pre.latest_execution_payload_bid.block_hash,
-            prev_randao=pre.latest_execution_payload_bid.prev_randao,
-            fee_recipient=pre.latest_execution_payload_bid.fee_recipient,
-            gas_limit=pre.latest_execution_payload_bid.gas_limit,
-            builder_index=pre.latest_execution_payload_bid.builder_index,
-            slot=pre.latest_execution_payload_bid.slot,
-            value=pre.latest_execution_payload_bid.value,
-            execution_payment=pre.latest_execution_payload_bid.execution_payment,
-            blob_kzg_commitments=pre.latest_execution_payload_bid.blob_kzg_commitments,
-            execution_requests_root=pre.latest_execution_payload_bid.execution_requests_root,
+        latest_sila_payload_bid = SilaPayloadBid(
+            parent_block_hash=pre.latest_sila_payload_bid.parent_block_hash,
+            parent_block_root=pre.latest_sila_payload_bid.parent_block_root,
+            block_hash=pre.latest_sila_payload_bid.block_hash,
+            prev_randao=pre.latest_sila_payload_bid.prev_randao,
+            fee_recipient=pre.latest_sila_payload_bid.fee_recipient,
+            gas_limit=pre.latest_sila_payload_bid.gas_limit,
+            builder_index=pre.latest_sila_payload_bid.builder_index,
+            slot=pre.latest_sila_payload_bid.slot,
+            value=pre.latest_sila_payload_bid.value,
+            execution_payment=pre.latest_sila_payload_bid.execution_payment,
+            blob_kzg_commitments=pre.latest_sila_payload_bid.blob_kzg_commitments,
+            execution_requests_root=pre.latest_sila_payload_bid.execution_requests_root,
             # [New in Heze:SIP7805]
             inclusion_list_bits=Bitvector[INCLUSION_LIST_COMMITTEE_SIZE](),
         )
@@ -12977,11 +12977,11 @@
             proposer_lookahead=pre.proposer_lookahead,
             builders=pre.builders,
             next_withdrawal_builder_index=pre.next_withdrawal_builder_index,
-            execution_payload_availability=pre.execution_payload_availability,
+            sila_payload_availability=pre.sila_payload_availability,
             builder_pending_payments=pre.builder_pending_payments,
             builder_pending_withdrawals=pre.builder_pending_withdrawals,
             # [Modified in Heze:SIP7805]
-            latest_execution_payload_bid=latest_execution_payload_bid,
+            latest_sila_payload_bid=latest_sila_payload_bid,
             payload_expected_withdrawals=pre.payload_expected_withdrawals,
             ptc_window=pre.ptc_window,
         )
@@ -13837,7 +13837,7 @@
         Raises GossipIgnore or GossipReject on validation failure.
         """
         block = signed_beacon_block.message
-        execution_payload = block.body.execution_payload
+        sila_payload = block.body.sila_payload
 
         # [IGNORE] The block is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
@@ -13873,9 +13873,9 @@
 
         # [New in Bellatrix]
         if is_execution_enabled(state, block.body):
-            # [REJECT] The block's execution payload timestamp is correct with respect to the slot
-            if execution_payload.timestamp != compute_time_at_slot(state, block.slot):
-                raise GossipReject("incorrect execution payload timestamp")
+            # [REJECT] The block's sila payload timestamp is correct with respect to the slot
+            if sila_payload.timestamp != compute_time_at_slot(state, block.slot):
+                raise GossipReject("incorrect sila payload timestamp")
 
             parent_payload_status = PAYLOAD_STATUS_NOT_VALIDATED
             if block.parent_root in block_payload_statuses:
@@ -13889,7 +13889,7 @@
                 # [IGNORE] The block's parent passes validation
                 raise GossipIgnore("block's parent is invalid and EL result is known")
 
-            # [IGNORE] The block's parent's execution payload passes validation
+            # [IGNORE] The block's parent's sila payload passes validation
             if parent_payload_status == PAYLOAD_STATUS_INVALIDATED:
                 raise GossipIgnore("block's parent is valid and EL result is invalid")
 
@@ -13938,7 +13938,7 @@
         Raises GossipIgnore or GossipReject on validation failure.
         """
         block = signed_beacon_block.message
-        execution_payload = block.body.execution_payload
+        sila_payload = block.body.sila_payload
 
         # [IGNORE] The block is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
@@ -13972,9 +13972,9 @@
         if block.parent_root not in store.blocks:
             raise GossipIgnore("block's parent has not been seen")
 
-        # [REJECT] The block's execution payload timestamp is correct with respect to the slot
-        if execution_payload.timestamp != compute_time_at_slot(state, block.slot):
-            raise GossipReject("incorrect execution payload timestamp")
+        # [REJECT] The block's sila payload timestamp is correct with respect to the slot
+        if sila_payload.timestamp != compute_time_at_slot(state, block.slot):
+            raise GossipReject("incorrect sila payload timestamp")
 
         parent_payload_status = PAYLOAD_STATUS_NOT_VALIDATED
         if block.parent_root in block_payload_statuses:
@@ -13988,7 +13988,7 @@
             # [IGNORE] The block's parent passes validation
             raise GossipIgnore("block's parent is invalid and EL result is known")
 
-        # [IGNORE] The block's parent's execution payload passes validation
+        # [IGNORE] The block's parent's sila payload passes validation
         if parent_payload_status == PAYLOAD_STATUS_INVALIDATED:
             raise GossipIgnore("block's parent is valid and EL result is invalid")
 
@@ -14032,7 +14032,7 @@
         Raises GossipIgnore or GossipReject on validation failure.
         """
         block = signed_beacon_block.message
-        execution_payload = block.body.execution_payload
+        sila_payload = block.body.sila_payload
 
         # [IGNORE] The block is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
@@ -14066,9 +14066,9 @@
         if block.parent_root not in store.blocks:
             raise GossipIgnore("block's parent has not been seen")
 
-        # [REJECT] The block's execution payload timestamp is correct with respect to the slot
-        if execution_payload.timestamp != compute_time_at_slot(state, block.slot):
-            raise GossipReject("incorrect execution payload timestamp")
+        # [REJECT] The block's sila payload timestamp is correct with respect to the slot
+        if sila_payload.timestamp != compute_time_at_slot(state, block.slot):
+            raise GossipReject("incorrect sila payload timestamp")
 
         parent_payload_status = PAYLOAD_STATUS_NOT_VALIDATED
         if block.parent_root in block_payload_statuses:
@@ -14082,7 +14082,7 @@
             # [IGNORE] The block's parent passes validation
             raise GossipIgnore("block's parent is invalid and EL result is known")
 
-        # [IGNORE] The block's parent's execution payload passes validation
+        # [IGNORE] The block's parent's sila payload passes validation
         if parent_payload_status == PAYLOAD_STATUS_INVALIDATED:
             raise GossipIgnore("block's parent is valid and EL result is invalid")
 
@@ -14131,7 +14131,7 @@
         Raises GossipIgnore or GossipReject on validation failure.
         """
         block = signed_beacon_block.message
-        execution_payload = block.body.execution_payload
+        sila_payload = block.body.sila_payload
 
         # [IGNORE] The block is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
@@ -14165,9 +14165,9 @@
         if block.parent_root not in store.blocks:
             raise GossipIgnore("block's parent has not been seen")
 
-        # [REJECT] The block's execution payload timestamp is correct with respect to the slot
-        if execution_payload.timestamp != compute_time_at_slot(state, block.slot):
-            raise GossipReject("incorrect execution payload timestamp")
+        # [REJECT] The block's sila payload timestamp is correct with respect to the slot
+        if sila_payload.timestamp != compute_time_at_slot(state, block.slot):
+            raise GossipReject("incorrect sila payload timestamp")
 
         parent_payload_status = PAYLOAD_STATUS_NOT_VALIDATED
         if block.parent_root in block_payload_statuses:
@@ -14181,7 +14181,7 @@
             # [IGNORE] The block's parent passes validation
             raise GossipIgnore("block's parent is invalid and EL result is known")
 
-        # [IGNORE] The block's parent's execution payload passes validation
+        # [IGNORE] The block's parent's sila payload passes validation
         if parent_payload_status == PAYLOAD_STATUS_INVALIDATED:
             raise GossipIgnore("block's parent is valid and EL result is invalid")
 
@@ -14232,7 +14232,7 @@
         if block_payload_statuses is None:
             block_payload_statuses = {}
         block = signed_beacon_block.message
-        execution_payload = block.body.execution_payload
+        sila_payload = block.body.sila_payload
 
         # [IGNORE] The block is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
@@ -14266,9 +14266,9 @@
         if block.parent_root not in store.blocks:
             raise GossipIgnore("block's parent has not been seen")
 
-        # [REJECT] The block's execution payload timestamp is correct with respect to the slot
-        if execution_payload.timestamp != compute_time_at_slot(state, block.slot):
-            raise GossipReject("incorrect execution payload timestamp")
+        # [REJECT] The block's sila payload timestamp is correct with respect to the slot
+        if sila_payload.timestamp != compute_time_at_slot(state, block.slot):
+            raise GossipReject("incorrect sila payload timestamp")
 
         parent_payload_status = PAYLOAD_STATUS_NOT_VALIDATED
         if block.parent_root in block_payload_statuses:
@@ -14282,7 +14282,7 @@
             # [IGNORE] The block's parent passes validation
             raise GossipIgnore("block's parent is invalid and EL result is known")
 
-        # [IGNORE] The block's parent's execution payload passes validation
+        # [IGNORE] The block's parent's sila payload passes validation
         if parent_payload_status == PAYLOAD_STATUS_INVALIDATED:
             raise GossipIgnore("block's parent is valid and EL result is invalid")
 
@@ -14755,7 +14755,7 @@
     <spec fn="validate_merge_block" fork="bellatrix" hash="6553dd1d">
     def validate_merge_block(block: BeaconBlock) -> None:
         """
-        Check the parent PoW block of execution payload is a valid terminal PoW block.
+        Check the parent PoW block of sila payload is a valid terminal PoW block.
 
         Note: Unavailable PoW block(s) may later become available,
         and a client software MAY delay a call to ``validate_merge_block``
@@ -14764,10 +14764,10 @@
         if TERMINAL_BLOCK_HASH != EMPTY_BLOCK_HASH:
             # If `TERMINAL_BLOCK_HASH` is used as an override, the activation epoch must be reached.
             assert compute_epoch_at_slot(block.slot) >= TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH
-            assert block.body.execution_payload.parent_hash == TERMINAL_BLOCK_HASH
+            assert block.body.sila_payload.parent_hash == TERMINAL_BLOCK_HASH
             return
 
-        pow_block = get_pow_block(block.body.execution_payload.parent_hash)
+        pow_block = get_pow_block(block.body.sila_payload.parent_hash)
         # Check if `pow_block` is available
         assert pow_block is not None
         pow_parent = get_pow_block(pow_block.parent_hash)
@@ -15470,12 +15470,12 @@
         )
     </spec>
 
-- name: verify_execution_payload_bid_signature#gloas
+- name: verify_sila_payload_bid_signature#gloas
   sources: []
   spec: |
-    <spec fn="verify_execution_payload_bid_signature" fork="gloas" hash="8a3e3a8d">
-    def verify_execution_payload_bid_signature(
-        state: BeaconState, signed_bid: SignedExecutionPayloadBid
+    <spec fn="verify_sila_payload_bid_signature" fork="gloas" hash="8a3e3a8d">
+    def verify_sila_payload_bid_signature(
+        state: BeaconState, signed_bid: SignedSilaPayloadBid
     ) -> bool:
         builder = state.builders[signed_bid.message.builder_index]
         signing_root = compute_signing_root(
@@ -15484,22 +15484,22 @@
         return bls.Verify(builder.pubkey, signing_root, signed_bid.signature)
     </spec>
 
-- name: verify_execution_payload_envelope#gloas
+- name: verify_sila_payload_envelope#gloas
   sources:
     - file: beacon-chain/core/gloas/payload.go
-      search: func VerifyExecutionPayloadEnvelope(
+      search: func VerifySilaPayloadEnvelope(
   spec: |
-    <spec fn="verify_execution_payload_envelope" fork="gloas" hash="450a2b1c">
-    def verify_execution_payload_envelope(
+    <spec fn="verify_sila_payload_envelope" fork="gloas" hash="450a2b1c">
+    def verify_sila_payload_envelope(
         state: BeaconState,
-        signed_envelope: SignedExecutionPayloadEnvelope,
+        signed_envelope: SignedSilaPayloadEnvelope,
         execution_engine: ExecutionEngine,
     ) -> None:
         envelope = signed_envelope.message
         payload = envelope.payload
 
         # Verify signature
-        assert verify_execution_payload_envelope_signature(state, signed_envelope)
+        assert verify_sila_payload_envelope_signature(state, signed_envelope)
 
         # Verify consistency with the beacon block
         header = copy(state.latest_block_header)
@@ -15508,21 +15508,21 @@
         assert envelope.parent_beacon_block_root == state.latest_block_header.parent_root
 
         # Verify consistency with the committed bid
-        bid = state.latest_execution_payload_bid
+        bid = state.latest_sila_payload_bid
         assert envelope.builder_index == bid.builder_index
         assert payload.prev_randao == bid.prev_randao
         assert payload.gas_limit == bid.gas_limit
         assert payload.block_hash == bid.block_hash
         assert hash_tree_root(envelope.execution_requests) == bid.execution_requests_root
 
-        # Verify the execution payload is valid
+        # Verify the sila payload is valid
         assert payload.slot_number == state.slot
         assert payload.parent_hash == state.latest_block_hash
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
         assert hash_tree_root(payload.withdrawals) == hash_tree_root(state.payload_expected_withdrawals)
         assert execution_engine.verify_and_notify_new_payload(
             NewPayloadRequest(
-                execution_payload=payload,
+                sila_payload=payload,
                 versioned_hashes=[
                     kzg_commitment_to_versioned_hash(commitment)
                     for commitment in bid.blob_kzg_commitments
@@ -15533,12 +15533,12 @@
         )
     </spec>
 
-- name: verify_execution_payload_envelope_signature#gloas
+- name: verify_sila_payload_envelope_signature#gloas
   sources: []
   spec: |
-    <spec fn="verify_execution_payload_envelope_signature" fork="gloas" hash="49483ae2">
-    def verify_execution_payload_envelope_signature(
-        state: BeaconState, signed_envelope: SignedExecutionPayloadEnvelope
+    <spec fn="verify_sila_payload_envelope_signature" fork="gloas" hash="49483ae2">
+    def verify_sila_payload_envelope_signature(
+        state: BeaconState, signed_envelope: SignedSilaPayloadEnvelope
     ) -> bool:
         builder_index = signed_envelope.message.builder_index
         if builder_index == BUILDER_INDEX_SELF_BUILD:

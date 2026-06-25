@@ -258,20 +258,20 @@ func (b *BeaconState) BuilderPendingPayment(index uint64) (*silapb.BuilderPendin
 	return silapb.CopyBuilderPendingPayment(b.builderPendingPayments[index]), nil
 }
 
-// LatestExecutionPayloadBid returns the cached latest execution payload bid for Gloas.
-func (b *BeaconState) LatestExecutionPayloadBid() (interfaces.ROExecutionPayloadBid, error) {
+// LatestSilaPayloadBid returns the cached latest sila payload bid for Gloas.
+func (b *BeaconState) LatestSilaPayloadBid() (interfaces.ROSilaPayloadBid, error) {
 	if b.version < version.Gloas {
-		return nil, errNotSupported("LatestExecutionPayloadBid", b.version)
+		return nil, errNotSupported("LatestSilaPayloadBid", b.version)
 	}
 
 	b.lock.RLock()
 	defer b.lock.RUnlock()
 
-	if b.latestExecutionPayloadBid == nil {
+	if b.latestSilaPayloadBid == nil {
 		return nil, nil
 	}
 
-	return blocks.WrappedROExecutionPayloadBid(b.latestExecutionPayloadBid.Copy())
+	return blocks.WrappedROSilaPayloadBid(b.latestSilaPayloadBid.Copy())
 }
 
 // WithdrawalsMatchPayloadExpected returns true if the given withdrawals root matches the state's
@@ -308,7 +308,7 @@ func withdrawalsEqual(a, b []*enginev1.Withdrawal) bool {
 // which can only happen when both beacon block and payload were present.
 //
 // WARNING: This must be called on a beacon state before processing the bid for the current block
-// (process_execution_payload_bid), otherwise it will compare against the in-flight bid and produce
+// (process_sila_payload_bid), otherwise it will compare against the in-flight bid and produce
 // incorrect results.
 func (b *BeaconState) LatestBlockHashMatchesBidBlockHash() (bool, error) {
 	if b.version < version.Gloas {
@@ -318,17 +318,17 @@ func (b *BeaconState) LatestBlockHashMatchesBidBlockHash() (bool, error) {
 	b.lock.RLock()
 	defer b.lock.RUnlock()
 
-	if b.latestExecutionPayloadBid == nil {
+	if b.latestSilaPayloadBid == nil {
 		return false, nil
 	}
 
-	return bytes.Equal(b.latestExecutionPayloadBid.BlockHash, b.latestBlockHash), nil
+	return bytes.Equal(b.latestSilaPayloadBid.BlockHash, b.latestBlockHash), nil
 }
 
-// ExecutionPayloadAvailability returns the execution payload availability bit for the given slot.
-func (b *BeaconState) ExecutionPayloadAvailability(slot primitives.Slot) (uint64, error) {
+// SilaPayloadAvailability returns the sila payload availability bit for the given slot.
+func (b *BeaconState) SilaPayloadAvailability(slot primitives.Slot) (uint64, error) {
 	if b.version < version.Gloas {
-		return 0, errNotSupported("ExecutionPayloadAvailability", b.version)
+		return 0, errNotSupported("SilaPayloadAvailability", b.version)
 	}
 
 	b.lock.RLock()
@@ -338,7 +338,7 @@ func (b *BeaconState) ExecutionPayloadAvailability(slot primitives.Slot) (uint64
 	byteIndex := slotIndex / 8
 	bitIndex := slotIndex % 8
 
-	bit := (b.executionPayloadAvailability[byteIndex] >> bitIndex) & 1
+	bit := (b.silaPayloadAvailability[byteIndex] >> bitIndex) & 1
 
 	return uint64(bit), nil
 }
@@ -372,7 +372,7 @@ func (b *BeaconState) builderIndexByPubkey(pubkey [fieldparams.BLSPubkeyLength]b
 }
 
 // ExpectedWithdrawalsGloas returns the withdrawals that a proposer will need to pack in the next block
-// applied to the current state. It is also used by validators to check that the execution payload carried
+// applied to the current state. It is also used by validators to check that the sila payload carried
 // the right number of withdrawals.
 //
 //	<spec fn="get_expected_withdrawals" fork="gloas" hash="8d0675cb">
@@ -616,16 +616,16 @@ func (b *BeaconState) Builders() ([]*silapb.Builder, error) {
 	return b.buildersVal(), nil
 }
 
-// ExecutionPayloadAvailabilityVector returns a copy of the execution payload availability bitvector.
-func (b *BeaconState) ExecutionPayloadAvailabilityVector() ([]byte, error) {
+// SilaPayloadAvailabilityVector returns a copy of the sila payload availability bitvector.
+func (b *BeaconState) SilaPayloadAvailabilityVector() ([]byte, error) {
 	if b.version < version.Gloas {
-		return nil, errNotSupported("ExecutionPayloadAvailabilityVector", b.version)
+		return nil, errNotSupported("SilaPayloadAvailabilityVector", b.version)
 	}
 
 	b.lock.RLock()
 	defer b.lock.RUnlock()
 
-	return b.executionPayloadAvailabilityVal(), nil
+	return b.silaPayloadAvailabilityVal(), nil
 }
 
 // BuilderPendingWithdrawals returns a copy of the builder pending withdrawals.
@@ -653,7 +653,7 @@ func (b *BeaconState) PayloadExpectedWithdrawals() ([]*enginev1.Withdrawal, erro
 }
 
 // WithdrawalsForPayload returns the withdrawals that should be included in the
-// execution payload for the current slot. If the parent block was full,
+// sila payload for the current slot. If the parent block was full,
 // fresh withdrawals are computed via ExpectedWithdrawalsGloas; otherwise
 // the existing payload_expected_withdrawals from state are reused unchanged.
 // This method does not acquire a lock directly; it delegates to

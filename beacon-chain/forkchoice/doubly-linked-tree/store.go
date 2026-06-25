@@ -148,7 +148,7 @@ func (s *Store) insert(ctx context.Context,
 	s.emptyNodeByRoot[root] = pn
 	ret = pn
 	if block.Version() < version.Gloas {
-		// Make also the full node, this is optimistic until the engine returns the execution payload validation.
+		// Make also the full node, this is optimistic until the engine returns the sila payload validation.
 		fn := &PayloadNode{
 			node:       n,
 			optimistic: true,

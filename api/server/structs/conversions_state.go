@@ -281,15 +281,15 @@ func BeaconStateBellatrixFromConsensus(st beaconState.BeaconState) (*BeaconState
 	if err != nil {
 		return nil, err
 	}
-	execData, err := st.LatestExecutionPayloadHeader()
+	execData, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
-	srcPayload, ok := execData.Proto().(*enginev1.ExecutionPayloadHeader)
+	srcPayload, ok := execData.Proto().(*enginev1.SilaPayloadHeader)
 	if !ok {
 		return nil, errPayloadHeaderNotFound
 	}
-	payload, err := ExecutionPayloadHeaderFromConsensus(srcPayload)
+	payload, err := SilaPayloadHeaderFromConsensus(srcPayload)
 	if err != nil {
 		return nil, err
 	}
@@ -319,7 +319,7 @@ func BeaconStateBellatrixFromConsensus(st beaconState.BeaconState) (*BeaconState
 		InactivityScores:             is,
 		CurrentSyncCommittee:         SyncCommitteeFromConsensus(currSc),
 		NextSyncCommittee:            SyncCommitteeFromConsensus(nextSc),
-		LatestExecutionPayloadHeader: payload,
+		LatestSilaPayloadHeader: payload,
 	}, nil
 }
 
@@ -400,15 +400,15 @@ func BeaconStateCapellaFromConsensus(st beaconState.BeaconState) (*BeaconStateCa
 	if err != nil {
 		return nil, err
 	}
-	execData, err := st.LatestExecutionPayloadHeader()
+	execData, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
-	srcPayload, ok := execData.Proto().(*enginev1.ExecutionPayloadHeaderCapella)
+	srcPayload, ok := execData.Proto().(*enginev1.SilaPayloadHeaderCapella)
 	if !ok {
 		return nil, errPayloadHeaderNotFound
 	}
-	payload, err := ExecutionPayloadHeaderCapellaFromConsensus(srcPayload)
+	payload, err := SilaPayloadHeaderCapellaFromConsensus(srcPayload)
 	if err != nil {
 		return nil, err
 	}
@@ -454,7 +454,7 @@ func BeaconStateCapellaFromConsensus(st beaconState.BeaconState) (*BeaconStateCa
 		InactivityScores:             is,
 		CurrentSyncCommittee:         SyncCommitteeFromConsensus(currSc),
 		NextSyncCommittee:            SyncCommitteeFromConsensus(nextSc),
-		LatestExecutionPayloadHeader: payload,
+		LatestSilaPayloadHeader: payload,
 		NextWithdrawalIndex:          fmt.Sprintf("%d", nwi),
 		NextWithdrawalValidatorIndex: fmt.Sprintf("%d", nwvi),
 		HistoricalSummaries:          hs,
@@ -538,15 +538,15 @@ func BeaconStateDenebFromConsensus(st beaconState.BeaconState) (*BeaconStateDene
 	if err != nil {
 		return nil, err
 	}
-	execData, err := st.LatestExecutionPayloadHeader()
+	execData, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
-	srcPayload, ok := execData.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+	srcPayload, ok := execData.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 	if !ok {
 		return nil, errPayloadHeaderNotFound
 	}
-	payload, err := ExecutionPayloadHeaderDenebFromConsensus(srcPayload)
+	payload, err := SilaPayloadHeaderDenebFromConsensus(srcPayload)
 	if err != nil {
 		return nil, err
 	}
@@ -592,7 +592,7 @@ func BeaconStateDenebFromConsensus(st beaconState.BeaconState) (*BeaconStateDene
 		InactivityScores:             is,
 		CurrentSyncCommittee:         SyncCommitteeFromConsensus(currSc),
 		NextSyncCommittee:            SyncCommitteeFromConsensus(nextSc),
-		LatestExecutionPayloadHeader: payload,
+		LatestSilaPayloadHeader: payload,
 		NextWithdrawalIndex:          fmt.Sprintf("%d", nwi),
 		NextWithdrawalValidatorIndex: fmt.Sprintf("%d", nwvi),
 		HistoricalSummaries:          hs,
@@ -676,15 +676,15 @@ func BeaconStateElectraFromConsensus(st beaconState.BeaconState) (*BeaconStateEl
 	if err != nil {
 		return nil, err
 	}
-	execData, err := st.LatestExecutionPayloadHeader()
+	execData, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
-	srcPayload, ok := execData.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+	srcPayload, ok := execData.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 	if !ok {
 		return nil, errPayloadHeaderNotFound
 	}
-	payload, err := ExecutionPayloadHeaderElectraFromConsensus(srcPayload)
+	payload, err := SilaPayloadHeaderElectraFromConsensus(srcPayload)
 	if err != nil {
 		return nil, err
 	}
@@ -766,7 +766,7 @@ func BeaconStateElectraFromConsensus(st beaconState.BeaconState) (*BeaconStateEl
 		InactivityScores:              is,
 		CurrentSyncCommittee:          SyncCommitteeFromConsensus(currSc),
 		NextSyncCommittee:             SyncCommitteeFromConsensus(nextSc),
-		LatestExecutionPayloadHeader:  payload,
+		LatestSilaPayloadHeader:  payload,
 		NextWithdrawalIndex:           fmt.Sprintf("%d", nwi),
 		NextWithdrawalValidatorIndex:  fmt.Sprintf("%d", nwvi),
 		HistoricalSummaries:           hs,
@@ -859,15 +859,15 @@ func BeaconStateFuluFromConsensus(st beaconState.BeaconState) (*BeaconStateFulu,
 	if err != nil {
 		return nil, err
 	}
-	execData, err := st.LatestExecutionPayloadHeader()
+	execData, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
-	srcPayload, ok := execData.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+	srcPayload, ok := execData.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 	if !ok {
 		return nil, errPayloadHeaderNotFound
 	}
-	payload, err := ExecutionPayloadHeaderElectraFromConsensus(srcPayload)
+	payload, err := SilaPayloadHeaderElectraFromConsensus(srcPayload)
 	if err != nil {
 		return nil, err
 	}
@@ -956,7 +956,7 @@ func BeaconStateFuluFromConsensus(st beaconState.BeaconState) (*BeaconStateFulu,
 		InactivityScores:              is,
 		CurrentSyncCommittee:          SyncCommitteeFromConsensus(currSc),
 		NextSyncCommittee:             SyncCommitteeFromConsensus(nextSc),
-		LatestExecutionPayloadHeader:  payload,
+		LatestSilaPayloadHeader:  payload,
 		NextWithdrawalIndex:           fmt.Sprintf("%d", nwi),
 		NextWithdrawalValidatorIndex:  fmt.Sprintf("%d", nwvi),
 		HistoricalSummaries:           hs,
@@ -1111,7 +1111,7 @@ func BeaconStateGloasFromConsensus(st beaconState.BeaconState) (*BeaconStateGloa
 		lookahead[i] = fmt.Sprintf("%d", uint64(v))
 	}
 	// Gloas-specific fields
-	lepb, err := st.LatestExecutionPayloadBid()
+	lepb, err := st.LatestSilaPayloadBid()
 	if err != nil {
 		return nil, err
 	}
@@ -1123,7 +1123,7 @@ func BeaconStateGloasFromConsensus(st beaconState.BeaconState) (*BeaconStateGloa
 	if err != nil {
 		return nil, err
 	}
-	epa, err := st.ExecutionPayloadAvailabilityVector()
+	epa, err := st.SilaPayloadAvailabilityVector()
 	if err != nil {
 		return nil, err
 	}
@@ -1186,10 +1186,10 @@ func BeaconStateGloasFromConsensus(st beaconState.BeaconState) (*BeaconStateGloa
 		PendingPartialWithdrawals:     PendingPartialWithdrawalsFromConsensus(ppw),
 		PendingConsolidations:         PendingConsolidationsFromConsensus(pc),
 		ProposerLookahead:             lookahead,
-		LatestExecutionPayloadBid:     ROExecutionPayloadBidFromConsensus(lepb),
+		LatestSilaPayloadBid:     ROSilaPayloadBidFromConsensus(lepb),
 		Builders:                      BuildersFromConsensus(builders),
 		NextWithdrawalBuilderIndex:    fmt.Sprintf("%d", nwbi),
-		ExecutionPayloadAvailability:  hexutil.Encode(epa),
+		SilaPayloadAvailability:  hexutil.Encode(epa),
 		BuilderPendingPayments:        BuilderPendingPaymentsFromConsensus(bpp),
 		BuilderPendingWithdrawals:     BuilderPendingWithdrawalsFromConsensus(bpw),
 		LatestBlockHash:               hexutil.Encode(lbh[:]),

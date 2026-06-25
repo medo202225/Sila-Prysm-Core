@@ -15,80 +15,80 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestValidateExecutionPayloadBid_Accept(t *testing.T) {
+func TestValidateSilaPayloadBid_Accept(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
 	parentRoot := bytesutil.PadTo([]byte{0x01}, fieldparams.RootLength)
 	block := util.NewBeaconBlockGloas()
 	block.Block.ParentRoot = parentRoot
-	block.Block.Body.SignedExecutionPayloadBid.Message.ParentBlockRoot = parentRoot
-	block.Block.Body.SignedExecutionPayloadBid.Message.BlobKzgCommitments = nil
+	block.Block.Body.SignedSilaPayloadBid.Message.ParentBlockRoot = parentRoot
+	block.Block.Body.SignedSilaPayloadBid.Message.BlobKzgCommitments = nil
 
 	wsb, err := blocks.NewSignedBeaconBlock(block)
 	require.NoError(t, err)
 
 	s := &Service{}
-	res, err := s.validateExecutionPayloadBid(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBid(ctx, wsb.Block())
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationAccept, res)
 }
 
-func TestValidateExecutionPayloadBid_RejectParentRootMismatch(t *testing.T) {
+func TestValidateSilaPayloadBid_RejectParentRootMismatch(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
 	block := util.NewBeaconBlockGloas()
 	block.Block.ParentRoot = bytesutil.PadTo([]byte{0x01}, fieldparams.RootLength)
-	block.Block.Body.SignedExecutionPayloadBid.Message.ParentBlockRoot = bytesutil.PadTo([]byte{0x02}, fieldparams.RootLength)
+	block.Block.Body.SignedSilaPayloadBid.Message.ParentBlockRoot = bytesutil.PadTo([]byte{0x02}, fieldparams.RootLength)
 
 	wsb, err := blocks.NewSignedBeaconBlock(block)
 	require.NoError(t, err)
 
 	s := &Service{}
-	res, err := s.validateExecutionPayloadBid(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBid(ctx, wsb.Block())
 	require.Error(t, err)
 	require.Equal(t, pubsub.ValidationReject, res)
 }
 
-func TestValidateExecutionPayloadBid_RejectTooManyCommitments(t *testing.T) {
+func TestValidateSilaPayloadBid_RejectTooManyCommitments(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
 	parentRoot := bytesutil.PadTo([]byte{0x01}, fieldparams.RootLength)
 	block := util.NewBeaconBlockGloas()
 	block.Block.ParentRoot = parentRoot
-	block.Block.Body.SignedExecutionPayloadBid.Message.ParentBlockRoot = parentRoot
+	block.Block.Body.SignedSilaPayloadBid.Message.ParentBlockRoot = parentRoot
 
 	maxBlobs := params.BeaconConfig().MaxBlobsPerBlockAtEpoch(0)
 	commitments := make([][]byte, maxBlobs+1)
 	for i := range commitments {
 		commitments[i] = bytesutil.PadTo([]byte{0x02}, fieldparams.BLSPubkeyLength)
 	}
-	block.Block.Body.SignedExecutionPayloadBid.Message.BlobKzgCommitments = commitments
+	block.Block.Body.SignedSilaPayloadBid.Message.BlobKzgCommitments = commitments
 
 	wsb, err := blocks.NewSignedBeaconBlock(block)
 	require.NoError(t, err)
 
 	s := &Service{}
-	res, err := s.validateExecutionPayloadBid(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBid(ctx, wsb.Block())
 	require.Error(t, err)
 	require.Equal(t, pubsub.ValidationReject, res)
 }
 
-func TestValidateExecutionPayloadBidParentSeen_PreGloas(t *testing.T) {
+func TestValidateSilaPayloadBidParentSeen_PreGloas(t *testing.T) {
 	ctx := context.Background()
 	blk := util.HydrateSignedBeaconBlockDeneb(nil)
 	wsb, err := blocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 
 	s := &Service{}
-	res, err := s.validateExecutionPayloadBidParentSeen(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBidParentSeen(ctx, wsb.Block())
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationAccept, res)
 }
 
-func TestValidateExecutionPayloadBidParentSeen_Accept(t *testing.T) {
+func TestValidateSilaPayloadBidParentSeen_Accept(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
@@ -99,12 +99,12 @@ func TestValidateExecutionPayloadBidParentSeen_Accept(t *testing.T) {
 	wsb, err := blocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 
-	res, err := s.validateExecutionPayloadBidParentSeen(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBidParentSeen(ctx, wsb.Block())
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationAccept, res)
 }
 
-func TestValidateExecutionPayloadBidParentSeen_Ignore(t *testing.T) {
+func TestValidateSilaPayloadBidParentSeen_Ignore(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
@@ -115,24 +115,24 @@ func TestValidateExecutionPayloadBidParentSeen_Ignore(t *testing.T) {
 	wsb, err := blocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 
-	res, err := s.validateExecutionPayloadBidParentSeen(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBidParentSeen(ctx, wsb.Block())
 	require.Error(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, res)
 }
 
-func TestValidateExecutionPayloadBidParentValid_PreGloas(t *testing.T) {
+func TestValidateSilaPayloadBidParentValid_PreGloas(t *testing.T) {
 	ctx := context.Background()
 	blk := util.HydrateSignedBeaconBlockDeneb(nil)
 	wsb, err := blocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 
 	s := &Service{}
-	res, err := s.validateExecutionPayloadBidParentValid(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBidParentValid(ctx, wsb.Block())
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationAccept, res)
 }
 
-func TestValidateExecutionPayloadBidParentValid_Accept(t *testing.T) {
+func TestValidateSilaPayloadBidParentValid_Accept(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
@@ -142,12 +142,12 @@ func TestValidateExecutionPayloadBidParentValid_Accept(t *testing.T) {
 	wsb, err := blocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 
-	res, err := s.validateExecutionPayloadBidParentValid(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBidParentValid(ctx, wsb.Block())
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationAccept, res)
 }
 
-func TestValidateExecutionPayloadBidParentValid_Reject(t *testing.T) {
+func TestValidateSilaPayloadBidParentValid_Reject(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	ctx := context.Background()
 
@@ -160,7 +160,7 @@ func TestValidateExecutionPayloadBidParentValid_Reject(t *testing.T) {
 	parentRoot := wsb.Block().ParentRoot()
 	s.badPayloadCache.Add(string(parentRoot[:]), true)
 
-	res, err := s.validateExecutionPayloadBidParentValid(ctx, wsb.Block())
+	res, err := s.validateSilaPayloadBidParentValid(ctx, wsb.Block())
 	require.Error(t, err)
 	require.Equal(t, pubsub.ValidationReject, res)
 }

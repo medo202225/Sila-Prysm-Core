@@ -97,7 +97,7 @@ type stateDiff struct {
 	currentSyncCommittee       *silapb.SyncCommittee // override.
 	nextSyncCommittee          *silapb.SyncCommittee // override.
 	// Bellatrix
-	executionPayloadHeader interfaces.ExecutionData // override.
+	silaPayloadHeader interfaces.ExecutionData // override.
 	// Capella
 	nextWithdrawalIndex          uint64                     // override.
 	nextWithdrawalValidatorIndex primitives.ValidatorIndex  // override.
@@ -119,10 +119,10 @@ type stateDiff struct {
 	// Fulu
 	proposerLookahead []uint64 // override
 	// Gloas
-	latestExecutionPayloadBid      *silapb.ExecutionPayloadBid        // override.
+	latestSilaPayloadBid      *silapb.SilaPayloadBid        // override.
 	builderDiffs                   []builderDiff                     // sparse diff: only changed/replaced builders.
 	nextWithdrawalBuilderIndex     uint64                            // override.
-	executionPayloadAvailability   []byte                            // override.
+	silaPayloadAvailability   []byte                            // override.
 	builderPendingPayments         []*silapb.BuilderPendingPayment    // override.
 	builderPendingWithdrawalsIndex uint64                            // prefix-drop index.
 	builderPendingWithdrawalsDiff  []*silapb.BuilderPendingWithdrawal // prefix-drop + append.
@@ -583,20 +583,20 @@ func (ret *stateDiff) readNextSyncCommittee(data *[]byte) error {
 	return nil
 }
 
-func (ret *stateDiff) readExecutionPayloadHeader(data *[]byte) error {
+func (ret *stateDiff) readSilaPayloadHeader(data *[]byte) error {
 	if len(*data) < 1 {
-		return errors.Wrap(errDataSmall, "executionPayloadHeader")
+		return errors.Wrap(errDataSmall, "silaPayloadHeader")
 	}
 	if (*data)[0] == nilMarker {
 		*data = (*data)[1:]
 		return nil
 	}
 	if len(*data) < 9 {
-		return errors.Wrap(errDataSmall, "executionPayloadHeader")
+		return errors.Wrap(errDataSmall, "silaPayloadHeader")
 	}
 	headerLength := int(binary.LittleEndian.Uint64((*data)[1:9])) // lint:ignore uintcast
 	if headerLength < 0 {
-		return errors.Wrap(errDataSmall, "executionPayloadHeader: negative length")
+		return errors.Wrap(errDataSmall, "silaPayloadHeader: negative length")
 	}
 	*data = (*data)[9:]
 	type sszSizeUnmarshaler interface {
@@ -607,22 +607,22 @@ func (ret *stateDiff) readExecutionPayloadHeader(data *[]byte) error {
 	var header sszSizeUnmarshaler
 	switch ret.targetVersion {
 	case version.Bellatrix:
-		header = &enginev1.ExecutionPayloadHeader{}
+		header = &enginev1.SilaPayloadHeader{}
 	case version.Capella:
-		header = &enginev1.ExecutionPayloadHeaderCapella{}
+		header = &enginev1.SilaPayloadHeaderCapella{}
 	case version.Deneb, version.Electra, version.Fulu:
-		header = &enginev1.ExecutionPayloadHeaderDeneb{}
+		header = &enginev1.SilaPayloadHeaderDeneb{}
 	default:
 		return errors.Errorf("unknown target version %d", ret.targetVersion)
 	}
 	if len(*data) < headerLength {
-		return errors.Wrap(errDataSmall, "executionPayloadHeader")
+		return errors.Wrap(errDataSmall, "silaPayloadHeader")
 	}
 	if err := header.UnmarshalSSZ((*data)[:headerLength]); err != nil {
-		return errors.Wrap(err, "failed to unmarshal executionPayloadHeader")
+		return errors.Wrap(err, "failed to unmarshal silaPayloadHeader")
 	}
 	var err error
-	ret.executionPayloadHeader, err = blocks.NewWrappedExecutionData(header)
+	ret.silaPayloadHeader, err = blocks.NewWrappedExecutionData(header)
 	if err != nil {
 		return err
 	}
@@ -851,7 +851,7 @@ func newStateDiff(input []byte) (*stateDiff, error) {
 		return nil, err
 	}
 	if ret.targetVersion < version.Gloas {
-		if err := ret.readExecutionPayloadHeader(&data); err != nil {
+		if err := ret.readSilaPayloadHeader(&data); err != nil {
 			return nil, err
 		}
 	}
@@ -1128,16 +1128,16 @@ func (s *stateDiff) serialize() []byte {
 	}
 
 	if s.targetVersion < version.Gloas {
-		if s.executionPayloadHeader == nil {
+		if s.silaPayloadHeader == nil {
 			ret = append(ret, nilMarker)
 		} else {
 			ret = append(ret, notNilMarker)
-			ret = binary.LittleEndian.AppendUint64(ret, uint64(s.executionPayloadHeader.SizeSSZ()))
+			ret = binary.LittleEndian.AppendUint64(ret, uint64(s.silaPayloadHeader.SizeSSZ()))
 			var err error
-			ret, err = s.executionPayloadHeader.MarshalSSZTo(ret)
+			ret, err = s.silaPayloadHeader.MarshalSSZTo(ret)
 			if err != nil {
 				// this is impossible to happen.
-				logrus.WithError(err).Error("Failed to marshal executionPayloadHeader")
+				logrus.WithError(err).Error("Failed to marshal silaPayloadHeader")
 				return nil
 			}
 		}
@@ -1416,7 +1416,7 @@ func diffToState(source, target state.ReadOnlyBeaconState) (*stateDiff, error) {
 		return ret, nil
 	}
 	if target.Version() < version.Gloas {
-		ret.executionPayloadHeader, err = target.LatestExecutionPayloadHeader()
+		ret.silaPayloadHeader, err = target.LatestSilaPayloadHeader()
 		if err != nil {
 			return nil, err
 		}
@@ -1918,9 +1918,9 @@ func applyStateDiff(ctx context.Context, source state.BeaconState, diff *stateDi
 	if diff.targetVersion < version.Bellatrix {
 		return source, nil
 	}
-	if diff.targetVersion < version.Gloas && diff.executionPayloadHeader != nil {
-		if err := source.SetLatestExecutionPayloadHeader(diff.executionPayloadHeader); err != nil {
-			return nil, errors.Wrap(err, "failed to set latest execution payload header")
+	if diff.targetVersion < version.Gloas && diff.silaPayloadHeader != nil {
+		if err := source.SetLatestSilaPayloadHeader(diff.silaPayloadHeader); err != nil {
+			return nil, errors.Wrap(err, "failed to set latest sila payload header")
 		}
 	}
 	if diff.targetVersion < version.Capella {

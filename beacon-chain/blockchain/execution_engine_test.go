@@ -60,7 +60,7 @@ func Test_NotifyForkchoiceUpdate_GetPayloadAttrErrorCanContinue(t *testing.T) {
 	sb := &silapb.SignedBeaconBlockBellatrix{
 		Block: &silapb.BeaconBlockBellatrix{
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &v1.ExecutionPayload{},
+				SilaPayload: &v1.SilaPayload{},
 			},
 		},
 	}
@@ -146,7 +146,7 @@ func Test_NotifyForkchoiceUpdate(t *testing.T) {
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				b, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockBellatrix{Block: &silapb.BeaconBlockBellatrix{
 					Body: &silapb.BeaconBlockBodyBellatrix{
-						ExecutionPayload: &v1.ExecutionPayload{
+						SilaPayload: &v1.SilaPayload{
 							ParentHash:    make([]byte, fieldparams.RootLength),
 							FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 							StateRoot:     make([]byte, fieldparams.RootLength),
@@ -169,7 +169,7 @@ func Test_NotifyForkchoiceUpdate(t *testing.T) {
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				b, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockBellatrix{Block: &silapb.BeaconBlockBellatrix{
 					Body: &silapb.BeaconBlockBodyBellatrix{
-						ExecutionPayload: &v1.ExecutionPayload{},
+						SilaPayload: &v1.SilaPayload{},
 					},
 				}})
 				require.NoError(t, err)
@@ -183,7 +183,7 @@ func Test_NotifyForkchoiceUpdate(t *testing.T) {
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				b, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockBellatrix{Block: &silapb.BeaconBlockBellatrix{
 					Body: &silapb.BeaconBlockBodyBellatrix{
-						ExecutionPayload: &v1.ExecutionPayload{},
+						SilaPayload: &v1.SilaPayload{},
 					},
 				}})
 				require.NoError(t, err)
@@ -197,7 +197,7 @@ func Test_NotifyForkchoiceUpdate(t *testing.T) {
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				b, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockBellatrix{Block: &silapb.BeaconBlockBellatrix{
 					Body: &silapb.BeaconBlockBodyBellatrix{
-						ExecutionPayload: &v1.ExecutionPayload{},
+						SilaPayload: &v1.SilaPayload{},
 					},
 				}})
 				require.NoError(t, err)
@@ -212,7 +212,7 @@ func Test_NotifyForkchoiceUpdate(t *testing.T) {
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				b, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockBellatrix{Block: &silapb.BeaconBlockBellatrix{
 					Body: &silapb.BeaconBlockBodyBellatrix{
-						ExecutionPayload: &v1.ExecutionPayload{BlockHash: badHash[:]},
+						SilaPayload: &v1.SilaPayload{BlockHash: badHash[:]},
 					},
 				}})
 				require.NoError(t, err)
@@ -257,29 +257,29 @@ func Test_NotifyForkchoiceUpdate_NIlLVH(t *testing.T) {
 
 	// Prepare blocks
 	ba := util.NewBeaconBlockBellatrix()
-	ba.Block.Body.ExecutionPayload.BlockNumber = 1
+	ba.Block.Body.SilaPayload.BlockNumber = 1
 	wba := util.SaveBlock(t, ctx, beaconDB, ba)
 	bra, err := wba.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bb := util.NewBeaconBlockBellatrix()
-	bb.Block.Body.ExecutionPayload.BlockNumber = 2
+	bb.Block.Body.SilaPayload.BlockNumber = 2
 	wbb := util.SaveBlock(t, ctx, beaconDB, bb)
 	brb, err := wbb.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bc := util.NewBeaconBlockBellatrix()
 	pc := [32]byte{'C'}
-	bc.Block.Body.ExecutionPayload.BlockHash = pc[:]
-	bc.Block.Body.ExecutionPayload.BlockNumber = 3
+	bc.Block.Body.SilaPayload.BlockHash = pc[:]
+	bc.Block.Body.SilaPayload.BlockNumber = 3
 	wbc := util.SaveBlock(t, ctx, beaconDB, bc)
 	brc, err := wbc.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bd := util.NewBeaconBlockBellatrix()
 	pd := [32]byte{'D'}
-	bd.Block.Body.ExecutionPayload.BlockHash = pd[:]
-	bd.Block.Body.ExecutionPayload.BlockNumber = 4
+	bd.Block.Body.SilaPayload.BlockHash = pd[:]
+	bd.Block.Body.SilaPayload.BlockNumber = 4
 	bd.Block.ParentRoot = brc[:]
 	wbd := util.SaveBlock(t, ctx, beaconDB, bd)
 	brd, err := wbd.Block().HashTreeRoot()
@@ -346,52 +346,52 @@ func Test_NotifyForkchoiceUpdateRecursive_DoublyLinkedTree(t *testing.T) {
 
 	// Prepare blocks
 	ba := util.NewBeaconBlockBellatrix()
-	ba.Block.Body.ExecutionPayload.BlockNumber = 1
+	ba.Block.Body.SilaPayload.BlockNumber = 1
 	wba := util.SaveBlock(t, ctx, beaconDB, ba)
 	bra, err := wba.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bb := util.NewBeaconBlockBellatrix()
-	bb.Block.Body.ExecutionPayload.BlockNumber = 2
+	bb.Block.Body.SilaPayload.BlockNumber = 2
 	wbb := util.SaveBlock(t, ctx, beaconDB, bb)
 	brb, err := wbb.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bc := util.NewBeaconBlockBellatrix()
-	bc.Block.Body.ExecutionPayload.BlockNumber = 3
+	bc.Block.Body.SilaPayload.BlockNumber = 3
 	wbc := util.SaveBlock(t, ctx, beaconDB, bc)
 	brc, err := wbc.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bd := util.NewBeaconBlockBellatrix()
 	pd := [32]byte{'D'}
-	bd.Block.Body.ExecutionPayload.BlockHash = pd[:]
-	bd.Block.Body.ExecutionPayload.BlockNumber = 4
+	bd.Block.Body.SilaPayload.BlockHash = pd[:]
+	bd.Block.Body.SilaPayload.BlockNumber = 4
 	wbd := util.SaveBlock(t, ctx, beaconDB, bd)
 	brd, err := wbd.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	be := util.NewBeaconBlockBellatrix()
 	pe := [32]byte{'E'}
-	be.Block.Body.ExecutionPayload.BlockHash = pe[:]
-	be.Block.Body.ExecutionPayload.BlockNumber = 5
+	be.Block.Body.SilaPayload.BlockHash = pe[:]
+	be.Block.Body.SilaPayload.BlockNumber = 5
 	wbe := util.SaveBlock(t, ctx, beaconDB, be)
 	bre, err := wbe.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bf := util.NewBeaconBlockBellatrix()
 	pf := [32]byte{'F'}
-	bf.Block.Body.ExecutionPayload.BlockHash = pf[:]
-	bf.Block.Body.ExecutionPayload.BlockNumber = 6
+	bf.Block.Body.SilaPayload.BlockHash = pf[:]
+	bf.Block.Body.SilaPayload.BlockNumber = 6
 	bf.Block.ParentRoot = bre[:]
 	wbf := util.SaveBlock(t, ctx, beaconDB, bf)
 	brf, err := wbf.Block().HashTreeRoot()
 	require.NoError(t, err)
 
 	bg := util.NewBeaconBlockBellatrix()
-	bg.Block.Body.ExecutionPayload.BlockNumber = 7
+	bg.Block.Body.SilaPayload.BlockNumber = 7
 	pg := [32]byte{'G'}
-	bg.Block.Body.ExecutionPayload.BlockHash = pg[:]
+	bg.Block.Body.SilaPayload.BlockHash = pg[:]
 	bg.Block.ParentRoot = bre[:]
 	wbg := util.SaveBlock(t, ctx, beaconDB, bg)
 	brg, err := wbg.Block().HashTreeRoot()
@@ -486,7 +486,7 @@ func Test_NotifyNewPayload(t *testing.T) {
 	require.NoError(t, err)
 	blk := util.NewBeaconBlockBellatrix()
 	blk.Block.Slot = 1
-	blk.Block.Body.ExecutionPayload.BlockNumber = 1
+	blk.Block.Body.SilaPayload.BlockNumber = 1
 	bellatrixBlk, err := consensusblocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockBellatrix(blk))
 	require.NoError(t, err)
 	st := params.BeaconConfig().SlotsPerEpoch.Mul(uint64(epochsSinceFinalitySaveHotStateDB))
@@ -550,7 +550,7 @@ func Test_NotifyNewPayload(t *testing.T) {
 			postState: bellatrixState,
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				blk := util.NewBeaconBlockBellatrix()
-				blk.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
+				blk.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
 				b, err := consensusblocks.NewSignedBeaconBlock(blk)
 				require.NoError(t, err)
 				return b
@@ -573,7 +573,7 @@ func Test_NotifyNewPayload(t *testing.T) {
 			postState: bellatrixState,
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				blk := util.NewBeaconBlockBellatrix()
-				blk.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
+				blk.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
 				b, err := consensusblocks.NewSignedBeaconBlock(blk)
 				require.NoError(t, err)
 				return b
@@ -585,7 +585,7 @@ func Test_NotifyNewPayload(t *testing.T) {
 			postState: bellatrixState,
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				blk := util.NewBeaconBlockBellatrix()
-				blk.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
+				blk.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
 				b, err := consensusblocks.NewSignedBeaconBlock(blk)
 				require.NoError(t, err)
 				return b
@@ -598,7 +598,7 @@ func Test_NotifyNewPayload(t *testing.T) {
 			postState: bellatrixState,
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				blk := util.NewBeaconBlockBellatrix()
-				blk.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
+				blk.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
 				b, err := consensusblocks.NewSignedBeaconBlock(blk)
 				require.NoError(t, err)
 				return b
@@ -656,7 +656,7 @@ func Test_NotifyNewPayload_SetOptimisticToValid(t *testing.T) {
 
 	bellatrixState, _ := util.DeterministicGenesisStateBellatrix(t, 2)
 	blk := util.NewBeaconBlockBellatrix()
-	blk.Block.Body.ExecutionPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
+	blk.Block.Body.SilaPayload.ParentHash = bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength)
 	bellatrixBlk, err := consensusblocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 	rob, err := consensusblocks.NewROBlock(bellatrixBlk)
@@ -1016,7 +1016,7 @@ func TestService_getPayloadHash(t *testing.T) {
 
 	bb := util.NewBeaconBlockBellatrix()
 	h = [32]byte{'a'}
-	bb.Block.Body.ExecutionPayload.BlockHash = h[:]
+	bb.Block.Body.SilaPayload.BlockHash = h[:]
 	r, err = b.Block.HashTreeRoot()
 	require.NoError(t, err)
 	wsb, err = consensusblocks.NewSignedBeaconBlock(bb)

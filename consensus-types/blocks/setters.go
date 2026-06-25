@@ -141,17 +141,17 @@ func (b *SignedBeaconBlock) SetSyncAggregate(s *eth.SyncAggregate) error {
 	return nil
 }
 
-// SetExecution sets the execution payload of the block body.
+// SetExecution sets the sila payload of the block body.
 // This function is not thread safe, it is only used during block creation.
 func (b *SignedBeaconBlock) SetExecution(e interfaces.ExecutionData) error {
 	if b.version == version.Phase0 || b.version == version.Altair || b.version >= version.Gloas {
 		return consensus_types.ErrNotSupported("Execution", b.version)
 	}
 	if e.IsBlinded() {
-		b.block.body.executionPayloadHeader = e
+		b.block.body.silaPayloadHeader = e
 		return nil
 	}
-	b.block.body.executionPayload = e
+	b.block.body.silaPayload = e
 	return nil
 }
 
@@ -201,11 +201,11 @@ func (b *SignedBeaconBlock) SetParentExecutionRequests(r *enginev1.ExecutionRequ
 	return nil
 }
 
-// SetSignedExecutionPayloadBid sets the signed execution payload header in the block.
-func (b *SignedBeaconBlock) SetSignedExecutionPayloadBid(header *eth.SignedExecutionPayloadBid) error {
+// SetSignedSilaPayloadBid sets the signed sila payload header in the block.
+func (b *SignedBeaconBlock) SetSignedSilaPayloadBid(header *eth.SignedSilaPayloadBid) error {
 	if b.version < version.Gloas {
-		return consensus_types.ErrNotSupported("SetSignedExecutionPayloadBid", b.version)
+		return consensus_types.ErrNotSupported("SetSignedSilaPayloadBid", b.version)
 	}
-	b.block.body.signedExecutionPayloadBid = header
+	b.block.body.signedSilaPayloadBid = header
 	return nil
 }

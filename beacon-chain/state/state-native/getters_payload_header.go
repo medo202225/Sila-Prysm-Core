@@ -8,26 +8,26 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
-// LatestExecutionPayloadHeader of the beacon state.
-func (b *BeaconState) LatestExecutionPayloadHeader() (interfaces.ExecutionData, error) {
+// LatestSilaPayloadHeader of the beacon state.
+func (b *BeaconState) LatestSilaPayloadHeader() (interfaces.ExecutionData, error) {
 	if b.version < version.Bellatrix {
-		return nil, errNotSupported("LatestExecutionPayloadHeader", b.version)
+		return nil, errNotSupported("LatestSilaPayloadHeader", b.version)
 	}
 
 	b.lock.RLock()
 	defer b.lock.RUnlock()
 
 	if b.version >= version.Deneb {
-		return blocks.WrappedExecutionPayloadHeaderDeneb(b.latestExecutionPayloadHeaderDeneb.Copy())
+		return blocks.WrappedSilaPayloadHeaderDeneb(b.latestSilaPayloadHeaderDeneb.Copy())
 	}
 
 	if b.version >= version.Capella {
-		return blocks.WrappedExecutionPayloadHeaderCapella(b.latestExecutionPayloadHeaderCapella.Copy())
+		return blocks.WrappedSilaPayloadHeaderCapella(b.latestSilaPayloadHeaderCapella.Copy())
 	}
 
 	if b.version >= version.Bellatrix {
-		return blocks.WrappedExecutionPayloadHeader(b.latestExecutionPayloadHeader.Copy())
+		return blocks.WrappedSilaPayloadHeader(b.latestSilaPayloadHeader.Copy())
 	}
 
-	return nil, fmt.Errorf("unsupported version (%s) for latest execution payload header", version.String(b.version))
+	return nil, fmt.Errorf("unsupported version (%s) for latest sila payload header", version.String(b.version))
 }

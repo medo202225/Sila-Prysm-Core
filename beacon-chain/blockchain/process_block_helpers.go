@@ -406,19 +406,19 @@ func (s *Service) fillInForkChoiceMissingBlocks(ctx context.Context, signed inte
 		}
 		hasPayload := false
 		if roblock.Version() >= version.Gloas {
-			sbid, err := child.Block().Body().SignedExecutionPayloadBid()
+			sbid, err := child.Block().Body().SignedSilaPayloadBid()
 			if err != nil {
-				return errors.Wrapf(err, "could not get execution payload bid for block at slot %d", child.Block().Slot())
+				return errors.Wrapf(err, "could not get sila payload bid for block at slot %d", child.Block().Slot())
 			}
 			if sbid == nil || sbid.Message == nil {
-				return fmt.Errorf("missing execution payload bid for block at slot %d", child.Block().Slot())
+				return fmt.Errorf("missing sila payload bid for block at slot %d", child.Block().Slot())
 			}
-			parentBid, err := b.Block().Body().SignedExecutionPayloadBid()
+			parentBid, err := b.Block().Body().SignedSilaPayloadBid()
 			if err != nil {
-				return errors.Wrapf(err, "could not get execution payload bid for block at slot %d", b.Block().Slot())
+				return errors.Wrapf(err, "could not get sila payload bid for block at slot %d", b.Block().Slot())
 			}
 			if parentBid == nil || parentBid.Message == nil {
-				return fmt.Errorf("missing execution payload bid for block at slot %d", b.Block().Slot())
+				return fmt.Errorf("missing sila payload bid for block at slot %d", b.Block().Slot())
 			}
 			if bytes.Equal(sbid.Message.ParentBlockHash, parentBid.Message.BlockHash) {
 				hasPayload = true

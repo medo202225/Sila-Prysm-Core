@@ -193,7 +193,7 @@ func TestRPCBeaconBlocksByRange_ReconstructsPayloads(t *testing.T) {
 	encodedBinaryTxs[0], err = txs[0].MarshalBinary()
 	require.NoError(t, err)
 	blockHash := bytesutil.ToBytes32([]byte("foo"))
-	payload := &enginev1.ExecutionPayload{
+	payload := &enginev1.SilaPayload{
 		ParentHash:    parent,
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     stateRoot,
@@ -210,11 +210,11 @@ func TestRPCBeaconBlocksByRange_ReconstructsPayloads(t *testing.T) {
 		Transactions:  encodedBinaryTxs,
 	}
 	mockEngine := &mockExecution.EngineClient{
-		ExecutionPayloadByBlockHash: map[[32]byte]*enginev1.ExecutionPayload{
+		SilaPayloadByBlockHash: map[[32]byte]*enginev1.SilaPayload{
 			blockHash: payload,
 		},
 	}
-	wrappedPayload, err := blocks.WrappedExecutionPayload(payload)
+	wrappedPayload, err := blocks.WrappedSilaPayload(payload)
 	require.NoError(t, err)
 	header, err := blocks.PayloadToHeader(wrappedPayload)
 	require.NoError(t, err)
@@ -224,7 +224,7 @@ func TestRPCBeaconBlocksByRange_ReconstructsPayloads(t *testing.T) {
 	for i := req.StartSlot; i < req.StartSlot.Add(req.Step*req.Count); i += primitives.Slot(req.Step) {
 		blk := util.NewBlindedBeaconBlockBellatrix()
 		blk.Block.Slot = i
-		blk.Block.Body.ExecutionPayloadHeader = header
+		blk.Block.Body.SilaPayloadHeader = header
 		if i == 0 {
 			rt, err := blk.Block.HashTreeRoot()
 			require.NoError(t, err)
@@ -292,9 +292,9 @@ func TestWriteBlockBatchToStream_ReconstructedBlocksPreserveCanonicalOrder(t *te
 
 	clock := startup.NewClock(time.Unix(0, 0), [32]byte{})
 
-	makePayload := func(tag byte) *enginev1.ExecutionPayload {
+	makePayload := func(tag byte) *enginev1.SilaPayload {
 		blockHash := bytesutil.PadTo([]byte{tag}, fieldparams.RootLength)
-		return &enginev1.ExecutionPayload{
+		return &enginev1.SilaPayload{
 			ParentHash:    bytesutil.PadTo([]byte{'p', tag}, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     bytesutil.PadTo([]byte{'s', tag}, fieldparams.RootLength),
@@ -312,14 +312,14 @@ func TestWriteBlockBatchToStream_ReconstructedBlocksPreserveCanonicalOrder(t *te
 		}
 	}
 
-	makeBlindedROBlock := func(slot primitives.Slot, payload *enginev1.ExecutionPayload) blocks.ROBlock {
+	makeBlindedROBlock := func(slot primitives.Slot, payload *enginev1.SilaPayload) blocks.ROBlock {
 		blinded := util.NewBlindedBeaconBlockBellatrix()
 		blinded.Block.Slot = slot
-		wrappedPayload, err := blocks.WrappedExecutionPayload(payload)
+		wrappedPayload, err := blocks.WrappedSilaPayload(payload)
 		require.NoError(t, err)
 		header, err := blocks.PayloadToHeader(wrappedPayload)
 		require.NoError(t, err)
-		blinded.Block.Body.ExecutionPayloadHeader = header
+		blinded.Block.Body.SilaPayloadHeader = header
 		signed, err := blocks.NewSignedBeaconBlock(blinded)
 		require.NoError(t, err)
 		root, err := blinded.Block.HashTreeRoot()
@@ -348,7 +348,7 @@ func TestWriteBlockBatchToStream_ReconstructedBlocksPreserveCanonicalOrder(t *te
 	block3 := makeBlindedROBlock(3, payload3)
 
 	mockEngine := &mockExecution.EngineClient{
-		ExecutionPayloadByBlockHash: map[[32]byte]*enginev1.ExecutionPayload{
+		SilaPayloadByBlockHash: map[[32]byte]*enginev1.SilaPayload{
 			bytesutil.ToBytes32(payload1.BlockHash): payload1,
 			bytesutil.ToBytes32(payload3.BlockHash): payload3,
 		},

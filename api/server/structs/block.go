@@ -147,7 +147,7 @@ type BeaconBlockBodyBellatrix struct {
 	Deposits          []*Deposit             `json:"deposits"`
 	VoluntaryExits    []*SignedVoluntaryExit `json:"voluntary_exits"`
 	SyncAggregate     *SyncAggregate         `json:"sync_aggregate"`
-	ExecutionPayload  *ExecutionPayload      `json:"execution_payload"`
+	SilaPayload  *SilaPayload      `json:"sila_payload"`
 }
 
 type SignedBlindedBeaconBlockBellatrix struct {
@@ -183,7 +183,7 @@ type BlindedBeaconBlockBodyBellatrix struct {
 	Deposits               []*Deposit              `json:"deposits"`
 	VoluntaryExits         []*SignedVoluntaryExit  `json:"voluntary_exits"`
 	SyncAggregate          *SyncAggregate          `json:"sync_aggregate"`
-	ExecutionPayloadHeader *ExecutionPayloadHeader `json:"execution_payload_header"`
+	SilaPayloadHeader *SilaPayloadHeader `json:"sila_payload_header"`
 }
 
 // ----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ type BeaconBlockBodyCapella struct {
 	Deposits              []*Deposit                    `json:"deposits"`
 	VoluntaryExits        []*SignedVoluntaryExit        `json:"voluntary_exits"`
 	SyncAggregate         *SyncAggregate                `json:"sync_aggregate"`
-	ExecutionPayload      *ExecutionPayloadCapella      `json:"execution_payload"`
+	SilaPayload      *SilaPayloadCapella      `json:"sila_payload"`
 	BLSToExecutionChanges []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 }
 
@@ -260,7 +260,7 @@ type BlindedBeaconBlockBodyCapella struct {
 	Deposits               []*Deposit                     `json:"deposits"`
 	VoluntaryExits         []*SignedVoluntaryExit         `json:"voluntary_exits"`
 	SyncAggregate          *SyncAggregate                 `json:"sync_aggregate"`
-	ExecutionPayloadHeader *ExecutionPayloadHeaderCapella `json:"execution_payload_header"`
+	SilaPayloadHeader *SilaPayloadHeaderCapella `json:"sila_payload_header"`
 	BLSToExecutionChanges  []*SignedBLSToExecutionChange  `json:"bls_to_execution_changes"`
 }
 
@@ -313,7 +313,7 @@ type BeaconBlockBodyDeneb struct {
 	Deposits              []*Deposit                    `json:"deposits"`
 	VoluntaryExits        []*SignedVoluntaryExit        `json:"voluntary_exits"`
 	SyncAggregate         *SyncAggregate                `json:"sync_aggregate"`
-	ExecutionPayload      *ExecutionPayloadDeneb        `json:"execution_payload"`
+	SilaPayload      *SilaPayloadDeneb        `json:"sila_payload"`
 	BLSToExecutionChanges []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	BlobKzgCommitments    []string                      `json:"blob_kzg_commitments"`
 }
@@ -351,7 +351,7 @@ type BlindedBeaconBlockBodyDeneb struct {
 	Deposits               []*Deposit                    `json:"deposits"`
 	VoluntaryExits         []*SignedVoluntaryExit        `json:"voluntary_exits"`
 	SyncAggregate          *SyncAggregate                `json:"sync_aggregate"`
-	ExecutionPayloadHeader *ExecutionPayloadHeaderDeneb  `json:"execution_payload_header"`
+	SilaPayloadHeader *SilaPayloadHeaderDeneb  `json:"sila_payload_header"`
 	BLSToExecutionChanges  []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	BlobKzgCommitments     []string                      `json:"blob_kzg_commitments"`
 }
@@ -405,7 +405,7 @@ type BeaconBlockBodyElectra struct {
 	Deposits              []*Deposit                    `json:"deposits"`
 	VoluntaryExits        []*SignedVoluntaryExit        `json:"voluntary_exits"`
 	SyncAggregate         *SyncAggregate                `json:"sync_aggregate"`
-	ExecutionPayload      *ExecutionPayloadDeneb        `json:"execution_payload"`
+	SilaPayload      *SilaPayloadDeneb        `json:"sila_payload"`
 	BLSToExecutionChanges []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	BlobKzgCommitments    []string                      `json:"blob_kzg_commitments"`
 	ExecutionRequests     *ExecutionRequests            `json:"execution_requests"`
@@ -444,7 +444,7 @@ type BlindedBeaconBlockBodyElectra struct {
 	Deposits               []*Deposit                    `json:"deposits"`
 	VoluntaryExits         []*SignedVoluntaryExit        `json:"voluntary_exits"`
 	SyncAggregate          *SyncAggregate                `json:"sync_aggregate"`
-	ExecutionPayloadHeader *ExecutionPayloadHeaderDeneb  `json:"execution_payload_header"`
+	SilaPayloadHeader *SilaPayloadHeaderDeneb  `json:"sila_payload_header"`
 	BLSToExecutionChanges  []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
 	BlobKzgCommitments     []string                      `json:"blob_kzg_commitments"`
 	ExecutionRequests      *ExecutionRequests            `json:"execution_requests"`
@@ -508,7 +508,7 @@ func (s *SignedBlindedBeaconBlockFulu) SigString() string {
 // Gloas
 // ----------------------------------------------------------------------------
 
-type ExecutionPayloadBid struct {
+type SilaPayloadBid struct {
 	ParentBlockHash       string   `json:"parent_block_hash"`
 	ParentBlockRoot       string   `json:"parent_block_root"`
 	BlockHash             string   `json:"block_hash"`
@@ -523,8 +523,8 @@ type ExecutionPayloadBid struct {
 	ExecutionRequestsRoot string   `json:"execution_requests_root"`
 }
 
-type SignedExecutionPayloadBid struct {
-	Message   *ExecutionPayloadBid `json:"message"`
+type SignedSilaPayloadBid struct {
+	Message   *SilaPayloadBid `json:"message"`
 	Signature string               `json:"signature"`
 }
 
@@ -558,7 +558,7 @@ type BeaconBlockBodyGloas struct {
 	VoluntaryExits            []*SignedVoluntaryExit        `json:"voluntary_exits"`
 	SyncAggregate             *SyncAggregate                `json:"sync_aggregate"`
 	BLSToExecutionChanges     []*SignedBLSToExecutionChange `json:"bls_to_execution_changes"`
-	SignedExecutionPayloadBid *SignedExecutionPayloadBid    `json:"signed_execution_payload_bid"`
+	SignedSilaPayloadBid *SignedSilaPayloadBid    `json:"signed_sila_payload_bid"`
 	PayloadAttestations       []*PayloadAttestation         `json:"payload_attestations"`
 	ParentExecutionRequests   *ExecutionRequests            `json:"parent_execution_requests"`
 }
@@ -588,35 +588,35 @@ func (s *SignedBeaconBlockGloas) SigString() string {
 
 type BlockContentsGloas struct {
 	Block                    *BeaconBlockGloas         `json:"block"`
-	ExecutionPayloadEnvelope *ExecutionPayloadEnvelope `json:"execution_payload_envelope"`
+	SilaPayloadEnvelope *SilaPayloadEnvelope `json:"sila_payload_envelope"`
 	KzgProofs                []string                  `json:"kzg_proofs"`
 	Blobs                    []string                  `json:"blobs"`
 }
 
-type ExecutionPayloadEnvelope struct {
-	Payload               *ExecutionPayloadGloas `json:"payload"`
+type SilaPayloadEnvelope struct {
+	Payload               *SilaPayloadGloas `json:"payload"`
 	ExecutionRequests     *ExecutionRequests     `json:"execution_requests"`
 	BuilderIndex          string                 `json:"builder_index"`
 	BeaconBlockRoot       string                 `json:"beacon_block_root"`
 	ParentBeaconBlockRoot string                 `json:"parent_beacon_block_root"`
 }
 
-type SignedExecutionPayloadEnvelope struct {
-	Message   *ExecutionPayloadEnvelope `json:"message"`
+type SignedSilaPayloadEnvelope struct {
+	Message   *SilaPayloadEnvelope `json:"message"`
 	Signature string                    `json:"signature"`
 }
 
-// SignedExecutionPayloadEnvelopeContents bundles a signed execution payload
+// SignedSilaPayloadEnvelopeContents bundles a signed sila payload
 // envelope with the raw blobs and KZG proofs needed by a beacon node that has
 // not cached them locally. Used by the stateless publish path.
-type SignedExecutionPayloadEnvelopeContents struct {
-	SignedExecutionPayloadEnvelope *SignedExecutionPayloadEnvelope `json:"signed_execution_payload_envelope"`
+type SignedSilaPayloadEnvelopeContents struct {
+	SignedSilaPayloadEnvelope *SignedSilaPayloadEnvelope `json:"signed_sila_payload_envelope"`
 	KzgProofs                      []string                        `json:"kzg_proofs"`
 	Blobs                          []string                        `json:"blobs"`
 }
 
-// BlindedExecutionPayloadEnvelope replaces the full payload with payload_root so its HTR matches the full envelope.
-type BlindedExecutionPayloadEnvelope struct {
+// BlindedSilaPayloadEnvelope replaces the full payload with payload_root so its HTR matches the full envelope.
+type BlindedSilaPayloadEnvelope struct {
 	PayloadRoot           string             `json:"payload_root"`
 	ExecutionRequests     *ExecutionRequests `json:"execution_requests"`
 	BuilderIndex          string             `json:"builder_index"`
@@ -624,7 +624,7 @@ type BlindedExecutionPayloadEnvelope struct {
 	ParentBeaconBlockRoot string             `json:"parent_beacon_block_root"`
 }
 
-type SignedBlindedExecutionPayloadEnvelope struct {
-	Message   *BlindedExecutionPayloadEnvelope `json:"message"`
+type SignedBlindedSilaPayloadEnvelope struct {
+	Message   *BlindedSilaPayloadEnvelope `json:"message"`
 	Signature string                           `json:"signature"`
 }

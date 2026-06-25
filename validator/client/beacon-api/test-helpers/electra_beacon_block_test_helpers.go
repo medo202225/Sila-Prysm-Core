@@ -184,7 +184,7 @@ func GenerateProtoElectraBeaconBlockContents() *silapb.BeaconBlockContentsElectr
 					SyncCommitteeBits:      FillByteSlice(64, 110),
 					SyncCommitteeSignature: FillByteSlice(96, 111),
 				},
-				ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+				SilaPayload: &enginev1.SilaPayloadDeneb{
 					ParentHash:    FillByteSlice(32, 112),
 					FeeRecipient:  FillByteSlice(20, 113),
 					StateRoot:     FillByteSlice(32, 114),
@@ -444,7 +444,7 @@ func GenerateProtoBlindedElectraBeaconBlock() *silapb.BlindedBeaconBlockElectra 
 				SyncCommitteeBits:      FillByteSlice(64, 110),
 				SyncCommitteeSignature: FillByteSlice(96, 111),
 			},
-			ExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+			SilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 				ParentHash:       FillByteSlice(32, 112),
 				FeeRecipient:     FillByteSlice(20, 113),
 				StateRoot:        FillByteSlice(32, 114),
@@ -686,7 +686,7 @@ func GenerateJsonElectraBeaconBlockContents() *structs.BeaconBlockContentsElectr
 					SyncCommitteeBits:      FillEncodedByteSlice(64, 110),
 					SyncCommitteeSignature: FillEncodedByteSlice(96, 111),
 				},
-				ExecutionPayload: &structs.ExecutionPayloadDeneb{
+				SilaPayload: &structs.SilaPayloadDeneb{
 					ParentHash:    FillEncodedByteSlice(32, 112),
 					FeeRecipient:  FillEncodedByteSlice(20, 113),
 					StateRoot:     FillEncodedByteSlice(32, 114),
@@ -946,7 +946,7 @@ func GenerateJsonBlindedElectraBeaconBlock() *structs.BlindedBeaconBlockElectra 
 				SyncCommitteeBits:      FillEncodedByteSlice(64, 110),
 				SyncCommitteeSignature: FillEncodedByteSlice(96, 111),
 			},
-			ExecutionPayloadHeader: &structs.ExecutionPayloadHeaderDeneb{
+			SilaPayloadHeader: &structs.SilaPayloadHeaderDeneb{
 				ParentHash:       FillEncodedByteSlice(32, 112),
 				FeeRecipient:     FillEncodedByteSlice(20, 113),
 				StateRoot:        FillEncodedByteSlice(32, 114),

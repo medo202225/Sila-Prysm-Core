@@ -53,7 +53,7 @@ type ForkchoiceFetcher interface {
 	FullBeatsEmpty([32]byte) bool
 	ReceivedBlocksLastEpoch() (uint64, error)
 	InsertNode(context.Context, state.BeaconState, consensus_blocks.ROBlock) error
-	InsertPayload(interfaces.ROExecutionPayloadEnvelope) error
+	InsertPayload(interfaces.ROSilaPayloadEnvelope) error
 	ForkChoiceDump(context.Context) (*forkchoice.Dump, error)
 	ForkChoiceDumpV2(context.Context) (*forkchoice.DumpV2, error)
 	NewSlot(context.Context, primitives.Slot) error
@@ -430,7 +430,7 @@ func (s *Service) ParentPayloadReady(blk interfaces.ReadOnlyBeaconBlock) bool {
 	if err != nil {
 		return false
 	}
-	bid, err := blk.Body().SignedExecutionPayloadBid()
+	bid, err := blk.Body().SignedSilaPayloadBid()
 	if err != nil || bid == nil || bid.Message == nil {
 		return false
 	}

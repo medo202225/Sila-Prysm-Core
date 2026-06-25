@@ -24,12 +24,12 @@ var (
 )
 
 // IsMergeTransitionComplete returns true if the transition to Bellatrix has completed.
-// Meaning the payload header in beacon state is not `ExecutionPayloadHeader()` (i.e. not empty).
+// Meaning the payload header in beacon state is not `SilaPayloadHeader()` (i.e. not empty).
 //
 // Spec code:
 // def is_merge_transition_complete(state: BeaconState) -> bool:
 //
-//	return state.latest_execution_payload_header != ExecutionPayloadHeader()
+//	return state.latest_sila_payload_header != SilaPayloadHeader()
 func IsMergeTransitionComplete(st state.BeaconState) (bool, error) {
 	if st == nil {
 		return false, errors.New("nil state")
@@ -40,7 +40,7 @@ func IsMergeTransitionComplete(st state.BeaconState) (bool, error) {
 	if st.Version() > version.Bellatrix {
 		return true, nil
 	}
-	h, err := st.LatestExecutionPayloadHeader()
+	h, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return false, err
 	}
@@ -51,12 +51,12 @@ func IsMergeTransitionComplete(st state.BeaconState) (bool, error) {
 	return !isEmpty, nil
 }
 
-// IsExecutionBlock returns whether the block has a non-empty ExecutionPayload.
+// IsExecutionBlock returns whether the block has a non-empty SilaPayload.
 //
 // Spec code:
 // def is_execution_block(block: ReadOnlyBeaconBlock) -> bool:
 //
-//	return block.body.execution_payload != ExecutionPayload()
+//	return block.body.sila_payload != SilaPayload()
 func IsExecutionBlock(body interfaces.ReadOnlyBeaconBlockBody) (bool, error) {
 	if body == nil {
 		return false, errors.New("nil block body")
@@ -96,7 +96,7 @@ func IsExecutionEnabled(st state.ReadOnlyBeaconState, body interfaces.ReadOnlyBe
 	if IsPreBellatrixVersion(st.Version()) {
 		return false, nil
 	}
-	header, err := st.LatestExecutionPayloadHeader()
+	header, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return false, err
 	}
@@ -126,9 +126,9 @@ func IsPreBellatrixVersion(v int) bool {
 //
 // Spec code:
 //
-//	# Verify consistency of the parent hash with respect to the previous execution payload header
+//	# Verify consistency of the parent hash with respect to the previous sila payload header
 //	if is_merge_complete(state):
-//	    assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+//	    assert payload.parent_hash == state.latest_sila_payload_header.block_hash
 func ValidatePayloadWhenMergeCompletes(st state.BeaconState, payload interfaces.ExecutionData) error {
 	complete, err := IsMergeTransitionComplete(st)
 	if err != nil {
@@ -137,7 +137,7 @@ func ValidatePayloadWhenMergeCompletes(st state.BeaconState, payload interfaces.
 	if !complete {
 		return nil
 	}
-	header, err := st.LatestExecutionPayloadHeader()
+	header, err := st.LatestSilaPayloadHeader()
 	if err != nil {
 		return err
 	}
@@ -175,24 +175,24 @@ func ValidatePayload(st state.BeaconState, payload interfaces.ExecutionData) err
 	return nil
 }
 
-// ProcessPayload processes input execution payload using beacon state.
+// ProcessPayload processes input sila payload using beacon state.
 // ValidatePayloadWhenMergeCompletes validates if payload is valid versus input beacon state.
 // These validation steps ONLY apply to post merge.
 //
 // Spec code:
-// def process_execution_payload(state: BeaconState, payload: ExecutionPayload, execution_engine: ExecutionEngine) -> None:
+// def process_sila_payload(state: BeaconState, payload: SilaPayload, execution_engine: ExecutionEngine) -> None:
 //
-//	# Verify consistency of the parent hash with respect to the previous execution payload header
+//	# Verify consistency of the parent hash with respect to the previous sila payload header
 //	if is_merge_complete(state):
-//	    assert payload.parent_hash == state.latest_execution_payload_header.block_hash
+//	    assert payload.parent_hash == state.latest_sila_payload_header.block_hash
 //	# Verify random
 //	assert payload.random == get_randao_mix(state, get_current_epoch(state))
 //	# Verify timestamp
 //	assert payload.timestamp == compute_timestamp_at_slot(state, state.slot)
-//	# Verify the execution payload is valid
+//	# Verify the sila payload is valid
 //	assert execution_engine.execute_payload(payload)
-//	# Cache execution payload header
-//	state.latest_execution_payload_header = ExecutionPayloadHeader(
+//	# Cache sila payload header
+//	state.latest_sila_payload_header = SilaPayloadHeader(
 //	    parent_hash=payload.parent_hash,
 //	    FeeRecipient=payload.FeeRecipient,
 //	    state_root=payload.state_root,
@@ -222,7 +222,7 @@ func ProcessPayload(st state.BeaconState, body interfaces.ReadOnlyBeaconBlockBod
 	if err := ValidatePayload(st, payload); err != nil {
 		return err
 	}
-	if err := st.SetLatestExecutionPayloadHeader(payload); err != nil {
+	if err := st.SetLatestSilaPayloadHeader(payload); err != nil {
 		return err
 	}
 	return nil

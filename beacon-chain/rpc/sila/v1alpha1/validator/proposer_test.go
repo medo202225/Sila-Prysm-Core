@@ -242,7 +242,7 @@ func TestServer_GetBeaconBlock_Bellatrix(t *testing.T) {
 				Graffiti:      genesis.Block.Body.Graffiti,
 				SilaExecutionData:      genesis.Block.Body.SilaExecutionData,
 				SyncAggregate: &silapb.SyncAggregate{SyncCommitteeBits: scBits[:], SyncCommitteeSignature: make([]byte, 96)},
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
@@ -269,7 +269,7 @@ func TestServer_GetBeaconBlock_Bellatrix(t *testing.T) {
 	timeStamp, err := slots.StartTime(beaconState.GenesisTime(), bellatrixSlot+1)
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayload{
+	payload := &enginev1.SilaPayload{
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     make([]byte, fieldparams.RootLength),
@@ -316,7 +316,7 @@ func TestServer_GetBeaconBlock_Bellatrix(t *testing.T) {
 	assert.DeepEqual(t, randaoReveal, bellatrixBlk.Bellatrix.Body.RandaoReveal, "Expected block to have correct randao reveal")
 	assert.DeepEqual(t, req.Graffiti, bellatrixBlk.Bellatrix.Body.Graffiti, "Expected block to have correct Graffiti")
 
-	require.DeepEqual(t, payload, bellatrixBlk.Bellatrix.Body.ExecutionPayload) // Payload should equal.
+	require.DeepEqual(t, payload, bellatrixBlk.Bellatrix.Body.SilaPayload) // Payload should equal.
 
 	// Operator sets default fee recipient to not be burned through beacon node cli.
 	newHook := logTest.NewGlobal()
@@ -367,7 +367,7 @@ func TestServer_GetBeaconBlock_Capella(t *testing.T) {
 				Graffiti:      genesis.Block.Body.Graffiti,
 				SilaExecutionData:      genesis.Block.Body.SilaExecutionData,
 				SyncAggregate: &silapb.SyncAggregate{SyncCommitteeBits: scBits[:], SyncCommitteeSignature: make([]byte, 96)},
-				ExecutionPayload: &enginev1.ExecutionPayloadCapella{
+				SilaPayload: &enginev1.SilaPayloadCapella{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
@@ -394,7 +394,7 @@ func TestServer_GetBeaconBlock_Capella(t *testing.T) {
 	require.NoError(t, err)
 	timeStamp, err := slots.StartTime(beaconState.GenesisTime(), capellaSlot+1)
 	require.NoError(t, err)
-	payload := &enginev1.ExecutionPayloadCapella{
+	payload := &enginev1.SilaPayloadCapella{
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     make([]byte, fieldparams.RootLength),
@@ -491,7 +491,7 @@ func TestServer_GetBeaconBlock_Deneb(t *testing.T) {
 				Graffiti:      genesis.Block.Body.Graffiti,
 				SilaExecutionData:      genesis.Block.Body.SilaExecutionData,
 				SyncAggregate: &silapb.SyncAggregate{SyncCommitteeBits: scBits[:], SyncCommitteeSignature: make([]byte, 96)},
-				ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+				SilaPayload: &enginev1.SilaPayloadDeneb{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
@@ -515,7 +515,7 @@ func TestServer_GetBeaconBlock_Deneb(t *testing.T) {
 	require.NoError(t, err)
 	timeStamp, err := slots.StartTime(beaconState.GenesisTime(), denebSlot+1)
 	require.NoError(t, err)
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     make([]byte, fieldparams.RootLength),
@@ -644,7 +644,7 @@ func TestServer_GetBeaconBlock_Electra(t *testing.T) {
 				Graffiti:      genesis.Block.Body.Graffiti,
 				SilaExecutionData:      genesis.Block.Body.SilaExecutionData,
 				SyncAggregate: &silapb.SyncAggregate{SyncCommitteeBits: scBits[:], SyncCommitteeSignature: make([]byte, 96)},
-				ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+				SilaPayload: &enginev1.SilaPayloadDeneb{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
@@ -673,7 +673,7 @@ func TestServer_GetBeaconBlock_Electra(t *testing.T) {
 	require.NoError(t, err)
 	timeStamp, err := slots.StartTime(beaconState.GenesisTime(), electraSlot+1)
 	require.NoError(t, err)
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		Timestamp:     uint64(timeStamp.Unix()),
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
@@ -781,7 +781,7 @@ func TestServer_GetBeaconBlock_Fulu(t *testing.T) {
 				Graffiti:      genesis.Block.Body.Graffiti,
 				SilaExecutionData:      genesis.Block.Body.SilaExecutionData,
 				SyncAggregate: &silapb.SyncAggregate{SyncCommitteeBits: scBits[:], SyncCommitteeSignature: make([]byte, 96)},
-				ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+				SilaPayload: &enginev1.SilaPayloadDeneb{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
@@ -810,7 +810,7 @@ func TestServer_GetBeaconBlock_Fulu(t *testing.T) {
 	require.NoError(t, err)
 	timeStamp, err := slots.StartTime(beaconState.GenesisTime(), fuluSlot+1)
 	require.NoError(t, err)
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		Timestamp:     uint64(timeStamp.Unix()),
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
@@ -986,8 +986,8 @@ func TestProposer_ProposeBlock_OK(t *testing.T) {
 				require.NoError(t, err)
 				withdrawalsRoot, err := ssz.WithdrawalSliceRoot([]*enginev1.Withdrawal{}, fieldparams.MaxWithdrawalsPerPayload)
 				require.NoError(t, err)
-				blockToPropose.Block.Body.ExecutionPayloadHeader.TransactionsRoot = txRoot[:]
-				blockToPropose.Block.Body.ExecutionPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
+				blockToPropose.Block.Body.SilaPayloadHeader.TransactionsRoot = txRoot[:]
+				blockToPropose.Block.Body.SilaPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
 				blk := &silapb.GenericSignedBeaconBlock_BlindedCapella{BlindedCapella: blockToPropose}
 				return &silapb.GenericSignedBeaconBlock{Block: blk}
 			},
@@ -1003,8 +1003,8 @@ func TestProposer_ProposeBlock_OK(t *testing.T) {
 				require.NoError(t, err)
 				withdrawalsRoot, err := ssz.WithdrawalSliceRoot([]*enginev1.Withdrawal{}, fieldparams.MaxWithdrawalsPerPayload)
 				require.NoError(t, err)
-				blockToPropose.Block.Body.ExecutionPayloadHeader.TransactionsRoot = txRoot[:]
-				blockToPropose.Block.Body.ExecutionPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
+				blockToPropose.Block.Body.SilaPayloadHeader.TransactionsRoot = txRoot[:]
+				blockToPropose.Block.Body.SilaPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
 				blk := &silapb.GenericSignedBeaconBlock_BlindedCapella{BlindedCapella: blockToPropose}
 				return &silapb.GenericSignedBeaconBlock{Block: blk}
 			},
@@ -1066,8 +1066,8 @@ func TestProposer_ProposeBlock_OK(t *testing.T) {
 				require.NoError(t, err)
 				withdrawalsRoot, err := ssz.WithdrawalSliceRoot([]*enginev1.Withdrawal{}, fieldparams.MaxWithdrawalsPerPayload)
 				require.NoError(t, err)
-				blockToPropose.Message.Body.ExecutionPayloadHeader.TransactionsRoot = txRoot[:]
-				blockToPropose.Message.Body.ExecutionPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
+				blockToPropose.Message.Body.SilaPayloadHeader.TransactionsRoot = txRoot[:]
+				blockToPropose.Message.Body.SilaPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
 				blockToPropose.Message.Body.BlobKzgCommitments = [][]byte{bytesutil.PadTo([]byte{0x01}, 48)}
 				blk := &silapb.GenericSignedBeaconBlock_BlindedDeneb{BlindedDeneb: blockToPropose}
 				return &silapb.GenericSignedBeaconBlock{Block: blk}
@@ -1084,8 +1084,8 @@ func TestProposer_ProposeBlock_OK(t *testing.T) {
 				require.NoError(t, err)
 				withdrawalsRoot, err := ssz.WithdrawalSliceRoot([]*enginev1.Withdrawal{}, fieldparams.MaxWithdrawalsPerPayload)
 				require.NoError(t, err)
-				blockToPropose.Message.Body.ExecutionPayloadHeader.TransactionsRoot = txRoot[:]
-				blockToPropose.Message.Body.ExecutionPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
+				blockToPropose.Message.Body.SilaPayloadHeader.TransactionsRoot = txRoot[:]
+				blockToPropose.Message.Body.SilaPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
 				blockToPropose.Message.Body.BlobKzgCommitments = [][]byte{bytesutil.PadTo([]byte("kc"), 48)}
 				blk := &silapb.GenericSignedBeaconBlock_BlindedDeneb{BlindedDeneb: blockToPropose}
 				return &silapb.GenericSignedBeaconBlock{Block: blk}
@@ -1260,8 +1260,8 @@ func TestProposer_ProposeBlock_OK(t *testing.T) {
 				require.NoError(t, err)
 				withdrawalsRoot, err := ssz.WithdrawalSliceRoot([]*enginev1.Withdrawal{}, fieldparams.MaxWithdrawalsPerPayload)
 				require.NoError(t, err)
-				blockToPropose.Message.Body.ExecutionPayloadHeader.TransactionsRoot = txRoot[:]
-				blockToPropose.Message.Body.ExecutionPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
+				blockToPropose.Message.Body.SilaPayloadHeader.TransactionsRoot = txRoot[:]
+				blockToPropose.Message.Body.SilaPayloadHeader.WithdrawalsRoot = withdrawalsRoot[:]
 				blockToPropose.Message.Body.BlobKzgCommitments = [][]byte{bytesutil.PadTo([]byte{0x01}, 48)}
 				blk := &silapb.GenericSignedBeaconBlock_BlindedFulu{BlindedFulu: blockToPropose}
 				return &silapb.GenericSignedBeaconBlock{Block: blk}
@@ -3652,7 +3652,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		mockBuilder := &builderTest.MockBuilderService{
 			HasConfigured: true,
 			Cfg:           &builderTest.Config{BeaconDB: db},
-			PayloadDeneb:  &enginev1.ExecutionPayloadDeneb{},
+			PayloadDeneb:  &enginev1.SilaPayloadDeneb{},
 			BlobBundle:    &enginev1.BlobsBundle{},
 		}
 
@@ -3796,7 +3796,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		mockBuilder := &builderTest.MockBuilderService{
 			HasConfigured:         true,
 			Cfg:                   &builderTest.Config{BeaconDB: db},
-			PayloadDeneb:          &enginev1.ExecutionPayloadDeneb{},
+			PayloadDeneb:          &enginev1.SilaPayloadDeneb{},
 			ErrSubmitBlindedBlock: builderapi.ErrBadGateway,
 		}
 

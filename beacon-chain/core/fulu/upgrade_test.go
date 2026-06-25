@@ -86,17 +86,17 @@ func TestUpgradeToFulu(t *testing.T) {
 	require.NoError(t, err)
 	require.DeepSSZEqual(t, psc, nsc)
 
-	header, err := mSt.LatestExecutionPayloadHeader()
+	header, err := mSt.LatestSilaPayloadHeader()
 	require.NoError(t, err)
-	protoHeader, ok := header.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+	protoHeader, ok := header.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 	require.Equal(t, true, ok)
-	prevHeader, err := preForkState.LatestExecutionPayloadHeader()
+	prevHeader, err := preForkState.LatestSilaPayloadHeader()
 	require.NoError(t, err)
 	txRoot, err := prevHeader.TransactionsRoot()
 	require.NoError(t, err)
 	wdRoot, err := prevHeader.WithdrawalsRoot()
 	require.NoError(t, err)
-	wanted := &enginev1.ExecutionPayloadHeaderDeneb{
+	wanted := &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       prevHeader.ParentHash(),
 		FeeRecipient:     prevHeader.FeeRecipient(),
 		StateRoot:        prevHeader.StateRoot(),

@@ -13,12 +13,12 @@ import (
 )
 
 func blockWithWithdrawals(ssz []byte) (interfaces.SignedBeaconBlock, error) {
-	e := &enginev1.ExecutionPayloadCapella{}
+	e := &enginev1.SilaPayloadCapella{}
 	if err := e.UnmarshalSSZ(ssz); err != nil {
 		return nil, err
 	}
 	b := util.NewBeaconBlockCapella()
-	b.Block.Body = &silapb.BeaconBlockBodyCapella{ExecutionPayload: e}
+	b.Block.Body = &silapb.BeaconBlockBodyCapella{SilaPayload: e}
 	return blocks.NewSignedBeaconBlock(b)
 }
 

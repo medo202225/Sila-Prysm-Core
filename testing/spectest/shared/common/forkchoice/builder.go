@@ -121,14 +121,14 @@ func (bb *Builder) ValidBlock(t testing.TB, b interfaces.ReadOnlySignedBeaconBlo
 	require.NoError(t, bb.service.ReceiveBlock(ctx, b, r, nil))
 }
 
-// ExecutionPayloadEnvelope receives an envelope and notifies the chain service.
+// SilaPayloadEnvelope receives an envelope and notifies the chain service.
 // If expectValid is false the receive call must error; otherwise it must succeed.
-func (bb *Builder) ExecutionPayloadEnvelope(t testing.TB, signed *silapb.SignedExecutionPayloadEnvelope, expectValid bool) {
-	ro, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signed)
+func (bb *Builder) SilaPayloadEnvelope(t testing.TB, signed *silapb.SignedSilaPayloadEnvelope, expectValid bool) {
+	ro, err := blocks.WrappedROSignedSilaPayloadEnvelope(signed)
 	require.NoError(t, err)
 	ctx, cancel := context.WithTimeout(t.Context(), 3*time.Second)
 	defer cancel()
-	err = bb.service.ReceiveExecutionPayloadEnvelope(ctx, ro)
+	err = bb.service.ReceiveSilaPayloadEnvelope(ctx, ro)
 	if expectValid {
 		require.NoError(t, err)
 	} else {

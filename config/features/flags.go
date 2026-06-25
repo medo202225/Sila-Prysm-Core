@@ -130,9 +130,9 @@ var (
 		Name:  "enable-full-ssz-data-logging",
 		Usage: "Enables displaying logs for full ssz data on rejected gossip messages.",
 	}
-	SaveFullExecutionPayloads = &cli.BoolFlag{
-		Name:  "save-full-execution-payloads",
-		Usage: "Saves beacon blocks with full execution payloads instead of execution payload headers in the database.",
+	SaveFullSilaPayloads = &cli.BoolFlag{
+		Name:  "save-full-sila-payloads",
+		Usage: "Saves beacon blocks with full sila payloads instead of sila payload headers in the database.",
 	}
 	EnableBeaconRESTApi = &cli.BoolFlag{
 		Name:  "enable-beacon-rest-api",
@@ -274,7 +274,7 @@ var BeaconChainFlags = combinedFlags([]cli.Flag{
 	disablePeerScorer,
 	disableBroadcastSlashingFlag,
 	disableStakinContractCheck,
-	SaveFullExecutionPayloads,
+	SaveFullSilaPayloads,
 	enableStartupOptimistic,
 	ignoreUnviableAttestations,
 	trackEquivocations,

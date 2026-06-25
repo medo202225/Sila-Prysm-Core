@@ -283,14 +283,14 @@ func BuildSignedBeaconBlock(blk interfaces.ReadOnlyBeaconBlock, signature []byte
 
 func getWrappedPayload(payload any) (wrappedPayload interfaces.ExecutionData, wrapErr error) {
 	switch p := payload.(type) {
-	case *enginev1.ExecutionPayload:
-		wrappedPayload, wrapErr = WrappedExecutionPayload(p)
-	case *enginev1.ExecutionPayloadCapella:
-		wrappedPayload, wrapErr = WrappedExecutionPayloadCapella(p)
-	case *enginev1.ExecutionPayloadDeneb:
-		wrappedPayload, wrapErr = WrappedExecutionPayloadDeneb(p)
+	case *enginev1.SilaPayload:
+		wrappedPayload, wrapErr = WrappedSilaPayload(p)
+	case *enginev1.SilaPayloadCapella:
+		wrappedPayload, wrapErr = WrappedSilaPayloadCapella(p)
+	case *enginev1.SilaPayloadDeneb:
+		wrappedPayload, wrapErr = WrappedSilaPayloadDeneb(p)
 	default:
-		wrappedPayload, wrapErr = nil, fmt.Errorf("%T is not a type of execution payload", p)
+		wrappedPayload, wrapErr = nil, fmt.Errorf("%T is not a type of sila payload", p)
 	}
 	return wrappedPayload, wrapErr
 }
@@ -305,7 +305,7 @@ func checkPayloadAgainstHeader(wrappedPayload, payloadHeader interfaces.Executio
 	}
 	payloadRoot, err := wrappedPayload.HashTreeRoot()
 	if err != nil {
-		return errors.Wrap(err, "could not hash tree root execution payload")
+		return errors.Wrap(err, "could not hash tree root sila payload")
 	}
 	payloadHeaderRoot, err := payloadHeader.HashTreeRoot()
 	if err != nil {
@@ -321,10 +321,10 @@ func checkPayloadAgainstHeader(wrappedPayload, payloadHeader interfaces.Executio
 	return nil
 }
 
-// BuildSignedBeaconBlockFromExecutionPayload takes a signed, blinded beacon block and converts into
-// a full, signed beacon block by specifying an execution payload.
+// BuildSignedBeaconBlockFromSilaPayload takes a signed, blinded beacon block and converts into
+// a full, signed beacon block by specifying an sila payload.
 // nolint:gocognit
-func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBeaconBlock, payload any) (interfaces.SignedBeaconBlock, error) {
+func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBlock, payload any) (interfaces.SignedBeaconBlock, error) {
 	if err := BeaconBlockIsNil(blk); err != nil {
 		return nil, err
 	}
@@ -334,7 +334,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 	b := blk.Block()
 	payloadHeader, err := b.Body().Execution()
 	if err != nil {
-		return nil, errors.Wrap(err, "could not get execution payload header")
+		return nil, errors.Wrap(err, "could not get sila payload header")
 	}
 
 	wrappedPayload, err := getWrappedPayload(payload)
@@ -357,9 +357,9 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 	var fullBlock any
 	switch blk.Version() {
 	case version.Bellatrix:
-		p, ok := payload.(*enginev1.ExecutionPayload)
+		p, ok := payload.(*enginev1.SilaPayload)
 		if !ok {
-			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.ExecutionPayload{}, payload)
+			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.SilaPayload{}, payload)
 		}
 		var atts []*eth.Attestation
 		if b.Body().Attestations() != nil {
@@ -399,15 +399,15 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 					Deposits:          b.Body().Deposits(),
 					VoluntaryExits:    b.Body().VoluntaryExits(),
 					SyncAggregate:     syncAgg,
-					ExecutionPayload:  p,
+					SilaPayload:  p,
 				},
 			},
 			Signature: sig[:],
 		}
 	case version.Capella:
-		p, ok := payload.(*enginev1.ExecutionPayloadCapella)
+		p, ok := payload.(*enginev1.SilaPayloadCapella)
 		if !ok {
-			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.ExecutionPayloadCapella{}, payload)
+			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.SilaPayloadCapella{}, payload)
 		}
 		blsToExecutionChanges, err := b.Body().BLSToExecutionChanges()
 		if err != nil {
@@ -451,16 +451,16 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 					Deposits:              b.Body().Deposits(),
 					VoluntaryExits:        b.Body().VoluntaryExits(),
 					SyncAggregate:         syncAgg,
-					ExecutionPayload:      p,
+					SilaPayload:      p,
 					BlsToExecutionChanges: blsToExecutionChanges,
 				},
 			},
 			Signature: sig[:],
 		}
 	case version.Deneb:
-		p, ok := payload.(*enginev1.ExecutionPayloadDeneb)
+		p, ok := payload.(*enginev1.SilaPayloadDeneb)
 		if !ok {
-			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.ExecutionPayloadDeneb{}, payload)
+			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.SilaPayloadDeneb{}, payload)
 		}
 		blsToExecutionChanges, err := b.Body().BLSToExecutionChanges()
 		if err != nil {
@@ -508,7 +508,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 					Deposits:              b.Body().Deposits(),
 					VoluntaryExits:        b.Body().VoluntaryExits(),
 					SyncAggregate:         syncAgg,
-					ExecutionPayload:      p,
+					SilaPayload:      p,
 					BlsToExecutionChanges: blsToExecutionChanges,
 					BlobKzgCommitments:    commitments,
 				},
@@ -516,9 +516,9 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 			Signature: sig[:],
 		}
 	case version.Electra:
-		p, ok := payload.(*enginev1.ExecutionPayloadDeneb)
+		p, ok := payload.(*enginev1.SilaPayloadDeneb)
 		if !ok {
-			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.ExecutionPayloadDeneb{}, payload)
+			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.SilaPayloadDeneb{}, payload)
 		}
 		blsToExecutionChanges, err := b.Body().BLSToExecutionChanges()
 		if err != nil {
@@ -572,7 +572,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 					Deposits:              b.Body().Deposits(),
 					VoluntaryExits:        b.Body().VoluntaryExits(),
 					SyncAggregate:         syncAgg,
-					ExecutionPayload:      p,
+					SilaPayload:      p,
 					BlsToExecutionChanges: blsToExecutionChanges,
 					BlobKzgCommitments:    commitments,
 					ExecutionRequests:     er,
@@ -581,9 +581,9 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 			Signature: sig[:],
 		}
 	case version.Fulu:
-		p, ok := payload.(*enginev1.ExecutionPayloadDeneb)
+		p, ok := payload.(*enginev1.SilaPayloadDeneb)
 		if !ok {
-			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.ExecutionPayloadDeneb{}, payload)
+			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &enginev1.SilaPayloadDeneb{}, payload)
 		}
 		blsToExecutionChanges, err := b.Body().BLSToExecutionChanges()
 		if err != nil {
@@ -637,7 +637,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 					Deposits:              b.Body().Deposits(),
 					VoluntaryExits:        b.Body().VoluntaryExits(),
 					SyncAggregate:         syncAgg,
-					ExecutionPayload:      p,
+					SilaPayload:      p,
 					BlsToExecutionChanges: blsToExecutionChanges,
 					BlobKzgCommitments:    commitments,
 					ExecutionRequests:     er,

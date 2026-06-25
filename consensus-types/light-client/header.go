@@ -90,7 +90,7 @@ func NewWrappedHeaderCapella(p *pb.LightClientHeaderCapella) (interfaces.LightCl
 	if p == nil {
 		return nil, consensustypes.ErrNilObjectWrapped
 	}
-	execution, err := blocks.WrappedExecutionPayloadHeaderCapella(p.Execution)
+	execution, err := blocks.WrappedSilaPayloadHeaderCapella(p.Execution)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func NewWrappedHeaderDeneb(p *pb.LightClientHeaderDeneb) (interfaces.LightClient
 	if p == nil {
 		return nil, consensustypes.ErrNilObjectWrapped
 	}
-	execution, err := blocks.WrappedExecutionPayloadHeaderDeneb(p.Execution)
+	execution, err := blocks.WrappedSilaPayloadHeaderDeneb(p.Execution)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func NewWrappedHeaderElectra(p *pb.LightClientHeaderDeneb) (interfaces.LightClie
 	if p == nil {
 		return nil, consensustypes.ErrNilObjectWrapped
 	}
-	execution, err := blocks.WrappedExecutionPayloadHeaderDeneb(p.Execution)
+	execution, err := blocks.WrappedSilaPayloadHeaderDeneb(p.Execution)
 	if err != nil {
 		return nil, err
 	}

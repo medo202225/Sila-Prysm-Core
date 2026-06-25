@@ -60,7 +60,7 @@ const (
 	SyncCommitteeContributionTopic = "contribution_and_proof"
 	// BLSToExecutionChangeTopic represents a new received BLS to execution change event topic.
 	BLSToExecutionChangeTopic = "bls_to_execution_change"
-	// PayloadAttributesTopic represents a new payload attributes for execution payload building event topic.
+	// PayloadAttributesTopic represents a new payload attributes for sila payload building event topic.
 	PayloadAttributesTopic = "payload_attributes"
 	// BlobSidecarTopic represents a new blob sidecar event topic
 	BlobSidecarTopic = "blob_sidecar"
@@ -74,19 +74,19 @@ const (
 	LightClientOptimisticUpdateTopic = "light_client_optimistic_update"
 	// DataColumnTopic represents a data column sidecar event topic
 	DataColumnTopic = "data_column_sidecar"
-	// ExecutionPayloadAvailableTopic represents the event topic fired when an execution payload envelope
+	// SilaPayloadAvailableTopic represents the event topic fired when an sila payload envelope
 	// and its custody data are available (for PTC voting). It does not require EL validity.
 	// TODO: Decouple emitting this event from EL validation.
-	ExecutionPayloadAvailableTopic = "execution_payload_available"
-	// ExecutionPayloadTopic represents the event topic fired after an execution payload envelope is
+	SilaPayloadAvailableTopic = "sila_payload_available"
+	// SilaPayloadTopic represents the event topic fired after an sila payload envelope is
 	// successfully imported into fork choice (post EL execution).
-	ExecutionPayloadTopic = "execution_payload"
-	// ExecutionPayloadGossipTopic represents an execution payload envelope received from gossip or API
+	SilaPayloadTopic = "sila_payload"
+	// SilaPayloadGossipTopic represents an sila payload envelope received from gossip or API
 	// that passes validation rules.
-	ExecutionPayloadGossipTopic = "execution_payload_gossip"
-	// ExecutionPayloadBidTopic represents a new execution payload bid event topic.
+	SilaPayloadGossipTopic = "sila_payload_gossip"
+	// SilaPayloadBidTopic represents a new sila payload bid event topic.
 	// This topic is currently not triggered but is recognized to avoid client subscription errors.
-	ExecutionPayloadBidTopic = "execution_payload_bid"
+	SilaPayloadBidTopic = "sila_payload_bid"
 	// PayloadAttestationMessageTopic represents a new payload attestation message event topic.
 	PayloadAttestationMessageTopic = "payload_attestation_message"
 	// ProposerPreferencesTopic represents a new signed proposer preferences event topic.
@@ -127,7 +127,7 @@ var opsFeedEventTopics = map[feed.EventType]string{
 	operation.DataColumnReceived:                DataColumnTopic,
 	operation.PayloadAttestationMessageReceived: PayloadAttestationMessageTopic,
 	operation.ProposerPreferencesReceived:       ProposerPreferencesTopic,
-	operation.ExecutionPayloadGossipReceived:    ExecutionPayloadGossipTopic,
+	operation.SilaPayloadGossipReceived:    SilaPayloadGossipTopic,
 }
 
 var stateFeedEventTopics = map[feed.EventType]string{
@@ -138,13 +138,13 @@ var stateFeedEventTopics = map[feed.EventType]string{
 	statefeed.Reorg:                       ChainReorgTopic,
 	statefeed.BlockProcessed:              BlockTopic,
 	statefeed.PayloadAttributes:           PayloadAttributesTopic,
-	statefeed.ExecutionPayloadAvailable:   ExecutionPayloadAvailableTopic,
-	statefeed.ExecutionPayloadProcessed:   ExecutionPayloadTopic,
+	statefeed.SilaPayloadAvailable:   SilaPayloadAvailableTopic,
+	statefeed.SilaPayloadProcessed:   SilaPayloadTopic,
 }
 
 var topicsForStateFeed = func() map[string]bool {
 	m := topicsForFeed(stateFeedEventTopics)
-	m[ExecutionPayloadBidTopic] = true
+	m[SilaPayloadBidTopic] = true
 	return m
 }()
 var topicsForOpsFeed = topicsForFeed(opsFeedEventTopics)
@@ -496,12 +496,12 @@ func topicForEvent(event *feed.Event) string {
 		return PayloadAttestationMessageTopic
 	case *operation.ProposerPreferencesReceivedData:
 		return ProposerPreferencesTopic
-	case *statefeed.ExecutionPayloadAvailableData:
-		return ExecutionPayloadAvailableTopic
-	case *statefeed.ExecutionPayloadProcessedData:
-		return ExecutionPayloadTopic
-	case *operation.ExecutionPayloadGossipReceivedData:
-		return ExecutionPayloadGossipTopic
+	case *statefeed.SilaPayloadAvailableData:
+		return SilaPayloadAvailableTopic
+	case *statefeed.SilaPayloadProcessedData:
+		return SilaPayloadTopic
+	case *operation.SilaPayloadGossipReceivedData:
+		return SilaPayloadGossipTopic
 	default:
 		return InvalidTopic
 	}
@@ -686,16 +686,16 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 				Data:    structs.SignedProposerPreferencesFromConsensus(v.Data),
 			})
 		}, nil
-	case *statefeed.ExecutionPayloadAvailableData:
+	case *statefeed.SilaPayloadAvailableData:
 		return func() io.Reader {
-			return jsonMarshalReader(eventName, &structs.ExecutionPayloadAvailableEvent{
+			return jsonMarshalReader(eventName, &structs.SilaPayloadAvailableEvent{
 				Slot:      fmt.Sprintf("%d", v.Slot),
 				BlockRoot: hexutil.Encode(v.BlockRoot[:]),
 			})
 		}, nil
-	case *statefeed.ExecutionPayloadProcessedData:
+	case *statefeed.SilaPayloadProcessedData:
 		return func() io.Reader {
-			return jsonMarshalReader(eventName, &structs.ExecutionPayloadEvent{
+			return jsonMarshalReader(eventName, &structs.SilaPayloadEvent{
 				Slot:                fmt.Sprintf("%d", v.Slot),
 				BuilderIndex:        fmt.Sprintf("%d", v.BuilderIndex),
 				BlockHash:           hexutil.Encode(v.BlockHash[:]),
@@ -703,9 +703,9 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 				ExecutionOptimistic: v.Optimistic,
 			})
 		}, nil
-	case *operation.ExecutionPayloadGossipReceivedData:
+	case *operation.SilaPayloadGossipReceivedData:
 		return func() io.Reader {
-			return jsonMarshalReader(eventName, &structs.ExecutionPayloadGossipEvent{
+			return jsonMarshalReader(eventName, &structs.SilaPayloadGossipEvent{
 				Slot:         fmt.Sprintf("%d", v.Slot),
 				BuilderIndex: fmt.Sprintf("%d", v.BuilderIndex),
 				BlockHash:    hexutil.Encode(v.BlockHash[:]),
@@ -855,7 +855,7 @@ func (s *Server) fillEventData(ctx context.Context, ev payloadattribute.EventDat
 
 	payload, err := ev.HeadBlock.Block().Body().Execution()
 	if err != nil {
-		return ev, errors.Wrap(err, "could not get execution payload for head block")
+		return ev, errors.Wrap(err, "could not get sila payload for head block")
 	}
 	ev.ParentBlockHash = payload.BlockHash()
 	ev.ParentBlockNumber = payload.BlockNumber()

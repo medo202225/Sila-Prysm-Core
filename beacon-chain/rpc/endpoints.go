@@ -223,7 +223,7 @@ func (s *Service) validatorEndpoints(
 		PeerManager:                   s.cfg.PeerManager,
 		Broadcaster:                   s.cfg.Broadcaster,
 		V1Alpha1Server:                validatorServer,
-		ExecutionPayloadEnvelopeCache: s.cfg.ExecutionPayloadEnvelopeCache,
+		SilaPayloadEnvelopeCache: s.cfg.SilaPayloadEnvelopeCache,
 		Stater:                        stater,
 		SyncCommitteePool:             s.cfg.SyncCommitteeObjectPool,
 		ChainInfoFetcher:              s.cfg.ChainInfoFetcher,
@@ -459,12 +459,12 @@ func (s *Service) validatorEndpoints(
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/sila/v1/validator/execution_payload_envelopes/{slot}/{beacon_block_root}",
-			name:     namespace + ".ExecutionPayloadEnvelope",
+			template: "/sila/v1/validator/sila_payload_envelopes/{slot}/{beacon_block_root}",
+			name:     namespace + ".SilaPayloadEnvelope",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType, api.OctetStreamMediaType}),
 			},
-			handler: server.ExecutionPayloadEnvelope,
+			handler: server.SilaPayloadEnvelope,
 			methods: []string{http.MethodGet},
 		},
 	}
@@ -606,7 +606,7 @@ func (s *Service) beaconEndpoints(
 		ForkchoiceFetcher:             s.cfg.ForkchoiceFetcher,
 		CoreService:                   coreService,
 		AttestationStateFetcher:       s.cfg.AttestationReceiver,
-		ExecutionPayloadEnvelopeCache: s.cfg.ExecutionPayloadEnvelopeCache,
+		SilaPayloadEnvelopeCache: s.cfg.SilaPayloadEnvelopeCache,
 	}
 
 	const namespace = "beacon"
@@ -982,32 +982,32 @@ func (s *Service) beaconEndpoints(
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/sila/v1/beacon/execution_payload_envelopes/{block_id}",
-			name:     namespace + ".GetExecutionPayloadEnvelope",
+			template: "/sila/v1/beacon/sila_payload_envelopes/{block_id}",
+			name:     namespace + ".GetSilaPayloadEnvelope",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType, api.OctetStreamMediaType}),
 			},
-			handler: server.GetExecutionPayloadEnvelope,
+			handler: server.GetSilaPayloadEnvelope,
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/sila/v1/beacon/execution_payload_envelopes",
-			name:     namespace + ".PublishExecutionPayloadEnvelope",
+			template: "/sila/v1/beacon/sila_payload_envelopes",
+			name:     namespace + ".PublishSilaPayloadEnvelope",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType, api.OctetStreamMediaType}),
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
 			},
-			handler: server.PublishExecutionPayloadEnvelope,
+			handler: server.PublishSilaPayloadEnvelope,
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/sila/v1/beacon/execution_payload_bids",
-			name:     namespace + ".PublishSignedExecutionPayloadBid",
+			template: "/sila/v1/beacon/sila_payload_bids",
+			name:     namespace + ".PublishSignedSilaPayloadBid",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType, api.OctetStreamMediaType}),
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
 			},
-			handler: server.PublishSignedExecutionPayloadBid,
+			handler: server.PublishSignedSilaPayloadBid,
 			methods: []string{http.MethodPost},
 		},
 	}

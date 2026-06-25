@@ -9,33 +9,33 @@ import (
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
-// signedExecutionPayloadBid wraps the protobuf signed execution payload bid
-// and implements the ROSignedExecutionPayloadBid interface.
-type signedExecutionPayloadBid struct {
-	bid *silapb.SignedExecutionPayloadBid
+// signedSilaPayloadBid wraps the protobuf signed sila payload bid
+// and implements the ROSignedSilaPayloadBid interface.
+type signedSilaPayloadBid struct {
+	bid *silapb.SignedSilaPayloadBid
 }
 
-// executionPayloadBidGloas wraps the protobuf execution payload bid for Gloas fork
-// and implements the ROExecutionPayloadBidGloas interface.
-type executionPayloadBidGloas struct {
-	payload *silapb.ExecutionPayloadBid
+// silaPayloadBidGloas wraps the protobuf sila payload bid for Gloas fork
+// and implements the ROSilaPayloadBidGloas interface.
+type silaPayloadBidGloas struct {
+	payload *silapb.SilaPayloadBid
 }
 
-// IsNil checks if the signed execution payload bid is nil or invalid.
-func (s signedExecutionPayloadBid) IsNil() bool {
+// IsNil checks if the signed sila payload bid is nil or invalid.
+func (s signedSilaPayloadBid) IsNil() bool {
 	if s.bid == nil {
 		return true
 	}
 
-	if _, err := WrappedROExecutionPayloadBid(s.bid.Message); err != nil {
+	if _, err := WrappedROSilaPayloadBid(s.bid.Message); err != nil {
 		return true
 	}
 
 	return len(s.bid.Signature) != 96
 }
 
-// IsNil checks if the execution payload bid is nil or has invalid fields.
-func (h executionPayloadBidGloas) IsNil() bool {
+// IsNil checks if the sila payload bid is nil or has invalid fields.
+func (h silaPayloadBidGloas) IsNil() bool {
 	if h.payload == nil {
 		return true
 	}
@@ -57,103 +57,103 @@ func (h executionPayloadBidGloas) IsNil() bool {
 	return false
 }
 
-// WrappedROSignedExecutionPayloadBid creates a new read-only signed execution payload bid
+// WrappedROSignedSilaPayloadBid creates a new read-only signed sila payload bid
 // wrapper from the given protobuf message.
-func WrappedROSignedExecutionPayloadBid(pb *silapb.SignedExecutionPayloadBid) (interfaces.ROSignedExecutionPayloadBid, error) {
-	wrapper := signedExecutionPayloadBid{bid: pb}
+func WrappedROSignedSilaPayloadBid(pb *silapb.SignedSilaPayloadBid) (interfaces.ROSignedSilaPayloadBid, error) {
+	wrapper := signedSilaPayloadBid{bid: pb}
 	if wrapper.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
 	return wrapper, nil
 }
 
-// WrappedROExecutionPayloadBid creates a new read-only execution payload bid
+// WrappedROSilaPayloadBid creates a new read-only sila payload bid
 // wrapper for the Gloas fork from the given protobuf message.
-func WrappedROExecutionPayloadBid(pb *silapb.ExecutionPayloadBid) (interfaces.ROExecutionPayloadBid, error) {
-	wrapper := executionPayloadBidGloas{payload: pb}
+func WrappedROSilaPayloadBid(pb *silapb.SilaPayloadBid) (interfaces.ROSilaPayloadBid, error) {
+	wrapper := silaPayloadBidGloas{payload: pb}
 	if wrapper.IsNil() {
 		return nil, consensus_types.ErrNilObjectWrapped
 	}
 	return wrapper, nil
 }
 
-// Bid returns the execution payload bid as a read-only interface.
-func (s signedExecutionPayloadBid) Bid() (interfaces.ROExecutionPayloadBid, error) {
-	return WrappedROExecutionPayloadBid(s.bid.Message)
+// Bid returns the sila payload bid as a read-only interface.
+func (s signedSilaPayloadBid) Bid() (interfaces.ROSilaPayloadBid, error) {
+	return WrappedROSilaPayloadBid(s.bid.Message)
 }
 
-// SigningRoot computes the signing root for the execution payload bid with the given domain.
-func (s signedExecutionPayloadBid) SigningRoot(domain []byte) ([32]byte, error) {
+// SigningRoot computes the signing root for the sila payload bid with the given domain.
+func (s signedSilaPayloadBid) SigningRoot(domain []byte) ([32]byte, error) {
 	return signing.ComputeSigningRoot(s.bid.Message, domain)
 }
 
 // Signature returns the BLS signature as a 96-byte array.
-func (s signedExecutionPayloadBid) Signature() [96]byte {
+func (s signedSilaPayloadBid) Signature() [96]byte {
 	return [96]byte(s.bid.Signature)
 }
 
 // ParentBlockHash returns the hash of the parent execution block.
-func (h executionPayloadBidGloas) ParentBlockHash() [32]byte {
+func (h silaPayloadBidGloas) ParentBlockHash() [32]byte {
 	return [32]byte(h.payload.ParentBlockHash)
 }
 
 // ParentBlockRoot returns the beacon block root of the parent block.
-func (h executionPayloadBidGloas) ParentBlockRoot() [32]byte {
+func (h silaPayloadBidGloas) ParentBlockRoot() [32]byte {
 	return [32]byte(h.payload.ParentBlockRoot)
 }
 
 // PrevRandao returns the previous randao value for the execution block.
-func (h executionPayloadBidGloas) PrevRandao() [32]byte {
+func (h silaPayloadBidGloas) PrevRandao() [32]byte {
 	return [32]byte(h.payload.PrevRandao)
 }
 
 // BlockHash returns the hash of the execution block.
-func (h executionPayloadBidGloas) BlockHash() [32]byte {
+func (h silaPayloadBidGloas) BlockHash() [32]byte {
 	return [32]byte(h.payload.BlockHash)
 }
 
 // GasLimit returns the gas limit for the execution block.
-func (h executionPayloadBidGloas) GasLimit() uint64 {
+func (h silaPayloadBidGloas) GasLimit() uint64 {
 	return h.payload.GasLimit
 }
 
 // BuilderIndex returns the builder index of the builder who created this bid.
-func (h executionPayloadBidGloas) BuilderIndex() primitives.BuilderIndex {
+func (h silaPayloadBidGloas) BuilderIndex() primitives.BuilderIndex {
 	return h.payload.BuilderIndex
 }
 
 // Slot returns the beacon chain slot for which this bid was created.
-func (h executionPayloadBidGloas) Slot() primitives.Slot {
+func (h silaPayloadBidGloas) Slot() primitives.Slot {
 	return h.payload.Slot
 }
 
 // Value returns the payment value offered by the builder in Gwei.
-func (h executionPayloadBidGloas) Value() primitives.Gwei {
+func (h silaPayloadBidGloas) Value() primitives.Gwei {
 	return primitives.Gwei(h.payload.Value)
 }
 
 // ExecutionPayment returns the execution payment offered by the builder.
-func (h executionPayloadBidGloas) ExecutionPayment() primitives.Gwei {
+func (h silaPayloadBidGloas) ExecutionPayment() primitives.Gwei {
 	return primitives.Gwei(h.payload.ExecutionPayment)
 }
 
 // BlobKzgCommitments returns the KZG commitments for blobs.
-func (h executionPayloadBidGloas) BlobKzgCommitments() [][]byte {
+func (h silaPayloadBidGloas) BlobKzgCommitments() [][]byte {
 	return bytesutil.SafeCopy2dBytes(h.payload.BlobKzgCommitments)
 }
 
 // BlobKzgCommitmentCount returns the number of blob KZG commitments.
-func (h executionPayloadBidGloas) BlobKzgCommitmentCount() uint64 {
+func (h silaPayloadBidGloas) BlobKzgCommitmentCount() uint64 {
 	return uint64(len(h.payload.BlobKzgCommitments))
 }
 
 // FeeRecipient returns the execution address that will receive the builder payment.
-func (h executionPayloadBidGloas) FeeRecipient() [20]byte {
+func (h silaPayloadBidGloas) FeeRecipient() [20]byte {
 	return [20]byte(h.payload.FeeRecipient)
 }
 
 // ExecutionRequestsRoot returns the hash tree root of the execution requests.
-func (h executionPayloadBidGloas) ExecutionRequestsRoot() [32]byte {
+func (h silaPayloadBidGloas) ExecutionRequestsRoot() [32]byte {
 	if h.payload == nil || len(h.payload.ExecutionRequestsRoot) < 32 {
 		return [32]byte{}
 	}

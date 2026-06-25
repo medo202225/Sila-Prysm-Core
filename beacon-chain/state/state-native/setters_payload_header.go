@@ -12,71 +12,71 @@ import (
 	"github.com/pkg/errors"
 )
 
-// SetLatestExecutionPayloadHeader for the beacon state.
-func (b *BeaconState) SetLatestExecutionPayloadHeader(val interfaces.ExecutionData) error {
+// SetLatestSilaPayloadHeader for the beacon state.
+func (b *BeaconState) SetLatestSilaPayloadHeader(val interfaces.ExecutionData) error {
 	b.lock.Lock()
 	defer b.lock.Unlock()
 
 	if b.version < version.Bellatrix {
-		return errNotSupported("SetLatestExecutionPayloadHeader", b.version)
+		return errNotSupported("SetLatestSilaPayloadHeader", b.version)
 	}
 
 	switch header := val.Proto().(type) {
-	case *enginev1.ExecutionPayload:
+	case *enginev1.SilaPayload:
 		if b.version != version.Bellatrix {
-			return fmt.Errorf("wrong state version (%s) for bellatrix execution payload", version.String(b.version))
+			return fmt.Errorf("wrong state version (%s) for bellatrix sila payload", version.String(b.version))
 		}
 		latest, err := consensusblocks.PayloadToHeader(val)
 		if err != nil {
 			return errors.Wrap(err, "could not convert payload to header")
 		}
-		b.latestExecutionPayloadHeader = latest
-		b.markFieldAsDirty(types.LatestExecutionPayloadHeader)
+		b.latestSilaPayloadHeader = latest
+		b.markFieldAsDirty(types.LatestSilaPayloadHeader)
 		return nil
-	case *enginev1.ExecutionPayloadCapella:
+	case *enginev1.SilaPayloadCapella:
 		if b.version != version.Capella {
-			return fmt.Errorf("wrong state version (%s) for capella execution payload", version.String(b.version))
+			return fmt.Errorf("wrong state version (%s) for capella sila payload", version.String(b.version))
 		}
 		latest, err := consensusblocks.PayloadToHeaderCapella(val)
 		if err != nil {
 			return errors.Wrap(err, "could not convert payload to header")
 		}
-		b.latestExecutionPayloadHeaderCapella = latest
-		b.markFieldAsDirty(types.LatestExecutionPayloadHeaderCapella)
+		b.latestSilaPayloadHeaderCapella = latest
+		b.markFieldAsDirty(types.LatestSilaPayloadHeaderCapella)
 		return nil
-	case *enginev1.ExecutionPayloadDeneb:
+	case *enginev1.SilaPayloadDeneb:
 		if !(b.version >= version.Deneb) {
-			return fmt.Errorf("wrong state version (%s) for deneb execution payload", version.String(b.version))
+			return fmt.Errorf("wrong state version (%s) for deneb sila payload", version.String(b.version))
 		}
 		latest, err := consensusblocks.PayloadToHeaderDeneb(val)
 		if err != nil {
 			return errors.Wrap(err, "could not convert payload to header")
 		}
-		b.latestExecutionPayloadHeaderDeneb = latest
-		b.markFieldAsDirty(types.LatestExecutionPayloadHeaderDeneb)
+		b.latestSilaPayloadHeaderDeneb = latest
+		b.markFieldAsDirty(types.LatestSilaPayloadHeaderDeneb)
 		return nil
-	case *enginev1.ExecutionPayloadHeader:
+	case *enginev1.SilaPayloadHeader:
 		if b.version != version.Bellatrix {
-			return fmt.Errorf("wrong state version (%s) for bellatrix execution payload header", version.String(b.version))
+			return fmt.Errorf("wrong state version (%s) for bellatrix sila payload header", version.String(b.version))
 		}
-		b.latestExecutionPayloadHeader = header
-		b.markFieldAsDirty(types.LatestExecutionPayloadHeader)
+		b.latestSilaPayloadHeader = header
+		b.markFieldAsDirty(types.LatestSilaPayloadHeader)
 		return nil
-	case *enginev1.ExecutionPayloadHeaderCapella:
+	case *enginev1.SilaPayloadHeaderCapella:
 		if b.version != version.Capella {
-			return fmt.Errorf("wrong state version (%s) for capella execution payload header", version.String(b.version))
+			return fmt.Errorf("wrong state version (%s) for capella sila payload header", version.String(b.version))
 		}
-		b.latestExecutionPayloadHeaderCapella = header
-		b.markFieldAsDirty(types.LatestExecutionPayloadHeaderCapella)
+		b.latestSilaPayloadHeaderCapella = header
+		b.markFieldAsDirty(types.LatestSilaPayloadHeaderCapella)
 		return nil
-	case *enginev1.ExecutionPayloadHeaderDeneb:
+	case *enginev1.SilaPayloadHeaderDeneb:
 		if !(b.version >= version.Deneb) {
-			return fmt.Errorf("wrong state version (%s) for deneb execution payload header", version.String(b.version))
+			return fmt.Errorf("wrong state version (%s) for deneb sila payload header", version.String(b.version))
 		}
-		b.latestExecutionPayloadHeaderDeneb = header
-		b.markFieldAsDirty(types.LatestExecutionPayloadHeaderDeneb)
+		b.latestSilaPayloadHeaderDeneb = header
+		b.markFieldAsDirty(types.LatestSilaPayloadHeaderDeneb)
 		return nil
 	default:
-		return errors.New("value must be an execution payload header")
+		return errors.New("value must be an sila payload header")
 	}
 }

@@ -30,7 +30,7 @@ var (
 const (
 	BlockType   = "BeaconBlock"
 	SidecarType = "DataColumnSidecar"
-	BidType     = "ExecutionPayloadBid"
+	BidType     = "SilaPayloadBid"
 )
 
 type (
@@ -57,7 +57,7 @@ type (
 		blocks.VerifiedRODataColumn
 	}
 
-	// BidReconstructionSource is a ConstructionPopulator that uses the execution payload bid
+	// BidReconstructionSource is a ConstructionPopulator that uses the sila payload bid
 	// from a Gloas beacon block to extract KZG commitments for data column sidecar construction.
 	BidReconstructionSource struct {
 		blocks.ROBlock
@@ -81,7 +81,7 @@ func PopulateFromSidecar(sidecar blocks.VerifiedRODataColumn) *SidecarReconstruc
 }
 
 // PopulateFromBid creates a BidReconstructionSource from a Gloas beacon block.
-// In Gloas (ePBS), the execution payload is delivered separately via the payload envelope,
+// In Gloas (ePBS), the sila payload is delivered separately via the payload envelope,
 // but the KZG commitments are available in the bid embedded in the block, allowing
 // data column sidecars to be constructed from the EL as soon as the block arrives.
 func PopulateFromBid(block blocks.ROBlock) *BidReconstructionSource {
@@ -342,11 +342,11 @@ func (s *BidReconstructionSource) ProposerIndex() (primitives.ValidatorIndex, er
 	return s.Block().ProposerIndex(), nil
 }
 
-// Commitments returns the blob KZG commitments from the execution payload bid
+// Commitments returns the blob KZG commitments from the sila payload bid
 func (s *BidReconstructionSource) Commitments() ([][]byte, error) {
-	bid, err := s.Block().Body().SignedExecutionPayloadBid()
+	bid, err := s.Block().Body().SignedSilaPayloadBid()
 	if err != nil {
-		return nil, errors.Wrap(err, "signed execution payload bid")
+		return nil, errors.Wrap(err, "signed sila payload bid")
 	}
 	return bid.Message.BlobKzgCommitments, nil
 }

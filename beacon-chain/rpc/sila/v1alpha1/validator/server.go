@@ -49,8 +49,8 @@ type Server struct {
 	PayloadIDCache                   *cache.PayloadIDCache
 	TrackedValidatorsCache           *cache.TrackedValidatorsCache
 	ProposerPreferencesCache         *cache.ProposerPreferencesCache
-	HighestBidCache                  *cache.HighestExecutionPayloadBidCache
-	ExecutionPayloadEnvelopeCache    *cache.ExecutionPayloadEnvelopeCache
+	HighestBidCache                  *cache.HighestSilaPayloadBidCache
+	SilaPayloadEnvelopeCache    *cache.SilaPayloadEnvelopeCache
 	HeadFetcher                      blockchain.HeadFetcher
 	ForkFetcher                      blockchain.ForkFetcher
 	ForkchoiceFetcher                blockchain.ForkchoiceFetcher
@@ -74,7 +74,7 @@ type Server struct {
 	SyncCommitteePool                synccommittee.Pool
 	BlockReceiver                    blockchain.BlockReceiver
 	PayloadAttestationReceiver       blockchain.PayloadAttestationReceiver
-	ExecutionPayloadEnvelopeReceiver blockchain.ExecutionPayloadEnvelopeReceiver
+	SilaPayloadEnvelopeReceiver blockchain.SilaPayloadEnvelopeReceiver
 	BlobReceiver                     blockchain.BlobReceiver
 	DataColumnReceiver               blockchain.DataColumnReceiver
 	MockSilaExecutionVotes                    bool

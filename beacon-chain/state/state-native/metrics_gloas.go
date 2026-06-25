@@ -6,10 +6,10 @@ import (
 )
 
 var (
-	gloasExecutionPayloadAvailabilityRatio = promauto.NewGauge(
+	gloasSilaPayloadAvailabilityRatio = promauto.NewGauge(
 		prometheus.GaugeOpts{
-			Name: "gloas_execution_payload_availability_ratio",
-			Help: "The fraction of execution payload availability bits currently set in the beacon state.",
+			Name: "gloas_sila_payload_availability_ratio",
+			Help: "The fraction of sila payload availability bits currently set in the beacon state.",
 		},
 	)
 	gloasBuilderPendingWithdrawalsCount = promauto.NewGauge(

@@ -128,7 +128,7 @@ func (v *validator) ProposeBlock(ctx context.Context, slot primitives.Slot, pubK
 
 	var genericSignedBlock *silapb.GenericSignedBeaconBlock
 	// Special handling for Deneb blocks and later version because of blob side cars.
-	// Gloas blocks are handled differently - no blobs in block, execution payload is separate.
+	// Gloas blocks are handled differently - no blobs in block, sila payload is separate.
 	if blk.Version() >= version.Deneb && blk.Version() < version.Gloas && !blk.IsBlinded() {
 		pb, err := blk.Proto()
 		if err != nil {
@@ -201,7 +201,7 @@ func logProposedBlock(log *logrus.Entry, blk interfaces.SignedBeaconBlock, blkRo
 	if blk.Version() >= version.Bellatrix && blk.Version() < version.Gloas {
 		p, err := blk.Block().Body().Execution()
 		if err != nil {
-			return errors.Wrap(err, "failed to get execution payload")
+			return errors.Wrap(err, "failed to get sila payload")
 		}
 		log = log.WithFields(logrus.Fields{
 			"payloadHash": fmt.Sprintf("%#x", bytesutil.Trunc(p.BlockHash())),
@@ -211,7 +211,7 @@ func logProposedBlock(log *logrus.Entry, blk interfaces.SignedBeaconBlock, blkRo
 		if !blk.IsBlinded() {
 			txs, err := p.Transactions()
 			if err != nil {
-				return errors.Wrap(err, "failed to get execution payload transactions")
+				return errors.Wrap(err, "failed to get sila payload transactions")
 			}
 			log = log.WithField("txCount", len(txs))
 		}
@@ -221,7 +221,7 @@ func logProposedBlock(log *logrus.Entry, blk interfaces.SignedBeaconBlock, blkRo
 		if blk.Version() >= version.Capella && !blk.IsBlinded() {
 			withdrawals, err := p.Withdrawals()
 			if err != nil {
-				return errors.Wrap(err, "failed to get execution payload withdrawals")
+				return errors.Wrap(err, "failed to get sila payload withdrawals")
 			}
 			log = log.WithField("withdrawalCount", len(withdrawals))
 		}
@@ -235,9 +235,9 @@ func logProposedBlock(log *logrus.Entry, blk interfaces.SignedBeaconBlock, blkRo
 		}
 	}
 	if blk.Version() >= version.Gloas {
-		bid, err := blk.Block().Body().SignedExecutionPayloadBid()
+		bid, err := blk.Block().Body().SignedSilaPayloadBid()
 		if err != nil {
-			return errors.Wrap(err, "failed to get execution payload bid")
+			return errors.Wrap(err, "failed to get sila payload bid")
 		}
 		if bid != nil && bid.Message != nil {
 			msg := bid.Message

@@ -14,7 +14,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
-func TestSetSelfBuildExecutionPayloadBid(t *testing.T) {
+func TestSetSelfBuildSilaPayloadBid(t *testing.T) {
 	parentRoot := [32]byte{1, 2, 3}
 	slot := primitives.Slot(100)
 	proposerIndex := primitives.ValidatorIndex(42)
@@ -29,7 +29,7 @@ func TestSetSelfBuildExecutionPayloadBid(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    make([]byte, 32),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -40,7 +40,7 @@ func TestSetSelfBuildExecutionPayloadBid(t *testing.T) {
 		BlockHash:     make([]byte, 32),
 		ExtraData:     make([]byte, 0),
 	}
-	ed, err := consensusblocks.WrappedExecutionPayloadDeneb(payload)
+	ed, err := consensusblocks.WrappedSilaPayloadDeneb(payload)
 	require.NoError(t, err)
 
 	// 5 Gwei = 5,000,000,000 Wei
@@ -54,17 +54,17 @@ func TestSetSelfBuildExecutionPayloadBid(t *testing.T) {
 
 	vs := &Server{}
 
-	isSelfBuild, err := vs.setExecutionPayloadBid(t.Context(), sBlk, local, false)
+	isSelfBuild, err := vs.setSilaPayloadBid(t.Context(), sBlk, local, false)
 	require.NoError(t, err)
 	require.Equal(t, true, isSelfBuild)
 
 	// Verify the signed bid was set on the block.
-	signedBid, err := sBlk.Block().Body().SignedExecutionPayloadBid()
+	signedBid, err := sBlk.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, signedBid)
 	require.NotNil(t, signedBid.Message)
 
-	// Per spec (process_execution_payload_bid): for self-builds,
+	// Per spec (process_sila_payload_bid): for self-builds,
 	// signature must be G2 point-at-infinity.
 	require.DeepEqual(t, common.InfiniteSignature[:], signedBid.Signature)
 
@@ -77,7 +77,7 @@ func TestSetSelfBuildExecutionPayloadBid(t *testing.T) {
 	require.Equal(t, primitives.Gwei(0), bid.ExecutionPayment)
 }
 
-func TestSetSelfBuildExecutionPayloadBid_BlobCommitments(t *testing.T) {
+func TestSetSelfBuildSilaPayloadBid_BlobCommitments(t *testing.T) {
 	parentRoot := [32]byte{1, 2, 3}
 	slot := primitives.Slot(100)
 
@@ -90,7 +90,7 @@ func TestSetSelfBuildExecutionPayloadBid_BlobCommitments(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    make([]byte, 32),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -101,7 +101,7 @@ func TestSetSelfBuildExecutionPayloadBid_BlobCommitments(t *testing.T) {
 		BlockHash:     make([]byte, 32),
 		ExtraData:     make([]byte, 0),
 	}
-	ed, err := consensusblocks.WrappedExecutionPayloadDeneb(payload)
+	ed, err := consensusblocks.WrappedSilaPayloadDeneb(payload)
 	require.NoError(t, err)
 
 	// Create blob commitments matching what the EL would return.
@@ -123,10 +123,10 @@ func TestSetSelfBuildExecutionPayloadBid_BlobCommitments(t *testing.T) {
 	}
 
 	vs := &Server{}
-	_, err = vs.setExecutionPayloadBid(t.Context(), sBlk, local, true)
+	_, err = vs.setSilaPayloadBid(t.Context(), sBlk, local, true)
 	require.NoError(t, err)
 
-	signedBid, err := sBlk.Block().Body().SignedExecutionPayloadBid()
+	signedBid, err := sBlk.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, signedBid.Message)
 
@@ -135,7 +135,7 @@ func TestSetSelfBuildExecutionPayloadBid_BlobCommitments(t *testing.T) {
 	require.DeepEqual(t, commitments, signedBid.Message.BlobKzgCommitments)
 }
 
-func TestSetSelfBuildExecutionPayloadBid_NilPayload(t *testing.T) {
+func TestSetSelfBuildSilaPayloadBid_NilPayload(t *testing.T) {
 	sBlk, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockGloas{
 		Block: &silapb.BeaconBlockGloas{
 			Slot:       1,
@@ -147,14 +147,14 @@ func TestSetSelfBuildExecutionPayloadBid_NilPayload(t *testing.T) {
 
 	vs := &Server{}
 
-	_, err = vs.setExecutionPayloadBid(t.Context(), sBlk, nil, false)
-	require.ErrorContains(t, "local execution payload is nil", err)
+	_, err = vs.setSilaPayloadBid(t.Context(), sBlk, nil, false)
+	require.ErrorContains(t, "local sila payload is nil", err)
 
-	_, err = vs.setExecutionPayloadBid(t.Context(), sBlk, &consensusblocks.GetPayloadResponse{}, false)
-	require.ErrorContains(t, "local execution payload is nil", err)
+	_, err = vs.setSilaPayloadBid(t.Context(), sBlk, &consensusblocks.GetPayloadResponse{}, false)
+	require.ErrorContains(t, "local sila payload is nil", err)
 }
 
-func TestSetExecutionPayloadBid_PrefersP2PBid(t *testing.T) {
+func TestSetSilaPayloadBid_PrefersP2PBid(t *testing.T) {
 	parentHash := [32]byte{10, 20, 30}
 	parentRoot := [32]byte{1, 2, 3}
 	slot := primitives.Slot(100)
@@ -168,7 +168,7 @@ func TestSetExecutionPayloadBid_PrefersP2PBid(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    parentHash[:],
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -179,7 +179,7 @@ func TestSetExecutionPayloadBid_PrefersP2PBid(t *testing.T) {
 		BlockHash:     make([]byte, 32),
 		ExtraData:     make([]byte, 0),
 	}
-	ed, err := consensusblocks.WrappedExecutionPayloadDeneb(payload)
+	ed, err := consensusblocks.WrappedSilaPayloadDeneb(payload)
 	require.NoError(t, err)
 
 	local := &consensusblocks.GetPayloadResponse{
@@ -190,8 +190,8 @@ func TestSetExecutionPayloadBid_PrefersP2PBid(t *testing.T) {
 	}
 
 	// Populate the highest bid cache with a P2P bid.
-	p2pBid := &silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	p2pBid := &silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			Slot:                  slot,
 			ParentBlockHash:       parentHash[:],
 			ParentBlockRoot:       parentRoot[:],
@@ -208,16 +208,16 @@ func TestSetExecutionPayloadBid_PrefersP2PBid(t *testing.T) {
 		Signature: make([]byte, 96),
 	}
 
-	bidCache := cache.NewHighestExecutionPayloadBidCache()
+	bidCache := cache.NewHighestSilaPayloadBidCache()
 	bidCache.SetIfHigher(p2pBid)
 
 	vs := &Server{HighestBidCache: bidCache}
 
-	isSelfBuild, err := vs.setExecutionPayloadBid(t.Context(), sBlk, local, false)
+	isSelfBuild, err := vs.setSilaPayloadBid(t.Context(), sBlk, local, false)
 	require.NoError(t, err)
 	require.Equal(t, false, isSelfBuild)
 
-	signedBid, err := sBlk.Block().Body().SignedExecutionPayloadBid()
+	signedBid, err := sBlk.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, signedBid)
 
@@ -227,7 +227,7 @@ func TestSetExecutionPayloadBid_PrefersP2PBid(t *testing.T) {
 	require.Equal(t, primitives.Gwei(500), signedBid.Message.ExecutionPayment)
 }
 
-func TestSetExecutionPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
+func TestSetSilaPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 	parentHash := [32]byte{10, 20, 30}
 	parentRoot := [32]byte{1, 2, 3}
 	slot := primitives.Slot(100)
@@ -241,7 +241,7 @@ func TestSetExecutionPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    parentHash[:],
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -252,7 +252,7 @@ func TestSetExecutionPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 		BlockHash:     make([]byte, 32),
 		ExtraData:     make([]byte, 0),
 	}
-	ed, err := consensusblocks.WrappedExecutionPayloadDeneb(payload)
+	ed, err := consensusblocks.WrappedSilaPayloadDeneb(payload)
 	require.NoError(t, err)
 
 	// Local bid is 2000 Gwei (in Wei: 2000 * 1e9).
@@ -264,8 +264,8 @@ func TestSetExecutionPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 	}
 
 	// P2P bid is only 1000 Gwei — local should win.
-	p2pBid := &silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	p2pBid := &silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			Slot:                  slot,
 			ParentBlockHash:       parentHash[:],
 			ParentBlockRoot:       parentRoot[:],
@@ -282,16 +282,16 @@ func TestSetExecutionPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 		Signature: make([]byte, 96),
 	}
 
-	bidCache := cache.NewHighestExecutionPayloadBidCache()
+	bidCache := cache.NewHighestSilaPayloadBidCache()
 	bidCache.SetIfHigher(p2pBid)
 
 	vs := &Server{HighestBidCache: bidCache}
 
-	isSelfBuild, err := vs.setExecutionPayloadBid(t.Context(), sBlk, local, false)
+	isSelfBuild, err := vs.setSilaPayloadBid(t.Context(), sBlk, local, false)
 	require.NoError(t, err)
 	require.Equal(t, true, isSelfBuild)
 
-	signedBid, err := sBlk.Block().Body().SignedExecutionPayloadBid()
+	signedBid, err := sBlk.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, signedBid)
 
@@ -301,7 +301,7 @@ func TestSetExecutionPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 	require.DeepEqual(t, common.InfiniteSignature[:], signedBid.Signature)
 }
 
-func TestSetExecutionPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
+func TestSetSilaPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 	parentHash := [32]byte{10, 20, 30}
 	parentRoot := [32]byte{1, 2, 3}
 	slot := primitives.Slot(100)
@@ -315,7 +315,7 @@ func TestSetExecutionPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    parentHash[:],
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -326,7 +326,7 @@ func TestSetExecutionPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 		BlockHash:     make([]byte, 32),
 		ExtraData:     make([]byte, 0),
 	}
-	ed, err := consensusblocks.WrappedExecutionPayloadDeneb(payload)
+	ed, err := consensusblocks.WrappedSilaPayloadDeneb(payload)
 	require.NoError(t, err)
 
 	local := &consensusblocks.GetPayloadResponse{
@@ -337,8 +337,8 @@ func TestSetExecutionPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 	}
 
 	// P2P bid has higher value, but selfBuildOnly=true should force self-build.
-	p2pBid := &silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	p2pBid := &silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			Slot:                  slot,
 			ParentBlockHash:       parentHash[:],
 			ParentBlockRoot:       parentRoot[:],
@@ -355,16 +355,16 @@ func TestSetExecutionPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 		Signature: make([]byte, 96),
 	}
 
-	bidCache := cache.NewHighestExecutionPayloadBidCache()
+	bidCache := cache.NewHighestSilaPayloadBidCache()
 	bidCache.SetIfHigher(p2pBid)
 
 	vs := &Server{HighestBidCache: bidCache}
 
-	isSelfBuild, err := vs.setExecutionPayloadBid(t.Context(), sBlk, local, true)
+	isSelfBuild, err := vs.setSilaPayloadBid(t.Context(), sBlk, local, true)
 	require.NoError(t, err)
 	require.Equal(t, true, isSelfBuild)
 
-	signedBid, err := sBlk.Block().Body().SignedExecutionPayloadBid()
+	signedBid, err := sBlk.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, signedBid)
 
@@ -374,7 +374,7 @@ func TestSetExecutionPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 	require.DeepEqual(t, common.InfiniteSignature[:], signedBid.Signature)
 }
 
-func TestSetExecutionPayloadBid_FallsBackToSelfBuildWhenNoCachedBid(t *testing.T) {
+func TestSetSilaPayloadBid_FallsBackToSelfBuildWhenNoCachedBid(t *testing.T) {
 	parentRoot := [32]byte{1, 2, 3}
 	slot := primitives.Slot(100)
 
@@ -387,7 +387,7 @@ func TestSetExecutionPayloadBid_FallsBackToSelfBuildWhenNoCachedBid(t *testing.T
 	})
 	require.NoError(t, err)
 
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    make([]byte, 32),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),
@@ -398,7 +398,7 @@ func TestSetExecutionPayloadBid_FallsBackToSelfBuildWhenNoCachedBid(t *testing.T
 		BlockHash:     make([]byte, 32),
 		ExtraData:     make([]byte, 0),
 	}
-	ed, err := consensusblocks.WrappedExecutionPayloadDeneb(payload)
+	ed, err := consensusblocks.WrappedSilaPayloadDeneb(payload)
 	require.NoError(t, err)
 
 	local := &consensusblocks.GetPayloadResponse{
@@ -409,14 +409,14 @@ func TestSetExecutionPayloadBid_FallsBackToSelfBuildWhenNoCachedBid(t *testing.T
 	}
 
 	// Empty cache — no P2P bids.
-	bidCache := cache.NewHighestExecutionPayloadBidCache()
+	bidCache := cache.NewHighestSilaPayloadBidCache()
 	vs := &Server{HighestBidCache: bidCache}
 
-	isSelfBuild, err := vs.setExecutionPayloadBid(t.Context(), sBlk, local, false)
+	isSelfBuild, err := vs.setSilaPayloadBid(t.Context(), sBlk, local, false)
 	require.NoError(t, err)
 	require.Equal(t, true, isSelfBuild)
 
-	signedBid, err := sBlk.Block().Body().SignedExecutionPayloadBid()
+	signedBid, err := sBlk.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, signedBid)
 

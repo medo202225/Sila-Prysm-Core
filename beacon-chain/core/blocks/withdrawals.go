@@ -118,12 +118,12 @@ func ValidateBLSToExecutionChange(st state.ReadOnlyBeaconState, signed *silapb.S
 	return val, nil
 }
 
-// ProcessWithdrawals processes the validator withdrawals from the provided execution payload
+// ProcessWithdrawals processes the validator withdrawals from the provided sila payload
 // into the beacon state.
 //
 // Spec pseudocode definition:
 //
-// def process_withdrawals(state: BeaconState, payload: ExecutionPayload) -> None:
+// def process_withdrawals(state: BeaconState, payload: SilaPayload) -> None:
 //
 //	expected_withdrawals, processed_partial_withdrawals_count = get_expected_withdrawals(state) # [Modified in Electra:SIP7251]
 //
@@ -171,7 +171,7 @@ func ProcessWithdrawals(st state.BeaconState, executionData interfaces.Execution
 		}
 
 		if len(wds) != len(expectedWithdrawals) {
-			return nil, fmt.Errorf("execution payload header has %d withdrawals when %d were expected", len(wds), len(expectedWithdrawals))
+			return nil, fmt.Errorf("sila payload header has %d withdrawals when %d were expected", len(wds), len(expectedWithdrawals))
 		}
 
 		wdRoot, err = ssz.WithdrawalSliceRoot(wds, fieldparams.MaxWithdrawalsPerPayload)

@@ -210,13 +210,13 @@ func (s BlobSidecarsByRootReq) Len() int {
 	return len(s)
 }
 
-// ExecutionPayloadEnvelopesByRootReq section
+// SilaPayloadEnvelopesByRootReq section
 
-// ExecutionPayloadEnvelopesByRootReq specifies the execution payload envelopes by roots request type.
-type ExecutionPayloadEnvelopesByRootReq [][fieldparams.RootLength]byte
+// SilaPayloadEnvelopesByRootReq specifies the sila payload envelopes by roots request type.
+type SilaPayloadEnvelopesByRootReq [][fieldparams.RootLength]byte
 
-// MarshalSSZTo marshals the execution payload envelopes by roots request with the provided byte slice.
-func (r *ExecutionPayloadEnvelopesByRootReq) MarshalSSZTo(dst []byte) ([]byte, error) {
+// MarshalSSZTo marshals the sila payload envelopes by roots request with the provided byte slice.
+func (r *SilaPayloadEnvelopesByRootReq) MarshalSSZTo(dst []byte) ([]byte, error) {
 	marshalledObj, err := r.MarshalSSZ()
 	if err != nil {
 		return nil, err
@@ -224,10 +224,10 @@ func (r *ExecutionPayloadEnvelopesByRootReq) MarshalSSZTo(dst []byte) ([]byte, e
 	return append(dst, marshalledObj...), nil
 }
 
-// MarshalSSZ Marshals the execution payload envelopes by roots request type into the serialized object.
-func (r *ExecutionPayloadEnvelopesByRootReq) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ Marshals the sila payload envelopes by roots request type into the serialized object.
+func (r *SilaPayloadEnvelopesByRootReq) MarshalSSZ() ([]byte, error) {
 	if len(*r) > int(params.BeaconConfig().MaxRequestPayloads) {
-		return nil, errors.Errorf("execution payload envelopes by roots request exceeds max size: %d > %d", len(*r), params.BeaconConfig().MaxRequestPayloads)
+		return nil, errors.Errorf("sila payload envelopes by roots request exceeds max size: %d > %d", len(*r), params.BeaconConfig().MaxRequestPayloads)
 	}
 	buf := make([]byte, 0, r.SizeSSZ())
 	for _, root := range *r {
@@ -237,13 +237,13 @@ func (r *ExecutionPayloadEnvelopesByRootReq) MarshalSSZ() ([]byte, error) {
 }
 
 // SizeSSZ returns the size of the serialized representation.
-func (r *ExecutionPayloadEnvelopesByRootReq) SizeSSZ() int {
+func (r *SilaPayloadEnvelopesByRootReq) SizeSSZ() int {
 	return len(*r) * fieldparams.RootLength
 }
 
 // UnmarshalSSZ unmarshals the provided bytes buffer into the
-// execution payload envelopes by roots request object.
-func (r *ExecutionPayloadEnvelopesByRootReq) UnmarshalSSZ(buf []byte) error {
+// sila payload envelopes by roots request object.
+func (r *SilaPayloadEnvelopesByRootReq) UnmarshalSSZ(buf []byte) error {
 	bufLen := len(buf)
 	maxLength := int(params.BeaconConfig().MaxRequestPayloads * fieldparams.RootLength)
 	if bufLen > maxLength {
@@ -264,7 +264,7 @@ func (r *ExecutionPayloadEnvelopesByRootReq) UnmarshalSSZ(buf []byte) error {
 }
 
 // Len returns the number of roots in the request.
-func (r ExecutionPayloadEnvelopesByRootReq) Len() int {
+func (r SilaPayloadEnvelopesByRootReq) Len() int {
 	return len(r)
 }
 

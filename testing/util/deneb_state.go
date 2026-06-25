@@ -80,7 +80,7 @@ func emptyGenesisStateDeneb() (state.BeaconState, error) {
 		SilaExecutionDataVotes:    []*silapb.SilaExecutionData{},
 		SilaExecutionDepositIndex: 0,
 
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{},
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{},
 	}
 	return state_native.InitializeFromProtoUnsafeDeneb(st)
 }
@@ -194,7 +194,7 @@ func buildGenesisBeaconStateDeneb(genesisTime uint64, preState state.BeaconState
 			SyncCommitteeBits:      scBits[:],
 			SyncCommitteeSignature: make([]byte, 96),
 		},
-		ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+		SilaPayload: &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, 32),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, 32),
@@ -237,7 +237,7 @@ func buildGenesisBeaconStateDeneb(genesisTime uint64, preState state.BeaconState
 		AggregatePubkey: aggregated.Marshal(),
 	}
 
-	st.LatestExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderDeneb{
+	st.LatestSilaPayloadHeader = &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       make([]byte, 32),
 		FeeRecipient:     make([]byte, 20),
 		StateRoot:        make([]byte, 32),

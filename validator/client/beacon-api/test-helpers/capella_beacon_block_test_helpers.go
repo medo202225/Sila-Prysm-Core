@@ -217,7 +217,7 @@ func GenerateProtoCapellaBeaconBlock() *silapb.BeaconBlockCapella {
 				SyncCommitteeBits:      FillByteSlice(64, 110),
 				SyncCommitteeSignature: FillByteSlice(96, 111),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayloadCapella{
+			SilaPayload: &enginev1.SilaPayloadCapella{
 				ParentHash:    FillByteSlice(32, 112),
 				FeeRecipient:  FillByteSlice(20, 113),
 				StateRoot:     FillByteSlice(32, 114),
@@ -482,7 +482,7 @@ func GenerateProtoBlindedCapellaBeaconBlock() *silapb.BlindedBeaconBlockCapella 
 				SyncCommitteeBits:      FillByteSlice(64, 110),
 				SyncCommitteeSignature: FillByteSlice(96, 111),
 			},
-			ExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderCapella{
+			SilaPayloadHeader: &enginev1.SilaPayloadHeaderCapella{
 				ParentHash:       FillByteSlice(32, 112),
 				FeeRecipient:     FillByteSlice(20, 113),
 				StateRoot:        FillByteSlice(32, 114),
@@ -731,7 +731,7 @@ func GenerateJsonCapellaBeaconBlock() *structs.BeaconBlockCapella {
 				SyncCommitteeBits:      FillEncodedByteSlice(64, 110),
 				SyncCommitteeSignature: FillEncodedByteSlice(96, 111),
 			},
-			ExecutionPayload: &structs.ExecutionPayloadCapella{
+			SilaPayload: &structs.SilaPayloadCapella{
 				ParentHash:    FillEncodedByteSlice(32, 112),
 				FeeRecipient:  FillEncodedByteSlice(20, 113),
 				StateRoot:     FillEncodedByteSlice(32, 114),
@@ -996,7 +996,7 @@ func GenerateJsonBlindedCapellaBeaconBlock() *structs.BlindedBeaconBlockCapella 
 				SyncCommitteeBits:      FillEncodedByteSlice(64, 110),
 				SyncCommitteeSignature: FillEncodedByteSlice(96, 111),
 			},
-			ExecutionPayloadHeader: &structs.ExecutionPayloadHeaderCapella{
+			SilaPayloadHeader: &structs.SilaPayloadHeaderCapella{
 				ParentHash:       FillEncodedByteSlice(32, 112),
 				FeeRecipient:     FillEncodedByteSlice(20, 113),
 				StateRoot:        FillEncodedByteSlice(32, 114),

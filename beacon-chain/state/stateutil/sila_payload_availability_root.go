@@ -1,0 +1,25 @@
+package stateutil
+
+import (
+	"fmt"
+
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
+)
+
+// SilaPayloadAvailabilityRoot computes the merkle root of an sila payload availability bitvector.
+func SilaPayloadAvailabilityRoot(bitvector []byte) ([32]byte, error) {
+	chunkCount := (len(bitvector) + 31) / 32
+	chunks := make([][32]byte, chunkCount)
+
+	for i := range chunks {
+		start := i * 32
+		end := min(start+32, len(bitvector))
+		copy(chunks[i][:], bitvector[start:end])
+	}
+
+	root, err := ssz.BitwiseMerkleize(chunks, uint64(len(chunks)), uint64(len(chunks)))
+	if err != nil {
+		return [32]byte{}, fmt.Errorf("could not merkleize sila payload availability: %w", err)
+	}
+	return root, nil
+}

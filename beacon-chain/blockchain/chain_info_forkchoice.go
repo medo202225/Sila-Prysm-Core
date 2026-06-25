@@ -49,7 +49,7 @@ func (s *Service) HighestReceivedBlockRoot() [32]byte {
 	return s.cfg.ForkChoiceStore.HighestReceivedBlockRoot()
 }
 
-// BlockHash returns the execution payload block hash for the given beacon block root from forkchoice.
+// BlockHash returns the sila payload block hash for the given beacon block root from forkchoice.
 func (s *Service) BlockHash(root [32]byte) ([32]byte, error) {
 	s.cfg.ForkChoiceStore.RLock()
 	defer s.cfg.ForkChoiceStore.RUnlock()
@@ -92,7 +92,7 @@ func (s *Service) InsertNode(ctx context.Context, st state.BeaconState, block co
 }
 
 // InsertPayload is a wrapper for payload insertion which is self locked
-func (s *Service) InsertPayload(pe interfaces.ROExecutionPayloadEnvelope) error {
+func (s *Service) InsertPayload(pe interfaces.ROSilaPayloadEnvelope) error {
 	s.cfg.ForkChoiceStore.Lock()
 	defer s.cfg.ForkChoiceStore.Unlock()
 	return s.cfg.ForkChoiceStore.InsertPayload(pe)
@@ -178,9 +178,9 @@ func (s *Service) hashForGenesisBlock(ctx context.Context, root [32]byte) ([]byt
 		}
 		return bytesutil.SafeCopyBytes(h[:]), nil
 	}
-	header, err := st.LatestExecutionPayloadHeader()
+	header, err := st.LatestSilaPayloadHeader()
 	if err != nil {
-		return nil, errors.Wrap(err, "could not get latest execution payload header")
+		return nil, errors.Wrap(err, "could not get latest sila payload header")
 	}
 	return bytesutil.SafeCopyBytes(header.BlockHash()), nil
 }

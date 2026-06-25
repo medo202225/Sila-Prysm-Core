@@ -29,7 +29,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var errMaxRequestEnvelopesExceeded = errors.New("peer returned more execution payload envelopes than requested")
+var errMaxRequestEnvelopesExceeded = errors.New("peer returned more sila payload envelopes than requested")
 var errBlobChunkedReadFailure = errors.New("failed to read stream of chunk-encoded blobs")
 var errBlobUnmarshal = errors.New("Could not unmarshal chunk-encoded blob")
 
@@ -827,24 +827,24 @@ func downscorePeer(p2p p2p.P2P, peerID peer.ID, reason string, fields ...logrus.
 }
 
 // ---------------------------------
-// Execution payload envelopes
+// Sila payload envelopes
 // ---------------------------------
 
-// SendExecutionPayloadEnvelopesByRootRequest sends ExecutionPayloadEnvelopesByRoot
+// SendSilaPayloadEnvelopesByRootRequest sends SilaPayloadEnvelopesByRoot
 // and returns fetched envelopes, if any.
-func SendExecutionPayloadEnvelopesByRootRequest(
+func SendSilaPayloadEnvelopesByRootRequest(
 	ctx context.Context, tor blockchain.TemporalOracle, p2pApi p2p.P2P, pid peer.ID,
-	ctxMap ContextByteVersions, req *p2ptypes.ExecutionPayloadEnvelopesByRootReq,
-) ([]*silapb.SignedExecutionPayloadEnvelope, error) {
+	ctxMap ContextByteVersions, req *p2ptypes.SilaPayloadEnvelopesByRootReq,
+) ([]*silapb.SignedSilaPayloadEnvelope, error) {
 	if uint64(len(*req)) > params.BeaconConfig().MaxRequestPayloads {
 		return nil, errors.Wrapf(p2ptypes.ErrMaxPayloadEnvelopeReqExceeded, "length=%d", len(*req))
 	}
 
-	topic, err := p2p.TopicFromMessage(p2p.ExecutionPayloadEnvelopesByRootName, slots.ToEpoch(tor.CurrentSlot()))
+	topic, err := p2p.TopicFromMessage(p2p.SilaPayloadEnvelopesByRootName, slots.ToEpoch(tor.CurrentSlot()))
 	if err != nil {
 		return nil, err
 	}
-	log.WithField("topic", topic).Debug("Sending execution payload envelopes by root request")
+	log.WithField("topic", topic).Debug("Sending sila payload envelopes by root request")
 	stream, err := p2pApi.Send(ctx, req, topic, pid)
 	if err != nil {
 		return nil, err
@@ -859,9 +859,9 @@ func SendExecutionPayloadEnvelopesByRootRequest(
 		pendingRoots[root]++
 	}
 
-	envelopes := make([]*silapb.SignedExecutionPayloadEnvelope, 0, len(*req))
+	envelopes := make([]*silapb.SignedSilaPayloadEnvelope, 0, len(*req))
 	for i := range max + 1 {
-		envelope, err := readChunkedExecutionPayloadEnvelope(stream, p2pApi.Encoding(), ctxMap)
+		envelope, err := readChunkedSilaPayloadEnvelope(stream, p2pApi.Encoding(), ctxMap)
 		if errors.Is(err, io.EOF) {
 			break
 		}
@@ -869,14 +869,14 @@ func SendExecutionPayloadEnvelopesByRootRequest(
 			return nil, err
 		}
 		if i == max {
-			return nil, errors.New("peer returned more execution payload envelopes than requested")
+			return nil, errors.New("peer returned more sila payload envelopes than requested")
 		}
 		// Validate that the returned envelope was actually requested and not a duplicate.
 		if envelope.Message != nil {
 			root := bytesutil.ToBytes32(envelope.Message.BeaconBlockRoot)
 			remaining, ok := pendingRoots[root]
 			if !ok || remaining <= 0 {
-				return nil, errors.Errorf("received unrequested or duplicate execution payload envelope for root %#x", root)
+				return nil, errors.Errorf("received unrequested or duplicate sila payload envelope for root %#x", root)
 			}
 			pendingRoots[root] = remaining - 1
 		}
@@ -886,11 +886,11 @@ func SendExecutionPayloadEnvelopesByRootRequest(
 	return envelopes, nil
 }
 
-func readChunkedExecutionPayloadEnvelope(
+func readChunkedSilaPayloadEnvelope(
 	stream network.Stream,
 	encoding encoder.NetworkEncoding,
 	ctxMap ContextByteVersions,
-) (*silapb.SignedExecutionPayloadEnvelope, error) {
+) (*silapb.SignedSilaPayloadEnvelope, error) {
 	code, msg, err := ReadStatusCode(stream, encoding)
 	if err != nil {
 		return nil, err
@@ -904,15 +904,15 @@ func readChunkedExecutionPayloadEnvelope(
 	}
 	v, found := ctxMap[bytesutil.ToBytes4(ctxb)]
 	if !found {
-		return nil, errors.Errorf("unrecognized fork digest %#x for execution payload envelope", ctxb)
+		return nil, errors.Errorf("unrecognized fork digest %#x for sila payload envelope", ctxb)
 	}
 
 	if v < version.Gloas {
-		return nil, errors.Errorf("unexpected context bytes for ExecutionPayloadEnvelope, ctx=%#x, v=%s", ctxb, version.String(v))
+		return nil, errors.Errorf("unexpected context bytes for SilaPayloadEnvelope, ctx=%#x, v=%s", ctxb, version.String(v))
 	}
-	envelope := &silapb.SignedExecutionPayloadEnvelope{}
+	envelope := &silapb.SignedSilaPayloadEnvelope{}
 	if err := encoding.DecodeWithMaxLength(stream, envelope); err != nil {
-		return nil, errors.Wrap(err, "failed to decode execution payload envelope from RPC chunk stream")
+		return nil, errors.Wrap(err, "failed to decode sila payload envelope from RPC chunk stream")
 	}
 	return envelope, nil
 }
@@ -928,16 +928,16 @@ func DataColumnSidecarsByRangeRequest(columns []uint64, start, end primitives.Sl
 	}, nil
 }
 
-// SendExecutionPayloadEnvelopesByRangeRequest sends ExecutionPayloadEnvelopesByRange and returns fetched envelopes, if any.
-func SendExecutionPayloadEnvelopesByRangeRequest(
+// SendSilaPayloadEnvelopesByRangeRequest sends SilaPayloadEnvelopesByRange and returns fetched envelopes, if any.
+func SendSilaPayloadEnvelopesByRangeRequest(
 	ctx context.Context,
 	tor blockchain.TemporalOracle,
 	p2pProvider p2p.SenderEncoder,
 	pid peer.ID,
 	ctxMap ContextByteVersions,
-	req *silapb.ExecutionPayloadEnvelopesByRangeRequest,
-) ([]*silapb.SignedExecutionPayloadEnvelope, error) {
-	topic, err := p2p.TopicFromMessage(p2p.ExecutionPayloadEnvelopesByRangeName, slots.ToEpoch(tor.CurrentSlot()))
+	req *silapb.SilaPayloadEnvelopesByRangeRequest,
+) ([]*silapb.SignedSilaPayloadEnvelope, error) {
+	topic, err := p2p.TopicFromMessage(p2p.SilaPayloadEnvelopesByRangeName, slots.ToEpoch(tor.CurrentSlot()))
 	if err != nil {
 		return nil, err
 	}
@@ -945,7 +945,7 @@ func SendExecutionPayloadEnvelopesByRangeRequest(
 		"topic":     topic,
 		"startSlot": req.StartSlot,
 		"count":     req.Count,
-	}).Debug("Sending execution payload envelopes by range request")
+	}).Debug("Sending sila payload envelopes by range request")
 	stream, err := p2pProvider.Send(ctx, req, topic, pid)
 	if err != nil {
 		return nil, err
@@ -954,11 +954,11 @@ func SendExecutionPayloadEnvelopesByRangeRequest(
 
 	max := min(req.Count, params.BeaconConfig().MaxRequestPayloads)
 
-	envelopes := make([]*silapb.SignedExecutionPayloadEnvelope, 0, max)
+	envelopes := make([]*silapb.SignedSilaPayloadEnvelope, 0, max)
 	var prevSlot primitives.Slot
 	var prevHash []byte
 	for i := uint64(0); i < max+1; i++ {
-		env, err := readChunkedExecutionPayloadEnvelope(stream, p2pProvider.Encoding(), ctxMap)
+		env, err := readChunkedSilaPayloadEnvelope(stream, p2pProvider.Encoding(), ctxMap)
 		if errors.Is(err, io.EOF) {
 			break
 		}
@@ -968,7 +968,7 @@ func SendExecutionPayloadEnvelopesByRangeRequest(
 		if i == max {
 			return nil, errMaxRequestEnvelopesExceeded
 		}
-		envSlot, blockHash, err := validateExecutionPayloadEnvelopeByRangeResponse(env, req, prevSlot, prevHash, i > 0)
+		envSlot, blockHash, err := validateSilaPayloadEnvelopeByRangeResponse(env, req, prevSlot, prevHash, i > 0)
 		if err != nil {
 			return nil, err
 		}
@@ -980,15 +980,15 @@ func SendExecutionPayloadEnvelopesByRangeRequest(
 	return envelopes, nil
 }
 
-func validateExecutionPayloadEnvelopeByRangeResponse(
-	env *silapb.SignedExecutionPayloadEnvelope,
-	req *silapb.ExecutionPayloadEnvelopesByRangeRequest,
+func validateSilaPayloadEnvelopeByRangeResponse(
+	env *silapb.SignedSilaPayloadEnvelope,
+	req *silapb.SilaPayloadEnvelopesByRangeRequest,
 	prevSlot primitives.Slot,
 	prevHash []byte,
 	hasPrevious bool,
 ) (primitives.Slot, []byte, error) {
-	if _, err := blocks.WrappedROSignedExecutionPayloadEnvelope(env); err != nil {
-		return 0, nil, errors.Wrap(ErrInvalidFetchedData, "invalid execution payload envelope")
+	if _, err := blocks.WrappedROSignedSilaPayloadEnvelope(env); err != nil {
+		return 0, nil, errors.Wrap(ErrInvalidFetchedData, "invalid sila payload envelope")
 	}
 
 	envSlot := primitives.Slot(env.Message.Payload.SlotNumber)

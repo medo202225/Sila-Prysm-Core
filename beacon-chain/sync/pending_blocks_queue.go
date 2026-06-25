@@ -490,9 +490,9 @@ func (s *Service) fetchAndQueuePayloadEnvelopesForRoots(
 		return
 	}
 
-	var envelopeRoots p2ptypes.ExecutionPayloadEnvelopesByRootReq
+	var envelopeRoots p2ptypes.SilaPayloadEnvelopesByRootReq
 	for _, root := range roots {
-		if s.cfg.beaconDB.HasExecutionPayloadEnvelope(ctx, root) {
+		if s.cfg.beaconDB.HasSilaPayloadEnvelope(ctx, root) {
 			continue
 		}
 		envelopeRoots = append(envelopeRoots, root)
@@ -502,9 +502,9 @@ func (s *Service) fetchAndQueuePayloadEnvelopesForRoots(
 		return
 	}
 
-	envelopes, err := SendExecutionPayloadEnvelopesByRootRequest(ctx, s.cfg.clock, s.cfg.p2p, pid, s.ctxMap, &envelopeRoots)
+	envelopes, err := SendSilaPayloadEnvelopesByRootRequest(ctx, s.cfg.clock, s.cfg.p2p, pid, s.ctxMap, &envelopeRoots)
 	if err != nil {
-		log.WithError(err).Debug("Could not request execution payload envelopes by root")
+		log.WithError(err).Debug("Could not request sila payload envelopes by root")
 		return
 	}
 
@@ -516,7 +516,7 @@ func (s *Service) fetchAndQueuePayloadEnvelopesForRoots(
 	}
 }
 
-func (s *Service) queuePendingPayloadEnvelopeFromRootRequest(signedEnvelope *silapb.SignedExecutionPayloadEnvelope) {
+func (s *Service) queuePendingPayloadEnvelopeFromRootRequest(signedEnvelope *silapb.SignedSilaPayloadEnvelope) {
 	if signedEnvelope == nil || signedEnvelope.Message == nil {
 		return
 	}
@@ -529,7 +529,7 @@ func (s *Service) queuePendingPayloadEnvelopeFromRootRequest(signedEnvelope *sil
 
 	inner, ok := s.pendingPayloadEnvelopes[root]
 	if !ok {
-		inner = make(map[uint64]*silapb.SignedExecutionPayloadEnvelope)
+		inner = make(map[uint64]*silapb.SignedSilaPayloadEnvelope)
 		s.pendingPayloadEnvelopes[root] = inner
 	}
 	inner[builderIdx] = signedEnvelope

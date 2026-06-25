@@ -65,7 +65,7 @@ const (
 	rangeLimit                  = 1024
 	seenBlockSize               = 1000
 	seenPayloadEnvelopeSize     = 1000
-	seenExecutionPayloadBidSize = 1000
+	seenSilaPayloadBidSize = 1000
 	seenDataColumnSize          = seenBlockSize * 128 // Each block can have max 128 data columns.
 	seenUnaggregatedAttSize     = 20000
 	seenAggregatedAttSize       = 16384
@@ -123,7 +123,7 @@ type blockchainService interface {
 	blockchain.BlockReceiver
 	blockchain.BlobReceiver
 	blockchain.DataColumnReceiver
-	blockchain.ExecutionPayloadEnvelopeReceiver
+	blockchain.SilaPayloadEnvelopeReceiver
 	blockchain.HeadFetcher
 	blockchain.FinalizationFetcher
 	blockchain.ForkFetcher
@@ -155,8 +155,8 @@ type Service struct {
 	seenBlockLock                        sync.RWMutex
 	seenBlockCache                       *lru.Cache
 	seenPayloadEnvelopeCache             *lru.Cache
-	seenExecutionPayloadBidCache         *slotAwareCache
-	highestExecutionPayloadBidCache      *cache.HighestExecutionPayloadBidCache
+	seenSilaPayloadBidCache         *slotAwareCache
+	highestSilaPayloadBidCache      *cache.HighestSilaPayloadBidCache
 	seenBlobLock                         sync.RWMutex
 	seenBlobCache                        *lru.Cache
 	seenDataColumnCache                  *slotAwareCache
@@ -190,7 +190,7 @@ type Service struct {
 	newColumnsVerifier                   verification.NewDataColumnsVerifier
 	newPayloadAttestationVerifier        verification.NewPayloadAttestationMsgVerifier
 	newSignedProposerPreferencesVerifier verification.NewSignedProposerPreferencesVerifier
-	newExecutionPayloadBidVerifier       verification.NewExecutionPayloadBidVerifier
+	newSilaPayloadBidVerifier       verification.NewSilaPayloadBidVerifier
 	columnSidecarsExecSingleFlight       singleflight.Group
 	reconstructionSingleFlight           singleflight.Group
 	payloadEnvelopeRequestSingleFlight   singleflight.Group
@@ -205,8 +205,8 @@ type Service struct {
 	proposerPreferencesCache             *cache.ProposerPreferencesCache
 	digestActions                        perDigestSet
 	subscriptionSpawner                  func(func()) // see Service.spawn for details
-	newExecutionPayloadEnvelopeVerifier  verification.NewExecutionPayloadEnvelopeVerifier
-	pendingPayloadEnvelopes              map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope
+	newSilaPayloadEnvelopeVerifier  verification.NewSilaPayloadEnvelopeVerifier
+	pendingPayloadEnvelopes              map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope
 	pendingEnvelopeLock                  sync.RWMutex
 	selfBuildSigFailures                 int
 }
@@ -227,7 +227,7 @@ func NewService(ctx context.Context, opts ...Option) *Service {
 		reconstructionRandGen:    rand.NewGenerator(),
 		payloadAttestationCache:  &cache.PayloadAttestationCache{},
 		proposerPreferencesCache: cache.NewProposerPreferencesCache(),
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 	}
 
 	for _, opt := range opts {
@@ -291,9 +291,9 @@ func newSignedProposerPreferencesVerifierFromInitializer(ini *verification.Initi
 	}
 }
 
-func newExecutionPayloadBidVerifierFromInitializer(ini *verification.Initializer) verification.NewExecutionPayloadBidVerifier {
-	return func(b interfaces.ROSignedExecutionPayloadBid, reqs []verification.Requirement) verification.ExecutionPayloadBidVerifier {
-		return ini.NewExecutionPayloadBidVerifier(b, reqs)
+func newSilaPayloadBidVerifierFromInitializer(ini *verification.Initializer) verification.NewSilaPayloadBidVerifier {
+	return func(b interfaces.ROSignedSilaPayloadBid, reqs []verification.Requirement) verification.SilaPayloadBidVerifier {
+		return ini.NewSilaPayloadBidVerifier(b, reqs)
 	}
 }
 
@@ -308,8 +308,8 @@ func (s *Service) Start() {
 	s.newColumnsVerifier = newDataColumnsVerifierFromInitializer(v)
 	s.newPayloadAttestationVerifier = newPayloadAttestationMessageFromInitializer(v)
 	s.newSignedProposerPreferencesVerifier = newSignedProposerPreferencesVerifierFromInitializer(v)
-	s.newExecutionPayloadBidVerifier = newExecutionPayloadBidVerifierFromInitializer(v)
-	s.newExecutionPayloadEnvelopeVerifier = newPayloadVerifierFromInitializer(v)
+	s.newSilaPayloadBidVerifier = newSilaPayloadBidVerifierFromInitializer(v)
+	s.newSilaPayloadEnvelopeVerifier = newPayloadVerifierFromInitializer(v)
 
 	go s.verifierRoutine()
 	go s.startDiscoveryAndSubscriptions()
@@ -394,10 +394,10 @@ func (s *Service) Status() error {
 	return nil
 }
 
-// HighestExecutionPayloadBidCache exposes sync's cache to the proposer RPC.
+// HighestSilaPayloadBidCache exposes sync's cache to the proposer RPC.
 // Sync is the sole writer (gossip); the proposer is a reader.
-func (s *Service) HighestExecutionPayloadBidCache() *cache.HighestExecutionPayloadBidCache {
-	return s.highestExecutionPayloadBidCache
+func (s *Service) HighestSilaPayloadBidCache() *cache.HighestSilaPayloadBidCache {
+	return s.highestSilaPayloadBidCache
 }
 
 // This initializes the caches to update seen beacon objects coming in from the wire
@@ -405,8 +405,8 @@ func (s *Service) HighestExecutionPayloadBidCache() *cache.HighestExecutionPaylo
 func (s *Service) initCaches() {
 	s.seenBlockCache = lruwrpr.New(seenBlockSize)
 	s.seenPayloadEnvelopeCache = lruwrpr.New(seenPayloadEnvelopeSize)
-	s.seenExecutionPayloadBidCache = newSlotAwareCache(seenExecutionPayloadBidSize)
-	s.highestExecutionPayloadBidCache = cache.NewHighestExecutionPayloadBidCache()
+	s.seenSilaPayloadBidCache = newSlotAwareCache(seenSilaPayloadBidSize)
+	s.highestSilaPayloadBidCache = cache.NewHighestSilaPayloadBidCache()
 	s.seenBlobCache = lruwrpr.New(seenBlockSize * params.BeaconConfig().DeprecatedMaxBlobsPerBlockElectra)
 	s.seenDataColumnCache = newSlotAwareCache(seenDataColumnSize)
 	s.seenAggregatedAttestationCache = lruwrpr.New(seenAggregatedAttSize)
@@ -609,8 +609,8 @@ type Checker interface {
 	Resync() error
 }
 
-func newPayloadVerifierFromInitializer(ini *verification.Initializer) verification.NewExecutionPayloadEnvelopeVerifier {
-	return func(e interfaces.ROSignedExecutionPayloadEnvelope, reqs []verification.Requirement) verification.ExecutionPayloadEnvelopeVerifier {
+func newPayloadVerifierFromInitializer(ini *verification.Initializer) verification.NewSilaPayloadEnvelopeVerifier {
+	return func(e interfaces.ROSignedSilaPayloadEnvelope, reqs []verification.Requirement) verification.SilaPayloadEnvelopeVerifier {
 		return ini.NewPayloadEnvelopeVerifier(e, reqs)
 	}
 }

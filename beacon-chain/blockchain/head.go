@@ -51,7 +51,7 @@ type head struct {
 	block      interfaces.ReadOnlySignedBeaconBlock // current head block.
 	state      state.BeaconState                    // current head state.
 	slot       primitives.Slot                      // the head block slot number
-	full       bool                                 // whether the head's execution payload has been delivered (post-Gloas)
+	full       bool                                 // whether the head's sila payload has been delivered (post-Gloas)
 	optimistic bool                                 // optimistic status when saved head
 }
 

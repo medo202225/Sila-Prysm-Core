@@ -43,7 +43,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 }
 
 // ExpectedWithdrawals returns the withdrawals that a proposer will need to pack in the next block
-// applied to the current state. It is also used by validators to check that the execution payload carried
+// applied to the current state. It is also used by validators to check that the sila payload carried
 // the right number of withdrawals. Note: The number of partial withdrawals will be zero before SIP-7251.
 //
 // Spec definition:

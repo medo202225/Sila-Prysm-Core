@@ -285,8 +285,8 @@ func (c *grpcValidatorClient) SubmitSignedProposerPreferences(ctx context.Contex
 	return c.getClient().SubmitSignedProposerPreferences(ctx, in)
 }
 
-func (c *grpcValidatorClient) SubmitSignedExecutionPayloadBid(ctx context.Context, in *silapb.SignedExecutionPayloadBid) (*empty.Empty, error) {
-	return c.getClient().SubmitSignedExecutionPayloadBid(ctx, in)
+func (c *grpcValidatorClient) SubmitSignedSilaPayloadBid(ctx context.Context, in *silapb.SignedSilaPayloadBid) (*empty.Empty, error) {
+	return c.getClient().SubmitSignedSilaPayloadBid(ctx, in)
 }
 
 func (c *grpcValidatorClient) SubscribeCommitteeSubnets(ctx context.Context, in *silapb.CommitteeSubnetsSubscribeRequest, _ []*silapb.ValidatorDuty) (*empty.Empty, error) {
@@ -448,18 +448,18 @@ func (c *grpcValidatorClient) EnsureReady(ctx context.Context) bool {
 // Gloas Fork Methods
 //
 // TODO(#580): the gRPC envelope path is full-typed end-to-end (get full, sign full, publish full).
-// The beacon-APIs blinded flow (GET BlindedExecutionPayloadEnvelope / POST
-// SignedBlindedExecutionPayloadEnvelope) is implemented only over REST. A blinded gRPC variant would
+// The beacon-APIs blinded flow (GET BlindedSilaPayloadEnvelope / POST
+// SignedBlindedSilaPayloadEnvelope) is implemented only over REST. A blinded gRPC variant would
 // need a v1alpha1 service change plus web3signer blinded signing; deferred as gRPC is BN-internal.
-func (c *grpcValidatorClient) GetExecutionPayloadEnvelope(ctx context.Context, slot primitives.Slot, _ [32]byte) (*silapb.ExecutionPayloadEnvelope, *silapb.WireBlindedExecutionPayloadEnvelope, error) {
-	req := &silapb.ExecutionPayloadEnvelopeRequest{
+func (c *grpcValidatorClient) GetSilaPayloadEnvelope(ctx context.Context, slot primitives.Slot, _ [32]byte) (*silapb.SilaPayloadEnvelope, *silapb.WireBlindedSilaPayloadEnvelope, error) {
+	req := &silapb.SilaPayloadEnvelopeRequest{
 		Slot: slot,
 	}
-	resp, err := c.getClient().GetExecutionPayloadEnvelope(ctx, req)
+	resp, err := c.getClient().GetSilaPayloadEnvelope(ctx, req)
 	if err != nil {
 		return nil, nil, errors.Wrap(
 			client.ErrConnectionIssue,
-			errors.Wrap(err, "GetExecutionPayloadEnvelope").Error(),
+			errors.Wrap(err, "GetSilaPayloadEnvelope").Error(),
 		)
 	}
 	// TODO(#580): gRPC only returns the full envelope (blinded form is nil). The spec-wire blinded
@@ -467,12 +467,12 @@ func (c *grpcValidatorClient) GetExecutionPayloadEnvelope(ctx context.Context, s
 	return resp.Envelope, nil, nil
 }
 
-func (c *grpcValidatorClient) PublishExecutionPayloadEnvelope(ctx context.Context, in *silapb.SignedExecutionPayloadEnvelope) (*empty.Empty, error) {
-	return c.getClient().PublishExecutionPayloadEnvelope(ctx, in)
+func (c *grpcValidatorClient) PublishSilaPayloadEnvelope(ctx context.Context, in *silapb.SignedSilaPayloadEnvelope) (*empty.Empty, error) {
+	return c.getClient().PublishSilaPayloadEnvelope(ctx, in)
 }
 
-func (c *grpcValidatorClient) PublishBlindedExecutionPayloadEnvelope(_ context.Context, _ *silapb.SignedWireBlindedExecutionPayloadEnvelope) (*empty.Empty, error) {
-	return nil, errors.New("blinded execution payload envelope publishing is not supported over gRPC; use the REST API")
+func (c *grpcValidatorClient) PublishBlindedSilaPayloadEnvelope(_ context.Context, _ *silapb.SignedWireBlindedSilaPayloadEnvelope) (*empty.Empty, error) {
+	return nil, errors.New("blinded sila payload envelope publishing is not supported over gRPC; use the REST API")
 }
 
 func (c *grpcValidatorClient) PayloadAttestationData(ctx context.Context, slot primitives.Slot) (*silapb.PayloadAttestationData, error) {

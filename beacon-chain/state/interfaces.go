@@ -82,7 +82,7 @@ type ReadOnlyBeaconState interface {
 	MarshalSSZ() ([]byte, error)
 	IsNil() bool
 	Version() int
-	LatestExecutionPayloadHeader() (interfaces.ExecutionData, error)
+	LatestSilaPayloadHeader() (interfaces.ExecutionData, error)
 	ProposerDependentRoot(slot primitives.Slot) ([32]byte, error)
 }
 
@@ -114,7 +114,7 @@ type WriteOnlyBeaconState interface {
 	UpdateSlashingsAtIndex(idx, val uint64) error
 	AppendHistoricalRoots(root [32]byte) error
 	AppendHistoricalSummaries(*silapb.HistoricalSummary) error
-	SetLatestExecutionPayloadHeader(payload interfaces.ExecutionData) error
+	SetLatestSilaPayloadHeader(payload interfaces.ExecutionData) error
 }
 
 // ReadOnlyValidator defines a struct which only has read access to validator methods.

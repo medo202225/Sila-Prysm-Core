@@ -477,9 +477,9 @@ func Test_BuildSignedBeaconBlock(t *testing.T) {
 	})
 }
 
-func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
+func TestBuildSignedBeaconBlockFromSilaPayload(t *testing.T) {
 	t.Run("nil block check", func(t *testing.T) {
-		_, err := BuildSignedBeaconBlockFromExecutionPayload(nil, nil)
+		_, err := BuildSignedBeaconBlockFromSilaPayload(nil, nil)
 		require.ErrorIs(t, ErrNilSignedBeaconBlock, err)
 	})
 	t.Run("not blinded payload", func(t *testing.T) {
@@ -488,12 +488,12 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 				Body: &eth.BeaconBlockBodyAltair{}}}
 		blk, err := NewSignedBeaconBlock(altairBlock)
 		require.NoError(t, err)
-		_, err = BuildSignedBeaconBlockFromExecutionPayload(blk, nil)
+		_, err = BuildSignedBeaconBlockFromSilaPayload(blk, nil)
 		require.Equal(t, true, errors.Is(err, errNonBlindedSignedBeaconBlock))
 	})
 	t.Run("payload header root and payload root mismatch", func(t *testing.T) {
 		blockHash := bytesutil.Bytes32(1)
-		payload := &enginev1.ExecutionPayload{
+		payload := &enginev1.SilaPayload{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -504,7 +504,7 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 			BlockHash:     blockHash,
 			Transactions:  make([][]byte, 0),
 		}
-		wrapped, err := WrappedExecutionPayload(payload)
+		wrapped, err := WrappedSilaPayload(payload)
 		require.NoError(t, err)
 		header, err := PayloadToHeader(wrapped)
 		require.NoError(t, err)
@@ -514,15 +514,15 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 
 		// Modify the header.
 		header.GasUsed += 1
-		blindedBlock.Block.Body.ExecutionPayloadHeader = header
+		blindedBlock.Block.Body.SilaPayloadHeader = header
 
 		blk, err := NewSignedBeaconBlock(blindedBlock)
 		require.NoError(t, err)
-		_, err = BuildSignedBeaconBlockFromExecutionPayload(blk, payload)
+		_, err = BuildSignedBeaconBlockFromSilaPayload(blk, payload)
 		require.ErrorContains(t, "roots do not match", err)
 	})
 	t.Run("ok", func(t *testing.T) {
-		payload := &enginev1.ExecutionPayload{
+		payload := &enginev1.SilaPayload{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -533,18 +533,18 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 			BlockHash:     make([]byte, fieldparams.RootLength),
 			Transactions:  make([][]byte, 0),
 		}
-		wrapped, err := WrappedExecutionPayload(payload)
+		wrapped, err := WrappedSilaPayload(payload)
 		require.NoError(t, err)
 		header, err := PayloadToHeader(wrapped)
 		require.NoError(t, err)
 		blindedBlock := &eth.SignedBlindedBeaconBlockBellatrix{
 			Block: &eth.BlindedBeaconBlockBellatrix{
 				Body: &eth.BlindedBeaconBlockBodyBellatrix{}}}
-		blindedBlock.Block.Body.ExecutionPayloadHeader = header
+		blindedBlock.Block.Body.SilaPayloadHeader = header
 
 		blk, err := NewSignedBeaconBlock(blindedBlock)
 		require.NoError(t, err)
-		builtBlock, err := BuildSignedBeaconBlockFromExecutionPayload(blk, payload)
+		builtBlock, err := BuildSignedBeaconBlockFromSilaPayload(blk, payload)
 		require.NoError(t, err)
 
 		got, err := builtBlock.Block().Body().Execution()
@@ -552,7 +552,7 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 		require.DeepEqual(t, payload, got.Proto())
 	})
 	t.Run("deneb", func(t *testing.T) {
-		payload := &enginev1.ExecutionPayloadDeneb{
+		payload := &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -565,18 +565,18 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 			ExcessBlobGas: 123,
 			BlobGasUsed:   321,
 		}
-		wrapped, err := WrappedExecutionPayloadDeneb(payload)
+		wrapped, err := WrappedSilaPayloadDeneb(payload)
 		require.NoError(t, err)
 		header, err := PayloadToHeaderDeneb(wrapped)
 		require.NoError(t, err)
 		blindedBlock := &eth.SignedBlindedBeaconBlockDeneb{
 			Message: &eth.BlindedBeaconBlockDeneb{
 				Body: &eth.BlindedBeaconBlockBodyDeneb{}}}
-		blindedBlock.Message.Body.ExecutionPayloadHeader = header
+		blindedBlock.Message.Body.SilaPayloadHeader = header
 
 		blk, err := NewSignedBeaconBlock(blindedBlock)
 		require.NoError(t, err)
-		builtBlock, err := BuildSignedBeaconBlockFromExecutionPayload(blk, payload)
+		builtBlock, err := BuildSignedBeaconBlockFromSilaPayload(blk, payload)
 		require.NoError(t, err)
 
 		got, err := builtBlock.Block().Body().Execution()
@@ -591,7 +591,7 @@ func TestBuildSignedBeaconBlockFromExecutionPayload(t *testing.T) {
 			block:   &BeaconBlock{version: version.Gloas, body: &BeaconBlockBody{version: version.Gloas}},
 		}
 		blinded := &testBlindedSignedBeaconBlock{SignedBeaconBlock: base}
-		_, err := BuildSignedBeaconBlockFromExecutionPayload(blinded, nil)
+		_, err := BuildSignedBeaconBlockFromSilaPayload(blinded, nil)
 		require.ErrorContains(t, "Execution is not supported for gloas", err)
 	})
 }

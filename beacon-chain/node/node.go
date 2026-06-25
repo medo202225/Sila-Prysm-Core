@@ -107,7 +107,7 @@ type BeaconNode struct {
 	trackedValidatorsCache   *cache.TrackedValidatorsCache
 	proposerPreferencesCache *cache.ProposerPreferencesCache
 	payloadIDCache           *cache.PayloadIDCache
-	executionPayloadCache    *cache.ExecutionPayloadEnvelopeCache
+	silaPayloadCache    *cache.SilaPayloadEnvelopeCache
 	stateFeed                *event.Feed
 	blockFeed                *event.Feed
 	opFeed                   *event.Feed
@@ -177,7 +177,7 @@ func New(cliCtx *cli.Context, cancel context.CancelFunc, optFuncs []func(*cli.Co
 		// are global and include proposers we do not own.
 		proposerPreferencesCache: cache.NewProposerPreferencesCache(),
 		payloadIDCache:           cache.NewPayloadIDCache(),
-		executionPayloadCache:    cache.NewExecutionPayloadEnvelopeCache(),
+		silaPayloadCache:    cache.NewSilaPayloadEnvelopeCache(),
 		slasherBlockHeadersFeed:  new(event.Feed),
 		slasherAttestationsFeed:  new(event.Feed),
 		serviceFlagOpts:          &serviceFlagOpts{},
@@ -1000,7 +1000,7 @@ func (b *BeaconNode) registerRPCService(router *http.ServeMux) error {
 		FinalizationFetcher:              chainService,
 		BlockReceiver:                    chainService,
 		PayloadAttestationReceiver:       chainService,
-		ExecutionPayloadEnvelopeReceiver: chainService,
+		SilaPayloadEnvelopeReceiver: chainService,
 		BlobReceiver:                     chainService,
 		DataColumnReceiver:               chainService,
 		AttestationReceiver:              chainService,
@@ -1034,9 +1034,9 @@ func (b *BeaconNode) registerRPCService(router *http.ServeMux) error {
 		DataColumnStorage:                b.DataColumnStorage,
 		TrackedValidatorsCache:           b.trackedValidatorsCache,
 		ProposerPreferencesCache:         b.proposerPreferencesCache,
-		HighestBidCache:                  regularSyncService.HighestExecutionPayloadBidCache(),
+		HighestBidCache:                  regularSyncService.HighestSilaPayloadBidCache(),
 		PayloadIDCache:                   b.payloadIDCache,
-		ExecutionPayloadEnvelopeCache:    b.executionPayloadCache,
+		SilaPayloadEnvelopeCache:    b.silaPayloadCache,
 		LCStore:                          b.lcStore,
 		GraffitiInfo:                     web3Service.GraffitiInfo(),
 	})

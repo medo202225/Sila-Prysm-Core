@@ -135,13 +135,13 @@ func Test_setupBlockStorageType(t *testing.T) {
 	ctx := t.Context()
 	t.Run("fresh database with feature enabled to store full blocks should store full blocks", func(t *testing.T) {
 		resetFn := features.InitWithReset(&features.Flags{
-			SaveFullExecutionPayloads: true,
+			SaveFullSilaPayloads: true,
 		})
 		defer resetFn()
 		store := setupDB(t)
 
 		blk := util.NewBeaconBlockBellatrix()
-		blk.Block.Body.ExecutionPayload.BlockNumber = 1
+		blk.Block.Body.SilaPayload.BlockNumber = 1
 		wrappedBlock, err := blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 		root, err := wrappedBlock.Block().HashTreeRoot()
@@ -156,13 +156,13 @@ func Test_setupBlockStorageType(t *testing.T) {
 	})
 	t.Run("fresh database with default settings should store blinded", func(t *testing.T) {
 		resetFn := features.InitWithReset(&features.Flags{
-			SaveFullExecutionPayloads: false,
+			SaveFullSilaPayloads: false,
 		})
 		defer resetFn()
 		store := setupDB(t)
 
 		blk := util.NewBeaconBlockBellatrix()
-		blk.Block.Body.ExecutionPayload.BlockNumber = 1
+		blk.Block.Body.SilaPayload.BlockNumber = 1
 		wrappedBlock, err := blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 		root, err := wrappedBlock.Block().HashTreeRoot()
@@ -185,7 +185,7 @@ func Test_setupBlockStorageType(t *testing.T) {
 		}))
 
 		blk := util.NewBlindedBeaconBlockBellatrix()
-		blk.Block.Body.ExecutionPayloadHeader.BlockNumber = 1
+		blk.Block.Body.SilaPayloadHeader.BlockNumber = 1
 		wrappedBlock, err := blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 		root, err := wrappedBlock.Block().HashTreeRoot()
@@ -218,7 +218,7 @@ func Test_setupBlockStorageType(t *testing.T) {
 		require.Equal(t, true, shouldSaveBlinded)
 
 		blkFull := util.NewBeaconBlockBellatrix()
-		blkFull.Block.Body.ExecutionPayload.BlockNumber = 2
+		blkFull.Block.Body.SilaPayload.BlockNumber = 2
 		wrappedBlock, err = blocks.NewSignedBeaconBlock(blkFull)
 		require.NoError(t, err)
 		root, err = wrappedBlock.Block().HashTreeRoot()
@@ -251,7 +251,7 @@ func Test_setupBlockStorageType(t *testing.T) {
 		}))
 
 		blk := util.NewBeaconBlockBellatrix()
-		blk.Block.Body.ExecutionPayload.BlockNumber = 1
+		blk.Block.Body.SilaPayload.BlockNumber = 1
 		wrappedBlock, err := blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 		root, err := wrappedBlock.Block().HashTreeRoot()
@@ -269,7 +269,7 @@ func Test_setupBlockStorageType(t *testing.T) {
 		require.NoError(t, err)
 
 		blk = util.NewBeaconBlockBellatrix()
-		blk.Block.Body.ExecutionPayload.BlockNumber = 2
+		blk.Block.Body.SilaPayload.BlockNumber = 2
 		wrappedBlock, err = blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 		root, err = wrappedBlock.Block().HashTreeRoot()
@@ -295,7 +295,7 @@ func Test_setupBlockStorageType(t *testing.T) {
 		store := setupDB(t)
 
 		blk := util.NewBeaconBlockBellatrix()
-		blk.Block.Body.ExecutionPayload.BlockNumber = 1
+		blk.Block.Body.SilaPayload.BlockNumber = 1
 		wrappedBlock, err := blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 		root, err := wrappedBlock.Block().HashTreeRoot()
@@ -312,11 +312,11 @@ func Test_setupBlockStorageType(t *testing.T) {
 
 		// Trying to enable full blocks with a database that is already storing blinded blocks should error.
 		resetFn := features.InitWithReset(&features.Flags{
-			SaveFullExecutionPayloads: true,
+			SaveFullSilaPayloads: true,
 		})
 		defer resetFn()
 		err = store.setupBlockStorageType(ctx)
 		errMsg := "cannot use the %s flag with this existing database, as it has already been initialized"
-		require.ErrorContains(t, fmt.Sprintf(errMsg, features.SaveFullExecutionPayloads.Name), err)
+		require.ErrorContains(t, fmt.Sprintf(errMsg, features.SaveFullSilaPayloads.Name), err)
 	})
 }

@@ -51,10 +51,10 @@ import (
 )
 
 // fillGloasBlockTestData populates a Gloas block with non-zero test values for the
-// Gloas-specific fields: SignedExecutionPayloadBid and PayloadAttestations.
+// Gloas-specific fields: SignedSilaPayloadBid and PayloadAttestations.
 func fillGloasBlockTestData(b *eth.SignedBeaconBlockGloas, numPayloadAttestations int) {
 	slot := b.Block.Slot
-	b.Block.Body.SignedExecutionPayloadBid = util.GenerateTestSignedExecutionPayloadBid(slot)
+	b.Block.Body.SignedSilaPayloadBid = util.GenerateTestSignedSilaPayloadBid(slot)
 	b.Block.Body.PayloadAttestations = util.GenerateTestPayloadAttestations(numPayloadAttestations, slot)
 }
 
@@ -377,9 +377,9 @@ func TestGetBlockV2(t *testing.T) {
 		assert.DeepEqual(t, blk, b)
 
 		// Verify Gloas-specific fields are correctly serialized/deserialized
-		require.NotNil(t, blk.Block.Body.SignedExecutionPayloadBid)
-		assert.Equal(t, primitives.Slot(123), blk.Block.Body.SignedExecutionPayloadBid.Message.Slot)
-		assert.Equal(t, primitives.BuilderIndex(1), blk.Block.Body.SignedExecutionPayloadBid.Message.BuilderIndex)
+		require.NotNil(t, blk.Block.Body.SignedSilaPayloadBid)
+		assert.Equal(t, primitives.Slot(123), blk.Block.Body.SignedSilaPayloadBid.Message.Slot)
+		assert.Equal(t, primitives.BuilderIndex(1), blk.Block.Body.SignedSilaPayloadBid.Message.BuilderIndex)
 		require.Equal(t, 2, len(blk.Block.Body.PayloadAttestations))
 		for _, att := range blk.Block.Body.PayloadAttestations {
 			assert.Equal(t, primitives.Slot(123), att.Data.Slot)
@@ -653,8 +653,8 @@ func TestGetBlockSSZV2(t *testing.T) {
 		// Verify SSZ round-trip preserves Gloas-specific fields
 		decoded := &eth.SignedBeaconBlockGloas{}
 		require.NoError(t, decoded.UnmarshalSSZ(writer.Body.Bytes()))
-		require.NotNil(t, decoded.Block.Body.SignedExecutionPayloadBid)
-		assert.Equal(t, primitives.Slot(123), decoded.Block.Body.SignedExecutionPayloadBid.Message.Slot)
+		require.NotNil(t, decoded.Block.Body.SignedSilaPayloadBid)
+		assert.Equal(t, primitives.Slot(123), decoded.Block.Body.SignedSilaPayloadBid.Message.Slot)
 		require.Equal(t, 2, len(decoded.Block.Body.PayloadAttestations))
 	})
 }

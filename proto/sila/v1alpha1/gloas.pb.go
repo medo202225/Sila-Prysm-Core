@@ -25,7 +25,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ExecutionPayloadBid struct {
+type SilaPayloadBid struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
 	ParentBlockHash       []byte                                                                   `protobuf:"bytes,1,opt,name=parent_block_hash,json=parentBlockHash,proto3" json:"parent_block_hash,omitempty" ssz-size:"32"`
 	ParentBlockRoot       []byte                                                                   `protobuf:"bytes,2,opt,name=parent_block_root,json=parentBlockRoot,proto3" json:"parent_block_root,omitempty" ssz-size:"32"`
@@ -43,20 +43,20 @@ type ExecutionPayloadBid struct {
 	sizeCache             protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadBid) Reset() {
-	*x = ExecutionPayloadBid{}
+func (x *SilaPayloadBid) Reset() {
+	*x = SilaPayloadBid{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadBid) String() string {
+func (x *SilaPayloadBid) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadBid) ProtoMessage() {}
+func (*SilaPayloadBid) ProtoMessage() {}
 
-func (x *ExecutionPayloadBid) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadBid) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -68,117 +68,117 @@ func (x *ExecutionPayloadBid) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadBid.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadBid) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadBid.ProtoReflect.Descriptor instead.
+func (*SilaPayloadBid) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ExecutionPayloadBid) GetParentBlockHash() []byte {
+func (x *SilaPayloadBid) GetParentBlockHash() []byte {
 	if x != nil {
 		return x.ParentBlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadBid) GetParentBlockRoot() []byte {
+func (x *SilaPayloadBid) GetParentBlockRoot() []byte {
 	if x != nil {
 		return x.ParentBlockRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadBid) GetBlockHash() []byte {
+func (x *SilaPayloadBid) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadBid) GetPrevRandao() []byte {
+func (x *SilaPayloadBid) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadBid) GetFeeRecipient() []byte {
+func (x *SilaPayloadBid) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadBid) GetGasLimit() uint64 {
+func (x *SilaPayloadBid) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadBid) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
+func (x *SilaPayloadBid) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
 	if x != nil {
 		return x.BuilderIndex
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex(0)
 }
 
-func (x *ExecutionPayloadBid) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
+func (x *SilaPayloadBid) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *ExecutionPayloadBid) GetValue() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei {
+func (x *SilaPayloadBid) GetValue() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei {
 	if x != nil {
 		return x.Value
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei(0)
 }
 
-func (x *ExecutionPayloadBid) GetExecutionPayment() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei {
+func (x *SilaPayloadBid) GetExecutionPayment() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei {
 	if x != nil {
 		return x.ExecutionPayment
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei(0)
 }
 
-func (x *ExecutionPayloadBid) GetBlobKzgCommitments() [][]byte {
+func (x *SilaPayloadBid) GetBlobKzgCommitments() [][]byte {
 	if x != nil {
 		return x.BlobKzgCommitments
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadBid) GetExecutionRequestsRoot() []byte {
+func (x *SilaPayloadBid) GetExecutionRequestsRoot() []byte {
 	if x != nil {
 		return x.ExecutionRequestsRoot
 	}
 	return nil
 }
 
-type SignedExecutionPayloadBid struct {
+type SignedSilaPayloadBid struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       *ExecutionPayloadBid   `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Message       *SilaPayloadBid   `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Signature     []byte                 `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SignedExecutionPayloadBid) Reset() {
-	*x = SignedExecutionPayloadBid{}
+func (x *SignedSilaPayloadBid) Reset() {
+	*x = SignedSilaPayloadBid{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SignedExecutionPayloadBid) String() string {
+func (x *SignedSilaPayloadBid) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SignedExecutionPayloadBid) ProtoMessage() {}
+func (*SignedSilaPayloadBid) ProtoMessage() {}
 
-func (x *SignedExecutionPayloadBid) ProtoReflect() protoreflect.Message {
+func (x *SignedSilaPayloadBid) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -190,19 +190,19 @@ func (x *SignedExecutionPayloadBid) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SignedExecutionPayloadBid.ProtoReflect.Descriptor instead.
-func (*SignedExecutionPayloadBid) Descriptor() ([]byte, []int) {
+// Deprecated: Use SignedSilaPayloadBid.ProtoReflect.Descriptor instead.
+func (*SignedSilaPayloadBid) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *SignedExecutionPayloadBid) GetMessage() *ExecutionPayloadBid {
+func (x *SignedSilaPayloadBid) GetMessage() *SilaPayloadBid {
 	if x != nil {
 		return x.Message
 	}
 	return nil
 }
 
-func (x *SignedExecutionPayloadBid) GetSignature() []byte {
+func (x *SignedSilaPayloadBid) GetSignature() []byte {
 	if x != nil {
 		return x.Signature
 	}
@@ -657,7 +657,7 @@ type BeaconBlockBodyGloas struct {
 	VoluntaryExits            []*SignedVoluntaryExit        `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
 	SyncAggregate             *SyncAggregate                `protobuf:"bytes,9,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	BlsToExecutionChanges     []*SignedBLSToExecutionChange `protobuf:"bytes,10,rep,name=bls_to_execution_changes,json=blsToExecutionChanges,proto3" json:"bls_to_execution_changes,omitempty" ssz-max:"16"`
-	SignedExecutionPayloadBid *SignedExecutionPayloadBid    `protobuf:"bytes,11,opt,name=signed_execution_payload_bid,json=signedExecutionPayloadBid,proto3" json:"signed_execution_payload_bid,omitempty"`
+	SignedSilaPayloadBid *SignedSilaPayloadBid    `protobuf:"bytes,11,opt,name=signed_sila_payload_bid,json=signedSilaPayloadBid,proto3" json:"signed_sila_payload_bid,omitempty"`
 	PayloadAttestations       []*PayloadAttestation         `protobuf:"bytes,12,rep,name=payload_attestations,json=payloadAttestations,proto3" json:"payload_attestations,omitempty" ssz-max:"4"`
 	ParentExecutionRequests   *v1.ExecutionRequests         `protobuf:"bytes,13,opt,name=parent_execution_requests,json=parentExecutionRequests,proto3" json:"parent_execution_requests,omitempty"`
 	unknownFields             protoimpl.UnknownFields
@@ -764,9 +764,9 @@ func (x *BeaconBlockBodyGloas) GetBlsToExecutionChanges() []*SignedBLSToExecutio
 	return nil
 }
 
-func (x *BeaconBlockBodyGloas) GetSignedExecutionPayloadBid() *SignedExecutionPayloadBid {
+func (x *BeaconBlockBodyGloas) GetSignedSilaPayloadBid() *SignedSilaPayloadBid {
 	if x != nil {
-		return x.SignedExecutionPayloadBid
+		return x.SignedSilaPayloadBid
 	}
 	return nil
 }
@@ -879,10 +879,10 @@ type BeaconStateGloas struct {
 	ProposerLookahead             []github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,13001,rep,packed,name=proposer_lookahead,json=proposerLookahead,proto3" json:"proposer_lookahead,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex" ssz-size:"64"`
 	Builders                      []*Builder                                                                   `protobuf:"bytes,14001,rep,name=builders,proto3" json:"builders,omitempty" ssz-max:"1099511627776"`
 	NextWithdrawalBuilderIndex    github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex     `protobuf:"varint,14002,opt,name=next_withdrawal_builder_index,json=nextWithdrawalBuilderIndex,proto3" json:"next_withdrawal_builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
-	ExecutionPayloadAvailability  []byte                                                                       `protobuf:"bytes,14003,opt,name=execution_payload_availability,json=executionPayloadAvailability,proto3" json:"execution_payload_availability,omitempty" ssz-size:"1024"`
+	SilaPayloadAvailability  []byte                                                                       `protobuf:"bytes,14003,opt,name=sila_payload_availability,json=silaPayloadAvailability,proto3" json:"sila_payload_availability,omitempty" ssz-size:"1024"`
 	BuilderPendingPayments        []*BuilderPendingPayment                                                     `protobuf:"bytes,14004,rep,name=builder_pending_payments,json=builderPendingPayments,proto3" json:"builder_pending_payments,omitempty" ssz-size:"64"`
 	BuilderPendingWithdrawals     []*BuilderPendingWithdrawal                                                  `protobuf:"bytes,14005,rep,name=builder_pending_withdrawals,json=builderPendingWithdrawals,proto3" json:"builder_pending_withdrawals,omitempty" ssz-max:"1048576"`
-	LatestExecutionPayloadBid     *ExecutionPayloadBid                                                         `protobuf:"bytes,14006,opt,name=latest_execution_payload_bid,json=latestExecutionPayloadBid,proto3" json:"latest_execution_payload_bid,omitempty"`
+	LatestSilaPayloadBid     *SilaPayloadBid                                                         `protobuf:"bytes,14006,opt,name=latest_sila_payload_bid,json=latestSilaPayloadBid,proto3" json:"latest_sila_payload_bid,omitempty"`
 	PayloadExpectedWithdrawals    []*v1.Withdrawal                                                             `protobuf:"bytes,14007,rep,name=payload_expected_withdrawals,json=payloadExpectedWithdrawals,proto3" json:"payload_expected_withdrawals,omitempty" ssz-max:"16"`
 	PtcWindow                     []*PTCs                                                                      `protobuf:"bytes,14008,rep,name=ptc_window,json=ptcWindow,proto3" json:"ptc_window,omitempty" ssz-size:"96"`
 	unknownFields                 protoimpl.UnknownFields
@@ -1199,9 +1199,9 @@ func (x *BeaconStateGloas) GetNextWithdrawalBuilderIndex() github_com_sila_chain
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex(0)
 }
 
-func (x *BeaconStateGloas) GetExecutionPayloadAvailability() []byte {
+func (x *BeaconStateGloas) GetSilaPayloadAvailability() []byte {
 	if x != nil {
-		return x.ExecutionPayloadAvailability
+		return x.SilaPayloadAvailability
 	}
 	return nil
 }
@@ -1220,9 +1220,9 @@ func (x *BeaconStateGloas) GetBuilderPendingWithdrawals() []*BuilderPendingWithd
 	return nil
 }
 
-func (x *BeaconStateGloas) GetLatestExecutionPayloadBid() *ExecutionPayloadBid {
+func (x *BeaconStateGloas) GetLatestSilaPayloadBid() *SilaPayloadBid {
 	if x != nil {
-		return x.LatestExecutionPayloadBid
+		return x.LatestSilaPayloadBid
 	}
 	return nil
 }
@@ -1288,7 +1288,7 @@ func (x *PTCs) GetValidatorIndices() []github_com_sila_chain_Sila_Sila_Core_v7_c
 type BeaconBlockContentsGloas struct {
 	state                    protoimpl.MessageState    `protogen:"open.v1"`
 	Block                    *BeaconBlockGloas         `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
-	ExecutionPayloadEnvelope *ExecutionPayloadEnvelope `protobuf:"bytes,2,opt,name=execution_payload_envelope,json=executionPayloadEnvelope,proto3" json:"execution_payload_envelope,omitempty"`
+	SilaPayloadEnvelope *SilaPayloadEnvelope `protobuf:"bytes,2,opt,name=sila_payload_envelope,json=silaPayloadEnvelope,proto3" json:"sila_payload_envelope,omitempty"`
 	KzgProofs                [][]byte                  `protobuf:"bytes,3,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"33554432" ssz-size:"?,48"`
 	Blobs                    [][]byte                  `protobuf:"bytes,4,rep,name=blobs,proto3" json:"blobs,omitempty" ssz-max:"4096" ssz-size:"?,131072"`
 	unknownFields            protoimpl.UnknownFields
@@ -1332,9 +1332,9 @@ func (x *BeaconBlockContentsGloas) GetBlock() *BeaconBlockGloas {
 	return nil
 }
 
-func (x *BeaconBlockContentsGloas) GetExecutionPayloadEnvelope() *ExecutionPayloadEnvelope {
+func (x *BeaconBlockContentsGloas) GetSilaPayloadEnvelope() *SilaPayloadEnvelope {
 	if x != nil {
-		return x.ExecutionPayloadEnvelope
+		return x.SilaPayloadEnvelope
 	}
 	return nil
 }
@@ -1353,29 +1353,29 @@ func (x *BeaconBlockContentsGloas) GetBlobs() [][]byte {
 	return nil
 }
 
-type SignedExecutionPayloadEnvelopeContents struct {
+type SignedSilaPayloadEnvelopeContents struct {
 	state                          protoimpl.MessageState          `protogen:"open.v1"`
-	SignedExecutionPayloadEnvelope *SignedExecutionPayloadEnvelope `protobuf:"bytes,1,opt,name=signed_execution_payload_envelope,json=signedExecutionPayloadEnvelope,proto3" json:"signed_execution_payload_envelope,omitempty"`
+	SignedSilaPayloadEnvelope *SignedSilaPayloadEnvelope `protobuf:"bytes,1,opt,name=signed_sila_payload_envelope,json=signedSilaPayloadEnvelope,proto3" json:"signed_sila_payload_envelope,omitempty"`
 	KzgProofs                      [][]byte                        `protobuf:"bytes,2,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"33554432" ssz-size:"?,48"`
 	Blobs                          [][]byte                        `protobuf:"bytes,3,rep,name=blobs,proto3" json:"blobs,omitempty" ssz-max:"4096" ssz-size:"?,131072"`
 	unknownFields                  protoimpl.UnknownFields
 	sizeCache                      protoimpl.SizeCache
 }
 
-func (x *SignedExecutionPayloadEnvelopeContents) Reset() {
-	*x = SignedExecutionPayloadEnvelopeContents{}
+func (x *SignedSilaPayloadEnvelopeContents) Reset() {
+	*x = SignedSilaPayloadEnvelopeContents{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SignedExecutionPayloadEnvelopeContents) String() string {
+func (x *SignedSilaPayloadEnvelopeContents) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SignedExecutionPayloadEnvelopeContents) ProtoMessage() {}
+func (*SignedSilaPayloadEnvelopeContents) ProtoMessage() {}
 
-func (x *SignedExecutionPayloadEnvelopeContents) ProtoReflect() protoreflect.Message {
+func (x *SignedSilaPayloadEnvelopeContents) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1387,26 +1387,26 @@ func (x *SignedExecutionPayloadEnvelopeContents) ProtoReflect() protoreflect.Mes
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SignedExecutionPayloadEnvelopeContents.ProtoReflect.Descriptor instead.
-func (*SignedExecutionPayloadEnvelopeContents) Descriptor() ([]byte, []int) {
+// Deprecated: Use SignedSilaPayloadEnvelopeContents.ProtoReflect.Descriptor instead.
+func (*SignedSilaPayloadEnvelopeContents) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *SignedExecutionPayloadEnvelopeContents) GetSignedExecutionPayloadEnvelope() *SignedExecutionPayloadEnvelope {
+func (x *SignedSilaPayloadEnvelopeContents) GetSignedSilaPayloadEnvelope() *SignedSilaPayloadEnvelope {
 	if x != nil {
-		return x.SignedExecutionPayloadEnvelope
+		return x.SignedSilaPayloadEnvelope
 	}
 	return nil
 }
 
-func (x *SignedExecutionPayloadEnvelopeContents) GetKzgProofs() [][]byte {
+func (x *SignedSilaPayloadEnvelopeContents) GetKzgProofs() [][]byte {
 	if x != nil {
 		return x.KzgProofs
 	}
 	return nil
 }
 
-func (x *SignedExecutionPayloadEnvelopeContents) GetBlobs() [][]byte {
+func (x *SignedSilaPayloadEnvelopeContents) GetBlobs() [][]byte {
 	if x != nil {
 		return x.Blobs
 	}
@@ -1601,9 +1601,9 @@ func (x *DataColumnSidecarGloas) GetBeaconBlockRoot() []byte {
 	return nil
 }
 
-type ExecutionPayloadEnvelope struct {
+type SilaPayloadEnvelope struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
-	Payload               *v1.ExecutionPayloadGloas                                                `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload               *v1.SilaPayloadGloas                                                `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	ExecutionRequests     *v1.ExecutionRequests                                                    `protobuf:"bytes,2,opt,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
 	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
@@ -1612,20 +1612,20 @@ type ExecutionPayloadEnvelope struct {
 	sizeCache             protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadEnvelope) Reset() {
-	*x = ExecutionPayloadEnvelope{}
+func (x *SilaPayloadEnvelope) Reset() {
+	*x = SilaPayloadEnvelope{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadEnvelope) String() string {
+func (x *SilaPayloadEnvelope) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadEnvelope) ProtoMessage() {}
+func (*SilaPayloadEnvelope) ProtoMessage() {}
 
-func (x *ExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1637,68 +1637,68 @@ func (x *ExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadEnvelope.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadEnvelope) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadEnvelope.ProtoReflect.Descriptor instead.
+func (*SilaPayloadEnvelope) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *ExecutionPayloadEnvelope) GetPayload() *v1.ExecutionPayloadGloas {
+func (x *SilaPayloadEnvelope) GetPayload() *v1.SilaPayloadGloas {
 	if x != nil {
 		return x.Payload
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
+func (x *SilaPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
 	if x != nil {
 		return x.ExecutionRequests
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadEnvelope) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
+func (x *SilaPayloadEnvelope) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
 	if x != nil {
 		return x.BuilderIndex
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex(0)
 }
 
-func (x *ExecutionPayloadEnvelope) GetBeaconBlockRoot() []byte {
+func (x *SilaPayloadEnvelope) GetBeaconBlockRoot() []byte {
 	if x != nil {
 		return x.BeaconBlockRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
+func (x *SilaPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
 	if x != nil {
 		return x.ParentBeaconBlockRoot
 	}
 	return nil
 }
 
-type SignedExecutionPayloadEnvelope struct {
+type SignedSilaPayloadEnvelope struct {
 	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Message       *ExecutionPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Message       *SilaPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Signature     []byte                    `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SignedExecutionPayloadEnvelope) Reset() {
-	*x = SignedExecutionPayloadEnvelope{}
+func (x *SignedSilaPayloadEnvelope) Reset() {
+	*x = SignedSilaPayloadEnvelope{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SignedExecutionPayloadEnvelope) String() string {
+func (x *SignedSilaPayloadEnvelope) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SignedExecutionPayloadEnvelope) ProtoMessage() {}
+func (*SignedSilaPayloadEnvelope) ProtoMessage() {}
 
-func (x *SignedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
+func (x *SignedSilaPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1710,26 +1710,26 @@ func (x *SignedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SignedExecutionPayloadEnvelope.ProtoReflect.Descriptor instead.
-func (*SignedExecutionPayloadEnvelope) Descriptor() ([]byte, []int) {
+// Deprecated: Use SignedSilaPayloadEnvelope.ProtoReflect.Descriptor instead.
+func (*SignedSilaPayloadEnvelope) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{19}
 }
 
-func (x *SignedExecutionPayloadEnvelope) GetMessage() *ExecutionPayloadEnvelope {
+func (x *SignedSilaPayloadEnvelope) GetMessage() *SilaPayloadEnvelope {
 	if x != nil {
 		return x.Message
 	}
 	return nil
 }
 
-func (x *SignedExecutionPayloadEnvelope) GetSignature() []byte {
+func (x *SignedSilaPayloadEnvelope) GetSignature() []byte {
 	if x != nil {
 		return x.Signature
 	}
 	return nil
 }
 
-type BlindedExecutionPayloadEnvelope struct {
+type BlindedSilaPayloadEnvelope struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
 	BlockHash             []byte                                                                   `protobuf:"bytes,1,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
 	ExecutionRequests     *v1.ExecutionRequests                                                    `protobuf:"bytes,2,opt,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
@@ -1742,20 +1742,20 @@ type BlindedExecutionPayloadEnvelope struct {
 	sizeCache             protoimpl.SizeCache
 }
 
-func (x *BlindedExecutionPayloadEnvelope) Reset() {
-	*x = BlindedExecutionPayloadEnvelope{}
+func (x *BlindedSilaPayloadEnvelope) Reset() {
+	*x = BlindedSilaPayloadEnvelope{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BlindedExecutionPayloadEnvelope) String() string {
+func (x *BlindedSilaPayloadEnvelope) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BlindedExecutionPayloadEnvelope) ProtoMessage() {}
+func (*BlindedSilaPayloadEnvelope) ProtoMessage() {}
 
-func (x *BlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
+func (x *BlindedSilaPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1767,82 +1767,82 @@ func (x *BlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BlindedExecutionPayloadEnvelope.ProtoReflect.Descriptor instead.
-func (*BlindedExecutionPayloadEnvelope) Descriptor() ([]byte, []int) {
+// Deprecated: Use BlindedSilaPayloadEnvelope.ProtoReflect.Descriptor instead.
+func (*BlindedSilaPayloadEnvelope) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetBlockHash() []byte {
+func (x *BlindedSilaPayloadEnvelope) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
+func (x *BlindedSilaPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
 	if x != nil {
 		return x.ExecutionRequests
 	}
 	return nil
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
+func (x *BlindedSilaPayloadEnvelope) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
 	if x != nil {
 		return x.BuilderIndex
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex(0)
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetBeaconBlockRoot() []byte {
+func (x *BlindedSilaPayloadEnvelope) GetBeaconBlockRoot() []byte {
 	if x != nil {
 		return x.BeaconBlockRoot
 	}
 	return nil
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
+func (x *BlindedSilaPayloadEnvelope) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetParentBlockHash() []byte {
+func (x *BlindedSilaPayloadEnvelope) GetParentBlockHash() []byte {
 	if x != nil {
 		return x.ParentBlockHash
 	}
 	return nil
 }
 
-func (x *BlindedExecutionPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
+func (x *BlindedSilaPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
 	if x != nil {
 		return x.ParentBeaconBlockRoot
 	}
 	return nil
 }
 
-type SignedBlindedExecutionPayloadEnvelope struct {
+type SignedBlindedSilaPayloadEnvelope struct {
 	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Message       *BlindedExecutionPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Message       *BlindedSilaPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Signature     []byte                           `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SignedBlindedExecutionPayloadEnvelope) Reset() {
-	*x = SignedBlindedExecutionPayloadEnvelope{}
+func (x *SignedBlindedSilaPayloadEnvelope) Reset() {
+	*x = SignedBlindedSilaPayloadEnvelope{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SignedBlindedExecutionPayloadEnvelope) String() string {
+func (x *SignedBlindedSilaPayloadEnvelope) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SignedBlindedExecutionPayloadEnvelope) ProtoMessage() {}
+func (*SignedBlindedSilaPayloadEnvelope) ProtoMessage() {}
 
-func (x *SignedBlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
+func (x *SignedBlindedSilaPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1854,26 +1854,26 @@ func (x *SignedBlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Mess
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SignedBlindedExecutionPayloadEnvelope.ProtoReflect.Descriptor instead.
-func (*SignedBlindedExecutionPayloadEnvelope) Descriptor() ([]byte, []int) {
+// Deprecated: Use SignedBlindedSilaPayloadEnvelope.ProtoReflect.Descriptor instead.
+func (*SignedBlindedSilaPayloadEnvelope) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *SignedBlindedExecutionPayloadEnvelope) GetMessage() *BlindedExecutionPayloadEnvelope {
+func (x *SignedBlindedSilaPayloadEnvelope) GetMessage() *BlindedSilaPayloadEnvelope {
 	if x != nil {
 		return x.Message
 	}
 	return nil
 }
 
-func (x *SignedBlindedExecutionPayloadEnvelope) GetSignature() []byte {
+func (x *SignedBlindedSilaPayloadEnvelope) GetSignature() []byte {
 	if x != nil {
 		return x.Signature
 	}
 	return nil
 }
 
-type WireBlindedExecutionPayloadEnvelope struct {
+type WireBlindedSilaPayloadEnvelope struct {
 	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
 	PayloadRoot           []byte                                                                   `protobuf:"bytes,1,opt,name=payload_root,json=payloadRoot,proto3" json:"payload_root,omitempty" ssz-size:"32"`
 	ExecutionRequests     *v1.ExecutionRequests                                                    `protobuf:"bytes,2,opt,name=execution_requests,json=executionRequests,proto3" json:"execution_requests,omitempty"`
@@ -1884,20 +1884,20 @@ type WireBlindedExecutionPayloadEnvelope struct {
 	sizeCache             protoimpl.SizeCache
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) Reset() {
-	*x = WireBlindedExecutionPayloadEnvelope{}
+func (x *WireBlindedSilaPayloadEnvelope) Reset() {
+	*x = WireBlindedSilaPayloadEnvelope{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) String() string {
+func (x *WireBlindedSilaPayloadEnvelope) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WireBlindedExecutionPayloadEnvelope) ProtoMessage() {}
+func (*WireBlindedSilaPayloadEnvelope) ProtoMessage() {}
 
-func (x *WireBlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
+func (x *WireBlindedSilaPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1909,68 +1909,68 @@ func (x *WireBlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Messag
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WireBlindedExecutionPayloadEnvelope.ProtoReflect.Descriptor instead.
-func (*WireBlindedExecutionPayloadEnvelope) Descriptor() ([]byte, []int) {
+// Deprecated: Use WireBlindedSilaPayloadEnvelope.ProtoReflect.Descriptor instead.
+func (*WireBlindedSilaPayloadEnvelope) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) GetPayloadRoot() []byte {
+func (x *WireBlindedSilaPayloadEnvelope) GetPayloadRoot() []byte {
 	if x != nil {
 		return x.PayloadRoot
 	}
 	return nil
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
+func (x *WireBlindedSilaPayloadEnvelope) GetExecutionRequests() *v1.ExecutionRequests {
 	if x != nil {
 		return x.ExecutionRequests
 	}
 	return nil
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
+func (x *WireBlindedSilaPayloadEnvelope) GetBuilderIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex {
 	if x != nil {
 		return x.BuilderIndex
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex(0)
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) GetBeaconBlockRoot() []byte {
+func (x *WireBlindedSilaPayloadEnvelope) GetBeaconBlockRoot() []byte {
 	if x != nil {
 		return x.BeaconBlockRoot
 	}
 	return nil
 }
 
-func (x *WireBlindedExecutionPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
+func (x *WireBlindedSilaPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
 	if x != nil {
 		return x.ParentBeaconBlockRoot
 	}
 	return nil
 }
 
-type SignedWireBlindedExecutionPayloadEnvelope struct {
+type SignedWireBlindedSilaPayloadEnvelope struct {
 	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Message       *WireBlindedExecutionPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Message       *WireBlindedSilaPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Signature     []byte                               `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SignedWireBlindedExecutionPayloadEnvelope) Reset() {
-	*x = SignedWireBlindedExecutionPayloadEnvelope{}
+func (x *SignedWireBlindedSilaPayloadEnvelope) Reset() {
+	*x = SignedWireBlindedSilaPayloadEnvelope{}
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SignedWireBlindedExecutionPayloadEnvelope) String() string {
+func (x *SignedWireBlindedSilaPayloadEnvelope) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SignedWireBlindedExecutionPayloadEnvelope) ProtoMessage() {}
+func (*SignedWireBlindedSilaPayloadEnvelope) ProtoMessage() {}
 
-func (x *SignedWireBlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.Message {
+func (x *SignedWireBlindedSilaPayloadEnvelope) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_gloas_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1982,19 +1982,19 @@ func (x *SignedWireBlindedExecutionPayloadEnvelope) ProtoReflect() protoreflect.
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SignedWireBlindedExecutionPayloadEnvelope.ProtoReflect.Descriptor instead.
-func (*SignedWireBlindedExecutionPayloadEnvelope) Descriptor() ([]byte, []int) {
+// Deprecated: Use SignedWireBlindedSilaPayloadEnvelope.ProtoReflect.Descriptor instead.
+func (*SignedWireBlindedSilaPayloadEnvelope) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *SignedWireBlindedExecutionPayloadEnvelope) GetMessage() *WireBlindedExecutionPayloadEnvelope {
+func (x *SignedWireBlindedSilaPayloadEnvelope) GetMessage() *WireBlindedSilaPayloadEnvelope {
 	if x != nil {
 		return x.Message
 	}
 	return nil
 }
 
-func (x *SignedWireBlindedExecutionPayloadEnvelope) GetSignature() []byte {
+func (x *SignedWireBlindedSilaPayloadEnvelope) GetSignature() []byte {
 	if x != nil {
 		return x.Signature
 	}
@@ -2874,8 +2874,8 @@ func file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_gloas_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_proto_sila_v1alpha1_gloas_proto_goTypes = []any{
-	(*ExecutionPayloadBid)(nil),                       // 0: sila.eth.v1alpha1.ExecutionPayloadBid
-	(*SignedExecutionPayloadBid)(nil),                 // 1: sila.eth.v1alpha1.SignedExecutionPayloadBid
+	(*SilaPayloadBid)(nil),                       // 0: sila.eth.v1alpha1.SilaPayloadBid
+	(*SignedSilaPayloadBid)(nil),                 // 1: sila.eth.v1alpha1.SignedSilaPayloadBid
 	(*ProposerPreferences)(nil),                       // 2: sila.eth.v1alpha1.ProposerPreferences
 	(*SignedProposerPreferences)(nil),                 // 3: sila.eth.v1alpha1.SignedProposerPreferences
 	(*SubmitSignedProposerPreferencesRequest)(nil),    // 4: sila.eth.v1alpha1.SubmitSignedProposerPreferencesRequest
@@ -2888,16 +2888,16 @@ var file_proto_sila_v1alpha1_gloas_proto_goTypes = []any{
 	(*BeaconStateGloas)(nil),                          // 11: sila.eth.v1alpha1.BeaconStateGloas
 	(*PTCs)(nil),                                      // 12: sila.eth.v1alpha1.PTCs
 	(*BeaconBlockContentsGloas)(nil),                  // 13: sila.eth.v1alpha1.BeaconBlockContentsGloas
-	(*SignedExecutionPayloadEnvelopeContents)(nil),    // 14: sila.eth.v1alpha1.SignedExecutionPayloadEnvelopeContents
+	(*SignedSilaPayloadEnvelopeContents)(nil),    // 14: sila.eth.v1alpha1.SignedSilaPayloadEnvelopeContents
 	(*BuilderPendingPayment)(nil),                     // 15: sila.eth.v1alpha1.BuilderPendingPayment
 	(*BuilderPendingWithdrawal)(nil),                  // 16: sila.eth.v1alpha1.BuilderPendingWithdrawal
 	(*DataColumnSidecarGloas)(nil),                    // 17: sila.eth.v1alpha1.DataColumnSidecarGloas
-	(*ExecutionPayloadEnvelope)(nil),                  // 18: sila.eth.v1alpha1.ExecutionPayloadEnvelope
-	(*SignedExecutionPayloadEnvelope)(nil),            // 19: sila.eth.v1alpha1.SignedExecutionPayloadEnvelope
-	(*BlindedExecutionPayloadEnvelope)(nil),           // 20: sila.eth.v1alpha1.BlindedExecutionPayloadEnvelope
-	(*SignedBlindedExecutionPayloadEnvelope)(nil),     // 21: sila.eth.v1alpha1.SignedBlindedExecutionPayloadEnvelope
-	(*WireBlindedExecutionPayloadEnvelope)(nil),       // 22: sila.eth.v1alpha1.WireBlindedExecutionPayloadEnvelope
-	(*SignedWireBlindedExecutionPayloadEnvelope)(nil), // 23: sila.eth.v1alpha1.SignedWireBlindedExecutionPayloadEnvelope
+	(*SilaPayloadEnvelope)(nil),                  // 18: sila.eth.v1alpha1.SilaPayloadEnvelope
+	(*SignedSilaPayloadEnvelope)(nil),            // 19: sila.eth.v1alpha1.SignedSilaPayloadEnvelope
+	(*BlindedSilaPayloadEnvelope)(nil),           // 20: sila.eth.v1alpha1.BlindedSilaPayloadEnvelope
+	(*SignedBlindedSilaPayloadEnvelope)(nil),     // 21: sila.eth.v1alpha1.SignedBlindedSilaPayloadEnvelope
+	(*WireBlindedSilaPayloadEnvelope)(nil),       // 22: sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope
+	(*SignedWireBlindedSilaPayloadEnvelope)(nil), // 23: sila.eth.v1alpha1.SignedWireBlindedSilaPayloadEnvelope
 	(*Builder)(nil),                                   // 24: sila.eth.v1alpha1.Builder
 	(*SilaExecutionData)(nil),                                  // 25: sila.eth.v1alpha1.SilaExecutionData
 	(*ProposerSlashing)(nil),                          // 26: sila.eth.v1alpha1.ProposerSlashing
@@ -2918,10 +2918,10 @@ var file_proto_sila_v1alpha1_gloas_proto_goTypes = []any{
 	(*PendingPartialWithdrawal)(nil),                  // 41: sila.eth.v1alpha1.PendingPartialWithdrawal
 	(*PendingConsolidation)(nil),                      // 42: sila.eth.v1alpha1.PendingConsolidation
 	(*v1.Withdrawal)(nil),                             // 43: sila.engine.v1.Withdrawal
-	(*v1.ExecutionPayloadGloas)(nil),                  // 44: sila.engine.v1.ExecutionPayloadGloas
+	(*v1.SilaPayloadGloas)(nil),                  // 44: sila.engine.v1.SilaPayloadGloas
 }
 var file_proto_sila_v1alpha1_gloas_proto_depIdxs = []int32{
-	0,  // 0: sila.eth.v1alpha1.SignedExecutionPayloadBid.message:type_name -> sila.eth.v1alpha1.ExecutionPayloadBid
+	0,  // 0: sila.eth.v1alpha1.SignedSilaPayloadBid.message:type_name -> sila.eth.v1alpha1.SilaPayloadBid
 	2,  // 1: sila.eth.v1alpha1.SignedProposerPreferences.message:type_name -> sila.eth.v1alpha1.ProposerPreferences
 	3,  // 2: sila.eth.v1alpha1.SubmitSignedProposerPreferencesRequest.signed_proposer_preferences:type_name -> sila.eth.v1alpha1.SignedProposerPreferences
 	5,  // 3: sila.eth.v1alpha1.PayloadAttestation.data:type_name -> sila.eth.v1alpha1.PayloadAttestationData
@@ -2935,7 +2935,7 @@ var file_proto_sila_v1alpha1_gloas_proto_depIdxs = []int32{
 	30, // 11: sila.eth.v1alpha1.BeaconBlockBodyGloas.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
 	31, // 12: sila.eth.v1alpha1.BeaconBlockBodyGloas.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
 	32, // 13: sila.eth.v1alpha1.BeaconBlockBodyGloas.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
-	1,  // 14: sila.eth.v1alpha1.BeaconBlockBodyGloas.signed_execution_payload_bid:type_name -> sila.eth.v1alpha1.SignedExecutionPayloadBid
+	1,  // 14: sila.eth.v1alpha1.BeaconBlockBodyGloas.signed_sila_payload_bid:type_name -> sila.eth.v1alpha1.SignedSilaPayloadBid
 	6,  // 15: sila.eth.v1alpha1.BeaconBlockBodyGloas.payload_attestations:type_name -> sila.eth.v1alpha1.PayloadAttestation
 	33, // 16: sila.eth.v1alpha1.BeaconBlockBodyGloas.parent_execution_requests:type_name -> sila.engine.v1.ExecutionRequests
 	8,  // 17: sila.eth.v1alpha1.SignedBeaconBlockGloas.block:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
@@ -2956,20 +2956,20 @@ var file_proto_sila_v1alpha1_gloas_proto_depIdxs = []int32{
 	24, // 32: sila.eth.v1alpha1.BeaconStateGloas.builders:type_name -> sila.eth.v1alpha1.Builder
 	15, // 33: sila.eth.v1alpha1.BeaconStateGloas.builder_pending_payments:type_name -> sila.eth.v1alpha1.BuilderPendingPayment
 	16, // 34: sila.eth.v1alpha1.BeaconStateGloas.builder_pending_withdrawals:type_name -> sila.eth.v1alpha1.BuilderPendingWithdrawal
-	0,  // 35: sila.eth.v1alpha1.BeaconStateGloas.latest_execution_payload_bid:type_name -> sila.eth.v1alpha1.ExecutionPayloadBid
+	0,  // 35: sila.eth.v1alpha1.BeaconStateGloas.latest_sila_payload_bid:type_name -> sila.eth.v1alpha1.SilaPayloadBid
 	43, // 36: sila.eth.v1alpha1.BeaconStateGloas.payload_expected_withdrawals:type_name -> sila.engine.v1.Withdrawal
 	12, // 37: sila.eth.v1alpha1.BeaconStateGloas.ptc_window:type_name -> sila.eth.v1alpha1.PTCs
 	8,  // 38: sila.eth.v1alpha1.BeaconBlockContentsGloas.block:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
-	18, // 39: sila.eth.v1alpha1.BeaconBlockContentsGloas.execution_payload_envelope:type_name -> sila.eth.v1alpha1.ExecutionPayloadEnvelope
-	19, // 40: sila.eth.v1alpha1.SignedExecutionPayloadEnvelopeContents.signed_execution_payload_envelope:type_name -> sila.eth.v1alpha1.SignedExecutionPayloadEnvelope
+	18, // 39: sila.eth.v1alpha1.BeaconBlockContentsGloas.sila_payload_envelope:type_name -> sila.eth.v1alpha1.SilaPayloadEnvelope
+	19, // 40: sila.eth.v1alpha1.SignedSilaPayloadEnvelopeContents.signed_sila_payload_envelope:type_name -> sila.eth.v1alpha1.SignedSilaPayloadEnvelope
 	16, // 41: sila.eth.v1alpha1.BuilderPendingPayment.withdrawal:type_name -> sila.eth.v1alpha1.BuilderPendingWithdrawal
-	44, // 42: sila.eth.v1alpha1.ExecutionPayloadEnvelope.payload:type_name -> sila.engine.v1.ExecutionPayloadGloas
-	33, // 43: sila.eth.v1alpha1.ExecutionPayloadEnvelope.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
-	18, // 44: sila.eth.v1alpha1.SignedExecutionPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.ExecutionPayloadEnvelope
-	33, // 45: sila.eth.v1alpha1.BlindedExecutionPayloadEnvelope.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
-	20, // 46: sila.eth.v1alpha1.SignedBlindedExecutionPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.BlindedExecutionPayloadEnvelope
-	33, // 47: sila.eth.v1alpha1.WireBlindedExecutionPayloadEnvelope.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
-	22, // 48: sila.eth.v1alpha1.SignedWireBlindedExecutionPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.WireBlindedExecutionPayloadEnvelope
+	44, // 42: sila.eth.v1alpha1.SilaPayloadEnvelope.payload:type_name -> sila.engine.v1.SilaPayloadGloas
+	33, // 43: sila.eth.v1alpha1.SilaPayloadEnvelope.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
+	18, // 44: sila.eth.v1alpha1.SignedSilaPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.SilaPayloadEnvelope
+	33, // 45: sila.eth.v1alpha1.BlindedSilaPayloadEnvelope.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
+	20, // 46: sila.eth.v1alpha1.SignedBlindedSilaPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.BlindedSilaPayloadEnvelope
+	33, // 47: sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
+	22, // 48: sila.eth.v1alpha1.SignedWireBlindedSilaPayloadEnvelope.message:type_name -> sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope
 	49, // [49:49] is the sub-list for method output_type
 	49, // [49:49] is the sub-list for method input_type
 	49, // [49:49] is the sub-list for extension type_name

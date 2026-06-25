@@ -128,8 +128,8 @@ func TestCopySignedBeaconBlockGloasDeepCopy(t *testing.T) {
 	original.Block.Body.RandaoReveal[0] ^= 0xFF
 	original.Block.Body.Graffiti[0] ^= 0xFF
 	original.Block.Body.SyncAggregate.SyncCommitteeSignature[0] ^= 0xFF
-	original.Block.Body.SignedExecutionPayloadBid.Signature[0] ^= 0xFF
-	original.Block.Body.SignedExecutionPayloadBid.Message.BlockHash[0] ^= 0xFF
+	original.Block.Body.SignedSilaPayloadBid.Signature[0] ^= 0xFF
+	original.Block.Body.SignedSilaPayloadBid.Message.BlockHash[0] ^= 0xFF
 	original.Block.Body.PayloadAttestations[0].Signature[0] ^= 0xFF
 	original.Block.Body.PayloadAttestations[0].Data.BeaconBlockRoot[0] ^= 0xFF
 	original.Block.Body.PayloadAttestations = append(original.Block.Body.PayloadAttestations, &v1alpha1.PayloadAttestation{})
@@ -671,7 +671,7 @@ func genBeaconBlockBodyBellatrix() *v1alpha1.BeaconBlockBodyBellatrix {
 		Deposits:          genDeposits(5),
 		VoluntaryExits:    genSignedVoluntaryExits(12),
 		SyncAggregate:     genSyncAggregate(),
-		ExecutionPayload:  genPayload(),
+		SilaPayload:  genPayload(),
 	}
 }
 
@@ -703,7 +703,7 @@ func genBeaconBlockBodyCapella() *v1alpha1.BeaconBlockBodyCapella {
 		Deposits:              genDeposits(5),
 		VoluntaryExits:        genSignedVoluntaryExits(12),
 		SyncAggregate:         genSyncAggregate(),
-		ExecutionPayload:      genPayloadCapella(),
+		SilaPayload:      genPayloadCapella(),
 		BlsToExecutionChanges: genBLSToExecutionChanges(10),
 	}
 }
@@ -736,7 +736,7 @@ func genBlindedBeaconBlockBodyCapella() *v1alpha1.BlindedBeaconBlockBodyCapella 
 		Deposits:               genDeposits(5),
 		VoluntaryExits:         genSignedVoluntaryExits(12),
 		SyncAggregate:          genSyncAggregate(),
-		ExecutionPayloadHeader: genPayloadHeaderCapella(),
+		SilaPayloadHeader: genPayloadHeaderCapella(),
 		BlsToExecutionChanges:  genBLSToExecutionChanges(10),
 	}
 }
@@ -769,7 +769,7 @@ func genBeaconBlockBodyDeneb() *v1alpha1.BeaconBlockBodyDeneb {
 		Deposits:              genDeposits(5),
 		VoluntaryExits:        genSignedVoluntaryExits(12),
 		SyncAggregate:         genSyncAggregate(),
-		ExecutionPayload:      genPayloadDeneb(),
+		SilaPayload:      genPayloadDeneb(),
 		BlsToExecutionChanges: genBLSToExecutionChanges(10),
 		BlobKzgCommitments:    getKZGCommitments(4),
 	}
@@ -803,7 +803,7 @@ func genBlindedBeaconBlockBodyDeneb() *v1alpha1.BlindedBeaconBlockBodyDeneb {
 		Deposits:               genDeposits(5),
 		VoluntaryExits:         genSignedVoluntaryExits(12),
 		SyncAggregate:          genSyncAggregate(),
-		ExecutionPayloadHeader: genPayloadHeaderDeneb(),
+		SilaPayloadHeader: genPayloadHeaderDeneb(),
 		BlsToExecutionChanges:  genBLSToExecutionChanges(10),
 		BlobKzgCommitments:     getKZGCommitments(4),
 	}
@@ -843,8 +843,8 @@ func genSyncCommitteeMessage() *v1alpha1.SyncCommitteeMessage {
 	}
 }
 
-func genPayload() *enginev1.ExecutionPayload {
-	return &enginev1.ExecutionPayload{
+func genPayload() *enginev1.SilaPayload {
+	return &enginev1.SilaPayload{
 		ParentHash:    bytes(32),
 		FeeRecipient:  bytes(32),
 		StateRoot:     bytes(32),
@@ -862,8 +862,8 @@ func genPayload() *enginev1.ExecutionPayload {
 	}
 }
 
-func genPayloadCapella() *enginev1.ExecutionPayloadCapella {
-	return &enginev1.ExecutionPayloadCapella{
+func genPayloadCapella() *enginev1.SilaPayloadCapella {
+	return &enginev1.SilaPayloadCapella{
 		ParentHash:    bytes(32),
 		FeeRecipient:  bytes(20),
 		StateRoot:     bytes(32),
@@ -895,8 +895,8 @@ func genPayloadCapella() *enginev1.ExecutionPayloadCapella {
 	}
 }
 
-func genPayloadDeneb() *enginev1.ExecutionPayloadDeneb {
-	return &enginev1.ExecutionPayloadDeneb{
+func genPayloadDeneb() *enginev1.SilaPayloadDeneb {
+	return &enginev1.SilaPayloadDeneb{
 		ParentHash:    bytes(32),
 		FeeRecipient:  bytes(20),
 		StateRoot:     bytes(32),
@@ -932,8 +932,8 @@ func genPayloadDeneb() *enginev1.ExecutionPayloadDeneb {
 
 var genPayloadElectra = genPayloadDeneb
 
-func genPayloadHeaderCapella() *enginev1.ExecutionPayloadHeaderCapella {
-	return &enginev1.ExecutionPayloadHeaderCapella{
+func genPayloadHeaderCapella() *enginev1.SilaPayloadHeaderCapella {
+	return &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       bytes(32),
 		FeeRecipient:     bytes(20),
 		StateRoot:        bytes(32),
@@ -952,8 +952,8 @@ func genPayloadHeaderCapella() *enginev1.ExecutionPayloadHeaderCapella {
 	}
 }
 
-func genPayloadHeaderDeneb() *enginev1.ExecutionPayloadHeaderDeneb {
-	return &enginev1.ExecutionPayloadHeaderDeneb{
+func genPayloadHeaderDeneb() *enginev1.SilaPayloadHeaderDeneb {
+	return &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       bytes(32),
 		FeeRecipient:     bytes(20),
 		StateRoot:        bytes(32),
@@ -1072,7 +1072,7 @@ func genBlindedBeaconBlockBodyElectra() *v1alpha1.BlindedBeaconBlockBodyElectra 
 		Deposits:               genDeposits(5),
 		VoluntaryExits:         genSignedVoluntaryExits(12),
 		SyncAggregate:          genSyncAggregate(),
-		ExecutionPayloadHeader: genPayloadHeaderElectra(),
+		SilaPayloadHeader: genPayloadHeaderElectra(),
 		BlsToExecutionChanges:  genBLSToExecutionChanges(10),
 		BlobKzgCommitments:     getKZGCommitments(4),
 		ExecutionRequests:      genExecutionRequests(),
@@ -1107,7 +1107,7 @@ func genBeaconBlockBodyElectra() *v1alpha1.BeaconBlockBodyElectra {
 		Deposits:              genDeposits(5),
 		VoluntaryExits:        genSignedVoluntaryExits(12),
 		SyncAggregate:         genSyncAggregate(),
-		ExecutionPayload:      genPayloadElectra(),
+		SilaPayload:      genPayloadElectra(),
 		BlsToExecutionChanges: genBLSToExecutionChanges(10),
 		BlobKzgCommitments:    getKZGCommitments(4),
 		ExecutionRequests:     genExecutionRequests(),
@@ -1201,20 +1201,20 @@ func genBeaconBlockBodyGloas() *v1alpha1.BeaconBlockBodyGloas {
 		VoluntaryExits:            genSignedVoluntaryExits(3),
 		SyncAggregate:             genSyncAggregate(),
 		BlsToExecutionChanges:     genBLSToExecutionChanges(2),
-		SignedExecutionPayloadBid: genSignedExecutionPayloadBidGloas(),
+		SignedSilaPayloadBid: genSignedSilaPayloadBidGloas(),
 		PayloadAttestations:       genPayloadAttestations(2),
 	}
 }
 
-func genSignedExecutionPayloadBidGloas() *v1alpha1.SignedExecutionPayloadBid {
-	return &v1alpha1.SignedExecutionPayloadBid{
-		Message:   genExecutionPayloadBidGloas(),
+func genSignedSilaPayloadBidGloas() *v1alpha1.SignedSilaPayloadBid {
+	return &v1alpha1.SignedSilaPayloadBid{
+		Message:   genSilaPayloadBidGloas(),
 		Signature: bytes(96),
 	}
 }
 
-func genExecutionPayloadBidGloas() *v1alpha1.ExecutionPayloadBid {
-	return &v1alpha1.ExecutionPayloadBid{
+func genSilaPayloadBidGloas() *v1alpha1.SilaPayloadBid {
+	return &v1alpha1.SilaPayloadBid{
 		ParentBlockHash:    bytes(32),
 		ParentBlockRoot:    bytes(32),
 		BlockHash:          bytes(32),

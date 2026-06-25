@@ -341,7 +341,7 @@ func TestVerifyAttestationNoVerifySignature_GloasCommitteeIndexLimit(t *testing.
 		BlockRoots:                   blockRoots,
 		StateRoots:                   stateRoots,
 		RandaoMixes:                  randaoMixes,
-		ExecutionPayloadAvailability: make([]byte, cfg.SlotsPerHistoricalRoot/8),
+		SilaPayloadAvailability: make([]byte, cfg.SlotsPerHistoricalRoot/8),
 		CurrentJustifiedCheckpoint:   justified,
 		PreviousJustifiedCheckpoint:  justified,
 		Validators: []*silapb.Validator{

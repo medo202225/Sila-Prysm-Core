@@ -158,16 +158,16 @@ type ValidatorClient interface {
 	// proposal slots. This replaces PrepareBeaconProposer and SubmitValidatorRegistrations
 	// for Gloas+.
 	SubmitSignedProposerPreferences(ctx context.Context, in *silapb.SubmitSignedProposerPreferencesRequest) (*empty.Empty, error)
-	SubmitSignedExecutionPayloadBid(ctx context.Context, in *silapb.SignedExecutionPayloadBid) (*empty.Empty, error)
+	SubmitSignedSilaPayloadBid(ctx context.Context, in *silapb.SignedSilaPayloadBid) (*empty.Empty, error)
 	StartEventStream(ctx context.Context, topics []string, eventsChannel chan<- *event.Event)
 	EventStreamIsRunning() bool
 	AggregatedSelections(ctx context.Context, selections []BeaconCommitteeSelection) ([]BeaconCommitteeSelection, error)
 	AggregatedSyncSelections(ctx context.Context, selections []SyncCommitteeSelection) ([]SyncCommitteeSelection, error)
 	Host() string
 	EnsureReady(ctx context.Context) bool
-	GetExecutionPayloadEnvelope(ctx context.Context, slot primitives.Slot, beaconBlockRoot [32]byte) (*silapb.ExecutionPayloadEnvelope, *silapb.WireBlindedExecutionPayloadEnvelope, error)
-	PublishExecutionPayloadEnvelope(ctx context.Context, in *silapb.SignedExecutionPayloadEnvelope) (*empty.Empty, error)
-	PublishBlindedExecutionPayloadEnvelope(ctx context.Context, in *silapb.SignedWireBlindedExecutionPayloadEnvelope) (*empty.Empty, error)
+	GetSilaPayloadEnvelope(ctx context.Context, slot primitives.Slot, beaconBlockRoot [32]byte) (*silapb.SilaPayloadEnvelope, *silapb.WireBlindedSilaPayloadEnvelope, error)
+	PublishSilaPayloadEnvelope(ctx context.Context, in *silapb.SignedSilaPayloadEnvelope) (*empty.Empty, error)
+	PublishBlindedSilaPayloadEnvelope(ctx context.Context, in *silapb.SignedWireBlindedSilaPayloadEnvelope) (*empty.Empty, error)
 	PayloadAttestationData(ctx context.Context, slot primitives.Slot) (*silapb.PayloadAttestationData, error)
 	SubmitPayloadAttestation(ctx context.Context, in *silapb.PayloadAttestationMessage) (*empty.Empty, error)
 }

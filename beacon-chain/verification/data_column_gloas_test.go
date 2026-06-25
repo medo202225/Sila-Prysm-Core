@@ -23,7 +23,7 @@ func testGloasDataColumnFixture(t *testing.T) (blocks.RODataColumn, interfaces.S
 	require.Equal(t, true, len(roSidecars) > 0)
 
 	base := roSidecars[0]
-	bid := util.GenerateTestSignedExecutionPayloadBid(base.Slot())
+	bid := util.GenerateTestSignedSilaPayloadBid(base.Slot())
 	var err error
 	bid.Message.BlobKzgCommitments, err = base.KzgCommitments()
 	require.NoError(t, err)
@@ -36,7 +36,7 @@ func testGloasDataColumnFixture(t *testing.T) (blocks.RODataColumn, interfaces.S
 	require.NoError(t, err)
 	pb.Block.ParentRoot = bytes.Clone(sbh.Header.ParentRoot)
 	pb.Block.StateRoot = bytes.Clone(sbh.Header.StateRoot)
-	pb.Block.Body.SignedExecutionPayloadBid = bid
+	pb.Block.Body.SignedSilaPayloadBid = bid
 
 	signedBlock, err := blocks.NewSignedBeaconBlock(pb)
 	require.NoError(t, err)

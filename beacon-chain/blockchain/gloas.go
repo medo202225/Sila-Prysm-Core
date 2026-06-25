@@ -89,12 +89,12 @@ func (s *Service) computePayloadWithdrawals(ctx context.Context, st state.Beacon
 		return st.PayloadExpectedWithdrawals()
 	}
 	// TODO: replace DB lookup with a single-entry cache (blockroot → envelope).
-	envelope, err := s.cfg.BeaconDB.ExecutionPayloadEnvelope(ctx, parentRoot)
+	envelope, err := s.cfg.BeaconDB.SilaPayloadEnvelope(ctx, parentRoot)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not get parent execution payload envelope")
+		return nil, errors.Wrap(err, "could not get parent sila payload envelope")
 	}
-	if err := coregloas.ApplyParentExecutionPayload(ctx, st, envelope.Message.ExecutionRequests); err != nil {
-		return nil, errors.Wrap(err, "could not apply parent execution payload")
+	if err := coregloas.ApplyParentSilaPayload(ctx, st, envelope.Message.ExecutionRequests); err != nil {
+		return nil, errors.Wrap(err, "could not apply parent sila payload")
 	}
 	result, err := st.ExpectedWithdrawalsGloas()
 	if err != nil {

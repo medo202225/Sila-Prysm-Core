@@ -68,10 +68,10 @@ func FuzzForkChoiceResponse(f *testing.F) {
 	})
 }
 
-func FuzzExecutionPayload(f *testing.F) {
+func FuzzSilaPayload(f *testing.F) {
 	logsBloom := [256]byte{'j', 'u', 'n', 'k'}
-	execData := &engine.ExecutionPayloadEnvelope{
-		ExecutionPayload: &engine.ExecutableData{
+	execData := &engine.SilaPayloadEnvelope{
+		SilaPayload: &engine.ExecutableData{
 			ParentHash:    common.Hash([32]byte{0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01}),
 			FeeRecipient:  common.Address([20]byte{0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF}),
 			StateRoot:     common.Hash([32]byte{0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01}),
@@ -94,8 +94,8 @@ func FuzzExecutionPayload(f *testing.F) {
 	assert.NoError(f, err)
 	f.Add(output)
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
-		gethResp := &engine.ExecutionPayloadEnvelope{}
-		silaResp := &pb.ExecutionPayloadCapellaWithValue{}
+		gethResp := &engine.SilaPayloadEnvelope{}
+		silaResp := &pb.SilaPayloadCapellaWithValue{}
 		gethErr := json.Unmarshal(jsonBlob, gethResp)
 		silaErr := json.Unmarshal(jsonBlob, silaResp)
 		assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
@@ -106,10 +106,10 @@ func FuzzExecutionPayload(f *testing.F) {
 		gethBlob, gethErr := json.Marshal(gethResp)
 		silaBlob, silaErr := json.Marshal(silaResp)
 		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
-		newGethResp := &engine.ExecutionPayloadEnvelope{}
+		newGethResp := &engine.SilaPayloadEnvelope{}
 		newGethErr := json.Unmarshal(silaBlob, newGethResp)
 		assert.NoError(t, newGethErr)
-		newGethResp2 := &engine.ExecutionPayloadEnvelope{}
+		newGethResp2 := &engine.SilaPayloadEnvelope{}
 		newGethErr = json.Unmarshal(gethBlob, newGethResp2)
 		assert.NoError(t, newGethErr)
 

@@ -82,9 +82,9 @@ func logStateTransitionData(b interfaces.ReadOnlyBeaconBlock) error {
 		}
 	}
 	if b.Version() >= version.Gloas {
-		signedBid, err := b.Body().SignedExecutionPayloadBid()
+		signedBid, err := b.Body().SignedSilaPayloadBid()
 		if err != nil {
-			log.WithError(err).Error("Failed to get signed execution payload bid")
+			log.WithError(err).Error("Failed to get signed sila payload bid")
 		} else {
 			bid := signedBid.Message
 			log = log.WithFields(logrus.Fields{
@@ -134,9 +134,9 @@ func logBlockSyncStatus(block interfaces.ReadOnlyBeaconBlock, blockRoot [32]byte
 	if block.Version() < version.Gloas {
 		moreFields["dataAvailabilityWaitedTime"] = daWaitedTime
 	} else {
-		signedBid, err := block.Body().SignedExecutionPayloadBid()
+		signedBid, err := block.Body().SignedSilaPayloadBid()
 		if err != nil {
-			log.WithError(err).Error("Failed to get signed execution payload bid for logging")
+			log.WithError(err).Error("Failed to get signed sila payload bid for logging")
 		} else if signedBid != nil && signedBid.Message != nil {
 			moreFields["blockHash"] = fmt.Sprintf("%#x", bytesutil.Trunc(signedBid.Message.BlockHash))
 			moreFields["parentHash"] = fmt.Sprintf("%#x", bytesutil.Trunc(signedBid.Message.ParentBlockHash))

@@ -241,7 +241,7 @@ message SignedBuilderBid {
 }
 
 message BuilderBid {
-  sila.engine.v1.ExecutionPayloadHeader header = 1;
+  sila.engine.v1.SilaPayloadHeader header = 1;
   bytes value = 2 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes pubkey = 3 [ (sila.eth.ext.ssz_size) = "48" ];
 }
@@ -392,9 +392,9 @@ message BeaconBlockBodyBellatrix {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload from the execution chain. New in Bellatrix network
+  // Sila payload from the execution chain. New in Bellatrix network
   // upgrade.
-  sila.engine.v1.ExecutionPayload execution_payload = 10;
+  sila.engine.v1.SilaPayload sila_payload = 10;
 }
 
 message SignedBlindedBeaconBlockBellatrix {
@@ -459,9 +459,9 @@ message BlindedBeaconBlockBodyBellatrix {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload header from the execution chain. New in Bellatrix network
+  // Sila payload header from the execution chain. New in Bellatrix network
   // upgrade.
-  sila.engine.v1.ExecutionPayloadHeader execution_payload_header = 10;
+  sila.engine.v1.SilaPayloadHeader sila_payload_header = 10;
 }
 
 // ----------------------------------------------------------------------------
@@ -534,8 +534,8 @@ message BeaconBlockBodyCapella {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload from the execution chain.
-  sila.engine.v1.ExecutionPayloadCapella execution_payload = 10;
+  // Sila payload from the execution chain.
+  sila.engine.v1.SilaPayloadCapella sila_payload = 10;
 
   // At most MAX_BLS_TO_EXECUTION_CHANGES. New in Capella network upgrade.
   repeated SignedBLSToExecutionChange bls_to_execution_changes = 11
@@ -604,8 +604,8 @@ message BlindedBeaconBlockBodyCapella {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload header from the execution chain.
-  sila.engine.v1.ExecutionPayloadHeaderCapella execution_payload_header =
+  // Sila payload header from the execution chain.
+  sila.engine.v1.SilaPayloadHeaderCapella sila_payload_header =
       10;
 
   // At most MAX_BLS_TO_EXECUTION_CHANGES. New in Capella network upgrade.
@@ -619,7 +619,7 @@ message SignedBuilderBidCapella {
 }
 
 message BuilderBidCapella {
-  sila.engine.v1.ExecutionPayloadHeaderCapella header = 1;
+  sila.engine.v1.SilaPayloadHeaderCapella header = 1;
   bytes value = 2 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes pubkey = 3 [ (sila.eth.ext.ssz_size) = "48" ];
 }
@@ -718,8 +718,8 @@ message BeaconBlockBodyDeneb {
   // Sync aggregate object for the beacon chain to track sync committee votes.-
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload from the execution chain.
-  sila.engine.v1.ExecutionPayloadDeneb execution_payload = 10;
+  // Sila payload from the execution chain.
+  sila.engine.v1.SilaPayloadDeneb sila_payload = 10;
 
   // At most MAX_BLS_TO_EXECUTION_CHANGES.
   repeated SignedBLSToExecutionChange bls_to_execution_changes = 11
@@ -793,8 +793,8 @@ message BlindedBeaconBlockBodyDeneb {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload header from the execution chain.
-  sila.engine.v1.ExecutionPayloadHeaderDeneb execution_payload_header = 10;
+  // Sila payload header from the execution chain.
+  sila.engine.v1.SilaPayloadHeaderDeneb sila_payload_header = 10;
 
   // At most MAX_BLS_TO_EXECUTION_CHANGES.
   repeated SignedBLSToExecutionChange bls_to_execution_changes = 11
@@ -813,7 +813,7 @@ message SignedBuilderBidDeneb {
 }
 
 message BuilderBidDeneb {
-  sila.engine.v1.ExecutionPayloadHeaderDeneb header = 1;
+  sila.engine.v1.SilaPayloadHeaderDeneb header = 1;
   repeated bytes blob_kzg_commitments = 2 [
     (sila.eth.ext.ssz_size) = "?,48",
     (sila.eth.ext.ssz_max) = "max_blob_commitments.size"
@@ -823,7 +823,7 @@ message BuilderBidDeneb {
 }
 
 message BuilderBidElectra {
-  sila.engine.v1.ExecutionPayloadHeaderDeneb header = 1;
+  sila.engine.v1.SilaPayloadHeaderDeneb header = 1;
   repeated bytes blob_kzg_commitments = 2 [
     (sila.eth.ext.ssz_size) = "?,48",
     (sila.eth.ext.ssz_max) = "max_blob_commitments.size"
@@ -949,9 +949,9 @@ message BeaconBlockBodyElectra {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload from the execution chain. New in Bellatrix network
+  // Sila payload from the execution chain. New in Bellatrix network
   // upgrade.
-  sila.engine.v1.ExecutionPayloadDeneb execution_payload = 10;
+  sila.engine.v1.SilaPayloadDeneb sila_payload = 10;
 
   // At most MAX_BLS_TO_EXECUTION_CHANGES. New in Capella network upgrade.
   repeated SignedBLSToExecutionChange bls_to_execution_changes = 11
@@ -1030,8 +1030,8 @@ message BlindedBeaconBlockBodyElectra {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Execution payload header from the execution chain.
-  sila.engine.v1.ExecutionPayloadHeaderDeneb execution_payload_header = 10;
+  // Sila payload header from the execution chain.
+  sila.engine.v1.SilaPayloadHeaderDeneb sila_payload_header = 10;
 
   // At most MAX_BLS_TO_EXECUTION_CHANGES.
   repeated SignedBLSToExecutionChange bls_to_execution_changes = 11

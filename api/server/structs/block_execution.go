@@ -4,7 +4,7 @@ package structs
 // Bellatrix
 // ----------------------------------------------------------------------------
 
-type ExecutionPayload struct {
+type SilaPayload struct {
 	ParentHash    string   `json:"parent_hash"`
 	FeeRecipient  string   `json:"fee_recipient"`
 	StateRoot     string   `json:"state_root"`
@@ -21,7 +21,7 @@ type ExecutionPayload struct {
 	Transactions  []string `json:"transactions"`
 }
 
-type ExecutionPayloadHeader struct {
+type SilaPayloadHeader struct {
 	ParentHash       string `json:"parent_hash"`
 	FeeRecipient     string `json:"fee_recipient"`
 	StateRoot        string `json:"state_root"`
@@ -42,7 +42,7 @@ type ExecutionPayloadHeader struct {
 // Capella
 // ----------------------------------------------------------------------------
 
-type ExecutionPayloadCapella struct {
+type SilaPayloadCapella struct {
 	ParentHash    string        `json:"parent_hash"`
 	FeeRecipient  string        `json:"fee_recipient"`
 	StateRoot     string        `json:"state_root"`
@@ -60,7 +60,7 @@ type ExecutionPayloadCapella struct {
 	Withdrawals   []*Withdrawal `json:"withdrawals"`
 }
 
-type ExecutionPayloadHeaderCapella struct {
+type SilaPayloadHeaderCapella struct {
 	ParentHash       string `json:"parent_hash"`
 	FeeRecipient     string `json:"fee_recipient"`
 	StateRoot        string `json:"state_root"`
@@ -82,7 +82,7 @@ type ExecutionPayloadHeaderCapella struct {
 // Deneb
 // ----------------------------------------------------------------------------
 
-type ExecutionPayloadDeneb struct {
+type SilaPayloadDeneb struct {
 	ParentHash    string        `json:"parent_hash"`
 	FeeRecipient  string        `json:"fee_recipient"`
 	StateRoot     string        `json:"state_root"`
@@ -102,7 +102,7 @@ type ExecutionPayloadDeneb struct {
 	ExcessBlobGas string        `json:"excess_blob_gas"`
 }
 
-type ExecutionPayloadHeaderDeneb struct {
+type SilaPayloadHeaderDeneb struct {
 	ParentHash       string `json:"parent_hash"`
 	FeeRecipient     string `json:"fee_recipient"`
 	StateRoot        string `json:"state_root"`
@@ -156,7 +156,7 @@ type ConsolidationRequest struct {
 // Gloas
 // ----------------------------------------------------------------------------
 
-type ExecutionPayloadGloas struct {
+type SilaPayloadGloas struct {
 	ParentHash      string        `json:"parent_hash"`
 	FeeRecipient    string        `json:"fee_recipient"`
 	StateRoot       string        `json:"state_root"`

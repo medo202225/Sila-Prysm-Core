@@ -67,24 +67,24 @@ func TestPayloadAvailability_PrunesOlderSlots(t *testing.T) {
 	require.Equal(t, true, has3)
 }
 
-func TestProcessEvent_ExecutionPayloadAvailableNotifiesWaiter(t *testing.T) {
+func TestProcessEvent_SilaPayloadAvailableNotifiesWaiter(t *testing.T) {
 	v := &validator{payloadAvailability: newPayloadAvailability()}
 	ch := v.payloadAvailability.waiter(42)
 
-	data, err := json.Marshal(&structs.ExecutionPayloadAvailableEvent{Slot: "42", BlockRoot: "0xabc"})
+	data, err := json.Marshal(&structs.SilaPayloadAvailableEvent{Slot: "42", BlockRoot: "0xabc"})
 	require.NoError(t, err)
-	v.ProcessEvent(t.Context(), &eventClient.Event{EventType: eventClient.EventExecutionPayloadAvailable, Data: data})
+	v.ProcessEvent(t.Context(), &eventClient.Event{EventType: eventClient.EventSilaPayloadAvailable, Data: data})
 
 	require.Equal(t, true, isClosed(ch))
 }
 
-func TestProcessEvent_ExecutionPayloadBadSlotDoesNotNotify(t *testing.T) {
+func TestProcessEvent_SilaPayloadBadSlotDoesNotNotify(t *testing.T) {
 	v := &validator{payloadAvailability: newPayloadAvailability()}
 	ch := v.payloadAvailability.waiter(42)
 
-	data, err := json.Marshal(&structs.ExecutionPayloadAvailableEvent{Slot: "not-a-number", BlockRoot: "0xabc"})
+	data, err := json.Marshal(&structs.SilaPayloadAvailableEvent{Slot: "not-a-number", BlockRoot: "0xabc"})
 	require.NoError(t, err)
-	v.ProcessEvent(t.Context(), &eventClient.Event{EventType: eventClient.EventExecutionPayloadAvailable, Data: data})
+	v.ProcessEvent(t.Context(), &eventClient.Event{EventType: eventClient.EventSilaPayloadAvailable, Data: data})
 
 	require.Equal(t, false, isClosed(ch))
 }

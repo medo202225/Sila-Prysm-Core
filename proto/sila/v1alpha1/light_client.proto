@@ -120,7 +120,7 @@ message LightClientOptimisticUpdateCapella {
 
 message LightClientHeaderCapella {
   BeaconBlockHeader beacon = 1;
-  sila.engine.v1.ExecutionPayloadHeaderCapella execution = 2;
+  sila.engine.v1.SilaPayloadHeaderCapella execution = 2;
   repeated bytes execution_branch = 3 [ (sila.eth.ext.ssz_size) = "4,32" ];
 }
 
@@ -171,7 +171,7 @@ message LightClientOptimisticUpdateDeneb {
 
 message LightClientHeaderDeneb {
   BeaconBlockHeader beacon = 1;
-  sila.engine.v1.ExecutionPayloadHeaderDeneb execution = 2;
+  sila.engine.v1.SilaPayloadHeaderDeneb execution = 2;
   repeated bytes execution_branch = 3 [ (sila.eth.ext.ssz_size) = "4,32" ];
 }
 

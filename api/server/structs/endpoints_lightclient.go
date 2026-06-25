@@ -8,13 +8,13 @@ type LightClientHeader struct {
 
 type LightClientHeaderCapella struct {
 	Beacon          *BeaconBlockHeader             `json:"beacon"`
-	Execution       *ExecutionPayloadHeaderCapella `json:"execution"`
+	Execution       *SilaPayloadHeaderCapella `json:"execution"`
 	ExecutionBranch []string                       `json:"execution_branch"`
 }
 
 type LightClientHeaderDeneb struct {
 	Beacon          *BeaconBlockHeader           `json:"beacon"`
-	Execution       *ExecutionPayloadHeaderDeneb `json:"execution"`
+	Execution       *SilaPayloadHeaderDeneb `json:"execution"`
 	ExecutionBranch []string                     `json:"execution_branch"`
 }
 

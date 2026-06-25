@@ -280,7 +280,7 @@ func (x *ExecutionRequests) GetConsolidations() []*ConsolidationRequest {
 
 type ExecutionBundleElectra struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Payload               *ExecutionPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload               *SilaPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundle           `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
@@ -319,7 +319,7 @@ func (*ExecutionBundleElectra) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ExecutionBundleElectra) GetPayload() *ExecutionPayloadDeneb {
+func (x *ExecutionBundleElectra) GetPayload() *SilaPayloadDeneb {
 	if x != nil {
 		return x.Payload
 	}
@@ -462,14 +462,14 @@ var file_proto_engine_v1_electra_proto_goTypes = []any{
 	(*ConsolidationRequest)(nil),   // 2: sila.engine.v1.ConsolidationRequest
 	(*ExecutionRequests)(nil),      // 3: sila.engine.v1.ExecutionRequests
 	(*ExecutionBundleElectra)(nil), // 4: sila.engine.v1.ExecutionBundleElectra
-	(*ExecutionPayloadDeneb)(nil),  // 5: sila.engine.v1.ExecutionPayloadDeneb
+	(*SilaPayloadDeneb)(nil),  // 5: sila.engine.v1.SilaPayloadDeneb
 	(*BlobsBundle)(nil),            // 6: sila.engine.v1.BlobsBundle
 }
 var file_proto_engine_v1_electra_proto_depIdxs = []int32{
 	1, // 0: sila.engine.v1.ExecutionRequests.deposits:type_name -> sila.engine.v1.DepositRequest
 	0, // 1: sila.engine.v1.ExecutionRequests.withdrawals:type_name -> sila.engine.v1.WithdrawalRequest
 	2, // 2: sila.engine.v1.ExecutionRequests.consolidations:type_name -> sila.engine.v1.ConsolidationRequest
-	5, // 3: sila.engine.v1.ExecutionBundleElectra.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	5, // 3: sila.engine.v1.ExecutionBundleElectra.payload:type_name -> sila.engine.v1.SilaPayloadDeneb
 	6, // 4: sila.engine.v1.ExecutionBundleElectra.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type

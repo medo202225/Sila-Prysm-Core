@@ -679,7 +679,7 @@ func TestProcessBlindWithdrawals(t *testing.T) {
 			require.NoError(t, err)
 			wdRoot, err := ssz.WithdrawalSliceRoot(test.Args.Withdrawals, fieldparams.MaxWithdrawalsPerPayload)
 			require.NoError(t, err)
-			p, err := consensusblocks.WrappedExecutionPayloadHeaderCapella(&enginev1.ExecutionPayloadHeaderCapella{WithdrawalsRoot: wdRoot[:]})
+			p, err := consensusblocks.WrappedSilaPayloadHeaderCapella(&enginev1.SilaPayloadHeaderCapella{WithdrawalsRoot: wdRoot[:]})
 			require.NoError(t, err)
 			post, err := blocks.ProcessWithdrawals(st, p)
 			if test.Control.ExpectedError {
@@ -1141,7 +1141,7 @@ func TestProcessWithdrawals(t *testing.T) {
 						}
 						st, err = state_native.InitializeFromProtoUnsafeCapella(spb)
 						require.NoError(t, err)
-						p, err = consensusblocks.WrappedExecutionPayloadCapella(&enginev1.ExecutionPayloadCapella{Withdrawals: test.Args.Withdrawals})
+						p, err = consensusblocks.WrappedSilaPayloadCapella(&enginev1.SilaPayloadCapella{Withdrawals: test.Args.Withdrawals})
 						require.NoError(t, err)
 					case version.Electra:
 						spb := &silapb.BeaconStateElectra{
@@ -1152,7 +1152,7 @@ func TestProcessWithdrawals(t *testing.T) {
 						}
 						st, err = state_native.InitializeFromProtoUnsafeElectra(spb)
 						require.NoError(t, err)
-						p, err = consensusblocks.WrappedExecutionPayloadDeneb(&enginev1.ExecutionPayloadDeneb{Withdrawals: test.Args.Withdrawals})
+						p, err = consensusblocks.WrappedSilaPayloadDeneb(&enginev1.SilaPayloadDeneb{Withdrawals: test.Args.Withdrawals})
 						require.NoError(t, err)
 					default:
 						t.Fatalf("Add a beacon state setup for version %s", version.String(fork))

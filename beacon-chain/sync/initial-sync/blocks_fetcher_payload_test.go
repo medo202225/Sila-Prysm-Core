@@ -21,7 +21,7 @@ func makeGloasBlock(t *testing.T, slot primitives.Slot, parentRoot [32]byte, par
 	blk := util.NewBeaconBlockGloas()
 	blk.Block.Slot = slot
 	blk.Block.ParentRoot = parentRoot[:]
-	blk.Block.Body.SignedExecutionPayloadBid.Message.ParentBlockHash = parentBlockHash[:]
+	blk.Block.Body.SignedSilaPayloadBid.Message.ParentBlockHash = parentBlockHash[:]
 	signed, err := blocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 	ro, err := blocks.NewROBlock(signed)
@@ -29,15 +29,15 @@ func makeGloasBlock(t *testing.T, slot primitives.Slot, parentRoot [32]byte, par
 	return ro
 }
 
-// makeEnvelope creates an ROSignedExecutionPayloadEnvelope with the given slot, blockHash, and parentHash.
-func makeEnvelope(t *testing.T, slot primitives.Slot, blockHash [32]byte, parentHash [32]byte) interfaces.ROSignedExecutionPayloadEnvelope {
-	env := &silapb.SignedExecutionPayloadEnvelope{
+// makeEnvelope creates an ROSignedSilaPayloadEnvelope with the given slot, blockHash, and parentHash.
+func makeEnvelope(t *testing.T, slot primitives.Slot, blockHash [32]byte, parentHash [32]byte) interfaces.ROSignedSilaPayloadEnvelope {
+	env := &silapb.SignedSilaPayloadEnvelope{
 		Signature: make([]byte, fieldparams.BLSSignatureLength),
-		Message: &silapb.ExecutionPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
 			BeaconBlockRoot:       make([]byte, fieldparams.RootLength),
 			ParentBeaconBlockRoot: make([]byte, fieldparams.RootLength),
 			ExecutionRequests:     &enginev1.ExecutionRequests{},
-			Payload: &enginev1.ExecutionPayloadGloas{
+			Payload: &enginev1.SilaPayloadGloas{
 				ParentHash:    parentHash[:],
 				FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:     make([]byte, fieldparams.RootLength),
@@ -50,7 +50,7 @@ func makeEnvelope(t *testing.T, slot primitives.Slot, blockHash [32]byte, parent
 			},
 		},
 	}
-	wrapped, err := blocks.WrappedROSignedExecutionPayloadEnvelope(env)
+	wrapped, err := blocks.WrappedROSignedSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 	return wrapped
 }
@@ -204,7 +204,7 @@ func TestValidatePayloadBlockConsistency(t *testing.T) {
 				{Block: b1},
 				{Block: b2},
 			},
-			envelopes: []interfaces.ROSignedExecutionPayloadEnvelope{env0, env1},
+			envelopes: []interfaces.ROSignedSilaPayloadEnvelope{env0, env1},
 		}
 		f.validatePayloadBlockConsistency(r)
 		require.NoError(t, r.err)
@@ -220,7 +220,7 @@ func TestValidatePayloadBlockConsistency(t *testing.T) {
 				{Block: b2},
 			},
 			// Only one envelope, but two are needed
-			envelopes: []interfaces.ROSignedExecutionPayloadEnvelope{env0},
+			envelopes: []interfaces.ROSignedSilaPayloadEnvelope{env0},
 		}
 		f.validatePayloadBlockConsistency(r)
 		// Should truncate bwb to the point where envelopes run out
@@ -241,7 +241,7 @@ func TestValidatePayloadBlockConsistency(t *testing.T) {
 				{Block: sb0},
 				{Block: sb1},
 			},
-			envelopes: []interfaces.ROSignedExecutionPayloadEnvelope{envFirst, env2},
+			envelopes: []interfaces.ROSignedSilaPayloadEnvelope{envFirst, env2},
 		}
 		f.validatePayloadBlockConsistency(r)
 		require.NoError(t, r.err)
@@ -259,7 +259,7 @@ func TestValidatePayloadBlockConsistency(t *testing.T) {
 				{Block: b0},
 				{Block: b1},
 			},
-			envelopes: []interfaces.ROSignedExecutionPayloadEnvelope{wrongEnv},
+			envelopes: []interfaces.ROSignedSilaPayloadEnvelope{wrongEnv},
 		}
 		f.validatePayloadBlockConsistency(r)
 		require.ErrorContains(t, "envelope does not match block", r.err)

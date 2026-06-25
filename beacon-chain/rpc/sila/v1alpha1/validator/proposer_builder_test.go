@@ -157,7 +157,7 @@ func createState(
 		BlockRoots:                 make([][]byte, 1),
 		CurrentJustifiedCheckpoint: justified,
 		FinalizedCheckpoint:        finalized,
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeader{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeader{
 			BlockHash: payloadHash[:],
 		},
 		LatestBlockHeader: &silapb.BeaconBlockHeader{
@@ -175,7 +175,7 @@ func createState(
 			Slot:       slot,
 			ParentRoot: parentRoot[:],
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					BlockHash: payloadHash[:],
 				},
 			},

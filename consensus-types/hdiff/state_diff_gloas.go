@@ -23,7 +23,7 @@ const (
 	builderPendingPaymentsTotalLength  = builderPendingPaymentsCount * builderPendingPaymentLength
 	builderPendingWithdrawalLength     = 36 // fixed SSZ size: fee_recipient(20) + amount(8) + builder_index(8)
 	withdrawalLength                   = 44 // fixed SSZ size: index(8) + validator_index(8) + address(20) + amount(8)
-	executionPayloadAvailabilityLength = fieldparams.BlockRootsLength / 8
+	silaPayloadAvailabilityLength = fieldparams.BlockRootsLength / 8
 )
 
 // builderDiff represents a change to a single builder in the registry.
@@ -34,13 +34,13 @@ type builderDiff struct {
 
 // diffGloasFields populates the Gloas-specific fields of the stateDiff.
 func diffGloasFields(diff *stateDiff, source, target state.ReadOnlyBeaconState) error {
-	// latestExecutionPayloadBid (override, always non-nil for valid Gloas states).
-	bid, err := target.LatestExecutionPayloadBid()
+	// latestSilaPayloadBid (override, always non-nil for valid Gloas states).
+	bid, err := target.LatestSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "failed to get latest execution payload bid")
+		return errors.Wrap(err, "failed to get latest sila payload bid")
 	}
 	if bid == nil || bid.IsNil() {
-		return errors.New("target Gloas state has nil execution payload bid")
+		return errors.New("target Gloas state has nil sila payload bid")
 	}
 	parentBlockHash := bid.ParentBlockHash()
 	parentBlockRoot := bid.ParentBlockRoot()
@@ -48,7 +48,7 @@ func diffGloasFields(diff *stateDiff, source, target state.ReadOnlyBeaconState) 
 	prevRandao := bid.PrevRandao()
 	feeRecipient := bid.FeeRecipient()
 	executionRequestsRoot := bid.ExecutionRequestsRoot()
-	diff.latestExecutionPayloadBid = &silapb.ExecutionPayloadBid{
+	diff.latestSilaPayloadBid = &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentBlockHash[:],
 		ParentBlockRoot:       parentBlockRoot[:],
 		BlockHash:             blockHash[:],
@@ -75,10 +75,10 @@ func diffGloasFields(diff *stateDiff, source, target state.ReadOnlyBeaconState) 
 	}
 	diff.nextWithdrawalBuilderIndex = uint64(nwbi)
 
-	// executionPayloadAvailability (override).
-	diff.executionPayloadAvailability, err = target.ExecutionPayloadAvailabilityVector()
+	// silaPayloadAvailability (override).
+	diff.silaPayloadAvailability, err = target.SilaPayloadAvailabilityVector()
 	if err != nil {
-		return errors.Wrap(err, "failed to get execution payload availability")
+		return errors.Wrap(err, "failed to get sila payload availability")
 	}
 
 	// builderPendingPayments (override).
@@ -171,11 +171,11 @@ func diffBuilderPendingWithdrawals(diff *stateDiff, source, target state.ReadOnl
 
 // serializeGloasFields appends the Gloas-specific fields to the serialized stateDiff.
 func serializeGloasFields(ret []byte, s *stateDiff) []byte {
-	// latestExecutionPayloadBid (override, always non-nil).
-	ret = binary.LittleEndian.AppendUint64(ret, uint64(s.latestExecutionPayloadBid.SizeSSZ()))
-	sszBytes, err := s.latestExecutionPayloadBid.MarshalSSZ()
+	// latestSilaPayloadBid (override, always non-nil).
+	ret = binary.LittleEndian.AppendUint64(ret, uint64(s.latestSilaPayloadBid.SizeSSZ()))
+	sszBytes, err := s.latestSilaPayloadBid.MarshalSSZ()
 	if err != nil {
-		logrus.WithError(err).Error("Failed to marshal latestExecutionPayloadBid")
+		logrus.WithError(err).Error("Failed to marshal latestSilaPayloadBid")
 		return nil
 	}
 	ret = append(ret, sszBytes...)
@@ -195,8 +195,8 @@ func serializeGloasFields(ret []byte, s *stateDiff) []byte {
 	// nextWithdrawalBuilderIndex.
 	ret = binary.LittleEndian.AppendUint64(ret, s.nextWithdrawalBuilderIndex)
 
-	// executionPayloadAvailability (fixed size: SlotsPerHistoricalRoot / 8).
-	ret = append(ret, s.executionPayloadAvailability...)
+	// silaPayloadAvailability (fixed size: SlotsPerHistoricalRoot / 8).
+	ret = append(ret, s.silaPayloadAvailability...)
 
 	// builderPendingPayments (fixed size: 2 * SlotsPerEpoch entries).
 	for _, p := range s.builderPendingPayments {
@@ -249,21 +249,21 @@ func serializeGloasFields(ret []byte, s *stateDiff) []byte {
 
 // readGloasFields deserializes the Gloas-specific fields from the serialized stateDiff.
 func (ret *stateDiff) readGloasFields(data *[]byte) error {
-	// latestExecutionPayloadBid (override, always non-nil).
+	// latestSilaPayloadBid (override, always non-nil).
 	if len(*data) < 8 {
-		return errors.Wrap(errDataSmall, "latestExecutionPayloadBid size")
+		return errors.Wrap(errDataSmall, "latestSilaPayloadBid size")
 	}
 	bidLength := int(binary.LittleEndian.Uint64((*data)[:8])) // lint:ignore uintcast
 	if bidLength < 0 {
-		return errors.Wrap(errDataSmall, "latestExecutionPayloadBid: negative length")
+		return errors.Wrap(errDataSmall, "latestSilaPayloadBid: negative length")
 	}
 	*data = (*data)[8:]
 	if len(*data) < bidLength {
-		return errors.Wrap(errDataSmall, "latestExecutionPayloadBid data")
+		return errors.Wrap(errDataSmall, "latestSilaPayloadBid data")
 	}
-	ret.latestExecutionPayloadBid = &silapb.ExecutionPayloadBid{}
-	if err := ret.latestExecutionPayloadBid.UnmarshalSSZ((*data)[:bidLength]); err != nil {
-		return errors.Wrap(err, "failed to unmarshal latestExecutionPayloadBid")
+	ret.latestSilaPayloadBid = &silapb.SilaPayloadBid{}
+	if err := ret.latestSilaPayloadBid.UnmarshalSSZ((*data)[:bidLength]); err != nil {
+		return errors.Wrap(err, "failed to unmarshal latestSilaPayloadBid")
 	}
 	*data = (*data)[bidLength:]
 
@@ -298,13 +298,13 @@ func (ret *stateDiff) readGloasFields(data *[]byte) error {
 	ret.nextWithdrawalBuilderIndex = binary.LittleEndian.Uint64((*data)[:8])
 	*data = (*data)[8:]
 
-	// executionPayloadAvailability (fixed size: SlotsPerHistoricalRoot / 8).
-	if len(*data) < executionPayloadAvailabilityLength {
-		return errors.Wrap(errDataSmall, "executionPayloadAvailability")
+	// silaPayloadAvailability (fixed size: SlotsPerHistoricalRoot / 8).
+	if len(*data) < silaPayloadAvailabilityLength {
+		return errors.Wrap(errDataSmall, "silaPayloadAvailability")
 	}
-	ret.executionPayloadAvailability = make([]byte, executionPayloadAvailabilityLength)
-	copy(ret.executionPayloadAvailability, (*data)[:executionPayloadAvailabilityLength])
-	*data = (*data)[executionPayloadAvailabilityLength:]
+	ret.silaPayloadAvailability = make([]byte, silaPayloadAvailabilityLength)
+	copy(ret.silaPayloadAvailability, (*data)[:silaPayloadAvailabilityLength])
+	*data = (*data)[silaPayloadAvailabilityLength:]
 
 	// builderPendingPayments (fixed size: 2 * SlotsPerEpoch entries).
 	if len(*data) < builderPendingPaymentsTotalLength {
@@ -396,13 +396,13 @@ func (ret *stateDiff) readGloasFields(data *[]byte) error {
 
 // applyGloasFields applies the Gloas-specific fields from the diff to the source state.
 func applyGloasFields(source state.BeaconState, diff *stateDiff) error {
-	// latestExecutionPayloadBid (override, always non-nil).
-	bid, err := blocks.WrappedROExecutionPayloadBid(diff.latestExecutionPayloadBid)
+	// latestSilaPayloadBid (override, always non-nil).
+	bid, err := blocks.WrappedROSilaPayloadBid(diff.latestSilaPayloadBid)
 	if err != nil {
-		return errors.Wrap(err, "failed to wrap execution payload bid")
+		return errors.Wrap(err, "failed to wrap sila payload bid")
 	}
-	if err := source.SetExecutionPayloadBid(bid); err != nil {
-		return errors.Wrap(err, "failed to set execution payload bid")
+	if err := source.SetSilaPayloadBid(bid); err != nil {
+		return errors.Wrap(err, "failed to set sila payload bid")
 	}
 
 	// builders (sparse diff: patch changed indices).
@@ -428,9 +428,9 @@ func applyGloasFields(source state.BeaconState, diff *stateDiff) error {
 		return errors.Wrap(err, "failed to set next withdrawal builder index")
 	}
 
-	// executionPayloadAvailability.
-	if err := source.SetExecutionPayloadAvailabilityVector(diff.executionPayloadAvailability); err != nil {
-		return errors.Wrap(err, "failed to set execution payload availability")
+	// silaPayloadAvailability.
+	if err := source.SetSilaPayloadAvailabilityVector(diff.silaPayloadAvailability); err != nil {
+		return errors.Wrap(err, "failed to set sila payload availability")
 	}
 
 	// builderPendingPayments.

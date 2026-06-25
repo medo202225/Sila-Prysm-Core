@@ -1,3 +1,3 @@
 ### Added
 
-- Add read only wrapper for execution payload envelope for gloas
+- Add read only wrapper for sila payload envelope for gloas

@@ -312,7 +312,7 @@ func (b *BuilderBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	// Offset (0) 'Header'
 	dst = ssz.WriteOffset(dst, offset)
 	if b.Header == nil {
-		b.Header = new(v1.ExecutionPayloadHeader)
+		b.Header = new(v1.SilaPayloadHeader)
 	}
 	offset += b.Header.SizeSSZ()
 
@@ -374,7 +374,7 @@ func (b *BuilderBid) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:]
 		if b.Header == nil {
-			b.Header = new(v1.ExecutionPayloadHeader)
+			b.Header = new(v1.SilaPayloadHeader)
 		}
 		if err = b.Header.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -389,7 +389,7 @@ func (b *BuilderBid) SizeSSZ() (size int) {
 
 	// Field (0) 'Header'
 	if b.Header == nil {
-		b.Header = new(v1.ExecutionPayloadHeader)
+		b.Header = new(v1.SilaPayloadHeader)
 	}
 	size += b.Header.SizeSSZ()
 
@@ -937,13 +937,13 @@ func (d *DataColumnSidecarsByRangeRequest) HashTreeRootWith(hh *ssz.Hasher) (err
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadEnvelopesByRangeRequest object
-func (e *ExecutionPayloadEnvelopesByRangeRequest) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadEnvelopesByRangeRequest object
+func (e *SilaPayloadEnvelopesByRangeRequest) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadEnvelopesByRangeRequest object to a target array
-func (e *ExecutionPayloadEnvelopesByRangeRequest) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadEnvelopesByRangeRequest object to a target array
+func (e *SilaPayloadEnvelopesByRangeRequest) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'StartSlot'
@@ -955,8 +955,8 @@ func (e *ExecutionPayloadEnvelopesByRangeRequest) MarshalSSZTo(buf []byte) (dst 
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadEnvelopesByRangeRequest object
-func (e *ExecutionPayloadEnvelopesByRangeRequest) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadEnvelopesByRangeRequest object
+func (e *SilaPayloadEnvelopesByRangeRequest) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size != 16 {
@@ -972,19 +972,19 @@ func (e *ExecutionPayloadEnvelopesByRangeRequest) UnmarshalSSZ(buf []byte) error
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadEnvelopesByRangeRequest object
-func (e *ExecutionPayloadEnvelopesByRangeRequest) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadEnvelopesByRangeRequest object
+func (e *SilaPayloadEnvelopesByRangeRequest) SizeSSZ() (size int) {
 	size = 16
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadEnvelopesByRangeRequest object
-func (e *ExecutionPayloadEnvelopesByRangeRequest) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadEnvelopesByRangeRequest object
+func (e *SilaPayloadEnvelopesByRangeRequest) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadEnvelopesByRangeRequest object with a hasher
-func (e *ExecutionPayloadEnvelopesByRangeRequest) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadEnvelopesByRangeRequest object with a hasher
+func (e *SilaPayloadEnvelopesByRangeRequest) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'StartSlot'

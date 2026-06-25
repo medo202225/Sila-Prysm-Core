@@ -105,7 +105,7 @@ func emptyGenesisStateElectra() (state.BeaconState, error) {
 		SilaExecutionDataVotes:    []*silapb.SilaExecutionData{},
 		SilaExecutionDepositIndex: 0,
 
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{},
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{},
 
 		DepositBalanceToConsume:       primitives.Gwei(0),
 		ExitBalanceToConsume:          primitives.Gwei(0),
@@ -241,7 +241,7 @@ func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, pre
 			SyncCommitteeBits:      scBits[:],
 			SyncCommitteeSignature: make([]byte, 96),
 		},
-		ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+		SilaPayload: &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, 32),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, 32),
@@ -288,7 +288,7 @@ func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, pre
 		AggregatePubkey: aggregated.Marshal(),
 	}
 
-	st.LatestExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderDeneb{
+	st.LatestSilaPayloadHeader = &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       make([]byte, 32),
 		FeeRecipient:     make([]byte, 20),
 		StateRoot:        make([]byte, 32),

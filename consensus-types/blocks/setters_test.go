@@ -43,21 +43,21 @@ func TestSignedBeaconBlock_SetPayloadAttestations(t *testing.T) {
 	})
 }
 
-func TestSignedBeaconBlock_SetSignedExecutionPayloadBid(t *testing.T) {
+func TestSignedBeaconBlock_SetSignedSilaPayloadBid(t *testing.T) {
 	t.Run("rejects pre-Gloas versions", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Fulu)
-		payloadBid := &eth.SignedExecutionPayloadBid{}
+		payloadBid := &eth.SignedSilaPayloadBid{}
 
-		err := sb.SetSignedExecutionPayloadBid(payloadBid)
+		err := sb.SetSignedSilaPayloadBid(payloadBid)
 
 		require.ErrorIs(t, err, consensus_types.ErrUnsupportedField)
-		require.IsNil(t, sb.block.body.signedExecutionPayloadBid)
+		require.IsNil(t, sb.block.body.signedSilaPayloadBid)
 	})
 
-	t.Run("sets signed execution payload bid for Gloas", func(t *testing.T) {
+	t.Run("sets signed sila payload bid for Gloas", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Gloas)
-		payloadBid := &eth.SignedExecutionPayloadBid{
-			Message: &eth.ExecutionPayloadBid{
+		payloadBid := &eth.SignedSilaPayloadBid{
+			Message: &eth.SilaPayloadBid{
 				ParentBlockHash: []byte{0xaa},
 				BlockHash:       []byte{0xbb},
 				FeeRecipient:    []byte{0xcc},
@@ -65,18 +65,18 @@ func TestSignedBeaconBlock_SetSignedExecutionPayloadBid(t *testing.T) {
 			Signature: []byte{0xdd},
 		}
 
-		err := sb.SetSignedExecutionPayloadBid(payloadBid)
+		err := sb.SetSignedSilaPayloadBid(payloadBid)
 
 		require.NoError(t, err)
-		require.Equal(t, payloadBid, sb.block.body.signedExecutionPayloadBid)
+		require.Equal(t, payloadBid, sb.block.body.signedSilaPayloadBid)
 	})
 }
 
 func TestSignedBeaconBlock_SetExecution(t *testing.T) {
 	t.Run("rejects Gloas version", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Gloas)
-		payload := &enginev1.ExecutionPayload{}
-		wrapped, err := WrappedExecutionPayload(payload)
+		payload := &enginev1.SilaPayload{}
+		wrapped, err := WrappedSilaPayload(payload)
 		require.NoError(t, err)
 
 		err = sb.SetExecution(wrapped)

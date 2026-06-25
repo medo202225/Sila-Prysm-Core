@@ -72,7 +72,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.DeepEqual(t, safe, payloadPb.SafeBlockHash)
 		require.DeepEqual(t, finalized, payloadPb.FinalizedBlockHash)
 	})
-	t.Run("execution payload", func(t *testing.T) {
+	t.Run("sila payload", func(t *testing.T) {
 		baseFeePerGas := big.NewInt(1770307273)
 		parentHash := bytesutil.PadTo([]byte("parent"), fieldparams.RootLength)
 		feeRecipient := bytesutil.PadTo([]byte("feeRecipient"), fieldparams.FeeRecipientLength)
@@ -82,7 +82,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		random := bytesutil.PadTo([]byte("random"), fieldparams.RootLength)
 		extra := bytesutil.PadTo([]byte("extraData"), fieldparams.RootLength)
 		hash := bytesutil.PadTo([]byte("hash"), fieldparams.RootLength)
-		jsonPayload := &enginev1.ExecutionPayload{
+		jsonPayload := &enginev1.SilaPayload{
 			ParentHash:    parentHash,
 			FeeRecipient:  feeRecipient,
 			StateRoot:     stateRoot,
@@ -100,7 +100,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		}
 		enc, err := json.Marshal(jsonPayload)
 		require.NoError(t, err)
-		payloadPb := &enginev1.ExecutionPayload{}
+		payloadPb := &enginev1.SilaPayload{}
 		require.NoError(t, json.Unmarshal(enc, payloadPb))
 		require.DeepEqual(t, parentHash, payloadPb.ParentHash)
 		require.DeepEqual(t, feeRecipient, payloadPb.FeeRecipient)
@@ -117,7 +117,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.DeepEqual(t, hash, payloadPb.BlockHash)
 		require.DeepEqual(t, [][]byte{[]byte("hi")}, payloadPb.Transactions)
 	})
-	t.Run("execution payload Capella", func(t *testing.T) {
+	t.Run("sila payload Capella", func(t *testing.T) {
 		parentHash := common.BytesToHash([]byte("parent"))
 		feeRecipient := common.BytesToAddress([]byte("feeRecipient"))
 		stateRoot := common.BytesToHash([]byte("stateRoot"))
@@ -133,7 +133,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 
 		resp := &enginev1.GetPayloadV2ResponseJson{
 			BlockValue: "0x123",
-			ExecutionPayload: &enginev1.ExecutionPayloadCapellaJSON{
+			SilaPayload: &enginev1.SilaPayloadCapellaJSON{
 				ParentHash:    &parentHash,
 				FeeRecipient:  &feeRecipient,
 				StateRoot:     &stateRoot,
@@ -158,7 +158,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		}
 		enc, err := json.Marshal(resp)
 		require.NoError(t, err)
-		pb := &enginev1.ExecutionPayloadCapellaWithValue{}
+		pb := &enginev1.SilaPayloadCapellaWithValue{}
 		require.NoError(t, json.Unmarshal(enc, pb))
 		require.DeepEqual(t, parentHash.Bytes(), pb.Payload.ParentHash)
 		require.DeepEqual(t, feeRecipient.Bytes(), pb.Payload.FeeRecipient)
@@ -182,7 +182,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.DeepEqual(t, bytesutil.PadTo([]byte("address"), 20), withdrawal.Address)
 		require.Equal(t, uint64(1), withdrawal.Amount)
 	})
-	t.Run("execution payload deneb", func(t *testing.T) {
+	t.Run("sila payload deneb", func(t *testing.T) {
 		parentHash := common.BytesToHash([]byte("parent"))
 		feeRecipient := common.BytesToAddress([]byte("feeRecipient"))
 		stateRoot := common.BytesToHash([]byte("stateRoot"))
@@ -205,7 +205,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 				Blobs:       []hexutil.Bytes{{'i'}, {'j'}, {'k'}, {'l'}},
 			},
 			BlockValue: "0x123",
-			ExecutionPayload: &enginev1.ExecutionPayloadDenebJSON{
+			SilaPayload: &enginev1.SilaPayloadDenebJSON{
 				ParentHash:    &parentHash,
 				FeeRecipient:  &feeRecipient,
 				StateRoot:     &stateRoot,
@@ -232,7 +232,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		}
 		enc, err := json.Marshal(resp)
 		require.NoError(t, err)
-		pb := &enginev1.ExecutionPayloadDenebWithValueAndBlobsBundle{}
+		pb := &enginev1.SilaPayloadDenebWithValueAndBlobsBundle{}
 		require.NoError(t, json.Unmarshal(enc, pb))
 		require.DeepEqual(t, parentHash.Bytes(), pb.Payload.ParentHash)
 		require.DeepEqual(t, feeRecipient.Bytes(), pb.Payload.FeeRecipient)
@@ -611,8 +611,8 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		// TODO #14351: update this test when geth updates
 	})
 
-	t.Run("ExecutionPayloadDenebAndBlobsBundleV2 SSZ marshaling", func(t *testing.T) {
-		payload := &enginev1.ExecutionPayloadDeneb{
+	t.Run("SilaPayloadDenebAndBlobsBundleV2 SSZ marshaling", func(t *testing.T) {
+		payload := &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, 32),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, 32),
@@ -638,7 +638,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 			Blobs:          [][]byte{make([]byte, 131072), make([]byte, 131072)},
 		}
 
-		bundle := &enginev1.ExecutionPayloadDenebAndBlobsBundleV2{
+		bundle := &enginev1.SilaPayloadDenebAndBlobsBundleV2{
 			Payload:     payload,
 			BlobsBundle: bundleV2,
 		}
@@ -646,7 +646,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		sszBytes, err := bundle.MarshalSSZ()
 		require.NoError(t, err)
 
-		unmarshaled := &enginev1.ExecutionPayloadDenebAndBlobsBundleV2{}
+		unmarshaled := &enginev1.SilaPayloadDenebAndBlobsBundleV2{}
 		err = unmarshaled.UnmarshalSSZ(sszBytes)
 		require.NoError(t, err)
 
@@ -702,8 +702,8 @@ func TestPayloadIDBytes_MarshalUnmarshalJSON(t *testing.T) {
 	require.Equal(t, true, item == *res)
 }
 
-func TestExecutionPayloadBody_MarshalUnmarshalJSON(t *testing.T) {
-	pBody := &enginev1.ExecutionPayloadBody{
+func TestSilaPayloadBody_MarshalUnmarshalJSON(t *testing.T) {
+	pBody := &enginev1.SilaPayloadBody{
 		Transactions: []hexutil.Bytes{[]byte("random1"), []byte("random2"), []byte("random3")},
 		Withdrawals: []*enginev1.Withdrawal{
 			{
@@ -722,7 +722,7 @@ func TestExecutionPayloadBody_MarshalUnmarshalJSON(t *testing.T) {
 	}
 	enc, err := json.Marshal(pBody)
 	require.NoError(t, err)
-	res := &enginev1.ExecutionPayloadBody{}
+	res := &enginev1.SilaPayloadBody{}
 	err = json.Unmarshal(enc, res)
 	require.NoError(t, err)
 	require.DeepEqual(t, pBody, res)

@@ -5,15 +5,15 @@ import (
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
-// executionPayloadAvailabilityVal returns a copy of the execution payload availability.
+// silaPayloadAvailabilityVal returns a copy of the sila payload availability.
 // This assumes that a lock is already held on BeaconState.
-func (b *BeaconState) executionPayloadAvailabilityVal() []byte {
-	if b.executionPayloadAvailability == nil {
+func (b *BeaconState) silaPayloadAvailabilityVal() []byte {
+	if b.silaPayloadAvailability == nil {
 		return nil
 	}
 
-	availability := make([]byte, len(b.executionPayloadAvailability))
-	copy(availability, b.executionPayloadAvailability)
+	availability := make([]byte, len(b.silaPayloadAvailability))
+	copy(availability, b.silaPayloadAvailability)
 
 	return availability
 }

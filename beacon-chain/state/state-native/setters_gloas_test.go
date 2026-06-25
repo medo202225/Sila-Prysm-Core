@@ -18,7 +18,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
-type testExecutionPayloadBid struct {
+type testSilaPayloadBid struct {
 	parentBlockHash    [32]byte
 	parentBlockRoot    [32]byte
 	blockHash          [32]byte
@@ -32,31 +32,31 @@ type testExecutionPayloadBid struct {
 	executionPayment   primitives.Gwei
 }
 
-func (t testExecutionPayloadBid) ParentBlockHash() [32]byte { return t.parentBlockHash }
-func (t testExecutionPayloadBid) ParentBlockRoot() [32]byte { return t.parentBlockRoot }
-func (t testExecutionPayloadBid) PrevRandao() [32]byte      { return t.prevRandao }
-func (t testExecutionPayloadBid) BlockHash() [32]byte       { return t.blockHash }
-func (t testExecutionPayloadBid) GasLimit() uint64          { return t.gasLimit }
-func (t testExecutionPayloadBid) BuilderIndex() primitives.BuilderIndex {
+func (t testSilaPayloadBid) ParentBlockHash() [32]byte { return t.parentBlockHash }
+func (t testSilaPayloadBid) ParentBlockRoot() [32]byte { return t.parentBlockRoot }
+func (t testSilaPayloadBid) PrevRandao() [32]byte      { return t.prevRandao }
+func (t testSilaPayloadBid) BlockHash() [32]byte       { return t.blockHash }
+func (t testSilaPayloadBid) GasLimit() uint64          { return t.gasLimit }
+func (t testSilaPayloadBid) BuilderIndex() primitives.BuilderIndex {
 	return t.builderIndex
 }
-func (t testExecutionPayloadBid) Slot() primitives.Slot  { return t.slot }
-func (t testExecutionPayloadBid) Value() primitives.Gwei { return t.value }
-func (t testExecutionPayloadBid) ExecutionPayment() primitives.Gwei {
+func (t testSilaPayloadBid) Slot() primitives.Slot  { return t.slot }
+func (t testSilaPayloadBid) Value() primitives.Gwei { return t.value }
+func (t testSilaPayloadBid) ExecutionPayment() primitives.Gwei {
 	return t.executionPayment
 }
-func (t testExecutionPayloadBid) BlobKzgCommitments() [][]byte { return t.blobKzgCommitments }
-func (t testExecutionPayloadBid) BlobKzgCommitmentCount() uint64 {
+func (t testSilaPayloadBid) BlobKzgCommitments() [][]byte { return t.blobKzgCommitments }
+func (t testSilaPayloadBid) BlobKzgCommitmentCount() uint64 {
 	return uint64(len(t.blobKzgCommitments))
 }
-func (t testExecutionPayloadBid) FeeRecipient() [20]byte          { return t.feeRecipient }
-func (t testExecutionPayloadBid) ExecutionRequestsRoot() [32]byte { return [32]byte{} }
-func (t testExecutionPayloadBid) IsNil() bool                     { return false }
+func (t testSilaPayloadBid) FeeRecipient() [20]byte          { return t.feeRecipient }
+func (t testSilaPayloadBid) ExecutionRequestsRoot() [32]byte { return [32]byte{} }
+func (t testSilaPayloadBid) IsNil() bool                     { return false }
 
-func TestSetExecutionPayloadBid(t *testing.T) {
+func TestSetSilaPayloadBid(t *testing.T) {
 	t.Run("previous fork returns expected error", func(t *testing.T) {
 		st := &BeaconState{version: version.Fulu}
-		err := st.SetExecutionPayloadBid(testExecutionPayloadBid{})
+		err := st.SetSilaPayloadBid(testSilaPayloadBid{})
 		require.ErrorContains(t, "is not supported", err)
 	})
 
@@ -74,7 +74,7 @@ func TestSetExecutionPayloadBid(t *testing.T) {
 			version:     version.Gloas,
 			dirtyFields: make(map[types.FieldIndex]bool),
 		}
-		bid := testExecutionPayloadBid{
+		bid := testSilaPayloadBid{
 			parentBlockHash:    parentBlockHash,
 			parentBlockRoot:    parentBlockRoot,
 			blockHash:          blockHash,
@@ -88,21 +88,21 @@ func TestSetExecutionPayloadBid(t *testing.T) {
 			executionPayment:   22,
 		}
 
-		require.NoError(t, st.SetExecutionPayloadBid(bid))
+		require.NoError(t, st.SetSilaPayloadBid(bid))
 
-		require.NotNil(t, st.latestExecutionPayloadBid)
-		require.DeepEqual(t, parentBlockHash[:], st.latestExecutionPayloadBid.ParentBlockHash)
-		require.DeepEqual(t, parentBlockRoot[:], st.latestExecutionPayloadBid.ParentBlockRoot)
-		require.DeepEqual(t, blockHash[:], st.latestExecutionPayloadBid.BlockHash)
-		require.DeepEqual(t, prevRandao[:], st.latestExecutionPayloadBid.PrevRandao)
-		require.DeepEqual(t, blobCommitments, st.latestExecutionPayloadBid.BlobKzgCommitments)
-		require.DeepEqual(t, feeRecipient[:], st.latestExecutionPayloadBid.FeeRecipient)
-		require.Equal(t, uint64(123), st.latestExecutionPayloadBid.GasLimit)
-		require.Equal(t, primitives.BuilderIndex(7), st.latestExecutionPayloadBid.BuilderIndex)
-		require.Equal(t, primitives.Slot(9), st.latestExecutionPayloadBid.Slot)
-		require.Equal(t, primitives.Gwei(11), st.latestExecutionPayloadBid.Value)
-		require.Equal(t, primitives.Gwei(22), st.latestExecutionPayloadBid.ExecutionPayment)
-		require.Equal(t, true, st.dirtyFields[types.LatestExecutionPayloadBid])
+		require.NotNil(t, st.latestSilaPayloadBid)
+		require.DeepEqual(t, parentBlockHash[:], st.latestSilaPayloadBid.ParentBlockHash)
+		require.DeepEqual(t, parentBlockRoot[:], st.latestSilaPayloadBid.ParentBlockRoot)
+		require.DeepEqual(t, blockHash[:], st.latestSilaPayloadBid.BlockHash)
+		require.DeepEqual(t, prevRandao[:], st.latestSilaPayloadBid.PrevRandao)
+		require.DeepEqual(t, blobCommitments, st.latestSilaPayloadBid.BlobKzgCommitments)
+		require.DeepEqual(t, feeRecipient[:], st.latestSilaPayloadBid.FeeRecipient)
+		require.Equal(t, uint64(123), st.latestSilaPayloadBid.GasLimit)
+		require.Equal(t, primitives.BuilderIndex(7), st.latestSilaPayloadBid.BuilderIndex)
+		require.Equal(t, primitives.Slot(9), st.latestSilaPayloadBid.Slot)
+		require.Equal(t, primitives.Gwei(11), st.latestSilaPayloadBid.Value)
+		require.Equal(t, primitives.Gwei(22), st.latestSilaPayloadBid.ExecutionPayment)
+		require.Equal(t, true, st.dirtyFields[types.LatestSilaPayloadBid])
 	})
 }
 
@@ -619,32 +619,32 @@ func TestAppendBuilderPendingWithdrawals_UnsupportedVersion(t *testing.T) {
 	require.ErrorContains(t, "AppendBuilderPendingWithdrawals", err)
 }
 
-func TestUpdateExecutionPayloadAvailabilityAtIndex_SetAndClear(t *testing.T) {
+func TestUpdateSilaPayloadAvailabilityAtIndex_SetAndClear(t *testing.T) {
 	st := newGloasStateWithAvailability(t, make([]byte, 1024))
 
 	otherIdx := uint64(8) // byte 1, bit 0
 	idx := uint64(9)      // byte 1, bit 1
 
-	require.NoError(t, st.UpdateExecutionPayloadAvailabilityAtIndex(otherIdx, 1))
-	require.Equal(t, byte(0x01), st.executionPayloadAvailability[1])
+	require.NoError(t, st.UpdateSilaPayloadAvailabilityAtIndex(otherIdx, 1))
+	require.Equal(t, byte(0x01), st.silaPayloadAvailability[1])
 
-	require.NoError(t, st.UpdateExecutionPayloadAvailabilityAtIndex(idx, 1))
-	require.Equal(t, byte(0x03), st.executionPayloadAvailability[1])
+	require.NoError(t, st.UpdateSilaPayloadAvailabilityAtIndex(idx, 1))
+	require.Equal(t, byte(0x03), st.silaPayloadAvailability[1])
 
-	require.NoError(t, st.UpdateExecutionPayloadAvailabilityAtIndex(idx, 0))
-	require.Equal(t, byte(0x01), st.executionPayloadAvailability[1])
+	require.NoError(t, st.UpdateSilaPayloadAvailabilityAtIndex(idx, 0))
+	require.Equal(t, byte(0x01), st.silaPayloadAvailability[1])
 }
 
-func TestUpdateExecutionPayloadAvailabilityAtIndex_OutOfRange(t *testing.T) {
+func TestUpdateSilaPayloadAvailabilityAtIndex_OutOfRange(t *testing.T) {
 	st := newGloasStateWithAvailability(t, make([]byte, 1024))
 
-	idx := uint64(len(st.executionPayloadAvailability)) * 8
-	err := st.UpdateExecutionPayloadAvailabilityAtIndex(idx, 1)
+	idx := uint64(len(st.silaPayloadAvailability)) * 8
+	err := st.UpdateSilaPayloadAvailabilityAtIndex(idx, 1)
 	require.ErrorContains(t, "out of range", err)
 
-	for _, b := range st.executionPayloadAvailability {
+	for _, b := range st.silaPayloadAvailability {
 		if b != 0 {
-			t.Fatalf("execution payload availability mutated on error")
+			t.Fatalf("sila payload availability mutated on error")
 		}
 	}
 }
@@ -704,7 +704,7 @@ func buildGloasStateForPaymentWeightTest(
 		BlockRoots:                   blockRoots,
 		StateRoots:                   stateRoots,
 		RandaoMixes:                  randaoMixes,
-		ExecutionPayloadAvailability: execPayloadAvailability,
+		SilaPayloadAvailability: execPayloadAvailability,
 		Validators:                   []*silapb.Validator{validator},
 		Balances:                     []uint64{cfg.MinActivationBalance},
 		CurrentEpochParticipation:    []byte{0},
@@ -726,7 +726,7 @@ func newGloasStateWithAvailability(t *testing.T, availability []byte) *BeaconSta
 	t.Helper()
 
 	st, err := InitializeFromProtoUnsafeGloas(&silapb.BeaconStateGloas{
-		ExecutionPayloadAvailability: availability,
+		SilaPayloadAvailability: availability,
 	})
 	require.NoError(t, err)
 
@@ -754,16 +754,16 @@ func TestSetLatestBlockHash(t *testing.T) {
 	require.DeepEqual(t, hash[:], state.latestBlockHash)
 }
 
-func TestSetExecutionPayloadAvailability(t *testing.T) {
+func TestSetSilaPayloadAvailability(t *testing.T) {
 	t.Run("returns error before gloas", func(t *testing.T) {
 		st := &BeaconState{version: version.Fulu}
-		err := st.SetExecutionPayloadAvailability(0, true)
-		require.ErrorContains(t, "SetExecutionPayloadAvailability", err)
+		err := st.SetSilaPayloadAvailability(0, true)
+		require.ErrorContains(t, "SetSilaPayloadAvailability", err)
 	})
 
 	state := &BeaconState{
 		version:                      version.Gloas,
-		executionPayloadAvailability: make([]byte, params.BeaconConfig().SlotsPerHistoricalRoot/8),
+		silaPayloadAvailability: make([]byte, params.BeaconConfig().SlotsPerHistoricalRoot/8),
 		dirtyFields:                  make(map[types.FieldIndex]bool),
 	}
 
@@ -772,24 +772,24 @@ func TestSetExecutionPayloadAvailability(t *testing.T) {
 	byteIndex := bitIndex / 8
 	bitPosition := bitIndex % 8
 
-	require.NoError(t, state.SetExecutionPayloadAvailability(slot, true))
-	require.Equal(t, true, state.dirtyFields[types.ExecutionPayloadAvailability])
-	require.Equal(t, byte(1<<bitPosition), state.executionPayloadAvailability[byteIndex]&(1<<bitPosition))
+	require.NoError(t, state.SetSilaPayloadAvailability(slot, true))
+	require.Equal(t, true, state.dirtyFields[types.SilaPayloadAvailability])
+	require.Equal(t, byte(1<<bitPosition), state.silaPayloadAvailability[byteIndex]&(1<<bitPosition))
 
-	require.NoError(t, state.SetExecutionPayloadAvailability(slot, false))
-	require.Equal(t, byte(0), state.executionPayloadAvailability[byteIndex]&(1<<bitPosition))
+	require.NoError(t, state.SetSilaPayloadAvailability(slot, false))
+	require.Equal(t, byte(0), state.silaPayloadAvailability[byteIndex]&(1<<bitPosition))
 }
 
-func TestSetExecutionPayloadAvailability_OutOfRange(t *testing.T) {
+func TestSetSilaPayloadAvailability_OutOfRange(t *testing.T) {
 	state := &BeaconState{
 		version:                      version.Gloas,
-		executionPayloadAvailability: []byte{},
+		silaPayloadAvailability: []byte{},
 		dirtyFields:                  make(map[types.FieldIndex]bool),
 	}
 
-	err := state.SetExecutionPayloadAvailability(0, true)
+	err := state.SetSilaPayloadAvailability(0, true)
 	require.ErrorContains(t, "out of range", err)
-	require.Equal(t, false, state.dirtyFields[types.ExecutionPayloadAvailability])
+	require.Equal(t, false, state.dirtyFields[types.SilaPayloadAvailability])
 }
 
 func TestIncreaseBuilderBalance(t *testing.T) {

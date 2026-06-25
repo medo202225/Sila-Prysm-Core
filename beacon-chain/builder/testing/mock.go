@@ -25,9 +25,9 @@ type Config struct {
 // MockBuilderService to mock builder.
 type MockBuilderService struct {
 	HasConfigured                 bool
-	Payload                       *v1.ExecutionPayload
-	PayloadCapella                *v1.ExecutionPayloadCapella
-	PayloadDeneb                  *v1.ExecutionPayloadDeneb
+	Payload                       *v1.SilaPayload
+	PayloadCapella                *v1.SilaPayloadCapella
+	PayloadDeneb                  *v1.SilaPayloadDeneb
 	BlobBundle                    *v1.BlobsBundle
 	BlobBundleV2                  *v1.BlobsBundleV2
 	ErrSubmitBlindedBlock         error
@@ -51,25 +51,25 @@ func (s *MockBuilderService) Configured() bool {
 func (s *MockBuilderService) SubmitBlindedBlock(_ context.Context, b interfaces.ReadOnlySignedBeaconBlock) (interfaces.ExecutionData, v1.BlobsBundler, error) {
 	switch b.Version() {
 	case version.Bellatrix:
-		w, err := blocks.WrappedExecutionPayload(s.Payload)
+		w, err := blocks.WrappedSilaPayload(s.Payload)
 		if err != nil {
 			return nil, nil, errors.Wrap(err, "could not wrap payload")
 		}
 		return w, nil, s.ErrSubmitBlindedBlock
 	case version.Capella:
-		w, err := blocks.WrappedExecutionPayloadCapella(s.PayloadCapella)
+		w, err := blocks.WrappedSilaPayloadCapella(s.PayloadCapella)
 		if err != nil {
 			return nil, nil, errors.Wrap(err, "could not wrap capella payload")
 		}
 		return w, nil, s.ErrSubmitBlindedBlock
 	case version.Deneb, version.Electra:
-		w, err := blocks.WrappedExecutionPayloadDeneb(s.PayloadDeneb)
+		w, err := blocks.WrappedSilaPayloadDeneb(s.PayloadDeneb)
 		if err != nil {
 			return nil, nil, errors.Wrap(err, "could not wrap deneb payload")
 		}
 		return w, s.BlobBundle, s.ErrSubmitBlindedBlock
 	case version.Fulu:
-		w, err := blocks.WrappedExecutionPayloadDeneb(s.PayloadDeneb)
+		w, err := blocks.WrappedSilaPayloadDeneb(s.PayloadDeneb)
 		if err != nil {
 			return nil, nil, errors.Wrap(err, "could not wrap deneb payload for fulu")
 		}

@@ -24,7 +24,7 @@ option java_outer_classname = "ExecutionEngineProto";
 option java_package = "org.sila.engine.v1";
 option php_namespace = "Sila\\Engine\\v1";
 
-message ExecutionPayload {
+message SilaPayload {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -44,7 +44,7 @@ message ExecutionPayload {
   ];
 }
 
-message ExecutionPayloadCapella {
+message SilaPayloadCapella {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -67,7 +67,7 @@ message ExecutionPayloadCapella {
       [ (sila.eth.ext.ssz_max) = "withdrawal.size" ]; // New in Capella.
 }
 
-message ExecutionPayloadDeneb {
+message SilaPayloadDeneb {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -92,7 +92,7 @@ message ExecutionPayloadDeneb {
   uint64 excess_blob_gas = 17;
 }
 
-message ExecutionPayloadGloas {
+message SilaPayloadGloas {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -125,29 +125,29 @@ message ExecutionPayloadGloas {
   ];
 }
 
-message ExecutionPayloadCapellaWithValue {
-  ExecutionPayloadCapella payload = 1;
+message SilaPayloadCapellaWithValue {
+  SilaPayloadCapella payload = 1;
   bytes value = 2;
 }
 
-message ExecutionPayloadDenebAndBlobsBundle {
-  ExecutionPayloadDeneb payload = 1;
+message SilaPayloadDenebAndBlobsBundle {
+  SilaPayloadDeneb payload = 1;
   BlobsBundle blobs_bundle = 2;
 }
 
-message ExecutionPayloadDenebAndBlobsBundleV2 {
-  ExecutionPayloadDeneb payload = 1;
+message SilaPayloadDenebAndBlobsBundleV2 {
+  SilaPayloadDeneb payload = 1;
   BlobsBundleV2 blobs_bundle = 2;
 }
 
-message ExecutionPayloadDenebWithValueAndBlobsBundle {
-  ExecutionPayloadDeneb payload = 1;
+message SilaPayloadDenebWithValueAndBlobsBundle {
+  SilaPayloadDeneb payload = 1;
   bytes value = 2;
   BlobsBundle blobs_bundle = 3;
   bool should_override_builder = 4;
 }
 
-message ExecutionPayloadHeader {
+message SilaPayloadHeader {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -164,7 +164,7 @@ message ExecutionPayloadHeader {
   bytes transactions_root = 14 [ (sila.eth.ext.ssz_size) = "32" ];
 }
 
-message ExecutionPayloadHeaderCapella {
+message SilaPayloadHeaderCapella {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -183,7 +183,7 @@ message ExecutionPayloadHeaderCapella {
       [ (sila.eth.ext.ssz_size) = "32" ]; // New in Capella.
 }
 
-message ExecutionPayloadHeaderDeneb {
+message SilaPayloadHeaderDeneb {
   bytes parent_hash = 1 [ (sila.eth.ext.ssz_size) = "32" ];
   bytes fee_recipient = 2 [ (sila.eth.ext.ssz_size) = "20" ];
   bytes state_root = 3 [ (sila.eth.ext.ssz_size) = "32" ];

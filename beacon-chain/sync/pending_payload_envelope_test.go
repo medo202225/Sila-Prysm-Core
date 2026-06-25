@@ -27,7 +27,7 @@ import (
 
 func TestProcessPendingPayloadEnvelope_NoPendingEnvelope(t *testing.T) {
 	s := &Service{
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
 		badBlockCache:            lruwrpr.New(10),
 		cfg:                      &config{chain: &mock.ChainService{}},
@@ -45,16 +45,16 @@ func TestProcessPendingPayloadEnvelope_AlreadySeen(t *testing.T) {
 		DB:                  db,
 	}
 	s := &Service{
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
 		badBlockCache:            lruwrpr.New(10),
 		cfg:                      &config{chain: chainService, beaconDB: db},
 	}
 
-	bid := util.GenerateTestSignedExecutionPayloadBid(1)
+	bid := util.GenerateTestSignedSilaPayloadBid(1)
 	sb := util.NewBeaconBlockGloas()
 	sb.Block.Slot = 1
-	sb.Block.Body.SignedExecutionPayloadBid = bid
+	sb.Block.Body.SignedSilaPayloadBid = bid
 	signedBlock, err := blocks.NewSignedBeaconBlock(sb)
 	require.NoError(t, err)
 	root, err := signedBlock.Block().HashTreeRoot()
@@ -62,8 +62,8 @@ func TestProcessPendingPayloadEnvelope_AlreadySeen(t *testing.T) {
 
 	builderIdx := primitives.BuilderIndex(bid.Message.BuilderIndex)
 	blockHash := bytesutil.ToBytes32(bid.Message.BlockHash)
-	env := testSignedExecutionPayloadEnvelope(t, 1, builderIdx, root, blockHash)
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{uint64(builderIdx): env}
+	env := testSignedSilaPayloadEnvelope(t, 1, builderIdx, root, blockHash)
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{uint64(builderIdx): env}
 
 	s.setSeenPayloadEnvelope(root, builderIdx)
 	s.processPendingPayloadEnvelope(ctx, root)
@@ -81,7 +81,7 @@ func TestProcessPendingPayloadEnvelope_HappyPath(t *testing.T) {
 	stateGen := stategen.New(db, doublylinkedtree.New())
 	broadcaster := p2ptesting.NewTestP2P(t)
 	s := &Service{
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
 		badBlockCache:            lruwrpr.New(10),
 		cfg: &config{
@@ -93,10 +93,10 @@ func TestProcessPendingPayloadEnvelope_HappyPath(t *testing.T) {
 		},
 	}
 
-	bid := util.GenerateTestSignedExecutionPayloadBid(1)
+	bid := util.GenerateTestSignedSilaPayloadBid(1)
 	sb := util.NewBeaconBlockGloas()
 	sb.Block.Slot = 1
-	sb.Block.Body.SignedExecutionPayloadBid = bid
+	sb.Block.Body.SignedSilaPayloadBid = bid
 	signedBlock, err := blocks.NewSignedBeaconBlock(sb)
 	require.NoError(t, err)
 	root, err := signedBlock.Block().HashTreeRoot()
@@ -109,8 +109,8 @@ func TestProcessPendingPayloadEnvelope_HappyPath(t *testing.T) {
 
 	builderIdx := primitives.BuilderIndex(bid.Message.BuilderIndex)
 	blockHash := bytesutil.ToBytes32(bid.Message.BlockHash)
-	env := testSignedExecutionPayloadEnvelope(t, 1, builderIdx, root, blockHash)
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{uint64(builderIdx): env}
+	env := testSignedSilaPayloadEnvelope(t, 1, builderIdx, root, blockHash)
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{uint64(builderIdx): env}
 
 	require.Equal(t, false, s.hasSeenPayloadEnvelope(root, builderIdx))
 	s.processPendingPayloadEnvelope(ctx, root)
@@ -131,7 +131,7 @@ func TestProcessPendingPayloadEnvelope_DoesNotBroadcastOnReceiveError(t *testing
 	stateGen := stategen.New(db, doublylinkedtree.New())
 	broadcaster := p2ptesting.NewTestP2P(t)
 	s := &Service{
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
 		badBlockCache:            lruwrpr.New(10),
 		cfg: &config{
@@ -143,10 +143,10 @@ func TestProcessPendingPayloadEnvelope_DoesNotBroadcastOnReceiveError(t *testing
 		},
 	}
 
-	bid := util.GenerateTestSignedExecutionPayloadBid(1)
+	bid := util.GenerateTestSignedSilaPayloadBid(1)
 	sb := util.NewBeaconBlockGloas()
 	sb.Block.Slot = 1
-	sb.Block.Body.SignedExecutionPayloadBid = bid
+	sb.Block.Body.SignedSilaPayloadBid = bid
 	signedBlock, err := blocks.NewSignedBeaconBlock(sb)
 	require.NoError(t, err)
 	root, err := signedBlock.Block().HashTreeRoot()
@@ -154,8 +154,8 @@ func TestProcessPendingPayloadEnvelope_DoesNotBroadcastOnReceiveError(t *testing
 
 	builderIdx := primitives.BuilderIndex(bid.Message.BuilderIndex)
 	blockHash := bytesutil.ToBytes32(bid.Message.BlockHash)
-	env := testSignedExecutionPayloadEnvelope(t, 1, builderIdx, root, blockHash)
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{uint64(builderIdx): env}
+	env := testSignedSilaPayloadEnvelope(t, 1, builderIdx, root, blockHash)
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{uint64(builderIdx): env}
 
 	s.processPendingPayloadEnvelope(ctx, root)
 	require.Equal(t, false, broadcaster.BroadcastCalled.Load())
@@ -171,7 +171,7 @@ func TestProcessPendingPayloadEnvelopes_Sweep(t *testing.T) {
 	}
 	stateGen := stategen.New(db, doublylinkedtree.New())
 	s := &Service{
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
 		badBlockCache:            lruwrpr.New(10),
 		cfg: &config{
@@ -183,10 +183,10 @@ func TestProcessPendingPayloadEnvelopes_Sweep(t *testing.T) {
 		},
 	}
 
-	bid := util.GenerateTestSignedExecutionPayloadBid(1)
+	bid := util.GenerateTestSignedSilaPayloadBid(1)
 	sb := util.NewBeaconBlockGloas()
 	sb.Block.Slot = 1
-	sb.Block.Body.SignedExecutionPayloadBid = bid
+	sb.Block.Body.SignedSilaPayloadBid = bid
 	signedBlock, err := blocks.NewSignedBeaconBlock(sb)
 	require.NoError(t, err)
 	root, err := signedBlock.Block().HashTreeRoot()
@@ -199,9 +199,9 @@ func TestProcessPendingPayloadEnvelopes_Sweep(t *testing.T) {
 
 	builderIdx := primitives.BuilderIndex(bid.Message.BuilderIndex)
 	blockHash := bytesutil.ToBytes32(bid.Message.BlockHash)
-	env := testSignedExecutionPayloadEnvelope(t, 1, builderIdx, root, blockHash)
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{uint64(builderIdx): env}
-	s.newExecutionPayloadEnvelopeVerifier = testNewExecutionPayloadEnvelopeVerifier(mockExecutionPayloadEnvelopeVerifier{})
+	env := testSignedSilaPayloadEnvelope(t, 1, builderIdx, root, blockHash)
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{uint64(builderIdx): env}
+	s.newSilaPayloadEnvelopeVerifier = testNewSilaPayloadEnvelopeVerifier(mockSilaPayloadEnvelopeVerifier{})
 
 	require.Equal(t, false, s.hasSeenPayloadEnvelope(root, builderIdx))
 
@@ -220,7 +220,7 @@ func TestProcessPendingPayloadEnvelopes_SkipsUnknownRoot(t *testing.T) {
 		NotFinalized:        true, // InForkchoice returns false
 	}
 	s := &Service{
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
 		badBlockCache:            lruwrpr.New(10),
 		cfg:                      &config{chain: chainService, beaconDB: db},
@@ -228,8 +228,8 @@ func TestProcessPendingPayloadEnvelopes_SkipsUnknownRoot(t *testing.T) {
 
 	root := [32]byte{0x01}
 	blockHash := [32]byte{0x02}
-	env := testSignedExecutionPayloadEnvelope(t, 1, 1, root, blockHash)
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{1: env}
+	env := testSignedSilaPayloadEnvelope(t, 1, 1, root, blockHash)
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{1: env}
 
 	s.processPendingPayloadEnvelopes(ctx)
 	require.Equal(t, 1, len(s.pendingPayloadEnvelopes))
@@ -239,7 +239,7 @@ func TestPrunePendingPayloadEnvelopes(t *testing.T) {
 	finalizedEpoch := primitives.Epoch(3)
 	slotsPerEpoch := params.BeaconConfig().SlotsPerEpoch
 	s := &Service{
-		pendingPayloadEnvelopes: make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes: make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		cfg: &config{
 			chain: &mock.ChainService{
 				FinalizedCheckPoint: &silapb.Checkpoint{Epoch: finalizedEpoch},
@@ -248,35 +248,35 @@ func TestPrunePendingPayloadEnvelopes(t *testing.T) {
 	}
 
 	oldRoot := [32]byte{0x01}
-	oldEnv := &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload:         &enginev1.ExecutionPayloadGloas{SlotNumber: primitives.Slot(finalizedEpoch-1) * slotsPerEpoch},
+	oldEnv := &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload:         &enginev1.SilaPayloadGloas{SlotNumber: primitives.Slot(finalizedEpoch-1) * slotsPerEpoch},
 			BeaconBlockRoot: oldRoot[:],
 		},
 		Signature: bytes.Repeat([]byte{0xAA}, 96),
 	}
 
 	atFinalizedRoot := [32]byte{0x03}
-	atFinalizedEnv := &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload:         &enginev1.ExecutionPayloadGloas{SlotNumber: primitives.Slot(finalizedEpoch) * slotsPerEpoch},
+	atFinalizedEnv := &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload:         &enginev1.SilaPayloadGloas{SlotNumber: primitives.Slot(finalizedEpoch) * slotsPerEpoch},
 			BeaconBlockRoot: atFinalizedRoot[:],
 		},
 		Signature: bytes.Repeat([]byte{0xCC}, 96),
 	}
 
 	freshRoot := [32]byte{0x02}
-	freshEnv := &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload:         &enginev1.ExecutionPayloadGloas{SlotNumber: primitives.Slot(finalizedEpoch+1) * slotsPerEpoch},
+	freshEnv := &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload:         &enginev1.SilaPayloadGloas{SlotNumber: primitives.Slot(finalizedEpoch+1) * slotsPerEpoch},
 			BeaconBlockRoot: freshRoot[:],
 		},
 		Signature: bytes.Repeat([]byte{0xBB}, 96),
 	}
 
-	s.pendingPayloadEnvelopes[oldRoot] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{1: oldEnv}
-	s.pendingPayloadEnvelopes[atFinalizedRoot] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{1: atFinalizedEnv}
-	s.pendingPayloadEnvelopes[freshRoot] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{1: freshEnv}
+	s.pendingPayloadEnvelopes[oldRoot] = map[uint64]*silapb.SignedSilaPayloadEnvelope{1: oldEnv}
+	s.pendingPayloadEnvelopes[atFinalizedRoot] = map[uint64]*silapb.SignedSilaPayloadEnvelope{1: atFinalizedEnv}
+	s.pendingPayloadEnvelopes[freshRoot] = map[uint64]*silapb.SignedSilaPayloadEnvelope{1: freshEnv}
 	require.Equal(t, 3, len(s.pendingPayloadEnvelopes))
 
 	s.prunePendingPayloadEnvelopes()
@@ -310,7 +310,7 @@ func TestQueuePendingPayloadEnvelope_SelfBuildIgnoredOutsideLookahead(t *testing
 
 	s := &Service{
 		seenPayloadEnvelopeCache: lruwrpr.New(10),
-		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedExecutionPayloadEnvelope),
+		pendingPayloadEnvelopes:  make(map[[32]byte]map[uint64]*silapb.SignedSilaPayloadEnvelope),
 		cfg: &config{
 			chain: chainService,
 			clock: startup.NewClock(chainService.Genesis, chainService.ValidatorsRoot),
@@ -319,15 +319,15 @@ func TestQueuePendingPayloadEnvelope_SelfBuildIgnoredOutsideLookahead(t *testing
 
 	root := [32]byte{0x01}
 	blockHash := [32]byte{0x02}
-	signedEnv := testSignedExecutionPayloadEnvelope(t, envelopeSlot, selfBuild, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnv)
+	signedEnv := testSignedSilaPayloadEnvelope(t, envelopeSlot, selfBuild, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
 	// Signature verification would fail, but self-build outside the lookahead
 	// should skip it and return Ignore without queuing.
-	v := &mockExecutionPayloadEnvelopeVerifier{errSignature: errors.New("bad signature")}
+	v := &mockSilaPayloadEnvelopeVerifier{errSignature: errors.New("bad signature")}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, signedEnv)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -336,18 +336,18 @@ func TestQueuePendingPayloadEnvelope_SelfBuildIgnoredOutsideLookahead(t *testing
 
 func TestQueuePendingPayloadEnvelope_SelfBuildInLookaheadVerifiesSignature(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 	selfBuild := params.BeaconConfig().BuilderIndexSelfBuild
 
 	blockHash := [32]byte{0x02}
-	signedEnv := testSignedExecutionPayloadEnvelope(t, 1, selfBuild, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnv)
+	signedEnv := testSignedSilaPayloadEnvelope(t, 1, selfBuild, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
 	// Self-build in the same epoch (lookahead) verifies the signature but ignores failures.
-	v := &mockExecutionPayloadEnvelopeVerifier{errSignature: errors.New("bad signature")}
+	v := &mockSilaPayloadEnvelopeVerifier{errSignature: errors.New("bad signature")}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, signedEnv)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -363,16 +363,16 @@ func TestQueuePendingPayloadEnvelope_SelfBuildInLookaheadVerifiesSignature(t *te
 
 func TestQueuePendingPayloadEnvelope_RejectBadSignature(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 
 	blockHash := [32]byte{0x02}
-	signedEnv := testSignedExecutionPayloadEnvelope(t, 1, 1, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnv)
+	signedEnv := testSignedSilaPayloadEnvelope(t, 1, 1, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{errSignature: errors.New("bad signature")}
+	v := &mockSilaPayloadEnvelopeVerifier{errSignature: errors.New("bad signature")}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, signedEnv)
 	require.NotNil(t, err)
 	require.Equal(t, pubsub.ValidationReject, result)
@@ -381,16 +381,16 @@ func TestQueuePendingPayloadEnvelope_RejectBadSignature(t *testing.T) {
 
 func TestQueuePendingPayloadEnvelope_QueuesNewRoot(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 
 	blockHash := [32]byte{0x02}
-	signedEnv := testSignedExecutionPayloadEnvelope(t, 1, 1, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnv)
+	signedEnv := testSignedSilaPayloadEnvelope(t, 1, 1, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, signedEnv)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -401,19 +401,19 @@ func TestQueuePendingPayloadEnvelope_QueuesNewRoot(t *testing.T) {
 
 func TestQueuePendingPayloadEnvelope_DoesNotOverwrite(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 
 	blockHash := [32]byte{0x02}
-	first := testSignedExecutionPayloadEnvelope(t, 1, 1, root, blockHash)
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{1: first}
+	first := testSignedSilaPayloadEnvelope(t, 1, 1, root, blockHash)
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{1: first}
 
-	second := testSignedExecutionPayloadEnvelope(t, 1, 1, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(second)
+	second := testSignedSilaPayloadEnvelope(t, 1, 1, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(second)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, second)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -423,20 +423,20 @@ func TestQueuePendingPayloadEnvelope_DoesNotOverwrite(t *testing.T) {
 
 func TestQueuePendingPayloadEnvelope_PrunesMalformedExistingEnvelope(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 
-	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{
+	s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{
 		1: {Signature: bytes.Repeat([]byte{0xAA}, 96)},
 	}
 
 	blockHash := [32]byte{0x02}
-	next := testSignedExecutionPayloadEnvelope(t, 1, 1, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(next)
+	next := testSignedSilaPayloadEnvelope(t, 1, 1, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(next)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, next)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -446,27 +446,27 @@ func TestQueuePendingPayloadEnvelope_PrunesMalformedExistingEnvelope(t *testing.
 
 func TestQueuePendingPayloadEnvelope_RootCountBound(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, _ := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, _ := setupSilaPayloadEnvelopeService(t, 1, 1)
 
 	// Fill up to maxPendingPayloadRoots with non-self-build envelopes.
 	for i := range maxPendingPayloadRoots {
 		root := [32]byte{byte(i + 1)}
-		env := &silapb.SignedExecutionPayloadEnvelope{
-			Message: &silapb.ExecutionPayloadEnvelope{Payload: &enginev1.ExecutionPayloadGloas{SlotNumber: 1}, BeaconBlockRoot: root[:]},
+		env := &silapb.SignedSilaPayloadEnvelope{
+			Message: &silapb.SilaPayloadEnvelope{Payload: &enginev1.SilaPayloadGloas{SlotNumber: 1}, BeaconBlockRoot: root[:]},
 		}
-		s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{uint64(i): env}
+		s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{uint64(i): env}
 	}
 	require.Equal(t, maxPendingPayloadRoots, len(s.pendingPayloadEnvelopes))
 
 	// Next non-self-build root should be rejected.
 	newRoot := [32]byte{0xFF}
-	signedEnv := testSignedExecutionPayloadEnvelope(t, 1, 1, newRoot, [32]byte{0x02})
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnv)
+	signedEnv := testSignedSilaPayloadEnvelope(t, 1, 1, newRoot, [32]byte{0x02})
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, signedEnv)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -476,27 +476,27 @@ func TestQueuePendingPayloadEnvelope_RootCountBound(t *testing.T) {
 
 func TestQueuePendingPayloadEnvelope_SelfBuildBypassesRootBound(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, _ := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, _ := setupSilaPayloadEnvelopeService(t, 1, 1)
 	selfBuild := params.BeaconConfig().BuilderIndexSelfBuild
 
 	// Fill to the root limit.
 	for i := range maxPendingPayloadRoots {
 		root := [32]byte{byte(i + 1)}
-		env := &silapb.SignedExecutionPayloadEnvelope{
-			Message: &silapb.ExecutionPayloadEnvelope{Payload: &enginev1.ExecutionPayloadGloas{SlotNumber: 1}, BeaconBlockRoot: root[:]},
+		env := &silapb.SignedSilaPayloadEnvelope{
+			Message: &silapb.SilaPayloadEnvelope{Payload: &enginev1.SilaPayloadGloas{SlotNumber: 1}, BeaconBlockRoot: root[:]},
 		}
-		s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedExecutionPayloadEnvelope{uint64(i): env}
+		s.pendingPayloadEnvelopes[root] = map[uint64]*silapb.SignedSilaPayloadEnvelope{uint64(i): env}
 	}
 
 	// Self-build for a new root should still be accepted.
 	newRoot := [32]byte{0xFF}
-	signedEnv := testSignedExecutionPayloadEnvelope(t, 1, selfBuild, newRoot, [32]byte{0x02})
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnv)
+	signedEnv := testSignedSilaPayloadEnvelope(t, 1, selfBuild, newRoot, [32]byte{0x02})
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, signedEnv)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -506,17 +506,17 @@ func TestQueuePendingPayloadEnvelope_SelfBuildBypassesRootBound(t *testing.T) {
 
 func TestQueuePendingPayloadEnvelope_PerRootBuilderBound(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 
 	blockHash := [32]byte{0x02}
 	// Insert two non-self-build builders for the same root.
 	for i := range uint64(maxPendingBuildersPerRoot) {
-		env := testSignedExecutionPayloadEnvelope(t, 1, primitives.BuilderIndex(i+10), root, blockHash)
-		e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(env)
+		env := testSignedSilaPayloadEnvelope(t, 1, primitives.BuilderIndex(i+10), root, blockHash)
+		e, err := blocks.WrappedROSignedSilaPayloadEnvelope(env)
 		require.NoError(t, err)
 		wrapped, err := e.Envelope()
 		require.NoError(t, err)
-		v := &mockExecutionPayloadEnvelopeVerifier{}
+		v := &mockSilaPayloadEnvelopeVerifier{}
 		result, err := s.queuePendingPayloadEnvelope(ctx, v, wrapped, env)
 		require.NoError(t, err)
 		require.Equal(t, pubsub.ValidationIgnore, result)
@@ -524,13 +524,13 @@ func TestQueuePendingPayloadEnvelope_PerRootBuilderBound(t *testing.T) {
 	require.Equal(t, int(maxPendingBuildersPerRoot), len(s.pendingPayloadEnvelopes[root]))
 
 	// Third non-self-build builder should be rejected.
-	third := testSignedExecutionPayloadEnvelope(t, 1, 99, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(third)
+	third := testSignedSilaPayloadEnvelope(t, 1, 99, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(third)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, third)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -539,29 +539,29 @@ func TestQueuePendingPayloadEnvelope_PerRootBuilderBound(t *testing.T) {
 
 func TestQueuePendingPayloadEnvelope_SelfBuildBypassesPerRootBound(t *testing.T) {
 	ctx := context.Background()
-	s, _, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
+	s, _, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
 	selfBuild := params.BeaconConfig().BuilderIndexSelfBuild
 
 	blockHash := [32]byte{0x02}
 	// Fill with maxPendingBuildersPerRoot non-self-build builders.
 	for i := range uint64(maxPendingBuildersPerRoot) {
-		env := testSignedExecutionPayloadEnvelope(t, 1, primitives.BuilderIndex(i+10), root, blockHash)
-		e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(env)
+		env := testSignedSilaPayloadEnvelope(t, 1, primitives.BuilderIndex(i+10), root, blockHash)
+		e, err := blocks.WrappedROSignedSilaPayloadEnvelope(env)
 		require.NoError(t, err)
 		wrapped, err := e.Envelope()
 		require.NoError(t, err)
-		v := &mockExecutionPayloadEnvelopeVerifier{}
+		v := &mockSilaPayloadEnvelopeVerifier{}
 		_, _ = s.queuePendingPayloadEnvelope(ctx, v, wrapped, env)
 	}
 
 	// Self-build should be accepted as the 3rd builder.
-	selfEnv := testSignedExecutionPayloadEnvelope(t, 1, selfBuild, root, blockHash)
-	e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(selfEnv)
+	selfEnv := testSignedSilaPayloadEnvelope(t, 1, selfBuild, root, blockHash)
+	e, err := blocks.WrappedROSignedSilaPayloadEnvelope(selfEnv)
 	require.NoError(t, err)
 	env, err := e.Envelope()
 	require.NoError(t, err)
 
-	v := &mockExecutionPayloadEnvelopeVerifier{}
+	v := &mockSilaPayloadEnvelopeVerifier{}
 	result, err := s.queuePendingPayloadEnvelope(ctx, v, env, selfEnv)
 	require.NoError(t, err)
 	require.Equal(t, pubsub.ValidationIgnore, result)
@@ -570,31 +570,31 @@ func TestQueuePendingPayloadEnvelope_SelfBuildBypassesPerRootBound(t *testing.T)
 	require.Equal(t, true, ok)
 }
 
-func TestValidateExecutionPayloadEnvelope_RejectBadSignatureBeforeQueue(t *testing.T) {
+func TestValidateSilaPayloadEnvelope_RejectBadSignatureBeforeQueue(t *testing.T) {
 	ctx := context.Background()
-	s, msg, _, _ := setupExecutionPayloadEnvelopeService(t, 1, 1)
-	s.newExecutionPayloadEnvelopeVerifier = testNewExecutionPayloadEnvelopeVerifier(
-		mockExecutionPayloadEnvelopeVerifier{
+	s, msg, _, _ := setupSilaPayloadEnvelopeService(t, 1, 1)
+	s.newSilaPayloadEnvelopeVerifier = testNewSilaPayloadEnvelopeVerifier(
+		mockSilaPayloadEnvelopeVerifier{
 			errBlockRootSeen: errors.New("not seen"),
 			errSignature:     errors.New("bad signature"),
 		},
 	)
 
-	result, err := s.validateExecutionPayloadEnvelope(ctx, "", msg)
+	result, err := s.validateSilaPayloadEnvelope(ctx, "", msg)
 	require.NotNil(t, err)
 	require.Equal(t, result, pubsub.ValidationReject)
 	require.Equal(t, 0, len(s.pendingPayloadEnvelopes))
 }
 
-func TestValidateExecutionPayloadEnvelope_QueueOnUnknownBlock(t *testing.T) {
+func TestValidateSilaPayloadEnvelope_QueueOnUnknownBlock(t *testing.T) {
 	ctx := context.Background()
-	s, msg, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
-	s.newExecutionPayloadEnvelopeVerifier = testNewExecutionPayloadEnvelopeVerifier(
-		mockExecutionPayloadEnvelopeVerifier{errBlockRootSeen: errors.New("not seen")},
+	s, msg, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
+	s.newSilaPayloadEnvelopeVerifier = testNewSilaPayloadEnvelopeVerifier(
+		mockSilaPayloadEnvelopeVerifier{errBlockRootSeen: errors.New("not seen")},
 	)
 
 	require.Equal(t, 0, len(s.pendingPayloadEnvelopes))
-	result, err := s.validateExecutionPayloadEnvelope(ctx, "", msg)
+	result, err := s.validateSilaPayloadEnvelope(ctx, "", msg)
 	require.NoError(t, err)
 	require.Equal(t, result, pubsub.ValidationIgnore)
 	require.Equal(t, 1, len(s.pendingPayloadEnvelopes))
@@ -602,19 +602,19 @@ func TestValidateExecutionPayloadEnvelope_QueueOnUnknownBlock(t *testing.T) {
 	require.Equal(t, true, ok)
 }
 
-func TestValidateExecutionPayloadEnvelope_QueueKeepsFirst(t *testing.T) {
+func TestValidateSilaPayloadEnvelope_QueueKeepsFirst(t *testing.T) {
 	ctx := context.Background()
-	s, msg, _, root := setupExecutionPayloadEnvelopeService(t, 1, 1)
-	s.newExecutionPayloadEnvelopeVerifier = testNewExecutionPayloadEnvelopeVerifier(
-		mockExecutionPayloadEnvelopeVerifier{errBlockRootSeen: errors.New("not seen")},
+	s, msg, _, root := setupSilaPayloadEnvelopeService(t, 1, 1)
+	s.newSilaPayloadEnvelopeVerifier = testNewSilaPayloadEnvelopeVerifier(
+		mockSilaPayloadEnvelopeVerifier{errBlockRootSeen: errors.New("not seen")},
 	)
 
 	// First envelope gets queued.
-	_, _ = s.validateExecutionPayloadEnvelope(ctx, "", msg)
+	_, _ = s.validateSilaPayloadEnvelope(ctx, "", msg)
 	require.Equal(t, 1, len(s.pendingPayloadEnvelopes[root]))
 
 	// Second envelope for the same root and same builder should be ignored (keep first).
-	_, _ = s.validateExecutionPayloadEnvelope(ctx, "", msg)
+	_, _ = s.validateSilaPayloadEnvelope(ctx, "", msg)
 	require.Equal(t, 1, len(s.pendingPayloadEnvelopes))
 	require.Equal(t, 1, len(s.pendingPayloadEnvelopes[root]))
 }

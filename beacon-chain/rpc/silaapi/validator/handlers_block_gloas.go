@@ -29,7 +29,7 @@ import (
 )
 
 // ProduceBlockV4 requests a beacon node to produce a valid Gloas block.
-// When include_payload=true (default), the response includes the execution payload
+// When include_payload=true (default), the response includes the sila payload
 // envelope alongside the beacon block.
 // Endpoint: GET /sila/v4/validator/blocks/{slot}
 func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
@@ -123,20 +123,20 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set(api.VersionHeader, version.String(version.Gloas))
 	w.Header().Set(api.ConsensusBlockValueHeader, consensusBlockValue)
-	w.Header().Set(api.ExecutionPayloadIncludedHeader, fmt.Sprintf("%v", includePayload))
+	w.Header().Set(api.SilaPayloadIncludedHeader, fmt.Sprintf("%v", includePayload))
 
 	isSSZ := httputil.RespondWithSsz(r)
 
 	if includePayload {
-		envelopeResp, err := s.V1Alpha1Server.GetExecutionPayloadEnvelope(ctx, &eth.ExecutionPayloadEnvelopeRequest{
+		envelopeResp, err := s.V1Alpha1Server.GetSilaPayloadEnvelope(ctx, &eth.SilaPayloadEnvelopeRequest{
 			Slot: primitives.Slot(slot),
 		})
 		if err != nil {
-			httputil.HandleError(w, errors.Wrap(err, "could not get execution payload envelope").Error(), http.StatusInternalServerError)
+			httputil.HandleError(w, errors.Wrap(err, "could not get sila payload envelope").Error(), http.StatusInternalServerError)
 			return
 		}
 		var blobs, kzgProofs [][]byte
-		if contents, ok := s.ExecutionPayloadEnvelopeCache.Contents(); ok &&
+		if contents, ok := s.SilaPayloadEnvelopeCache.Contents(); ok &&
 			contents.Envelope.Payload.SlotNumber == primitives.Slot(slot) {
 			blobs, kzgProofs, err = blobsAndProofsFromDataColumns(contents.DataColumns)
 			if err != nil {
@@ -148,7 +148,7 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 		if isSSZ {
 			sszResp, err := (&eth.BeaconBlockContentsGloas{
 				Block:                    gloasBlock.Gloas,
-				ExecutionPayloadEnvelope: envelopeResp.Envelope,
+				SilaPayloadEnvelope: envelopeResp.Envelope,
 				KzgProofs:                kzgProofs,
 				Blobs:                    blobs,
 			}).MarshalSSZ()
@@ -173,7 +173,7 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 		httputil.WriteJson(w, &structs.ProduceBlockV4Response{
 			Version:                  version.String(version.Gloas),
 			ConsensusBlockValue:      consensusBlockValue,
-			ExecutionPayloadIncluded: true,
+			SilaPayloadIncluded: true,
 			Data:                     jsonBytes,
 		})
 		return
@@ -203,7 +203,7 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, &structs.ProduceBlockV4Response{
 		Version:                  version.String(version.Gloas),
 		ConsensusBlockValue:      consensusBlockValue,
-		ExecutionPayloadIncluded: false,
+		SilaPayloadIncluded: false,
 		Data:                     jsonBytes,
 	})
 }
@@ -211,15 +211,15 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 // gloasBlockSelfBuilt reports whether the block's bid is the proposer's own
 // self-built payload rather than an external builder's.
 func gloasBlockSelfBuilt(b *eth.BeaconBlockGloas) bool {
-	bid := b.GetBody().GetSignedExecutionPayloadBid().GetMessage()
+	bid := b.GetBody().GetSignedSilaPayloadBid().GetMessage()
 	return bid != nil && bid.BuilderIndex == params.BeaconConfig().BuilderIndexSelfBuild
 }
 
-// ExecutionPayloadEnvelope returns the cached envelope in blinded form (payload_root);
+// SilaPayloadEnvelope returns the cached envelope in blinded form (payload_root);
 // HTR equivalence lets the VC sign the blinded form for the full envelope.
-// Endpoint: GET /sila/v1/validator/execution_payload_envelopes/{slot}/{beacon_block_root}
-func (s *Server) ExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
-	ctx, span := trace.StartSpan(r.Context(), "validator.ExecutionPayloadEnvelope")
+// Endpoint: GET /sila/v1/validator/sila_payload_envelopes/{slot}/{beacon_block_root}
+func (s *Server) SilaPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
+	ctx, span := trace.StartSpan(r.Context(), "validator.SilaPayloadEnvelope")
 	defer span.End()
 
 	rawSlot := r.PathValue("slot")
@@ -243,7 +243,7 @@ func (s *Server) ExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	resp, err := s.V1Alpha1Server.GetExecutionPayloadEnvelope(ctx, &eth.ExecutionPayloadEnvelopeRequest{
+	resp, err := s.V1Alpha1Server.GetSilaPayloadEnvelope(ctx, &eth.SilaPayloadEnvelopeRequest{
 		Slot: primitives.Slot(slot),
 	})
 	if err != nil {
@@ -258,7 +258,7 @@ func (s *Server) ExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Request
 			}
 			return
 		}
-		httputil.HandleError(w, "could not get execution payload envelope: "+err.Error(), http.StatusInternalServerError)
+		httputil.HandleError(w, "could not get sila payload envelope: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 	if !bytes.Equal(resp.Envelope.BeaconBlockRoot, beaconBlockRoot) {
@@ -284,12 +284,12 @@ func (s *Server) ExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	jsonEnvelope, err := structs.BlindedExecutionPayloadEnvelopeFromConsensus(blinded)
+	jsonEnvelope, err := structs.BlindedSilaPayloadEnvelopeFromConsensus(blinded)
 	if err != nil {
 		httputil.HandleError(w, "could not convert envelope to JSON: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	httputil.WriteJson(w, &structs.GetValidatorBlindedExecutionPayloadEnvelopeResponse{
+	httputil.WriteJson(w, &structs.GetValidatorBlindedSilaPayloadEnvelopeResponse{
 		Version: version.String(version.Gloas),
 		Data:    jsonEnvelope,
 	})

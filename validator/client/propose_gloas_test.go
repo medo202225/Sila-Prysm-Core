@@ -28,8 +28,8 @@ func signedGloasBlock(t *testing.T, slot primitives.Slot, builderIndex primitive
 	if blk.Block.Body == nil {
 		blk.Block.Body = &silapb.BeaconBlockBodyGloas{}
 	}
-	blk.Block.Body.SignedExecutionPayloadBid = util.HydrateSignedExecutionPayloadBid(&silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	blk.Block.Body.SignedSilaPayloadBid = util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			BuilderIndex: builderIndex,
 		},
 		Signature: make([]byte, 96),
@@ -40,9 +40,9 @@ func signedGloasBlock(t *testing.T, slot primitives.Slot, builderIndex primitive
 	return signed
 }
 
-func testExecutionPayloadEnvelope(slot primitives.Slot, builderIndex primitives.BuilderIndex) *silapb.ExecutionPayloadEnvelope {
-	return &silapb.ExecutionPayloadEnvelope{
-		Payload: &enginev1.ExecutionPayloadGloas{
+func testSilaPayloadEnvelope(slot primitives.Slot, builderIndex primitives.BuilderIndex) *silapb.SilaPayloadEnvelope {
+	return &silapb.SilaPayloadEnvelope{
+		Payload: &enginev1.SilaPayloadGloas{
 			ParentHash:    make([]byte, 32),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, 32),
@@ -68,10 +68,10 @@ func TestProposeSelfBuildEnvelope(t *testing.T) {
 	slot := primitives.Slot(100)
 	builderIndex := params.BeaconConfig().BuilderIndexSelfBuild
 
-	expectedEnvelope := testExecutionPayloadEnvelope(slot, builderIndex)
+	expectedEnvelope := testSilaPayloadEnvelope(slot, builderIndex)
 
 	m.validatorClient.EXPECT().
-		GetExecutionPayloadEnvelope(gomock.Any(), slot, gomock.Any()).
+		GetSilaPayloadEnvelope(gomock.Any(), slot, gomock.Any()).
 		Return(expectedEnvelope, nil, nil)
 
 	builderDomain := make([]byte, 32)
@@ -81,7 +81,7 @@ func TestProposeSelfBuildEnvelope(t *testing.T) {
 		Return(&silapb.DomainResponse{SignatureDomain: builderDomain}, nil)
 
 	m.validatorClient.EXPECT().
-		PublishExecutionPayloadEnvelope(gomock.Any(), gomock.AssignableToTypeOf(&silapb.SignedExecutionPayloadEnvelope{})).
+		PublishSilaPayloadEnvelope(gomock.Any(), gomock.AssignableToTypeOf(&silapb.SignedSilaPayloadEnvelope{})).
 		Return(&emptypb.Empty{}, nil)
 
 	signedBlock := signedGloasBlock(t, slot, builderIndex)
@@ -102,14 +102,14 @@ func TestProposeSelfBuildEnvelope_MissingBid(t *testing.T) {
 	if blk.Block.Body == nil {
 		blk.Block.Body = &silapb.BeaconBlockBodyGloas{}
 	}
-	blk.Block.Body.SignedExecutionPayloadBid = nil
+	blk.Block.Body.SignedSilaPayloadBid = nil
 
 	signedBlock, err := consensusblocks.NewSignedBeaconBlock(blk)
 	require.NoError(t, err)
 
 	var pubKey [fieldparams.BLSPubkeyLength]byte
 	err = validator.proposeSelfBuildEnvelope(t.Context(), 1, pubKey, signedBlock)
-	require.ErrorContains(t, "no execution payload bid found in block body", err)
+	require.ErrorContains(t, "no sila payload bid found in block body", err)
 }
 
 func TestProposeSelfBuildEnvelope_ClientError(t *testing.T) {
@@ -117,7 +117,7 @@ func TestProposeSelfBuildEnvelope_ClientError(t *testing.T) {
 	defer finish()
 
 	m.validatorClient.EXPECT().
-		GetExecutionPayloadEnvelope(gomock.Any(), gomock.Any(), gomock.Any()).
+		GetSilaPayloadEnvelope(gomock.Any(), gomock.Any(), gomock.Any()).
 		Return(nil, nil, errors.New("connection refused"))
 
 	signedBlock := signedGloasBlock(t, 1, params.BeaconConfig().BuilderIndexSelfBuild)
@@ -126,10 +126,10 @@ func TestProposeSelfBuildEnvelope_ClientError(t *testing.T) {
 	copy(pubKey[:], validatorKey.PublicKey().Marshal())
 
 	err := validator.proposeSelfBuildEnvelope(t.Context(), 1, pubKey, signedBlock)
-	require.ErrorContains(t, "failed to get execution payload envelope for self-build", err)
+	require.ErrorContains(t, "failed to get sila payload envelope for self-build", err)
 }
 
-func TestSignExecutionPayloadEnvelope(t *testing.T) {
+func TestSignSilaPayloadEnvelope(t *testing.T) {
 	validator, m, _, finish := setup(t, false)
 	defer finish()
 
@@ -142,9 +142,9 @@ func TestSignExecutionPayloadEnvelope(t *testing.T) {
 		DomainData(gomock.Any(), gomock.Any()).
 		Return(&silapb.DomainResponse{SignatureDomain: builderDomain}, nil)
 
-	envelope := testExecutionPayloadEnvelope(100, 42)
+	envelope := testSilaPayloadEnvelope(100, 42)
 
-	signed, err := validator.signExecutionPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
+	signed, err := validator.signSilaPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
 	require.NoError(t, err)
 	require.NotNil(t, signed)
 	require.DeepEqual(t, envelope, signed.Message)
@@ -156,7 +156,7 @@ func TestSignExecutionPayloadEnvelope(t *testing.T) {
 	require.NotEqual(t, [32]byte{}, expectedRoot)
 }
 
-func TestSignExecutionPayloadEnvelope_VerifySignature(t *testing.T) {
+func TestSignSilaPayloadEnvelope_VerifySignature(t *testing.T) {
 	validator, m, _, finish := setup(t, false)
 	defer finish()
 
@@ -169,9 +169,9 @@ func TestSignExecutionPayloadEnvelope_VerifySignature(t *testing.T) {
 		DomainData(gomock.Any(), gomock.Any()).
 		Return(&silapb.DomainResponse{SignatureDomain: builderDomain}, nil)
 
-	envelope := testExecutionPayloadEnvelope(100, 42)
+	envelope := testSilaPayloadEnvelope(100, 42)
 
-	signed, err := validator.signExecutionPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
+	signed, err := validator.signSilaPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
 	require.NoError(t, err)
 
 	// Compute the expected signing root and verify the signature.
@@ -183,7 +183,7 @@ func TestSignExecutionPayloadEnvelope_VerifySignature(t *testing.T) {
 	require.Equal(t, true, sig.Verify(kp.pri.PublicKey(), signingRoot[:]))
 }
 
-func TestSignExecutionPayloadEnvelope_DomainDataError(t *testing.T) {
+func TestSignSilaPayloadEnvelope_DomainDataError(t *testing.T) {
 	validator, m, _, finish := setup(t, false)
 	defer finish()
 
@@ -194,13 +194,13 @@ func TestSignExecutionPayloadEnvelope_DomainDataError(t *testing.T) {
 		DomainData(gomock.Any(), gomock.Any()).
 		Return(nil, errors.New("domain data unavailable"))
 
-	envelope := testExecutionPayloadEnvelope(100, 0)
+	envelope := testSilaPayloadEnvelope(100, 0)
 
-	_, err := validator.signExecutionPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
+	_, err := validator.signSilaPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
 	require.ErrorContains(t, "could not get domain data", err)
 }
 
-func TestSignExecutionPayloadEnvelope_NilDomain(t *testing.T) {
+func TestSignSilaPayloadEnvelope_NilDomain(t *testing.T) {
 	validator, m, _, finish := setup(t, false)
 	defer finish()
 
@@ -211,13 +211,13 @@ func TestSignExecutionPayloadEnvelope_NilDomain(t *testing.T) {
 		DomainData(gomock.Any(), gomock.Any()).
 		Return(nil, nil)
 
-	envelope := testExecutionPayloadEnvelope(100, 0)
+	envelope := testSilaPayloadEnvelope(100, 0)
 
-	_, err := validator.signExecutionPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
+	_, err := validator.signSilaPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
 	require.ErrorContains(t, "nil domain data", err)
 }
 
-func TestSignExecutionPayloadEnvelope_UsesDomainBeaconBuilder(t *testing.T) {
+func TestSignSilaPayloadEnvelope_UsesDomainBeaconBuilder(t *testing.T) {
 	validator, m, _, finish := setup(t, false)
 	defer finish()
 
@@ -232,9 +232,9 @@ func TestSignExecutionPayloadEnvelope_UsesDomainBeaconBuilder(t *testing.T) {
 			return &silapb.DomainResponse{SignatureDomain: make([]byte, 32)}, nil
 		})
 
-	envelope := testExecutionPayloadEnvelope(100, 0)
+	envelope := testSilaPayloadEnvelope(100, 0)
 
-	_, err := validator.signExecutionPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
+	_, err := validator.signSilaPayloadEnvelope(t.Context(), kp.pub, 100, envelope)
 	require.NoError(t, err)
 }
 
@@ -255,13 +255,13 @@ func TestProposeBlock_Gloas_EnvelopeAfterBlock(t *testing.T) {
 	if blk.Block.Body == nil {
 		blk.Block.Body = &silapb.BeaconBlockBodyGloas{}
 	}
-	if blk.Block.Body.SignedExecutionPayloadBid == nil {
-		blk.Block.Body.SignedExecutionPayloadBid = &silapb.SignedExecutionPayloadBid{}
+	if blk.Block.Body.SignedSilaPayloadBid == nil {
+		blk.Block.Body.SignedSilaPayloadBid = &silapb.SignedSilaPayloadBid{}
 	}
-	if blk.Block.Body.SignedExecutionPayloadBid.Message == nil {
-		blk.Block.Body.SignedExecutionPayloadBid.Message = &silapb.ExecutionPayloadBid{}
+	if blk.Block.Body.SignedSilaPayloadBid.Message == nil {
+		blk.Block.Body.SignedSilaPayloadBid.Message = &silapb.SilaPayloadBid{}
 	}
-	blk.Block.Body.SignedExecutionPayloadBid.Message.BuilderIndex = builderIndex
+	blk.Block.Body.SignedSilaPayloadBid.Message.BuilderIndex = builderIndex
 
 	gloasBlock := &silapb.GenericBeaconBlock{
 		Block: &silapb.GenericBeaconBlock_Gloas{
@@ -269,7 +269,7 @@ func TestProposeBlock_Gloas_EnvelopeAfterBlock(t *testing.T) {
 		},
 	}
 
-	envelope := testExecutionPayloadEnvelope(1, builderIndex)
+	envelope := testSilaPayloadEnvelope(1, builderIndex)
 
 	// DomainData for randao signing.
 	m.validatorClient.EXPECT().
@@ -286,13 +286,13 @@ func TestProposeBlock_Gloas_EnvelopeAfterBlock(t *testing.T) {
 		DomainData(gomock.Any(), gomock.Any()).
 		Return(&silapb.DomainResponse{SignatureDomain: make([]byte, 32)}, nil)
 
-	// Critical ordering: ProposeBeaconBlock must be called BEFORE ExecutionPayloadEnvelope.
+	// Critical ordering: ProposeBeaconBlock must be called BEFORE SilaPayloadEnvelope.
 	proposeCall := m.validatorClient.EXPECT().
 		ProposeBeaconBlock(gomock.Any(), gomock.AssignableToTypeOf(&silapb.GenericSignedBeaconBlock{})).
 		Return(&silapb.ProposeResponse{BlockRoot: make([]byte, 32)}, nil)
 
 	getEnvelopeCall := m.validatorClient.EXPECT().
-		GetExecutionPayloadEnvelope(gomock.Any(), primitives.Slot(1), gomock.Any()).
+		GetSilaPayloadEnvelope(gomock.Any(), primitives.Slot(1), gomock.Any()).
 		Return(envelope, nil, nil).
 		After(proposeCall)
 
@@ -303,7 +303,7 @@ func TestProposeBlock_Gloas_EnvelopeAfterBlock(t *testing.T) {
 		After(getEnvelopeCall)
 
 	m.validatorClient.EXPECT().
-		PublishExecutionPayloadEnvelope(gomock.Any(), gomock.AssignableToTypeOf(&silapb.SignedExecutionPayloadEnvelope{})).
+		PublishSilaPayloadEnvelope(gomock.Any(), gomock.AssignableToTypeOf(&silapb.SignedSilaPayloadEnvelope{})).
 		Return(&emptypb.Empty{}, nil)
 
 	validator.ProposeBlock(t.Context(), 1, pubKey)

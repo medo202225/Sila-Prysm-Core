@@ -75,7 +75,7 @@ message ExecutionRequests {
 // ExecutionBundleElectra is a container that builds on Payload V4 and includes
 // execution requests sidecar needed post Electra
 message ExecutionBundleElectra {
-  ExecutionPayloadDeneb payload = 1;
+  SilaPayloadDeneb payload = 1;
   bytes value = 2;
   BlobsBundle blobs_bundle = 3;
   bool should_override_builder = 4;

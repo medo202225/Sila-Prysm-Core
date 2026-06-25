@@ -331,7 +331,7 @@ func TestHandshakeHandlers_Roundtrip(t *testing.T) {
 		chainStarted:                    abool.New(),
 		subHandler:                      newSubTopicHandler(),
 		proposerPreferencesCache:        cache.NewProposerPreferencesCache(),
-		highestExecutionPayloadBidCache: cache.NewHighestExecutionPayloadBidCache(),
+		highestSilaPayloadBidCache: cache.NewHighestSilaPayloadBidCache(),
 	}
 	markInitSyncComplete(t, r)
 	clock := startup.NewClockSynchronizer()
@@ -950,7 +950,7 @@ func TestStatusRPCRequest_BadPeerHandshake(t *testing.T) {
 		chainStarted:                    abool.New(),
 		subHandler:                      newSubTopicHandler(),
 		proposerPreferencesCache:        cache.NewProposerPreferencesCache(),
-		highestExecutionPayloadBidCache: cache.NewHighestExecutionPayloadBidCache(),
+		highestSilaPayloadBidCache: cache.NewHighestSilaPayloadBidCache(),
 	}
 	markInitSyncComplete(t, r)
 	clock := startup.NewClockSynchronizer()

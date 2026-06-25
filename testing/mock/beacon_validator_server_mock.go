@@ -177,19 +177,19 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetDutiesV2(arg0, arg1 any)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDutiesV2", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).GetDutiesV2), arg0, arg1)
 }
 
-// GetExecutionPayloadEnvelope mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetExecutionPayloadEnvelope(arg0 context.Context, arg1 *eth.ExecutionPayloadEnvelopeRequest) (*eth.ExecutionPayloadEnvelopeResponse, error) {
+// GetSilaPayloadEnvelope mocks base method.
+func (m *MockBeaconNodeValidatorServer) GetSilaPayloadEnvelope(arg0 context.Context, arg1 *eth.SilaPayloadEnvelopeRequest) (*eth.SilaPayloadEnvelopeResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetExecutionPayloadEnvelope", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ExecutionPayloadEnvelopeResponse)
+	ret := m.ctrl.Call(m, "GetSilaPayloadEnvelope", arg0, arg1)
+	ret0, _ := ret[0].(*eth.SilaPayloadEnvelopeResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetExecutionPayloadEnvelope indicates an expected call of GetExecutionPayloadEnvelope.
-func (mr *MockBeaconNodeValidatorServerMockRecorder) GetExecutionPayloadEnvelope(arg0, arg1 any) *gomock.Call {
+// GetSilaPayloadEnvelope indicates an expected call of GetSilaPayloadEnvelope.
+func (mr *MockBeaconNodeValidatorServerMockRecorder) GetSilaPayloadEnvelope(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetExecutionPayloadEnvelope", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).GetExecutionPayloadEnvelope), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSilaPayloadEnvelope", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).GetSilaPayloadEnvelope), arg0, arg1)
 }
 
 // GetFeeRecipientByPubKey mocks base method.
@@ -402,19 +402,19 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ProposeExit(arg0, arg1 any)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ProposeExit", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).ProposeExit), arg0, arg1)
 }
 
-// PublishExecutionPayloadEnvelope mocks base method.
-func (m *MockBeaconNodeValidatorServer) PublishExecutionPayloadEnvelope(arg0 context.Context, arg1 *eth.SignedExecutionPayloadEnvelope) (*emptypb.Empty, error) {
+// PublishSilaPayloadEnvelope mocks base method.
+func (m *MockBeaconNodeValidatorServer) PublishSilaPayloadEnvelope(arg0 context.Context, arg1 *eth.SignedSilaPayloadEnvelope) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PublishExecutionPayloadEnvelope", arg0, arg1)
+	ret := m.ctrl.Call(m, "PublishSilaPayloadEnvelope", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// PublishExecutionPayloadEnvelope indicates an expected call of PublishExecutionPayloadEnvelope.
-func (mr *MockBeaconNodeValidatorServerMockRecorder) PublishExecutionPayloadEnvelope(arg0, arg1 any) *gomock.Call {
+// PublishSilaPayloadEnvelope indicates an expected call of PublishSilaPayloadEnvelope.
+func (mr *MockBeaconNodeValidatorServerMockRecorder) PublishSilaPayloadEnvelope(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PublishExecutionPayloadEnvelope", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).PublishExecutionPayloadEnvelope), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PublishSilaPayloadEnvelope", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).PublishSilaPayloadEnvelope), arg0, arg1)
 }
 
 // StreamBlocksAltair mocks base method.
@@ -550,19 +550,19 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedProposerPrefere
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitSignedProposerPreferences", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).SubmitSignedProposerPreferences), arg0, arg1)
 }
 
-// SubmitSignedExecutionPayloadBid mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSignedExecutionPayloadBid(arg0 context.Context, arg1 *eth.SignedExecutionPayloadBid) (*emptypb.Empty, error) {
+// SubmitSignedSilaPayloadBid mocks base method.
+func (m *MockBeaconNodeValidatorServer) SubmitSignedSilaPayloadBid(arg0 context.Context, arg1 *eth.SignedSilaPayloadBid) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SubmitSignedExecutionPayloadBid", arg0, arg1)
+	ret := m.ctrl.Call(m, "SubmitSignedSilaPayloadBid", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// SubmitSignedExecutionPayloadBid indicates an expected call of SubmitSignedExecutionPayloadBid.
-func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedExecutionPayloadBid(arg0, arg1 any) *gomock.Call {
+// SubmitSignedSilaPayloadBid indicates an expected call of SubmitSignedSilaPayloadBid.
+func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedSilaPayloadBid(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitSignedExecutionPayloadBid", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).SubmitSignedExecutionPayloadBid), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitSignedSilaPayloadBid", reflect.TypeOf((*MockBeaconNodeValidatorServer)(nil).SubmitSignedSilaPayloadBid), arg0, arg1)
 }
 
 // SubmitSyncMessage mocks base method.

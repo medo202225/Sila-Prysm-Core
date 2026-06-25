@@ -87,7 +87,7 @@ type ForkchoiceUpdatedResponse struct {
 
 type ExecPayloadResponse struct {
 	Version string               `json:"version"`
-	Data    *v1.ExecutionPayload `json:"data"`
+	Data    *v1.SilaPayload `json:"data"`
 }
 type Builder struct {
 	cfg            *config
@@ -348,9 +348,9 @@ func (p *Builder) handleHeaderRequest(w http.ResponseWriter, req *http.Request) 
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	wObj, err := blocks.WrappedExecutionPayload(b)
+	wObj, err := blocks.WrappedSilaPayload(b)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not wrap execution payload")
+		p.cfg.logger.WithError(err).Error("Could not wrap sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -364,7 +364,7 @@ func (p *Builder) handleHeaderRequest(w http.ResponseWriter, req *http.Request) 
 	weiEth := gEth.Mul(gEth, gEth)
 	val := builderAPI.Uint256{Int: weiEth}
 
-	wrappedHdr, err := structs.ExecutionPayloadHeaderFromConsensus(hdr)
+	wrappedHdr, err := structs.SilaPayloadHeaderFromConsensus(hdr)
 	if err != nil {
 		p.cfg.logger.WithError(err).Error("Could not convert wrapped header")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -433,9 +433,9 @@ func (p *Builder) handleHeaderRequestCapella(w http.ResponseWriter) {
 	v := big.NewInt(0).SetBytes(bytesutil.ReverseByteOrder(b.Value))
 	// we set the payload value as twice its actual one so that it always chooses builder payloads vs local payloads
 	v = v.Mul(v, big.NewInt(2))
-	wObj, err := blocks.WrappedExecutionPayloadCapella(b.Payload)
+	wObj, err := blocks.WrappedSilaPayloadCapella(b.Payload)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not wrap execution payload")
+		p.cfg.logger.WithError(err).Error("Could not wrap sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -446,9 +446,9 @@ func (p *Builder) handleHeaderRequestCapella(w http.ResponseWriter) {
 		return
 	}
 	val := builderAPI.Uint256{Int: v}
-	wrappedHdr, err := structs.ExecutionPayloadHeaderCapellaFromConsensus(hdr)
+	wrappedHdr, err := structs.SilaPayloadHeaderCapellaFromConsensus(hdr)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not make execution payload")
+		p.cfg.logger.WithError(err).Error("Could not make sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -515,9 +515,9 @@ func (p *Builder) handleHeaderRequestDeneb(w http.ResponseWriter) {
 	v := big.NewInt(0).SetBytes(bytesutil.ReverseByteOrder(b.Value))
 	// we set the payload value as twice its actual one so that it always chooses builder payloads vs local payloads
 	v = v.Mul(v, big.NewInt(2))
-	wObj, err := blocks.WrappedExecutionPayloadDeneb(b.Payload)
+	wObj, err := blocks.WrappedSilaPayloadDeneb(b.Payload)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not wrap execution payload")
+		p.cfg.logger.WithError(err).Error("Could not wrap sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -534,9 +534,9 @@ func (p *Builder) handleHeaderRequestDeneb(w http.ResponseWriter) {
 		copiedC := c
 		commitments = append(commitments, copiedC)
 	}
-	wrappedHdr, err := structs.ExecutionPayloadHeaderDenebFromConsensus(hdr)
+	wrappedHdr, err := structs.SilaPayloadHeaderDenebFromConsensus(hdr)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not make execution payload")
+		p.cfg.logger.WithError(err).Error("Could not make sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -606,9 +606,9 @@ func (p *Builder) handleHeaderRequestElectra(w http.ResponseWriter) {
 	v := big.NewInt(0).SetBytes(bytesutil.ReverseByteOrder(b.Value))
 	// we set the payload value as twice its actual one so that it always chooses builder payloads vs local payloads
 	v = v.Mul(v, big.NewInt(2))
-	wObj, err := blocks.WrappedExecutionPayloadDeneb(b.Payload)
+	wObj, err := blocks.WrappedSilaPayloadDeneb(b.Payload)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not wrap execution payload")
+		p.cfg.logger.WithError(err).Error("Could not wrap sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -625,9 +625,9 @@ func (p *Builder) handleHeaderRequestElectra(w http.ResponseWriter) {
 		copiedC := c
 		commitments = append(commitments, copiedC)
 	}
-	wrappedHdr, err := structs.ExecutionPayloadHeaderDenebFromConsensus(hdr)
+	wrappedHdr, err := structs.SilaPayloadHeaderDenebFromConsensus(hdr)
 	if err != nil {
-		p.cfg.logger.WithError(err).Error("Could not make execution payload")
+		p.cfg.logger.WithError(err).Error("Could not make sila payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -718,7 +718,7 @@ func (p *Builder) handleBlindedBlock(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp, err := ExecutionPayloadResponseFromData(p.currVersion, p.currPayload, p.blobBundle)
+	resp, err := SilaPayloadResponseFromData(p.currVersion, p.currPayload, p.blobBundle)
 	if err != nil {
 		p.cfg.logger.WithError(err).Error("Could not convert the payload")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -735,47 +735,47 @@ func (p *Builder) handleBlindedBlock(w http.ResponseWriter, req *http.Request) {
 
 var errInvalidTypeConversion = errors.New("unable to translate between api and foreign type")
 
-// ExecutionPayloadResponseFromData converts an ExecutionData interface value to a payload response.
-// This involves serializing the execution payload value so that the abstract payload envelope can be used.
-func ExecutionPayloadResponseFromData(v int, ed interfaces.ExecutionData, bundle *v1.BlobsBundle) (*builderAPI.ExecutionPayloadResponse, error) {
+// SilaPayloadResponseFromData converts an ExecutionData interface value to a payload response.
+// This involves serializing the sila payload value so that the abstract payload envelope can be used.
+func SilaPayloadResponseFromData(v int, ed interfaces.ExecutionData, bundle *v1.BlobsBundle) (*builderAPI.SilaPayloadResponse, error) {
 	pb := ed.Proto()
 	var data any
 	var err error
 	ver := version.String(v)
 	switch pbStruct := pb.(type) {
-	case *v1.ExecutionPayloadDeneb:
-		payloadStruct, err := structs.ExecutionPayloadDenebFromConsensus(pbStruct)
+	case *v1.SilaPayloadDeneb:
+		payloadStruct, err := structs.SilaPayloadDenebFromConsensus(pbStruct)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert a Deneb ExecutionPayload to an API response")
+			return nil, errors.Wrap(err, "failed to convert a Deneb SilaPayload to an API response")
 		}
-		data = &builderAPI.ExecutionPayloadDenebAndBlobsBundle{
-			ExecutionPayload: payloadStruct,
+		data = &builderAPI.SilaPayloadDenebAndBlobsBundle{
+			SilaPayload: payloadStruct,
 			BlobsBundle:      builderAPI.FromBundleProto(bundle),
 		}
-	case *v1.ExecutionPayloadCapella:
-		data, err = structs.ExecutionPayloadCapellaFromConsensus(pbStruct)
+	case *v1.SilaPayloadCapella:
+		data, err = structs.SilaPayloadCapellaFromConsensus(pbStruct)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert a Capella ExecutionPayload to an API response")
+			return nil, errors.Wrap(err, "failed to convert a Capella SilaPayload to an API response")
 		}
-	case *v1.ExecutionPayload:
-		data, err = structs.ExecutionPayloadFromConsensus(pbStruct)
+	case *v1.SilaPayload:
+		data, err = structs.SilaPayloadFromConsensus(pbStruct)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert a Bellatrix ExecutionPayload to an API response")
+			return nil, errors.Wrap(err, "failed to convert a Bellatrix SilaPayload to an API response")
 		}
 	default:
 		return nil, errInvalidTypeConversion
 	}
 	encoded, err := json.Marshal(data)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to marshal execution payload version=%s", ver)
+		return nil, errors.Wrapf(err, "failed to marshal sila payload version=%s", ver)
 	}
-	return &builderAPI.ExecutionPayloadResponse{
+	return &builderAPI.SilaPayloadResponse{
 		Version: ver,
 		Data:    encoded,
 	}, nil
 }
 
-func (p *Builder) retrievePendingBlock() (*v1.ExecutionPayload, error) {
+func (p *Builder) retrievePendingBlock() (*v1.SilaPayload, error) {
 	result := &engine.ExecutableData{}
 	if p.currId == nil {
 		return nil, errors.New("no payload id is cached")
@@ -784,15 +784,15 @@ func (p *Builder) retrievePendingBlock() (*v1.ExecutionPayload, error) {
 	if err != nil {
 		return nil, err
 	}
-	payloadEnv, err := modifyExecutionPayload(*result, big.NewInt(0), nil, nil)
+	payloadEnv, err := modifySilaPayload(*result, big.NewInt(0), nil, nil)
 	if err != nil {
 		return nil, err
 	}
-	marshalledOutput, err := payloadEnv.ExecutionPayload.MarshalJSON()
+	marshalledOutput, err := payloadEnv.SilaPayload.MarshalJSON()
 	if err != nil {
 		return nil, err
 	}
-	bellatrixPayload := &v1.ExecutionPayload{}
+	bellatrixPayload := &v1.SilaPayload{}
 	if err = json.Unmarshal(marshalledOutput, bellatrixPayload); err != nil {
 		return nil, err
 	}
@@ -800,8 +800,8 @@ func (p *Builder) retrievePendingBlock() (*v1.ExecutionPayload, error) {
 	return bellatrixPayload, nil
 }
 
-func (p *Builder) retrievePendingBlockCapella() (*v1.ExecutionPayloadCapellaWithValue, error) {
-	result := &engine.ExecutionPayloadEnvelope{}
+func (p *Builder) retrievePendingBlockCapella() (*v1.SilaPayloadCapellaWithValue, error) {
+	result := &engine.SilaPayloadEnvelope{}
 	if p.currId == nil {
 		return nil, errors.New("no payload id is cached")
 	}
@@ -809,7 +809,7 @@ func (p *Builder) retrievePendingBlockCapella() (*v1.ExecutionPayloadCapellaWith
 	if err != nil {
 		return nil, err
 	}
-	payloadEnv, err := modifyExecutionPayload(*result.ExecutionPayload, result.BlockValue, nil, nil)
+	payloadEnv, err := modifySilaPayload(*result.SilaPayload, result.BlockValue, nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -817,7 +817,7 @@ func (p *Builder) retrievePendingBlockCapella() (*v1.ExecutionPayloadCapellaWith
 	if err != nil {
 		return nil, err
 	}
-	capellaPayload := &v1.ExecutionPayloadCapellaWithValue{}
+	capellaPayload := &v1.SilaPayloadCapellaWithValue{}
 	if err = json.Unmarshal(marshalledOutput, capellaPayload); err != nil {
 		return nil, err
 	}
@@ -825,8 +825,8 @@ func (p *Builder) retrievePendingBlockCapella() (*v1.ExecutionPayloadCapellaWith
 	return capellaPayload, nil
 }
 
-func (p *Builder) retrievePendingBlockDeneb() (*v1.ExecutionPayloadDenebWithValueAndBlobsBundle, error) {
-	result := &engine.ExecutionPayloadEnvelope{}
+func (p *Builder) retrievePendingBlockDeneb() (*v1.SilaPayloadDenebWithValueAndBlobsBundle, error) {
+	result := &engine.SilaPayloadEnvelope{}
 	if p.currId == nil {
 		return nil, errors.New("no payload id is cached")
 	}
@@ -837,7 +837,7 @@ func (p *Builder) retrievePendingBlockDeneb() (*v1.ExecutionPayloadDenebWithValu
 	if p.prevBeaconRoot == nil {
 		p.cfg.logger.Errorf("previous root is nil")
 	}
-	payloadEnv, err := modifyExecutionPayload(*result.ExecutionPayload, result.BlockValue, p.prevBeaconRoot, nil)
+	payloadEnv, err := modifySilaPayload(*result.SilaPayload, result.BlockValue, p.prevBeaconRoot, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -846,7 +846,7 @@ func (p *Builder) retrievePendingBlockDeneb() (*v1.ExecutionPayloadDenebWithValu
 	if err != nil {
 		return nil, err
 	}
-	denebPayload := &v1.ExecutionPayloadDenebWithValueAndBlobsBundle{}
+	denebPayload := &v1.SilaPayloadDenebWithValueAndBlobsBundle{}
 	if err = json.Unmarshal(marshalledOutput, denebPayload); err != nil {
 		return nil, err
 	}
@@ -855,7 +855,7 @@ func (p *Builder) retrievePendingBlockDeneb() (*v1.ExecutionPayloadDenebWithValu
 }
 
 func (p *Builder) retrievePendingBlockElectra() (*v1.ExecutionBundleElectra, error) {
-	result := &engine.ExecutionPayloadEnvelope{}
+	result := &engine.SilaPayloadEnvelope{}
 	if p.currId == nil {
 		return nil, errors.New("no payload id is cached")
 	}
@@ -867,7 +867,7 @@ func (p *Builder) retrievePendingBlockElectra() (*v1.ExecutionBundleElectra, err
 		p.cfg.logger.Errorf("previous root is nil")
 	}
 
-	payloadEnv, err := modifyExecutionPayload(*result.ExecutionPayload, result.BlockValue, p.prevBeaconRoot, result.Requests)
+	payloadEnv, err := modifySilaPayload(*result.SilaPayload, result.BlockValue, p.prevBeaconRoot, result.Requests)
 	if err != nil {
 		return nil, err
 	}
@@ -946,10 +946,10 @@ func unmarshalRPCObject(b []byte) (*jsonRPCObject, error) {
 	return r, nil
 }
 
-func modifyExecutionPayload(execPayload engine.ExecutableData, fees *big.Int, prevBeaconRoot []byte, requests [][]byte) (*engine.ExecutionPayloadEnvelope, error) {
+func modifySilaPayload(execPayload engine.ExecutableData, fees *big.Int, prevBeaconRoot []byte, requests [][]byte) (*engine.SilaPayloadEnvelope, error) {
 	modifiedBlock, err := executableDataToBlock(execPayload, prevBeaconRoot, requests)
 	if err != nil {
-		return &engine.ExecutionPayloadEnvelope{}, err
+		return &engine.SilaPayloadEnvelope{}, err
 	}
 	return engine.BlockToExecutableData(modifiedBlock, fees, nil /*blobs*/, requests /*requests*/), nil
 }

@@ -466,10 +466,10 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 		}, nil
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			var ph *enginev1.ExecutionPayloadHeader
+			var ph *enginev1.SilaPayloadHeader
 			var ok bool
-			if b.executionPayloadHeader != nil {
-				ph, ok = b.executionPayloadHeader.Proto().(*enginev1.ExecutionPayloadHeader)
+			if b.silaPayloadHeader != nil {
+				ph, ok = b.silaPayloadHeader.Proto().(*enginev1.SilaPayloadHeader)
 				if !ok {
 					return nil, errPayloadHeaderWrongType
 				}
@@ -484,13 +484,13 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				Deposits:               b.deposits,
 				VoluntaryExits:         b.voluntaryExits,
 				SyncAggregate:          b.syncAggregate,
-				ExecutionPayloadHeader: ph,
+				SilaPayloadHeader: ph,
 			}, nil
 		}
-		var p *enginev1.ExecutionPayload
+		var p *enginev1.SilaPayload
 		var ok bool
-		if b.executionPayload != nil {
-			p, ok = b.executionPayload.Proto().(*enginev1.ExecutionPayload)
+		if b.silaPayload != nil {
+			p, ok = b.silaPayload.Proto().(*enginev1.SilaPayload)
 			if !ok {
 				return nil, errPayloadWrongType
 			}
@@ -505,14 +505,14 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			Deposits:          b.deposits,
 			VoluntaryExits:    b.voluntaryExits,
 			SyncAggregate:     b.syncAggregate,
-			ExecutionPayload:  p,
+			SilaPayload:  p,
 		}, nil
 	case version.Capella:
 		if b.IsBlinded() {
-			var ph *enginev1.ExecutionPayloadHeaderCapella
+			var ph *enginev1.SilaPayloadHeaderCapella
 			var ok bool
-			if b.executionPayloadHeader != nil {
-				ph, ok = b.executionPayloadHeader.Proto().(*enginev1.ExecutionPayloadHeaderCapella)
+			if b.silaPayloadHeader != nil {
+				ph, ok = b.silaPayloadHeader.Proto().(*enginev1.SilaPayloadHeaderCapella)
 				if !ok {
 					return nil, errPayloadHeaderWrongType
 				}
@@ -527,14 +527,14 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				Deposits:               b.deposits,
 				VoluntaryExits:         b.voluntaryExits,
 				SyncAggregate:          b.syncAggregate,
-				ExecutionPayloadHeader: ph,
+				SilaPayloadHeader: ph,
 				BlsToExecutionChanges:  b.blsToExecutionChanges,
 			}, nil
 		}
-		var p *enginev1.ExecutionPayloadCapella
+		var p *enginev1.SilaPayloadCapella
 		var ok bool
-		if b.executionPayload != nil {
-			p, ok = b.executionPayload.Proto().(*enginev1.ExecutionPayloadCapella)
+		if b.silaPayload != nil {
+			p, ok = b.silaPayload.Proto().(*enginev1.SilaPayloadCapella)
 			if !ok {
 				return nil, errPayloadWrongType
 			}
@@ -549,15 +549,15 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			Deposits:              b.deposits,
 			VoluntaryExits:        b.voluntaryExits,
 			SyncAggregate:         b.syncAggregate,
-			ExecutionPayload:      p,
+			SilaPayload:      p,
 			BlsToExecutionChanges: b.blsToExecutionChanges,
 		}, nil
 	case version.Deneb:
 		if b.IsBlinded() {
-			var ph *enginev1.ExecutionPayloadHeaderDeneb
+			var ph *enginev1.SilaPayloadHeaderDeneb
 			var ok bool
-			if b.executionPayloadHeader != nil {
-				ph, ok = b.executionPayloadHeader.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+			if b.silaPayloadHeader != nil {
+				ph, ok = b.silaPayloadHeader.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 				if !ok {
 					return nil, errPayloadHeaderWrongType
 				}
@@ -572,15 +572,15 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				Deposits:               b.deposits,
 				VoluntaryExits:         b.voluntaryExits,
 				SyncAggregate:          b.syncAggregate,
-				ExecutionPayloadHeader: ph,
+				SilaPayloadHeader: ph,
 				BlsToExecutionChanges:  b.blsToExecutionChanges,
 				BlobKzgCommitments:     b.blobKzgCommitments,
 			}, nil
 		}
-		var p *enginev1.ExecutionPayloadDeneb
+		var p *enginev1.SilaPayloadDeneb
 		var ok bool
-		if b.executionPayload != nil {
-			p, ok = b.executionPayload.Proto().(*enginev1.ExecutionPayloadDeneb)
+		if b.silaPayload != nil {
+			p, ok = b.silaPayload.Proto().(*enginev1.SilaPayloadDeneb)
 			if !ok {
 				return nil, errPayloadWrongType
 			}
@@ -595,16 +595,16 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			Deposits:              b.deposits,
 			VoluntaryExits:        b.voluntaryExits,
 			SyncAggregate:         b.syncAggregate,
-			ExecutionPayload:      p,
+			SilaPayload:      p,
 			BlsToExecutionChanges: b.blsToExecutionChanges,
 			BlobKzgCommitments:    b.blobKzgCommitments,
 		}, nil
 	case version.Electra:
 		if b.IsBlinded() {
-			var ph *enginev1.ExecutionPayloadHeaderDeneb
+			var ph *enginev1.SilaPayloadHeaderDeneb
 			var ok bool
-			if b.executionPayloadHeader != nil {
-				ph, ok = b.executionPayloadHeader.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+			if b.silaPayloadHeader != nil {
+				ph, ok = b.silaPayloadHeader.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 				if !ok {
 					return nil, errPayloadHeaderWrongType
 				}
@@ -619,16 +619,16 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				Deposits:               b.deposits,
 				VoluntaryExits:         b.voluntaryExits,
 				SyncAggregate:          b.syncAggregate,
-				ExecutionPayloadHeader: ph,
+				SilaPayloadHeader: ph,
 				BlsToExecutionChanges:  b.blsToExecutionChanges,
 				BlobKzgCommitments:     b.blobKzgCommitments,
 				ExecutionRequests:      b.executionRequests,
 			}, nil
 		}
-		var p *enginev1.ExecutionPayloadDeneb
+		var p *enginev1.SilaPayloadDeneb
 		var ok bool
-		if b.executionPayload != nil {
-			p, ok = b.executionPayload.Proto().(*enginev1.ExecutionPayloadDeneb)
+		if b.silaPayload != nil {
+			p, ok = b.silaPayload.Proto().(*enginev1.SilaPayloadDeneb)
 			if !ok {
 				return nil, errPayloadWrongType
 			}
@@ -643,17 +643,17 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			Deposits:              b.deposits,
 			VoluntaryExits:        b.voluntaryExits,
 			SyncAggregate:         b.syncAggregate,
-			ExecutionPayload:      p,
+			SilaPayload:      p,
 			BlsToExecutionChanges: b.blsToExecutionChanges,
 			BlobKzgCommitments:    b.blobKzgCommitments,
 			ExecutionRequests:     b.executionRequests,
 		}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
-			var ph *enginev1.ExecutionPayloadHeaderDeneb
+			var ph *enginev1.SilaPayloadHeaderDeneb
 			var ok bool
-			if b.executionPayloadHeader != nil {
-				ph, ok = b.executionPayloadHeader.Proto().(*enginev1.ExecutionPayloadHeaderDeneb)
+			if b.silaPayloadHeader != nil {
+				ph, ok = b.silaPayloadHeader.Proto().(*enginev1.SilaPayloadHeaderDeneb)
 				if !ok {
 					return nil, errPayloadHeaderWrongType
 				}
@@ -668,16 +668,16 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				Deposits:               b.deposits,
 				VoluntaryExits:         b.voluntaryExits,
 				SyncAggregate:          b.syncAggregate,
-				ExecutionPayloadHeader: ph,
+				SilaPayloadHeader: ph,
 				BlsToExecutionChanges:  b.blsToExecutionChanges,
 				BlobKzgCommitments:     b.blobKzgCommitments,
 				ExecutionRequests:      b.executionRequests,
 			}, nil
 		}
-		var p *enginev1.ExecutionPayloadDeneb
+		var p *enginev1.SilaPayloadDeneb
 		var ok bool
-		if b.executionPayload != nil {
-			p, ok = b.executionPayload.Proto().(*enginev1.ExecutionPayloadDeneb)
+		if b.silaPayload != nil {
+			p, ok = b.silaPayload.Proto().(*enginev1.SilaPayloadDeneb)
 			if !ok {
 				return nil, errPayloadWrongType
 			}
@@ -692,7 +692,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			Deposits:              b.deposits,
 			VoluntaryExits:        b.voluntaryExits,
 			SyncAggregate:         b.syncAggregate,
-			ExecutionPayload:      p,
+			SilaPayload:      p,
 			BlsToExecutionChanges: b.blsToExecutionChanges,
 			BlobKzgCommitments:    b.blobKzgCommitments,
 			ExecutionRequests:     b.executionRequests,
@@ -709,7 +709,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			VoluntaryExits:            b.voluntaryExits,
 			SyncAggregate:             b.syncAggregate,
 			BlsToExecutionChanges:     b.blsToExecutionChanges,
-			SignedExecutionPayloadBid: b.signedExecutionPayloadBid,
+			SignedSilaPayloadBid: b.signedSilaPayloadBid,
 			PayloadAttestations:       b.payloadAttestations,
 			ParentExecutionRequests:   b.parentExecutionRequests,
 		}, nil
@@ -922,7 +922,7 @@ func initBlockBodyFromProtoBellatrix(pb *eth.BeaconBlockBodyBellatrix) (*BeaconB
 		return nil, errNilBlockBody
 	}
 
-	p, err := WrappedExecutionPayload(pb.ExecutionPayload)
+	p, err := WrappedSilaPayload(pb.SilaPayload)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -938,7 +938,7 @@ func initBlockBodyFromProtoBellatrix(pb *eth.BeaconBlockBodyBellatrix) (*BeaconB
 		deposits:          pb.Deposits,
 		voluntaryExits:    pb.VoluntaryExits,
 		syncAggregate:     pb.SyncAggregate,
-		executionPayload:  p,
+		silaPayload:  p,
 	}
 	return b, nil
 }
@@ -948,7 +948,7 @@ func initBlindedBlockBodyFromProtoBellatrix(pb *eth.BlindedBeaconBlockBodyBellat
 		return nil, errNilBlockBody
 	}
 
-	ph, err := WrappedExecutionPayloadHeader(pb.ExecutionPayloadHeader)
+	ph, err := WrappedSilaPayloadHeader(pb.SilaPayloadHeader)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -964,7 +964,7 @@ func initBlindedBlockBodyFromProtoBellatrix(pb *eth.BlindedBeaconBlockBodyBellat
 		deposits:               pb.Deposits,
 		voluntaryExits:         pb.VoluntaryExits,
 		syncAggregate:          pb.SyncAggregate,
-		executionPayloadHeader: ph,
+		silaPayloadHeader: ph,
 	}
 	return b, nil
 }
@@ -1052,7 +1052,7 @@ func initBlockBodyFromProtoCapella(pb *eth.BeaconBlockBodyCapella) (*BeaconBlock
 		return nil, errNilBlockBody
 	}
 
-	p, err := WrappedExecutionPayloadCapella(pb.ExecutionPayload)
+	p, err := WrappedSilaPayloadCapella(pb.SilaPayload)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1068,7 +1068,7 @@ func initBlockBodyFromProtoCapella(pb *eth.BeaconBlockBodyCapella) (*BeaconBlock
 		deposits:              pb.Deposits,
 		voluntaryExits:        pb.VoluntaryExits,
 		syncAggregate:         pb.SyncAggregate,
-		executionPayload:      p,
+		silaPayload:      p,
 		blsToExecutionChanges: pb.BlsToExecutionChanges,
 	}
 	return b, nil
@@ -1079,7 +1079,7 @@ func initBlindedBlockBodyFromProtoCapella(pb *eth.BlindedBeaconBlockBodyCapella)
 		return nil, errNilBlockBody
 	}
 
-	ph, err := WrappedExecutionPayloadHeaderCapella(pb.ExecutionPayloadHeader)
+	ph, err := WrappedSilaPayloadHeaderCapella(pb.SilaPayloadHeader)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1095,7 +1095,7 @@ func initBlindedBlockBodyFromProtoCapella(pb *eth.BlindedBeaconBlockBodyCapella)
 		deposits:               pb.Deposits,
 		voluntaryExits:         pb.VoluntaryExits,
 		syncAggregate:          pb.SyncAggregate,
-		executionPayloadHeader: ph,
+		silaPayloadHeader: ph,
 		blsToExecutionChanges:  pb.BlsToExecutionChanges,
 	}
 	return b, nil
@@ -1184,7 +1184,7 @@ func initBlockBodyFromProtoDeneb(pb *eth.BeaconBlockBodyDeneb) (*BeaconBlockBody
 		return nil, errNilBlockBody
 	}
 
-	p, err := WrappedExecutionPayloadDeneb(pb.ExecutionPayload)
+	p, err := WrappedSilaPayloadDeneb(pb.SilaPayload)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1200,7 +1200,7 @@ func initBlockBodyFromProtoDeneb(pb *eth.BeaconBlockBodyDeneb) (*BeaconBlockBody
 		deposits:              pb.Deposits,
 		voluntaryExits:        pb.VoluntaryExits,
 		syncAggregate:         pb.SyncAggregate,
-		executionPayload:      p,
+		silaPayload:      p,
 		blsToExecutionChanges: pb.BlsToExecutionChanges,
 		blobKzgCommitments:    pb.BlobKzgCommitments,
 	}
@@ -1212,7 +1212,7 @@ func initBlindedBlockBodyFromProtoDeneb(pb *eth.BlindedBeaconBlockBodyDeneb) (*B
 		return nil, errNilBlockBody
 	}
 
-	ph, err := WrappedExecutionPayloadHeaderDeneb(pb.ExecutionPayloadHeader)
+	ph, err := WrappedSilaPayloadHeaderDeneb(pb.SilaPayloadHeader)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1228,7 +1228,7 @@ func initBlindedBlockBodyFromProtoDeneb(pb *eth.BlindedBeaconBlockBodyDeneb) (*B
 		deposits:               pb.Deposits,
 		voluntaryExits:         pb.VoluntaryExits,
 		syncAggregate:          pb.SyncAggregate,
-		executionPayloadHeader: ph,
+		silaPayloadHeader: ph,
 		blsToExecutionChanges:  pb.BlsToExecutionChanges,
 		blobKzgCommitments:     pb.BlobKzgCommitments,
 	}
@@ -1318,7 +1318,7 @@ func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlock
 		return nil, errNilBlockBody
 	}
 
-	p, err := WrappedExecutionPayloadDeneb(pb.ExecutionPayload)
+	p, err := WrappedSilaPayloadDeneb(pb.SilaPayload)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1338,7 +1338,7 @@ func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlock
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		executionPayload:         p,
+		silaPayload:         p,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
 		executionRequests:        er,
@@ -1351,7 +1351,7 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 		return nil, errNilBlockBody
 	}
 
-	ph, err := WrappedExecutionPayloadHeaderDeneb(pb.ExecutionPayloadHeader)
+	ph, err := WrappedSilaPayloadHeaderDeneb(pb.SilaPayloadHeader)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1371,7 +1371,7 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		executionPayloadHeader:   ph,
+		silaPayloadHeader:   ph,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
 		executionRequests:        er,
@@ -1462,7 +1462,7 @@ func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBod
 		return nil, errNilBlockBody
 	}
 
-	p, err := WrappedExecutionPayloadDeneb(pb.ExecutionPayload)
+	p, err := WrappedSilaPayloadDeneb(pb.SilaPayload)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1482,7 +1482,7 @@ func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBod
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		executionPayload:         p,
+		silaPayload:         p,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
 		executionRequests:        er,
@@ -1495,7 +1495,7 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 		return nil, errNilBlockBody
 	}
 
-	ph, err := WrappedExecutionPayloadHeaderDeneb(pb.ExecutionPayloadHeader)
+	ph, err := WrappedSilaPayloadHeaderDeneb(pb.SilaPayloadHeader)
 	// We allow the payload to be nil
 	if err != nil && !errors.Is(err, consensus_types.ErrNilObjectWrapped) {
 		return nil, err
@@ -1515,7 +1515,7 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		executionPayloadHeader:   ph,
+		silaPayloadHeader:   ph,
 		blsToExecutionChanges:    pb.BlsToExecutionChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
 		executionRequests:        er,
@@ -1585,7 +1585,7 @@ func initBlockBodyFromProtoGloas(pb *eth.BeaconBlockBodyGloas) (*BeaconBlockBody
 		voluntaryExits:            pb.VoluntaryExits,
 		syncAggregate:             pb.SyncAggregate,
 		blsToExecutionChanges:     pb.BlsToExecutionChanges,
-		signedExecutionPayloadBid: pb.SignedExecutionPayloadBid,
+		signedSilaPayloadBid: pb.SignedSilaPayloadBid,
 		payloadAttestations:       pb.PayloadAttestations,
 		parentExecutionRequests:   per,
 	}

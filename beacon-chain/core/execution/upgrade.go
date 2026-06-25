@@ -10,7 +10,7 @@ import (
 )
 
 // UpgradeToBellatrix updates inputs a generic state to return the version Bellatrix state.
-// It inserts an empty `ExecutionPayloadHeader` into the state.
+// It inserts an empty `SilaPayloadHeader` into the state.
 func UpgradeToBellatrix(state state.BeaconState) (state.BeaconState, error) {
 	epoch := time.CurrentEpoch(state)
 
@@ -64,7 +64,7 @@ func UpgradeToBellatrix(state state.BeaconState) (state.BeaconState, error) {
 		InactivityScores:            inactivityScores,
 		CurrentSyncCommittee:        currentSyncCommittee,
 		NextSyncCommittee:           nextSyncCommittee,
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeader{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeader{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, 32),

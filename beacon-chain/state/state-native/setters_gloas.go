@@ -87,10 +87,10 @@ func (b *BeaconState) AppendBuilderPendingWithdrawals(withdrawals []*silapb.Buil
 	return nil
 }
 
-// SetExecutionPayloadBid sets the latest execution payload bid in the state.
-func (b *BeaconState) SetExecutionPayloadBid(h interfaces.ROExecutionPayloadBid) error {
+// SetSilaPayloadBid sets the latest sila payload bid in the state.
+func (b *BeaconState) SetSilaPayloadBid(h interfaces.ROSilaPayloadBid) error {
 	if b.version < version.Gloas {
-		return errNotSupported("SetExecutionPayloadBid", b.version)
+		return errNotSupported("SetSilaPayloadBid", b.version)
 	}
 
 	b.lock.Lock()
@@ -103,7 +103,7 @@ func (b *BeaconState) SetExecutionPayloadBid(h interfaces.ROExecutionPayloadBid)
 	blobKzgCommitments := h.BlobKzgCommitments()
 	feeRecipient := h.FeeRecipient()
 	executionRequestsRoot := h.ExecutionRequestsRoot()
-	b.latestExecutionPayloadBid = &silapb.ExecutionPayloadBid{
+	b.latestSilaPayloadBid = &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentBlockHash[:],
 		ParentBlockRoot:       parentBlockRoot[:],
 		BlockHash:             blockHash[:],
@@ -117,7 +117,7 @@ func (b *BeaconState) SetExecutionPayloadBid(h interfaces.ROExecutionPayloadBid)
 		FeeRecipient:          feeRecipient[:],
 		ExecutionRequestsRoot: executionRequestsRoot[:],
 	}
-	b.markFieldAsDirty(types.LatestExecutionPayloadBid)
+	b.markFieldAsDirty(types.LatestSilaPayloadBid)
 
 	return nil
 }
@@ -155,7 +155,7 @@ func (b *BeaconState) QueueBuilderPaymentForSlot(parentSlot primitives.Slot) err
 	if parentEpoch+1 == currentEpoch {
 		return b.queueBuilderPaymentAtIndex(parentSlot % slotsPerEpoch)
 	}
-	bid := b.latestExecutionPayloadBid
+	bid := b.latestSilaPayloadBid
 	if bid == nil || bid.Value == 0 {
 		return nil
 	}
@@ -204,25 +204,25 @@ func (b *BeaconState) SetBuilderPendingPayment(index primitives.Slot, payment *s
 	return nil
 }
 
-// UpdateExecutionPayloadAvailabilityAtIndex updates the execution payload availability bit at a specific index.
-func (b *BeaconState) UpdateExecutionPayloadAvailabilityAtIndex(idx uint64, val byte) error {
+// UpdateSilaPayloadAvailabilityAtIndex updates the sila payload availability bit at a specific index.
+func (b *BeaconState) UpdateSilaPayloadAvailabilityAtIndex(idx uint64, val byte) error {
 	b.lock.Lock()
 	defer b.lock.Unlock()
 
 	byteIndex := idx / 8
 	bitIndex := idx % 8
 
-	if byteIndex >= uint64(len(b.executionPayloadAvailability)) {
-		return fmt.Errorf("bit index %d (byte index %d) out of range for execution payload availability length %d", idx, byteIndex, len(b.executionPayloadAvailability))
+	if byteIndex >= uint64(len(b.silaPayloadAvailability)) {
+		return fmt.Errorf("bit index %d (byte index %d) out of range for sila payload availability length %d", idx, byteIndex, len(b.silaPayloadAvailability))
 	}
 
 	if val != 0 {
-		b.executionPayloadAvailability[byteIndex] |= (1 << bitIndex)
+		b.silaPayloadAvailability[byteIndex] |= (1 << bitIndex)
 	} else {
-		b.executionPayloadAvailability[byteIndex] &^= (1 << bitIndex)
+		b.silaPayloadAvailability[byteIndex] &^= (1 << bitIndex)
 	}
 
-	b.markFieldAsDirty(types.ExecutionPayloadAvailability)
+	b.markFieldAsDirty(types.SilaPayloadAvailability)
 	return nil
 }
 
@@ -255,10 +255,10 @@ func (b *BeaconState) SetPayloadExpectedWithdrawals(withdrawals []*enginev1.With
 	return nil
 }
 
-// SetExecutionPayloadAvailability sets the execution payload availability bit for a specific slot.
-func (b *BeaconState) SetExecutionPayloadAvailability(index primitives.Slot, available bool) error {
+// SetSilaPayloadAvailability sets the sila payload availability bit for a specific slot.
+func (b *BeaconState) SetSilaPayloadAvailability(index primitives.Slot, available bool) error {
 	if b.version < version.Gloas {
-		return errNotSupported("SetExecutionPayloadAvailability", b.version)
+		return errNotSupported("SetSilaPayloadAvailability", b.version)
 	}
 
 	b.lock.Lock()
@@ -268,18 +268,18 @@ func (b *BeaconState) SetExecutionPayloadAvailability(index primitives.Slot, ava
 	byteIndex := bitIndex / 8
 	bitPosition := bitIndex % 8
 
-	if uint64(byteIndex) >= uint64(len(b.executionPayloadAvailability)) {
-		return fmt.Errorf("bit index %d (byte index %d) out of range for execution payload availability length %d", bitIndex, byteIndex, len(b.executionPayloadAvailability))
+	if uint64(byteIndex) >= uint64(len(b.silaPayloadAvailability)) {
+		return fmt.Errorf("bit index %d (byte index %d) out of range for sila payload availability length %d", bitIndex, byteIndex, len(b.silaPayloadAvailability))
 	}
 
 	// Set or clear the bit
 	if available {
-		b.executionPayloadAvailability[byteIndex] |= 1 << bitPosition
+		b.silaPayloadAvailability[byteIndex] |= 1 << bitPosition
 	} else {
-		b.executionPayloadAvailability[byteIndex] &^= 1 << bitPosition
+		b.silaPayloadAvailability[byteIndex] &^= 1 << bitPosition
 	}
 
-	b.markFieldAsDirty(types.ExecutionPayloadAvailability)
+	b.markFieldAsDirty(types.SilaPayloadAvailability)
 	return nil
 }
 
@@ -862,17 +862,17 @@ func (b *BeaconState) SetBuilderPendingWithdrawals(val []*silapb.BuilderPendingW
 	return nil
 }
 
-// SetExecutionPayloadAvailabilityVector replaces the entire execution payload availability bitvector.
-func (b *BeaconState) SetExecutionPayloadAvailabilityVector(val []byte) error {
+// SetSilaPayloadAvailabilityVector replaces the entire sila payload availability bitvector.
+func (b *BeaconState) SetSilaPayloadAvailabilityVector(val []byte) error {
 	if b.version < version.Gloas {
-		return errNotSupported("SetExecutionPayloadAvailabilityVector", b.version)
+		return errNotSupported("SetSilaPayloadAvailabilityVector", b.version)
 	}
 
 	b.lock.Lock()
 	defer b.lock.Unlock()
 
-	b.executionPayloadAvailability = val
-	b.markFieldAsDirty(types.ExecutionPayloadAvailability)
+	b.silaPayloadAvailability = val
+	b.markFieldAsDirty(types.SilaPayloadAvailability)
 	return nil
 }
 

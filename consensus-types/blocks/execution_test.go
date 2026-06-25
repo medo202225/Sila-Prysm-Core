@@ -12,45 +12,45 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
-func TestWrapExecutionPayload(t *testing.T) {
-	data := &enginev1.ExecutionPayload{GasUsed: 54}
-	wsb, err := blocks.WrappedExecutionPayload(data)
+func TestWrapSilaPayload(t *testing.T) {
+	data := &enginev1.SilaPayload{GasUsed: 54}
+	wsb, err := blocks.WrappedSilaPayload(data)
 	require.NoError(t, err)
 
 	assert.DeepEqual(t, data, wsb.Proto())
 }
 
-func TestWrapExecutionPayloadHeader(t *testing.T) {
-	data := &enginev1.ExecutionPayloadHeader{GasUsed: 54}
-	wsb, err := blocks.WrappedExecutionPayloadHeader(data)
+func TestWrapSilaPayloadHeader(t *testing.T) {
+	data := &enginev1.SilaPayloadHeader{GasUsed: 54}
+	wsb, err := blocks.WrappedSilaPayloadHeader(data)
 	require.NoError(t, err)
 
 	assert.DeepEqual(t, data, wsb.Proto())
 }
 
-func TestWrapExecutionPayload_IsNil(t *testing.T) {
-	_, err := blocks.WrappedExecutionPayload(nil)
+func TestWrapSilaPayload_IsNil(t *testing.T) {
+	_, err := blocks.WrappedSilaPayload(nil)
 	require.Equal(t, consensus_types.ErrNilObjectWrapped, err)
 
-	data := &enginev1.ExecutionPayload{GasUsed: 54}
-	wsb, err := blocks.WrappedExecutionPayload(data)
+	data := &enginev1.SilaPayload{GasUsed: 54}
+	wsb, err := blocks.WrappedSilaPayload(data)
 	require.NoError(t, err)
 
 	assert.Equal(t, false, wsb.IsNil())
 }
 
-func TestWrapExecutionPayloadHeader_IsNil(t *testing.T) {
-	_, err := blocks.WrappedExecutionPayloadHeader(nil)
+func TestWrapSilaPayloadHeader_IsNil(t *testing.T) {
+	_, err := blocks.WrappedSilaPayloadHeader(nil)
 	require.Equal(t, consensus_types.ErrNilObjectWrapped, err)
 
-	data := &enginev1.ExecutionPayloadHeader{GasUsed: 54}
-	wsb, err := blocks.WrappedExecutionPayloadHeader(data)
+	data := &enginev1.SilaPayloadHeader{GasUsed: 54}
+	wsb, err := blocks.WrappedSilaPayloadHeader(data)
 	require.NoError(t, err)
 
 	assert.Equal(t, false, wsb.IsNil())
 }
 
-func TestWrapExecutionPayload_SSZ(t *testing.T) {
+func TestWrapSilaPayload_SSZ(t *testing.T) {
 	wsb := createWrappedPayload(t)
 	rt, err := wsb.HashTreeRoot()
 	assert.NoError(t, err)
@@ -66,7 +66,7 @@ func TestWrapExecutionPayload_SSZ(t *testing.T) {
 	assert.NoError(t, wsb.UnmarshalSSZ(encoded))
 }
 
-func TestWrapExecutionPayloadHeader_SSZ(t *testing.T) {
+func TestWrapSilaPayloadHeader_SSZ(t *testing.T) {
 	wsb := createWrappedPayloadHeader(t)
 	rt, err := wsb.HashTreeRoot()
 	assert.NoError(t, err)
@@ -82,8 +82,8 @@ func TestWrapExecutionPayloadHeader_SSZ(t *testing.T) {
 	assert.NoError(t, wsb.UnmarshalSSZ(encoded))
 }
 
-func TestWrapExecutionPayloadCapella(t *testing.T) {
-	data := &enginev1.ExecutionPayloadCapella{
+func TestWrapSilaPayloadCapella(t *testing.T) {
+	data := &enginev1.SilaPayloadCapella{
 		ParentHash:    []byte("parenthash"),
 		FeeRecipient:  []byte("feerecipient"),
 		StateRoot:     []byte("stateroot"),
@@ -105,14 +105,14 @@ func TestWrapExecutionPayloadCapella(t *testing.T) {
 			Amount:         77,
 		}},
 	}
-	payload, err := blocks.WrappedExecutionPayloadCapella(data)
+	payload, err := blocks.WrappedSilaPayloadCapella(data)
 	require.NoError(t, err)
 
 	assert.DeepEqual(t, data, payload.Proto())
 }
 
-func TestWrapExecutionPayloadHeaderCapella(t *testing.T) {
-	data := &enginev1.ExecutionPayloadHeaderCapella{
+func TestWrapSilaPayloadHeaderCapella(t *testing.T) {
+	data := &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       []byte("parenthash"),
 		FeeRecipient:     []byte("feerecipient"),
 		StateRoot:        []byte("stateroot"),
@@ -129,7 +129,7 @@ func TestWrapExecutionPayloadHeaderCapella(t *testing.T) {
 		TransactionsRoot: []byte("transactionsroot"),
 		WithdrawalsRoot:  []byte("withdrawalsroot"),
 	}
-	payload, err := blocks.WrappedExecutionPayloadHeaderCapella(data)
+	payload, err := blocks.WrappedSilaPayloadHeaderCapella(data)
 	require.NoError(t, err)
 
 	assert.DeepEqual(t, data, payload.Proto())
@@ -143,29 +143,29 @@ func TestWrapExecutionPayloadHeaderCapella(t *testing.T) {
 	require.DeepEqual(t, wrRoot, data.WithdrawalsRoot)
 }
 
-func TestWrapExecutionPayloadCapella_IsNil(t *testing.T) {
-	_, err := blocks.WrappedExecutionPayloadCapella(nil)
+func TestWrapSilaPayloadCapella_IsNil(t *testing.T) {
+	_, err := blocks.WrappedSilaPayloadCapella(nil)
 	require.Equal(t, consensus_types.ErrNilObjectWrapped, err)
 
-	data := &enginev1.ExecutionPayloadCapella{GasUsed: 54}
-	payload, err := blocks.WrappedExecutionPayloadCapella(data)
+	data := &enginev1.SilaPayloadCapella{GasUsed: 54}
+	payload, err := blocks.WrappedSilaPayloadCapella(data)
 	require.NoError(t, err)
 
 	assert.Equal(t, false, payload.IsNil())
 }
 
-func TestWrapExecutionPayloadHeaderCapella_IsNil(t *testing.T) {
-	_, err := blocks.WrappedExecutionPayloadHeaderCapella(nil)
+func TestWrapSilaPayloadHeaderCapella_IsNil(t *testing.T) {
+	_, err := blocks.WrappedSilaPayloadHeaderCapella(nil)
 	require.Equal(t, consensus_types.ErrNilObjectWrapped, err)
 
-	data := &enginev1.ExecutionPayloadHeaderCapella{GasUsed: 54}
-	payload, err := blocks.WrappedExecutionPayloadHeaderCapella(data)
+	data := &enginev1.SilaPayloadHeaderCapella{GasUsed: 54}
+	payload, err := blocks.WrappedSilaPayloadHeaderCapella(data)
 	require.NoError(t, err)
 
 	assert.Equal(t, false, payload.IsNil())
 }
 
-func TestWrapExecutionPayloadCapella_SSZ(t *testing.T) {
+func TestWrapSilaPayloadCapella_SSZ(t *testing.T) {
 	payload := createWrappedPayloadCapella(t)
 	rt, err := payload.HashTreeRoot()
 	assert.NoError(t, err)
@@ -181,7 +181,7 @@ func TestWrapExecutionPayloadCapella_SSZ(t *testing.T) {
 	assert.NoError(t, payload.UnmarshalSSZ(encoded))
 }
 
-func TestWrapExecutionPayloadHeaderCapella_SSZ(t *testing.T) {
+func TestWrapSilaPayloadHeaderCapella_SSZ(t *testing.T) {
 	payload := createWrappedPayloadHeaderCapella(t)
 	rt, err := payload.HashTreeRoot()
 	assert.NoError(t, err)
@@ -197,8 +197,8 @@ func TestWrapExecutionPayloadHeaderCapella_SSZ(t *testing.T) {
 	assert.NoError(t, payload.UnmarshalSSZ(encoded))
 }
 
-func TestWrapExecutionPayloadDeneb(t *testing.T) {
-	data := &enginev1.ExecutionPayloadDeneb{
+func TestWrapSilaPayloadDeneb(t *testing.T) {
+	data := &enginev1.SilaPayloadDeneb{
 		ParentHash:    []byte("parenthash"),
 		FeeRecipient:  []byte("feerecipient"),
 		StateRoot:     []byte("stateroot"),
@@ -222,7 +222,7 @@ func TestWrapExecutionPayloadDeneb(t *testing.T) {
 		BlobGasUsed:   88,
 		ExcessBlobGas: 99,
 	}
-	payload, err := blocks.WrappedExecutionPayloadDeneb(data)
+	payload, err := blocks.WrappedSilaPayloadDeneb(data)
 	require.NoError(t, err)
 
 	g, err := payload.BlobGasUsed()
@@ -234,8 +234,8 @@ func TestWrapExecutionPayloadDeneb(t *testing.T) {
 	require.DeepEqual(t, uint64(99), g)
 }
 
-func TestWrapExecutionPayloadHeaderDeneb(t *testing.T) {
-	data := &enginev1.ExecutionPayloadHeaderDeneb{
+func TestWrapSilaPayloadHeaderDeneb(t *testing.T) {
+	data := &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       []byte("parenthash"),
 		FeeRecipient:     []byte("feerecipient"),
 		StateRoot:        []byte("stateroot"),
@@ -254,7 +254,7 @@ func TestWrapExecutionPayloadHeaderDeneb(t *testing.T) {
 		BlobGasUsed:      88,
 		ExcessBlobGas:    99,
 	}
-	payload, err := blocks.WrappedExecutionPayloadHeaderDeneb(data)
+	payload, err := blocks.WrappedSilaPayloadHeaderDeneb(data)
 	require.NoError(t, err)
 
 	g, err := payload.BlobGasUsed()
@@ -266,7 +266,7 @@ func TestWrapExecutionPayloadHeaderDeneb(t *testing.T) {
 	require.DeepEqual(t, uint64(99), g)
 }
 
-func TestWrapExecutionPayloadDeneb_SSZ(t *testing.T) {
+func TestWrapSilaPayloadDeneb_SSZ(t *testing.T) {
 	payload := createWrappedPayloadDeneb(t)
 	rt, err := payload.HashTreeRoot()
 	assert.NoError(t, err)
@@ -282,7 +282,7 @@ func TestWrapExecutionPayloadDeneb_SSZ(t *testing.T) {
 	assert.NoError(t, payload.UnmarshalSSZ(encoded))
 }
 
-func TestWrapExecutionPayloadHeaderDeneb_SSZ(t *testing.T) {
+func TestWrapSilaPayloadHeaderDeneb_SSZ(t *testing.T) {
 	payload := createWrappedPayloadHeaderDeneb(t)
 	rt, err := payload.HashTreeRoot()
 	assert.NoError(t, err)
@@ -299,7 +299,7 @@ func TestWrapExecutionPayloadHeaderDeneb_SSZ(t *testing.T) {
 }
 
 func createWrappedPayload(t testing.TB) interfaces.ExecutionData {
-	wsb, err := blocks.WrappedExecutionPayload(&enginev1.ExecutionPayload{
+	wsb, err := blocks.WrappedSilaPayload(&enginev1.SilaPayload{
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     make([]byte, fieldparams.RootLength),
@@ -320,7 +320,7 @@ func createWrappedPayload(t testing.TB) interfaces.ExecutionData {
 }
 
 func createWrappedPayloadHeader(t testing.TB) interfaces.ExecutionData {
-	wsb, err := blocks.WrappedExecutionPayloadHeader(&enginev1.ExecutionPayloadHeader{
+	wsb, err := blocks.WrappedSilaPayloadHeader(&enginev1.SilaPayloadHeader{
 		ParentHash:       make([]byte, fieldparams.RootLength),
 		FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:        make([]byte, fieldparams.RootLength),
@@ -341,7 +341,7 @@ func createWrappedPayloadHeader(t testing.TB) interfaces.ExecutionData {
 }
 
 func createWrappedPayloadCapella(t testing.TB) interfaces.ExecutionData {
-	payload, err := blocks.WrappedExecutionPayloadCapella(&enginev1.ExecutionPayloadCapella{
+	payload, err := blocks.WrappedSilaPayloadCapella(&enginev1.SilaPayloadCapella{
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     make([]byte, fieldparams.RootLength),
@@ -363,7 +363,7 @@ func createWrappedPayloadCapella(t testing.TB) interfaces.ExecutionData {
 }
 
 func createWrappedPayloadHeaderCapella(t testing.TB) interfaces.ExecutionData {
-	payload, err := blocks.WrappedExecutionPayloadHeaderCapella(&enginev1.ExecutionPayloadHeaderCapella{
+	payload, err := blocks.WrappedSilaPayloadHeaderCapella(&enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       make([]byte, fieldparams.RootLength),
 		FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:        make([]byte, fieldparams.RootLength),
@@ -385,7 +385,7 @@ func createWrappedPayloadHeaderCapella(t testing.TB) interfaces.ExecutionData {
 }
 
 func createWrappedPayloadDeneb(t testing.TB) interfaces.ExecutionData {
-	payload, err := blocks.WrappedExecutionPayloadDeneb(&enginev1.ExecutionPayloadDeneb{
+	payload, err := blocks.WrappedSilaPayloadDeneb(&enginev1.SilaPayloadDeneb{
 		ParentHash:    make([]byte, fieldparams.RootLength),
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     make([]byte, fieldparams.RootLength),
@@ -409,7 +409,7 @@ func createWrappedPayloadDeneb(t testing.TB) interfaces.ExecutionData {
 }
 
 func createWrappedPayloadHeaderDeneb(t testing.TB) interfaces.ExecutionData {
-	payload, err := blocks.WrappedExecutionPayloadHeaderDeneb(&enginev1.ExecutionPayloadHeaderDeneb{
+	payload, err := blocks.WrappedSilaPayloadHeaderDeneb(&enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       make([]byte, fieldparams.RootLength),
 		FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:        make([]byte, fieldparams.RootLength),

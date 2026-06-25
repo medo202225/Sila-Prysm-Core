@@ -80,7 +80,7 @@ func emptyGenesisStateCapella() (state.BeaconState, error) {
 		SilaExecutionDataVotes:    []*silapb.SilaExecutionData{},
 		SilaExecutionDepositIndex: 0,
 
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderCapella{},
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderCapella{},
 	}
 	return state_native.InitializeFromProtoUnsafeCapella(st)
 }
@@ -194,7 +194,7 @@ func buildGenesisBeaconStateCapella(genesisTime uint64, preState state.BeaconSta
 			SyncCommitteeBits:      scBits[:],
 			SyncCommitteeSignature: make([]byte, 96),
 		},
-		ExecutionPayload: &enginev1.ExecutionPayloadCapella{
+		SilaPayload: &enginev1.SilaPayloadCapella{
 			ParentHash:    make([]byte, 32),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, 32),
@@ -237,7 +237,7 @@ func buildGenesisBeaconStateCapella(genesisTime uint64, preState state.BeaconSta
 		AggregatePubkey: aggregated.Marshal(),
 	}
 
-	st.LatestExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderCapella{
+	st.LatestSilaPayloadHeader = &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       make([]byte, 32),
 		FeeRecipient:     make([]byte, 20),
 		StateRoot:        make([]byte, 32),

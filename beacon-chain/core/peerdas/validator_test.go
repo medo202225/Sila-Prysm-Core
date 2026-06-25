@@ -284,7 +284,7 @@ func TestReconstructionSource(t *testing.T) {
 		bidCommitment2[0] = 0xBB
 
 		gloasBlockPb := util.NewBeaconBlockGloas()
-		gloasBlockPb.Block.Body.SignedExecutionPayloadBid.Message.BlobKzgCommitments = [][]byte{bidCommitment1, bidCommitment2}
+		gloasBlockPb.Block.Body.SignedSilaPayloadBid.Message.BlobKzgCommitments = [][]byte{bidCommitment1, bidCommitment2}
 		gloasBlockPb.Block.Slot = 42
 		gloasBlockPb.Block.ProposerIndex = 7
 
@@ -325,7 +325,7 @@ func TestPopulateFromBid_DataColumnSidecars(t *testing.T) {
 	bidCommitment2[0] = 0xBB
 
 	gloasBlockPb := util.NewBeaconBlockGloas()
-	gloasBlockPb.Block.Body.SignedExecutionPayloadBid.Message.BlobKzgCommitments = [][]byte{bidCommitment1, bidCommitment2}
+	gloasBlockPb.Block.Body.SignedSilaPayloadBid.Message.BlobKzgCommitments = [][]byte{bidCommitment1, bidCommitment2}
 
 	signedGloasBlock, err := blocks.NewSignedBeaconBlock(gloasBlockPb)
 	require.NoError(t, err)

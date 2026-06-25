@@ -35,10 +35,10 @@ func TestUpgradeToGloas_Basic(t *testing.T) {
 	require.NoError(t, st.SetPendingConsolidations([]*silapb.PendingConsolidation{{SourceIndex: 3, TargetIndex: 4}}))
 
 	blockHash := bytes.Repeat([]byte{0xAB}, 32)
-	header := &enginev1.ExecutionPayloadHeaderDeneb{BlockHash: blockHash}
-	wrappedHeader, err := consensusblocks.WrappedExecutionPayloadHeaderDeneb(header)
+	header := &enginev1.SilaPayloadHeaderDeneb{BlockHash: blockHash}
+	wrappedHeader, err := consensusblocks.WrappedSilaPayloadHeaderDeneb(header)
 	require.NoError(t, err)
-	require.NoError(t, st.SetLatestExecutionPayloadHeader(wrappedHeader))
+	require.NoError(t, st.SetLatestSilaPayloadHeader(wrappedHeader))
 
 	preForkState := st.Copy()
 	mSt, err := gloas.UpgradeToGloas(st)
@@ -54,7 +54,7 @@ func TestUpgradeToGloas_Basic(t *testing.T) {
 		Epoch:           time.CurrentEpoch(st),
 	}, mSt.Fork())
 
-	bid, err := mSt.LatestExecutionPayloadBid()
+	bid, err := mSt.LatestSilaPayloadBid()
 	require.NoError(t, err)
 	wantBlockHash := [32]byte{}
 	copy(wantBlockHash[:], blockHash)
@@ -72,8 +72,8 @@ func TestUpgradeToGloas_Basic(t *testing.T) {
 	require.Equal(t, true, ok)
 
 	expectedAvailLen := int((params.BeaconConfig().SlotsPerHistoricalRoot + 7) / 8)
-	require.Equal(t, expectedAvailLen, len(pbState.ExecutionPayloadAvailability))
-	for _, b := range pbState.ExecutionPayloadAvailability {
+	require.Equal(t, expectedAvailLen, len(pbState.SilaPayloadAvailability))
+	for _, b := range pbState.SilaPayloadAvailability {
 		require.Equal(t, byte(0xff), b)
 	}
 

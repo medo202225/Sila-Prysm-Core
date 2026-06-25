@@ -963,12 +963,12 @@ func (b *BeaconStateFulu) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		return
 	}
 
-	// Offset (24) 'LatestExecutionPayloadHeader'
+	// Offset (24) 'LatestSilaPayloadHeader'
 	dst = ssz.WriteOffset(dst, offset)
-	if b.LatestExecutionPayloadHeader == nil {
-		b.LatestExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderDeneb)
+	if b.LatestSilaPayloadHeader == nil {
+		b.LatestSilaPayloadHeader = new(v1.SilaPayloadHeaderDeneb)
 	}
-	offset += b.LatestExecutionPayloadHeader.SizeSSZ()
+	offset += b.LatestSilaPayloadHeader.SizeSSZ()
 
 	// Field (25) 'NextWithdrawalIndex'
 	dst = ssz.MarshalUint(dst, b.NextWithdrawalIndex)
@@ -1086,8 +1086,8 @@ func (b *BeaconStateFulu) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		dst = ssz.MarshalUint(dst, b.InactivityScores[ii])
 	}
 
-	// Field (24) 'LatestExecutionPayloadHeader'
-	if dst, err = b.LatestExecutionPayloadHeader.MarshalSSZTo(dst); err != nil {
+	// Field (24) 'LatestSilaPayloadHeader'
+	if dst, err = b.LatestSilaPayloadHeader.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -1306,7 +1306,7 @@ func (b *BeaconStateFulu) UnmarshalSSZ(buf []byte) error {
 		return err
 	}
 
-	// Offset (24) 'LatestExecutionPayloadHeader'
+	// Offset (24) 'LatestSilaPayloadHeader'
 	if o24 = ssz.ReadOffset(buf[2736629:2736633]); o24 > size || o21 > o24 {
 		return ssz.ErrOffset
 	}
@@ -1463,13 +1463,13 @@ func (b *BeaconStateFulu) UnmarshalSSZ(buf []byte) error {
 		}
 	}
 
-	// Field (24) 'LatestExecutionPayloadHeader'
+	// Field (24) 'LatestSilaPayloadHeader'
 	{
 		buf = tail[o24:o27]
-		if b.LatestExecutionPayloadHeader == nil {
-			b.LatestExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderDeneb)
+		if b.LatestSilaPayloadHeader == nil {
+			b.LatestSilaPayloadHeader = new(v1.SilaPayloadHeaderDeneb)
 		}
-		if err = b.LatestExecutionPayloadHeader.UnmarshalSSZ(buf); err != nil {
+		if err = b.LatestSilaPayloadHeader.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -1573,11 +1573,11 @@ func (b *BeaconStateFulu) SizeSSZ() (size int) {
 	// Field (21) 'InactivityScores'
 	size += len(b.InactivityScores) * 8
 
-	// Field (24) 'LatestExecutionPayloadHeader'
-	if b.LatestExecutionPayloadHeader == nil {
-		b.LatestExecutionPayloadHeader = new(v1.ExecutionPayloadHeaderDeneb)
+	// Field (24) 'LatestSilaPayloadHeader'
+	if b.LatestSilaPayloadHeader == nil {
+		b.LatestSilaPayloadHeader = new(v1.SilaPayloadHeaderDeneb)
 	}
-	size += b.LatestExecutionPayloadHeader.SizeSSZ()
+	size += b.LatestSilaPayloadHeader.SizeSSZ()
 
 	// Field (27) 'HistoricalSummaries'
 	size += len(b.HistoricalSummaries) * 64
@@ -1837,8 +1837,8 @@ func (b *BeaconStateFulu) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 
-	// Field (24) 'LatestExecutionPayloadHeader'
-	if err = b.LatestExecutionPayloadHeader.HashTreeRootWith(hh); err != nil {
+	// Field (24) 'LatestSilaPayloadHeader'
+	if err = b.LatestSilaPayloadHeader.HashTreeRootWith(hh); err != nil {
 		return
 	}
 

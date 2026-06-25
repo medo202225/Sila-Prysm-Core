@@ -540,13 +540,13 @@ func (e *ExecutionRequests) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayload object
-func (e *ExecutionPayload) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayload object
+func (e *SilaPayload) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayload object to a target array
-func (e *ExecutionPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayload object to a target array
+func (e *SilaPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(508)
 
@@ -659,8 +659,8 @@ func (e *ExecutionPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayload object
-func (e *ExecutionPayload) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayload object
+func (e *SilaPayload) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 508 {
@@ -781,8 +781,8 @@ func (e *ExecutionPayload) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayload object
-func (e *ExecutionPayload) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayload object
+func (e *SilaPayload) SizeSSZ() (size int) {
 	size = 508
 
 	// Field (10) 'ExtraData'
@@ -797,13 +797,13 @@ func (e *ExecutionPayload) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayload object
-func (e *ExecutionPayload) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayload object
+func (e *SilaPayload) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayload object with a hasher
-func (e *ExecutionPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayload object with a hasher
+func (e *SilaPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'
@@ -913,13 +913,13 @@ func (e *ExecutionPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadCapella object
-func (e *ExecutionPayloadCapella) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadCapella object
+func (e *SilaPayloadCapella) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadCapella object to a target array
-func (e *ExecutionPayloadCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadCapella object to a target array
+func (e *SilaPayloadCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(512)
 
@@ -1047,8 +1047,8 @@ func (e *ExecutionPayloadCapella) MarshalSSZTo(buf []byte) (dst []byte, err erro
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadCapella object
-func (e *ExecutionPayloadCapella) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadCapella object
+func (e *SilaPayloadCapella) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 512 {
@@ -1192,8 +1192,8 @@ func (e *ExecutionPayloadCapella) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadCapella object
-func (e *ExecutionPayloadCapella) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadCapella object
+func (e *SilaPayloadCapella) SizeSSZ() (size int) {
 	size = 512
 
 	// Field (10) 'ExtraData'
@@ -1211,13 +1211,13 @@ func (e *ExecutionPayloadCapella) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadCapella object
-func (e *ExecutionPayloadCapella) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadCapella object
+func (e *SilaPayloadCapella) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadCapella object with a hasher
-func (e *ExecutionPayloadCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadCapella object with a hasher
+func (e *SilaPayloadCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'
@@ -1343,13 +1343,13 @@ func (e *ExecutionPayloadCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadDeneb object
-func (e *ExecutionPayloadDeneb) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadDeneb object
+func (e *SilaPayloadDeneb) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadDeneb object to a target array
-func (e *ExecutionPayloadDeneb) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadDeneb object to a target array
+func (e *SilaPayloadDeneb) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(528)
 
@@ -1483,8 +1483,8 @@ func (e *ExecutionPayloadDeneb) MarshalSSZTo(buf []byte) (dst []byte, err error)
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadDeneb object
-func (e *ExecutionPayloadDeneb) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadDeneb object
+func (e *SilaPayloadDeneb) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 528 {
@@ -1634,8 +1634,8 @@ func (e *ExecutionPayloadDeneb) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadDeneb object
-func (e *ExecutionPayloadDeneb) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadDeneb object
+func (e *SilaPayloadDeneb) SizeSSZ() (size int) {
 	size = 528
 
 	// Field (10) 'ExtraData'
@@ -1653,13 +1653,13 @@ func (e *ExecutionPayloadDeneb) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadDeneb object
-func (e *ExecutionPayloadDeneb) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadDeneb object
+func (e *SilaPayloadDeneb) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadDeneb object with a hasher
-func (e *ExecutionPayloadDeneb) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadDeneb object with a hasher
+func (e *SilaPayloadDeneb) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'
@@ -1791,13 +1791,13 @@ func (e *ExecutionPayloadDeneb) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadGloas object
-func (e *ExecutionPayloadGloas) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadGloas object
+func (e *SilaPayloadGloas) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadGloas object to a target array
-func (e *ExecutionPayloadGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadGloas object to a target array
+func (e *SilaPayloadGloas) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(540)
 
@@ -1945,8 +1945,8 @@ func (e *ExecutionPayloadGloas) MarshalSSZTo(buf []byte) (dst []byte, err error)
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadGloas object
-func (e *ExecutionPayloadGloas) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadGloas object
+func (e *SilaPayloadGloas) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 540 {
@@ -2116,8 +2116,8 @@ func (e *ExecutionPayloadGloas) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadGloas object
-func (e *ExecutionPayloadGloas) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadGloas object
+func (e *SilaPayloadGloas) SizeSSZ() (size int) {
 	size = 540
 
 	// Field (10) 'ExtraData'
@@ -2138,13 +2138,13 @@ func (e *ExecutionPayloadGloas) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadGloas object
-func (e *ExecutionPayloadGloas) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadGloas object
+func (e *SilaPayloadGloas) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadGloas object with a hasher
-func (e *ExecutionPayloadGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadGloas object with a hasher
+func (e *SilaPayloadGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'
@@ -2291,20 +2291,20 @@ func (e *ExecutionPayloadGloas) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadDenebAndBlobsBundle object
-func (e *ExecutionPayloadDenebAndBlobsBundle) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadDenebAndBlobsBundle object
+func (e *SilaPayloadDenebAndBlobsBundle) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadDenebAndBlobsBundle object to a target array
-func (e *ExecutionPayloadDenebAndBlobsBundle) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadDenebAndBlobsBundle object to a target array
+func (e *SilaPayloadDenebAndBlobsBundle) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(8)
 
 	// Offset (0) 'Payload'
 	dst = ssz.WriteOffset(dst, offset)
 	if e.Payload == nil {
-		e.Payload = new(ExecutionPayloadDeneb)
+		e.Payload = new(SilaPayloadDeneb)
 	}
 	offset += e.Payload.SizeSSZ()
 
@@ -2328,8 +2328,8 @@ func (e *ExecutionPayloadDenebAndBlobsBundle) MarshalSSZTo(buf []byte) (dst []by
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadDenebAndBlobsBundle object
-func (e *ExecutionPayloadDenebAndBlobsBundle) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadDenebAndBlobsBundle object
+func (e *SilaPayloadDenebAndBlobsBundle) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 8 {
@@ -2357,7 +2357,7 @@ func (e *ExecutionPayloadDenebAndBlobsBundle) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:o1]
 		if e.Payload == nil {
-			e.Payload = new(ExecutionPayloadDeneb)
+			e.Payload = new(SilaPayloadDeneb)
 		}
 		if err = e.Payload.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -2377,13 +2377,13 @@ func (e *ExecutionPayloadDenebAndBlobsBundle) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadDenebAndBlobsBundle object
-func (e *ExecutionPayloadDenebAndBlobsBundle) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadDenebAndBlobsBundle object
+func (e *SilaPayloadDenebAndBlobsBundle) SizeSSZ() (size int) {
 	size = 8
 
 	// Field (0) 'Payload'
 	if e.Payload == nil {
-		e.Payload = new(ExecutionPayloadDeneb)
+		e.Payload = new(SilaPayloadDeneb)
 	}
 	size += e.Payload.SizeSSZ()
 
@@ -2396,13 +2396,13 @@ func (e *ExecutionPayloadDenebAndBlobsBundle) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadDenebAndBlobsBundle object
-func (e *ExecutionPayloadDenebAndBlobsBundle) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadDenebAndBlobsBundle object
+func (e *SilaPayloadDenebAndBlobsBundle) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadDenebAndBlobsBundle object with a hasher
-func (e *ExecutionPayloadDenebAndBlobsBundle) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadDenebAndBlobsBundle object with a hasher
+func (e *SilaPayloadDenebAndBlobsBundle) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Payload'
@@ -2419,20 +2419,20 @@ func (e *ExecutionPayloadDenebAndBlobsBundle) HashTreeRootWith(hh *ssz.Hasher) (
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadDenebAndBlobsBundleV2 object
-func (e *ExecutionPayloadDenebAndBlobsBundleV2) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadDenebAndBlobsBundleV2 object
+func (e *SilaPayloadDenebAndBlobsBundleV2) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadDenebAndBlobsBundleV2 object to a target array
-func (e *ExecutionPayloadDenebAndBlobsBundleV2) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadDenebAndBlobsBundleV2 object to a target array
+func (e *SilaPayloadDenebAndBlobsBundleV2) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(8)
 
 	// Offset (0) 'Payload'
 	dst = ssz.WriteOffset(dst, offset)
 	if e.Payload == nil {
-		e.Payload = new(ExecutionPayloadDeneb)
+		e.Payload = new(SilaPayloadDeneb)
 	}
 	offset += e.Payload.SizeSSZ()
 
@@ -2456,8 +2456,8 @@ func (e *ExecutionPayloadDenebAndBlobsBundleV2) MarshalSSZTo(buf []byte) (dst []
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadDenebAndBlobsBundleV2 object
-func (e *ExecutionPayloadDenebAndBlobsBundleV2) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadDenebAndBlobsBundleV2 object
+func (e *SilaPayloadDenebAndBlobsBundleV2) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 8 {
@@ -2485,7 +2485,7 @@ func (e *ExecutionPayloadDenebAndBlobsBundleV2) UnmarshalSSZ(buf []byte) error {
 	{
 		buf = tail[o0:o1]
 		if e.Payload == nil {
-			e.Payload = new(ExecutionPayloadDeneb)
+			e.Payload = new(SilaPayloadDeneb)
 		}
 		if err = e.Payload.UnmarshalSSZ(buf); err != nil {
 			return err
@@ -2505,13 +2505,13 @@ func (e *ExecutionPayloadDenebAndBlobsBundleV2) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadDenebAndBlobsBundleV2 object
-func (e *ExecutionPayloadDenebAndBlobsBundleV2) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadDenebAndBlobsBundleV2 object
+func (e *SilaPayloadDenebAndBlobsBundleV2) SizeSSZ() (size int) {
 	size = 8
 
 	// Field (0) 'Payload'
 	if e.Payload == nil {
-		e.Payload = new(ExecutionPayloadDeneb)
+		e.Payload = new(SilaPayloadDeneb)
 	}
 	size += e.Payload.SizeSSZ()
 
@@ -2524,13 +2524,13 @@ func (e *ExecutionPayloadDenebAndBlobsBundleV2) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadDenebAndBlobsBundleV2 object
-func (e *ExecutionPayloadDenebAndBlobsBundleV2) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadDenebAndBlobsBundleV2 object
+func (e *SilaPayloadDenebAndBlobsBundleV2) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadDenebAndBlobsBundleV2 object with a hasher
-func (e *ExecutionPayloadDenebAndBlobsBundleV2) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadDenebAndBlobsBundleV2 object with a hasher
+func (e *SilaPayloadDenebAndBlobsBundleV2) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Payload'
@@ -2547,13 +2547,13 @@ func (e *ExecutionPayloadDenebAndBlobsBundleV2) HashTreeRootWith(hh *ssz.Hasher)
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadHeader object
-func (e *ExecutionPayloadHeader) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadHeader object
+func (e *SilaPayloadHeader) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadHeader object to a target array
-func (e *ExecutionPayloadHeader) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadHeader object to a target array
+func (e *SilaPayloadHeader) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(536)
 
@@ -2646,8 +2646,8 @@ func (e *ExecutionPayloadHeader) MarshalSSZTo(buf []byte) (dst []byte, err error
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadHeader object
-func (e *ExecutionPayloadHeader) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadHeader object
+func (e *SilaPayloadHeader) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 536 {
@@ -2746,8 +2746,8 @@ func (e *ExecutionPayloadHeader) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadHeader object
-func (e *ExecutionPayloadHeader) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadHeader object
+func (e *SilaPayloadHeader) SizeSSZ() (size int) {
 	size = 536
 
 	// Field (10) 'ExtraData'
@@ -2756,13 +2756,13 @@ func (e *ExecutionPayloadHeader) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadHeader object
-func (e *ExecutionPayloadHeader) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadHeader object
+func (e *SilaPayloadHeader) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadHeader object with a hasher
-func (e *ExecutionPayloadHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadHeader object with a hasher
+func (e *SilaPayloadHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'
@@ -2856,13 +2856,13 @@ func (e *ExecutionPayloadHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadHeaderCapella object
-func (e *ExecutionPayloadHeaderCapella) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadHeaderCapella object
+func (e *SilaPayloadHeaderCapella) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadHeaderCapella object to a target array
-func (e *ExecutionPayloadHeaderCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadHeaderCapella object to a target array
+func (e *SilaPayloadHeaderCapella) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(568)
 
@@ -2962,8 +2962,8 @@ func (e *ExecutionPayloadHeaderCapella) MarshalSSZTo(buf []byte) (dst []byte, er
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadHeaderCapella object
-func (e *ExecutionPayloadHeaderCapella) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadHeaderCapella object
+func (e *SilaPayloadHeaderCapella) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 568 {
@@ -3068,8 +3068,8 @@ func (e *ExecutionPayloadHeaderCapella) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadHeaderCapella object
-func (e *ExecutionPayloadHeaderCapella) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadHeaderCapella object
+func (e *SilaPayloadHeaderCapella) SizeSSZ() (size int) {
 	size = 568
 
 	// Field (10) 'ExtraData'
@@ -3078,13 +3078,13 @@ func (e *ExecutionPayloadHeaderCapella) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadHeaderCapella object
-func (e *ExecutionPayloadHeaderCapella) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadHeaderCapella object
+func (e *SilaPayloadHeaderCapella) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadHeaderCapella object with a hasher
-func (e *ExecutionPayloadHeaderCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadHeaderCapella object with a hasher
+func (e *SilaPayloadHeaderCapella) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'
@@ -3185,13 +3185,13 @@ func (e *ExecutionPayloadHeaderCapella) HashTreeRootWith(hh *ssz.Hasher) (err er
 	return
 }
 
-// MarshalSSZ ssz marshals the ExecutionPayloadHeaderDeneb object
-func (e *ExecutionPayloadHeaderDeneb) MarshalSSZ() ([]byte, error) {
+// MarshalSSZ ssz marshals the SilaPayloadHeaderDeneb object
+func (e *SilaPayloadHeaderDeneb) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(e)
 }
 
-// MarshalSSZTo ssz marshals the ExecutionPayloadHeaderDeneb object to a target array
-func (e *ExecutionPayloadHeaderDeneb) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the SilaPayloadHeaderDeneb object to a target array
+func (e *SilaPayloadHeaderDeneb) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 	offset := int(584)
 
@@ -3297,8 +3297,8 @@ func (e *ExecutionPayloadHeaderDeneb) MarshalSSZTo(buf []byte) (dst []byte, err 
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the ExecutionPayloadHeaderDeneb object
-func (e *ExecutionPayloadHeaderDeneb) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the SilaPayloadHeaderDeneb object
+func (e *SilaPayloadHeaderDeneb) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
 	if size < 584 {
@@ -3409,8 +3409,8 @@ func (e *ExecutionPayloadHeaderDeneb) UnmarshalSSZ(buf []byte) error {
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the ExecutionPayloadHeaderDeneb object
-func (e *ExecutionPayloadHeaderDeneb) SizeSSZ() (size int) {
+// SizeSSZ returns the ssz encoded size in bytes for the SilaPayloadHeaderDeneb object
+func (e *SilaPayloadHeaderDeneb) SizeSSZ() (size int) {
 	size = 584
 
 	// Field (10) 'ExtraData'
@@ -3419,13 +3419,13 @@ func (e *ExecutionPayloadHeaderDeneb) SizeSSZ() (size int) {
 	return
 }
 
-// HashTreeRoot ssz hashes the ExecutionPayloadHeaderDeneb object
-func (e *ExecutionPayloadHeaderDeneb) HashTreeRoot() ([32]byte, error) {
+// HashTreeRoot ssz hashes the SilaPayloadHeaderDeneb object
+func (e *SilaPayloadHeaderDeneb) HashTreeRoot() ([32]byte, error) {
 	return ssz.HashWithDefaultHasher(e)
 }
 
-// HashTreeRootWith ssz hashes the ExecutionPayloadHeaderDeneb object with a hasher
-func (e *ExecutionPayloadHeaderDeneb) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the SilaPayloadHeaderDeneb object with a hasher
+func (e *SilaPayloadHeaderDeneb) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'ParentHash'

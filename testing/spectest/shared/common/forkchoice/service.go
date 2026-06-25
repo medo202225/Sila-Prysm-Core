@@ -103,7 +103,7 @@ type engineMock struct {
 func (m *engineMock) GetPayload(context.Context, [8]byte, primitives.Slot) (*blocks.GetPayloadResponse, error) {
 	return nil, nil
 }
-func (m *engineMock) GetPayloadV2(context.Context, [8]byte) (*pb.ExecutionPayloadCapella, error) {
+func (m *engineMock) GetPayloadV2(context.Context, [8]byte) (*pb.SilaPayloadCapella, error) {
 	return nil, nil
 }
 func (m *engineMock) ForkchoiceUpdated(context.Context, *pb.ForkchoiceState, payloadattribute.Attributer) (*pb.PayloadIDBytes, []byte, error) {

@@ -143,12 +143,12 @@ type Reconstructor interface {
 	ReconstructFullBellatrixBlockBatch(
 		ctx context.Context, blindedBlocks []interfaces.ReadOnlySignedBeaconBlock,
 	) ([]interfaces.SignedBeaconBlock, error)
-	ReconstructFullGloasExecutionPayloadsByHash(
+	ReconstructFullGloasSilaPayloadsByHash(
 		ctx context.Context, blockHashes [][32]byte,
-	) (map[[32]byte]*pb.ExecutionPayloadGloas, error)
+	) (map[[32]byte]*pb.SilaPayloadGloas, error)
 	ReconstructBlobSidecars(ctx context.Context, block interfaces.ReadOnlySignedBeaconBlock, blockRoot [fieldparams.RootLength]byte, hi func(uint64) bool) ([]blocks.VerifiedROBlob, error)
 	ConstructDataColumnSidecars(ctx context.Context, populator peerdas.ConstructionPopulator) ([]blocks.VerifiedRODataColumn, error)
-	ReconstructExecutionPayloadEnvelope(ctx context.Context, envelope *silapb.SignedBlindedExecutionPayloadEnvelope) (*silapb.SignedExecutionPayloadEnvelope, error)
+	ReconstructSilaPayloadEnvelope(ctx context.Context, envelope *silapb.SignedBlindedSilaPayloadEnvelope) (*silapb.SignedSilaPayloadEnvelope, error)
 }
 
 // EngineCaller defines a client that can interact with a Sila
@@ -180,17 +180,17 @@ func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionDa
 	result := &pb.PayloadStatus{}
 
 	switch payloadPb := payload.Proto().(type) {
-	case *pb.ExecutionPayload:
+	case *pb.SilaPayload:
 		err := s.rpcClient.CallContext(ctx, result, NewPayloadMethod, payloadPb)
 		if err != nil {
 			return nil, handleRPCError(err)
 		}
-	case *pb.ExecutionPayloadCapella:
+	case *pb.SilaPayloadCapella:
 		err := s.rpcClient.CallContext(ctx, result, NewPayloadMethodV2, payloadPb)
 		if err != nil {
 			return nil, handleRPCError(err)
 		}
-	case *pb.ExecutionPayloadDeneb:
+	case *pb.SilaPayloadDeneb:
 		if executionRequests == nil {
 			err := s.rpcClient.CallContext(ctx, result, NewPayloadMethodV3, payloadPb, versionedHashes, parentBlockRoot)
 			if err != nil {
@@ -206,7 +206,7 @@ func (s *Service) NewPayload(ctx context.Context, payload interfaces.ExecutionDa
 				return nil, handleRPCError(err)
 			}
 		}
-	case *pb.ExecutionPayloadGloas:
+	case *pb.SilaPayloadGloas:
 		flattenedRequests, err := pb.EncodeExecutionRequests(executionRequests)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to encode execution requests")
@@ -329,12 +329,12 @@ func getPayloadMethodAndMessage(slot primitives.Slot) (string, proto.Message) {
 		return GetPayloadMethodV4, &pb.ExecutionBundleElectra{}
 	}
 	if epoch >= params.BeaconConfig().DenebForkEpoch {
-		return GetPayloadMethodV3, &pb.ExecutionPayloadDenebWithValueAndBlobsBundle{}
+		return GetPayloadMethodV3, &pb.SilaPayloadDenebWithValueAndBlobsBundle{}
 	}
 	if epoch >= params.BeaconConfig().CapellaForkEpoch {
-		return GetPayloadMethodV2, &pb.ExecutionPayloadCapellaWithValue{}
+		return GetPayloadMethodV2, &pb.SilaPayloadCapellaWithValue{}
 	}
-	return GetPayloadMethod, &pb.ExecutionPayload{}
+	return GetPayloadMethod, &pb.SilaPayload{}
 }
 
 // GetPayload calls the silaEngine_getPayloadVX method via JSON-RPC.
@@ -640,7 +640,7 @@ func (s *Service) GetClientVersionV1(ctx context.Context) ([]*structs.ClientVers
 }
 
 // ReconstructFullBlock takes in a blinded beacon block and reconstructs
-// a beacon block with a full execution payload via the engine API.
+// a beacon block with a full sila payload via the engine API.
 func (s *Service) ReconstructFullBlock(
 	ctx context.Context, blindedBlock interfaces.ReadOnlySignedBeaconBlock,
 ) (interfaces.SignedBeaconBlock, error) {
@@ -655,7 +655,7 @@ func (s *Service) ReconstructFullBlock(
 }
 
 // ReconstructFullBellatrixBlockBatch takes in a batch of blinded beacon blocks and reconstructs
-// them with a full execution payload for each block via the engine API.
+// them with a full sila payload for each block via the engine API.
 func (s *Service) ReconstructFullBellatrixBlockBatch(
 	ctx context.Context, blindedBlocks []interfaces.ReadOnlySignedBeaconBlock,
 ) ([]interfaces.SignedBeaconBlock, error) {
@@ -663,28 +663,28 @@ func (s *Service) ReconstructFullBellatrixBlockBatch(
 	if err != nil {
 		return nil, err
 	}
-	reconstructedExecutionPayloadCount.Add(float64(len(unb)))
+	reconstructedSilaPayloadCount.Add(float64(len(unb)))
 	return unb, nil
 }
 
-// ReconstructExecutionPayloadEnvelope reconstructs a full Gloas envelope from a blinded envelope.
-func (s *Service) ReconstructExecutionPayloadEnvelope(
-	ctx context.Context, envelope *silapb.SignedBlindedExecutionPayloadEnvelope,
-) (*silapb.SignedExecutionPayloadEnvelope, error) {
+// ReconstructSilaPayloadEnvelope reconstructs a full Gloas envelope from a blinded envelope.
+func (s *Service) ReconstructSilaPayloadEnvelope(
+	ctx context.Context, envelope *silapb.SignedBlindedSilaPayloadEnvelope,
+) (*silapb.SignedSilaPayloadEnvelope, error) {
 	if envelope == nil || envelope.Message == nil {
-		return nil, errors.New("nil blinded execution payload envelope")
+		return nil, errors.New("nil blinded sila payload envelope")
 	}
 	blockHash := bytesutil.ToBytes32(envelope.Message.BlockHash)
-	payloads, err := s.ReconstructFullGloasExecutionPayloadsByHash(ctx, [][32]byte{blockHash})
+	payloads, err := s.ReconstructFullGloasSilaPayloadsByHash(ctx, [][32]byte{blockHash})
 	if err != nil {
-		return nil, errors.Wrap(err, "could not reconstruct execution payload")
+		return nil, errors.Wrap(err, "could not reconstruct sila payload")
 	}
 	payload, ok := payloads[blockHash]
 	if !ok || payload == nil {
-		return nil, errors.New("execution payload not found")
+		return nil, errors.New("sila payload not found")
 	}
-	return &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
+	return &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
 			Payload:               payload,
 			ExecutionRequests:     envelope.Message.ExecutionRequests,
 			BuilderIndex:          envelope.Message.BuilderIndex,
@@ -695,11 +695,11 @@ func (s *Service) ReconstructExecutionPayloadEnvelope(
 	}, nil
 }
 
-// ReconstructFullGloasExecutionPayloadsByHash reconstructs full Gloas payloads from EL data.
-func (s *Service) ReconstructFullGloasExecutionPayloadsByHash(
+// ReconstructFullGloasSilaPayloadsByHash reconstructs full Gloas payloads from EL data.
+func (s *Service) ReconstructFullGloasSilaPayloadsByHash(
 	ctx context.Context, blockHashes [][32]byte,
-) (map[[32]byte]*pb.ExecutionPayloadGloas, error) {
-	payloads := make(map[[32]byte]*pb.ExecutionPayloadGloas, len(blockHashes))
+) (map[[32]byte]*pb.SilaPayloadGloas, error) {
+	payloads := make(map[[32]byte]*pb.SilaPayloadGloas, len(blockHashes))
 	if len(blockHashes) == 0 {
 		return payloads, nil
 	}
@@ -718,11 +718,11 @@ func (s *Service) ReconstructFullGloasExecutionPayloadsByHash(
 	requestHashes := make([]common.Hash, 0, len(uniqueHashes))
 	for i := range uniqueHashes {
 		if uniqueHashes[i] == params.BeaconConfig().ZeroHash {
-			empty, err := EmptyExecutionPayload(version.Gloas)
+			empty, err := EmptySilaPayload(version.Gloas)
 			if err != nil {
 				return nil, err
 			}
-			payloads[uniqueHashes[i]] = empty.(*pb.ExecutionPayloadGloas)
+			payloads[uniqueHashes[i]] = empty.(*pb.SilaPayloadGloas)
 			continue
 		}
 		requestHashes = append(requestHashes, uniqueHashes[i])
@@ -733,7 +733,7 @@ func (s *Service) ReconstructFullGloasExecutionPayloadsByHash(
 	}
 
 	var execBlocks []*pb.ExecutionBlock
-	bodiesV2 := make([]*pb.ExecutionPayloadBodyV2, 0)
+	bodiesV2 := make([]*pb.SilaPayloadBodyV2, 0)
 	g, gctx := errgroup.WithContext(ctx)
 	g.Go(func() error {
 		blks, err := s.ExecutionBlocksByHashes(gctx, requestHashes, false)
@@ -778,7 +778,7 @@ func (s *Service) ReconstructFullGloasExecutionPayloadsByHash(
 // gloasPayloadFromExecutionBlock extracts header fields from an execution block.
 func gloasPayloadFromExecutionBlock(
 	requestedHash [32]byte, blk *pb.ExecutionBlock,
-) (*pb.ExecutionPayloadGloas, error) {
+) (*pb.SilaPayloadGloas, error) {
 	if blk == nil {
 		return nil, errors.New("execution block not found")
 	}
@@ -802,7 +802,7 @@ func gloasPayloadFromExecutionBlock(
 		return nil, errors.New("execution block slot number is nil")
 	}
 
-	return &pb.ExecutionPayloadGloas{
+	return &pb.SilaPayloadGloas{
 		ParentHash:      blk.ParentHash.Bytes(),
 		FeeRecipient:    blk.Coinbase.Bytes(),
 		StateRoot:       blk.Root.Bytes(),
@@ -978,7 +978,7 @@ func upgradeSidecarsToVerifiedSidecars(roSidecars []blocks.RODataColumn) []block
 }
 
 func fullPayloadFromPayloadBody(
-	header interfaces.ExecutionData, body *pb.ExecutionPayloadBody, bVersion int,
+	header interfaces.ExecutionData, body *pb.SilaPayloadBody, bVersion int,
 ) (interfaces.ExecutionData, error) {
 	if header == nil || header.IsNil() || body == nil {
 		return nil, errors.New("execution block and header cannot be nil")
@@ -987,14 +987,14 @@ func fullPayloadFromPayloadBody(
 	if bVersion >= version.Deneb {
 		ebg, err := header.ExcessBlobGas()
 		if err != nil {
-			return nil, errors.Wrap(err, "unable to extract ExcessBlobGas attribute from execution payload header")
+			return nil, errors.Wrap(err, "unable to extract ExcessBlobGas attribute from sila payload header")
 		}
 		bgu, err := header.BlobGasUsed()
 		if err != nil {
-			return nil, errors.Wrap(err, "unable to extract BlobGasUsed attribute from execution payload header")
+			return nil, errors.Wrap(err, "unable to extract BlobGasUsed attribute from sila payload header")
 		}
-		return blocks.WrappedExecutionPayloadDeneb(
-			&pb.ExecutionPayloadDeneb{
+		return blocks.WrappedSilaPayloadDeneb(
+			&pb.SilaPayloadDeneb{
 				ParentHash:    header.ParentHash(),
 				FeeRecipient:  header.FeeRecipient(),
 				StateRoot:     header.StateRoot(),
@@ -1016,7 +1016,7 @@ func fullPayloadFromPayloadBody(
 	}
 
 	if bVersion >= version.Capella {
-		return blocks.WrappedExecutionPayloadCapella(&pb.ExecutionPayloadCapella{
+		return blocks.WrappedSilaPayloadCapella(&pb.SilaPayloadCapella{
 			ParentHash:    header.ParentHash(),
 			FeeRecipient:  header.FeeRecipient(),
 			StateRoot:     header.StateRoot(),
@@ -1036,7 +1036,7 @@ func fullPayloadFromPayloadBody(
 	}
 
 	if bVersion >= version.Bellatrix {
-		return blocks.WrappedExecutionPayload(&pb.ExecutionPayload{
+		return blocks.WrappedSilaPayload(&pb.SilaPayload{
 			ParentHash:    header.ParentHash(),
 			FeeRecipient:  header.FeeRecipient(),
 			StateRoot:     header.StateRoot(),
@@ -1145,9 +1145,9 @@ func tDStringToUint256(td string) (*uint256.Int, error) {
 	return i, nil
 }
 
-func EmptyExecutionPayload(v int) (proto.Message, error) {
+func EmptySilaPayload(v int) (proto.Message, error) {
 	if v >= version.Gloas {
-		return &pb.ExecutionPayloadGloas{
+		return &pb.SilaPayloadGloas{
 			ParentHash:      make([]byte, fieldparams.RootLength),
 			FeeRecipient:    make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:       make([]byte, fieldparams.RootLength),
@@ -1164,7 +1164,7 @@ func EmptyExecutionPayload(v int) (proto.Message, error) {
 	}
 
 	if v >= version.Deneb {
-		return &pb.ExecutionPayloadDeneb{
+		return &pb.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1180,7 +1180,7 @@ func EmptyExecutionPayload(v int) (proto.Message, error) {
 	}
 
 	if v >= version.Capella {
-		return &pb.ExecutionPayloadCapella{
+		return &pb.SilaPayloadCapella{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1196,7 +1196,7 @@ func EmptyExecutionPayload(v int) (proto.Message, error) {
 	}
 
 	if v >= version.Bellatrix {
-		return &pb.ExecutionPayload{
+		return &pb.SilaPayload{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1213,9 +1213,9 @@ func EmptyExecutionPayload(v int) (proto.Message, error) {
 	return nil, errors.Wrapf(ErrUnsupportedVersion, "version=%s", version.String(v))
 }
 
-func EmptyExecutionPayloadHeader(v int) (proto.Message, error) {
+func EmptySilaPayloadHeader(v int) (proto.Message, error) {
 	if v >= version.Deneb {
-		return &pb.ExecutionPayloadHeaderDeneb{
+		return &pb.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, fieldparams.RootLength),
 			FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1231,7 +1231,7 @@ func EmptyExecutionPayloadHeader(v int) (proto.Message, error) {
 	}
 
 	if v >= version.Capella {
-		return &pb.ExecutionPayloadHeaderCapella{
+		return &pb.SilaPayloadHeaderCapella{
 			ParentHash:       make([]byte, fieldparams.RootLength),
 			FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1247,7 +1247,7 @@ func EmptyExecutionPayloadHeader(v int) (proto.Message, error) {
 	}
 
 	if v >= version.Bellatrix {
-		return &pb.ExecutionPayloadHeader{
+		return &pb.SilaPayloadHeader{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 			StateRoot:     make([]byte, fieldparams.RootLength),

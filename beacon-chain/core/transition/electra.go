@@ -44,11 +44,11 @@ var (
 //      for_ops(body.deposits, process_deposit)  # [Modified in Electra:SIP7251]
 //      for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:SIP7251]
 //      for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-//      for_ops(body.execution_payload.deposit_requests, process_deposit_request)  # [New in Electra:SIP6110]
+//      for_ops(body.sila_payload.deposit_requests, process_deposit_request)  # [New in Electra:SIP6110]
 //      # [New in Electra:SIP7002:SIP7251]
-//      for_ops(body.execution_payload.withdrawal_requests, process_withdrawal_request)
+//      for_ops(body.sila_payload.withdrawal_requests, process_withdrawal_request)
 //      # [New in Electra:SIP7251]
-//      for_ops(body.execution_payload.consolidation_requests, process_consolidation_request)
+//      for_ops(body.sila_payload.consolidation_requests, process_consolidation_request)
 
 func electraOperations(ctx context.Context, st state.BeaconState, block interfaces.ReadOnlyBeaconBlock) (state.BeaconState, error) {
 	ctx, span := trace.StartSpan(ctx, "core.state.electraOperations")

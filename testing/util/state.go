@@ -209,7 +209,7 @@ func NewBeaconStateBellatrix(options ...func(state *silapb.BeaconStateBellatrix)
 			Pubkeys:         pubkeys,
 			AggregatePubkey: make([]byte, 48),
 		},
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeader{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeader{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, 32),
@@ -276,7 +276,7 @@ func NewBeaconStateCapella(options ...func(state *silapb.BeaconStateCapella) err
 			Pubkeys:         pubkeys,
 			AggregatePubkey: make([]byte, 48),
 		},
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderCapella{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderCapella{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, 32),
@@ -344,7 +344,7 @@ func NewBeaconStateDeneb(options ...func(state *silapb.BeaconStateDeneb) error) 
 			Pubkeys:         pubkeys,
 			AggregatePubkey: make([]byte, 48),
 		},
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, 32),
@@ -412,7 +412,7 @@ func NewBeaconStateElectra(options ...func(state *silapb.BeaconStateElectra) err
 			Pubkeys:         pubkeys,
 			AggregatePubkey: make([]byte, 48),
 		},
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, 32),
@@ -480,7 +480,7 @@ func NewBeaconStateFulu(options ...func(state *silapb.BeaconStateFulu) error) (s
 			Pubkeys:         pubkeys,
 			AggregatePubkey: make([]byte, 48),
 		},
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, 32),
@@ -566,7 +566,7 @@ func NewBeaconStateGloas(options ...func(state *silapb.BeaconStateGloas) error) 
 			AggregatePubkey: make([]byte, 48),
 		},
 		ProposerLookahead: make([]primitives.ValidatorIndex, 64),
-		LatestExecutionPayloadBid: &silapb.ExecutionPayloadBid{
+		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
 			ParentBlockHash:       make([]byte, 32),
 			ParentBlockRoot:       make([]byte, 32),
 			BlockHash:             make([]byte, 32),
@@ -576,7 +576,7 @@ func NewBeaconStateGloas(options ...func(state *silapb.BeaconStateGloas) error) 
 			ExecutionRequestsRoot: make([]byte, 32),
 		},
 		Builders:                     make([]*silapb.Builder, 0),
-		ExecutionPayloadAvailability: make([]byte, 1024),
+		SilaPayloadAvailability: make([]byte, 1024),
 		BuilderPendingPayments:       builderPendingPayments,
 		BuilderPendingWithdrawals:    make([]*silapb.BuilderPendingWithdrawal, 0),
 		LatestBlockHash:              make([]byte, 32),

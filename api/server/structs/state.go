@@ -76,7 +76,7 @@ type BeaconStateBellatrix struct {
 	InactivityScores             []string                `json:"inactivity_scores"`
 	CurrentSyncCommittee         *SyncCommittee          `json:"current_sync_committee"`
 	NextSyncCommittee            *SyncCommittee          `json:"next_sync_committee"`
-	LatestExecutionPayloadHeader *ExecutionPayloadHeader `json:"latest_execution_payload_header"`
+	LatestSilaPayloadHeader *SilaPayloadHeader `json:"latest_sila_payload_header"`
 }
 
 type BeaconStateCapella struct {
@@ -104,7 +104,7 @@ type BeaconStateCapella struct {
 	InactivityScores             []string                       `json:"inactivity_scores"`
 	CurrentSyncCommittee         *SyncCommittee                 `json:"current_sync_committee"`
 	NextSyncCommittee            *SyncCommittee                 `json:"next_sync_committee"`
-	LatestExecutionPayloadHeader *ExecutionPayloadHeaderCapella `json:"latest_execution_payload_header"`
+	LatestSilaPayloadHeader *SilaPayloadHeaderCapella `json:"latest_sila_payload_header"`
 	NextWithdrawalIndex          string                         `json:"next_withdrawal_index"`
 	NextWithdrawalValidatorIndex string                         `json:"next_withdrawal_validator_index"`
 	HistoricalSummaries          []*HistoricalSummary           `json:"historical_summaries"`
@@ -135,7 +135,7 @@ type BeaconStateDeneb struct {
 	InactivityScores             []string                     `json:"inactivity_scores"`
 	CurrentSyncCommittee         *SyncCommittee               `json:"current_sync_committee"`
 	NextSyncCommittee            *SyncCommittee               `json:"next_sync_committee"`
-	LatestExecutionPayloadHeader *ExecutionPayloadHeaderDeneb `json:"latest_execution_payload_header"`
+	LatestSilaPayloadHeader *SilaPayloadHeaderDeneb `json:"latest_sila_payload_header"`
 	NextWithdrawalIndex          string                       `json:"next_withdrawal_index"`
 	NextWithdrawalValidatorIndex string                       `json:"next_withdrawal_validator_index"`
 	HistoricalSummaries          []*HistoricalSummary         `json:"historical_summaries"`
@@ -166,7 +166,7 @@ type BeaconStateElectra struct {
 	InactivityScores              []string                     `json:"inactivity_scores"`
 	CurrentSyncCommittee          *SyncCommittee               `json:"current_sync_committee"`
 	NextSyncCommittee             *SyncCommittee               `json:"next_sync_committee"`
-	LatestExecutionPayloadHeader  *ExecutionPayloadHeaderDeneb `json:"latest_execution_payload_header"`
+	LatestSilaPayloadHeader  *SilaPayloadHeaderDeneb `json:"latest_sila_payload_header"`
 	NextWithdrawalIndex           string                       `json:"next_withdrawal_index"`
 	NextWithdrawalValidatorIndex  string                       `json:"next_withdrawal_validator_index"`
 	HistoricalSummaries           []*HistoricalSummary         `json:"historical_summaries"`
@@ -206,7 +206,7 @@ type BeaconStateFulu struct {
 	InactivityScores              []string                     `json:"inactivity_scores"`
 	CurrentSyncCommittee          *SyncCommittee               `json:"current_sync_committee"`
 	NextSyncCommittee             *SyncCommittee               `json:"next_sync_committee"`
-	LatestExecutionPayloadHeader  *ExecutionPayloadHeaderDeneb `json:"latest_execution_payload_header"`
+	LatestSilaPayloadHeader  *SilaPayloadHeaderDeneb `json:"latest_sila_payload_header"`
 	NextWithdrawalIndex           string                       `json:"next_withdrawal_index"`
 	NextWithdrawalValidatorIndex  string                       `json:"next_withdrawal_validator_index"`
 	HistoricalSummaries           []*HistoricalSummary         `json:"historical_summaries"`
@@ -260,10 +260,10 @@ type BeaconStateGloas struct {
 	PendingPartialWithdrawals     []*PendingPartialWithdrawal `json:"pending_partial_withdrawals"`
 	PendingConsolidations         []*PendingConsolidation     `json:"pending_consolidations"`
 	ProposerLookahead             []string                    `json:"proposer_lookahead"`
-	LatestExecutionPayloadBid     *ExecutionPayloadBid        `json:"latest_execution_payload_bid"`
+	LatestSilaPayloadBid     *SilaPayloadBid        `json:"latest_sila_payload_bid"`
 	Builders                      []*Builder                  `json:"builders"`
 	NextWithdrawalBuilderIndex    string                      `json:"next_withdrawal_builder_index"`
-	ExecutionPayloadAvailability  string                      `json:"execution_payload_availability"`
+	SilaPayloadAvailability  string                      `json:"sila_payload_availability"`
 	BuilderPendingPayments        []*BuilderPendingPayment    `json:"builder_pending_payments"`
 	BuilderPendingWithdrawals     []*BuilderPendingWithdrawal `json:"builder_pending_withdrawals"`
 	LatestBlockHash               string                      `json:"latest_block_hash"`

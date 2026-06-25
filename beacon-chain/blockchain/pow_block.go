@@ -27,10 +27,10 @@ import (
 //	if TERMINAL_BLOCK_HASH != Hash32():
 //	    # If `TERMINAL_BLOCK_HASH` is used as an override, the activation epoch must be reached.
 //	    assert compute_epoch_at_slot(block.slot) >= TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH
-//	    assert block.body.execution_payload.parent_hash == TERMINAL_BLOCK_HASH
+//	    assert block.body.sila_payload.parent_hash == TERMINAL_BLOCK_HASH
 //	    return
 //
-//	pow_block = get_pow_block(block.body.execution_payload.parent_hash)
+//	pow_block = get_pow_block(block.body.sila_payload.parent_hash)
 //	# Check if `pow_block` is available
 //	assert pow_block is not None
 //	pow_parent = get_pow_block(pow_block.parent_hash)
@@ -47,7 +47,7 @@ func (s *Service) validateMergeBlock(ctx context.Context, b interfaces.ReadOnlyS
 		return err
 	}
 	if payload == nil || payload.IsNil() {
-		return errors.New("nil execution payload")
+		return errors.New("nil sila payload")
 	}
 	ok, err := canUseValidatedTerminalBlockHash(b.Block().Slot(), payload)
 	if err != nil {
@@ -115,7 +115,7 @@ func (s *Service) getBlkParentHashAndTD(ctx context.Context, blkHash []byte) ([]
 //
 //	# If `TERMINAL_BLOCK_HASH` is used as an override, the activation epoch must be reached.
 //	assert compute_epoch_at_slot(block.slot) >= TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH
-//	assert block.body.execution_payload.parent_hash == TERMINAL_BLOCK_HASH
+//	assert block.body.sila_payload.parent_hash == TERMINAL_BLOCK_HASH
 //	return
 func canUseValidatedTerminalBlockHash(blkSlot primitives.Slot, payload interfaces.ExecutionData) (bool, error) {
 	if bytesutil.ToBytes32(params.BeaconConfig().TerminalBlockHash.Bytes()) == [32]byte{} {

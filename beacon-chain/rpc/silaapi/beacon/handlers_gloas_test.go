@@ -37,19 +37,19 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func envelopeCacheFor(signed *silapb.SignedExecutionPayloadEnvelope) *cache.ExecutionPayloadEnvelopeCache {
-	c := cache.NewExecutionPayloadEnvelopeCache()
-	c.Set(&cache.ExecutionPayloadContents{Envelope: signed.Message})
+func envelopeCacheFor(signed *silapb.SignedSilaPayloadEnvelope) *cache.SilaPayloadEnvelopeCache {
+	c := cache.NewSilaPayloadEnvelopeCache()
+	c.Set(&cache.SilaPayloadContents{Envelope: signed.Message})
 	return c
 }
 
-func blindedJSONBody(t *testing.T, signed *silapb.SignedExecutionPayloadEnvelope) []byte {
+func blindedJSONBody(t *testing.T, signed *silapb.SignedSilaPayloadEnvelope) []byte {
 	t.Helper()
 	blinded, err := structs.SignedWireBlindedFromFull(signed)
 	require.NoError(t, err)
-	msg, err := structs.BlindedExecutionPayloadEnvelopeFromConsensus(blinded.Message)
+	msg, err := structs.BlindedSilaPayloadEnvelopeFromConsensus(blinded.Message)
 	require.NoError(t, err)
-	body, err := json.Marshal(&structs.SignedBlindedExecutionPayloadEnvelope{
+	body, err := json.Marshal(&structs.SignedBlindedSilaPayloadEnvelope{
 		Message:   msg,
 		Signature: hexutil.Encode(blinded.Signature),
 	})
@@ -57,16 +57,16 @@ func blindedJSONBody(t *testing.T, signed *silapb.SignedExecutionPayloadEnvelope
 	return body
 }
 
-func TestGetExecutionPayloadEnvelope_AcceptsSlotID(t *testing.T) {
+func TestGetSilaPayloadEnvelope_AcceptsSlotID(t *testing.T) {
 	ctx := t.Context()
 	beaconDB := dbTest.SetupDB(t)
 
 	root := bytesutil.ToBytes32(bytesutil.PadTo([]byte("beacon-root"), 32))
 	blockHash := bytesutil.ToBytes32(bytesutil.PadTo([]byte("block-hash"), 32))
 
-	env := &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload: &enginev1.ExecutionPayloadGloas{
+	env := &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload: &enginev1.SilaPayloadGloas{
 				ParentHash:    bytesutil.PadTo([]byte("parent"), 32),
 				FeeRecipient:  bytesutil.PadTo([]byte("fee"), 20),
 				StateRoot:     bytesutil.PadTo([]byte("state"), 32),
@@ -86,11 +86,11 @@ func TestGetExecutionPayloadEnvelope_AcceptsSlotID(t *testing.T) {
 		},
 		Signature: bytesutil.PadTo([]byte("sig"), 96),
 	}
-	require.NoError(t, beaconDB.SaveExecutionPayloadEnvelope(ctx, env))
+	require.NoError(t, beaconDB.SaveSilaPayloadEnvelope(ctx, env))
 
 	reconstructor := &executiontesting.EngineClient{
-		ExecutionPayloadByBlockHash: map[[32]byte]*enginev1.ExecutionPayload{
-			blockHash: &enginev1.ExecutionPayload{
+		SilaPayloadByBlockHash: map[[32]byte]*enginev1.SilaPayload{
+			blockHash: &enginev1.SilaPayload{
 				ParentHash:    bytesutil.PadTo([]byte("parent"), 32),
 				FeeRecipient:  bytesutil.PadTo([]byte("fee"), 20),
 				StateRoot:     bytesutil.PadTo([]byte("state"), 32),
@@ -116,37 +116,37 @@ func TestGetExecutionPayloadEnvelope_AcceptsSlotID(t *testing.T) {
 		FinalizationFetcher:    chain,
 	}
 
-	req := httptest.NewRequest(http.MethodGet, "http://example.com/sila/v1/beacon/execution_payload_envelope/{block_id}", nil)
+	req := httptest.NewRequest(http.MethodGet, "http://example.com/sila/v1/beacon/sila_payload_envelope/{block_id}", nil)
 	req.SetPathValue("block_id", "177")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.GetExecutionPayloadEnvelope(w, req)
+	s.GetSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, version.String(version.Gloas), w.Header().Get("Eth-Consensus-Version"))
 }
 
-func TestGetExecutionPayloadEnvelope_BlockNotFound(t *testing.T) {
+func TestGetSilaPayloadEnvelope_BlockNotFound(t *testing.T) {
 	s := &Server{
 		Blocker: &testutil.MockBlocker{
 			ErrorToReturn: lookup.NewBlockNotFoundError("missing block"),
 		},
 	}
 
-	req := httptest.NewRequest(http.MethodGet, "http://example.com/sila/v1/beacon/execution_payload_envelope/{block_id}", nil)
+	req := httptest.NewRequest(http.MethodGet, "http://example.com/sila/v1/beacon/sila_payload_envelope/{block_id}", nil)
 	req.SetPathValue("block_id", "not-a-root")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.GetExecutionPayloadEnvelope(w, req)
+	s.GetSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusNotFound, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("Block not found")))
 }
 
-func testSignedEnvelope() *silapb.SignedExecutionPayloadEnvelope {
-	return &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
-			Payload: &enginev1.ExecutionPayloadGloas{
+func testSignedEnvelope() *silapb.SignedSilaPayloadEnvelope {
+	return &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
+			Payload: &enginev1.SilaPayloadGloas{
 				ParentHash:    bytesutil.PadTo([]byte("parent"), 32),
 				FeeRecipient:  bytesutil.PadTo([]byte("fee"), 20),
 				StateRoot:     bytesutil.PadTo([]byte("state"), 32),
@@ -169,7 +169,7 @@ func testSignedEnvelope() *silapb.SignedExecutionPayloadEnvelope {
 }
 
 // Stateful: body is the spec-wire blinded envelope; BN reconstructs full from cache.
-func TestPublishExecutionPayloadEnvelope_StatefulBlinded_OK(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_StatefulBlinded_OK(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -179,7 +179,7 @@ func TestPublishExecutionPayloadEnvelope_StatefulBlinded_OK(t *testing.T) {
 	signed := testSignedEnvelope()
 
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(&emptypb.Empty{}, nil)
 
@@ -187,44 +187,44 @@ func TestPublishExecutionPayloadEnvelope_StatefulBlinded_OK(t *testing.T) {
 
 	s := &Server{
 		V1Alpha1ValidatorServer:       v1alpha1Server,
-		ExecutionPayloadEnvelopeCache: envelopeCacheFor(signed),
+		SilaPayloadEnvelopeCache: envelopeCacheFor(signed),
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "true")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "true")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 }
 
-// Missing Eth-Execution-Payload-Blinded header must be a 400.
-func TestPublishExecutionPayloadEnvelope_MissingBlindedHeader(t *testing.T) {
+// Missing Sila-Payload-Blinded header must be a 400.
+func TestPublishSilaPayloadEnvelope_MissingBlindedHeader(t *testing.T) {
 	s := &Server{}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader([]byte("{}")))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader([]byte("{}")))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
-	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte(api.ExecutionPayloadBlindedHeader)))
+	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte(api.SilaPayloadBlindedHeader)))
 }
 
-func TestPublishExecutionPayloadEnvelope_InvalidBody(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_InvalidBody(t *testing.T) {
 	s := &Server{}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader([]byte("not json")))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader([]byte("not json")))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "false")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "false")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 }
 
-func TestPublishExecutionPayloadEnvelope_StatelessContents_NoBlobs(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_StatelessContents_NoBlobs(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -232,59 +232,59 @@ func TestPublishExecutionPayloadEnvelope_StatelessContents_NoBlobs(t *testing.T)
 
 	ctrl := gomock.NewController(t)
 	signed := testSignedEnvelope()
-	contents, err := structs.SignedExecutionPayloadEnvelopeContentsFromConsensus(signed, nil, nil)
+	contents, err := structs.SignedSilaPayloadEnvelopeContentsFromConsensus(signed, nil, nil)
 	require.NoError(t, err)
 	body, err := json.Marshal(contents)
 	require.NoError(t, err)
 
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(&emptypb.Empty{}, nil)
 
 	// With no blobs in the request, the sidecar broadcast/receive branch is
 	// skipped, so the handler does not need a Broadcaster or DataColumnReceiver.
 	s := &Server{V1Alpha1ValidatorServer: v1alpha1Server}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "false")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "false")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 }
 
 // DB integration failed -> Aborted maps to 202.
-func TestPublishExecutionPayloadEnvelope_ImportFailureReturns202(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_ImportFailureReturns202(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	signed := testSignedEnvelope()
-	contents, err := structs.SignedExecutionPayloadEnvelopeContentsFromConsensus(signed, nil, nil)
+	contents, err := structs.SignedSilaPayloadEnvelopeContentsFromConsensus(signed, nil, nil)
 	require.NoError(t, err)
 	body, err := json.Marshal(contents)
 	require.NoError(t, err)
 
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(nil, status.Error(codes.Aborted, "import failed"))
 
 	s := &Server{V1Alpha1ValidatorServer: v1alpha1Server}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "false")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "false")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusAccepted, w.Code)
 }
 
-// statelessContentsBody builds a SignedExecutionPayloadEnvelopeContents JSON
+// statelessContentsBody builds a SignedSilaPayloadEnvelopeContents JSON
 // body with real blobs+proofs, returning the body bytes and the signed
 // envelope used to construct it. blobMutator runs against the flat proofs
 // after they're built so callers can inject corruption.
-func statelessContentsBody(t *testing.T, blobCount int, mutateProofs func([][]byte)) ([]byte, *silapb.SignedExecutionPayloadEnvelope) {
+func statelessContentsBody(t *testing.T, blobCount int, mutateProofs func([][]byte)) ([]byte, *silapb.SignedSilaPayloadEnvelope) {
 	t.Helper()
 	require.NoError(t, kzg.Start())
 
@@ -309,14 +309,14 @@ func statelessContentsBody(t *testing.T, blobCount int, mutateProofs func([][]by
 	}
 
 	signed := testSignedEnvelope()
-	contents, err := structs.SignedExecutionPayloadEnvelopeContentsFromConsensus(signed, flatProofs, flatBlobs)
+	contents, err := structs.SignedSilaPayloadEnvelopeContentsFromConsensus(signed, flatProofs, flatBlobs)
 	require.NoError(t, err)
 	body, err := json.Marshal(contents)
 	require.NoError(t, err)
 	return body, signed
 }
 
-func TestPublishExecutionPayloadEnvelope_StatelessContents_WithBlobs(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_StatelessContents_WithBlobs(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -326,7 +326,7 @@ func TestPublishExecutionPayloadEnvelope_StatelessContents_WithBlobs(t *testing.
 
 	ctrl := gomock.NewController(t)
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(&emptypb.Empty{}, nil)
 
@@ -335,17 +335,17 @@ func TestPublishExecutionPayloadEnvelope_StatelessContents_WithBlobs(t *testing.
 		Broadcaster:             &mockp2p.MockBroadcaster{},
 		DataColumnReceiver:      &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "false")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "false")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 }
 
-func TestPublishExecutionPayloadEnvelope_StatelessContents_RejectsBadProofs(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_StatelessContents_RejectsBadProofs(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -360,18 +360,18 @@ func TestPublishExecutionPayloadEnvelope_StatelessContents_RejectsBadProofs(t *t
 		Broadcaster:        &mockp2p.MockBroadcaster{},
 		DataColumnReceiver: &chainMock.ChainService{},
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "false")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "false")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("kzg verification failed")))
 }
 
-func TestPublishExecutionPayloadEnvelope_ServerError(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_ServerError(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -380,7 +380,7 @@ func TestPublishExecutionPayloadEnvelope_ServerError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(nil, status.Error(codes.Internal, "broadcast failed"))
 
@@ -389,20 +389,20 @@ func TestPublishExecutionPayloadEnvelope_ServerError(t *testing.T) {
 
 	s := &Server{
 		V1Alpha1ValidatorServer:       v1alpha1Server,
-		ExecutionPayloadEnvelopeCache: envelopeCacheFor(signed),
+		SilaPayloadEnvelopeCache: envelopeCacheFor(signed),
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "true")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "true")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusInternalServerError, w.Code)
 }
 
-// SSZ stateful: send SignedWireBlindedExecutionPayloadEnvelope, header=true.
-func TestPublishExecutionPayloadEnvelope_SSZ_StatefulBlinded(t *testing.T) {
+// SSZ stateful: send SignedWireBlindedSilaPayloadEnvelope, header=true.
+func TestPublishSilaPayloadEnvelope_SSZ_StatefulBlinded(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -416,27 +416,27 @@ func TestPublishExecutionPayloadEnvelope_SSZ_StatefulBlinded(t *testing.T) {
 	require.NoError(t, err)
 
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(&emptypb.Empty{}, nil)
 
 	s := &Server{
 		V1Alpha1ValidatorServer:       v1alpha1Server,
-		ExecutionPayloadEnvelopeCache: envelopeCacheFor(signed),
+		SilaPayloadEnvelopeCache: envelopeCacheFor(signed),
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(sszBody))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(sszBody))
 	req.Header.Set("Content-Type", "application/octet-stream")
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "true")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "true")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 }
 
 // SSZ stateful with no cache entry must fail (cannot reconstruct full).
-func TestPublishExecutionPayloadEnvelope_SSZ_StatefulBlinded_CacheMiss(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_SSZ_StatefulBlinded_CacheMiss(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -449,23 +449,23 @@ func TestPublishExecutionPayloadEnvelope_SSZ_StatefulBlinded_CacheMiss(t *testin
 	require.NoError(t, err)
 
 	s := &Server{
-		ExecutionPayloadEnvelopeCache: cache.NewExecutionPayloadEnvelopeCache(),
+		SilaPayloadEnvelopeCache: cache.NewSilaPayloadEnvelopeCache(),
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(sszBody))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(sszBody))
 	req.Header.Set("Content-Type", "application/octet-stream")
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "true")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "true")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
-	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("no cached execution payload envelope")))
+	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("no cached sila payload envelope")))
 }
 
 // A cached envelope whose HTR differs from the signed blinded envelope must be rejected,
 // even when the beacon_block_root matches.
-func TestPublishExecutionPayloadEnvelope_StatefulBlinded_HTRMismatch(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_StatefulBlinded_HTRMismatch(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -478,20 +478,20 @@ func TestPublishExecutionPayloadEnvelope_StatefulBlinded_HTRMismatch(t *testing.
 	tampered.Message.BuilderIndex = signed.Message.BuilderIndex + 1
 
 	s := &Server{
-		ExecutionPayloadEnvelopeCache: envelopeCacheFor(tampered),
+		SilaPayloadEnvelopeCache: envelopeCacheFor(tampered),
 	}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(body))
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "true")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "true")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusBadRequest, w.Code)
 	assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte("hash tree root does not match")))
 }
 
-func TestPublishExecutionPayloadEnvelope_SSZ_Contents(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_SSZ_Contents(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -499,30 +499,30 @@ func TestPublishExecutionPayloadEnvelope_SSZ_Contents(t *testing.T) {
 
 	ctrl := gomock.NewController(t)
 	signed := testSignedEnvelope()
-	contents := &silapb.SignedExecutionPayloadEnvelopeContents{
-		SignedExecutionPayloadEnvelope: signed,
+	contents := &silapb.SignedSilaPayloadEnvelopeContents{
+		SignedSilaPayloadEnvelope: signed,
 	}
 	sszBody, err := contents.MarshalSSZ()
 	require.NoError(t, err)
 
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-	v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+	v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 		gomock.Any(), gomock.Any(),
 	).Return(&emptypb.Empty{}, nil)
 
 	s := &Server{V1Alpha1ValidatorServer: v1alpha1Server}
-	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope", bytes.NewReader(sszBody))
+	req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope", bytes.NewReader(sszBody))
 	req.Header.Set("Content-Type", "application/octet-stream")
 	req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-	req.Header.Set(api.ExecutionPayloadBlindedHeader, "false")
+	req.Header.Set(api.SilaPayloadBlindedHeader, "false")
 	w := httptest.NewRecorder()
 	w.Body = &bytes.Buffer{}
 
-	s.PublishExecutionPayloadEnvelope(w, req)
+	s.PublishSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
 }
 
-func TestPublishExecutionPayloadEnvelope_BroadcastValidation(t *testing.T) {
+func TestPublishSilaPayloadEnvelope_BroadcastValidation(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
 	cfg := params.BeaconConfig().Copy()
 	cfg.GloasForkEpoch = 0
@@ -533,7 +533,7 @@ func TestPublishExecutionPayloadEnvelope_BroadcastValidation(t *testing.T) {
 	envSlot := primitives.Slot(signed.Message.Payload.SlotNumber)
 	body := blindedJSONBody(t, signed)
 
-	// State that fails gloas.VerifyExecutionPayloadEnvelope (slot mismatch is
+	// State that fails gloas.VerifySilaPayloadEnvelope (slot mismatch is
 	// enough). Lets us exercise the consensus path and assert it actually runs.
 	failingState, err := util.NewBeaconStateGloas()
 	require.NoError(t, err)
@@ -604,7 +604,7 @@ func TestPublishExecutionPayloadEnvelope_BroadcastValidation(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
 			if tc.expectPublish {
-				v1alpha1Server.EXPECT().PublishExecutionPayloadEnvelope(
+				v1alpha1Server.EXPECT().PublishSilaPayloadEnvelope(
 					gomock.Any(), gomock.Any(),
 				).Return(&emptypb.Empty{}, nil)
 			}
@@ -623,15 +623,15 @@ func TestPublishExecutionPayloadEnvelope_BroadcastValidation(t *testing.T) {
 				V1Alpha1ValidatorServer:       v1alpha1Server,
 				ForkchoiceFetcher:             chainSvc,
 				HeadFetcher:                   chainSvc,
-				ExecutionPayloadEnvelopeCache: envelopeCacheFor(signed),
+				SilaPayloadEnvelopeCache: envelopeCacheFor(signed),
 			}
-			req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/execution_payload_envelope"+tc.query, bytes.NewReader(body))
+			req := httptest.NewRequest(http.MethodPost, "/sila/v1/beacon/sila_payload_envelope"+tc.query, bytes.NewReader(body))
 			req.Header.Set(api.VersionHeader, version.String(version.Gloas))
-			req.Header.Set(api.ExecutionPayloadBlindedHeader, "true")
+			req.Header.Set(api.SilaPayloadBlindedHeader, "true")
 			w := httptest.NewRecorder()
 			w.Body = &bytes.Buffer{}
 
-			s.PublishExecutionPayloadEnvelope(w, req)
+			s.PublishSilaPayloadEnvelope(w, req)
 			require.Equal(t, tc.expectedStatus, w.Code)
 			if tc.expectedBody != "" {
 				assert.Equal(t, true, bytes.Contains(w.Body.Bytes(), []byte(tc.expectedBody)))

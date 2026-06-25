@@ -59,7 +59,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 		m = &pb.LightClientBootstrapCapella{
 			Header: &pb.LightClientHeaderCapella{
 				Beacon:          &pb.BeaconBlockHeader{},
-				Execution:       &enginev1.ExecutionPayloadHeaderCapella{},
+				Execution:       &enginev1.SilaPayloadHeaderCapella{},
 				ExecutionBranch: executionBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
@@ -69,7 +69,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 		m = &pb.LightClientBootstrapDeneb{
 			Header: &pb.LightClientHeaderDeneb{
 				Beacon:          &pb.BeaconBlockHeader{},
-				Execution:       &enginev1.ExecutionPayloadHeaderDeneb{},
+				Execution:       &enginev1.SilaPayloadHeaderDeneb{},
 				ExecutionBranch: executionBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
@@ -79,7 +79,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 		m = &pb.LightClientBootstrapElectra{
 			Header: &pb.LightClientHeaderDeneb{
 				Beacon:          &pb.BeaconBlockHeader{},
-				Execution:       &enginev1.ExecutionPayloadHeaderDeneb{},
+				Execution:       &enginev1.SilaPayloadHeaderDeneb{},
 				ExecutionBranch: executionBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
@@ -90,15 +90,15 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 	return light_client.NewWrappedBootstrap(m)
 }
 
-func makeExecutionAndProofDeneb(ctx context.Context, blk interfaces.ReadOnlySignedBeaconBlock) (*enginev1.ExecutionPayloadHeaderDeneb, [][]byte, error) {
+func makeExecutionAndProofDeneb(ctx context.Context, blk interfaces.ReadOnlySignedBeaconBlock) (*enginev1.SilaPayloadHeaderDeneb, [][]byte, error) {
 	if blk.Version() < version.Capella {
-		p, err := execution.EmptyExecutionPayloadHeader(version.Deneb)
+		p, err := execution.EmptySilaPayloadHeader(version.Deneb)
 		if err != nil {
 			return nil, nil, errors.Wrap(err, "could not get payload header")
 		}
-		payloadHeader, ok := p.(*enginev1.ExecutionPayloadHeaderDeneb)
+		payloadHeader, ok := p.(*enginev1.SilaPayloadHeaderDeneb)
 		if !ok {
-			return nil, nil, fmt.Errorf("payload header type %T is not %T", p, &enginev1.ExecutionPayloadHeaderDeneb{})
+			return nil, nil, fmt.Errorf("payload header type %T is not %T", p, &enginev1.SilaPayloadHeaderDeneb{})
 		}
 		payloadProof := emptyPayloadProof()
 
@@ -107,7 +107,7 @@ func makeExecutionAndProofDeneb(ctx context.Context, blk interfaces.ReadOnlySign
 
 	payload, err := blk.Block().Body().Execution()
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "could not get execution payload")
+		return nil, nil, errors.Wrap(err, "could not get sila payload")
 	}
 	transactionsRoot, err := ComputeTransactionsRoot(payload)
 	if err != nil {
@@ -118,7 +118,7 @@ func makeExecutionAndProofDeneb(ctx context.Context, blk interfaces.ReadOnlySign
 		return nil, nil, errors.Wrap(err, "could not get withdrawals root")
 	}
 
-	payloadHeader := &enginev1.ExecutionPayloadHeaderDeneb{
+	payloadHeader := &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       payload.ParentHash(),
 		FeeRecipient:     payload.FeeRecipient(),
 		StateRoot:        payload.StateRoot(),
@@ -154,24 +154,24 @@ func makeExecutionAndProofDeneb(ctx context.Context, blk interfaces.ReadOnlySign
 
 	payloadProof, err := blocks.PayloadProof(ctx, blk.Block())
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "could not get execution payload proof")
+		return nil, nil, errors.Wrap(err, "could not get sila payload proof")
 	}
 
 	return payloadHeader, payloadProof, nil
 }
 
-func makeExecutionAndProofCapella(ctx context.Context, blk interfaces.ReadOnlySignedBeaconBlock) (*enginev1.ExecutionPayloadHeaderCapella, [][]byte, error) {
+func makeExecutionAndProofCapella(ctx context.Context, blk interfaces.ReadOnlySignedBeaconBlock) (*enginev1.SilaPayloadHeaderCapella, [][]byte, error) {
 	if blk.Version() > version.Capella {
-		return nil, nil, fmt.Errorf("unsupported block version %s for capella execution payload", version.String(blk.Version()))
+		return nil, nil, fmt.Errorf("unsupported block version %s for capella sila payload", version.String(blk.Version()))
 	}
 	if blk.Version() < version.Capella {
-		p, err := execution.EmptyExecutionPayloadHeader(version.Capella)
+		p, err := execution.EmptySilaPayloadHeader(version.Capella)
 		if err != nil {
 			return nil, nil, errors.Wrap(err, "could not get payload header")
 		}
-		payloadHeader, ok := p.(*enginev1.ExecutionPayloadHeaderCapella)
+		payloadHeader, ok := p.(*enginev1.SilaPayloadHeaderCapella)
 		if !ok {
-			return nil, nil, fmt.Errorf("payload header type %T is not %T", p, &enginev1.ExecutionPayloadHeaderCapella{})
+			return nil, nil, fmt.Errorf("payload header type %T is not %T", p, &enginev1.SilaPayloadHeaderCapella{})
 		}
 		payloadProof := emptyPayloadProof()
 
@@ -180,7 +180,7 @@ func makeExecutionAndProofCapella(ctx context.Context, blk interfaces.ReadOnlySi
 
 	payload, err := blk.Block().Body().Execution()
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "could not get execution payload")
+		return nil, nil, errors.Wrap(err, "could not get sila payload")
 	}
 	transactionsRoot, err := ComputeTransactionsRoot(payload)
 	if err != nil {
@@ -191,7 +191,7 @@ func makeExecutionAndProofCapella(ctx context.Context, blk interfaces.ReadOnlySi
 		return nil, nil, errors.Wrap(err, "could not get withdrawals root")
 	}
 
-	payloadHeader := &enginev1.ExecutionPayloadHeaderCapella{
+	payloadHeader := &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       payload.ParentHash(),
 		FeeRecipient:     payload.FeeRecipient(),
 		StateRoot:        payload.StateRoot(),
@@ -211,7 +211,7 @@ func makeExecutionAndProofCapella(ctx context.Context, blk interfaces.ReadOnlySi
 
 	payloadProof, err := blocks.PayloadProof(ctx, blk.Block())
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "could not get execution payload proof")
+		return nil, nil, errors.Wrap(err, "could not get sila payload proof")
 	}
 
 	return payloadHeader, payloadProof, nil

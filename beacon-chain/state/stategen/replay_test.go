@@ -33,7 +33,7 @@ type envelopeLookupDB struct {
 	calls       int
 }
 
-func (d *envelopeLookupDB) ExecutionPayloadEnvelope(_ context.Context, _ [32]byte) (*silapb.SignedBlindedExecutionPayloadEnvelope, error) {
+func (d *envelopeLookupDB) SilaPayloadEnvelope(_ context.Context, _ [32]byte) (*silapb.SignedBlindedSilaPayloadEnvelope, error) {
 	d.calls++
 	return nil, d.envelopeErr
 }
@@ -132,7 +132,7 @@ func TestReplayBlocks_LowerSlotBlock(t *testing.T) {
 	assert.Equal(t, targetSlot, newState.Slot(), "Did not advance slots")
 }
 
-func TestReplayBlocks_SkipsExecutionPayloadEnvelopeLookup_PreGloas(t *testing.T) {
+func TestReplayBlocks_SkipsSilaPayloadEnvelopeLookup_PreGloas(t *testing.T) {
 	wrappedDB := &envelopeLookupDB{
 		NoHeadAccessDatabase: testDB.SetupDB(t),
 		envelopeErr:          stderrors.New("db unavailable"),
@@ -148,11 +148,11 @@ func TestReplayBlocks_SkipsExecutionPayloadEnvelopeLookup_PreGloas(t *testing.T)
 	_, err = service.replayBlocks(t.Context(), beaconState, []interfaces.ReadOnlySignedBeaconBlock{wsb}, 1)
 	require.Equal(t, 0, wrappedDB.calls)
 	if err != nil {
-		assert.Equal(t, false, strings.Contains(err.Error(), "could not retrieve execution payload envelope"))
+		assert.Equal(t, false, strings.Contains(err.Error(), "could not retrieve sila payload envelope"))
 	}
 }
 
-func TestReplayBlocks_IgnoresMissingExecutionPayloadEnvelope_Gloas(t *testing.T) {
+func TestReplayBlocks_IgnoresMissingSilaPayloadEnvelope_Gloas(t *testing.T) {
 	wrappedDB := &envelopeLookupDB{
 		NoHeadAccessDatabase: testDB.SetupDB(t),
 		envelopeErr:          db.ErrNotFound,
@@ -169,7 +169,7 @@ func TestReplayBlocks_IgnoresMissingExecutionPayloadEnvelope_Gloas(t *testing.T)
 	// Single-block list means it's the last block, so no envelope lookup is performed.
 	require.Equal(t, 0, wrappedDB.calls)
 	if err != nil {
-		assert.Equal(t, false, strings.Contains(err.Error(), "could not retrieve execution payload envelope"))
+		assert.Equal(t, false, strings.Contains(err.Error(), "could not retrieve sila payload envelope"))
 	}
 }
 

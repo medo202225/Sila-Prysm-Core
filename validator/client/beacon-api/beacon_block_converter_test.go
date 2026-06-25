@@ -276,11 +276,11 @@ func TestGetBeaconBlockConverter_BellatrixError(t *testing.T) {
 			},
 		},
 		{
-			name:                 "nil execution payload",
-			expectedErrorMessage: "execution payload is nil",
+			name:                 "nil sila payload",
+			expectedErrorMessage: "sila payload is nil",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload = nil
+				beaconBlock.Body.SilaPayload = nil
 				return beaconBlock
 			},
 		},
@@ -295,127 +295,127 @@ func TestGetBeaconBlockConverter_BellatrixError(t *testing.T) {
 		},
 		{
 			name:                 "bad parent hash",
-			expectedErrorMessage: "failed to decode execution payload parent hash `foo`",
+			expectedErrorMessage: "failed to decode sila payload parent hash `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.ParentHash = "foo"
+				beaconBlock.Body.SilaPayload.ParentHash = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad fee recipient",
-			expectedErrorMessage: "failed to decode execution payload fee recipient `bar`",
+			expectedErrorMessage: "failed to decode sila payload fee recipient `bar`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.FeeRecipient = "bar"
+				beaconBlock.Body.SilaPayload.FeeRecipient = "bar"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad state root",
-			expectedErrorMessage: "failed to decode execution payload state root `foo`",
+			expectedErrorMessage: "failed to decode sila payload state root `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.StateRoot = "foo"
+				beaconBlock.Body.SilaPayload.StateRoot = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad receipts root",
-			expectedErrorMessage: "failed to decode execution payload receipts root `bar`",
+			expectedErrorMessage: "failed to decode sila payload receipts root `bar`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.ReceiptsRoot = "bar"
+				beaconBlock.Body.SilaPayload.ReceiptsRoot = "bar"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad logs bloom",
-			expectedErrorMessage: "failed to decode execution payload logs bloom `foo`",
+			expectedErrorMessage: "failed to decode sila payload logs bloom `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.LogsBloom = "foo"
+				beaconBlock.Body.SilaPayload.LogsBloom = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad prev randao",
-			expectedErrorMessage: "failed to decode execution payload prev randao `bar`",
+			expectedErrorMessage: "failed to decode sila payload prev randao `bar`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.PrevRandao = "bar"
+				beaconBlock.Body.SilaPayload.PrevRandao = "bar"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad block number",
-			expectedErrorMessage: "failed to parse execution payload block number `foo`",
+			expectedErrorMessage: "failed to parse sila payload block number `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.BlockNumber = "foo"
+				beaconBlock.Body.SilaPayload.BlockNumber = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad gas limit",
-			expectedErrorMessage: "failed to parse execution payload gas limit `bar`",
+			expectedErrorMessage: "failed to parse sila payload gas limit `bar`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.GasLimit = "bar"
+				beaconBlock.Body.SilaPayload.GasLimit = "bar"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad gas used",
-			expectedErrorMessage: "failed to parse execution payload gas used `foo`",
+			expectedErrorMessage: "failed to parse sila payload gas used `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.GasUsed = "foo"
+				beaconBlock.Body.SilaPayload.GasUsed = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad timestamp",
-			expectedErrorMessage: "failed to parse execution payload timestamp `bar`",
+			expectedErrorMessage: "failed to parse sila payload timestamp `bar`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.Timestamp = "bar"
+				beaconBlock.Body.SilaPayload.Timestamp = "bar"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad extra data",
-			expectedErrorMessage: "failed to decode execution payload extra data `foo`",
+			expectedErrorMessage: "failed to decode sila payload extra data `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.ExtraData = "foo"
+				beaconBlock.Body.SilaPayload.ExtraData = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad base fee per gas",
-			expectedErrorMessage: "failed to parse execution payload base fee per gas `bar`",
+			expectedErrorMessage: "failed to parse sila payload base fee per gas `bar`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.BaseFeePerGas = "bar"
+				beaconBlock.Body.SilaPayload.BaseFeePerGas = "bar"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad block hash",
-			expectedErrorMessage: "failed to decode execution payload block hash `foo`",
+			expectedErrorMessage: "failed to decode sila payload block hash `foo`",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.BlockHash = "foo"
+				beaconBlock.Body.SilaPayload.BlockHash = "foo"
 				return beaconBlock
 			},
 		},
 		{
 			name:                 "bad transactions",
-			expectedErrorMessage: "failed to get execution payload transactions",
+			expectedErrorMessage: "failed to get sila payload transactions",
 			generateData: func() *structs.BeaconBlockBellatrix {
 				beaconBlock := testhelpers.GenerateJsonBellatrixBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.Transactions[0] = "bar"
+				beaconBlock.Body.SilaPayload.Transactions[0] = "bar"
 				return beaconBlock
 			},
 		},
@@ -456,11 +456,11 @@ func TestGetBeaconBlockConverter_CapellaError(t *testing.T) {
 			},
 		},
 		{
-			name:                 "nil execution payload",
-			expectedErrorMessage: "execution payload is nil",
+			name:                 "nil sila payload",
+			expectedErrorMessage: "sila payload is nil",
 			generateData: func() *structs.BeaconBlockCapella {
 				beaconBlock := testhelpers.GenerateJsonCapellaBeaconBlock()
-				beaconBlock.Body.ExecutionPayload = nil
+				beaconBlock.Body.SilaPayload = nil
 				return beaconBlock
 			},
 		},
@@ -478,7 +478,7 @@ func TestGetBeaconBlockConverter_CapellaError(t *testing.T) {
 			expectedErrorMessage: "failed to get withdrawals",
 			generateData: func() *structs.BeaconBlockCapella {
 				beaconBlock := testhelpers.GenerateJsonCapellaBeaconBlock()
-				beaconBlock.Body.ExecutionPayload.Withdrawals[0] = nil
+				beaconBlock.Body.SilaPayload.Withdrawals[0] = nil
 				return beaconBlock
 			},
 		},

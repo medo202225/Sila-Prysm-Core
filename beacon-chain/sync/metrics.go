@@ -224,29 +224,29 @@ var (
 			Help: "Count the number of times data columns have been recovered from the execution layer.",
 		},
 	)
-	syncExecutionPayloadEnvelopeArrivalDelaySeconds = promauto.NewHistogram(
+	syncSilaPayloadEnvelopeArrivalDelaySeconds = promauto.NewHistogram(
 		prometheus.HistogramOpts{
-			Name:    "sync_execution_payload_envelope_arrival_delay_seconds",
-			Help:    "Time from slot start to execution payload envelope gossip arrival.",
+			Name:    "sync_sila_payload_envelope_arrival_delay_seconds",
+			Help:    "Time from slot start to sila payload envelope gossip arrival.",
 			Buckets: prometheus.DefBuckets,
 		},
 	)
 	syncPayloadEnvelopeByRangeServedTotal = promauto.NewCounter(
 		prometheus.CounterOpts{
 			Name: "sync_payload_envelope_by_range_served_total",
-			Help: "Count the number of execution payload envelopes by range RPC requests served.",
+			Help: "Count the number of sila payload envelopes by range RPC requests served.",
 		},
 	)
 	syncPayloadEnvelopeByRootServedTotal = promauto.NewCounter(
 		prometheus.CounterOpts{
 			Name: "sync_payload_envelope_by_root_served_total",
-			Help: "Count the number of execution payload envelopes by root RPC requests served.",
+			Help: "Count the number of sila payload envelopes by root RPC requests served.",
 		},
 	)
-	gloasExecutionPayloadEnvelopesRPCRequestsTotal = promauto.NewCounterVec(
+	gloasSilaPayloadEnvelopesRPCRequestsTotal = promauto.NewCounterVec(
 		prometheus.CounterOpts{
-			Name: "gloas_execution_payload_envelopes_rpc_requests_total",
-			Help: "Count execution payload envelope RPC requests by method and outcome.",
+			Name: "gloas_sila_payload_envelopes_rpc_requests_total",
+			Help: "Count sila payload envelope RPC requests by method and outcome.",
 		},
 		[]string{"rpc", "result"},
 	)

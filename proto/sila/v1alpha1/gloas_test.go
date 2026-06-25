@@ -7,10 +7,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
-func TestExecutionPayloadBid_Copy(t *testing.T) {
+func TestSilaPayloadBid_Copy(t *testing.T) {
 	tests := []struct {
 		name string
-		bid  *ExecutionPayloadBid
+		bid  *SilaPayloadBid
 	}{
 		{
 			name: "nil bid",
@@ -18,11 +18,11 @@ func TestExecutionPayloadBid_Copy(t *testing.T) {
 		},
 		{
 			name: "empty bid",
-			bid:  &ExecutionPayloadBid{},
+			bid:  &SilaPayloadBid{},
 		},
 		{
 			name: "fully populated bid",
-			bid: &ExecutionPayloadBid{
+			bid: &SilaPayloadBid{
 				ParentBlockHash:    []byte("parent_block_hash_32_bytes_long!"),
 				ParentBlockRoot:    []byte("parent_block_root_32_bytes_long!"),
 				BlockHash:          []byte("block_hash_32_bytes_are_long!!"),

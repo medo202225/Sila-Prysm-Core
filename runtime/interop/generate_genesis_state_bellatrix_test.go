@@ -12,7 +12,7 @@ import (
 )
 
 func TestGenerateGenesisStateBellatrix(t *testing.T) {
-	ep := &enginev1.ExecutionPayload{
+	ep := &enginev1.SilaPayload{
 		ParentHash:    make([]byte, 32),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     make([]byte, 32),

@@ -11,7 +11,7 @@ go_library(
         "consolidations.go",
         "deposit.go",
         "deposit_request.go",
-        "execution_payload.go",
+        "sila_payload.go",
         "helpers.go",
         "proposer_slashing.go",
         "sync_committee.go",

@@ -38,7 +38,7 @@ func gloasFixture(t *testing.T) (*silapb.DataColumnSidecarGloas, interfaces.Read
 	require.Equal(t, true, len(roSidecars) > 0)
 
 	base := roSidecars[0]
-	bid := util.GenerateTestSignedExecutionPayloadBid(base.Slot())
+	bid := util.GenerateTestSignedSilaPayloadBid(base.Slot())
 	comms, err := roBlock.Block().Body().BlobKzgCommitments()
 	require.NoError(t, err)
 	bid.Message.BlobKzgCommitments = bytesutil.SafeCopy2dBytes(comms)
@@ -50,7 +50,7 @@ func gloasFixture(t *testing.T) (*silapb.DataColumnSidecarGloas, interfaces.Read
 	pb.Block.ParentRoot = parentRoot[:]
 	stateRoot := roBlock.Block().StateRoot()
 	pb.Block.StateRoot = stateRoot[:]
-	pb.Block.Body.SignedExecutionPayloadBid = bid
+	pb.Block.Body.SignedSilaPayloadBid = bid
 
 	signedBlock, err := blocks.NewSignedBeaconBlock(pb)
 	require.NoError(t, err)

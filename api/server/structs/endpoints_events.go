@@ -118,12 +118,12 @@ type ProposerPreferencesEvent struct {
 	Data    *SignedProposerPreferences `json:"data"`
 }
 
-type ExecutionPayloadAvailableEvent struct {
+type SilaPayloadAvailableEvent struct {
 	Slot      string `json:"slot"`
 	BlockRoot string `json:"block_root"`
 }
 
-type ExecutionPayloadEvent struct {
+type SilaPayloadEvent struct {
 	Slot                string `json:"slot"`
 	BuilderIndex        string `json:"builder_index"`
 	BlockHash           string `json:"block_hash"`
@@ -131,7 +131,7 @@ type ExecutionPayloadEvent struct {
 	ExecutionOptimistic bool   `json:"execution_optimistic"`
 }
 
-type ExecutionPayloadGossipEvent struct {
+type SilaPayloadGossipEvent struct {
 	Slot         string `json:"slot"`
 	BuilderIndex string `json:"builder_index"`
 	BlockHash    string `json:"block_hash"`

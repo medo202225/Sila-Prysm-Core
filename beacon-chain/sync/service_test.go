@@ -72,7 +72,7 @@ func TestSyncHandlers_WaitToSync(t *testing.T) {
 		subHandler:                      newSubTopicHandler(),
 		clockWaiter:                     gs,
 		proposerPreferencesCache:        cache.NewProposerPreferencesCache(),
-		highestExecutionPayloadBidCache: cache.NewHighestExecutionPayloadBidCache(),
+		highestSilaPayloadBidCache: cache.NewHighestSilaPayloadBidCache(),
 	}
 
 	topic := "/sila/%x/beacon_block"
@@ -145,7 +145,7 @@ func TestSyncHandlers_WaitTillSynced(t *testing.T) {
 		clockWaiter:                     gs,
 		initialSyncComplete:             make(chan struct{}),
 		proposerPreferencesCache:        cache.NewProposerPreferencesCache(),
-		highestExecutionPayloadBidCache: cache.NewHighestExecutionPayloadBidCache(),
+		highestSilaPayloadBidCache: cache.NewHighestSilaPayloadBidCache(),
 	}
 	r.initCaches()
 
@@ -216,7 +216,7 @@ func TestSyncService_StopCleanly(t *testing.T) {
 		clockWaiter:                     gs,
 		initialSyncComplete:             make(chan struct{}),
 		proposerPreferencesCache:        cache.NewProposerPreferencesCache(),
-		highestExecutionPayloadBidCache: cache.NewHighestExecutionPayloadBidCache(),
+		highestSilaPayloadBidCache: cache.NewHighestSilaPayloadBidCache(),
 	}
 	markInitSyncComplete(t, &r)
 

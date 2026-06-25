@@ -17,8 +17,8 @@ var (
 	feeRecipientBucket                      = []byte("fee-recipient")
 	registrationBucket                      = []byte("registration")
 	stateDiffBucket                         = []byte("state-diff")
-	executionPayloadEnvelopesBucket         = []byte("execution-payload-envelopes")
-	executionPayloadEnvelopeBlockHashBucket = []byte("execution-payload-envelope-block-hash-index")
+	silaPayloadEnvelopesBucket         = []byte("sila-payload-envelopes")
+	silaPayloadEnvelopeBlockHashBucket = []byte("sila-payload-envelope-block-hash-index")
 
 	// Light Client Updates Bucket
 	lightClientUpdatesBucket       = []byte("light-client-updates")
@@ -63,7 +63,7 @@ var (
 	fuluKey                    = []byte("fulu")
 	fuluBlindKey               = []byte("blind-fulu")
 	gloasKey                   = []byte("gloas")
-	// No gloasBlindKey needed - Gloas blocks are never blinded (no execution payload in block body).
+	// No gloasBlindKey needed - Gloas blocks are never blinded (no sila payload in block body).
 
 	// block root included in the beacon state used by weak subjectivity initial sync
 	originCheckpointBlockRootKey = []byte("origin-checkpoint-block-root")

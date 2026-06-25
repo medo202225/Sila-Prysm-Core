@@ -167,7 +167,7 @@ func (bb *BuilderBid) ToProto() (*eth.BuilderBid, error) {
 
 // BuilderBid is part of ExecHeaderResponse for Bellatrix.
 type BuilderBid struct {
-	Header *structs.ExecutionPayloadHeader `json:"header"`
+	Header *structs.SilaPayloadHeader `json:"header"`
 	Value  Uint256                         `json:"value"`
 	Pubkey hexutil.Bytes                   `json:"pubkey"`
 }
@@ -210,7 +210,7 @@ func (bb *BuilderBidCapella) ToProto() (*eth.BuilderBidCapella, error) {
 
 // BuilderBidCapella is field of ExecHeaderResponseCapella.
 type BuilderBidCapella struct {
-	Header *structs.ExecutionPayloadHeaderCapella `json:"header"`
+	Header *structs.SilaPayloadHeaderCapella `json:"header"`
 	Value  Uint256                                `json:"value"`
 	Pubkey hexutil.Bytes                          `json:"pubkey"`
 }
@@ -218,43 +218,43 @@ type BuilderBidCapella struct {
 // ExecPayloadResponseCapella is the builder API /sila/v1/builder/blinded_blocks for Capella.
 type ExecPayloadResponseCapella struct {
 	Version string                          `json:"version"`
-	Data    structs.ExecutionPayloadCapella `json:"data"`
+	Data    structs.SilaPayloadCapella `json:"data"`
 }
 
-// ExecutionPayloadResponse allows for unmarshaling just the Version field of the payload.
-// This allows it to return different ExecutionPayload types based on the version field.
-type ExecutionPayloadResponse struct {
+// SilaPayloadResponse allows for unmarshaling just the Version field of the payload.
+// This allows it to return different SilaPayload types based on the version field.
+type SilaPayloadResponse struct {
 	Version string          `json:"version"`
 	Data    json.RawMessage `json:"data"`
 }
 
-// ParsedPayload can retrieve the underlying protobuf message for the given execution payload response.
+// ParsedPayload can retrieve the underlying protobuf message for the given sila payload response.
 type ParsedPayload interface {
 	PayloadProto() (proto.Message, error)
 }
 
-// BlobBundler can retrieve the underlying blob bundle protobuf message for the given execution payload response.
+// BlobBundler can retrieve the underlying blob bundle protobuf message for the given sila payload response.
 type BlobBundler interface {
 	BundleProto() (*v1.BlobsBundle, error)
 }
 
-// ParsedExecutionRequests can retrieve the underlying execution requests for the given execution payload response.
+// ParsedExecutionRequests can retrieve the underlying execution requests for the given sila payload response.
 type ParsedExecutionRequests interface {
 	ExecutionRequestsProto() (*v1.ExecutionRequests, error)
 }
 
-func (r *ExecutionPayloadResponse) ParsePayload() (ParsedPayload, error) {
+func (r *SilaPayloadResponse) ParsePayload() (ParsedPayload, error) {
 	var toProto ParsedPayload
 	v, err := version.FromString(strings.ToLower(r.Version))
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("unsupported version %s", strings.ToLower(r.Version)))
 	}
 	if v >= version.Deneb {
-		toProto = &ExecutionPayloadDenebAndBlobsBundle{}
+		toProto = &SilaPayloadDenebAndBlobsBundle{}
 	} else if v >= version.Capella {
-		toProto = &structs.ExecutionPayloadCapella{}
+		toProto = &structs.SilaPayloadCapella{}
 	} else if v >= version.Bellatrix {
-		toProto = &structs.ExecutionPayload{}
+		toProto = &structs.SilaPayload{}
 	} else {
 		return nil, fmt.Errorf("unsupported version %s", strings.ToLower(r.Version))
 	}
@@ -267,12 +267,12 @@ func (r *ExecutionPayloadResponse) ParsePayload() (ParsedPayload, error) {
 	return toProto, nil
 }
 
-// ToProto returns a ExecutionPayloadCapella Proto.
-func (r *ExecPayloadResponseCapella) ToProto() (*v1.ExecutionPayloadCapella, error) {
+// ToProto returns a SilaPayloadCapella Proto.
+func (r *ExecPayloadResponseCapella) ToProto() (*v1.SilaPayloadCapella, error) {
 	return r.Data.ToConsensus()
 }
 
-// Withdrawal is a field of ExecutionPayloadCapella.
+// Withdrawal is a field of SilaPayloadCapella.
 type Withdrawal struct {
 	Index          Uint256       `json:"index"`
 	ValidatorIndex Uint256       `json:"validator_index"`
@@ -388,25 +388,25 @@ func (bb *BuilderBidDeneb) ToProto() (*eth.BuilderBidDeneb, error) {
 
 // BuilderBidDeneb is a field of ExecHeaderResponseDeneb.
 type BuilderBidDeneb struct {
-	Header             *structs.ExecutionPayloadHeaderDeneb `json:"header"`
+	Header             *structs.SilaPayloadHeaderDeneb `json:"header"`
 	BlobKzgCommitments []hexutil.Bytes                      `json:"blob_kzg_commitments"`
 	Value              Uint256                              `json:"value"`
 	Pubkey             hexutil.Bytes                        `json:"pubkey"`
 }
 
-// ExecPayloadResponseDeneb the response to the build API /sila/v1/builder/blinded_blocks that includes the version, execution payload object , and blobs bundle object.
+// ExecPayloadResponseDeneb the response to the build API /sila/v1/builder/blinded_blocks that includes the version, sila payload object , and blobs bundle object.
 type ExecPayloadResponseDeneb struct {
 	Version string                               `json:"version"`
-	Data    *ExecutionPayloadDenebAndBlobsBundle `json:"data"`
+	Data    *SilaPayloadDenebAndBlobsBundle `json:"data"`
 }
 
-// ExecutionPayloadDenebAndBlobsBundle the main field used in ExecPayloadResponseDeneb.
-type ExecutionPayloadDenebAndBlobsBundle struct {
-	ExecutionPayload *structs.ExecutionPayloadDeneb `json:"execution_payload"`
+// SilaPayloadDenebAndBlobsBundle the main field used in ExecPayloadResponseDeneb.
+type SilaPayloadDenebAndBlobsBundle struct {
+	SilaPayload *structs.SilaPayloadDeneb `json:"sila_payload"`
 	BlobsBundle      *BlobsBundle                   `json:"blobs_bundle"`
 }
 
-// BlobsBundle is a field in ExecutionPayloadDenebAndBlobsBundle.
+// BlobsBundle is a field in SilaPayloadDenebAndBlobsBundle.
 type BlobsBundle struct {
 	Commitments []hexutil.Bytes `json:"commitments"`
 	Proofs      []hexutil.Bytes `json:"proofs"`
@@ -475,18 +475,18 @@ func FromBundleProto(bundle *v1.BlobsBundle) *BlobsBundle {
 	}
 }
 
-// ToProto returns ExecutionPayloadDeneb Proto and BlobsBundle Proto separately.
-func (r *ExecPayloadResponseDeneb) ToProto() (*v1.ExecutionPayloadDeneb, *v1.BlobsBundle, error) {
+// ToProto returns SilaPayloadDeneb Proto and BlobsBundle Proto separately.
+func (r *ExecPayloadResponseDeneb) ToProto() (*v1.SilaPayloadDeneb, *v1.BlobsBundle, error) {
 	if r.Data == nil {
 		return nil, nil, errors.New("data field in response is empty")
 	}
-	if r.Data.ExecutionPayload == nil {
-		return nil, nil, errors.Wrap(consensusblocks.ErrNilObject, "nil execution payload")
+	if r.Data.SilaPayload == nil {
+		return nil, nil, errors.Wrap(consensusblocks.ErrNilObject, "nil sila payload")
 	}
 	if r.Data.BlobsBundle == nil {
 		return nil, nil, errors.Wrap(consensusblocks.ErrNilObject, "nil blobs bundle")
 	}
-	payload, err := r.Data.ExecutionPayload.ToConsensus()
+	payload, err := r.Data.SilaPayload.ToConsensus()
 	if err != nil {
 		return nil, nil, err
 	}
@@ -497,15 +497,15 @@ func (r *ExecPayloadResponseDeneb) ToProto() (*v1.ExecutionPayloadDeneb, *v1.Blo
 	return payload, bundle, nil
 }
 
-func (r *ExecutionPayloadDenebAndBlobsBundle) PayloadProto() (proto.Message, error) {
-	if r.ExecutionPayload == nil {
-		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil execution payload in combined deneb payload")
+func (r *SilaPayloadDenebAndBlobsBundle) PayloadProto() (proto.Message, error) {
+	if r.SilaPayload == nil {
+		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil sila payload in combined deneb payload")
 	}
-	pb, err := r.ExecutionPayload.ToConsensus()
+	pb, err := r.SilaPayload.ToConsensus()
 	return pb, err
 }
 
-func (r *ExecutionPayloadDenebAndBlobsBundle) BundleProto() (*v1.BlobsBundle, error) {
+func (r *SilaPayloadDenebAndBlobsBundle) BundleProto() (*v1.BlobsBundle, error) {
 	if r.BlobsBundle == nil {
 		return nil, errors.Wrap(consensusblocks.ErrNilObject, "nil blobs bundle")
 	}
@@ -571,7 +571,7 @@ func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*eth.BuilderBidElectra, e
 
 // BuilderBidElectra is a field of ExecHeaderResponseElectra.
 type BuilderBidElectra struct {
-	Header             *structs.ExecutionPayloadHeaderDeneb `json:"header"`
+	Header             *structs.SilaPayloadHeaderDeneb `json:"header"`
 	BlobKzgCommitments []hexutil.Bytes                      `json:"blob_kzg_commitments"`
 	ExecutionRequests  *structs.ExecutionRequests           `json:"execution_requests"`
 	Value              Uint256                              `json:"value"`

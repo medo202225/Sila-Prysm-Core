@@ -98,7 +98,7 @@ func NewGenesisBlockForState(ctx context.Context, st state.BeaconState) (interfa
 						SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 						SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 					},
-					ExecutionPayload: &enginev1.ExecutionPayload{
+					SilaPayload: &enginev1.SilaPayload{
 						ParentHash:    make([]byte, 32),
 						FeeRecipient:  make([]byte, 20),
 						StateRoot:     make([]byte, 32),
@@ -130,7 +130,7 @@ func NewGenesisBlockForState(ctx context.Context, st state.BeaconState) (interfa
 						SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 						SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 					},
-					ExecutionPayload: &enginev1.ExecutionPayloadCapella{
+					SilaPayload: &enginev1.SilaPayloadCapella{
 						ParentHash:    make([]byte, 32),
 						FeeRecipient:  make([]byte, 20),
 						StateRoot:     make([]byte, 32),
@@ -163,7 +163,7 @@ func NewGenesisBlockForState(ctx context.Context, st state.BeaconState) (interfa
 						SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 						SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 					},
-					ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+					SilaPayload: &enginev1.SilaPayloadDeneb{
 						ParentHash:    make([]byte, 32),
 						FeeRecipient:  make([]byte, 20),
 						StateRoot:     make([]byte, 32),
@@ -195,7 +195,7 @@ func NewGenesisBlockForState(ctx context.Context, st state.BeaconState) (interfa
 	case *silapb.BeaconStateGloas:
 		gs := ps.(*silapb.BeaconStateGloas)
 		return blocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockGloas{
-			Block:     gloasGenesisBlock(root, gs.LatestExecutionPayloadBid),
+			Block:     gloasGenesisBlock(root, gs.LatestSilaPayloadBid),
 			Signature: params.BeaconConfig().EmptySignature[:],
 		})
 	default:
@@ -203,15 +203,15 @@ func NewGenesisBlockForState(ctx context.Context, st state.BeaconState) (interfa
 	}
 }
 
-func gloasGenesisBlock(root [fieldparams.RootLength]byte, latestBid *silapb.ExecutionPayloadBid) *silapb.BeaconBlockGloas {
-	// The genesis block body's signed_execution_payload_bid mirrors the state's
-	// latest_execution_payload_bid so the reconstructed block's body_root matches
+func gloasGenesisBlock(root [fieldparams.RootLength]byte, latestBid *silapb.SilaPayloadBid) *silapb.BeaconBlockGloas {
+	// The genesis block body's signed_sila_payload_bid mirrors the state's
+	// latest_sila_payload_bid so the reconstructed block's body_root matches
 	// state.latest_block_header.body_root (which the genesis distribution tool
 	// commits to). Falling back to a zero bid is only useful in tests that
-	// initialize a Gloas state without populating latest_execution_payload_bid.
+	// initialize a Gloas state without populating latest_sila_payload_bid.
 	bidMessage := latestBid.Copy()
 	if bidMessage == nil {
-		bidMessage = &silapb.ExecutionPayloadBid{
+		bidMessage = &silapb.SilaPayloadBid{
 			ParentBlockHash:       make([]byte, 32),
 			ParentBlockRoot:       make([]byte, 32),
 			BlockHash:             make([]byte, 32),
@@ -235,7 +235,7 @@ func gloasGenesisBlock(root [fieldparams.RootLength]byte, latestBid *silapb.Exec
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			SignedExecutionPayloadBid: &silapb.SignedExecutionPayloadBid{
+			SignedSilaPayloadBid: &silapb.SignedSilaPayloadBid{
 				Message:   bidMessage,
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
@@ -264,7 +264,7 @@ func electraGenesisBlock(root [fieldparams.RootLength]byte) *silapb.BeaconBlockE
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+			SilaPayload: &enginev1.SilaPayloadDeneb{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),

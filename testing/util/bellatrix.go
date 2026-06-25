@@ -127,12 +127,12 @@ func GenerateFullBlockBellatrix(
 		return nil, err
 	}
 
-	parentExecution, err := stCopy.LatestExecutionPayloadHeader()
+	parentExecution, err := stCopy.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
 	blockHash := indexToHash(uint64(slot))
-	newExecutionPayload := &enginev1.ExecutionPayload{
+	newSilaPayload := &enginev1.SilaPayload{
 		ParentHash:    parentExecution.BlockHash(),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     params.BeaconConfig().ZeroHash[:],
@@ -200,7 +200,7 @@ func GenerateFullBlockBellatrix(
 			Deposits:          newDeposits,
 			Graffiti:          make([]byte, fieldparams.RootLength),
 			SyncAggregate:     newSyncAggregate,
-			ExecutionPayload:  newExecutionPayload,
+			SilaPayload:  newSilaPayload,
 		},
 	}
 

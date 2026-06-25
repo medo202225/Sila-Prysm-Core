@@ -151,7 +151,7 @@ func (s *Service) setupForkchoiceRoot(st state.BeaconState) error {
 }
 
 // resolveChainPayloadStatus determines which blocks in the chain had their
-// execution payloads delivered by checking if consecutive blocks' bids indicate
+// sila payloads delivered by checking if consecutive blocks' bids indicate
 // payload delivery. For each pair of blocks (chain[i], chain[i+1]), if the next
 // block's bid parentBlockHash equals the current block's bid blockHash, the
 // current block's payload was delivered.
@@ -162,11 +162,11 @@ func resolveChainPayloadStatus(chain []*forkchoicetypes.BlockAndCheckpoints) {
 		if curr.Version() < version.Gloas || next.Version() < version.Gloas {
 			continue
 		}
-		currBid, err := curr.Body().SignedExecutionPayloadBid()
+		currBid, err := curr.Body().SignedSilaPayloadBid()
 		if err != nil || currBid == nil || currBid.Message == nil {
 			continue
 		}
-		nextBid, err := next.Body().SignedExecutionPayloadBid()
+		nextBid, err := next.Body().SignedSilaPayloadBid()
 		if err != nil || nextBid == nil || nextBid.Message == nil {
 			continue
 		}
@@ -189,7 +189,7 @@ func (s *Service) markFinalizedRootFull(chain []*forkchoicetypes.BlockAndCheckpo
 	if firstBlock.Version() < version.Gloas {
 		return nil
 	}
-	firstBid, err := firstBlock.Body().SignedExecutionPayloadBid()
+	firstBid, err := firstBlock.Body().SignedSilaPayloadBid()
 	if err != nil || firstBid == nil || firstBid.Message == nil {
 		return nil
 	}
@@ -200,7 +200,7 @@ func (s *Service) markFinalizedRootFull(chain []*forkchoicetypes.BlockAndCheckpo
 	if fBlock.Block().Version() < version.Gloas {
 		return nil
 	}
-	fBid, err := fBlock.Block().Body().SignedExecutionPayloadBid()
+	fBid, err := fBlock.Block().Body().SignedSilaPayloadBid()
 	if err != nil || fBid == nil || fBid.Message == nil {
 		return nil
 	}

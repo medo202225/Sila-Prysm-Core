@@ -223,7 +223,7 @@ func execHeaderPath(slot primitives.Slot, parentHash [32]byte, pubkey [48]byte) 
 	return b.String(), nil
 }
 
-// GetHeader is used by a proposing validator to request an execution payload header from the Builder node.
+// GetHeader is used by a proposing validator to request an sila payload header from the Builder node.
 func (c *Client) GetHeader(ctx context.Context, slot primitives.Slot, parentHash [32]byte, pubkey [48]byte) (SignedBid, error) {
 	path, err := execHeaderPath(slot, parentHash, pubkey)
 	if err != nil {
@@ -465,14 +465,14 @@ func getVersionsBlockToPayload(blockVersion int) (int, error) {
 }
 
 // SubmitBlindedBlock calls the builder API endpoint that binds the validator to the builder and submits the block.
-// The response is the full execution payload used to create the blinded block.
+// The response is the full sila payload used to create the blinded block.
 func (c *Client) SubmitBlindedBlock(ctx context.Context, sb interfaces.ReadOnlySignedBeaconBlock) (interfaces.ExecutionData, v1.BlobsBundler, error) {
 	body, postOpts, err := c.buildBlindedBlockRequest(sb)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	// post the blinded block - the execution payload response should contain the unblinded payload, along with the
+	// post the blinded block - the sila payload response should contain the unblinded payload, along with the
 	// blobs bundle if it is post deneb.
 	data, header, err := c.do(ctx, http.MethodPost, postBlindedBeaconBlockPath, bytes.NewBuffer(body), http.StatusOK, postOpts)
 	if err != nil {
@@ -505,7 +505,7 @@ func (c *Client) SubmitBlindedBlock(ctx context.Context, sb interfaces.ReadOnlyS
 }
 
 // SubmitBlindedBlockPostFulu calls the builder API endpoint post-Fulu where relays only return status codes.
-// This method is used after the Fulu fork when MEV-boost relays no longer return execution payloads.
+// This method is used after the Fulu fork when MEV-boost relays no longer return sila payloads.
 func (c *Client) SubmitBlindedBlockPostFulu(ctx context.Context, sb interfaces.ReadOnlySignedBeaconBlock) error {
 	body, postOpts, err := c.buildBlindedBlockRequest(sb)
 	if err != nil {
@@ -594,9 +594,9 @@ func (c *Client) parseBlindedBlockResponseSSZ(
 	forkVersion int,
 ) (interfaces.ExecutionData, v1.BlobsBundler, error) {
 	if forkVersion >= version.Fulu {
-		payloadAndBlobs := &v1.ExecutionPayloadDenebAndBlobsBundleV2{}
+		payloadAndBlobs := &v1.SilaPayloadDenebAndBlobsBundleV2{}
 		if err := payloadAndBlobs.UnmarshalSSZ(respBytes); err != nil {
-			return nil, nil, errors.Wrap(err, "unable to unmarshal ExecutionPayloadDenebAndBlobsBundleV2 SSZ")
+			return nil, nil, errors.Wrap(err, "unable to unmarshal SilaPayloadDenebAndBlobsBundleV2 SSZ")
 		}
 		ed, err := blocks.NewWrappedExecutionData(payloadAndBlobs.Payload)
 		if err != nil {
@@ -604,9 +604,9 @@ func (c *Client) parseBlindedBlockResponseSSZ(
 		}
 		return ed, payloadAndBlobs.BlobsBundle, nil
 	} else if forkVersion >= version.Deneb {
-		payloadAndBlobs := &v1.ExecutionPayloadDenebAndBlobsBundle{}
+		payloadAndBlobs := &v1.SilaPayloadDenebAndBlobsBundle{}
 		if err := payloadAndBlobs.UnmarshalSSZ(respBytes); err != nil {
-			return nil, nil, errors.Wrap(err, "unable to unmarshal ExecutionPayloadDenebAndBlobsBundle SSZ")
+			return nil, nil, errors.Wrap(err, "unable to unmarshal SilaPayloadDenebAndBlobsBundle SSZ")
 		}
 		ed, err := blocks.NewWrappedExecutionData(payloadAndBlobs.Payload)
 		if err != nil {
@@ -614,9 +614,9 @@ func (c *Client) parseBlindedBlockResponseSSZ(
 		}
 		return ed, payloadAndBlobs.BlobsBundle, nil
 	} else if forkVersion >= version.Capella {
-		payload := &v1.ExecutionPayloadCapella{}
+		payload := &v1.SilaPayloadCapella{}
 		if err := payload.UnmarshalSSZ(respBytes); err != nil {
-			return nil, nil, errors.Wrap(err, "unable to unmarshal ExecutionPayloadCapella SSZ")
+			return nil, nil, errors.Wrap(err, "unable to unmarshal SilaPayloadCapella SSZ")
 		}
 		ed, err := blocks.NewWrappedExecutionData(payload)
 		if err != nil {
@@ -624,9 +624,9 @@ func (c *Client) parseBlindedBlockResponseSSZ(
 		}
 		return ed, nil, nil
 	} else if forkVersion >= version.Bellatrix {
-		payload := &v1.ExecutionPayload{}
+		payload := &v1.SilaPayload{}
 		if err := payload.UnmarshalSSZ(respBytes); err != nil {
-			return nil, nil, errors.Wrap(err, "unable to unmarshal ExecutionPayload SSZ")
+			return nil, nil, errors.Wrap(err, "unable to unmarshal SilaPayload SSZ")
 		}
 		ed, err := blocks.NewWrappedExecutionData(payload)
 		if err != nil {
@@ -642,9 +642,9 @@ func (c *Client) parseBlindedBlockResponseJSON(
 	respBytes []byte,
 	forkVersion int,
 ) (interfaces.ExecutionData, *v1.BlobsBundle, error) {
-	ep := &ExecutionPayloadResponse{}
+	ep := &SilaPayloadResponse{}
 	if err := json.Unmarshal(respBytes, ep); err != nil {
-		return nil, nil, errors.Wrap(err, "error unmarshaling ExecutionPayloadResponse")
+		return nil, nil, errors.Wrap(err, "error unmarshaling SilaPayloadResponse")
 	}
 	pp, err := ep.ParsePayload()
 	if err != nil {

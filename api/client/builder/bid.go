@@ -123,7 +123,7 @@ func WrappedBuilderBid(p *silapb.BuilderBid) (Bid, error) {
 
 // Header --
 func (b builderBid) Header() (interfaces.ExecutionData, error) {
-	return blocks.WrappedExecutionPayloadHeader(b.p.Header)
+	return blocks.WrappedSilaPayloadHeader(b.p.Header)
 }
 
 // Version --
@@ -172,7 +172,7 @@ func WrappedBuilderBidCapella(p *silapb.BuilderBidCapella) (Bid, error) {
 // Header returns the execution data interface.
 func (b builderBidCapella) Header() (interfaces.ExecutionData, error) {
 	// We have to convert big endian to little endian because the value is coming from the execution layer.
-	return blocks.WrappedExecutionPayloadHeaderCapella(b.p.Header)
+	return blocks.WrappedSilaPayloadHeaderCapella(b.p.Header)
 }
 
 // Version --
@@ -251,7 +251,7 @@ func (b builderBidDeneb) HashTreeRootWith(hh *ssz.Hasher) error {
 // Header --
 func (b builderBidDeneb) Header() (interfaces.ExecutionData, error) {
 	// We have to convert big endian to little endian because the value is coming from the execution layer.
-	return blocks.WrappedExecutionPayloadHeaderDeneb(b.p.Header)
+	return blocks.WrappedSilaPayloadHeaderDeneb(b.p.Header)
 }
 
 // BlobKzgCommitments --
@@ -338,7 +338,7 @@ func (b builderBidElectra) HashTreeRootWith(hh *ssz.Hasher) error {
 // Header --
 func (b builderBidElectra) Header() (interfaces.ExecutionData, error) {
 	// We have to convert big endian to little endian because the value is coming from the execution layer.
-	return blocks.WrappedExecutionPayloadHeaderDeneb(b.p.Header)
+	return blocks.WrappedSilaPayloadHeaderDeneb(b.p.Header)
 }
 
 // ExecutionRequests --

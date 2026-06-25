@@ -20,7 +20,7 @@ type RODataColumn struct {
 	fulu                *silapb.DataColumnSidecar
 	gloas               *silapb.DataColumnSidecarGloas
 	root                [fieldparams.RootLength]byte
-	bidCommitmentsGloas [][]byte // KZG commitments from the block's execution payload bid.
+	bidCommitmentsGloas [][]byte // KZG commitments from the block's sila payload bid.
 }
 
 // NewRODataColumn creates a new RODataColumn from a Fulu DataColumnSidecar.

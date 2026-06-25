@@ -743,8 +743,8 @@ func HydrateBeaconBlockBodyBellatrix(b *silapb.BeaconBlockBodyBellatrix) *silapb
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = &enginev1.ExecutionPayload{
+	if b.SilaPayload == nil {
+		b.SilaPayload = &enginev1.SilaPayload{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -810,8 +810,8 @@ func HydrateBlindedBeaconBlockBodyBellatrix(b *silapb.BlindedBeaconBlockBodyBell
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = &enginev1.ExecutionPayloadHeader{
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = &enginev1.SilaPayloadHeader{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -881,8 +881,8 @@ func HydrateBeaconBlockBodyCapella(b *silapb.BeaconBlockBodyCapella) *silapb.Bea
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = &enginev1.ExecutionPayloadCapella{
+	if b.SilaPayload == nil {
+		b.SilaPayload = &enginev1.SilaPayloadCapella{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -949,8 +949,8 @@ func HydrateBlindedBeaconBlockBodyCapella(b *silapb.BlindedBeaconBlockBodyCapell
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderCapella{
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = &enginev1.SilaPayloadHeaderCapella{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1031,8 +1031,8 @@ func HydrateBeaconBlockBodyDeneb(b *silapb.BeaconBlockBodyDeneb) *silapb.BeaconB
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = &enginev1.ExecutionPayloadDeneb{
+	if b.SilaPayload == nil {
+		b.SilaPayload = &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1083,8 +1083,8 @@ func HydrateBlindedBeaconBlockBodyDeneb(b *silapb.BlindedBeaconBlockBodyDeneb) *
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderDeneb{
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1181,8 +1181,8 @@ func HydrateBeaconBlockBodyElectra(b *silapb.BeaconBlockBodyElectra) *silapb.Bea
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = &enginev1.ExecutionPayloadDeneb{
+	if b.SilaPayload == nil {
+		b.SilaPayload = &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1268,8 +1268,8 @@ func HydrateBlindedBeaconBlockBodyElectra(b *silapb.BlindedBeaconBlockBodyElectr
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderDeneb{
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1386,8 +1386,8 @@ func HydrateBeaconBlockBodyFulu(b *silapb.BeaconBlockBodyElectra) *silapb.Beacon
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayload == nil {
-		b.ExecutionPayload = &enginev1.ExecutionPayloadDeneb{
+	if b.SilaPayload == nil {
+		b.SilaPayload = &enginev1.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -1455,8 +1455,8 @@ func HydrateBlindedBeaconBlockBodyFulu(b *silapb.BlindedBeaconBlockBodyElectra) 
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	if b.ExecutionPayloadHeader == nil {
-		b.ExecutionPayloadHeader = &enginev1.ExecutionPayloadHeaderDeneb{
+	if b.SilaPayloadHeader == nil {
+		b.SilaPayloadHeader = &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       make([]byte, 32),
 			FeeRecipient:     make([]byte, 20),
 			StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1527,7 +1527,7 @@ func HydrateBeaconBlockBodyGloas(b *silapb.BeaconBlockBodyGloas) *silapb.BeaconB
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		}
 	}
-	b.SignedExecutionPayloadBid = HydrateSignedExecutionPayloadBid(b.SignedExecutionPayloadBid)
+	b.SignedSilaPayloadBid = HydrateSignedSilaPayloadBid(b.SignedSilaPayloadBid)
 	if b.PayloadAttestations == nil {
 		b.PayloadAttestations = make([]*silapb.PayloadAttestation, 0)
 	}
@@ -1537,24 +1537,24 @@ func HydrateBeaconBlockBodyGloas(b *silapb.BeaconBlockBodyGloas) *silapb.BeaconB
 	return b
 }
 
-// HydrateSignedExecutionPayloadBid hydrates a signed execution payload bid with correct field length sizes
+// HydrateSignedSilaPayloadBid hydrates a signed sila payload bid with correct field length sizes
 // to comply with fssz marshalling and unmarshalling rules.
-func HydrateSignedExecutionPayloadBid(b *silapb.SignedExecutionPayloadBid) *silapb.SignedExecutionPayloadBid {
+func HydrateSignedSilaPayloadBid(b *silapb.SignedSilaPayloadBid) *silapb.SignedSilaPayloadBid {
 	if b == nil {
-		b = &silapb.SignedExecutionPayloadBid{}
+		b = &silapb.SignedSilaPayloadBid{}
 	}
 	if b.Signature == nil {
 		b.Signature = make([]byte, fieldparams.BLSSignatureLength)
 	}
-	b.Message = HydrateExecutionPayloadBid(b.Message)
+	b.Message = HydrateSilaPayloadBid(b.Message)
 	return b
 }
 
-// HydrateExecutionPayloadBid hydrates an execution payload bid with correct field length sizes
+// HydrateSilaPayloadBid hydrates an sila payload bid with correct field length sizes
 // to comply with fssz marshalling and unmarshalling rules.
-func HydrateExecutionPayloadBid(b *silapb.ExecutionPayloadBid) *silapb.ExecutionPayloadBid {
+func HydrateSilaPayloadBid(b *silapb.SilaPayloadBid) *silapb.SilaPayloadBid {
 	if b == nil {
-		b = &silapb.ExecutionPayloadBid{}
+		b = &silapb.SilaPayloadBid{}
 	}
 	if b.ParentBlockHash == nil {
 		b.ParentBlockHash = make([]byte, fieldparams.RootLength)
@@ -1634,9 +1634,9 @@ func GenerateTestPayloadAttestations(count int, slot primitives.Slot) []*silapb.
 	return attestations
 }
 
-// GenerateTestSignedExecutionPayloadBid generates a signed execution payload bid with non-zero test values.
+// GenerateTestSignedSilaPayloadBid generates a signed sila payload bid with non-zero test values.
 // This is useful for testing Gloas-specific fields.
-func GenerateTestSignedExecutionPayloadBid(slot primitives.Slot) *silapb.SignedExecutionPayloadBid {
+func GenerateTestSignedSilaPayloadBid(slot primitives.Slot) *silapb.SignedSilaPayloadBid {
 	parentBlockHash := bytesutil.PadTo([]byte{0x01}, fieldparams.RootLength)
 	parentBlockRoot := bytesutil.PadTo([]byte{0x02}, fieldparams.RootLength)
 	blockHash := bytesutil.PadTo([]byte{0x03}, fieldparams.RootLength)
@@ -1645,8 +1645,8 @@ func GenerateTestSignedExecutionPayloadBid(slot primitives.Slot) *silapb.SignedE
 	blobKzgCommitment := bytesutil.PadTo([]byte{0x06}, fieldparams.BLSPubkeyLength)
 	signature := bytesutil.PadTo([]byte{0x07}, fieldparams.BLSSignatureLength)
 
-	return &silapb.SignedExecutionPayloadBid{
-		Message: &silapb.ExecutionPayloadBid{
+	return &silapb.SignedSilaPayloadBid{
+		Message: &silapb.SilaPayloadBid{
 			Slot:                  slot,
 			BuilderIndex:          1,
 			ParentBlockHash:       parentBlockHash,

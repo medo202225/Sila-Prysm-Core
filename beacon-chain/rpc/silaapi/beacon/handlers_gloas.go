@@ -29,11 +29,11 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// GetExecutionPayloadEnvelope retrieves a full execution payload envelope by beacon block root.
-// The blinded envelope is fetched from the DB and the full execution payload is reconstructed
+// GetSilaPayloadEnvelope retrieves a full sila payload envelope by beacon block root.
+// The blinded envelope is fetched from the DB and the full sila payload is reconstructed
 // from the EL via sila_getBlockByHash.
-func (s *Server) GetExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
-	ctx, span := trace.StartSpan(r.Context(), "beacon.GetExecutionPayloadEnvelope")
+func (s *Server) GetSilaPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
+	ctx, span := trace.StartSpan(r.Context(), "beacon.GetSilaPayloadEnvelope")
 	defer span.End()
 
 	blockID := r.PathValue("block_id")
@@ -47,18 +47,18 @@ func (s *Server) GetExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	blinded, err := s.BeaconDB.ExecutionPayloadEnvelope(ctx, root)
+	blinded, err := s.BeaconDB.SilaPayloadEnvelope(ctx, root)
 	if err != nil {
 		if errors.Is(err, db.ErrNotFound) {
-			httputil.HandleError(w, "execution payload envelope not found", http.StatusNotFound)
+			httputil.HandleError(w, "sila payload envelope not found", http.StatusNotFound)
 			return
 		}
-		httputil.HandleError(w, "could not retrieve execution payload envelope: "+err.Error(), http.StatusInternalServerError)
+		httputil.HandleError(w, "could not retrieve sila payload envelope: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	full, err := s.ExecutionReconstructor.ReconstructExecutionPayloadEnvelope(ctx, blinded)
+	full, err := s.ExecutionReconstructor.ReconstructSilaPayloadEnvelope(ctx, blinded)
 	if err != nil {
-		httputil.HandleError(w, "could not reconstruct execution payload envelope: "+err.Error(), http.StatusInternalServerError)
+		httputil.HandleError(w, "could not reconstruct sila payload envelope: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -81,12 +81,12 @@ func (s *Server) GetExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Requ
 	}
 	finalized := s.FinalizationFetcher.IsFinalized(ctx, root)
 
-	jsonEnvelope, err := structs.SignedExecutionPayloadEnvelopeFromConsensus(full)
+	jsonEnvelope, err := structs.SignedSilaPayloadEnvelopeFromConsensus(full)
 	if err != nil {
 		httputil.HandleError(w, "could not convert envelope to JSON: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	httputil.WriteJson(w, &structs.GetExecutionPayloadEnvelopeResponse{
+	httputil.WriteJson(w, &structs.GetSilaPayloadEnvelopeResponse{
 		Version:             version.String(version.Gloas),
 		ExecutionOptimistic: isOptimistic,
 		Finalized:           finalized,
@@ -94,11 +94,11 @@ func (s *Server) GetExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Requ
 	})
 }
 
-// PublishExecutionPayloadEnvelope broadcasts a signed envelope. Eth-Execution-Payload-Blinded
+// PublishSilaPayloadEnvelope broadcasts a signed envelope. Sila-Payload-Blinded
 // selects the body: true=blinded (stateful, BN reconstructs from cache), false=contents (stateless).
-// Endpoint: POST /sila/v1/beacon/execution_payload_envelopes
-func (s *Server) PublishExecutionPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
-	ctx, span := trace.StartSpan(r.Context(), "beacon.PublishExecutionPayloadEnvelope")
+// Endpoint: POST /sila/v1/beacon/sila_payload_envelopes
+func (s *Server) PublishSilaPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
+	ctx, span := trace.StartSpan(r.Context(), "beacon.PublishSilaPayloadEnvelope")
 	defer span.End()
 	versionHeader := r.Header.Get(api.VersionHeader)
 	if versionHeader == "" {
@@ -110,14 +110,14 @@ func (s *Server) PublishExecutionPayloadEnvelope(w http.ResponseWriter, r *http.
 		httputil.HandleError(w, api.VersionHeader+" header must be gloas or later", http.StatusBadRequest)
 		return
 	}
-	blindedHeader := r.Header.Get(api.ExecutionPayloadBlindedHeader)
+	blindedHeader := r.Header.Get(api.SilaPayloadBlindedHeader)
 	if blindedHeader == "" {
-		httputil.HandleError(w, api.ExecutionPayloadBlindedHeader+" header is required", http.StatusBadRequest)
+		httputil.HandleError(w, api.SilaPayloadBlindedHeader+" header is required", http.StatusBadRequest)
 		return
 	}
 	isBlinded, err := strconv.ParseBool(blindedHeader)
 	if err != nil {
-		httputil.HandleError(w, "invalid "+api.ExecutionPayloadBlindedHeader+" value: "+err.Error(), http.StatusBadRequest)
+		httputil.HandleError(w, "invalid "+api.SilaPayloadBlindedHeader+" value: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -137,14 +137,14 @@ func (s *Server) PublishExecutionPayloadEnvelope(w http.ResponseWriter, r *http.
 // publishBlindedEnvelope reconstructs the full envelope from cache by beacon_block_root.
 // HTR(blinded) == HTR(full), so the validator signature stays valid.
 func (s *Server) publishBlindedEnvelope(ctx context.Context, w http.ResponseWriter, r *http.Request, body []byte) {
-	signedBlinded := &eth.SignedWireBlindedExecutionPayloadEnvelope{}
+	signedBlinded := &eth.SignedWireBlindedSilaPayloadEnvelope{}
 	if httputil.IsRequestSsz(r) {
 		if err := signedBlinded.UnmarshalSSZ(body); err != nil {
 			httputil.HandleError(w, "could not decode SSZ blinded envelope: "+err.Error(), http.StatusBadRequest)
 			return
 		}
 	} else {
-		var jsonBlinded structs.SignedBlindedExecutionPayloadEnvelope
+		var jsonBlinded structs.SignedBlindedSilaPayloadEnvelope
 		if err := json.Unmarshal(body, &jsonBlinded); err != nil {
 			httputil.HandleError(w, "could not decode JSON blinded envelope: "+err.Error(), http.StatusBadRequest)
 			return
@@ -161,9 +161,9 @@ func (s *Server) publishBlindedEnvelope(ctx context.Context, w http.ResponseWrit
 		return
 	}
 
-	cached, ok := s.ExecutionPayloadEnvelopeCache.Contents()
+	cached, ok := s.SilaPayloadEnvelopeCache.Contents()
 	if !ok || cached.Envelope == nil {
-		httputil.HandleError(w, "no cached execution payload envelope to reconstruct from", http.StatusBadRequest)
+		httputil.HandleError(w, "no cached sila payload envelope to reconstruct from", http.StatusBadRequest)
 		return
 	}
 	if !bytes.Equal(cached.Envelope.BeaconBlockRoot, signedBlinded.Message.BeaconBlockRoot) {
@@ -185,7 +185,7 @@ func (s *Server) publishBlindedEnvelope(ctx context.Context, w http.ResponseWrit
 		return
 	}
 
-	full := &eth.SignedExecutionPayloadEnvelope{
+	full := &eth.SignedSilaPayloadEnvelope{
 		Message:   cached.Envelope,
 		Signature: signedBlinded.Signature,
 	}
@@ -194,7 +194,7 @@ func (s *Server) publishBlindedEnvelope(ctx context.Context, w http.ResponseWrit
 		return
 	}
 
-	if _, err := s.V1Alpha1ValidatorServer.PublishExecutionPayloadEnvelope(ctx, full); err != nil {
+	if _, err := s.V1Alpha1ValidatorServer.PublishSilaPayloadEnvelope(ctx, full); err != nil {
 		writeEnvelopePublishError(w, err)
 		return
 	}
@@ -215,50 +215,50 @@ func writeEnvelopePublishError(w http.ResponseWriter, err error) {
 		}
 		return
 	}
-	httputil.HandleError(w, "could not publish execution payload envelope: "+err.Error(), http.StatusInternalServerError)
+	httputil.HandleError(w, "could not publish sila payload envelope: "+err.Error(), http.StatusInternalServerError)
 }
 
 // publishEnvelopeContents handles the stateless flow (header=false).
 func (s *Server) publishEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, body []byte) {
 	if httputil.IsRequestSsz(r) {
-		contents := &eth.SignedExecutionPayloadEnvelopeContents{}
+		contents := &eth.SignedSilaPayloadEnvelopeContents{}
 		if err := contents.UnmarshalSSZ(body); err != nil {
 			httputil.HandleError(w, "could not decode SSZ envelope contents: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		s.publishExecutionPayloadEnvelopeContentsSSZ(ctx, w, r, contents)
+		s.publishSilaPayloadEnvelopeContentsSSZ(ctx, w, r, contents)
 		return
 	}
-	s.publishExecutionPayloadEnvelopeContents(ctx, w, r, body)
+	s.publishSilaPayloadEnvelopeContents(ctx, w, r, body)
 }
 
-// publishExecutionPayloadEnvelopeContents handles the JSON stateless variant.
-func (s *Server) publishExecutionPayloadEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, body []byte) {
-	var contents structs.SignedExecutionPayloadEnvelopeContents
+// publishSilaPayloadEnvelopeContents handles the JSON stateless variant.
+func (s *Server) publishSilaPayloadEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, body []byte) {
+	var contents structs.SignedSilaPayloadEnvelopeContents
 	if err := json.Unmarshal(body, &contents); err != nil {
 		httputil.HandleError(w, "could not decode envelope contents: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 	signed, kzgProofs, blobs, err := contents.ToConsensus()
 	if err != nil {
-		httputil.HandleError(w, "invalid signed execution payload envelope contents: "+err.Error(), http.StatusBadRequest)
+		httputil.HandleError(w, "invalid signed sila payload envelope contents: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 	s.processEnvelopeContents(ctx, w, r, signed, kzgProofs, blobs)
 }
 
-// publishExecutionPayloadEnvelopeContentsSSZ handles the SSZ stateless variant.
-func (s *Server) publishExecutionPayloadEnvelopeContentsSSZ(ctx context.Context, w http.ResponseWriter, r *http.Request, contents *eth.SignedExecutionPayloadEnvelopeContents) {
-	if contents == nil || contents.SignedExecutionPayloadEnvelope == nil {
-		httputil.HandleError(w, "nil signed execution payload envelope contents", http.StatusBadRequest)
+// publishSilaPayloadEnvelopeContentsSSZ handles the SSZ stateless variant.
+func (s *Server) publishSilaPayloadEnvelopeContentsSSZ(ctx context.Context, w http.ResponseWriter, r *http.Request, contents *eth.SignedSilaPayloadEnvelopeContents) {
+	if contents == nil || contents.SignedSilaPayloadEnvelope == nil {
+		httputil.HandleError(w, "nil signed sila payload envelope contents", http.StatusBadRequest)
 		return
 	}
-	s.processEnvelopeContents(ctx, w, r, contents.SignedExecutionPayloadEnvelope, contents.KzgProofs, contents.Blobs)
+	s.processEnvelopeContents(ctx, w, r, contents.SignedSilaPayloadEnvelope, contents.KzgProofs, contents.Blobs)
 }
 
 // processEnvelopeContents verifies caller-supplied blobs/proofs, broadcasts
 // derived sidecars, then delegates the envelope to the bare publish path.
-func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *eth.SignedExecutionPayloadEnvelope, kzgProofs, blobs [][]byte) {
+func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *eth.SignedSilaPayloadEnvelope, kzgProofs, blobs [][]byte) {
 	if !s.validateEnvelopeBroadcast(ctx, w, r, signed) {
 		return
 	}
@@ -294,7 +294,7 @@ func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWri
 		}
 	}
 
-	if _, err := s.V1Alpha1ValidatorServer.PublishExecutionPayloadEnvelope(ctx, signed); err != nil {
+	if _, err := s.V1Alpha1ValidatorServer.PublishSilaPayloadEnvelope(ctx, signed); err != nil {
 		writeEnvelopePublishError(w, err)
 		return
 	}
@@ -311,7 +311,7 @@ func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWri
 //     path requires envRoot to equal head.
 //   - consensus_and_equivocation: consensus + reject if a different beacon
 //     block at the envelope's slot has already been received.
-func (s *Server) validateEnvelopeBroadcast(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *eth.SignedExecutionPayloadEnvelope) bool {
+func (s *Server) validateEnvelopeBroadcast(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *eth.SignedSilaPayloadEnvelope) bool {
 	level := r.URL.Query().Get(broadcastValidationQueryParam)
 	switch level {
 	case "", broadcastValidationGossip:
@@ -352,12 +352,12 @@ func (s *Server) validateEnvelopeBroadcast(ctx context.Context, w http.ResponseW
 		httputil.HandleError(w, "could not get head state: "+err.Error(), http.StatusInternalServerError)
 		return false
 	}
-	roSigned, err := consensusblocks.WrappedROSignedExecutionPayloadEnvelope(signed)
+	roSigned, err := consensusblocks.WrappedROSignedSilaPayloadEnvelope(signed)
 	if err != nil {
 		httputil.HandleError(w, "could not wrap signed envelope: "+err.Error(), http.StatusInternalServerError)
 		return false
 	}
-	if err := gloas.VerifyExecutionPayloadEnvelope(ctx, st, roSigned); err != nil {
+	if err := gloas.VerifySilaPayloadEnvelope(ctx, st, roSigned); err != nil {
 		httputil.HandleError(w, "consensus validation failed: "+err.Error(), http.StatusBadRequest)
 		return false
 	}
@@ -384,9 +384,9 @@ func verifyCellProofs(blobs [][]byte, flatProofs [][]byte) error {
 	return kzg.VerifyCellKZGProofBatchFromBlobData(blobs, commitments, flatProofs, fieldparams.NumberOfColumns)
 }
 
-// PublishSignedExecutionPayloadBid broadcasts a signed execution payload bid to the P2P network.
-func (s *Server) PublishSignedExecutionPayloadBid(w http.ResponseWriter, r *http.Request) {
-	ctx, span := trace.StartSpan(r.Context(), "beacon.PublishSignedExecutionPayloadBid")
+// PublishSignedSilaPayloadBid broadcasts a signed sila payload bid to the P2P network.
+func (s *Server) PublishSignedSilaPayloadBid(w http.ResponseWriter, r *http.Request) {
+	ctx, span := trace.StartSpan(r.Context(), "beacon.PublishSignedSilaPayloadBid")
 	defer span.End()
 
 	if shared.IsSyncing(ctx, w, s.SyncChecker, s.HeadFetcher, s.TimeFetcher, s.OptimisticModeFetcher) {
@@ -399,20 +399,20 @@ func (s *Server) PublishSignedExecutionPayloadBid(w http.ResponseWriter, r *http
 		return
 	}
 
-	var signedBid *eth.SignedExecutionPayloadBid
+	var signedBid *eth.SignedSilaPayloadBid
 	if httputil.IsRequestSsz(r) {
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			httputil.HandleError(w, "Could not read request body: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		signedBid = &eth.SignedExecutionPayloadBid{}
+		signedBid = &eth.SignedSilaPayloadBid{}
 		if err := signedBid.UnmarshalSSZ(body); err != nil {
 			httputil.HandleError(w, "Could not unmarshal SSZ: "+err.Error(), http.StatusBadRequest)
 			return
 		}
 	} else {
-		var jsonBid structs.SignedExecutionPayloadBid
+		var jsonBid structs.SignedSilaPayloadBid
 		if err := json.NewDecoder(r.Body).Decode(&jsonBid); err != nil {
 			if errors.Is(err, io.EOF) {
 				httputil.HandleError(w, "No data submitted", http.StatusBadRequest)
@@ -430,7 +430,7 @@ func (s *Server) PublishSignedExecutionPayloadBid(w http.ResponseWriter, r *http
 	}
 
 	if err := s.Broadcaster.Broadcast(ctx, signedBid); err != nil {
-		httputil.HandleError(w, "Could not broadcast execution payload bid: "+err.Error(), http.StatusInternalServerError)
+		httputil.HandleError(w, "Could not broadcast sila payload bid: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 }

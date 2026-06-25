@@ -33,10 +33,10 @@ const (
 	LightClientOptimisticUpdate
 	// PayloadAttributes events are fired upon a missed slot or new head.
 	PayloadAttributes
-	// ExecutionPayloadAvailable is sent when a new execution payload is available (without EL validation results).
-	ExecutionPayloadAvailable
-	// ExecutionPayloadProcessed is sent after a payload envelope has been processed.
-	ExecutionPayloadProcessed
+	// SilaPayloadAvailable is sent when a new sila payload is available (without EL validation results).
+	SilaPayloadAvailable
+	// SilaPayloadProcessed is sent after a payload envelope has been processed.
+	SilaPayloadProcessed
 )
 
 // BlockProcessedData is the data sent with BlockProcessed events.
@@ -77,14 +77,14 @@ type InitializedData struct {
 	GenesisValidatorsRoot []byte
 }
 
-// ExecutionPayloadAvailableData is the data sent with ExecutionPayloadAvailable events.
-type ExecutionPayloadAvailableData struct {
+// SilaPayloadAvailableData is the data sent with SilaPayloadAvailable events.
+type SilaPayloadAvailableData struct {
 	Slot      primitives.Slot
 	BlockRoot [32]byte
 }
 
-// ExecutionPayloadProcessedData is the data sent with ExecutionPayloadProcessed events.
-type ExecutionPayloadProcessedData struct {
+// SilaPayloadProcessedData is the data sent with SilaPayloadProcessed events.
+type SilaPayloadProcessedData struct {
 	Slot         primitives.Slot
 	BuilderIndex primitives.BuilderIndex
 	BlockHash    [32]byte

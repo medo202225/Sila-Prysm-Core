@@ -6,7 +6,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
-// payloadAvailability releases per-slot waiters when an execution_payload_available
+// payloadAvailability releases per-slot waiters when an sila_payload_available
 // event is received, so PTC members can attest as soon as the payload and blobs are
 // available rather than waiting for the attestation deadline.
 type payloadAvailability struct {

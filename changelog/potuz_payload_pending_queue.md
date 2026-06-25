@@ -1,2 +1,2 @@
 ### Added
-- Add an execution payload envelope pending queue for Gloas.
+- Add an sila payload envelope pending queue for Gloas.

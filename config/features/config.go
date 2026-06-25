@@ -63,7 +63,7 @@ type Flags struct {
 	EnableSlashingProtectionPruning bool // Enable slashing protection pruning for the validator client.
 	EnableMinimalSlashingProtection bool // Enable minimal slashing protection database for the validator client.
 
-	SaveFullExecutionPayloads bool // Save full beacon blocks with execution payloads in the database.
+	SaveFullSilaPayloads bool // Save full beacon blocks with sila payloads in the database.
 	EnableStartOptimistic     bool // EnableStartOptimistic treats every block as optimistic at startup.
 
 	DisableResourceManager     bool // Disables running the node with libp2p's resource manager.
@@ -233,9 +233,9 @@ func ConfigureBeaconChain(ctx *cli.Context) error {
 		logEnabled(disableStakinContractCheck)
 		cfg.DisableStakinContractCheck = true
 	}
-	if ctx.Bool(SaveFullExecutionPayloads.Name) {
-		logEnabled(SaveFullExecutionPayloads)
-		cfg.SaveFullExecutionPayloads = true
+	if ctx.Bool(SaveFullSilaPayloads.Name) {
+		logEnabled(SaveFullSilaPayloads)
+		cfg.SaveFullSilaPayloads = true
 	}
 	if ctx.Bool(enableStartupOptimistic.Name) {
 		logEnabled(enableStartupOptimistic)

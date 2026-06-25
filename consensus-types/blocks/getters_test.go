@@ -88,7 +88,7 @@ func Test_SignedBeaconBlock_Copy(t *testing.T) {
 
 	t.Run("gloas deep copy", func(t *testing.T) {
 		payload := []*eth.PayloadAttestation{{Signature: []byte{0x01}}}
-		payloadBid := &eth.SignedExecutionPayloadBid{Signature: []byte{0x02}}
+		payloadBid := &eth.SignedSilaPayloadBid{Signature: []byte{0x02}}
 		sb := &SignedBeaconBlock{
 			version: version.Gloas,
 			block: &BeaconBlock{
@@ -96,7 +96,7 @@ func Test_SignedBeaconBlock_Copy(t *testing.T) {
 				body: &BeaconBlockBody{
 					version:                   version.Gloas,
 					payloadAttestations:       payload,
-					signedExecutionPayloadBid: payloadBid,
+					signedSilaPayloadBid: payloadBid,
 				},
 			},
 		}
@@ -116,7 +116,7 @@ func Test_SignedBeaconBlock_Copy(t *testing.T) {
 		payload[0].Signature[0] ^= 0xFF
 		require.Equal(t, origAttSig, att[0].Signature[0])
 
-		bid, err := cp.Block().Body().SignedExecutionPayloadBid()
+		bid, err := cp.Block().Body().SignedSilaPayloadBid()
 		require.NoError(t, err)
 		require.DeepEqual(t, payloadBid, bid)
 		origBidSig := bid.Signature[0]
@@ -252,7 +252,7 @@ func Test_BeaconBlock_IsBlinded(t *testing.T) {
 	b := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	assert.Equal(t, false, b.IsBlinded())
 
-	b1 := &SignedBeaconBlock{version: version.Bellatrix, block: &BeaconBlock{body: &BeaconBlockBody{executionPayloadHeader: executionPayloadHeader{}}}}
+	b1 := &SignedBeaconBlock{version: version.Bellatrix, block: &BeaconBlock{body: &BeaconBlockBody{silaPayloadHeader: silaPayloadHeader{}}}}
 	assert.Equal(t, true, b1.IsBlinded())
 
 	t.Run("gloas never blinded", func(t *testing.T) {
@@ -419,21 +419,21 @@ func Test_BeaconBlockBody_PayloadAttestations(t *testing.T) {
 	})
 }
 
-func Test_BeaconBlockBody_SignedExecutionPayloadBid(t *testing.T) {
+func Test_BeaconBlockBody_SignedSilaPayloadBid(t *testing.T) {
 	t.Run("unsupported before gloas", func(t *testing.T) {
 		bb := &BeaconBlockBody{version: version.Fulu}
-		_, err := bb.SignedExecutionPayloadBid()
+		_, err := bb.SignedSilaPayloadBid()
 		require.ErrorIs(t, err, consensus_types.ErrUnsupportedField)
 	})
 
 	t.Run("gloas returns bid", func(t *testing.T) {
-		bid := &eth.SignedExecutionPayloadBid{Signature: []byte{0xFF}}
+		bid := &eth.SignedSilaPayloadBid{Signature: []byte{0xFF}}
 		sb := &SignedBeaconBlock{
 			version: version.Gloas,
 			block:   &BeaconBlock{version: version.Gloas, body: &BeaconBlockBody{version: version.Gloas}},
 		}
-		require.NoError(t, sb.SetSignedExecutionPayloadBid(bid))
-		got, err := sb.Block().Body().SignedExecutionPayloadBid()
+		require.NoError(t, sb.SetSignedSilaPayloadBid(bid))
+		got, err := sb.Block().Body().SignedSilaPayloadBid()
 		require.NoError(t, err)
 		require.DeepEqual(t, bid, got)
 	})
@@ -465,8 +465,8 @@ func Test_BeaconBlockBody_BLSToExecutionChanges(t *testing.T) {
 }
 
 func Test_BeaconBlockBody_Execution(t *testing.T) {
-	execution := &pb.ExecutionPayload{BlockNumber: 1}
-	e, err := WrappedExecutionPayload(execution)
+	execution := &pb.SilaPayload{BlockNumber: 1}
+	e, err := WrappedSilaPayload(execution)
 	require.NoError(t, err)
 	bb := &SignedBeaconBlock{version: version.Bellatrix, block: &BeaconBlock{body: &BeaconBlockBody{version: version.Bellatrix}}}
 	require.NoError(t, bb.SetExecution(e))
@@ -474,8 +474,8 @@ func Test_BeaconBlockBody_Execution(t *testing.T) {
 	require.NoError(t, err)
 	assert.DeepEqual(t, result, e)
 
-	executionCapella := &pb.ExecutionPayloadCapella{BlockNumber: 1}
-	eCapella, err := WrappedExecutionPayloadCapella(executionCapella)
+	executionCapella := &pb.SilaPayloadCapella{BlockNumber: 1}
+	eCapella, err := WrappedSilaPayloadCapella(executionCapella)
 	require.NoError(t, err)
 	bb = &SignedBeaconBlock{version: version.Capella, block: &BeaconBlock{body: &BeaconBlockBody{version: version.Capella}}}
 	require.NoError(t, bb.SetExecution(eCapella))
@@ -483,8 +483,8 @@ func Test_BeaconBlockBody_Execution(t *testing.T) {
 	require.NoError(t, err)
 	assert.DeepEqual(t, result, eCapella)
 
-	executionCapellaHeader := &pb.ExecutionPayloadHeaderCapella{BlockNumber: 1}
-	eCapellaHeader, err := WrappedExecutionPayloadHeaderCapella(executionCapellaHeader)
+	executionCapellaHeader := &pb.SilaPayloadHeaderCapella{BlockNumber: 1}
+	eCapellaHeader, err := WrappedSilaPayloadHeaderCapella(executionCapellaHeader)
 	require.NoError(t, err)
 	bb = &SignedBeaconBlock{version: version.Capella, block: &BeaconBlock{version: version.Capella, body: &BeaconBlockBody{version: version.Capella}}}
 	require.NoError(t, bb.SetExecution(eCapellaHeader))
@@ -492,8 +492,8 @@ func Test_BeaconBlockBody_Execution(t *testing.T) {
 	require.NoError(t, err)
 	assert.DeepEqual(t, result, eCapellaHeader)
 
-	executionDeneb := &pb.ExecutionPayloadDeneb{BlockNumber: 1, ExcessBlobGas: 123}
-	eDeneb, err := WrappedExecutionPayloadDeneb(executionDeneb)
+	executionDeneb := &pb.SilaPayloadDeneb{BlockNumber: 1, ExcessBlobGas: 123}
+	eDeneb, err := WrappedSilaPayloadDeneb(executionDeneb)
 	require.NoError(t, err)
 	bb = &SignedBeaconBlock{version: version.Deneb, block: &BeaconBlock{body: &BeaconBlockBody{version: version.Deneb}}}
 	require.NoError(t, bb.SetExecution(eDeneb))
@@ -504,8 +504,8 @@ func Test_BeaconBlockBody_Execution(t *testing.T) {
 	require.NoError(t, err)
 	require.DeepEqual(t, gas, uint64(123))
 
-	executionDenebHeader := &pb.ExecutionPayloadHeaderDeneb{BlockNumber: 1, ExcessBlobGas: 223}
-	eDenebHeader, err := WrappedExecutionPayloadHeaderDeneb(executionDenebHeader)
+	executionDenebHeader := &pb.SilaPayloadHeaderDeneb{BlockNumber: 1, ExcessBlobGas: 223}
+	eDenebHeader, err := WrappedSilaPayloadHeaderDeneb(executionDenebHeader)
 	require.NoError(t, err)
 	bb = &SignedBeaconBlock{version: version.Deneb, block: &BeaconBlock{version: version.Deneb, body: &BeaconBlockBody{version: version.Deneb}}}
 	require.NoError(t, bb.SetExecution(eDenebHeader))
@@ -618,7 +618,7 @@ func hydrateBeaconBlockBodyBellatrix() *eth.BeaconBlockBodyBellatrix {
 			SyncCommitteeBits:      make([]byte, 64),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &pb.ExecutionPayload{
+		SilaPayload: &pb.SilaPayload{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -645,7 +645,7 @@ func hydrateBeaconBlockBodyCapella() *eth.BeaconBlockBodyCapella {
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &pb.ExecutionPayloadCapella{
+		SilaPayload: &pb.SilaPayloadCapella{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -676,8 +676,8 @@ func hydrateBeaconBlockBodyGloas() *eth.BeaconBlockBodyGloas {
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		SignedExecutionPayloadBid: &eth.SignedExecutionPayloadBid{
-			Message: &eth.ExecutionPayloadBid{
+		SignedSilaPayloadBid: &eth.SignedSilaPayloadBid{
+			Message: &eth.SilaPayloadBid{
 				ParentBlockHash:       make([]byte, fieldparams.RootLength),
 				ParentBlockRoot:       make([]byte, fieldparams.RootLength),
 				BlockHash:             make([]byte, fieldparams.RootLength),
@@ -713,7 +713,7 @@ func hydrateBeaconBlockBodyDeneb() *eth.BeaconBlockBodyDeneb {
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &pb.ExecutionPayloadDeneb{
+		SilaPayload: &pb.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),
@@ -741,7 +741,7 @@ func hydrateBeaconBlockBodyElectra() *eth.BeaconBlockBodyElectra {
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		ExecutionPayload: &pb.ExecutionPayloadDeneb{
+		SilaPayload: &pb.SilaPayloadDeneb{
 			ParentHash:    make([]byte, fieldparams.RootLength),
 			FeeRecipient:  make([]byte, 20),
 			StateRoot:     make([]byte, fieldparams.RootLength),

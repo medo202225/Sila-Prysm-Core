@@ -33,8 +33,8 @@ import (
 var defaultLatestValidHash = bytesutil.PadTo([]byte{0xff}, 32)
 
 // notifyForkchoiceUpdate signals execution engine the fork choice updates. Execution engine should:
-// 1. Re-organizes the execution payload chain and corresponding state to make head_block_hash the head.
-// 2. Applies finality to the execution state: it irreversibly persists the chain of all execution payloads and corresponding state, up to and including finalized_block_hash.
+// 1. Re-organizes the sila payload chain and corresponding state to make head_block_hash the head.
+// 2. Applies finality to the execution state: it irreversibly persists the chain of all sila payloads and corresponding state, up to and including finalized_block_hash.
 func (s *Service) notifyForkchoiceUpdate(ctx context.Context, arg *fcuConfig) (*enginev1.PayloadIDBytes, error) {
 	ctx, span := trace.StartSpan(ctx, "blockChain.notifyForkchoiceUpdate")
 	defer span.End()
@@ -59,7 +59,7 @@ func (s *Service) notifyForkchoiceUpdate(ctx context.Context, arg *fcuConfig) (*
 	}
 	headPayload, err := headBlk.Body().Execution()
 	if err != nil {
-		log.WithError(err).Error("Could not get execution payload for head block")
+		log.WithError(err).Error("Could not get sila payload for head block")
 		return nil, nil
 	}
 	finalizedHash := s.cfg.ForkChoiceStore.FinalizedPayloadBlockHash()
@@ -216,7 +216,7 @@ func (s *Service) getPayloadHash(ctx context.Context, root []byte) ([32]byte, er
 	}
 	payload, err := blk.Block().Body().Execution()
 	if err != nil {
-		return [32]byte{}, errors.Wrap(err, "could not get execution payload")
+		return [32]byte{}, errors.Wrap(err, "could not get sila payload")
 	}
 	return bytesutil.ToBytes32(payload.BlockHash()), nil
 }
@@ -228,7 +228,7 @@ func (s *Service) notifyNewPayload(ctx context.Context, stVersion int, header in
 	ctx, span := trace.StartSpan(ctx, "blockChain.notifyNewPayload")
 	defer span.End()
 
-	// Execution payload is only supported in Bellatrix and beyond. Pre
+	// Sila payload is only supported in Bellatrix and beyond. Pre
 	// merge blocks are never optimistic
 	if stVersion < version.Bellatrix {
 		return true, nil
@@ -246,7 +246,7 @@ func (s *Service) notifyNewPayload(ctx context.Context, stVersion int, header in
 	}
 	payload, err := body.Execution()
 	if err != nil {
-		return false, errors.Wrap(invalidBlock{error: err}, "could not get execution payload")
+		return false, errors.Wrap(invalidBlock{error: err}, "could not get sila payload")
 	}
 
 	var lastValidHash []byte

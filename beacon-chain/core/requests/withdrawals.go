@@ -19,7 +19,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ProcessWithdrawalRequests processes the validator withdrawals from the provided execution payload
+// ProcessWithdrawalRequests processes the validator withdrawals from the provided sila payload
 // into the beacon state triggered by the execution layer.
 //
 // Spec pseudocode definition:

@@ -460,7 +460,7 @@ func generateSignedBlindedBellatrixBlock() *silapb.GenericSignedBeaconBlock_Blin
 						SyncCommitteeBits:      testhelpers.FillByteSlice(64, 100),
 						SyncCommitteeSignature: testhelpers.FillByteSlice(96, 101),
 					},
-					ExecutionPayloadHeader: &engine.ExecutionPayloadHeader{
+					SilaPayloadHeader: &engine.SilaPayloadHeader{
 						ParentHash:       testhelpers.FillByteSlice(32, 102),
 						FeeRecipient:     testhelpers.FillByteSlice(20, 103),
 						StateRoot:        testhelpers.FillByteSlice(32, 104),
@@ -540,7 +540,7 @@ func generateSignedBlindedCapellaBlock() *silapb.GenericSignedBeaconBlock_Blinde
 						SyncCommitteeBits:      testhelpers.FillByteSlice(64, 37),
 						SyncCommitteeSignature: testhelpers.FillByteSlice(96, 38),
 					},
-					ExecutionPayloadHeader: &engine.ExecutionPayloadHeaderCapella{
+					SilaPayloadHeader: &engine.SilaPayloadHeaderCapella{
 						ParentHash:       testhelpers.FillByteSlice(32, 39),
 						FeeRecipient:     testhelpers.FillByteSlice(20, 40),
 						StateRoot:        testhelpers.FillByteSlice(32, 41),

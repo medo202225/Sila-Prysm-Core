@@ -312,7 +312,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &enginev1.ExecutionPayloadHeaderCapella{
+				Execution: &enginev1.SilaPayloadHeaderCapella{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -336,7 +336,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &enginev1.ExecutionPayloadHeaderCapella{
+				Execution: &enginev1.SilaPayloadHeaderCapella{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -365,7 +365,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &enginev1.ExecutionPayloadHeaderDeneb{
+				Execution: &enginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -391,7 +391,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &enginev1.ExecutionPayloadHeaderDeneb{
+				Execution: &enginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -422,7 +422,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &enginev1.ExecutionPayloadHeaderDeneb{
+				Execution: &enginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -448,7 +448,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &enginev1.ExecutionPayloadHeaderDeneb{
+				Execution: &enginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -536,7 +536,7 @@ func BlockToLightClientHeader(
 	case version.Capella:
 		payloadHeader, payloadProof, err := makeExecutionAndProofCapella(ctx, block)
 		if err != nil {
-			return nil, errors.Wrap(err, "could not make execution payload header and proof")
+			return nil, errors.Wrap(err, "could not make sila payload header and proof")
 		}
 		m = &pb.LightClientHeaderCapella{
 			Beacon:          beacon,
@@ -546,7 +546,7 @@ func BlockToLightClientHeader(
 	case version.Deneb, version.Electra, version.Fulu:
 		payloadHeader, payloadProof, err := makeExecutionAndProofDeneb(ctx, block)
 		if err != nil {
-			return nil, errors.Wrap(err, "could not make execution payload header and proof")
+			return nil, errors.Wrap(err, "could not make sila payload header and proof")
 		}
 		m = &pb.LightClientHeaderDeneb{
 			Beacon:          beacon,

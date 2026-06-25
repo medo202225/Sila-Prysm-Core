@@ -81,7 +81,7 @@ func (PayloadStatus_Status) EnumDescriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{15, 0}
 }
 
-type ExecutionPayload struct {
+type SilaPayload struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ParentHash    []byte                 `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient  []byte                 `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -101,20 +101,20 @@ type ExecutionPayload struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayload) Reset() {
-	*x = ExecutionPayload{}
+func (x *SilaPayload) Reset() {
+	*x = SilaPayload{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayload) String() string {
+func (x *SilaPayload) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayload) ProtoMessage() {}
+func (*SilaPayload) ProtoMessage() {}
 
-func (x *ExecutionPayload) ProtoReflect() protoreflect.Message {
+func (x *SilaPayload) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -126,110 +126,110 @@ func (x *ExecutionPayload) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayload.ProtoReflect.Descriptor instead.
-func (*ExecutionPayload) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayload.ProtoReflect.Descriptor instead.
+func (*SilaPayload) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ExecutionPayload) GetParentHash() []byte {
+func (x *SilaPayload) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetFeeRecipient() []byte {
+func (x *SilaPayload) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetStateRoot() []byte {
+func (x *SilaPayload) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetReceiptsRoot() []byte {
+func (x *SilaPayload) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetLogsBloom() []byte {
+func (x *SilaPayload) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetPrevRandao() []byte {
+func (x *SilaPayload) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetBlockNumber() uint64 {
+func (x *SilaPayload) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayload) GetGasLimit() uint64 {
+func (x *SilaPayload) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayload) GetGasUsed() uint64 {
+func (x *SilaPayload) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayload) GetTimestamp() uint64 {
+func (x *SilaPayload) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayload) GetExtraData() []byte {
+func (x *SilaPayload) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetBaseFeePerGas() []byte {
+func (x *SilaPayload) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetBlockHash() []byte {
+func (x *SilaPayload) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayload) GetTransactions() [][]byte {
+func (x *SilaPayload) GetTransactions() [][]byte {
 	if x != nil {
 		return x.Transactions
 	}
 	return nil
 }
 
-type ExecutionPayloadCapella struct {
+type SilaPayloadCapella struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ParentHash    []byte                 `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient  []byte                 `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -250,20 +250,20 @@ type ExecutionPayloadCapella struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadCapella) Reset() {
-	*x = ExecutionPayloadCapella{}
+func (x *SilaPayloadCapella) Reset() {
+	*x = SilaPayloadCapella{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadCapella) String() string {
+func (x *SilaPayloadCapella) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadCapella) ProtoMessage() {}
+func (*SilaPayloadCapella) ProtoMessage() {}
 
-func (x *ExecutionPayloadCapella) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadCapella) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -275,117 +275,117 @@ func (x *ExecutionPayloadCapella) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadCapella.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadCapella) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadCapella.ProtoReflect.Descriptor instead.
+func (*SilaPayloadCapella) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ExecutionPayloadCapella) GetParentHash() []byte {
+func (x *SilaPayloadCapella) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetFeeRecipient() []byte {
+func (x *SilaPayloadCapella) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetStateRoot() []byte {
+func (x *SilaPayloadCapella) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetReceiptsRoot() []byte {
+func (x *SilaPayloadCapella) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetLogsBloom() []byte {
+func (x *SilaPayloadCapella) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetPrevRandao() []byte {
+func (x *SilaPayloadCapella) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetBlockNumber() uint64 {
+func (x *SilaPayloadCapella) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadCapella) GetGasLimit() uint64 {
+func (x *SilaPayloadCapella) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadCapella) GetGasUsed() uint64 {
+func (x *SilaPayloadCapella) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadCapella) GetTimestamp() uint64 {
+func (x *SilaPayloadCapella) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadCapella) GetExtraData() []byte {
+func (x *SilaPayloadCapella) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetBaseFeePerGas() []byte {
+func (x *SilaPayloadCapella) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetBlockHash() []byte {
+func (x *SilaPayloadCapella) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetTransactions() [][]byte {
+func (x *SilaPayloadCapella) GetTransactions() [][]byte {
 	if x != nil {
 		return x.Transactions
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapella) GetWithdrawals() []*Withdrawal {
+func (x *SilaPayloadCapella) GetWithdrawals() []*Withdrawal {
 	if x != nil {
 		return x.Withdrawals
 	}
 	return nil
 }
 
-type ExecutionPayloadDeneb struct {
+type SilaPayloadDeneb struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ParentHash    []byte                 `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient  []byte                 `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -408,20 +408,20 @@ type ExecutionPayloadDeneb struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadDeneb) Reset() {
-	*x = ExecutionPayloadDeneb{}
+func (x *SilaPayloadDeneb) Reset() {
+	*x = SilaPayloadDeneb{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadDeneb) String() string {
+func (x *SilaPayloadDeneb) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadDeneb) ProtoMessage() {}
+func (*SilaPayloadDeneb) ProtoMessage() {}
 
-func (x *ExecutionPayloadDeneb) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadDeneb) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -433,131 +433,131 @@ func (x *ExecutionPayloadDeneb) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadDeneb.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadDeneb) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadDeneb.ProtoReflect.Descriptor instead.
+func (*SilaPayloadDeneb) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ExecutionPayloadDeneb) GetParentHash() []byte {
+func (x *SilaPayloadDeneb) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetFeeRecipient() []byte {
+func (x *SilaPayloadDeneb) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetStateRoot() []byte {
+func (x *SilaPayloadDeneb) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetReceiptsRoot() []byte {
+func (x *SilaPayloadDeneb) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetLogsBloom() []byte {
+func (x *SilaPayloadDeneb) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetPrevRandao() []byte {
+func (x *SilaPayloadDeneb) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetBlockNumber() uint64 {
+func (x *SilaPayloadDeneb) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadDeneb) GetGasLimit() uint64 {
+func (x *SilaPayloadDeneb) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadDeneb) GetGasUsed() uint64 {
+func (x *SilaPayloadDeneb) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadDeneb) GetTimestamp() uint64 {
+func (x *SilaPayloadDeneb) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadDeneb) GetExtraData() []byte {
+func (x *SilaPayloadDeneb) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetBaseFeePerGas() []byte {
+func (x *SilaPayloadDeneb) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetBlockHash() []byte {
+func (x *SilaPayloadDeneb) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetTransactions() [][]byte {
+func (x *SilaPayloadDeneb) GetTransactions() [][]byte {
 	if x != nil {
 		return x.Transactions
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetWithdrawals() []*Withdrawal {
+func (x *SilaPayloadDeneb) GetWithdrawals() []*Withdrawal {
 	if x != nil {
 		return x.Withdrawals
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDeneb) GetBlobGasUsed() uint64 {
+func (x *SilaPayloadDeneb) GetBlobGasUsed() uint64 {
 	if x != nil {
 		return x.BlobGasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadDeneb) GetExcessBlobGas() uint64 {
+func (x *SilaPayloadDeneb) GetExcessBlobGas() uint64 {
 	if x != nil {
 		return x.ExcessBlobGas
 	}
 	return 0
 }
 
-type ExecutionPayloadGloas struct {
+type SilaPayloadGloas struct {
 	state           protoimpl.MessageState                                           `protogen:"open.v1"`
 	ParentHash      []byte                                                           `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient    []byte                                                           `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -582,20 +582,20 @@ type ExecutionPayloadGloas struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadGloas) Reset() {
-	*x = ExecutionPayloadGloas{}
+func (x *SilaPayloadGloas) Reset() {
+	*x = SilaPayloadGloas{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadGloas) String() string {
+func (x *SilaPayloadGloas) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadGloas) ProtoMessage() {}
+func (*SilaPayloadGloas) ProtoMessage() {}
 
-func (x *ExecutionPayloadGloas) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadGloas) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -607,166 +607,166 @@ func (x *ExecutionPayloadGloas) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadGloas.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadGloas) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadGloas.ProtoReflect.Descriptor instead.
+func (*SilaPayloadGloas) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ExecutionPayloadGloas) GetParentHash() []byte {
+func (x *SilaPayloadGloas) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetFeeRecipient() []byte {
+func (x *SilaPayloadGloas) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetStateRoot() []byte {
+func (x *SilaPayloadGloas) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetReceiptsRoot() []byte {
+func (x *SilaPayloadGloas) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetLogsBloom() []byte {
+func (x *SilaPayloadGloas) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetPrevRandao() []byte {
+func (x *SilaPayloadGloas) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetBlockNumber() uint64 {
+func (x *SilaPayloadGloas) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadGloas) GetGasLimit() uint64 {
+func (x *SilaPayloadGloas) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadGloas) GetGasUsed() uint64 {
+func (x *SilaPayloadGloas) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadGloas) GetTimestamp() uint64 {
+func (x *SilaPayloadGloas) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadGloas) GetExtraData() []byte {
+func (x *SilaPayloadGloas) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetBaseFeePerGas() []byte {
+func (x *SilaPayloadGloas) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetBlockHash() []byte {
+func (x *SilaPayloadGloas) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetTransactions() [][]byte {
+func (x *SilaPayloadGloas) GetTransactions() [][]byte {
 	if x != nil {
 		return x.Transactions
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetWithdrawals() []*Withdrawal {
+func (x *SilaPayloadGloas) GetWithdrawals() []*Withdrawal {
 	if x != nil {
 		return x.Withdrawals
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetBlobGasUsed() uint64 {
+func (x *SilaPayloadGloas) GetBlobGasUsed() uint64 {
 	if x != nil {
 		return x.BlobGasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadGloas) GetExcessBlobGas() uint64 {
+func (x *SilaPayloadGloas) GetExcessBlobGas() uint64 {
 	if x != nil {
 		return x.ExcessBlobGas
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadGloas) GetBlockAccessList() []byte {
+func (x *SilaPayloadGloas) GetBlockAccessList() []byte {
 	if x != nil {
 		return x.BlockAccessList
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetSlotNumber() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
+func (x *SilaPayloadGloas) GetSlotNumber() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SlotNumber
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-type ExecutionPayloadCapellaWithValue struct {
+type SilaPayloadCapellaWithValue struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Payload       *ExecutionPayloadCapella `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload       *SilaPayloadCapella `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	Value         []byte                   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadCapellaWithValue) Reset() {
-	*x = ExecutionPayloadCapellaWithValue{}
+func (x *SilaPayloadCapellaWithValue) Reset() {
+	*x = SilaPayloadCapellaWithValue{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadCapellaWithValue) String() string {
+func (x *SilaPayloadCapellaWithValue) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadCapellaWithValue) ProtoMessage() {}
+func (*SilaPayloadCapellaWithValue) ProtoMessage() {}
 
-func (x *ExecutionPayloadCapellaWithValue) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadCapellaWithValue) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -778,47 +778,47 @@ func (x *ExecutionPayloadCapellaWithValue) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadCapellaWithValue.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadCapellaWithValue) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadCapellaWithValue.ProtoReflect.Descriptor instead.
+func (*SilaPayloadCapellaWithValue) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ExecutionPayloadCapellaWithValue) GetPayload() *ExecutionPayloadCapella {
+func (x *SilaPayloadCapellaWithValue) GetPayload() *SilaPayloadCapella {
 	if x != nil {
 		return x.Payload
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadCapellaWithValue) GetValue() []byte {
+func (x *SilaPayloadCapellaWithValue) GetValue() []byte {
 	if x != nil {
 		return x.Value
 	}
 	return nil
 }
 
-type ExecutionPayloadDenebAndBlobsBundle struct {
+type SilaPayloadDenebAndBlobsBundle struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Payload       *ExecutionPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload       *SilaPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	BlobsBundle   *BlobsBundle           `protobuf:"bytes,2,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundle) Reset() {
-	*x = ExecutionPayloadDenebAndBlobsBundle{}
+func (x *SilaPayloadDenebAndBlobsBundle) Reset() {
+	*x = SilaPayloadDenebAndBlobsBundle{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundle) String() string {
+func (x *SilaPayloadDenebAndBlobsBundle) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadDenebAndBlobsBundle) ProtoMessage() {}
+func (*SilaPayloadDenebAndBlobsBundle) ProtoMessage() {}
 
-func (x *ExecutionPayloadDenebAndBlobsBundle) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadDenebAndBlobsBundle) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -830,47 +830,47 @@ func (x *ExecutionPayloadDenebAndBlobsBundle) ProtoReflect() protoreflect.Messag
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadDenebAndBlobsBundle.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadDenebAndBlobsBundle) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadDenebAndBlobsBundle.ProtoReflect.Descriptor instead.
+func (*SilaPayloadDenebAndBlobsBundle) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundle) GetPayload() *ExecutionPayloadDeneb {
+func (x *SilaPayloadDenebAndBlobsBundle) GetPayload() *SilaPayloadDeneb {
 	if x != nil {
 		return x.Payload
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundle) GetBlobsBundle() *BlobsBundle {
+func (x *SilaPayloadDenebAndBlobsBundle) GetBlobsBundle() *BlobsBundle {
 	if x != nil {
 		return x.BlobsBundle
 	}
 	return nil
 }
 
-type ExecutionPayloadDenebAndBlobsBundleV2 struct {
+type SilaPayloadDenebAndBlobsBundleV2 struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Payload       *ExecutionPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload       *SilaPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	BlobsBundle   *BlobsBundleV2         `protobuf:"bytes,2,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundleV2) Reset() {
-	*x = ExecutionPayloadDenebAndBlobsBundleV2{}
+func (x *SilaPayloadDenebAndBlobsBundleV2) Reset() {
+	*x = SilaPayloadDenebAndBlobsBundleV2{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundleV2) String() string {
+func (x *SilaPayloadDenebAndBlobsBundleV2) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadDenebAndBlobsBundleV2) ProtoMessage() {}
+func (*SilaPayloadDenebAndBlobsBundleV2) ProtoMessage() {}
 
-func (x *ExecutionPayloadDenebAndBlobsBundleV2) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadDenebAndBlobsBundleV2) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -882,28 +882,28 @@ func (x *ExecutionPayloadDenebAndBlobsBundleV2) ProtoReflect() protoreflect.Mess
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadDenebAndBlobsBundleV2.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadDenebAndBlobsBundleV2) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadDenebAndBlobsBundleV2.ProtoReflect.Descriptor instead.
+func (*SilaPayloadDenebAndBlobsBundleV2) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundleV2) GetPayload() *ExecutionPayloadDeneb {
+func (x *SilaPayloadDenebAndBlobsBundleV2) GetPayload() *SilaPayloadDeneb {
 	if x != nil {
 		return x.Payload
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDenebAndBlobsBundleV2) GetBlobsBundle() *BlobsBundleV2 {
+func (x *SilaPayloadDenebAndBlobsBundleV2) GetBlobsBundle() *BlobsBundleV2 {
 	if x != nil {
 		return x.BlobsBundle
 	}
 	return nil
 }
 
-type ExecutionPayloadDenebWithValueAndBlobsBundle struct {
+type SilaPayloadDenebWithValueAndBlobsBundle struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Payload               *ExecutionPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Payload               *SilaPayloadDeneb `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
 	Value                 []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	BlobsBundle           *BlobsBundle           `protobuf:"bytes,3,opt,name=blobs_bundle,json=blobsBundle,proto3" json:"blobs_bundle,omitempty"`
 	ShouldOverrideBuilder bool                   `protobuf:"varint,4,opt,name=should_override_builder,json=shouldOverrideBuilder,proto3" json:"should_override_builder,omitempty"`
@@ -911,20 +911,20 @@ type ExecutionPayloadDenebWithValueAndBlobsBundle struct {
 	sizeCache             protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) Reset() {
-	*x = ExecutionPayloadDenebWithValueAndBlobsBundle{}
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) Reset() {
+	*x = SilaPayloadDenebWithValueAndBlobsBundle{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) String() string {
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadDenebWithValueAndBlobsBundle) ProtoMessage() {}
+func (*SilaPayloadDenebWithValueAndBlobsBundle) ProtoMessage() {}
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -936,40 +936,40 @@ func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) ProtoReflect() protorefle
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadDenebWithValueAndBlobsBundle.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadDenebWithValueAndBlobsBundle) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadDenebWithValueAndBlobsBundle.ProtoReflect.Descriptor instead.
+func (*SilaPayloadDenebWithValueAndBlobsBundle) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) GetPayload() *ExecutionPayloadDeneb {
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) GetPayload() *SilaPayloadDeneb {
 	if x != nil {
 		return x.Payload
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) GetValue() []byte {
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) GetValue() []byte {
 	if x != nil {
 		return x.Value
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) GetBlobsBundle() *BlobsBundle {
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) GetBlobsBundle() *BlobsBundle {
 	if x != nil {
 		return x.BlobsBundle
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadDenebWithValueAndBlobsBundle) GetShouldOverrideBuilder() bool {
+func (x *SilaPayloadDenebWithValueAndBlobsBundle) GetShouldOverrideBuilder() bool {
 	if x != nil {
 		return x.ShouldOverrideBuilder
 	}
 	return false
 }
 
-type ExecutionPayloadHeader struct {
+type SilaPayloadHeader struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	ParentHash       []byte                 `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient     []byte                 `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -989,20 +989,20 @@ type ExecutionPayloadHeader struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadHeader) Reset() {
-	*x = ExecutionPayloadHeader{}
+func (x *SilaPayloadHeader) Reset() {
+	*x = SilaPayloadHeader{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadHeader) String() string {
+func (x *SilaPayloadHeader) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadHeader) ProtoMessage() {}
+func (*SilaPayloadHeader) ProtoMessage() {}
 
-func (x *ExecutionPayloadHeader) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadHeader) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1014,110 +1014,110 @@ func (x *ExecutionPayloadHeader) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadHeader.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadHeader) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadHeader.ProtoReflect.Descriptor instead.
+func (*SilaPayloadHeader) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ExecutionPayloadHeader) GetParentHash() []byte {
+func (x *SilaPayloadHeader) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetFeeRecipient() []byte {
+func (x *SilaPayloadHeader) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetStateRoot() []byte {
+func (x *SilaPayloadHeader) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetReceiptsRoot() []byte {
+func (x *SilaPayloadHeader) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetLogsBloom() []byte {
+func (x *SilaPayloadHeader) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetPrevRandao() []byte {
+func (x *SilaPayloadHeader) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetBlockNumber() uint64 {
+func (x *SilaPayloadHeader) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeader) GetGasLimit() uint64 {
+func (x *SilaPayloadHeader) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeader) GetGasUsed() uint64 {
+func (x *SilaPayloadHeader) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeader) GetTimestamp() uint64 {
+func (x *SilaPayloadHeader) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeader) GetExtraData() []byte {
+func (x *SilaPayloadHeader) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetBaseFeePerGas() []byte {
+func (x *SilaPayloadHeader) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetBlockHash() []byte {
+func (x *SilaPayloadHeader) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeader) GetTransactionsRoot() []byte {
+func (x *SilaPayloadHeader) GetTransactionsRoot() []byte {
 	if x != nil {
 		return x.TransactionsRoot
 	}
 	return nil
 }
 
-type ExecutionPayloadHeaderCapella struct {
+type SilaPayloadHeaderCapella struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	ParentHash       []byte                 `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient     []byte                 `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -1138,20 +1138,20 @@ type ExecutionPayloadHeaderCapella struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadHeaderCapella) Reset() {
-	*x = ExecutionPayloadHeaderCapella{}
+func (x *SilaPayloadHeaderCapella) Reset() {
+	*x = SilaPayloadHeaderCapella{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadHeaderCapella) String() string {
+func (x *SilaPayloadHeaderCapella) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadHeaderCapella) ProtoMessage() {}
+func (*SilaPayloadHeaderCapella) ProtoMessage() {}
 
-func (x *ExecutionPayloadHeaderCapella) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadHeaderCapella) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1163,117 +1163,117 @@ func (x *ExecutionPayloadHeaderCapella) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadHeaderCapella.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadHeaderCapella) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadHeaderCapella.ProtoReflect.Descriptor instead.
+func (*SilaPayloadHeaderCapella) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetParentHash() []byte {
+func (x *SilaPayloadHeaderCapella) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetFeeRecipient() []byte {
+func (x *SilaPayloadHeaderCapella) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetStateRoot() []byte {
+func (x *SilaPayloadHeaderCapella) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetReceiptsRoot() []byte {
+func (x *SilaPayloadHeaderCapella) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetLogsBloom() []byte {
+func (x *SilaPayloadHeaderCapella) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetPrevRandao() []byte {
+func (x *SilaPayloadHeaderCapella) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetBlockNumber() uint64 {
+func (x *SilaPayloadHeaderCapella) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetGasLimit() uint64 {
+func (x *SilaPayloadHeaderCapella) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetGasUsed() uint64 {
+func (x *SilaPayloadHeaderCapella) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetTimestamp() uint64 {
+func (x *SilaPayloadHeaderCapella) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetExtraData() []byte {
+func (x *SilaPayloadHeaderCapella) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetBaseFeePerGas() []byte {
+func (x *SilaPayloadHeaderCapella) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetBlockHash() []byte {
+func (x *SilaPayloadHeaderCapella) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetTransactionsRoot() []byte {
+func (x *SilaPayloadHeaderCapella) GetTransactionsRoot() []byte {
 	if x != nil {
 		return x.TransactionsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderCapella) GetWithdrawalsRoot() []byte {
+func (x *SilaPayloadHeaderCapella) GetWithdrawalsRoot() []byte {
 	if x != nil {
 		return x.WithdrawalsRoot
 	}
 	return nil
 }
 
-type ExecutionPayloadHeaderDeneb struct {
+type SilaPayloadHeaderDeneb struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	ParentHash       []byte                 `protobuf:"bytes,1,opt,name=parent_hash,json=parentHash,proto3" json:"parent_hash,omitempty" ssz-size:"32"`
 	FeeRecipient     []byte                 `protobuf:"bytes,2,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
@@ -1296,20 +1296,20 @@ type ExecutionPayloadHeaderDeneb struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *ExecutionPayloadHeaderDeneb) Reset() {
-	*x = ExecutionPayloadHeaderDeneb{}
+func (x *SilaPayloadHeaderDeneb) Reset() {
+	*x = SilaPayloadHeaderDeneb{}
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionPayloadHeaderDeneb) String() string {
+func (x *SilaPayloadHeaderDeneb) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionPayloadHeaderDeneb) ProtoMessage() {}
+func (*SilaPayloadHeaderDeneb) ProtoMessage() {}
 
-func (x *ExecutionPayloadHeaderDeneb) ProtoReflect() protoreflect.Message {
+func (x *SilaPayloadHeaderDeneb) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_engine_v1_execution_engine_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1321,124 +1321,124 @@ func (x *ExecutionPayloadHeaderDeneb) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionPayloadHeaderDeneb.ProtoReflect.Descriptor instead.
-func (*ExecutionPayloadHeaderDeneb) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaPayloadHeaderDeneb.ProtoReflect.Descriptor instead.
+func (*SilaPayloadHeaderDeneb) Descriptor() ([]byte, []int) {
 	return file_proto_engine_v1_execution_engine_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetParentHash() []byte {
+func (x *SilaPayloadHeaderDeneb) GetParentHash() []byte {
 	if x != nil {
 		return x.ParentHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetFeeRecipient() []byte {
+func (x *SilaPayloadHeaderDeneb) GetFeeRecipient() []byte {
 	if x != nil {
 		return x.FeeRecipient
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetStateRoot() []byte {
+func (x *SilaPayloadHeaderDeneb) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetReceiptsRoot() []byte {
+func (x *SilaPayloadHeaderDeneb) GetReceiptsRoot() []byte {
 	if x != nil {
 		return x.ReceiptsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetLogsBloom() []byte {
+func (x *SilaPayloadHeaderDeneb) GetLogsBloom() []byte {
 	if x != nil {
 		return x.LogsBloom
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetPrevRandao() []byte {
+func (x *SilaPayloadHeaderDeneb) GetPrevRandao() []byte {
 	if x != nil {
 		return x.PrevRandao
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetBlockNumber() uint64 {
+func (x *SilaPayloadHeaderDeneb) GetBlockNumber() uint64 {
 	if x != nil {
 		return x.BlockNumber
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetGasLimit() uint64 {
+func (x *SilaPayloadHeaderDeneb) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetGasUsed() uint64 {
+func (x *SilaPayloadHeaderDeneb) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetTimestamp() uint64 {
+func (x *SilaPayloadHeaderDeneb) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetExtraData() []byte {
+func (x *SilaPayloadHeaderDeneb) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetBaseFeePerGas() []byte {
+func (x *SilaPayloadHeaderDeneb) GetBaseFeePerGas() []byte {
 	if x != nil {
 		return x.BaseFeePerGas
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetBlockHash() []byte {
+func (x *SilaPayloadHeaderDeneb) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetTransactionsRoot() []byte {
+func (x *SilaPayloadHeaderDeneb) GetTransactionsRoot() []byte {
 	if x != nil {
 		return x.TransactionsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetWithdrawalsRoot() []byte {
+func (x *SilaPayloadHeaderDeneb) GetWithdrawalsRoot() []byte {
 	if x != nil {
 		return x.WithdrawalsRoot
 	}
 	return nil
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetBlobGasUsed() uint64 {
+func (x *SilaPayloadHeaderDeneb) GetBlobGasUsed() uint64 {
 	if x != nil {
 		return x.BlobGasUsed
 	}
 	return 0
 }
 
-func (x *ExecutionPayloadHeaderDeneb) GetExcessBlobGas() uint64 {
+func (x *SilaPayloadHeaderDeneb) GetExcessBlobGas() uint64 {
 	if x != nil {
 		return x.ExcessBlobGas
 	}
@@ -2725,17 +2725,17 @@ var file_proto_engine_v1_execution_engine_proto_enumTypes = make([]protoimpl.Enu
 var file_proto_engine_v1_execution_engine_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_proto_engine_v1_execution_engine_proto_goTypes = []any{
 	(PayloadStatus_Status)(0),                            // 0: sila.engine.v1.PayloadStatus.Status
-	(*ExecutionPayload)(nil),                             // 1: sila.engine.v1.ExecutionPayload
-	(*ExecutionPayloadCapella)(nil),                      // 2: sila.engine.v1.ExecutionPayloadCapella
-	(*ExecutionPayloadDeneb)(nil),                        // 3: sila.engine.v1.ExecutionPayloadDeneb
-	(*ExecutionPayloadGloas)(nil),                        // 4: sila.engine.v1.ExecutionPayloadGloas
-	(*ExecutionPayloadCapellaWithValue)(nil),             // 5: sila.engine.v1.ExecutionPayloadCapellaWithValue
-	(*ExecutionPayloadDenebAndBlobsBundle)(nil),          // 6: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundle
-	(*ExecutionPayloadDenebAndBlobsBundleV2)(nil),        // 7: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2
-	(*ExecutionPayloadDenebWithValueAndBlobsBundle)(nil), // 8: sila.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle
-	(*ExecutionPayloadHeader)(nil),                       // 9: sila.engine.v1.ExecutionPayloadHeader
-	(*ExecutionPayloadHeaderCapella)(nil),                // 10: sila.engine.v1.ExecutionPayloadHeaderCapella
-	(*ExecutionPayloadHeaderDeneb)(nil),                  // 11: sila.engine.v1.ExecutionPayloadHeaderDeneb
+	(*SilaPayload)(nil),                             // 1: sila.engine.v1.SilaPayload
+	(*SilaPayloadCapella)(nil),                      // 2: sila.engine.v1.SilaPayloadCapella
+	(*SilaPayloadDeneb)(nil),                        // 3: sila.engine.v1.SilaPayloadDeneb
+	(*SilaPayloadGloas)(nil),                        // 4: sila.engine.v1.SilaPayloadGloas
+	(*SilaPayloadCapellaWithValue)(nil),             // 5: sila.engine.v1.SilaPayloadCapellaWithValue
+	(*SilaPayloadDenebAndBlobsBundle)(nil),          // 6: sila.engine.v1.SilaPayloadDenebAndBlobsBundle
+	(*SilaPayloadDenebAndBlobsBundleV2)(nil),        // 7: sila.engine.v1.SilaPayloadDenebAndBlobsBundleV2
+	(*SilaPayloadDenebWithValueAndBlobsBundle)(nil), // 8: sila.engine.v1.SilaPayloadDenebWithValueAndBlobsBundle
+	(*SilaPayloadHeader)(nil),                       // 9: sila.engine.v1.SilaPayloadHeader
+	(*SilaPayloadHeaderCapella)(nil),                // 10: sila.engine.v1.SilaPayloadHeaderCapella
+	(*SilaPayloadHeaderDeneb)(nil),                  // 11: sila.engine.v1.SilaPayloadHeaderDeneb
 	(*PayloadAttributes)(nil),                            // 12: sila.engine.v1.PayloadAttributes
 	(*PayloadAttributesV2)(nil),                          // 13: sila.engine.v1.PayloadAttributesV2
 	(*PayloadAttributesV3)(nil),                          // 14: sila.engine.v1.PayloadAttributesV3
@@ -2750,16 +2750,16 @@ var file_proto_engine_v1_execution_engine_proto_goTypes = []any{
 	(*BlobAndProofV2)(nil),                               // 23: sila.engine.v1.BlobAndProofV2
 }
 var file_proto_engine_v1_execution_engine_proto_depIdxs = []int32{
-	18, // 0: sila.engine.v1.ExecutionPayloadCapella.withdrawals:type_name -> sila.engine.v1.Withdrawal
-	18, // 1: sila.engine.v1.ExecutionPayloadDeneb.withdrawals:type_name -> sila.engine.v1.Withdrawal
-	18, // 2: sila.engine.v1.ExecutionPayloadGloas.withdrawals:type_name -> sila.engine.v1.Withdrawal
-	2,  // 3: sila.engine.v1.ExecutionPayloadCapellaWithValue.payload:type_name -> sila.engine.v1.ExecutionPayloadCapella
-	3,  // 4: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundle.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
-	19, // 5: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundle.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
-	3,  // 6: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
-	20, // 7: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
-	3,  // 8: sila.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
-	19, // 9: sila.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
+	18, // 0: sila.engine.v1.SilaPayloadCapella.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	18, // 1: sila.engine.v1.SilaPayloadDeneb.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	18, // 2: sila.engine.v1.SilaPayloadGloas.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	2,  // 3: sila.engine.v1.SilaPayloadCapellaWithValue.payload:type_name -> sila.engine.v1.SilaPayloadCapella
+	3,  // 4: sila.engine.v1.SilaPayloadDenebAndBlobsBundle.payload:type_name -> sila.engine.v1.SilaPayloadDeneb
+	19, // 5: sila.engine.v1.SilaPayloadDenebAndBlobsBundle.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
+	3,  // 6: sila.engine.v1.SilaPayloadDenebAndBlobsBundleV2.payload:type_name -> sila.engine.v1.SilaPayloadDeneb
+	20, // 7: sila.engine.v1.SilaPayloadDenebAndBlobsBundleV2.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
+	3,  // 8: sila.engine.v1.SilaPayloadDenebWithValueAndBlobsBundle.payload:type_name -> sila.engine.v1.SilaPayloadDeneb
+	19, // 9: sila.engine.v1.SilaPayloadDenebWithValueAndBlobsBundle.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
 	18, // 10: sila.engine.v1.PayloadAttributesV2.withdrawals:type_name -> sila.engine.v1.Withdrawal
 	18, // 11: sila.engine.v1.PayloadAttributesV3.withdrawals:type_name -> sila.engine.v1.Withdrawal
 	18, // 12: sila.engine.v1.PayloadAttributesV4.withdrawals:type_name -> sila.engine.v1.Withdrawal

@@ -16,11 +16,11 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ProcessExecutionPayloadBid processes a signed execution payload bid in the Gloas fork.
+// ProcessSilaPayloadBid processes a signed sila payload bid in the Gloas fork.
 //
-//	<spec fn="process_execution_payload_bid" fork="gloas" hash="823c9f3a">
-//	def process_execution_payload_bid(state: BeaconState, block: BeaconBlock) -> None:
-//	    signed_bid = block.body.signed_execution_payload_bid
+//	<spec fn="process_sila_payload_bid" fork="gloas" hash="823c9f3a">
+//	def process_sila_payload_bid(state: BeaconState, block: BeaconBlock) -> None:
+//	    signed_bid = block.body.signed_sila_payload_bid
 //	    bid = signed_bid.message
 //	    builder_index = bid.builder_index
 //	    amount = bid.value
@@ -35,7 +35,7 @@ import (
 //	        # Verify that the builder has funds to cover the bid
 //	        assert can_builder_cover_bid(state, builder_index, amount)
 //	        # Verify that the bid signature is valid
-//	        assert verify_execution_payload_bid_signature(state, signed_bid)
+//	        assert verify_sila_payload_bid_signature(state, signed_bid)
 //
 //	    # Verify commitments are under limit
 //	    assert (
@@ -64,16 +64,16 @@ import (
 //	            pending_payment
 //	        )
 //
-//	    # Cache the signed execution payload bid
-//	    state.latest_execution_payload_bid = bid
+//	    # Cache the signed sila payload bid
+//	    state.latest_sila_payload_bid = bid
 //	</spec>
-func ProcessExecutionPayloadBid(st state.BeaconState, block interfaces.ReadOnlyBeaconBlock) error {
-	signedBid, err := block.Body().SignedExecutionPayloadBid()
+func ProcessSilaPayloadBid(st state.BeaconState, block interfaces.ReadOnlyBeaconBlock) error {
+	signedBid, err := block.Body().SignedSilaPayloadBid()
 	if err != nil {
-		return errors.Wrap(err, "failed to get signed execution payload bid")
+		return errors.Wrap(err, "failed to get signed sila payload bid")
 	}
 
-	wrappedBid, err := blocks.WrappedROSignedExecutionPayloadBid(signedBid)
+	wrappedBid, err := blocks.WrappedROSignedSilaPayloadBid(signedBid)
 	if err != nil {
 		return errors.Wrap(err, "failed to wrap signed bid")
 	}
@@ -141,15 +141,15 @@ func ProcessExecutionPayloadBid(st state.BeaconState, block interfaces.ReadOnlyB
 		}
 	}
 
-	if err := st.SetExecutionPayloadBid(bid); err != nil {
-		return errors.Wrap(err, "failed to cache execution payload bid")
+	if err := st.SetSilaPayloadBid(bid); err != nil {
+		return errors.Wrap(err, "failed to cache sila payload bid")
 	}
 
 	return nil
 }
 
 // validateBidConsistency checks that the bid is consistent with the current beacon state.
-func validateBidConsistency(st state.BeaconState, bid interfaces.ROExecutionPayloadBid, block interfaces.ReadOnlyBeaconBlock) error {
+func validateBidConsistency(st state.BeaconState, bid interfaces.ROSilaPayloadBid, block interfaces.ReadOnlyBeaconBlock) error {
 	if bid.Slot() != block.Slot() {
 		return fmt.Errorf("bid slot %d does not match block slot %d", bid.Slot(), block.Slot())
 	}
@@ -179,10 +179,10 @@ func validateBidConsistency(st state.BeaconState, bid interfaces.ROExecutionPayl
 	return nil
 }
 
-// ValidatePayloadBidSignature verifies the BLS signature on a signed execution payload bid.
+// ValidatePayloadBidSignature verifies the BLS signature on a signed sila payload bid.
 // It validates that the signature was created by the builder specified in the bid
 // using the appropriate domain for the beacon builder.
-func ValidatePayloadBidSignature(st state.ReadOnlyBeaconState, signedBid interfaces.ROSignedExecutionPayloadBid) error {
+func ValidatePayloadBidSignature(st state.ReadOnlyBeaconState, signedBid interfaces.ROSignedSilaPayloadBid) error {
 	bid, err := signedBid.Bid()
 	if err != nil {
 		return errors.Wrap(err, "failed to get bid")

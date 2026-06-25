@@ -320,7 +320,7 @@ func (s *PremineGenesisConfig) populate(g state.BeaconState) error {
 	if err := s.setSyncCommittees(g); err != nil {
 		return err
 	}
-	if err := s.setExecutionPayload(g); err != nil {
+	if err := s.setSilaPayload(g); err != nil {
 		return err
 	}
 
@@ -475,7 +475,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayload{
+			SilaPayload: &enginev1.SilaPayload{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),
@@ -500,7 +500,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayloadCapella{
+			SilaPayload: &enginev1.SilaPayloadCapella{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),
@@ -527,7 +527,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+			SilaPayload: &enginev1.SilaPayloadDeneb{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),
@@ -555,7 +555,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+			SilaPayload: &enginev1.SilaPayloadDeneb{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),
@@ -588,7 +588,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				SyncCommitteeBits:      make([]byte, fieldparams.SyncCommitteeLength/8),
 				SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 			},
-			ExecutionPayload: &enginev1.ExecutionPayloadDeneb{
+			SilaPayload: &enginev1.SilaPayloadDeneb{
 				ParentHash:    make([]byte, 32),
 				FeeRecipient:  make([]byte, 20),
 				StateRoot:     make([]byte, 32),
@@ -625,7 +625,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	return g.SetLatestBlockHeader(lbh)
 }
 
-func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
+func (s *PremineGenesisConfig) setSilaPayload(g state.BeaconState) error {
 	gb := s.GB
 	extraData := gb.Extra()
 	if len(extraData) > 32 {
@@ -633,7 +633,7 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 	}
 
 	if s.Version >= version.Deneb {
-		payload := &enginev1.ExecutionPayloadDeneb{
+		payload := &enginev1.SilaPayloadDeneb{
 			ParentHash:    gb.ParentHash().Bytes(),
 			FeeRecipient:  gb.Coinbase().Bytes(),
 			StateRoot:     gb.Root().Bytes(),
@@ -653,7 +653,7 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 			BlobGasUsed:   unwrapUint64Ptr(gb.BlobGasUsed()),
 		}
 
-		wep, err := blocks.WrappedExecutionPayloadDeneb(payload)
+		wep, err := blocks.WrappedSilaPayloadDeneb(payload)
 		if err != nil {
 			return err
 		}
@@ -663,16 +663,16 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 			return err
 		}
 
-		ed, err := blocks.WrappedExecutionPayloadHeaderDeneb(eph)
+		ed, err := blocks.WrappedSilaPayloadHeaderDeneb(eph)
 		if err != nil {
 			return err
 		}
 
-		return g.SetLatestExecutionPayloadHeader(ed)
+		return g.SetLatestSilaPayloadHeader(ed)
 	}
 
 	if s.Version >= version.Capella {
-		payload := &enginev1.ExecutionPayloadCapella{
+		payload := &enginev1.SilaPayloadCapella{
 			ParentHash:    gb.ParentHash().Bytes(),
 			FeeRecipient:  gb.Coinbase().Bytes(),
 			StateRoot:     gb.Root().Bytes(),
@@ -690,7 +690,7 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 			Withdrawals:   make([]*enginev1.Withdrawal, 0),
 		}
 
-		wep, err := blocks.WrappedExecutionPayloadCapella(payload)
+		wep, err := blocks.WrappedSilaPayloadCapella(payload)
 		if err != nil {
 			return err
 		}
@@ -699,16 +699,16 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 		if err != nil {
 			return err
 		}
-		ed, err := blocks.WrappedExecutionPayloadHeaderCapella(eph)
+		ed, err := blocks.WrappedSilaPayloadHeaderCapella(eph)
 		if err != nil {
 			return err
 		}
 
-		return g.SetLatestExecutionPayloadHeader(ed)
+		return g.SetLatestSilaPayloadHeader(ed)
 	}
 
 	if s.Version >= version.Bellatrix {
-		payload := &enginev1.ExecutionPayload{
+		payload := &enginev1.SilaPayload{
 			ParentHash:    gb.ParentHash().Bytes(),
 			FeeRecipient:  gb.Coinbase().Bytes(),
 			StateRoot:     gb.Root().Bytes(),
@@ -725,7 +725,7 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 			Transactions:  make([][]byte, 0),
 		}
 
-		wep, err := blocks.WrappedExecutionPayload(payload)
+		wep, err := blocks.WrappedSilaPayload(payload)
 		if err != nil {
 			return err
 		}
@@ -735,12 +735,12 @@ func (s *PremineGenesisConfig) setExecutionPayload(g state.BeaconState) error {
 			return err
 		}
 
-		ed, err := blocks.WrappedExecutionPayloadHeader(eph)
+		ed, err := blocks.WrappedSilaPayloadHeader(eph)
 		if err != nil {
 			return err
 		}
 
-		return g.SetLatestExecutionPayloadHeader(ed)
+		return g.SetLatestSilaPayloadHeader(ed)
 	}
 
 	if s.Version >= version.Phase0 {

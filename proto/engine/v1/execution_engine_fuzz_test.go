@@ -9,16 +9,16 @@ import (
 	fuzz "github.com/google/gofuzz"
 )
 
-func TestCopyExecutionPayload_Fuzz(t *testing.T) {
-	fuzzCopies(t, &enginev1.ExecutionPayloadDeneb{})
-	fuzzCopies(t, &enginev1.ExecutionPayloadCapella{})
-	fuzzCopies(t, &enginev1.ExecutionPayload{})
+func TestCopySilaPayload_Fuzz(t *testing.T) {
+	fuzzCopies(t, &enginev1.SilaPayloadDeneb{})
+	fuzzCopies(t, &enginev1.SilaPayloadCapella{})
+	fuzzCopies(t, &enginev1.SilaPayload{})
 }
 
-func TestCopyExecutionPayloadHeader_Fuzz(t *testing.T) {
-	fuzzCopies(t, &enginev1.ExecutionPayloadHeaderDeneb{})
-	fuzzCopies(t, &enginev1.ExecutionPayloadHeaderCapella{})
-	fuzzCopies(t, &enginev1.ExecutionPayloadHeader{})
+func TestCopySilaPayloadHeader_Fuzz(t *testing.T) {
+	fuzzCopies(t, &enginev1.SilaPayloadHeaderDeneb{})
+	fuzzCopies(t, &enginev1.SilaPayloadHeaderCapella{})
+	fuzzCopies(t, &enginev1.SilaPayloadHeader{})
 }
 
 func fuzzCopies[T any, C enginev1.Copier[T]](t *testing.T, obj C) {

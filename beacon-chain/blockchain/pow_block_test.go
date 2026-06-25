@@ -128,7 +128,7 @@ func Test_validateMergeBlock(t *testing.T) {
 		Block: &silapb.BeaconBlockBellatrix{
 			Slot: 1,
 			Body: &silapb.BeaconBlockBodyBellatrix{
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					ParentHash: a[:],
 				},
 			},
@@ -192,7 +192,7 @@ func Test_getBlkParentHashAndTD(t *testing.T) {
 }
 
 func Test_validateTerminalBlockHash(t *testing.T) {
-	wrapped, err := blocks.WrappedExecutionPayload(&enginev1.ExecutionPayload{})
+	wrapped, err := blocks.WrappedSilaPayload(&enginev1.SilaPayload{})
 	require.NoError(t, err)
 	ok, err := canUseValidatedTerminalBlockHash(1, wrapped)
 	require.NoError(t, err)
@@ -211,7 +211,7 @@ func Test_validateTerminalBlockHash(t *testing.T) {
 	require.ErrorContains(t, "parent hash does not match terminal block hash", err)
 	require.Equal(t, false, ok)
 
-	wrapped, err = blocks.WrappedExecutionPayload(&enginev1.ExecutionPayload{
+	wrapped, err = blocks.WrappedSilaPayload(&enginev1.SilaPayload{
 		ParentHash: cfg.TerminalBlockHash.Bytes(),
 	})
 	require.NoError(t, err)

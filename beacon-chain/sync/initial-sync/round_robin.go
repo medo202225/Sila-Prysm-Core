@@ -31,7 +31,7 @@ const (
 type blockReceiverFn func(ctx context.Context, block interfaces.ReadOnlySignedBeaconBlock, blockRoot [32]byte, avs das.AvailabilityChecker) error
 
 // batchBlockReceiverFn defines batch receiving function.
-type batchBlockReceiverFn func(ctx context.Context, blks []blocks.ROBlock, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error
+type batchBlockReceiverFn func(ctx context.Context, blks []blocks.ROBlock, envelopes []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error
 
 // Round Robin sync looks at the latest peer statuses and syncs up to the highest known epoch.
 //
@@ -241,8 +241,8 @@ func (s *Service) processFetchedDataRegSync(ctx context.Context, data *blocksQue
 				return uint64(len(blocksWithBlobs)), errors.Wrap(err, "could not get envelope from data")
 			}
 			if !s.cfg.Chain.HasFullNode(env.BeaconBlockRoot()) {
-				if err := s.cfg.Chain.ReceiveExecutionPayloadEnvelope(ctx, envelopes[0]); err != nil {
-					log.WithError(err).Warning("Execution payload envelope processing failure")
+				if err := s.cfg.Chain.ReceiveSilaPayloadEnvelope(ctx, envelopes[0]); err != nil {
+					log.WithError(err).Warning("Sila payload envelope processing failure")
 					return 0, err
 				}
 			} else {
@@ -268,8 +268,8 @@ func (s *Service) processFetchedDataRegSync(ctx context.Context, data *blocksQue
 		}
 		if idx, ok := envIdxMap[b.Block.Root()]; ok {
 			e := envelopes[idx]
-			if err := s.cfg.Chain.ReceiveExecutionPayloadEnvelope(ctx, e); err != nil {
-				logDataColumns.WithError(err).Warning("Execution payload envelope processing failure")
+			if err := s.cfg.Chain.ReceiveSilaPayloadEnvelope(ctx, e); err != nil {
+				logDataColumns.WithError(err).Warning("Sila payload envelope processing failure")
 				return uint64(i), err
 			}
 		}
@@ -366,16 +366,16 @@ func (s *Service) processBlock(
 }
 
 type processedChecker func(context.Context, blocks.ROBlock) bool
-type payloadChecker func(context.Context, interfaces.ROSignedExecutionPayloadEnvelope) bool
+type payloadChecker func(context.Context, interfaces.ROSignedSilaPayloadEnvelope) bool
 
 func validUnprocessed(
 	ctx context.Context,
 	bwb []blocks.BlockWithROSidecars,
-	envelopes []interfaces.ROSignedExecutionPayloadEnvelope,
+	envelopes []interfaces.ROSignedSilaPayloadEnvelope,
 	headSlot primitives.Slot,
 	isProc processedChecker,
 	isPayloadProc payloadChecker,
-) ([]blocks.BlockWithROSidecars, []interfaces.ROSignedExecutionPayloadEnvelope, error) {
+) ([]blocks.BlockWithROSidecars, []interfaces.ROSignedSilaPayloadEnvelope, error) {
 	// use a pointer to avoid confusing the zero-value with the case where the first element is processed.
 	var processed *int
 	for i := range bwb {
@@ -410,11 +410,11 @@ func validUnprocessed(
 func envelopesForBlocks(
 	ctx context.Context,
 	bwb []blocks.BlockWithROSidecars,
-	envelopes []interfaces.ROSignedExecutionPayloadEnvelope,
+	envelopes []interfaces.ROSignedSilaPayloadEnvelope,
 	isPayloadProc payloadChecker,
-) []interfaces.ROSignedExecutionPayloadEnvelope {
+) []interfaces.ROSignedSilaPayloadEnvelope {
 	if len(envelopes) == 0 || len(bwb) == 0 {
-		return []interfaces.ROSignedExecutionPayloadEnvelope{}
+		return []interfaces.ROSignedSilaPayloadEnvelope{}
 	}
 
 	// Build a set of block roots from the remaining blocks.
@@ -446,7 +446,7 @@ func envelopesForBlocks(
 	return nil
 }
 
-func (s *Service) processBatchedBlocks(ctx context.Context, bwb []blocks.BlockWithROSidecars, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, bFunc batchBlockReceiverFn) (uint64, error) {
+func (s *Service) processBatchedBlocks(ctx context.Context, bwb []blocks.BlockWithROSidecars, envelopes []interfaces.ROSignedSilaPayloadEnvelope, bFunc batchBlockReceiverFn) (uint64, error) {
 	if len(bwb) == 0 {
 		return 0, errors.New("0 blocks provided into method")
 	}
@@ -483,7 +483,7 @@ func (s *Service) processBatchedBlocks(ctx context.Context, bwb []blocks.BlockWi
 	return bwbCount, nil
 }
 
-func (s *Service) processBlocksWithBlobs(ctx context.Context, bwbs []blocks.BlockWithROSidecars, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, bFunc batchBlockReceiverFn, firstBlock blocks.ROBlock) error {
+func (s *Service) processBlocksWithBlobs(ctx context.Context, bwbs []blocks.BlockWithROSidecars, envelopes []interfaces.ROSignedSilaPayloadEnvelope, bFunc batchBlockReceiverFn, firstBlock blocks.ROBlock) error {
 	bwbCount := len(bwbs)
 	if bwbCount == 0 {
 		return nil
@@ -511,7 +511,7 @@ func (s *Service) processBlocksWithBlobs(ctx context.Context, bwbs []blocks.Bloc
 	return nil
 }
 
-func (s *Service) processBlocksWithDataColumns(ctx context.Context, bwbs []blocks.BlockWithROSidecars, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, bFunc batchBlockReceiverFn, firstBlock blocks.ROBlock) error {
+func (s *Service) processBlocksWithDataColumns(ctx context.Context, bwbs []blocks.BlockWithROSidecars, envelopes []interfaces.ROSignedSilaPayloadEnvelope, bFunc batchBlockReceiverFn, firstBlock blocks.ROBlock) error {
 	bwbCount := len(bwbs)
 	if bwbCount == 0 {
 		return nil
@@ -582,12 +582,12 @@ func (s *Service) isProcessedBlock(ctx context.Context, blk blocks.ROBlock) bool
 }
 
 // isProcessedPayload checks DB if a payload has been processed
-func (s *Service) isProcessedPayload(ctx context.Context, e interfaces.ROSignedExecutionPayloadEnvelope) bool {
+func (s *Service) isProcessedPayload(ctx context.Context, e interfaces.ROSignedSilaPayloadEnvelope) bool {
 	env, err := e.Envelope()
 	if err != nil {
 		return false
 	}
-	return s.cfg.DB.HasExecutionPayloadEnvelope(ctx, env.BeaconBlockRoot())
+	return s.cfg.DB.HasSilaPayloadEnvelope(ctx, env.BeaconBlockRoot())
 }
 
 func (s *Service) downscorePeer(peerID peer.ID, reason string) {

@@ -28,7 +28,7 @@ func (s *Service) processPendingPayloadEnvelopeQueue() {
 }
 
 // processPendingPayloadEnvelope retrieves all queued payload envelopes for the
-// given block root and calls ReceiveExecutionPayloadEnvelope on each.
+// given block root and calls ReceiveSilaPayloadEnvelope on each.
 func (s *Service) processPendingPayloadEnvelope(ctx context.Context, root [32]byte) {
 	s.pendingEnvelopeLock.Lock()
 	inner, ok := s.pendingPayloadEnvelopes[root]
@@ -40,14 +40,14 @@ func (s *Service) processPendingPayloadEnvelope(ctx context.Context, root [32]by
 	s.pendingEnvelopeLock.Unlock()
 
 	for _, signedEnvelope := range inner {
-		e, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedEnvelope)
+		e, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedEnvelope)
 		if err != nil {
-			log.WithError(err).Debug("Could not wrap pending signed execution payload envelope")
+			log.WithError(err).Debug("Could not wrap pending signed sila payload envelope")
 			continue
 		}
 		env, err := e.Envelope()
 		if err != nil {
-			log.WithError(err).Debug("Could not get pending execution payload envelope")
+			log.WithError(err).Debug("Could not get pending sila payload envelope")
 			continue
 		}
 		if s.hasSeenPayloadEnvelope(root, env.BuilderIndex()) {
@@ -59,7 +59,7 @@ func (s *Service) processPendingPayloadEnvelope(ctx context.Context, root [32]by
 		}
 		s.setSeenPayloadEnvelope(root, env.BuilderIndex())
 
-		if err := s.cfg.chain.ReceiveExecutionPayloadEnvelope(ctx, e); err != nil {
+		if err := s.cfg.chain.ReceiveSilaPayloadEnvelope(ctx, e); err != nil {
 			log.WithError(err).Debug("Could not process pending payload envelope")
 			continue
 		}

@@ -146,28 +146,28 @@ func runLightClientSingleMerkleProofTestBeaconBlockBody(t *testing.T, testFolder
 	require.NoError(t, err, "Failed to decompress")
 
 	var beaconBlockBodyRoot [32]byte
-	var executionPayloadRoot [32]byte
+	var silaPayloadRoot [32]byte
 	switch v {
 	case version.Capella:
 		beaconBlockBody := &silapb.BeaconBlockBodyCapella{}
 		require.NoError(t, beaconBlockBody.UnmarshalSSZ(beaconBlockBodySSZ), "Failed to unmarshal")
 		beaconBlockBodyRoot, err = beaconBlockBody.HashTreeRoot()
 		require.NoError(t, err)
-		executionPayloadRoot, err = beaconBlockBody.ExecutionPayload.HashTreeRoot()
+		silaPayloadRoot, err = beaconBlockBody.SilaPayload.HashTreeRoot()
 		require.NoError(t, err)
 	case version.Deneb:
 		beaconBlockBody := &silapb.BeaconBlockBodyDeneb{}
 		require.NoError(t, beaconBlockBody.UnmarshalSSZ(beaconBlockBodySSZ), "Failed to unmarshal")
 		beaconBlockBodyRoot, err = beaconBlockBody.HashTreeRoot()
 		require.NoError(t, err)
-		executionPayloadRoot, err = beaconBlockBody.ExecutionPayload.HashTreeRoot()
+		silaPayloadRoot, err = beaconBlockBody.SilaPayload.HashTreeRoot()
 		require.NoError(t, err)
 	case version.Electra, version.Fulu:
 		beaconBlockBody := &silapb.BeaconBlockBodyElectra{}
 		require.NoError(t, beaconBlockBody.UnmarshalSSZ(beaconBlockBodySSZ), "Failed to unmarshal")
 		beaconBlockBodyRoot, err = beaconBlockBody.HashTreeRoot()
 		require.NoError(t, err)
-		executionPayloadRoot, err = beaconBlockBody.ExecutionPayload.HashTreeRoot()
+		silaPayloadRoot, err = beaconBlockBody.SilaPayload.HashTreeRoot()
 		require.NoError(t, err)
 	default:
 		t.Fatalf("Unsupported version: %d", v)
@@ -194,7 +194,7 @@ func runLightClientSingleMerkleProofTestBeaconBlockBody(t *testing.T, testFolder
 		branch = append(branch, bBytes)
 	}
 
-	require.DeepSSZEqual(t, executionPayloadRoot[:], leaf)
+	require.DeepSSZEqual(t, silaPayloadRoot[:], leaf)
 
-	require.Equal(t, true, trie.VerifyMerkleProof(beaconBlockBodyRoot[:], executionPayloadRoot[:], proof.LeafIndex, branch))
+	require.Equal(t, true, trie.VerifyMerkleProof(beaconBlockBodyRoot[:], silaPayloadRoot[:], proof.LeafIndex, branch))
 }

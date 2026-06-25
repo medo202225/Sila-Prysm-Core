@@ -33,7 +33,7 @@ func UpgradeToDeneb(state state.BeaconState) (state.BeaconState, error) {
 	if err != nil {
 		return nil, err
 	}
-	payloadHeader, err := state.LatestExecutionPayloadHeader()
+	payloadHeader, err := state.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func UpgradeToDeneb(state state.BeaconState) (state.BeaconState, error) {
 		InactivityScores:            inactivityScores,
 		CurrentSyncCommittee:        currentSyncCommittee,
 		NextSyncCommittee:           nextSyncCommittee,
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       payloadHeader.ParentHash(),
 			FeeRecipient:     payloadHeader.FeeRecipient(),
 			StateRoot:        payloadHeader.StateRoot(),

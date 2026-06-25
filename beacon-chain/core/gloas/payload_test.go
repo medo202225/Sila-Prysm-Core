@@ -21,14 +21,14 @@ import (
 
 type payloadFixture struct {
 	state       state.BeaconState
-	signed      interfaces.ROSignedExecutionPayloadEnvelope
-	signedProto *silapb.SignedExecutionPayloadEnvelope
-	envelope    *silapb.ExecutionPayloadEnvelope
-	payload     *enginev1.ExecutionPayloadGloas
+	signed      interfaces.ROSignedSilaPayloadEnvelope
+	signedProto *silapb.SignedSilaPayloadEnvelope
+	envelope    *silapb.SilaPayloadEnvelope
+	payload     *enginev1.SilaPayloadGloas
 	slot        primitives.Slot
 }
 
-func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPayloadGloas, bid *silapb.ExecutionPayloadBid, envelope *silapb.ExecutionPayloadEnvelope)) payloadFixture {
+func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.SilaPayloadGloas, bid *silapb.SilaPayloadBid, envelope *silapb.SilaPayloadEnvelope)) payloadFixture {
 	t.Helper()
 
 	cfg := params.BeaconConfig()
@@ -47,7 +47,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 		{Index: 0, ValidatorIndex: 1, Address: bytes.Repeat([]byte{0x01}, 20), Amount: 0},
 	}
 
-	payload := &enginev1.ExecutionPayloadGloas{
+	payload := &enginev1.SilaPayloadGloas{
 		ParentHash:    parentHash,
 		FeeRecipient:  bytes.Repeat([]byte{0x01}, 20),
 		StateRoot:     bytes.Repeat([]byte{0x02}, 32),
@@ -70,7 +70,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 
 	emptyRequestsRoot, err := enginev1.EmptyExecutionRequestsHashTreeRoot()
 	require.NoError(t, err)
-	bid := &silapb.ExecutionPayloadBid{
+	bid := &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentHash,
 		ParentBlockRoot:       bytes.Repeat([]byte{0xDD}, 32),
 		BlockHash:             blockHash,
@@ -93,7 +93,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 	headerRoot, err := header.HashTreeRoot()
 	require.NoError(t, err)
 
-	envelope := &silapb.ExecutionPayloadEnvelope{
+	envelope := &silapb.SilaPayloadEnvelope{
 		BuilderIndex:          builderIdx,
 		BeaconBlockRoot:       headerRoot[:],
 		ParentBeaconBlockRoot: header.ParentRoot,
@@ -144,7 +144,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 		}
 	}
 
-	executionPayloadAvailability := make([]byte, cfg.SlotsPerHistoricalRoot/8)
+	silaPayloadAvailability := make([]byte, cfg.SlotsPerHistoricalRoot/8)
 
 	builders := make([]*silapb.Builder, builderIdx+1)
 	builders[builderIdx] = &silapb.Builder{
@@ -179,9 +179,9 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 		Validators:                   vals,
 		Balances:                     balances,
 		LatestBlockHash:              payload.ParentHash,
-		LatestExecutionPayloadBid:    bid,
+		LatestSilaPayloadBid:    bid,
 		BuilderPendingPayments:       payments,
-		ExecutionPayloadAvailability: executionPayloadAvailability,
+		SilaPayloadAvailability: silaPayloadAvailability,
 		BuilderPendingWithdrawals:    []*silapb.BuilderPendingWithdrawal{},
 		PayloadExpectedWithdrawals:   payload.Withdrawals,
 		Builders:                     builders,
@@ -197,11 +197,11 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 	require.NoError(t, err)
 	signature := sk.Sign(signingRoot[:]).Marshal()
 
-	signedProto := &silapb.SignedExecutionPayloadEnvelope{
+	signedProto := &silapb.SignedSilaPayloadEnvelope{
 		Message:   envelope,
 		Signature: signature,
 	}
-	signed, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedProto)
+	signed, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedProto)
 	require.NoError(t, err)
 
 	return payloadFixture{
@@ -214,29 +214,29 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *enginev1.ExecutionPa
 	}
 }
 
-func TestVerifyExecutionPayloadEnvelope_Success(t *testing.T) {
+func TestVerifySilaPayloadEnvelope_Success(t *testing.T) {
 	fixture := buildPayloadFixture(t, nil)
-	require.NoError(t, VerifyExecutionPayloadEnvelope(t.Context(), fixture.state, fixture.signed))
+	require.NoError(t, VerifySilaPayloadEnvelope(t.Context(), fixture.state, fixture.signed))
 }
 
-func TestVerifyExecutionPayloadEnvelopeWithDeferredSig_Success(t *testing.T) {
+func TestVerifySilaPayloadEnvelopeWithDeferredSig_Success(t *testing.T) {
 	fixture := buildPayloadFixture(t, nil)
 
-	sigBatch, err := VerifyExecutionPayloadEnvelopeWithDeferredSig(t.Context(), fixture.state, fixture.signed)
+	sigBatch, err := VerifySilaPayloadEnvelopeWithDeferredSig(t.Context(), fixture.state, fixture.signed)
 	require.NoError(t, err)
 	require.NotNil(t, sigBatch)
 	require.Equal(t, 1, len(sigBatch.Signatures))
 	require.Equal(t, 1, len(sigBatch.PublicKeys))
 	require.Equal(t, 1, len(sigBatch.Messages))
 	require.Equal(t, 1, len(sigBatch.Descriptions))
-	require.Equal(t, "execution payload envelope signature", sigBatch.Descriptions[0])
+	require.Equal(t, "sila payload envelope signature", sigBatch.Descriptions[0])
 
 	valid, err := sigBatch.Verify()
 	require.NoError(t, err)
 	require.Equal(t, true, valid)
 }
 
-func TestVerifyExecutionPayloadEnvelopeSignature(t *testing.T) {
+func TestVerifySilaPayloadEnvelopeSignature(t *testing.T) {
 	fixture := buildPayloadFixture(t, nil)
 
 	t.Run("self build", func(t *testing.T) {
@@ -251,7 +251,7 @@ func TestVerifyExecutionPayloadEnvelopeSignature(t *testing.T) {
 		st, err := state_native.InitializeFromProtoUnsafeGloas(stPb)
 		require.NoError(t, err)
 
-		msg := proto.Clone(fixture.signedProto.Message).(*silapb.ExecutionPayloadEnvelope)
+		msg := proto.Clone(fixture.signedProto.Message).(*silapb.SilaPayloadEnvelope)
 		msg.BuilderIndex = params.BeaconConfig().BuilderIndexSelfBuild
 
 		epoch := slots.ToEpoch(msg.Payload.SlotNumber)
@@ -261,21 +261,21 @@ func TestVerifyExecutionPayloadEnvelopeSignature(t *testing.T) {
 		require.NoError(t, err)
 		signature := proposerSk.Sign(signingRoot[:]).Marshal()
 
-		signedProto := &silapb.SignedExecutionPayloadEnvelope{
+		signedProto := &silapb.SignedSilaPayloadEnvelope{
 			Message:   msg,
 			Signature: signature,
 		}
-		signed, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedProto)
+		signed, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedProto)
 		require.NoError(t, err)
 
-		require.NoError(t, verifyExecutionPayloadEnvelopeSignature(st, signed))
+		require.NoError(t, verifySilaPayloadEnvelopeSignature(st, signed))
 	})
 
 	t.Run("builder", func(t *testing.T) {
-		signed, err := blocks.WrappedROSignedExecutionPayloadEnvelope(fixture.signedProto)
+		signed, err := blocks.WrappedROSignedSilaPayloadEnvelope(fixture.signedProto)
 		require.NoError(t, err)
 
-		require.NoError(t, verifyExecutionPayloadEnvelopeSignature(fixture.state, signed))
+		require.NoError(t, verifySilaPayloadEnvelopeSignature(fixture.state, signed))
 	})
 
 	t.Run("invalid signature", func(t *testing.T) {
@@ -291,29 +291,29 @@ func TestVerifyExecutionPayloadEnvelopeSignature(t *testing.T) {
 			st, err := state_native.InitializeFromProtoUnsafeGloas(stPb)
 			require.NoError(t, err)
 
-			msg := proto.Clone(fixture.signedProto.Message).(*silapb.ExecutionPayloadEnvelope)
+			msg := proto.Clone(fixture.signedProto.Message).(*silapb.SilaPayloadEnvelope)
 			msg.BuilderIndex = params.BeaconConfig().BuilderIndexSelfBuild
 
-			signedProto := &silapb.SignedExecutionPayloadEnvelope{
+			signedProto := &silapb.SignedSilaPayloadEnvelope{
 				Message:   msg,
 				Signature: bytes.Repeat([]byte{0xFF}, 96),
 			}
-			badSigned, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedProto)
+			badSigned, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedProto)
 			require.NoError(t, err)
 
-			err = verifyExecutionPayloadEnvelopeSignature(st, badSigned)
+			err = verifySilaPayloadEnvelopeSignature(st, badSigned)
 			require.ErrorContains(t, "invalid signature format", err)
 		})
 
 		t.Run("builder", func(t *testing.T) {
-			signedProto := &silapb.SignedExecutionPayloadEnvelope{
+			signedProto := &silapb.SignedSilaPayloadEnvelope{
 				Message:   fixture.signedProto.Message,
 				Signature: bytes.Repeat([]byte{0xFF}, 96),
 			}
-			badSigned, err := blocks.WrappedROSignedExecutionPayloadEnvelope(signedProto)
+			badSigned, err := blocks.WrappedROSignedSilaPayloadEnvelope(signedProto)
 			require.NoError(t, err)
 
-			err = verifyExecutionPayloadEnvelopeSignature(fixture.state, badSigned)
+			err = verifySilaPayloadEnvelopeSignature(fixture.state, badSigned)
 			require.ErrorContains(t, "invalid signature format", err)
 		})
 	})

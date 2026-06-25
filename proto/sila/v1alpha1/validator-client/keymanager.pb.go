@@ -107,7 +107,7 @@ type SignRequest struct {
 	//	*SignRequest_BlockFulu
 	//	*SignRequest_BlindedBlockFulu
 	//	*SignRequest_BlockGloas
-	//	*SignRequest_ExecutionPayloadEnvelope
+	//	*SignRequest_SilaPayloadEnvelope
 	//	*SignRequest_PayloadAttestationData
 	//	*SignRequest_ProposerPreference
 	Object        isSignRequest_Object                                             `protobuf_oneof:"object"`
@@ -381,10 +381,10 @@ func (x *SignRequest) GetBlockGloas() *v1alpha1.BeaconBlockGloas {
 	return nil
 }
 
-func (x *SignRequest) GetExecutionPayloadEnvelope() *v1alpha1.ExecutionPayloadEnvelope {
+func (x *SignRequest) GetSilaPayloadEnvelope() *v1alpha1.SilaPayloadEnvelope {
 	if x != nil {
-		if x, ok := x.Object.(*SignRequest_ExecutionPayloadEnvelope); ok {
-			return x.ExecutionPayloadEnvelope
+		if x, ok := x.Object.(*SignRequest_SilaPayloadEnvelope); ok {
+			return x.SilaPayloadEnvelope
 		}
 	}
 	return nil
@@ -511,8 +511,8 @@ type SignRequest_BlockGloas struct {
 	BlockGloas *v1alpha1.BeaconBlockGloas `protobuf:"bytes,123,opt,name=block_gloas,json=blockGloas,proto3,oneof"`
 }
 
-type SignRequest_ExecutionPayloadEnvelope struct {
-	ExecutionPayloadEnvelope *v1alpha1.ExecutionPayloadEnvelope `protobuf:"bytes,124,opt,name=execution_payload_envelope,json=executionPayloadEnvelope,proto3,oneof"`
+type SignRequest_SilaPayloadEnvelope struct {
+	SilaPayloadEnvelope *v1alpha1.SilaPayloadEnvelope `protobuf:"bytes,124,opt,name=sila_payload_envelope,json=silaPayloadEnvelope,proto3,oneof"`
 }
 
 type SignRequest_PayloadAttestationData struct {
@@ -569,7 +569,7 @@ func (*SignRequest_BlindedBlockFulu) isSignRequest_Object() {}
 
 func (*SignRequest_BlockGloas) isSignRequest_Object() {}
 
-func (*SignRequest_ExecutionPayloadEnvelope) isSignRequest_Object() {}
+func (*SignRequest_SilaPayloadEnvelope) isSignRequest_Object() {}
 
 func (*SignRequest_PayloadAttestationData) isSignRequest_Object() {}
 
@@ -1105,7 +1105,7 @@ var file_proto_sila_v1alpha1_validator_client_keymanager_proto_goTypes = []any{
 	(*v1alpha1.AggregateAttestationAndProofElectra)(nil), // 23: sila.eth.v1alpha1.AggregateAttestationAndProofElectra
 	(*v1alpha1.BlindedBeaconBlockFulu)(nil),              // 24: sila.eth.v1alpha1.BlindedBeaconBlockFulu
 	(*v1alpha1.BeaconBlockGloas)(nil),                    // 25: sila.eth.v1alpha1.BeaconBlockGloas
-	(*v1alpha1.ExecutionPayloadEnvelope)(nil),            // 26: sila.eth.v1alpha1.ExecutionPayloadEnvelope
+	(*v1alpha1.SilaPayloadEnvelope)(nil),            // 26: sila.eth.v1alpha1.SilaPayloadEnvelope
 	(*v1alpha1.PayloadAttestationData)(nil),              // 27: sila.eth.v1alpha1.PayloadAttestationData
 	(*v1alpha1.ProposerPreferences)(nil),                 // 28: sila.eth.v1alpha1.ProposerPreferences
 }
@@ -1130,7 +1130,7 @@ var file_proto_sila_v1alpha1_validator_client_keymanager_proto_depIdxs = []int32
 	21, // 17: sila.validator.accounts.v2.SignRequest.block_fulu:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
 	24, // 18: sila.validator.accounts.v2.SignRequest.blinded_block_fulu:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockFulu
 	25, // 19: sila.validator.accounts.v2.SignRequest.block_gloas:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
-	26, // 20: sila.validator.accounts.v2.SignRequest.execution_payload_envelope:type_name -> sila.eth.v1alpha1.ExecutionPayloadEnvelope
+	26, // 20: sila.validator.accounts.v2.SignRequest.sila_payload_envelope:type_name -> sila.eth.v1alpha1.SilaPayloadEnvelope
 	27, // 21: sila.validator.accounts.v2.SignRequest.payload_attestation_data:type_name -> sila.eth.v1alpha1.PayloadAttestationData
 	28, // 22: sila.validator.accounts.v2.SignRequest.proposer_preference:type_name -> sila.eth.v1alpha1.ProposerPreferences
 	0,  // 23: sila.validator.accounts.v2.SignResponse.status:type_name -> sila.validator.accounts.v2.SignResponse.Status
@@ -1174,7 +1174,7 @@ func file_proto_sila_v1alpha1_validator_client_keymanager_proto_init() {
 		(*SignRequest_BlockFulu)(nil),
 		(*SignRequest_BlindedBlockFulu)(nil),
 		(*SignRequest_BlockGloas)(nil),
-		(*SignRequest_ExecutionPayloadEnvelope)(nil),
+		(*SignRequest_SilaPayloadEnvelope)(nil),
 		(*SignRequest_PayloadAttestationData)(nil),
 		(*SignRequest_ProposerPreference)(nil),
 	}

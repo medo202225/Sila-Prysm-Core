@@ -13,9 +13,9 @@ import (
 	"github.com/sila-chain/Sila/common/hexutil"
 )
 
-// ExecutionPayloadEnvelopeFromConsensus converts a proto envelope to the API struct.
-func ExecutionPayloadEnvelopeFromConsensus(e *eth.ExecutionPayloadEnvelope) (*ExecutionPayloadEnvelope, error) {
-	payload, err := ExecutionPayloadGloasFromConsensus(e.Payload)
+// SilaPayloadEnvelopeFromConsensus converts a proto envelope to the API struct.
+func SilaPayloadEnvelopeFromConsensus(e *eth.SilaPayloadEnvelope) (*SilaPayloadEnvelope, error) {
+	payload, err := SilaPayloadGloasFromConsensus(e.Payload)
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func ExecutionPayloadEnvelopeFromConsensus(e *eth.ExecutionPayloadEnvelope) (*Ex
 	if e.ExecutionRequests != nil {
 		requests = ExecutionRequestsFromConsensus(e.ExecutionRequests)
 	}
-	return &ExecutionPayloadEnvelope{
+	return &SilaPayloadEnvelope{
 		Payload:               payload,
 		ExecutionRequests:     requests,
 		BuilderIndex:          fmt.Sprintf("%d", e.BuilderIndex),
@@ -32,13 +32,13 @@ func ExecutionPayloadEnvelopeFromConsensus(e *eth.ExecutionPayloadEnvelope) (*Ex
 	}, nil
 }
 
-// SignedExecutionPayloadEnvelopeFromConsensus converts a signed proto envelope to the API struct.
-func SignedExecutionPayloadEnvelopeFromConsensus(e *eth.SignedExecutionPayloadEnvelope) (*SignedExecutionPayloadEnvelope, error) {
-	envelope, err := ExecutionPayloadEnvelopeFromConsensus(e.Message)
+// SignedSilaPayloadEnvelopeFromConsensus converts a signed proto envelope to the API struct.
+func SignedSilaPayloadEnvelopeFromConsensus(e *eth.SignedSilaPayloadEnvelope) (*SignedSilaPayloadEnvelope, error) {
+	envelope, err := SilaPayloadEnvelopeFromConsensus(e.Message)
 	if err != nil {
 		return nil, err
 	}
-	return &SignedExecutionPayloadEnvelope{
+	return &SignedSilaPayloadEnvelope{
 		Message:   envelope,
 		Signature: hexutil.Encode(e.Signature),
 	}, nil
@@ -46,12 +46,12 @@ func SignedExecutionPayloadEnvelopeFromConsensus(e *eth.SignedExecutionPayloadEn
 
 // BlockContentsGloasFromConsensus converts a proto Gloas block, envelope, and
 // blob data to the API struct.
-func BlockContentsGloasFromConsensus(block *eth.BeaconBlockGloas, envelope *eth.ExecutionPayloadEnvelope, kzgProofs [][]byte, blobs [][]byte) (*BlockContentsGloas, error) {
+func BlockContentsGloasFromConsensus(block *eth.BeaconBlockGloas, envelope *eth.SilaPayloadEnvelope, kzgProofs [][]byte, blobs [][]byte) (*BlockContentsGloas, error) {
 	b, err := BeaconBlockGloasFromConsensus(block)
 	if err != nil {
 		return nil, err
 	}
-	env, err := ExecutionPayloadEnvelopeFromConsensus(envelope)
+	env, err := SilaPayloadEnvelopeFromConsensus(envelope)
 	if err != nil {
 		return nil, err
 	}
@@ -65,16 +65,16 @@ func BlockContentsGloasFromConsensus(block *eth.BeaconBlockGloas, envelope *eth.
 	}
 	return &BlockContentsGloas{
 		Block:                    b,
-		ExecutionPayloadEnvelope: env,
+		SilaPayloadEnvelope: env,
 		KzgProofs:                encodedProofs,
 		Blobs:                    encodedBlobs,
 	}, nil
 }
 
-// ToConsensus converts the API struct to a proto ExecutionPayloadEnvelope.
-func (e *ExecutionPayloadEnvelope) ToConsensus() (*eth.ExecutionPayloadEnvelope, error) {
+// ToConsensus converts the API struct to a proto SilaPayloadEnvelope.
+func (e *SilaPayloadEnvelope) ToConsensus() (*eth.SilaPayloadEnvelope, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "ExecutionPayloadEnvelope")
+		return nil, server.NewDecodeError(errNilValue, "SilaPayloadEnvelope")
 	}
 	payload, err := e.Payload.ToConsensus()
 	if err != nil {
@@ -99,7 +99,7 @@ func (e *ExecutionPayloadEnvelope) ToConsensus() (*eth.ExecutionPayloadEnvelope,
 	if err != nil {
 		return nil, server.NewDecodeError(err, "ParentBeaconBlockRoot")
 	}
-	return &eth.ExecutionPayloadEnvelope{
+	return &eth.SilaPayloadEnvelope{
 		Payload:               payload,
 		ExecutionRequests:     requests,
 		BuilderIndex:          primitives.BuilderIndex(builderIndex),
@@ -108,10 +108,10 @@ func (e *ExecutionPayloadEnvelope) ToConsensus() (*eth.ExecutionPayloadEnvelope,
 	}, nil
 }
 
-// ToConsensus converts the API struct to a proto SignedExecutionPayloadEnvelope.
-func (e *SignedExecutionPayloadEnvelope) ToConsensus() (*eth.SignedExecutionPayloadEnvelope, error) {
+// ToConsensus converts the API struct to a proto SignedSilaPayloadEnvelope.
+func (e *SignedSilaPayloadEnvelope) ToConsensus() (*eth.SignedSilaPayloadEnvelope, error) {
 	if e == nil {
-		return nil, server.NewDecodeError(errNilValue, "SignedExecutionPayloadEnvelope")
+		return nil, server.NewDecodeError(errNilValue, "SignedSilaPayloadEnvelope")
 	}
 	msg, err := e.Message.ToConsensus()
 	if err != nil {
@@ -121,13 +121,13 @@ func (e *SignedExecutionPayloadEnvelope) ToConsensus() (*eth.SignedExecutionPayl
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.SignedExecutionPayloadEnvelope{
+	return &eth.SignedSilaPayloadEnvelope{
 		Message:   msg,
 		Signature: sig,
 	}, nil
 }
 
-func BlindedExecutionPayloadEnvelopeFromConsensus(b *eth.WireBlindedExecutionPayloadEnvelope) (*BlindedExecutionPayloadEnvelope, error) {
+func BlindedSilaPayloadEnvelopeFromConsensus(b *eth.WireBlindedSilaPayloadEnvelope) (*BlindedSilaPayloadEnvelope, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -135,7 +135,7 @@ func BlindedExecutionPayloadEnvelopeFromConsensus(b *eth.WireBlindedExecutionPay
 	if b.ExecutionRequests != nil {
 		requests = ExecutionRequestsFromConsensus(b.ExecutionRequests)
 	}
-	return &BlindedExecutionPayloadEnvelope{
+	return &BlindedSilaPayloadEnvelope{
 		PayloadRoot:           hexutil.Encode(b.PayloadRoot),
 		ExecutionRequests:     requests,
 		BuilderIndex:          fmt.Sprintf("%d", b.BuilderIndex),
@@ -144,9 +144,9 @@ func BlindedExecutionPayloadEnvelopeFromConsensus(b *eth.WireBlindedExecutionPay
 	}, nil
 }
 
-func (b *BlindedExecutionPayloadEnvelope) ToConsensus() (*eth.WireBlindedExecutionPayloadEnvelope, error) {
+func (b *BlindedSilaPayloadEnvelope) ToConsensus() (*eth.WireBlindedSilaPayloadEnvelope, error) {
 	if b == nil {
-		return nil, server.NewDecodeError(errNilValue, "BlindedExecutionPayloadEnvelope")
+		return nil, server.NewDecodeError(errNilValue, "BlindedSilaPayloadEnvelope")
 	}
 	payloadRoot, err := bytesutil.DecodeHexWithLength(b.PayloadRoot, fieldparams.RootLength)
 	if err != nil {
@@ -171,7 +171,7 @@ func (b *BlindedExecutionPayloadEnvelope) ToConsensus() (*eth.WireBlindedExecuti
 	if err != nil {
 		return nil, server.NewDecodeError(err, "ParentBeaconBlockRoot")
 	}
-	return &eth.WireBlindedExecutionPayloadEnvelope{
+	return &eth.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           payloadRoot,
 		ExecutionRequests:     requests,
 		BuilderIndex:          primitives.BuilderIndex(builderIndex),
@@ -180,9 +180,9 @@ func (b *BlindedExecutionPayloadEnvelope) ToConsensus() (*eth.WireBlindedExecuti
 	}, nil
 }
 
-func (s *SignedBlindedExecutionPayloadEnvelope) ToConsensus() (*eth.SignedWireBlindedExecutionPayloadEnvelope, error) {
+func (s *SignedBlindedSilaPayloadEnvelope) ToConsensus() (*eth.SignedWireBlindedSilaPayloadEnvelope, error) {
 	if s == nil {
-		return nil, server.NewDecodeError(errNilValue, "SignedBlindedExecutionPayloadEnvelope")
+		return nil, server.NewDecodeError(errNilValue, "SignedBlindedSilaPayloadEnvelope")
 	}
 	msg, err := s.Message.ToConsensus()
 	if err != nil {
@@ -192,16 +192,16 @@ func (s *SignedBlindedExecutionPayloadEnvelope) ToConsensus() (*eth.SignedWireBl
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.SignedWireBlindedExecutionPayloadEnvelope{
+	return &eth.SignedWireBlindedSilaPayloadEnvelope{
 		Message:   msg,
 		Signature: sig,
 	}, nil
 }
 
-// SignedExecutionPayloadEnvelopeContentsFromConsensus builds the API struct
+// SignedSilaPayloadEnvelopeContentsFromConsensus builds the API struct
 // used for stateless envelope publishing from native components.
-func SignedExecutionPayloadEnvelopeContentsFromConsensus(signed *eth.SignedExecutionPayloadEnvelope, kzgProofs [][]byte, blobs [][]byte) (*SignedExecutionPayloadEnvelopeContents, error) {
-	signedJSON, err := SignedExecutionPayloadEnvelopeFromConsensus(signed)
+func SignedSilaPayloadEnvelopeContentsFromConsensus(signed *eth.SignedSilaPayloadEnvelope, kzgProofs [][]byte, blobs [][]byte) (*SignedSilaPayloadEnvelopeContents, error) {
+	signedJSON, err := SignedSilaPayloadEnvelopeFromConsensus(signed)
 	if err != nil {
 		return nil, err
 	}
@@ -213,8 +213,8 @@ func SignedExecutionPayloadEnvelopeContentsFromConsensus(signed *eth.SignedExecu
 	for i, b := range blobs {
 		encodedBlobs[i] = hexutil.Encode(b)
 	}
-	return &SignedExecutionPayloadEnvelopeContents{
-		SignedExecutionPayloadEnvelope: signedJSON,
+	return &SignedSilaPayloadEnvelopeContents{
+		SignedSilaPayloadEnvelope: signedJSON,
 		KzgProofs:                      encodedProofs,
 		Blobs:                          encodedBlobs,
 	}, nil
@@ -222,13 +222,13 @@ func SignedExecutionPayloadEnvelopeContentsFromConsensus(signed *eth.SignedExecu
 
 // ToConsensus decodes the API struct into the signed envelope plus raw blob and
 // KZG proof bytes used by the stateless publish path.
-func (c *SignedExecutionPayloadEnvelopeContents) ToConsensus() (*eth.SignedExecutionPayloadEnvelope, [][]byte, [][]byte, error) {
+func (c *SignedSilaPayloadEnvelopeContents) ToConsensus() (*eth.SignedSilaPayloadEnvelope, [][]byte, [][]byte, error) {
 	if c == nil {
-		return nil, nil, nil, server.NewDecodeError(errNilValue, "SignedExecutionPayloadEnvelopeContents")
+		return nil, nil, nil, server.NewDecodeError(errNilValue, "SignedSilaPayloadEnvelopeContents")
 	}
-	signed, err := c.SignedExecutionPayloadEnvelope.ToConsensus()
+	signed, err := c.SignedSilaPayloadEnvelope.ToConsensus()
 	if err != nil {
-		return nil, nil, nil, server.NewDecodeError(err, "SignedExecutionPayloadEnvelope")
+		return nil, nil, nil, server.NewDecodeError(err, "SignedSilaPayloadEnvelope")
 	}
 	proofs := make([][]byte, len(c.KzgProofs))
 	for i, p := range c.KzgProofs {
@@ -252,7 +252,7 @@ func (c *SignedExecutionPayloadEnvelopeContents) ToConsensus() (*eth.SignedExecu
 // WireBlindedFromFull derives the spec-wire blinded envelope from a full one: payload_root is
 // HashTreeRoot(payload), so HashTreeRoot(blinded) == HashTreeRoot(full) and a validator signature
 // over either form is valid against the other.
-func WireBlindedFromFull(full *eth.ExecutionPayloadEnvelope) (*eth.WireBlindedExecutionPayloadEnvelope, error) {
+func WireBlindedFromFull(full *eth.SilaPayloadEnvelope) (*eth.WireBlindedSilaPayloadEnvelope, error) {
 	if full == nil {
 		return nil, nil
 	}
@@ -260,7 +260,7 @@ func WireBlindedFromFull(full *eth.ExecutionPayloadEnvelope) (*eth.WireBlindedEx
 	if err != nil {
 		return nil, err
 	}
-	return &eth.WireBlindedExecutionPayloadEnvelope{
+	return &eth.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           payloadRoot[:],
 		ExecutionRequests:     full.ExecutionRequests,
 		BuilderIndex:          full.BuilderIndex,
@@ -270,7 +270,7 @@ func WireBlindedFromFull(full *eth.ExecutionPayloadEnvelope) (*eth.WireBlindedEx
 }
 
 // SignedWireBlindedFromFull lifts a signed envelope to its blinded form, preserving the signature.
-func SignedWireBlindedFromFull(full *eth.SignedExecutionPayloadEnvelope) (*eth.SignedWireBlindedExecutionPayloadEnvelope, error) {
+func SignedWireBlindedFromFull(full *eth.SignedSilaPayloadEnvelope) (*eth.SignedWireBlindedSilaPayloadEnvelope, error) {
 	if full == nil {
 		return nil, nil
 	}
@@ -278,7 +278,7 @@ func SignedWireBlindedFromFull(full *eth.SignedExecutionPayloadEnvelope) (*eth.S
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedWireBlindedExecutionPayloadEnvelope{
+	return &eth.SignedWireBlindedSilaPayloadEnvelope{
 		Message:   msg,
 		Signature: bytesutil.SafeCopyBytes(full.Signature),
 	}, nil

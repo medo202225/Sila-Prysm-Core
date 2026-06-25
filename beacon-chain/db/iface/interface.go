@@ -67,10 +67,10 @@ type ReadOnlyDatabase interface {
 	OriginCheckpointBlockRoot(ctx context.Context) ([32]byte, error)
 	BackfillStatus(context.Context) (*dbval.BackfillStatus, error)
 
-	// Execution payload envelope operations (Gloas+).
-	ExecutionPayloadEnvelope(ctx context.Context, blockRoot [32]byte) (*silapb.SignedBlindedExecutionPayloadEnvelope, error)
-	ExecutionPayloadEnvelopeByBlockHash(ctx context.Context, blockHash [32]byte) (*silapb.SignedBlindedExecutionPayloadEnvelope, error)
-	HasExecutionPayloadEnvelope(ctx context.Context, blockRoot [32]byte) bool
+	// Sila payload envelope operations (Gloas+).
+	SilaPayloadEnvelope(ctx context.Context, blockRoot [32]byte) (*silapb.SignedBlindedSilaPayloadEnvelope, error)
+	SilaPayloadEnvelopeByBlockHash(ctx context.Context, blockHash [32]byte) (*silapb.SignedBlindedSilaPayloadEnvelope, error)
+	HasSilaPayloadEnvelope(ctx context.Context, blockRoot [32]byte) bool
 
 	// P2P Metadata operations.
 	MetadataSeqNum(ctx context.Context) (uint64, error)
@@ -121,9 +121,9 @@ type NoHeadAccessDatabase interface {
 	SaveLightClientUpdate(ctx context.Context, period uint64, update interfaces.LightClientUpdate) error
 	SaveLightClientBootstrap(ctx context.Context, blockRoot []byte, bootstrap interfaces.LightClientBootstrap) error
 
-	// Execution payload envelope operations (Gloas+).
-	SaveExecutionPayloadEnvelope(ctx context.Context, envelope *silapb.SignedExecutionPayloadEnvelope) error
-	DeleteExecutionPayloadEnvelope(ctx context.Context, blockRoot [32]byte) error
+	// Sila payload envelope operations (Gloas+).
+	SaveSilaPayloadEnvelope(ctx context.Context, envelope *silapb.SignedSilaPayloadEnvelope) error
+	DeleteSilaPayloadEnvelope(ctx context.Context, blockRoot [32]byte) error
 
 	CleanUpDirtyStates(ctx context.Context, slotsPerArchivedPoint primitives.Slot) error
 	DeleteHistoricalDataBeforeSlot(ctx context.Context, slot primitives.Slot, batchSize int) (int, error)

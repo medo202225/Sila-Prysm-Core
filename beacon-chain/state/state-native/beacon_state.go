@@ -50,9 +50,9 @@ type BeaconState struct {
 	inactivityScoresMultiValue          *MultiValueInactivityScores
 	currentSyncCommittee                *silapb.SyncCommittee
 	nextSyncCommittee                   *silapb.SyncCommittee
-	latestExecutionPayloadHeader        *enginev1.ExecutionPayloadHeader
-	latestExecutionPayloadHeaderCapella *enginev1.ExecutionPayloadHeaderCapella
-	latestExecutionPayloadHeaderDeneb   *enginev1.ExecutionPayloadHeaderDeneb
+	latestSilaPayloadHeader        *enginev1.SilaPayloadHeader
+	latestSilaPayloadHeaderCapella *enginev1.SilaPayloadHeaderCapella
+	latestSilaPayloadHeaderDeneb   *enginev1.SilaPayloadHeaderDeneb
 
 	// Capella fields
 	nextWithdrawalIndex          uint64
@@ -72,11 +72,11 @@ type BeaconState struct {
 	proposerLookahead             []primitives.ValidatorIndex       // proposer_look_ahead: List[uint64, (MIN_LOOKAHEAD + 1)*SLOTS_PER_EPOCH]
 
 	// Gloas fields
-	latestExecutionPayloadBid    *silapb.ExecutionPayloadBid
+	latestSilaPayloadBid    *silapb.SilaPayloadBid
 	builders                     []*silapb.Builder
 	builderIdxMap                map[[fieldparams.BLSPubkeyLength]byte]primitives.BuilderIndex
 	nextWithdrawalBuilderIndex   primitives.BuilderIndex
-	executionPayloadAvailability []byte
+	silaPayloadAvailability []byte
 	builderPendingPayments       []*silapb.BuilderPendingPayment
 	builderPendingWithdrawals    []*silapb.BuilderPendingWithdrawal
 	latestBlockHash              []byte
@@ -122,9 +122,9 @@ type beaconStateMarshalable struct {
 	InactivityScores                    []uint64                                `json:"inactivity_scores" yaml:"inactivity_scores"`
 	CurrentSyncCommittee                *silapb.SyncCommittee                    `json:"current_sync_committee" yaml:"current_sync_committee"`
 	NextSyncCommittee                   *silapb.SyncCommittee                    `json:"next_sync_committee" yaml:"next_sync_committee"`
-	LatestExecutionPayloadHeader        *enginev1.ExecutionPayloadHeader        `json:"latest_execution_payload_header" yaml:"latest_execution_payload_header"`
-	LatestExecutionPayloadHeaderCapella *enginev1.ExecutionPayloadHeaderCapella `json:"latest_execution_payload_header_capella" yaml:"latest_execution_payload_header_capella"`
-	LatestExecutionPayloadHeaderDeneb   *enginev1.ExecutionPayloadHeaderDeneb   `json:"latest_execution_payload_header_deneb" yaml:"latest_execution_payload_header_deneb"`
+	LatestSilaPayloadHeader        *enginev1.SilaPayloadHeader        `json:"latest_sila_payload_header" yaml:"latest_sila_payload_header"`
+	LatestSilaPayloadHeaderCapella *enginev1.SilaPayloadHeaderCapella `json:"latest_sila_payload_header_capella" yaml:"latest_sila_payload_header_capella"`
+	LatestSilaPayloadHeaderDeneb   *enginev1.SilaPayloadHeaderDeneb   `json:"latest_sila_payload_header_deneb" yaml:"latest_sila_payload_header_deneb"`
 	NextWithdrawalIndex                 uint64                                  `json:"next_withdrawal_index" yaml:"next_withdrawal_index"`
 	NextWithdrawalValidatorIndex        primitives.ValidatorIndex               `json:"next_withdrawal_validator_index" yaml:"next_withdrawal_validator_index"`
 	HistoricalSummaries                 []*silapb.HistoricalSummary              `json:"historical_summaries" yaml:"historical_summaries"`
@@ -138,10 +138,10 @@ type beaconStateMarshalable struct {
 	PendingPartialWithdrawals           []*silapb.PendingPartialWithdrawal       `json:"pending_partial_withdrawals" yaml:"pending_partial_withdrawals"`
 	PendingConsolidations               []*silapb.PendingConsolidation           `json:"pending_consolidations" yaml:"pending_consolidations"`
 	ProposerLookahead                   []primitives.ValidatorIndex             `json:"proposer_look_ahead" yaml:"proposer_look_ahead"`
-	LatestExecutionPayloadBid           *silapb.ExecutionPayloadBid              `json:"latest_execution_payload_bid" yaml:"latest_execution_payload_bid"`
+	LatestSilaPayloadBid           *silapb.SilaPayloadBid              `json:"latest_sila_payload_bid" yaml:"latest_sila_payload_bid"`
 	Builders                            []*silapb.Builder                        `json:"builders" yaml:"builders"`
 	NextWithdrawalBuilderIndex          primitives.BuilderIndex                 `json:"next_withdrawal_builder_index" yaml:"next_withdrawal_builder_index"`
-	ExecutionPayloadAvailability        []byte                                  `json:"execution_payload_availability" yaml:"execution_payload_availability"`
+	SilaPayloadAvailability        []byte                                  `json:"sila_payload_availability" yaml:"sila_payload_availability"`
 	BuilderPendingPayments              []*silapb.BuilderPendingPayment          `json:"builder_pending_payments" yaml:"builder_pending_payments"`
 	BuilderPendingWithdrawals           []*silapb.BuilderPendingWithdrawal       `json:"builder_pending_withdrawals" yaml:"builder_pending_withdrawals"`
 	LatestBlockHash                     []byte                                  `json:"latest_block_hash" yaml:"latest_block_hash"`
@@ -185,9 +185,9 @@ func (b *BeaconState) MarshalJSON() ([]byte, error) {
 		InactivityScores:                    inactivityScores,
 		CurrentSyncCommittee:                b.currentSyncCommittee,
 		NextSyncCommittee:                   b.nextSyncCommittee,
-		LatestExecutionPayloadHeader:        b.latestExecutionPayloadHeader,
-		LatestExecutionPayloadHeaderCapella: b.latestExecutionPayloadHeaderCapella,
-		LatestExecutionPayloadHeaderDeneb:   b.latestExecutionPayloadHeaderDeneb,
+		LatestSilaPayloadHeader:        b.latestSilaPayloadHeader,
+		LatestSilaPayloadHeaderCapella: b.latestSilaPayloadHeaderCapella,
+		LatestSilaPayloadHeaderDeneb:   b.latestSilaPayloadHeaderDeneb,
 		NextWithdrawalIndex:                 b.nextWithdrawalIndex,
 		NextWithdrawalValidatorIndex:        b.nextWithdrawalValidatorIndex,
 		HistoricalSummaries:                 b.historicalSummaries,
@@ -201,10 +201,10 @@ func (b *BeaconState) MarshalJSON() ([]byte, error) {
 		PendingPartialWithdrawals:           b.pendingPartialWithdrawals,
 		PendingConsolidations:               b.pendingConsolidations,
 		ProposerLookahead:                   b.proposerLookahead,
-		LatestExecutionPayloadBid:           b.latestExecutionPayloadBid,
+		LatestSilaPayloadBid:           b.latestSilaPayloadBid,
 		Builders:                            b.builders,
 		NextWithdrawalBuilderIndex:          b.nextWithdrawalBuilderIndex,
-		ExecutionPayloadAvailability:        b.executionPayloadAvailability,
+		SilaPayloadAvailability:        b.silaPayloadAvailability,
 		BuilderPendingPayments:              b.builderPendingPayments,
 		BuilderPendingWithdrawals:           b.builderPendingWithdrawals,
 		LatestBlockHash:                     b.latestBlockHash,

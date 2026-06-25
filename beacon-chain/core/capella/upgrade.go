@@ -33,7 +33,7 @@ func UpgradeToCapella(state state.BeaconState) (state.BeaconState, error) {
 	if err != nil {
 		return nil, err
 	}
-	payloadHeader, err := state.LatestExecutionPayloadHeader()
+	payloadHeader, err := state.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func UpgradeToCapella(state state.BeaconState) (state.BeaconState, error) {
 		InactivityScores:            inactivityScores,
 		CurrentSyncCommittee:        currentSyncCommittee,
 		NextSyncCommittee:           nextSyncCommittee,
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderCapella{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderCapella{
 			ParentHash:       payloadHeader.ParentHash(),
 			FeeRecipient:     payloadHeader.FeeRecipient(),
 			StateRoot:        payloadHeader.StateRoot(),

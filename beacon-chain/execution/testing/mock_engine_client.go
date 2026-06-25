@@ -32,7 +32,7 @@ type EngineClient struct {
 	ErrExecBlockByHash          error
 	ErrForkchoiceUpdated        error
 	ErrNewPayload               error
-	ExecutionPayloadByBlockHash map[[32]byte]*pb.ExecutionPayload
+	SilaPayloadByBlockHash map[[32]byte]*pb.SilaPayload
 	SlotByBlockHash             map[[32]byte]primitives.Slot
 	BlockByHashMap              map[[32]byte]*pb.ExecutionBlock
 	NumReconstructedPayloads    uint64
@@ -94,12 +94,12 @@ func (e *EngineClient) ReconstructFullBlock(
 	if err != nil {
 		return nil, err
 	}
-	payload, ok := e.ExecutionPayloadByBlockHash[bytesutil.ToBytes32(header.BlockHash())]
+	payload, ok := e.SilaPayloadByBlockHash[bytesutil.ToBytes32(header.BlockHash())]
 	if !ok {
 		return nil, errors.New("block not found")
 	}
 	e.NumReconstructedPayloads++
-	return blocks.BuildSignedBeaconBlockFromExecutionPayload(blindedBlock, payload)
+	return blocks.BuildSignedBeaconBlockFromSilaPayload(blindedBlock, payload)
 }
 
 // ReconstructFullBellatrixBlockBatch --
@@ -117,15 +117,15 @@ func (e *EngineClient) ReconstructFullBellatrixBlockBatch(
 	return fullBlocks, nil
 }
 
-// ReconstructFullGloasExecutionPayloadsByHash --
-func (e *EngineClient) ReconstructFullGloasExecutionPayloadsByHash(
+// ReconstructFullGloasSilaPayloadsByHash --
+func (e *EngineClient) ReconstructFullGloasSilaPayloadsByHash(
 	_ context.Context, blockHashes [][32]byte,
-) (map[[32]byte]*pb.ExecutionPayloadGloas, error) {
-	payloads := make(map[[32]byte]*pb.ExecutionPayloadGloas, len(blockHashes))
+) (map[[32]byte]*pb.SilaPayloadGloas, error) {
+	payloads := make(map[[32]byte]*pb.SilaPayloadGloas, len(blockHashes))
 	for i := range blockHashes {
 		blockHash := blockHashes[i]
-		if p, ok := e.ExecutionPayloadByBlockHash[blockHash]; ok {
-			payloads[blockHash] = &pb.ExecutionPayloadGloas{
+		if p, ok := e.SilaPayloadByBlockHash[blockHash]; ok {
+			payloads[blockHash] = &pb.SilaPayloadGloas{
 				ParentHash:    p.ParentHash,
 				FeeRecipient:  p.FeeRecipient,
 				StateRoot:     p.StateRoot,
@@ -146,7 +146,7 @@ func (e *EngineClient) ReconstructFullGloasExecutionPayloadsByHash(
 			continue
 		}
 		if e.GetPayloadResponse != nil && e.GetPayloadResponse.ExecutionData != nil {
-			if p, ok := e.GetPayloadResponse.ExecutionData.Proto().(*pb.ExecutionPayloadGloas); ok {
+			if p, ok := e.GetPayloadResponse.ExecutionData.Proto().(*pb.SilaPayloadGloas); ok {
 				payloads[blockHash] = p
 				continue
 			}
@@ -166,21 +166,21 @@ func (e *EngineClient) ConstructDataColumnSidecars(context.Context, peerdas.Cons
 	return e.DataColumnSidecars, e.ErrorDataColumnSidecars
 }
 
-// ReconstructExecutionPayloadEnvelope --
-func (e *EngineClient) ReconstructExecutionPayloadEnvelope(
-	_ context.Context, envelope *silapb.SignedBlindedExecutionPayloadEnvelope,
-) (*silapb.SignedExecutionPayloadEnvelope, error) {
+// ReconstructSilaPayloadEnvelope --
+func (e *EngineClient) ReconstructSilaPayloadEnvelope(
+	_ context.Context, envelope *silapb.SignedBlindedSilaPayloadEnvelope,
+) (*silapb.SignedSilaPayloadEnvelope, error) {
 	if e.Err != nil {
 		return nil, e.Err
 	}
-	payload, ok := e.ExecutionPayloadByBlockHash[bytesutil.ToBytes32(envelope.Message.BlockHash)]
+	payload, ok := e.SilaPayloadByBlockHash[bytesutil.ToBytes32(envelope.Message.BlockHash)]
 	if !ok {
-		return nil, errors.New("execution payload not found for block hash")
+		return nil, errors.New("sila payload not found for block hash")
 	}
 	p := payloadToPayloadGloas(payload)
 	p.SlotNumber = envelope.Message.Slot
-	return &silapb.SignedExecutionPayloadEnvelope{
-		Message: &silapb.ExecutionPayloadEnvelope{
+	return &silapb.SignedSilaPayloadEnvelope{
+		Message: &silapb.SilaPayloadEnvelope{
 			Payload:           p,
 			ExecutionRequests: envelope.Message.ExecutionRequests,
 			BuilderIndex:      envelope.Message.BuilderIndex,
@@ -190,8 +190,8 @@ func (e *EngineClient) ReconstructExecutionPayloadEnvelope(
 	}, nil
 }
 
-func payloadToPayloadGloas(p *pb.ExecutionPayload) *pb.ExecutionPayloadGloas {
-	return &pb.ExecutionPayloadGloas{
+func payloadToPayloadGloas(p *pb.SilaPayload) *pb.SilaPayloadGloas {
+	return &pb.SilaPayloadGloas{
 		ParentHash:    p.ParentHash,
 		FeeRecipient:  p.FeeRecipient,
 		StateRoot:     p.StateRoot,

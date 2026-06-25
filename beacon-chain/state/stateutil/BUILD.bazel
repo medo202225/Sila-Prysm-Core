@@ -9,7 +9,7 @@ go_library(
         "builders_root.go",
         "compact_validator.go",
         "silaexec_root.go",
-        "execution_payload_availability_root.go",
+        "sila_payload_availability_root.go",
         "field_root_attestation.go",
         "field_root_silaexec.go",
         "field_root_validator.go",

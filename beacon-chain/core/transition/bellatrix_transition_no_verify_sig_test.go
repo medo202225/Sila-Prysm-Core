@@ -238,7 +238,7 @@ func createFullBellatrixBlockWithOperations(t *testing.T) (state.BeaconState,
 				Deposits:          altairBlk.Block.Body.Deposits,
 				VoluntaryExits:    altairBlk.Block.Body.VoluntaryExits,
 				SyncAggregate:     altairBlk.Block.Body.SyncAggregate,
-				ExecutionPayload: &enginev1.ExecutionPayload{
+				SilaPayload: &enginev1.SilaPayload{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
@@ -277,7 +277,7 @@ func createFullCapellaBlockWithOperations(t *testing.T) (state.BeaconState,
 				Deposits:          bellatrixBlk.Block.Body.Deposits,
 				VoluntaryExits:    bellatrixBlk.Block.Body.VoluntaryExits,
 				SyncAggregate:     bellatrixBlk.Block.Body.SyncAggregate,
-				ExecutionPayload: &enginev1.ExecutionPayloadCapella{
+				SilaPayload: &enginev1.SilaPayloadCapella{
 					ParentHash:    make([]byte, fieldparams.RootLength),
 					FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),

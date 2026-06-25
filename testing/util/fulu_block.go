@@ -158,12 +158,12 @@ func GenerateFullBlockFulu(bState state.BeaconState, privs []bls.SecretKey, conf
 		Consolidations: consolidationRequests,
 	}
 
-	parentExecution, err := stCopy.LatestExecutionPayloadHeader()
+	parentExecution, err := stCopy.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
 	blockHash := indexToHash(uint64(slot))
-	newExecutionPayloadElectra := &v1.ExecutionPayloadDeneb{
+	newSilaPayloadElectra := &v1.SilaPayloadDeneb{
 		ParentHash:    parentExecution.BlockHash(),
 		FeeRecipient:  make([]byte, 20),
 		StateRoot:     params.BeaconConfig().ZeroHash[:],
@@ -245,7 +245,7 @@ func GenerateFullBlockFulu(bState state.BeaconState, privs []bls.SecretKey, conf
 			Deposits:              newDeposits,
 			Graffiti:              make([]byte, fieldparams.RootLength),
 			SyncAggregate:         newSyncAggregate,
-			ExecutionPayload:      newExecutionPayloadElectra,
+			SilaPayload:      newSilaPayloadElectra,
 			BlsToExecutionChanges: changes,
 			ExecutionRequests:     executionRequests,
 			BlobKzgCommitments:    blobKzgCommitments,

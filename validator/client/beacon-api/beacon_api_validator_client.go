@@ -31,17 +31,17 @@ type beaconApiValidatorClient struct {
 	silaChainClient        iface.SilaChainClient
 	isEventStreamRunning    bool
 	stateless               bool
-	envelopeCache           *executionPayloadEnvelopeCache
+	envelopeCache           *silaPayloadEnvelopeCache
 }
 
 // WithStateless configures the validator client to use the Gloas stateless block production path,
-// retrieving the block and execution payload envelope in a single v4 call and caching the envelope
+// retrieving the block and sila payload envelope in a single v4 call and caching the envelope
 // for reuse by the self-build publisher.
 func WithStateless(enabled bool) ValidatorClientOpt {
 	return func(c *beaconApiValidatorClient) {
 		c.stateless = enabled
 		if enabled {
-			c.envelopeCache = newExecutionPayloadEnvelopeCache()
+			c.envelopeCache = newSilaPayloadEnvelopeCache()
 		}
 	}
 }
@@ -311,9 +311,9 @@ func (c *beaconApiValidatorClient) SubmitSignedProposerPreferences(ctx context.C
 	})
 }
 
-// TODO(gloas): Wire up actual REST call to POST /sila/v2/beacon/execution_payload/bid
-func (c *beaconApiValidatorClient) SubmitSignedExecutionPayloadBid(_ context.Context, _ *silapb.SignedExecutionPayloadBid) (*empty.Empty, error) {
-	log.Debug("SubmitSignedExecutionPayloadBid not yet implemented for beacon API client, skipping")
+// TODO(gloas): Wire up actual REST call to POST /sila/v2/beacon/sila_payload/bid
+func (c *beaconApiValidatorClient) SubmitSignedSilaPayloadBid(_ context.Context, _ *silapb.SignedSilaPayloadBid) (*empty.Empty, error) {
+	log.Debug("SubmitSignedSilaPayloadBid not yet implemented for beacon API client, skipping")
 	return new(empty.Empty), nil
 }
 
@@ -417,30 +417,30 @@ func (c *beaconApiValidatorClient) EnsureReady(ctx context.Context) bool {
 
 // Gloas Fork Methods
 
-func (c *beaconApiValidatorClient) GetExecutionPayloadEnvelope(ctx context.Context, slot primitives.Slot, beaconBlockRoot [32]byte) (*silapb.ExecutionPayloadEnvelope, *silapb.WireBlindedExecutionPayloadEnvelope, error) {
-	ctx, span := trace.StartSpan(ctx, "beacon-api.GetExecutionPayloadEnvelope")
+func (c *beaconApiValidatorClient) GetSilaPayloadEnvelope(ctx context.Context, slot primitives.Slot, beaconBlockRoot [32]byte) (*silapb.SilaPayloadEnvelope, *silapb.WireBlindedSilaPayloadEnvelope, error) {
+	ctx, span := trace.StartSpan(ctx, "beacon-api.GetSilaPayloadEnvelope")
 	defer span.End()
 
-	return wrapInMetrics2("GetExecutionPayloadEnvelope", func() (*silapb.ExecutionPayloadEnvelope, *silapb.WireBlindedExecutionPayloadEnvelope, error) {
-		return c.getExecutionPayloadEnvelope(ctx, slot, beaconBlockRoot)
+	return wrapInMetrics2("GetSilaPayloadEnvelope", func() (*silapb.SilaPayloadEnvelope, *silapb.WireBlindedSilaPayloadEnvelope, error) {
+		return c.getSilaPayloadEnvelope(ctx, slot, beaconBlockRoot)
 	})
 }
 
-func (c *beaconApiValidatorClient) PublishExecutionPayloadEnvelope(ctx context.Context, in *silapb.SignedExecutionPayloadEnvelope) (*empty.Empty, error) {
-	ctx, span := trace.StartSpan(ctx, "beacon-api.PublishExecutionPayloadEnvelope")
+func (c *beaconApiValidatorClient) PublishSilaPayloadEnvelope(ctx context.Context, in *silapb.SignedSilaPayloadEnvelope) (*empty.Empty, error) {
+	ctx, span := trace.StartSpan(ctx, "beacon-api.PublishSilaPayloadEnvelope")
 	defer span.End()
 
-	return wrapInMetrics[*empty.Empty]("PublishExecutionPayloadEnvelope", func() (*empty.Empty, error) {
-		return c.publishExecutionPayloadEnvelope(ctx, in)
+	return wrapInMetrics[*empty.Empty]("PublishSilaPayloadEnvelope", func() (*empty.Empty, error) {
+		return c.publishSilaPayloadEnvelope(ctx, in)
 	})
 }
 
-func (c *beaconApiValidatorClient) PublishBlindedExecutionPayloadEnvelope(ctx context.Context, in *silapb.SignedWireBlindedExecutionPayloadEnvelope) (*empty.Empty, error) {
-	ctx, span := trace.StartSpan(ctx, "beacon-api.PublishBlindedExecutionPayloadEnvelope")
+func (c *beaconApiValidatorClient) PublishBlindedSilaPayloadEnvelope(ctx context.Context, in *silapb.SignedWireBlindedSilaPayloadEnvelope) (*empty.Empty, error) {
+	ctx, span := trace.StartSpan(ctx, "beacon-api.PublishBlindedSilaPayloadEnvelope")
 	defer span.End()
 
-	return wrapInMetrics[*empty.Empty]("PublishBlindedExecutionPayloadEnvelope", func() (*empty.Empty, error) {
-		return c.publishBlindedExecutionPayloadEnvelope(ctx, in)
+	return wrapInMetrics[*empty.Empty]("PublishBlindedSilaPayloadEnvelope", func() (*empty.Empty, error) {
+		return c.publishBlindedSilaPayloadEnvelope(ctx, in)
 	})
 }
 

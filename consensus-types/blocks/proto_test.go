@@ -25,12 +25,12 @@ type fields struct {
 	attesterSlashingsElectra []*eth.AttesterSlashingElectra
 	voluntaryExits           []*eth.SignedVoluntaryExit
 	syncAggregate            *eth.SyncAggregate
-	execPayload              *enginev1.ExecutionPayload
-	execPayloadHeader        *enginev1.ExecutionPayloadHeader
-	execPayloadCapella       *enginev1.ExecutionPayloadCapella
-	execPayloadHeaderCapella *enginev1.ExecutionPayloadHeaderCapella
-	execPayloadDeneb         *enginev1.ExecutionPayloadDeneb
-	execPayloadHeaderDeneb   *enginev1.ExecutionPayloadHeaderDeneb
+	execPayload              *enginev1.SilaPayload
+	execPayloadHeader        *enginev1.SilaPayloadHeader
+	execPayloadCapella       *enginev1.SilaPayloadCapella
+	execPayloadHeaderCapella *enginev1.SilaPayloadHeaderCapella
+	execPayloadDeneb         *enginev1.SilaPayloadDeneb
+	execPayloadHeaderDeneb   *enginev1.SilaPayloadHeaderDeneb
 	blsToExecutionChanges    []*eth.SignedBLSToExecutionChange
 	kzgCommitments           [][]byte
 	execRequests             *enginev1.ExecutionRequests
@@ -790,49 +790,49 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 	})
 	t.Run("Bellatrix - wrong payload type", func(t *testing.T) {
 		body := bodyBellatrix(t)
-		body.executionPayload = &executionPayloadHeader{}
+		body.silaPayload = &silaPayloadHeader{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadWrongType)
 	})
 	t.Run("BellatrixBlind - wrong payload type", func(t *testing.T) {
 		body := bodyBlindedBellatrix(t)
-		body.executionPayloadHeader = &executionPayload{}
+		body.silaPayloadHeader = &silaPayload{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadHeaderWrongType)
 	})
 	t.Run("Capella - wrong payload type", func(t *testing.T) {
 		body := bodyCapella(t)
-		body.executionPayload = &executionPayloadHeaderCapella{}
+		body.silaPayload = &silaPayloadHeaderCapella{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadWrongType)
 	})
 	t.Run("CapellaBlind - wrong payload type", func(t *testing.T) {
 		body := bodyBlindedCapella(t)
-		body.executionPayloadHeader = &executionPayloadCapella{}
+		body.silaPayloadHeader = &silaPayloadCapella{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadHeaderWrongType)
 	})
 	t.Run("Deneb - wrong payload type", func(t *testing.T) {
 		body := bodyDeneb(t)
-		body.executionPayload = &executionPayloadHeaderDeneb{}
+		body.silaPayload = &silaPayloadHeaderDeneb{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadWrongType)
 	})
 	t.Run("DenebBlind - wrong payload type", func(t *testing.T) {
 		body := bodyBlindedDeneb(t)
-		body.executionPayloadHeader = &executionPayloadDeneb{}
+		body.silaPayloadHeader = &silaPayloadDeneb{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadHeaderWrongType)
 	})
 	t.Run("Electra - wrong payload type", func(t *testing.T) {
 		body := bodyElectra(t)
-		body.executionPayload = &executionPayloadHeaderDeneb{}
+		body.silaPayload = &silaPayloadHeaderDeneb{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadWrongType)
 	})
 	t.Run("ElectraBlind - wrong payload type", func(t *testing.T) {
 		body := bodyBlindedElectra(t)
-		body.executionPayloadHeader = &executionPayloadDeneb{}
+		body.silaPayloadHeader = &silaPayloadDeneb{}
 		_, err := body.Proto()
 		require.ErrorIs(t, err, errPayloadHeaderWrongType)
 	})
@@ -1401,7 +1401,7 @@ func bodyPbBellatrix() *eth.BeaconBlockBodyBellatrix {
 		Deposits:          f.deposits,
 		VoluntaryExits:    f.voluntaryExits,
 		SyncAggregate:     f.syncAggregate,
-		ExecutionPayload:  f.execPayload,
+		SilaPayload:  f.execPayload,
 	}
 }
 
@@ -1421,7 +1421,7 @@ func bodyPbBlindedBellatrix() *eth.BlindedBeaconBlockBodyBellatrix {
 		Deposits:               f.deposits,
 		VoluntaryExits:         f.voluntaryExits,
 		SyncAggregate:          f.syncAggregate,
-		ExecutionPayloadHeader: f.execPayloadHeader,
+		SilaPayloadHeader: f.execPayloadHeader,
 	}
 }
 
@@ -1441,7 +1441,7 @@ func bodyPbCapella() *eth.BeaconBlockBodyCapella {
 		Deposits:              f.deposits,
 		VoluntaryExits:        f.voluntaryExits,
 		SyncAggregate:         f.syncAggregate,
-		ExecutionPayload:      f.execPayloadCapella,
+		SilaPayload:      f.execPayloadCapella,
 		BlsToExecutionChanges: f.blsToExecutionChanges,
 	}
 }
@@ -1462,7 +1462,7 @@ func bodyPbBlindedCapella() *eth.BlindedBeaconBlockBodyCapella {
 		Deposits:               f.deposits,
 		VoluntaryExits:         f.voluntaryExits,
 		SyncAggregate:          f.syncAggregate,
-		ExecutionPayloadHeader: f.execPayloadHeaderCapella,
+		SilaPayloadHeader: f.execPayloadHeaderCapella,
 		BlsToExecutionChanges:  f.blsToExecutionChanges,
 	}
 }
@@ -1483,7 +1483,7 @@ func bodyPbDeneb() *eth.BeaconBlockBodyDeneb {
 		Deposits:              f.deposits,
 		VoluntaryExits:        f.voluntaryExits,
 		SyncAggregate:         f.syncAggregate,
-		ExecutionPayload:      f.execPayloadDeneb,
+		SilaPayload:      f.execPayloadDeneb,
 		BlsToExecutionChanges: f.blsToExecutionChanges,
 		BlobKzgCommitments:    f.kzgCommitments,
 	}
@@ -1505,7 +1505,7 @@ func bodyPbBlindedDeneb() *eth.BlindedBeaconBlockBodyDeneb {
 		Deposits:               f.deposits,
 		VoluntaryExits:         f.voluntaryExits,
 		SyncAggregate:          f.syncAggregate,
-		ExecutionPayloadHeader: f.execPayloadHeaderDeneb,
+		SilaPayloadHeader: f.execPayloadHeaderDeneb,
 		BlsToExecutionChanges:  f.blsToExecutionChanges,
 		BlobKzgCommitments:     f.kzgCommitments,
 	}
@@ -1527,7 +1527,7 @@ func bodyPbElectra() *eth.BeaconBlockBodyElectra {
 		Deposits:              f.deposits,
 		VoluntaryExits:        f.voluntaryExits,
 		SyncAggregate:         f.syncAggregate,
-		ExecutionPayload:      f.execPayloadDeneb,
+		SilaPayload:      f.execPayloadDeneb,
 		BlsToExecutionChanges: f.blsToExecutionChanges,
 		BlobKzgCommitments:    f.kzgCommitments,
 		ExecutionRequests:     f.execRequests,
@@ -1550,7 +1550,7 @@ func bodyPbBlindedElectra() *eth.BlindedBeaconBlockBodyElectra {
 		Deposits:               f.deposits,
 		VoluntaryExits:         f.voluntaryExits,
 		SyncAggregate:          f.syncAggregate,
-		ExecutionPayloadHeader: f.execPayloadHeaderDeneb,
+		SilaPayloadHeader: f.execPayloadHeaderDeneb,
 		BlsToExecutionChanges:  f.blsToExecutionChanges,
 		BlobKzgCommitments:     f.kzgCommitments,
 		ExecutionRequests:      f.execRequests,
@@ -1598,7 +1598,7 @@ func bodyAltair() *BeaconBlockBody {
 
 func bodyBellatrix(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	p, err := WrappedExecutionPayload(f.execPayload)
+	p, err := WrappedSilaPayload(f.execPayload)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Bellatrix,
@@ -1615,13 +1615,13 @@ func bodyBellatrix(t *testing.T) *BeaconBlockBody {
 		deposits:          f.deposits,
 		voluntaryExits:    f.voluntaryExits,
 		syncAggregate:     f.syncAggregate,
-		executionPayload:  p,
+		silaPayload:  p,
 	}
 }
 
 func bodyBlindedBellatrix(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	ph, err := WrappedExecutionPayloadHeader(f.execPayloadHeader)
+	ph, err := WrappedSilaPayloadHeader(f.execPayloadHeader)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Bellatrix,
@@ -1638,13 +1638,13 @@ func bodyBlindedBellatrix(t *testing.T) *BeaconBlockBody {
 		deposits:               f.deposits,
 		voluntaryExits:         f.voluntaryExits,
 		syncAggregate:          f.syncAggregate,
-		executionPayloadHeader: ph,
+		silaPayloadHeader: ph,
 	}
 }
 
 func bodyCapella(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	p, err := WrappedExecutionPayloadCapella(f.execPayloadCapella)
+	p, err := WrappedSilaPayloadCapella(f.execPayloadCapella)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Capella,
@@ -1661,14 +1661,14 @@ func bodyCapella(t *testing.T) *BeaconBlockBody {
 		deposits:              f.deposits,
 		voluntaryExits:        f.voluntaryExits,
 		syncAggregate:         f.syncAggregate,
-		executionPayload:      p,
+		silaPayload:      p,
 		blsToExecutionChanges: f.blsToExecutionChanges,
 	}
 }
 
 func bodyBlindedCapella(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	ph, err := WrappedExecutionPayloadHeaderCapella(f.execPayloadHeaderCapella)
+	ph, err := WrappedSilaPayloadHeaderCapella(f.execPayloadHeaderCapella)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Capella,
@@ -1685,14 +1685,14 @@ func bodyBlindedCapella(t *testing.T) *BeaconBlockBody {
 		deposits:               f.deposits,
 		voluntaryExits:         f.voluntaryExits,
 		syncAggregate:          f.syncAggregate,
-		executionPayloadHeader: ph,
+		silaPayloadHeader: ph,
 		blsToExecutionChanges:  f.blsToExecutionChanges,
 	}
 }
 
 func bodyDeneb(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	p, err := WrappedExecutionPayloadDeneb(f.execPayloadDeneb)
+	p, err := WrappedSilaPayloadDeneb(f.execPayloadDeneb)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Deneb,
@@ -1709,7 +1709,7 @@ func bodyDeneb(t *testing.T) *BeaconBlockBody {
 		deposits:              f.deposits,
 		voluntaryExits:        f.voluntaryExits,
 		syncAggregate:         f.syncAggregate,
-		executionPayload:      p,
+		silaPayload:      p,
 		blsToExecutionChanges: f.blsToExecutionChanges,
 		blobKzgCommitments:    f.kzgCommitments,
 	}
@@ -1717,7 +1717,7 @@ func bodyDeneb(t *testing.T) *BeaconBlockBody {
 
 func bodyBlindedDeneb(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	ph, err := WrappedExecutionPayloadHeaderDeneb(f.execPayloadHeaderDeneb)
+	ph, err := WrappedSilaPayloadHeaderDeneb(f.execPayloadHeaderDeneb)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Deneb,
@@ -1734,7 +1734,7 @@ func bodyBlindedDeneb(t *testing.T) *BeaconBlockBody {
 		deposits:               f.deposits,
 		voluntaryExits:         f.voluntaryExits,
 		syncAggregate:          f.syncAggregate,
-		executionPayloadHeader: ph,
+		silaPayloadHeader: ph,
 		blsToExecutionChanges:  f.blsToExecutionChanges,
 		blobKzgCommitments:     f.kzgCommitments,
 	}
@@ -1742,7 +1742,7 @@ func bodyBlindedDeneb(t *testing.T) *BeaconBlockBody {
 
 func bodyElectra(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	p, err := WrappedExecutionPayloadDeneb(f.execPayloadDeneb)
+	p, err := WrappedSilaPayloadDeneb(f.execPayloadDeneb)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Electra,
@@ -1759,7 +1759,7 @@ func bodyElectra(t *testing.T) *BeaconBlockBody {
 		deposits:                 f.deposits,
 		voluntaryExits:           f.voluntaryExits,
 		syncAggregate:            f.syncAggregate,
-		executionPayload:         p,
+		silaPayload:         p,
 		blsToExecutionChanges:    f.blsToExecutionChanges,
 		blobKzgCommitments:       f.kzgCommitments,
 		executionRequests:        f.execRequests,
@@ -1768,7 +1768,7 @@ func bodyElectra(t *testing.T) *BeaconBlockBody {
 
 func bodyBlindedElectra(t *testing.T) *BeaconBlockBody {
 	f := getFields()
-	ph, err := WrappedExecutionPayloadHeaderDeneb(f.execPayloadHeaderDeneb)
+	ph, err := WrappedSilaPayloadHeaderDeneb(f.execPayloadHeaderDeneb)
 	require.NoError(t, err)
 	return &BeaconBlockBody{
 		version:      version.Electra,
@@ -1785,7 +1785,7 @@ func bodyBlindedElectra(t *testing.T) *BeaconBlockBody {
 		deposits:                 f.deposits,
 		voluntaryExits:           f.voluntaryExits,
 		syncAggregate:            f.syncAggregate,
-		executionPayloadHeader:   ph,
+		silaPayloadHeader:   ph,
 		blsToExecutionChanges:    f.blsToExecutionChanges,
 		blobKzgCommitments:       f.kzgCommitments,
 		executionRequests:        f.execRequests,
@@ -1794,7 +1794,7 @@ func bodyBlindedElectra(t *testing.T) *BeaconBlockBody {
 
 func TestSignedBeaconBlockProtoGloas(t *testing.T) {
 	payload := []*eth.PayloadAttestation{{Signature: []byte{0x01}}}
-	bid := &eth.SignedExecutionPayloadBid{Signature: []byte{0x02}}
+	bid := &eth.SignedSilaPayloadBid{Signature: []byte{0x02}}
 	sb := &SignedBeaconBlock{
 		version: version.Gloas,
 		block: &BeaconBlock{
@@ -1802,7 +1802,7 @@ func TestSignedBeaconBlockProtoGloas(t *testing.T) {
 			body: &BeaconBlockBody{
 				version:                   version.Gloas,
 				payloadAttestations:       payload,
-				signedExecutionPayloadBid: bid,
+				signedSilaPayloadBid: bid,
 			},
 		},
 	}
@@ -1812,7 +1812,7 @@ func TestSignedBeaconBlockProtoGloas(t *testing.T) {
 	gloas, ok := msg.(*eth.SignedBeaconBlockGloas)
 	require.Equal(t, true, ok)
 	require.DeepEqual(t, payload, gloas.Block.Body.PayloadAttestations)
-	require.DeepEqual(t, bid, gloas.Block.Body.SignedExecutionPayloadBid)
+	require.DeepEqual(t, bid, gloas.Block.Body.SignedSilaPayloadBid)
 }
 
 func TestInitSignedBlockFromProtoGloas(t *testing.T) {
@@ -1827,7 +1827,7 @@ func TestInitSignedBlockFromProtoGloas(t *testing.T) {
 						Signature:       []byte{0x01},
 					},
 				},
-				SignedExecutionPayloadBid: &eth.SignedExecutionPayloadBid{Signature: []byte{0x02}},
+				SignedSilaPayloadBid: &eth.SignedSilaPayloadBid{Signature: []byte{0x02}},
 			},
 		},
 		Signature: []byte{0x03},
@@ -1842,9 +1842,9 @@ func TestInitSignedBlockFromProtoGloas(t *testing.T) {
 	require.Equal(t, 1, len(gotPayload))
 	require.DeepEqual(t, pb.Block.Body.PayloadAttestations, gotPayload)
 
-	gotBid, err := sb.Block().Body().SignedExecutionPayloadBid()
+	gotBid, err := sb.Block().Body().SignedSilaPayloadBid()
 	require.NoError(t, err)
-	require.DeepEqual(t, pb.Block.Body.SignedExecutionPayloadBid, gotBid)
+	require.DeepEqual(t, pb.Block.Body.SignedSilaPayloadBid, gotBid)
 }
 
 func getFields() fields {
@@ -2024,7 +2024,7 @@ func getFields() fields {
 		SyncCommitteeBits:      syncCommitteeBits,
 		SyncCommitteeSignature: sig[:],
 	}
-	execPayload := &enginev1.ExecutionPayload{
+	execPayload := &enginev1.SilaPayload{
 		ParentHash:    root[:],
 		FeeRecipient:  b20,
 		StateRoot:     root[:],
@@ -2044,7 +2044,7 @@ func getFields() fields {
 			[]byte("transaction8"),
 		},
 	}
-	execPayloadHeader := &enginev1.ExecutionPayloadHeader{
+	execPayloadHeader := &enginev1.SilaPayloadHeader{
 		ParentHash:       root[:],
 		FeeRecipient:     b20,
 		StateRoot:        root[:],
@@ -2060,7 +2060,7 @@ func getFields() fields {
 		BlockHash:        root[:],
 		TransactionsRoot: root[:],
 	}
-	execPayloadCapella := &enginev1.ExecutionPayloadCapella{
+	execPayloadCapella := &enginev1.SilaPayloadCapella{
 		ParentHash:    root[:],
 		FeeRecipient:  b20,
 		StateRoot:     root[:],
@@ -2087,7 +2087,7 @@ func getFields() fields {
 			},
 		},
 	}
-	execPayloadHeaderCapella := &enginev1.ExecutionPayloadHeaderCapella{
+	execPayloadHeaderCapella := &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       root[:],
 		FeeRecipient:     b20,
 		StateRoot:        root[:],
@@ -2113,7 +2113,7 @@ func getFields() fields {
 		Signature: sig[:],
 	}}
 
-	execPayloadDeneb := &enginev1.ExecutionPayloadDeneb{
+	execPayloadDeneb := &enginev1.SilaPayloadDeneb{
 		ParentHash:    root[:],
 		FeeRecipient:  b20,
 		StateRoot:     root[:],
@@ -2142,7 +2142,7 @@ func getFields() fields {
 		BlobGasUsed:   128,
 		ExcessBlobGas: 128,
 	}
-	execPayloadHeaderDeneb := &enginev1.ExecutionPayloadHeaderDeneb{
+	execPayloadHeaderDeneb := &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       root[:],
 		FeeRecipient:     b20,
 		StateRoot:        root[:],

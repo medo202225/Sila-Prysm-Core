@@ -20,7 +20,7 @@ import (
 //
 //	# [New in Gloas:SIP7732]
 //	# Return early if the parent block is empty
-//	if state.latest_block_hash != state.latest_execution_payload_bid.block_hash:
+//	if state.latest_block_hash != state.latest_sila_payload_bid.block_hash:
 //	    return
 //
 //	# Get expected withdrawals
@@ -42,7 +42,7 @@ import (
 //
 // </spec>
 func ProcessWithdrawals(st state.BeaconState) error {
-	// Must be called before ProcessExecutionPayloadBid for the current block.
+	// Must be called before ProcessSilaPayloadBid for the current block.
 	full, err := st.LatestBlockHashMatchesBidBlockHash()
 	if err != nil {
 		return errors.Wrap(err, "could not get parent block full status")

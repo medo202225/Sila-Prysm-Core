@@ -26,8 +26,8 @@ var gossipTopicMappings = map[string]func() proto.Message{
 	LightClientFinalityUpdateTopicFormat:      func() proto.Message { return &silapb.LightClientFinalityUpdateAltair{} },
 	DataColumnSubnetTopicFormat:               func() proto.Message { return &silapb.DataColumnSidecar{} },
 	PayloadAttestationMessageTopicFormat:      func() proto.Message { return &silapb.PayloadAttestationMessage{} },
-	ExecutionPayloadEnvelopeTopicFormat:       func() proto.Message { return &silapb.SignedExecutionPayloadEnvelope{} },
-	ExecutionPayloadBidTopicFormat:            func() proto.Message { return &silapb.SignedExecutionPayloadBid{} },
+	SilaPayloadEnvelopeTopicFormat:       func() proto.Message { return &silapb.SignedSilaPayloadEnvelope{} },
+	SilaPayloadBidTopicFormat:            func() proto.Message { return &silapb.SignedSilaPayloadBid{} },
 	SignedProposerPreferencesTopicFormat:      func() proto.Message { return &silapb.SignedProposerPreferences{} },
 }
 
@@ -162,6 +162,6 @@ func init() {
 
 	// Payload attestation messages.
 	GossipTypeMapping[reflect.TypeFor[*silapb.PayloadAttestationMessage]()] = PayloadAttestationMessageTopicFormat
-	GossipTypeMapping[reflect.TypeFor[*silapb.SignedExecutionPayloadBid]()] = ExecutionPayloadBidTopicFormat
+	GossipTypeMapping[reflect.TypeFor[*silapb.SignedSilaPayloadBid]()] = SilaPayloadBidTopicFormat
 	GossipTypeMapping[reflect.TypeFor[*silapb.SignedProposerPreferences]()] = SignedProposerPreferencesTopicFormat
 }

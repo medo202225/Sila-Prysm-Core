@@ -16,24 +16,24 @@ import (
 	"github.com/pkg/errors"
 )
 
-// validateExecutionPayloadBid validates execution payload bid gossip rules.
+// validateSilaPayloadBid validates sila payload bid gossip rules.
 // [REJECT] The bid's parent (defined by bid.parent_block_root) equals the block's parent (defined by block.parent_root).
 // [REJECT] The length of KZG commitments is less than or equal to the limitation defined in the consensus layer.
-func (s *Service) validateExecutionPayloadBid(ctx context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
+func (s *Service) validateSilaPayloadBid(ctx context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
 	if blk.Version() < version.Gloas {
 		return pubsub.ValidationAccept, nil
 	}
-	signedBid, err := blk.Body().SignedExecutionPayloadBid()
+	signedBid, err := blk.Body().SignedSilaPayloadBid()
 	if err != nil {
 		return pubsub.ValidationIgnore, errors.Wrap(err, "unable to read bid from block")
 	}
-	wrappedBid, err := consensusblocks.WrappedROSignedExecutionPayloadBid(signedBid)
+	wrappedBid, err := consensusblocks.WrappedROSignedSilaPayloadBid(signedBid)
 	if err != nil {
-		return pubsub.ValidationIgnore, errors.Wrap(err, "unable to wrap signed execution payload bid")
+		return pubsub.ValidationIgnore, errors.Wrap(err, "unable to wrap signed sila payload bid")
 	}
 	bid, err := wrappedBid.Bid()
 	if err != nil {
-		return pubsub.ValidationIgnore, errors.Wrap(err, "unable to read bid from signed execution payload bid")
+		return pubsub.ValidationIgnore, errors.Wrap(err, "unable to read bid from signed sila payload bid")
 	}
 
 	if bid.ParentBlockRoot() != blk.ParentRoot() {
@@ -48,10 +48,10 @@ func (s *Service) validateExecutionPayloadBid(ctx context.Context, blk interface
 	return pubsub.ValidationAccept, nil
 }
 
-// validateExecutionPayloadBidParentSeen validates parent payload gossip rules.
-// [IGNORE] The block's parent execution payload (defined by bid.parent_block_hash) has been seen
+// validateSilaPayloadBidParentSeen validates parent payload gossip rules.
+// [IGNORE] The block's parent sila payload (defined by bid.parent_block_hash) has been seen
 // (via gossip or non-gossip sources) (a client MAY queue blocks for processing once the parent payload is retrieved).
-func (s *Service) validateExecutionPayloadBidParentSeen(_ context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
+func (s *Service) validateSilaPayloadBidParentSeen(_ context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
 	if blk.Version() < version.Gloas {
 		return pubsub.ValidationAccept, nil
 	}
@@ -61,10 +61,10 @@ func (s *Service) validateExecutionPayloadBidParentSeen(_ context.Context, blk i
 	return pubsub.ValidationIgnore, errors.New("parent payload not yet available")
 }
 
-// validateExecutionPayloadBidParentValid validates parent payload verification status.
-// If execution_payload verification of block's execution payload parent by an execution node is complete:
-// [REJECT] The block's execution payload parent (defined by bid.parent_block_hash) passes all validation.
-func (s *Service) validateExecutionPayloadBidParentValid(_ context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
+// validateSilaPayloadBidParentValid validates parent payload verification status.
+// If sila_payload verification of block's sila payload parent by an execution node is complete:
+// [REJECT] The block's sila payload parent (defined by bid.parent_block_hash) passes all validation.
+func (s *Service) validateSilaPayloadBidParentValid(_ context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
 	if blk.Version() < version.Gloas {
 		return pubsub.ValidationAccept, nil
 	}
@@ -97,12 +97,12 @@ func (s *Service) fetchPayloadEnvelope(root [32]byte) {
 	if len(bestPeers) > maxPayloadEnvelopeFetchAttempts {
 		bestPeers = bestPeers[:maxPayloadEnvelopeFetchAttempts]
 	}
-	req := p2ptypes.ExecutionPayloadEnvelopesByRootReq{root}
+	req := p2ptypes.SilaPayloadEnvelopesByRootReq{root}
 	for _, pid := range bestPeers {
 		if s.cfg.chain.HasFullNode(root) {
 			return
 		}
-		envelopes, err := SendExecutionPayloadEnvelopesByRootRequest(s.ctx, s.cfg.clock, s.cfg.p2p, pid, s.ctxMap, &req)
+		envelopes, err := SendSilaPayloadEnvelopesByRootRequest(s.ctx, s.cfg.clock, s.cfg.p2p, pid, s.ctxMap, &req)
 		if err != nil {
 			log.WithError(err).WithField("peer", pid).Debug("Could not request payload envelope by root")
 			continue
@@ -110,12 +110,12 @@ func (s *Service) fetchPayloadEnvelope(root [32]byte) {
 		if len(envelopes) == 0 {
 			continue
 		}
-		wrapped, err := consensusblocks.WrappedROSignedExecutionPayloadEnvelope(envelopes[0])
+		wrapped, err := consensusblocks.WrappedROSignedSilaPayloadEnvelope(envelopes[0])
 		if err != nil {
 			log.WithError(err).Debug("Could not wrap requested payload envelope")
 			continue
 		}
-		if err := s.cfg.chain.ReceiveExecutionPayloadEnvelope(s.ctx, wrapped); err != nil {
+		if err := s.cfg.chain.ReceiveSilaPayloadEnvelope(s.ctx, wrapped); err != nil {
 			if blockchain.IsInvalidBlock(err) {
 				s.setBadPayload(s.ctx, root)
 				return

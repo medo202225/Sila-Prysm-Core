@@ -94,7 +94,7 @@ func setExecutionData(ctx context.Context, blk interfaces.SignedBeaconBlock, loc
 			log.WithFields(logrus.Fields{
 				"minBuilderBid":    minBid,
 				"builderGweiValue": builderValueGwei,
-			}).Warn("Proposer: using local execution payload because min bid not attained")
+			}).Warn("Proposer: using local sila payload because min bid not attained")
 			return local.Bid, local.BlobsBundler, setLocalExecution(blk, local)
 		}
 
@@ -105,7 +105,7 @@ func setExecutionData(ctx context.Context, blk interfaces.SignedBeaconBlock, loc
 				"localGweiValue":   localValueGwei,
 				"minBidDiff":       minDiff,
 				"builderGweiValue": builderValueGwei,
-			}).Warn("Proposer: using local execution payload because min difference with local value was not attained")
+			}).Warn("Proposer: using local sila payload because min difference with local value was not attained")
 			return local.Bid, local.BlobsBundler, setLocalExecution(blk, local)
 		}
 
@@ -160,7 +160,7 @@ func setExecutionData(ctx context.Context, blk interfaces.SignedBeaconBlock, loc
 				"localBoostPercentage": boost,
 				"builderGweiValue":     builderValueGwei,
 				"builderBoostFactor":   builderBoostFactor,
-			}).Warn("Proposer: using local execution payload because higher value")
+			}).Warn("Proposer: using local sila payload because higher value")
 		}
 		span.SetAttributes(
 			trace.BoolAttribute("higherValueBuilder", higherValueBuilder),

@@ -57,7 +57,7 @@ func ConvertToFulu(beaconState state.BeaconState) (state.BeaconState, error) {
 	if err != nil {
 		return nil, err
 	}
-	payloadHeader, err := beaconState.LatestExecutionPayloadHeader()
+	payloadHeader, err := beaconState.LatestSilaPayloadHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func ConvertToFulu(beaconState state.BeaconState) (state.BeaconState, error) {
 		InactivityScores:            inactivityScores,
 		CurrentSyncCommittee:        currentSyncCommittee,
 		NextSyncCommittee:           nextSyncCommittee,
-		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{
+		LatestSilaPayloadHeader: &enginev1.SilaPayloadHeaderDeneb{
 			ParentHash:       payloadHeader.ParentHash(),
 			FeeRecipient:     payloadHeader.FeeRecipient(),
 			StateRoot:        payloadHeader.StateRoot(),

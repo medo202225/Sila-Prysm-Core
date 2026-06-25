@@ -151,7 +151,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderCapella{
+			execution := &v11.SilaPayloadHeaderCapella{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -259,7 +259,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderDeneb{
+			execution := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -334,7 +334,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderDeneb{
+			execution := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -411,7 +411,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderDeneb{
+			execution := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -485,7 +485,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderDeneb{
+			execution := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -562,7 +562,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderDeneb{
+			execution := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -636,7 +636,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 			}
-			execution := &v11.ExecutionPayloadHeaderDeneb{
+			execution := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payloadInterface.ParentHash(),
 				FeeRecipient:     payloadInterface.FeeRecipient(),
 				StateRoot:        payloadInterface.StateRoot(),
@@ -733,7 +733,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := lightClient.ComputeWithdrawalsRoot(payload)
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderCapella{
+			executionHeader := &v11.SilaPayloadHeaderCapella{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -751,7 +751,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				WithdrawalsRoot:  withdrawalsRoot,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -766,7 +766,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -794,7 +794,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := payload.WithdrawalsRoot()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderCapella{
+			executionHeader := &v11.SilaPayloadHeaderCapella{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -812,7 +812,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				WithdrawalsRoot:  withdrawalsRoot,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -827,7 +827,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -863,7 +863,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -883,7 +883,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				ExcessBlobGas:    excessBlobGas,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -898,7 +898,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -932,7 +932,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -952,7 +952,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				ExcessBlobGas:    excessBlobGas,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -967,7 +967,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -999,7 +999,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1019,7 +1019,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				ExcessBlobGas:    excessBlobGas,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -1034,7 +1034,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -1064,7 +1064,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1084,7 +1084,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				ExcessBlobGas:    excessBlobGas,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -1099,7 +1099,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -1131,7 +1131,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1151,7 +1151,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				ExcessBlobGas:    excessBlobGas,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -1166,7 +1166,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -1196,7 +1196,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1216,7 +1216,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				ExcessBlobGas:    excessBlobGas,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -1231,7 +1231,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -1304,7 +1304,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := lightClient.ComputeWithdrawalsRoot(payload)
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1322,7 +1322,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				WithdrawalsRoot:  withdrawalsRoot,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -1337,7 +1337,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -1364,7 +1364,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := payload.WithdrawalsRoot()
 			require.NoError(t, err)
 
-			executionHeader := &v11.ExecutionPayloadHeaderDeneb{
+			executionHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1382,7 +1382,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 				WithdrawalsRoot:  withdrawalsRoot,
 			}
 
-			executionPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
+			silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.Block.Block())
 			require.NoError(t, err)
 
 			require.Equal(t, l.Block.Block().Slot(), header.Beacon().Slot, "Slot is not equal")
@@ -1397,7 +1397,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionPayloadProof, convertArrayToSlice(headerExecutionBranch), "Execution payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
 		})
 	})
 }

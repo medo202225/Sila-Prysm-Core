@@ -76,7 +76,7 @@ func generateTestBlockWithSidecars(t *testing.T, parent [32]byte, slot types.Slo
 	encodedBinaryTxs[0], err = txs[0].MarshalBinary()
 	require.NoError(t, err)
 	blockHash := bytesutil.ToBytes32([]byte("foo"))
-	payload := &enginev1.ExecutionPayloadDeneb{
+	payload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    parentHash,
 		FeeRecipient:  make([]byte, fieldparams.FeeRecipientLength),
 		StateRoot:     stateRoot,
@@ -95,7 +95,7 @@ func generateTestBlockWithSidecars(t *testing.T, parent [32]byte, slot types.Slo
 		Transactions:  encodedBinaryTxs,
 	}
 	block := util.NewBeaconBlockDeneb()
-	block.Block.Body.ExecutionPayload = payload
+	block.Block.Body.SilaPayload = payload
 	block.Block.Slot = slot
 	block.Block.ParentRoot = parent[:]
 	commitments := make([][48]byte, nblobs)

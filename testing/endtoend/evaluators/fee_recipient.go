@@ -100,7 +100,7 @@ func feeRecipientIsPresent(_ *types.EvaluationContext, conns ...*grpc.ClientConn
 	for _, ctr := range blks.BlockContainers {
 		if ctr.GetBellatrixBlock() != nil {
 			bb := ctr.GetBellatrixBlock().Block
-			payload := bb.Body.ExecutionPayload
+			payload := bb.Body.SilaPayload
 			// If the beacon chain has transitioned to Bellatrix, but the EL hasn't hit TTD, we could see a few slots
 			// of blocks with empty payloads.
 			if bytes.Equal(payload.BlockHash, make([]byte, 32)) {

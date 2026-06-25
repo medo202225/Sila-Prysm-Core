@@ -10,7 +10,7 @@ go_library(
         "bls_to_execution_changes.go",
         "consolidations.go",
         "deposit_request.go",
-        "execution_payload.go",
+        "sila_payload.go",
         "helpers.go",
         "proposer_slashing.go",
         "sync_committee.go",

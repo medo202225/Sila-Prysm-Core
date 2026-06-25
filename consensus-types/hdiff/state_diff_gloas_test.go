@@ -220,15 +220,15 @@ func TestGloasPendingPaymentsOverride(t *testing.T) {
 	requireEqualState(t, target, result)
 }
 
-func TestGloasExecutionPayloadAvailability(t *testing.T) {
+func TestGloasSilaPayloadAvailability(t *testing.T) {
 	source, err := gloasState(t, 64)
 	require.NoError(t, err)
 
 	target := source.Copy()
 	require.NoError(t, target.SetSlot(source.Slot()+1))
 
-	// Flip a bit in execution payload availability.
-	require.NoError(t, target.SetExecutionPayloadAvailability(0, false))
+	// Flip a bit in sila payload availability.
+	require.NoError(t, target.SetSilaPayloadAvailability(0, false))
 
 	ctx := t.Context()
 	hdiffBytes, err := Diff(source, target)
@@ -274,7 +274,7 @@ func TestGloasSerializeDeserializeRoundTrip(t *testing.T) {
 	sd, err := diffToState(source, target)
 	require.NoError(t, err)
 	require.Equal(t, version.Gloas, sd.targetVersion)
-	require.NotNil(t, sd.latestExecutionPayloadBid)
+	require.NotNil(t, sd.latestSilaPayloadBid)
 
 	raw := sd.serialize()
 	require.NotNil(t, raw)
@@ -290,7 +290,7 @@ func TestGloasSerializeDeserializeRoundTrip(t *testing.T) {
 	require.Equal(t, len(sd.builderDiffs), len(deserialized.builderDiffs))
 	require.Equal(t, len(sd.builderPendingPayments), len(deserialized.builderPendingPayments))
 	require.Equal(t, len(sd.builderPendingWithdrawalsDiff), len(deserialized.builderPendingWithdrawalsDiff))
-	require.Equal(t, len(sd.executionPayloadAvailability), len(deserialized.executionPayloadAvailability))
+	require.Equal(t, len(sd.silaPayloadAvailability), len(deserialized.silaPayloadAvailability))
 	require.Equal(t, len(sd.payloadExpectedWithdrawals), len(deserialized.payloadExpectedWithdrawals))
 }
 
@@ -303,7 +303,7 @@ func TestGloasNilBidErrors(t *testing.T) {
 	// Force bid to nil by using the underlying proto.
 	// We can't do this through the public API, so we just verify
 	// that a normal Gloas state always has a non-nil bid.
-	bid, err := target.LatestExecutionPayloadBid()
+	bid, err := target.LatestSilaPayloadBid()
 	require.NoError(t, err)
 	require.NotNil(t, bid)
 }
@@ -342,7 +342,7 @@ func TestGloasExecutionRequestsRoot(t *testing.T) {
 	require.NoError(t, target.SetSlot(source.Slot()+1))
 
 	// Mutate ExecutionRequestsRoot on the bid.
-	srcBid, err := target.LatestExecutionPayloadBid()
+	srcBid, err := target.LatestSilaPayloadBid()
 	require.NoError(t, err)
 	parentBlockHash := srcBid.ParentBlockHash()
 	parentBlockRoot := srcBid.ParentBlockRoot()
@@ -353,7 +353,7 @@ func TestGloasExecutionRequestsRoot(t *testing.T) {
 	for i := range newRequestsRoot {
 		newRequestsRoot[i] = byte(i + 99)
 	}
-	newBidProto := &silapb.ExecutionPayloadBid{
+	newBidProto := &silapb.SilaPayloadBid{
 		ParentBlockHash:       parentBlockHash[:],
 		ParentBlockRoot:       parentBlockRoot[:],
 		BlockHash:             blockHash[:],
@@ -367,9 +367,9 @@ func TestGloasExecutionRequestsRoot(t *testing.T) {
 		FeeRecipient:          feeRecipient[:],
 		ExecutionRequestsRoot: newRequestsRoot[:],
 	}
-	wrapped, err := blocks.WrappedROExecutionPayloadBid(newBidProto)
+	wrapped, err := blocks.WrappedROSilaPayloadBid(newBidProto)
 	require.NoError(t, err)
-	require.NoError(t, target.SetExecutionPayloadBid(wrapped))
+	require.NoError(t, target.SetSilaPayloadBid(wrapped))
 
 	ctx := t.Context()
 	hdiffBytes, err := Diff(source, target)
@@ -380,7 +380,7 @@ func TestGloasExecutionRequestsRoot(t *testing.T) {
 	requireEqualState(t, target, result)
 
 	// Sanity: the restored bid carries the mutated requests root.
-	gotBid, err := result.LatestExecutionPayloadBid()
+	gotBid, err := result.LatestSilaPayloadBid()
 	require.NoError(t, err)
 	gotRoot := gotBid.ExecutionRequestsRoot()
 	require.Equal(t, newRequestsRoot, gotRoot)

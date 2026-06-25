@@ -20,10 +20,10 @@ func fillByteSlice(sliceLength int, value byte) []byte {
 	return bytes
 }
 
-// TestExecutionPayloadFromConsensus_HappyPath checks the
-// ExecutionPayloadFromConsensus function under normal conditions.
-func TestExecutionPayloadFromConsensus_HappyPath(t *testing.T) {
-	consensusPayload := &enginev1.ExecutionPayload{
+// TestSilaPayloadFromConsensus_HappyPath checks the
+// SilaPayloadFromConsensus function under normal conditions.
+func TestSilaPayloadFromConsensus_HappyPath(t *testing.T) {
+	consensusPayload := &enginev1.SilaPayload{
 		ParentHash:    fillByteSlice(common.HashLength, 0xaa),
 		FeeRecipient:  fillByteSlice(20, 0xbb),
 		StateRoot:     fillByteSlice(32, 0xcc),
@@ -43,7 +43,7 @@ func TestExecutionPayloadFromConsensus_HappyPath(t *testing.T) {
 		},
 	}
 
-	result, err := ExecutionPayloadFromConsensus(consensusPayload)
+	result, err := SilaPayloadFromConsensus(consensusPayload)
 	require.NoError(t, err)
 	require.NotNil(t, result)
 	require.Equal(t, hexutil.Encode(consensusPayload.ParentHash), result.ParentHash)
@@ -53,10 +53,10 @@ func TestExecutionPayloadFromConsensus_HappyPath(t *testing.T) {
 	require.Equal(t, fmt.Sprintf("%d", consensusPayload.BlockNumber), result.BlockNumber)
 }
 
-// TestExecutionPayload_ToConsensus_HappyPath checks the
-// (*ExecutionPayload).ToConsensus function under normal conditions.
-func TestExecutionPayload_ToConsensus_HappyPath(t *testing.T) {
-	payload := &ExecutionPayload{
+// TestSilaPayload_ToConsensus_HappyPath checks the
+// (*SilaPayload).ToConsensus function under normal conditions.
+func TestSilaPayload_ToConsensus_HappyPath(t *testing.T) {
+	payload := &SilaPayload{
 		ParentHash:    hexutil.Encode(fillByteSlice(common.HashLength, 0xaa)),
 		FeeRecipient:  hexutil.Encode(fillByteSlice(20, 0xbb)),
 		StateRoot:     hexutil.Encode(fillByteSlice(32, 0xcc)),
@@ -83,10 +83,10 @@ func TestExecutionPayload_ToConsensus_HappyPath(t *testing.T) {
 	require.DeepEqual(t, result.StateRoot, fillByteSlice(32, 0xcc))
 }
 
-// TestExecutionPayloadHeaderFromConsensus_HappyPath checks the
-// ExecutionPayloadHeaderFromConsensus function under normal conditions.
-func TestExecutionPayloadHeaderFromConsensus_HappyPath(t *testing.T) {
-	consensusHeader := &enginev1.ExecutionPayloadHeader{
+// TestSilaPayloadHeaderFromConsensus_HappyPath checks the
+// SilaPayloadHeaderFromConsensus function under normal conditions.
+func TestSilaPayloadHeaderFromConsensus_HappyPath(t *testing.T) {
+	consensusHeader := &enginev1.SilaPayloadHeader{
 		ParentHash:       fillByteSlice(common.HashLength, 0xaa),
 		FeeRecipient:     fillByteSlice(20, 0xbb),
 		StateRoot:        fillByteSlice(32, 0xcc),
@@ -103,17 +103,17 @@ func TestExecutionPayloadHeaderFromConsensus_HappyPath(t *testing.T) {
 		TransactionsRoot: fillByteSlice(32, 0x78),
 	}
 
-	result, err := ExecutionPayloadHeaderFromConsensus(consensusHeader)
+	result, err := SilaPayloadHeaderFromConsensus(consensusHeader)
 	require.NoError(t, err)
 	require.NotNil(t, result)
 	require.Equal(t, hexutil.Encode(consensusHeader.ParentHash), result.ParentHash)
 	require.Equal(t, fmt.Sprintf("%d", consensusHeader.BlockNumber), result.BlockNumber)
 }
 
-// TestExecutionPayloadHeader_ToConsensus_HappyPath checks the
-// (*ExecutionPayloadHeader).ToConsensus function under normal conditions.
-func TestExecutionPayloadHeader_ToConsensus_HappyPath(t *testing.T) {
-	header := &ExecutionPayloadHeader{
+// TestSilaPayloadHeader_ToConsensus_HappyPath checks the
+// (*SilaPayloadHeader).ToConsensus function under normal conditions.
+func TestSilaPayloadHeader_ToConsensus_HappyPath(t *testing.T) {
+	header := &SilaPayloadHeader{
 		ParentHash:       hexutil.Encode(fillByteSlice(common.HashLength, 0xaa)),
 		FeeRecipient:     hexutil.Encode(fillByteSlice(20, 0xbb)),
 		StateRoot:        hexutil.Encode(fillByteSlice(32, 0xcc)),
@@ -137,10 +137,10 @@ func TestExecutionPayloadHeader_ToConsensus_HappyPath(t *testing.T) {
 	require.DeepEqual(t, hexutil.Encode(result.StateRoot), header.StateRoot)
 }
 
-// TestExecutionPayloadCapellaFromConsensus_HappyPath checks the
-// ExecutionPayloadCapellaFromConsensus function under normal conditions.
-func TestExecutionPayloadCapellaFromConsensus_HappyPath(t *testing.T) {
-	capellaPayload := &enginev1.ExecutionPayloadCapella{
+// TestSilaPayloadCapellaFromConsensus_HappyPath checks the
+// SilaPayloadCapellaFromConsensus function under normal conditions.
+func TestSilaPayloadCapellaFromConsensus_HappyPath(t *testing.T) {
+	capellaPayload := &enginev1.SilaPayloadCapella{
 		ParentHash:    fillByteSlice(common.HashLength, 0xaa),
 		FeeRecipient:  fillByteSlice(20, 0xbb),
 		StateRoot:     fillByteSlice(32, 0xcc),
@@ -167,7 +167,7 @@ func TestExecutionPayloadCapellaFromConsensus_HappyPath(t *testing.T) {
 		},
 	}
 
-	result, err := ExecutionPayloadCapellaFromConsensus(capellaPayload)
+	result, err := SilaPayloadCapellaFromConsensus(capellaPayload)
 	require.NoError(t, err)
 	require.NotNil(t, result)
 	require.Equal(t, hexutil.Encode(capellaPayload.ParentHash), result.ParentHash)
@@ -175,10 +175,10 @@ func TestExecutionPayloadCapellaFromConsensus_HappyPath(t *testing.T) {
 	require.Equal(t, len(capellaPayload.Withdrawals), len(result.Withdrawals))
 }
 
-// TestExecutionPayloadCapella_ToConsensus_HappyPath checks the
-// (*ExecutionPayloadCapella).ToConsensus function under normal conditions.
-func TestExecutionPayloadCapella_ToConsensus_HappyPath(t *testing.T) {
-	capella := &ExecutionPayloadCapella{
+// TestSilaPayloadCapella_ToConsensus_HappyPath checks the
+// (*SilaPayloadCapella).ToConsensus function under normal conditions.
+func TestSilaPayloadCapella_ToConsensus_HappyPath(t *testing.T) {
+	capella := &SilaPayloadCapella{
 		ParentHash:    hexutil.Encode(fillByteSlice(common.HashLength, 0xaa)),
 		FeeRecipient:  hexutil.Encode(fillByteSlice(20, 0xbb)),
 		StateRoot:     hexutil.Encode(fillByteSlice(32, 0xcc)),
@@ -212,10 +212,10 @@ func TestExecutionPayloadCapella_ToConsensus_HappyPath(t *testing.T) {
 	require.DeepEqual(t, hexutil.Encode(result.StateRoot), capella.StateRoot)
 }
 
-// TestExecutionPayloadDenebFromConsensus_HappyPath checks the
-// ExecutionPayloadDenebFromConsensus function under normal conditions.
-func TestExecutionPayloadDenebFromConsensus_HappyPath(t *testing.T) {
-	denebPayload := &enginev1.ExecutionPayloadDeneb{
+// TestSilaPayloadDenebFromConsensus_HappyPath checks the
+// SilaPayloadDenebFromConsensus function under normal conditions.
+func TestSilaPayloadDenebFromConsensus_HappyPath(t *testing.T) {
+	denebPayload := &enginev1.SilaPayloadDeneb{
 		ParentHash:    fillByteSlice(common.HashLength, 0xaa),
 		FeeRecipient:  fillByteSlice(20, 0xbb),
 		StateRoot:     fillByteSlice(32, 0xcc),
@@ -244,7 +244,7 @@ func TestExecutionPayloadDenebFromConsensus_HappyPath(t *testing.T) {
 		ExcessBlobGas: 5678,
 	}
 
-	result, err := ExecutionPayloadDenebFromConsensus(denebPayload)
+	result, err := SilaPayloadDenebFromConsensus(denebPayload)
 	require.NoError(t, err)
 	require.Equal(t, hexutil.Encode(denebPayload.ParentHash), result.ParentHash)
 	require.Equal(t, len(denebPayload.Transactions), len(result.Transactions))
@@ -253,10 +253,10 @@ func TestExecutionPayloadDenebFromConsensus_HappyPath(t *testing.T) {
 	require.Equal(t, fmt.Sprintf("%d", denebPayload.BlockNumber), result.BlockNumber)
 }
 
-// TestExecutionPayloadDeneb_ToConsensus_HappyPath checks the
-// (*ExecutionPayloadDeneb).ToConsensus function under normal conditions.
-func TestExecutionPayloadDeneb_ToConsensus_HappyPath(t *testing.T) {
-	deneb := &ExecutionPayloadDeneb{
+// TestSilaPayloadDeneb_ToConsensus_HappyPath checks the
+// (*SilaPayloadDeneb).ToConsensus function under normal conditions.
+func TestSilaPayloadDeneb_ToConsensus_HappyPath(t *testing.T) {
+	deneb := &SilaPayloadDeneb{
 		ParentHash:    hexutil.Encode(fillByteSlice(common.HashLength, 0xaa)),
 		FeeRecipient:  hexutil.Encode(fillByteSlice(20, 0xbb)),
 		StateRoot:     hexutil.Encode(fillByteSlice(32, 0xcc)),
@@ -292,8 +292,8 @@ func TestExecutionPayloadDeneb_ToConsensus_HappyPath(t *testing.T) {
 	require.Equal(t, result.BlockNumber, uint64(999))
 }
 
-func TestExecutionPayloadHeaderCapellaFromConsensus_HappyPath(t *testing.T) {
-	capellaHeader := &enginev1.ExecutionPayloadHeaderCapella{
+func TestSilaPayloadHeaderCapellaFromConsensus_HappyPath(t *testing.T) {
+	capellaHeader := &enginev1.SilaPayloadHeaderCapella{
 		ParentHash:       fillByteSlice(common.HashLength, 0xaa),
 		FeeRecipient:     fillByteSlice(20, 0xbb),
 		StateRoot:        fillByteSlice(32, 0xcc),
@@ -311,14 +311,14 @@ func TestExecutionPayloadHeaderCapellaFromConsensus_HappyPath(t *testing.T) {
 		WithdrawalsRoot:  fillByteSlice(32, 0x99),
 	}
 
-	result, err := ExecutionPayloadHeaderCapellaFromConsensus(capellaHeader)
+	result, err := SilaPayloadHeaderCapellaFromConsensus(capellaHeader)
 	require.NoError(t, err)
 	require.Equal(t, hexutil.Encode(capellaHeader.ParentHash), result.ParentHash)
 	require.DeepEqual(t, hexutil.Encode(capellaHeader.WithdrawalsRoot), result.WithdrawalsRoot)
 }
 
-func TestExecutionPayloadHeaderCapella_ToConsensus_HappyPath(t *testing.T) {
-	header := &ExecutionPayloadHeaderCapella{
+func TestSilaPayloadHeaderCapella_ToConsensus_HappyPath(t *testing.T) {
+	header := &SilaPayloadHeaderCapella{
 		ParentHash:       hexutil.Encode(fillByteSlice(common.HashLength, 0xaa)),
 		FeeRecipient:     hexutil.Encode(fillByteSlice(20, 0xbb)),
 		StateRoot:        hexutil.Encode(fillByteSlice(32, 0xcc)),
@@ -345,8 +345,8 @@ func TestExecutionPayloadHeaderCapella_ToConsensus_HappyPath(t *testing.T) {
 	require.DeepEqual(t, hexutil.Encode(result.WithdrawalsRoot), header.WithdrawalsRoot)
 }
 
-func TestExecutionPayloadHeaderDenebFromConsensus_HappyPath(t *testing.T) {
-	denebHeader := &enginev1.ExecutionPayloadHeaderDeneb{
+func TestSilaPayloadHeaderDenebFromConsensus_HappyPath(t *testing.T) {
+	denebHeader := &enginev1.SilaPayloadHeaderDeneb{
 		ParentHash:       fillByteSlice(common.HashLength, 0xaa),
 		FeeRecipient:     fillByteSlice(20, 0xbb),
 		StateRoot:        fillByteSlice(32, 0xcc),
@@ -366,7 +366,7 @@ func TestExecutionPayloadHeaderDenebFromConsensus_HappyPath(t *testing.T) {
 		ExcessBlobGas:    5678,
 	}
 
-	result, err := ExecutionPayloadHeaderDenebFromConsensus(denebHeader)
+	result, err := SilaPayloadHeaderDenebFromConsensus(denebHeader)
 	require.NoError(t, err)
 	require.Equal(t, hexutil.Encode(denebHeader.ParentHash), result.ParentHash)
 	require.DeepEqual(t, hexutil.Encode(denebHeader.FeeRecipient), result.FeeRecipient)
@@ -374,8 +374,8 @@ func TestExecutionPayloadHeaderDenebFromConsensus_HappyPath(t *testing.T) {
 	require.DeepEqual(t, fmt.Sprintf("%d", denebHeader.BlobGasUsed), result.BlobGasUsed)
 }
 
-func TestExecutionPayloadHeaderDeneb_ToConsensus_HappyPath(t *testing.T) {
-	header := &ExecutionPayloadHeaderDeneb{
+func TestSilaPayloadHeaderDeneb_ToConsensus_HappyPath(t *testing.T) {
+	header := &SilaPayloadHeaderDeneb{
 		ParentHash:       hexutil.Encode(fillByteSlice(common.HashLength, 0xaa)),
 		FeeRecipient:     hexutil.Encode(fillByteSlice(20, 0xbb)),
 		StateRoot:        hexutil.Encode(fillByteSlice(32, 0xcc)),

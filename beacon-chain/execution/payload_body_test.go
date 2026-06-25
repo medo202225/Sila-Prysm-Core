@@ -16,8 +16,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
-func payloadToBody(t *testing.T, ed interfaces.ExecutionData) *pb.ExecutionPayloadBody {
-	body := &pb.ExecutionPayloadBody{}
+func payloadToBody(t *testing.T, ed interfaces.ExecutionData) *pb.SilaPayloadBody {
+	body := &pb.SilaPayloadBody{}
 	txs, err := ed.Transactions()
 	require.NoError(t, err)
 	wd, err := ed.Withdrawals()
@@ -78,32 +78,32 @@ func fuluSlot(t *testing.T) primitives.Slot {
 func testBlindedBlockFixtures(t *testing.T) *blindedBlockFixtures {
 	pfx := fixturesStruct()
 	fx := &blindedBlockFixtures{}
-	full := pfx.ExecutionPayloadDeneb
+	full := pfx.SilaPayloadDeneb
 	// this func overrides fixture blockhashes to ensure they are unique
 	full.BlockHash = bytesutil.PadTo([]byte("full"), 32)
 	denebBlock, _ := util.GenerateTestDenebBlockWithSidecar(t, [32]byte{}, denebSlot(t), 0, util.WithPayloadSetter(full))
 	fx.denebBlock = blindedBlockWithHeader(t, denebBlock)
 
-	empty := pfx.EmptyExecutionPayloadDeneb
+	empty := pfx.EmptySilaPayloadDeneb
 	empty.BlockHash = bytesutil.PadTo([]byte("empty"), 32)
 	empty.BlockNumber = 2
 	emptyDenebBlock, _ := util.GenerateTestDenebBlockWithSidecar(t, [32]byte{}, denebSlot(t)+1, 0, util.WithPayloadSetter(empty))
 	fx.emptyDenebBlock = blindedBlockWithHeader(t, emptyDenebBlock)
 
-	afterSkip := fixturesStruct().ExecutionPayloadDeneb
+	afterSkip := fixturesStruct().SilaPayloadDeneb
 	// this func overrides fixture blockhashes to ensure they are unique
 	afterSkip.BlockHash = bytesutil.PadTo([]byte("afterSkip"), 32)
 	afterSkip.BlockNumber = 4
 	afterSkipBlock, _ := util.GenerateTestDenebBlockWithSidecar(t, [32]byte{}, denebSlot(t)+3, 0, util.WithPayloadSetter(afterSkip))
 	fx.afterSkipDeneb = blindedBlockWithHeader(t, afterSkipBlock)
 
-	electra := fixturesStruct().ExecutionPayloadDeneb
+	electra := fixturesStruct().SilaPayloadDeneb
 	electra.BlockHash = bytesutil.PadTo([]byte("electra"), 32)
 	electra.BlockNumber = 5
 	electraBlock, _ := util.GenerateTestElectraBlockWithSidecar(t, [32]byte{}, electraSlot(t), 0, util.WithElectraPayload(electra))
 	fx.electra = blindedBlockWithHeader(t, electraBlock)
 
-	fulu := fixturesStruct().ExecutionPayloadDeneb
+	fulu := fixturesStruct().SilaPayloadDeneb
 	fulu.BlockHash = bytesutil.PadTo([]byte("fulu"), 32)
 	fulu.BlockNumber = 6
 	fuluBlock, _ := util.GenerateTestElectraBlockWithSidecar(t, [32]byte{}, fuluSlot(t), 0, util.WithElectraPayload(fulu))
@@ -118,11 +118,11 @@ func TestPayloadBodiesViaUnblinder(t *testing.T) {
 	t.Run("mix of non-empty and empty", func(t *testing.T) {
 		cli, srv := newMockEngine(t)
 		srv.register(GetPayloadBodiesByHashV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{
+			silaPayloadBodies := []*pb.SilaPayloadBody{
 				payloadToBody(t, fx.denebBlock.blinded.header),
 				payloadToBody(t, fx.emptyDenebBlock.blinded.header),
 			}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		ctx := t.Context()
 
@@ -137,13 +137,13 @@ func TestPayloadBodiesViaUnblinder(t *testing.T) {
 		payload, err := bbr.payloadForHeader(fx.denebBlock.blinded.header, fx.denebBlock.blinded.block.Version())
 		require.NoError(t, err)
 		require.Equal(t, version.Deneb, fx.denebBlock.blinded.block.Version())
-		unblindFull, err := blocks.BuildSignedBeaconBlockFromExecutionPayload(fx.denebBlock.blinded.block, payload)
+		unblindFull, err := blocks.BuildSignedBeaconBlockFromSilaPayload(fx.denebBlock.blinded.block, payload)
 		require.NoError(t, err)
 		testAssertReconstructedEquivalent(t, fx.denebBlock.full, unblindFull)
 
 		emptyPayload, err := bbr.payloadForHeader(fx.emptyDenebBlock.blinded.header, fx.emptyDenebBlock.blinded.block.Version())
 		require.NoError(t, err)
-		unblindEmpty, err := blocks.BuildSignedBeaconBlockFromExecutionPayload(fx.emptyDenebBlock.blinded.block, emptyPayload)
+		unblindEmpty, err := blocks.BuildSignedBeaconBlockFromSilaPayload(fx.emptyDenebBlock.blinded.block, emptyPayload)
 		require.NoError(t, err)
 		testAssertReconstructedEquivalent(t, fx.emptyDenebBlock.full, unblindEmpty)
 	})
@@ -259,12 +259,12 @@ func TestReconstructBlindedBlockBatchFallbackToRange(t *testing.T) {
 		cli, srv := newMockEngine(t)
 		fx := testBlindedBlockFixtures(t)
 		srv.register(GetPayloadBodiesByHashV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{nil, nil}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			silaPayloadBodies := []*pb.SilaPayloadBody{nil, nil}
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		srv.register(GetPayloadBodiesByRangeV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{nil, nil}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			silaPayloadBodies := []*pb.SilaPayloadBody{nil, nil}
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		toUnblind := []interfaces.ReadOnlySignedBeaconBlock{
 			fx.denebBlock.blinded.block,
@@ -279,15 +279,15 @@ func TestReconstructBlindedBlockBatchFallbackToRange(t *testing.T) {
 		cli, srv := newMockEngine(t)
 		fx := testBlindedBlockFixtures(t)
 		srv.register(GetPayloadBodiesByHashV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{nil, nil}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			silaPayloadBodies := []*pb.SilaPayloadBody{nil, nil}
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		srv.register(GetPayloadBodiesByRangeV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{
+			silaPayloadBodies := []*pb.SilaPayloadBody{
 				payloadToBody(t, fx.denebBlock.blinded.header),
 				payloadToBody(t, fx.emptyDenebBlock.blinded.header),
 			}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		unblind := []interfaces.ReadOnlySignedBeaconBlock{
 			fx.denebBlock.blinded.block,
@@ -300,8 +300,8 @@ func TestReconstructBlindedBlockBatchFallbackToRange(t *testing.T) {
 		cli, srv := newMockEngine(t)
 		fx := testBlindedBlockFixtures(t)
 		srv.register(GetPayloadBodiesByHashV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{nil, nil, nil}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			silaPayloadBodies := []*pb.SilaPayloadBody{nil, nil, nil}
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		srv.register(GetPayloadBodiesByRangeV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
 			p := mockParseUintList(t, msg.Params)
@@ -310,20 +310,20 @@ func TestReconstructBlindedBlockBatchFallbackToRange(t *testing.T) {
 			// Return first 2 blocks by number, which are contiguous.
 			if start == fx.denebBlock.blinded.header.BlockNumber() {
 				require.Equal(t, uint64(2), count)
-				executionPayloadBodies := []*pb.ExecutionPayloadBody{
+				silaPayloadBodies := []*pb.SilaPayloadBody{
 					payloadToBody(t, fx.denebBlock.blinded.header),
 					payloadToBody(t, fx.emptyDenebBlock.blinded.header),
 				}
-				mockWriteResult(t, w, msg, executionPayloadBodies)
+				mockWriteResult(t, w, msg, silaPayloadBodies)
 				return
 			}
 			// Assume it's the second request
 			require.Equal(t, fx.afterSkipDeneb.blinded.header.BlockNumber(), start)
 			require.Equal(t, uint64(1), count)
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{
+			silaPayloadBodies := []*pb.SilaPayloadBody{
 				payloadToBody(t, fx.afterSkipDeneb.blinded.header),
 			}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		blind := []interfaces.ReadOnlySignedBeaconBlock{
 			fx.denebBlock.blinded.block,
@@ -344,8 +344,8 @@ func TestReconstructBlindedBlockBatchDenebAndBeyond(t *testing.T) {
 		cli, srv := newMockEngine(t)
 		fx := testBlindedBlockFixtures(t)
 		srv.register(GetPayloadBodiesByHashV1, func(msg *jsonrpcMessage, w http.ResponseWriter, r *http.Request) {
-			executionPayloadBodies := []*pb.ExecutionPayloadBody{payloadToBody(t, fx.denebBlock.blinded.header), payloadToBody(t, fx.electra.blinded.header), payloadToBody(t, fx.fulu.blinded.header)}
-			mockWriteResult(t, w, msg, executionPayloadBodies)
+			silaPayloadBodies := []*pb.SilaPayloadBody{payloadToBody(t, fx.denebBlock.blinded.header), payloadToBody(t, fx.electra.blinded.header), payloadToBody(t, fx.fulu.blinded.header)}
+			mockWriteResult(t, w, msg, silaPayloadBodies)
 		})
 		blinded := []interfaces.ReadOnlySignedBeaconBlock{
 			fx.denebBlock.blinded.block,

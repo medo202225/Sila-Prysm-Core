@@ -109,9 +109,9 @@ func (ini *Initializer) NewSignedProposerPreferencesVerifier(p *silapb.SignedPro
 	}
 }
 
-// NewExecutionPayloadBidVerifier creates an ExecutionPayloadBidVerifier for a single signed execution payload bid
+// NewSilaPayloadBidVerifier creates an SilaPayloadBidVerifier for a single signed sila payload bid
 // with the given set of requirements.
-func (ini *Initializer) NewExecutionPayloadBidVerifier(b interfaces.ROSignedExecutionPayloadBid, reqs []Requirement) *BidVerifier {
+func (ini *Initializer) NewSilaPayloadBidVerifier(b interfaces.ROSignedSilaPayloadBid, reqs []Requirement) *BidVerifier {
 	return &BidVerifier{
 		sharedResources: ini.shared,
 		results:         newResults(reqs...),
@@ -119,8 +119,8 @@ func (ini *Initializer) NewExecutionPayloadBidVerifier(b interfaces.ROSignedExec
 	}
 }
 
-// NewPayloadEnvelopeVerifier creates a SignedExecutionPayloadEnvelopeVerifier for a single signed execution payload envelope with the given set of requirements.
-func (ini *Initializer) NewPayloadEnvelopeVerifier(ee interfaces.ROSignedExecutionPayloadEnvelope, reqs []Requirement) *EnvelopeVerifier {
+// NewPayloadEnvelopeVerifier creates a SignedSilaPayloadEnvelopeVerifier for a single signed sila payload envelope with the given set of requirements.
+func (ini *Initializer) NewPayloadEnvelopeVerifier(ee interfaces.ROSignedSilaPayloadEnvelope, reqs []Requirement) *EnvelopeVerifier {
 	return &EnvelopeVerifier{
 		results: newResults(reqs...),
 		e:       ee,

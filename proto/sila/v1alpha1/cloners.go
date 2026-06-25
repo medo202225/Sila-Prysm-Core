@@ -135,16 +135,16 @@ func copyPayloadAttestations(pas []*PayloadAttestation) []*PayloadAttestation {
 	return copied
 }
 
-// copySignedExecutionPayloadBid copies the provided signed execution payload header.
-func copySignedExecutionPayloadBid(header *SignedExecutionPayloadBid) *SignedExecutionPayloadBid {
+// copySignedSilaPayloadBid copies the provided signed sila payload header.
+func copySignedSilaPayloadBid(header *SignedSilaPayloadBid) *SignedSilaPayloadBid {
 	if header == nil {
 		return nil
 	}
-	copied := &SignedExecutionPayloadBid{
+	copied := &SignedSilaPayloadBid{
 		Signature: bytesutil.SafeCopyBytes(header.Signature),
 	}
 	if header.Message != nil {
-		copied.Message = &ExecutionPayloadBid{
+		copied.Message = &SilaPayloadBid{
 			ParentBlockHash:       bytesutil.SafeCopyBytes(header.Message.ParentBlockHash),
 			ParentBlockRoot:       bytesutil.SafeCopyBytes(header.Message.ParentBlockRoot),
 			BlockHash:             bytesutil.SafeCopyBytes(header.Message.BlockHash),
@@ -188,30 +188,30 @@ func copyBeaconBlockBodyGloas(body *BeaconBlockBodyGloas) *BeaconBlockBodyGloas 
 	copied.VoluntaryExits = CopySlice(body.VoluntaryExits)
 	copied.BlsToExecutionChanges = CopySlice(body.BlsToExecutionChanges)
 
-	copied.SignedExecutionPayloadBid = copySignedExecutionPayloadBid(body.SignedExecutionPayloadBid)
+	copied.SignedSilaPayloadBid = copySignedSilaPayloadBid(body.SignedSilaPayloadBid)
 	copied.PayloadAttestations = copyPayloadAttestations(body.PayloadAttestations)
 	copied.ParentExecutionRequests = CopyExecutionRequests(body.ParentExecutionRequests)
 
 	return copied
 }
 
-// CopySignedExecutionPayloadEnvelope copies the provided signed execution payload envelope.
-func CopySignedExecutionPayloadEnvelope(env *SignedExecutionPayloadEnvelope) *SignedExecutionPayloadEnvelope {
+// CopySignedSilaPayloadEnvelope copies the provided signed sila payload envelope.
+func CopySignedSilaPayloadEnvelope(env *SignedSilaPayloadEnvelope) *SignedSilaPayloadEnvelope {
 	if env == nil {
 		return nil
 	}
-	return &SignedExecutionPayloadEnvelope{
-		Message:   copyExecutionPayloadEnvelope(env.Message),
+	return &SignedSilaPayloadEnvelope{
+		Message:   copySilaPayloadEnvelope(env.Message),
 		Signature: bytesutil.SafeCopyBytes(env.Signature),
 	}
 }
 
-// copyExecutionPayloadEnvelope copies the provided execution payload envelope.
-func copyExecutionPayloadEnvelope(env *ExecutionPayloadEnvelope) *ExecutionPayloadEnvelope {
+// copySilaPayloadEnvelope copies the provided sila payload envelope.
+func copySilaPayloadEnvelope(env *SilaPayloadEnvelope) *SilaPayloadEnvelope {
 	if env == nil {
 		return nil
 	}
-	return &ExecutionPayloadEnvelope{
+	return &SilaPayloadEnvelope{
 		Payload:               env.Payload, // engine proto, not deep copied here
 		ExecutionRequests:     env.ExecutionRequests,
 		BuilderIndex:          env.BuilderIndex,
@@ -220,23 +220,23 @@ func copyExecutionPayloadEnvelope(env *ExecutionPayloadEnvelope) *ExecutionPaylo
 	}
 }
 
-// CopySignedBlindedExecutionPayloadEnvelope copies the provided signed blinded execution payload envelope.
-func CopySignedBlindedExecutionPayloadEnvelope(env *SignedBlindedExecutionPayloadEnvelope) *SignedBlindedExecutionPayloadEnvelope {
+// CopySignedBlindedSilaPayloadEnvelope copies the provided signed blinded sila payload envelope.
+func CopySignedBlindedSilaPayloadEnvelope(env *SignedBlindedSilaPayloadEnvelope) *SignedBlindedSilaPayloadEnvelope {
 	if env == nil {
 		return nil
 	}
-	return &SignedBlindedExecutionPayloadEnvelope{
-		Message:   copyBlindedExecutionPayloadEnvelope(env.Message),
+	return &SignedBlindedSilaPayloadEnvelope{
+		Message:   copyBlindedSilaPayloadEnvelope(env.Message),
 		Signature: bytesutil.SafeCopyBytes(env.Signature),
 	}
 }
 
-// copyBlindedExecutionPayloadEnvelope copies the provided blinded execution payload envelope.
-func copyBlindedExecutionPayloadEnvelope(env *BlindedExecutionPayloadEnvelope) *BlindedExecutionPayloadEnvelope {
+// copyBlindedSilaPayloadEnvelope copies the provided blinded sila payload envelope.
+func copyBlindedSilaPayloadEnvelope(env *BlindedSilaPayloadEnvelope) *BlindedSilaPayloadEnvelope {
 	if env == nil {
 		return nil
 	}
-	return &BlindedExecutionPayloadEnvelope{
+	return &BlindedSilaPayloadEnvelope{
 		BlockHash:             bytesutil.SafeCopyBytes(env.BlockHash),
 		ExecutionRequests:     env.ExecutionRequests,
 		BuilderIndex:          env.BuilderIndex,

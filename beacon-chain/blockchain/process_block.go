@@ -134,7 +134,7 @@ func getStateVersionAndPayload(st state.BeaconState) (int, interfaces.ExecutionD
 	switch preStateVersion {
 	case version.Phase0, version.Altair, version.Gloas:
 	default:
-		preStateHeader, err = st.LatestExecutionPayloadHeader()
+		preStateHeader, err = st.LatestSilaPayloadHeader()
 		if err != nil {
 			return 0, nil, err
 		}
@@ -143,7 +143,7 @@ func getStateVersionAndPayload(st state.BeaconState) (int, interfaces.ExecutionD
 }
 
 // getBatchPrestate returns the pre-state to apply to the first beacon block in the batch and returns true if it applied the first envelope before
-func (s *Service) getBatchPrestate(ctx context.Context, b consensusblocks.ROBlock, envelopes []interfaces.ROSignedExecutionPayloadEnvelope) (state.BeaconState, bool, error) {
+func (s *Service) getBatchPrestate(ctx context.Context, b consensusblocks.ROBlock, envelopes []interfaces.ROSignedSilaPayloadEnvelope) (state.BeaconState, bool, error) {
 	if len(envelopes) == 0 || b.Version() < version.Gloas {
 		blockPreState, err := s.cfg.StateGen.StateByRootInitialSync(ctx, b.Block().ParentRoot())
 		if err != nil {
@@ -164,7 +164,7 @@ func (s *Service) getBatchPrestate(ctx context.Context, b consensusblocks.ROBloc
 		return blockPreState, false, nil
 	}
 
-	if !s.cfg.BeaconDB.HasExecutionPayloadEnvelope(ctx, parentRoot) {
+	if !s.cfg.BeaconDB.HasSilaPayloadEnvelope(ctx, parentRoot) {
 		env, err := envelopes[0].Envelope()
 		if err != nil {
 			return nil, false, err
@@ -181,7 +181,7 @@ type versionAndHeader struct {
 	header  interfaces.ExecutionData
 }
 
-func (s *Service) onBlockBatch(ctx context.Context, blks []consensusblocks.ROBlock, envelopes []interfaces.ROSignedExecutionPayloadEnvelope, avs das.AvailabilityChecker) error {
+func (s *Service) onBlockBatch(ctx context.Context, blks []consensusblocks.ROBlock, envelopes []interfaces.ROSignedSilaPayloadEnvelope, avs das.AvailabilityChecker) error {
 	ctx, span := trace.StartSpan(ctx, "blockChain.onBlockBatch")
 	defer span.End()
 
@@ -211,7 +211,7 @@ func (s *Service) onBlockBatch(ctx context.Context, blks []consensusblocks.ROBlo
 	sigSet := bls.NewSet()
 	if applied {
 		eidx = 1
-		envSigSet, err := gloas.ExecutionPayloadEnvelopeSignatureBatch(preState, envelopes[0])
+		envSigSet, err := gloas.SilaPayloadEnvelopeSignatureBatch(preState, envelopes[0])
 		if err != nil {
 			return err
 		}
@@ -269,7 +269,7 @@ func (s *Service) onBlockBatch(ctx context.Context, blks []consensusblocks.ROBlo
 		}
 		sigSet.Join(proposerSig)
 		if b.Root() == br && eidx < len(envelopes) {
-			envSigSet, err := gloas.VerifyExecutionPayloadEnvelopeWithDeferredSig(ctx, preState, envelopes[eidx])
+			envSigSet, err := gloas.VerifySilaPayloadEnvelopeWithDeferredSig(ctx, preState, envelopes[eidx])
 			if err != nil {
 				return err
 			}
@@ -357,7 +357,7 @@ func (s *Service) onBlockBatch(ctx context.Context, blks []consensusblocks.ROBlo
 func (s *Service) notifyEngineAndSaveData(
 	ctx context.Context,
 	blks []consensusblocks.ROBlock,
-	envelopes []interfaces.ROSignedExecutionPayloadEnvelope,
+	envelopes []interfaces.ROSignedSilaPayloadEnvelope,
 	avs das.AvailabilityChecker,
 	preVersionAndHeaders []*versionAndHeader,
 	postVersionAndHeaders []*versionAndHeader,
@@ -1193,9 +1193,9 @@ func (s *Service) lateBlockTasks(ctx context.Context) {
 	}
 
 	if headState.Version() >= version.Gloas {
-		bid, err := headState.LatestExecutionPayloadBid()
+		bid, err := headState.LatestSilaPayloadBid()
 		if err != nil {
-			log.WithError(err).Debug("could not perform late block tasks: failed to retrieve execution payload bid")
+			log.WithError(err).Debug("could not perform late block tasks: failed to retrieve sila payload bid")
 			return
 		}
 		bh := bid.ParentBlockHash()

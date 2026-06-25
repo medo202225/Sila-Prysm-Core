@@ -340,7 +340,7 @@ The first 8 bytes contain the little Endian encoded length, and the remaining by
 
 If the first byte is 0, then the sync committee is set to be nil (and therefore the source's sync committee is not changed). Otherwise the remaining bytes contain the SSZ serialized sync committee.
 
-##### Execution Payload Header
+##### Sila Payload Header
 
 This is serialized exactly like the sync committes. Notice that the implementation of `readSilaPayloadHeader` is more involved because the SSZ serialization of the header depends on the state's version.
 
@@ -393,15 +393,15 @@ The proposer lookahead is stored as the SSZ serialized version of the field. It 
 
 #### Gloas fields
 
-Gloas replaces `silaPayloadHeader` with two state fields — `latestBlockHash` (at proto position 10001) and `latestSilaPayloadBid` (at proto position 14006) — and introduces several new state fields related to the builder registry, execution payload availability, and the cached PTC window. The Gloas-specific diff logic lives in `state_diff_gloas.go`. When `targetVersion >= version.Gloas`, the `silaPayloadHeader` path is skipped entirely and the following fields are serialized/deserialized instead:
+Gloas replaces `silaPayloadHeader` with two state fields — `latestBlockHash` (at proto position 10001) and `latestSilaPayloadBid` (at proto position 14006) — and introduces several new state fields related to the builder registry, sila payload availability, and the cached PTC window. The Gloas-specific diff logic lives in `state_diff_gloas.go`. When `targetVersion >= version.Gloas`, the `silaPayloadHeader` path is skipped entirely and the following fields are serialized/deserialized instead:
 
-**Latest Execution Payload Bid.** Always non-nil for valid Gloas states. Serialized as 8 bytes for the SSZ size followed by the SSZ bytes (variable size due to `BlobKzgCommitments`). The bid carries 12 sub-fields including `ExecutionRequestsRoot`. Always overrides. The diff computation errors if the target bid is nil.
+**Latest Sila Payload Bid.** Always non-nil for valid Gloas states. Serialized as 8 bytes for the SSZ size followed by the SSZ bytes (variable size due to `BlobKzgCommitments`). The bid carries 12 sub-fields including `ExecutionRequestsRoot`. Always overrides. The diff computation errors if the target bid is nil.
 
 **Builder Diffs.** The builder registry is diffed sparsely. Only builders whose fields changed between source and target are stored. The first 8 bytes encode the count of changed builders. Each entry is a `uint32` index followed by the fixed-size (93 bytes) SSZ-encoded `Builder`. When applying, the current builder slice is read from the source, changed indices are patched, and the result is written back with `SetBuilders`. This handles both mutations (balance changes, exits) and replacements (exited builder slot reused by a new deposit) since the full builder struct is stored for each changed index.
 
 **Next Withdrawal Builder Index.** Stored as an 8 byte `uint64`, always overrides.
 
-**Execution Payload Availability.** A fixed-size bitvector of `SlotsPerHistoricalRoot / 8` bytes (1024 bytes), stored without a length prefix. This uses a full override strategy rather than an append diff: availability updates flip bits in place on a wrapping slot-indexed ring buffer, so the mutation pattern is overwrite-with-wraparound rather than list growth. Given the small fixed size, storing the full vector is simpler than introducing changed-byte or append metadata. Always overrides.
+**Sila Payload Availability.** A fixed-size bitvector of `SlotsPerHistoricalRoot / 8` bytes (1024 bytes), stored without a length prefix. This uses a full override strategy rather than an append diff: availability updates flip bits in place on a wrapping slot-indexed ring buffer, so the mutation pattern is overwrite-with-wraparound rather than list growth. Given the small fixed size, storing the full vector is simpler than introducing changed-byte or append metadata. Always overrides.
 
 **Builder Pending Payments.** A fixed-size vector of `2 * SlotsPerEpoch` entries (64 entries × 44 bytes each), stored without a length prefix. Each entry is SSZ-encoded. Always overrides.
 

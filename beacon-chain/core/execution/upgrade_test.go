@@ -61,12 +61,12 @@ func TestUpgradeToBellatrix(t *testing.T) {
 	require.NoError(t, err)
 	require.DeepSSZEqual(t, nsc, csc)
 
-	header, err := mSt.LatestExecutionPayloadHeader()
+	header, err := mSt.LatestSilaPayloadHeader()
 	require.NoError(t, err)
-	protoHeader, ok := header.Proto().(*enginev1.ExecutionPayloadHeader)
+	protoHeader, ok := header.Proto().(*enginev1.SilaPayloadHeader)
 	require.Equal(t, true, ok)
 
-	wanted := &enginev1.ExecutionPayloadHeader{
+	wanted := &enginev1.SilaPayloadHeader{
 		ParentHash:       make([]byte, 32),
 		FeeRecipient:     make([]byte, 20),
 		StateRoot:        make([]byte, 32),

@@ -377,7 +377,7 @@ func TestProcessSidecarsFromExecutionFromBlock(t *testing.T) {
 				}
 
 				b := util.NewBeaconBlockGloas()
-				b.Block.Body.SignedExecutionPayloadBid.Message.BlobKzgCommitments = kzgCommitments
+				b.Block.Body.SignedSilaPayloadBid.Message.BlobKzgCommitments = kzgCommitments
 				b.Block.Slot = 1
 
 				sb, err := blocks.NewSignedBeaconBlock(b)
