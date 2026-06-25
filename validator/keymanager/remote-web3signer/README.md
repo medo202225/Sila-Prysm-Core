@@ -4,7 +4,7 @@ Web3Signer is a popular remote signer tool by Consensys to allow users to store 
 client and signed without the vc knowing the private keys. Web3Signer Specs are found by
 searching `Consensys' Web3Signer API specification`
 
-issue: https://github.com/medo202225/Sila-Prysm-Core/issues
+issue: https://github.com/sila-chain/Sila-Prysm-Core/issues
 
 API interface: https://github.com/ethereum/remote-signing-api
 
@@ -12,7 +12,7 @@ API interface: https://github.com/ethereum/remote-signing-api
 
 ### CLI
 
-detailed info found on https://github.com/medo202225/Sila-Prysm-Core
+detailed info found on https://github.com/sila-chain/Sila-Prysm-Core
 
 Flags used on validator client
 - `--validators-external-signer-url=http://localhost:9000`

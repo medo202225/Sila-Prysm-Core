@@ -10,7 +10,7 @@ This README details how to setup Sila-Prysm for interop testing for usage with o
 ## Installation & Setup
 
 1. Install [Bazel](https://bazel.build/install) **(Recommended)**
-2. `git clone https://github.com/medo202225/Sila-Prysm-Core && cd Sila-Prysm-Core`
+2. `git clone https://github.com/sila-chain/Sila-Prysm-Core && cd Sila-Prysm-Core`
 3. `bazel build //cmd/...`
 
 ## Starting from Genesis

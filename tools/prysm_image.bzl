@@ -56,7 +56,7 @@ def prysm_image_upload(
             ":binary_tar",
         ],
         labels = {
-          "org.opencontainers.image.source": "https://github.com/medo202225/Sila-Prysm-Core",
+          "org.opencontainers.image.source": "https://github.com/sila-chain/Sila-Prysm-Core",
         },
         tags = tags,
     )

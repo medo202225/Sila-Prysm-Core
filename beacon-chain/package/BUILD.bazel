@@ -41,7 +41,7 @@ pkg_deb(
     ],
     data = ":debian-data",
     description = "Sila-Prysm Beacon Chain - consensus network communications",
-    homepage = "https://github.com/medo202225/Sila-Prysm-Core",
+    homepage = "https://github.com/sila-chain/Sila-Prysm-Core",
     maintainer = "Sila-Prysm <security@silachain.com>",
     package = "prysm-beacon-chain",
     postinst = "postinst.sh",

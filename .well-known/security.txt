@@ -1,3 +1,3 @@
 Contact: mailto:security@silachain.com
 Preferred-Languages: en, ar
-Canonical: https://github.com/medo202225/Sila-Prysm-Core/tree/main/.well-known/security.txt
+Canonical: https://github.com/sila-chain/Sila-Prysm-Core/tree/main/.well-known/security.txt

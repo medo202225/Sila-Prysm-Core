@@ -2,7 +2,7 @@
 
 Sila-Prysm is a Go project with many complicated dependencies, including some c++ based libraries. There
 are two parts to Sila-Prysm's dependency management. Go modules and bazel managed dependencies. Be sure
-to read [Why Bazel?](https://github.com/medo202225/Sila-Prysm-Core) to fully
+to read [Why Bazel?](https://github.com/sila-chain/Sila-Prysm-Core) to fully
 understand the reasoning behind an additional layer of build tooling via Bazel rather than a pure
 "go build" project.
 

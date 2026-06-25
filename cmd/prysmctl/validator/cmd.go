@@ -99,11 +99,11 @@ var Commands = []*cli.Command{
 						fmt.Println(au.Red("Please read the following carefully"))
 						fmt.Print("This action will allow the partial withdrawal of amounts over the 32 staked ETH in your active validator balance. \n" +
 							"You will also be entitled to the full withdrawal of the entire validator balance if your validator has exited. \n" +
-							"Please navigate to our website (https://github.com/medo202225/Sila-Prysm-Core) and make sure you understand the full implications of setting your withdrawal address. \n")
+							"Please navigate to our website (https://github.com/sila-chain/Sila-Prysm-Core) and make sure you understand the full implications of setting your withdrawal address. \n")
 						fmt.Println(au.Red("THIS ACTION WILL NOT BE REVERSIBLE ONCE INCLUDED. "))
 						fmt.Println(au.Red("You will NOT be able to change the address again once changed. "))
 						return fmt.Errorf("both the `--%s` and `--%s` flags are required to run this command. \n"+
-							"By providing these flags the user has read and accepts the TERMS AND CONDITIONS: https://github.com/medo202225/Sila-Prysm-Core/blob/main/TERMS_OF_SERVICE.md "+
+							"By providing these flags the user has read and accepts the TERMS AND CONDITIONS: https://github.com/sila-chain/Sila-Prysm-Core/blob/main/TERMS_OF_SERVICE.md "+
 							"and confirms the action of setting withdrawals addresses", cmd.AcceptTosFlag.Name, ConfirmFlag.Name)
 					} else {
 						return nil

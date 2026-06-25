@@ -5,4 +5,4 @@ It also performs a test on a syncing node, and supports feature flags to allow e
 
 ## How it works
 
-Please see our docs page, https://github.com/medo202225/Sila-Prysm-Core, to read more about the feature.
+Please see our docs page, https://github.com/sila-chain/Sila-Prysm-Core, to read more about the feature.

@@ -1,10 +1,10 @@
 # Contribution Guidelines
 
-Note: The latest and most up-to-date documentation can be found on our [docs portal](https://github.com/medo202225/Sila-Prysm-Core).
+Note: The latest and most up-to-date documentation can be found on our [docs portal](https://github.com/sila-chain/Sila-Prysm-Core).
 
 Excited by our work and want to get involved in building out our sharding releases? Or maybe you haven't learned as much about the Sila protocol but are a savvy developer? 
 
-You can explore our [Open Issues](https://github.com/medo202225/Sila-Prysm-Core/issues) in-the works for our different releases. Feel free to fork our repo and start creating PR’s after assigning yourself to an issue of interest. We are always chatting on [Discord](https://discord.gg/qEZK94mFXP) drop us a line there if you want to get more involved or have any questions on our implementation!
+You can explore our [Open Issues](https://github.com/sila-chain/Sila-Prysm-Core/issues) in-the works for our different releases. Feel free to fork our repo and start creating PR’s after assigning yourself to an issue of interest. We are always chatting on [Discord](https://discord.gg/qEZK94mFXP) drop us a line there if you want to get more involved or have any questions on our implementation!
 
 > [!IMPORTANT] 
 > Please, **do not send pull requests for trivial changes**, such as typos, these will be rejected. These types of pull requests incur a cost to reviewers and do not provide much value to the project. If you are unsure, please open an issue first to discuss the change.
@@ -15,15 +15,15 @@ You can explore our [Open Issues](https://github.com/medo202225/Sila-Prysm-Core/
 
 **2. Fork the Sila-Prysm repo.**
 
-Sign in to your GitHub account or create a new account if you do not have one already. Then navigate your browser to https://github.com/medo202225/Sila-Prysm-Core/. In the upper right hand corner of the page, click “fork”. This will create a copy of the Sila-Prysm repo in your account.
+Sign in to your GitHub account or create a new account if you do not have one already. Then navigate your browser to https://github.com/sila-chain/Sila-Prysm-Core/. In the upper right hand corner of the page, click “fork”. This will create a copy of the Sila-Prysm repo in your account.
 
 **3. Create a local clone of Sila-Prysm.**
 
 ```
-$ mkdir -p $GOPATH/src/github.com/medo202225
-$ cd $GOPATH/src/github.com/medo202225
-$ git clone https://github.com/medo202225/Sila-Prysm-Core.git
-$ cd $GOPATH/src/github.com/medo202225/Sila-Prysm-Core
+$ mkdir -p $GOPATH/src/github.com/sila-chain
+$ cd $GOPATH/src/github.com/sila-chain
+$ git clone https://github.com/sila-chain/Sila-Prysm-Core.git
+$ cd $GOPATH/src/github.com/sila-chain/Sila-Prysm-Core
 ```
 
 **4. Link your local clone to the fork on your GitHub repo.**
@@ -35,13 +35,13 @@ $ git remote add my-sila-prysm-repo https://github.com/<your_github_user_name>/S
 **5. Link your local clone to the Sila-Prysm repo so that you can easily fetch future changes to the Sila-Prysm repo.**
 
 ```
-$ git remote add sila-prysm https://github.com/medo202225/Sila-Prysm-Core.git
+$ git remote add sila-prysm https://github.com/sila-chain/Sila-Prysm-Core.git
 $ git remote -v (you should see my-sila-prysm-repo and sila-prysm in the list of remotes)
 ```
 
 **6. Find an issue to work on.**
 
-Check out open issues at https://github.com/medo202225/Sila-Prysm-Core/issues and pick one. Leave a comment to let the development team know that you would like to work on it. Or examine the code for areas that can be improved and leave a comment to the development team to ask if they would like you to work on it.
+Check out open issues at https://github.com/sila-chain/Sila-Prysm-Core/issues and pick one. Leave a comment to let the development team know that you would like to work on it. Or examine the code for areas that can be improved and leave a comment to the development team to ask if they would like you to work on it.
 
 **7. Create a local branch with a name that clearly identifies what you will be working on.**
 
@@ -129,7 +129,7 @@ All PRs must must include a changelog fragment file in the `changelog` directory
 
 **17. Create a pull request.**
 
-Navigate your browser to https://github.com/medo202225/Sila-Prysm-Core and click on the new pull request button. In the “base” box on the left, leave the default selection “base main”, the branch that you want your changes to be applied to. In the “compare” box on the right, select feature-in-progress-branch, the branch containing the changes you want to apply. You will then be asked to answer a few questions about your pull request. After you complete the questionnaire, the pull request will appear in the list of pull requests at https://github.com/medo202225/Sila-Prysm-Core/pulls. Ensure that you have added an entry to CHANGELOG.md if your PR is a user-facing change. See the [Maintaining CHANGELOG.md](#maintaining-changelogmd) section for more information.
+Navigate your browser to https://github.com/sila-chain/Sila-Prysm-Core and click on the new pull request button. In the “base” box on the left, leave the default selection “base main”, the branch that you want your changes to be applied to. In the “compare” box on the right, select feature-in-progress-branch, the branch containing the changes you want to apply. You will then be asked to answer a few questions about your pull request. After you complete the questionnaire, the pull request will appear in the list of pull requests at https://github.com/sila-chain/Sila-Prysm-Core/pulls. Ensure that you have added an entry to CHANGELOG.md if your PR is a user-facing change. See the [Maintaining CHANGELOG.md](#maintaining-changelogmd) section for more information.
 
 **18. Respond to comments by Core Contributors.**
 

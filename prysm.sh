@@ -112,7 +112,7 @@ function get_prysm_version() {
     else
         # Find the latest Sila-Prysm version available for download.
         readonly reason="automatically selected latest available version"
-        prysm_version=$(curl -f -s https://prysmaticlabs.com/releases/latest) || (color "31" "Starting Sila-Prysm requires an internet connection. If you are being blocked by your antivirus, you can download the beacon chain and validator executables from our releases page on Github here https://github.com/medo202225/Sila-Prysm-Core/releases/" && exit 1)
+        prysm_version=$(curl -f -s https://prysmaticlabs.com/releases/latest) || (color "31" "Starting Sila-Prysm requires an internet connection. If you are being blocked by your antivirus, you can download the beacon chain and validator executables from our releases page on Github here https://github.com/sila-chain/Sila-Prysm-Core/releases/" && exit 1)
         readonly prysm_version
     fi
 }
@@ -258,7 +258,7 @@ if [[ $1 == prysmctl ]]; then
 fi
 
 if [[ $1 == slasher ]]; then
-    color "41" "The slasher binary is no longer available. Please use the --slasher flag with your beacon node. See: https://github.com/medo202225/Sila-Prysm-Core"
+    color "41" "The slasher binary is no longer available. Please use the --slasher flag with your beacon node. See: https://github.com/sila-chain/Sila-Prysm-Core"
     exit 1
 fi
 
