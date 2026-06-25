@@ -46,7 +46,7 @@ type ValidatorDB interface {
 	) error
 
 	// Attester protection related methods.
-	// Methods to store and read blacklisted public keys from EIP-3076
+	// Methods to store and read blacklisted public keys from SIP-3076
 	// slashing protection imports.
 	EIPImportBlacklistedPublicKeys(ctx context.Context) ([][fieldparams.BLSPubkeyLength]byte, error)
 	SaveEIPImportBlacklistedPublicKeys(ctx context.Context, publicKeys [][fieldparams.BLSPubkeyLength]byte) error
@@ -80,6 +80,6 @@ type ValidatorDB interface {
 	ProposerSettingsExists(ctx context.Context) (bool, error)
 	SaveProposerSettings(ctx context.Context, settings *proposer.Settings) error
 
-	// EIP-3076 slashing protection related methods
+	// SIP-3076 slashing protection related methods
 	ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error
 }

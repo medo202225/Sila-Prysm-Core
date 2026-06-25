@@ -27,7 +27,7 @@ import (
 //	        slot=pre.slot,
 //	        fork=Fork(
 //	            previous_version=pre.fork.current_version,
-//	            # [Modified in Gloas:EIP7732]
+//	            # [Modified in Gloas:SIP7732]
 //	            current_version=GLOAS_FORK_VERSION,
 //	            epoch=epoch,
 //	        ),
@@ -51,9 +51,9 @@ import (
 //	        inactivity_scores=pre.inactivity_scores,
 //	        current_sync_committee=pre.current_sync_committee,
 //	        next_sync_committee=pre.next_sync_committee,
-//	        # [Modified in Gloas:EIP7732]
+//	        # [Modified in Gloas:SIP7732]
 //	        # Removed `latest_execution_payload_header`
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        latest_block_hash=pre.latest_execution_payload_header.block_hash,
 //	        next_withdrawal_index=pre.next_withdrawal_index,
 //	        next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
@@ -68,29 +68,29 @@ import (
 //	        pending_partial_withdrawals=pre.pending_partial_withdrawals,
 //	        pending_consolidations=pre.pending_consolidations,
 //	        proposer_lookahead=pre.proposer_lookahead,
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        builders=[],
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        next_withdrawal_builder_index=BuilderIndex(0),
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        execution_payload_availability=[0b1 for _ in range(SLOTS_PER_HISTORICAL_ROOT)],
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        builder_pending_payments=[BuilderPendingPayment() for _ in range(2 * SLOTS_PER_EPOCH)],
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        builder_pending_withdrawals=[],
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        latest_execution_payload_bid=ExecutionPayloadBid(
 //	            block_hash=pre.latest_execution_payload_header.block_hash,
 //	            gas_limit=pre.latest_execution_payload_header.gas_limit,
 //	            execution_requests_root=hash_tree_root(ExecutionRequests()),
 //	        ),
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        payload_expected_withdrawals=[],
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        ptc_window=initialize_ptc_window(pre),
 //	    )
 //
-//	    # [New in Gloas:EIP7732]
+//	    # [New in Gloas:SIP7732]
 //	    onboard_builders_from_pending_deposits(post)
 //
 //	    return post

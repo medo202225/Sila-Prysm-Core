@@ -137,7 +137,7 @@ func file_proto_sila_v1alpha1_slasher_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_slasher_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_sila_v1alpha1_slasher_proto_goTypes = []any{
-	(*HighestAttestation)(nil), // 0: ethereum.eth.v1alpha1.HighestAttestation
+	(*HighestAttestation)(nil), // 0: sila.eth.v1alpha1.HighestAttestation
 }
 var file_proto_sila_v1alpha1_slasher_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

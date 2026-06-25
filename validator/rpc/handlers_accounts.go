@@ -106,7 +106,7 @@ func (s *Server) ListAccounts(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// BackupAccounts creates a zip file containing EIP-2335 keystores for the user's
+// BackupAccounts creates a zip file containing SIP-2335 keystores for the user's
 // specified public keys by encrypting them with the specified password.
 func (s *Server) BackupAccounts(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.web.accounts.ListAccounts")

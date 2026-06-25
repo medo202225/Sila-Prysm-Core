@@ -95,7 +95,7 @@ func (s *Store) AttestedPublicKeys(_ context.Context) ([][fieldparams.BLSPubkeyL
 }
 
 // SlashableAttestationCheck checks if an attestation is slashable by comparing it with the attesting
-// history for the given public key in our minimal slashing protection database defined by EIP-3076.
+// history for the given public key in our minimal slashing protection database defined by SIP-3076.
 // If it is not, it updates the database.
 func (s *Store) SlashableAttestationCheck(
 	ctx context.Context,
@@ -108,7 +108,7 @@ func (s *Store) SlashableAttestationCheck(
 	ctx, span := trace.StartSpan(ctx, "validator.postAttSignUpdate")
 	defer span.End()
 
-	// Check if the attestation is potentially slashable regarding EIP-3076 minimal conditions.
+	// Check if the attestation is potentially slashable regarding SIP-3076 minimal conditions.
 	// If not, save the new attestation into the database.
 	if err := s.SaveAttestationForPubKey(ctx, pubKey, signingRoot32, indexedAtt); err != nil {
 		if strings.Contains(err.Error(), "could not sign attestation") {
@@ -121,7 +121,7 @@ func (s *Store) SlashableAttestationCheck(
 	return nil
 }
 
-// SaveAttestationForPubKey checks if the incoming attestation is valid regarding EIP-3076 minimal slashing protection.
+// SaveAttestationForPubKey checks if the incoming attestation is valid regarding SIP-3076 minimal slashing protection.
 // If so, it updates the database with the incoming source and target, and returns nil.
 // If not, it does not modify the database and return an error.
 func (s *Store) SaveAttestationForPubKey(
@@ -161,7 +161,7 @@ func (s *Store) SaveAttestationForPubKey(
 	savedSourceEpoch := validatorSlashingProtection.LastSignedAttestationSourceEpoch
 	savedTargetEpoch := validatorSlashingProtection.LastSignedAttestationTargetEpoch
 
-	// Based on EIP-3076 (minimal database), validator should refuse to sign any attestation
+	// Based on SIP-3076 (minimal database), validator should refuse to sign any attestation
 	// with source epoch less than the recorded source epoch.
 	if incomingSourceEpochUInt64 < savedSourceEpoch {
 		return errors.Errorf(
@@ -171,7 +171,7 @@ func (s *Store) SaveAttestationForPubKey(
 		)
 	}
 
-	// Based on EIP-3076 (minimal database), validator should refuse to sign any attestation
+	// Based on SIP-3076 (minimal database), validator should refuse to sign any attestation
 	// with target epoch less than or equal to the recorded target epoch.
 	if savedTargetEpoch != nil && incomingTargetEpochUInt64 <= *savedTargetEpoch {
 		return errors.Errorf(
@@ -194,7 +194,7 @@ func (s *Store) SaveAttestationForPubKey(
 }
 
 // SaveAttestationsForPubKey saves the attestation history for a list of public keys WITHOUT checking if the incoming
-// attestations are valid regarding EIP-3076 minimal slashing protection.
+// attestations are valid regarding SIP-3076 minimal slashing protection.
 // For each public key, incoming sources and targets epochs are compared with
 // recorded source and target epochs, and maximums are saved.
 func (s *Store) SaveAttestationsForPubKey(

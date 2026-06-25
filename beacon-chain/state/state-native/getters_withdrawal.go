@@ -44,7 +44,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 
 // ExpectedWithdrawals returns the withdrawals that a proposer will need to pack in the next block
 // applied to the current state. It is also used by validators to check that the execution payload carried
-// the right number of withdrawals. Note: The number of partial withdrawals will be zero before EIP-7251.
+// the right number of withdrawals. Note: The number of partial withdrawals will be zero before SIP-7251.
 //
 // Spec definition:
 //
@@ -55,7 +55,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 //		withdrawals: List[Withdrawal] = []
 //		processed_partial_withdrawals_count = 0
 //
-//		# [New in Electra:EIP7251] Consume pending partial withdrawals
+//		# [New in Electra:SIP7251] Consume pending partial withdrawals
 //		for withdrawal in state.pending_partial_withdrawals:
 //			if withdrawal.withdrawable_epoch > epoch or len(withdrawals) == MAX_PENDING_PARTIALS_PER_WITHDRAWALS_SWEEP:
 //				break
@@ -81,7 +81,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 //		bound = min(len(state.validators), MAX_VALIDATORS_PER_WITHDRAWALS_SWEEP)
 //		for _ in range(bound):
 //			validator = state.validators[validator_index]
-//			# [Modified in Electra:EIP7251]
+//			# [Modified in Electra:SIP7251]
 //			partially_withdrawn_balance = sum(withdrawal.amount for withdrawal in withdrawals if withdrawal.validator_index == validator_index)
 //			balance = state.balances[validator_index] - partially_withdrawn_balance
 //			if is_fully_withdrawable_validator(validator, balance, epoch):
@@ -97,7 +97,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 //					index=withdrawal_index,
 //					validator_index=validator_index,
 //					address=ExecutionAddress(validator.withdrawal_credentials[12:]),
-//					amount=balance - get_max_effective_balance(validator),  # [Modified in Electra:EIP7251]
+//					amount=balance - get_max_effective_balance(validator),  # [Modified in Electra:SIP7251]
 //				))
 //				withdrawal_index += WithdrawalIndex(1)
 //			if len(withdrawals) == MAX_WITHDRAWALS_PER_PAYLOAD:

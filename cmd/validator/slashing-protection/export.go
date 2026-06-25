@@ -24,7 +24,7 @@ const (
 )
 
 // Extracts a validator's slashing protection
-// history from their database and formats it into an EIP-3076 standard JSON
+// history from their database and formats it into an SIP-3076 standard JSON
 // file via a CLI entrypoint to make it easy to migrate machines or Sila consensus clients.
 //
 // Steps:

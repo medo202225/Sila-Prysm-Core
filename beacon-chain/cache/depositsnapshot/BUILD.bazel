@@ -43,7 +43,7 @@ go_test(
         "spec_test.go",
     ],
     data = [
-        "@eip4881_spec_tests//:test_data",
+        "@sip4881_spec_tests//:test_data",
     ],
     embed = [":go_default_library"],
     deps = [

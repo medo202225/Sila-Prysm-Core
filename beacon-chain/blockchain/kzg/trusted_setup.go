@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	GoKZG "github.com/crate-crypto/go-kzg-4844"
-	CKZG "github.com/ethereum/c-kzg-4844/v2/bindings/go"
+	CKZG "github.com/sila-chain/c-kzg-4844/v2/bindings/go"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )

@@ -421,14 +421,14 @@ func file_proto_silaapi_v1_validator_proto_rawDescGZIP() []byte {
 var file_proto_silaapi_v1_validator_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_silaapi_v1_validator_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_proto_silaapi_v1_validator_proto_goTypes = []any{
-	(ValidatorStatus)(0),         // 0: ethereum.eth.v1.ValidatorStatus
-	(*Validator)(nil),            // 1: ethereum.eth.v1.Validator
-	(*ProduceBlockRequest)(nil),  // 2: ethereum.eth.v1.ProduceBlockRequest
-	(*ProduceBlockResponse)(nil), // 3: ethereum.eth.v1.ProduceBlockResponse
-	(*BeaconBlock)(nil),          // 4: ethereum.eth.v1.BeaconBlock
+	(ValidatorStatus)(0),         // 0: sila.eth.v1.ValidatorStatus
+	(*Validator)(nil),            // 1: sila.eth.v1.Validator
+	(*ProduceBlockRequest)(nil),  // 2: sila.eth.v1.ProduceBlockRequest
+	(*ProduceBlockResponse)(nil), // 3: sila.eth.v1.ProduceBlockResponse
+	(*BeaconBlock)(nil),          // 4: sila.eth.v1.BeaconBlock
 }
 var file_proto_silaapi_v1_validator_proto_depIdxs = []int32{
-	4, // 0: ethereum.eth.v1.ProduceBlockResponse.data:type_name -> ethereum.eth.v1.BeaconBlock
+	4, // 0: sila.eth.v1.ProduceBlockResponse.data:type_name -> sila.eth.v1.BeaconBlock
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

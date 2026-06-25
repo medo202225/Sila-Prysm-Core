@@ -78,7 +78,7 @@ func LessThan1Eth() *big.Int {
 	return amount
 }
 
-// DeployDepositContract deploys a new Ethereum contract, binding an instance of DepositContract to it.
+// DeployDepositContract deploys a new Sila contract, binding an instance of DepositContract to it.
 func DeployDepositContract(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *deposit.DepositContract, error) {
 	parsed, err := abi.JSON(strings.NewReader(deposit.DepositContractABI))
 	if err != nil {

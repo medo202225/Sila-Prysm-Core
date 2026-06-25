@@ -99,7 +99,7 @@ func (km *Keymanager) reloadAccountsFromKeystoreFile(accountsFilePath string) {
 	if err := json.Unmarshal(fileBytes, accountsKeystore); err != nil {
 		log.WithError(
 			err,
-		).Errorf("Could not read valid, EIP-2335 keystore json file at path: %s", accountsFilePath)
+		).Errorf("Could not read valid, SIP-2335 keystore json file at path: %s", accountsFilePath)
 		return
 	}
 	if err := km.reloadAccountsFromKeystore(accountsKeystore); err != nil {

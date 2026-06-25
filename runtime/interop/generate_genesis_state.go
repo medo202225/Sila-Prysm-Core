@@ -22,7 +22,7 @@ import (
 
 var (
 	// This is the recommended mock silaexec block hash according to the Sila consensus interop guidelines.
-	// https://github.com/ethereum/silaconsensus.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
+	// https://github.com/sila-chain/silaconsensus.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
 	mockSilaExecutionBlockHash = []byte{66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66}
 )
 

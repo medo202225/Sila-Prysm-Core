@@ -114,7 +114,7 @@ func (v *BidVerifier) VerifyFeeRecipientMatches(expected []byte) (err error) {
 }
 
 // VerifyGasLimitTargetCompatible verifies the bid gas limit is compatible with
-// the parent payload's gas limit and the proposer's target via the EIP-1559
+// the parent payload's gas limit and the proposer's target via the SIP-1559
 // elasticity rule.
 func (v *BidVerifier) VerifyGasLimitTargetCompatible(parentGasLimit, targetGasLimit uint64) (err error) {
 	defer v.record(RequireBidGasLimitCompatible, &err)
@@ -130,7 +130,7 @@ func (v *BidVerifier) VerifyGasLimitTargetCompatible(parentGasLimit, targetGasLi
 }
 
 // isGasLimitTargetCompatible reports whether gasLimit is compatible with
-// targetGasLimit under the EIP-1559 transition rule from parentGasLimit.
+// targetGasLimit under the SIP-1559 transition rule from parentGasLimit.
 //
 //	<spec fn="is_gas_limit_target_compatible" fork="gloas" hash="3fa22023">
 //	def is_gas_limit_target_compatible(
@@ -138,7 +138,7 @@ func (v *BidVerifier) VerifyGasLimitTargetCompatible(parentGasLimit, targetGasLi
 //	) -> bool:
 //	    """
 //	    Check if ``gas_limit`` is compatible with ``target_gas_limit`` under the
-//	    EIP-1559 transition rule from ``parent_gas_limit``.
+//	    SIP-1559 transition rule from ``parent_gas_limit``.
 //	    """
 //	    max_gas_limit_difference = max(parent_gas_limit // 1024, 1) - 1
 //	    min_gas_limit = parent_gas_limit - max_gas_limit_difference

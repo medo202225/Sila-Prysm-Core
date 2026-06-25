@@ -578,7 +578,7 @@ func (*SignRequest_ProposerPreference) isSignRequest_Object() {}
 type SignResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Signature     []byte                 `protobuf:"bytes,1,opt,name=signature,proto3" json:"signature,omitempty"`
-	Status        SignResponse_Status    `protobuf:"varint,2,opt,name=status,proto3,enum=ethereum.validator.accounts.v2.SignResponse_Status" json:"status,omitempty"`
+	Status        SignResponse_Status    `protobuf:"varint,2,opt,name=status,proto3,enum=sila.validator.accounts.v2.SignResponse_Status" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1079,65 +1079,65 @@ func file_proto_sila_v1alpha1_validator_client_keymanager_proto_rawDescGZIP() []
 var file_proto_sila_v1alpha1_validator_client_keymanager_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_sila_v1alpha1_validator_client_keymanager_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_sila_v1alpha1_validator_client_keymanager_proto_goTypes = []any{
-	(SignResponse_Status)(0),                             // 0: ethereum.validator.accounts.v2.SignResponse.Status
-	(*SignRequest)(nil),                                  // 1: ethereum.validator.accounts.v2.SignRequest
-	(*SignResponse)(nil),                                 // 2: ethereum.validator.accounts.v2.SignResponse
-	(*ProposerOptionPayload)(nil),                        // 3: ethereum.validator.accounts.v2.ProposerOptionPayload
-	(*BuilderConfig)(nil),                                // 4: ethereum.validator.accounts.v2.BuilderConfig
-	(*ProposerSettingsPayload)(nil),                      // 5: ethereum.validator.accounts.v2.ProposerSettingsPayload
-	nil,                                                  // 6: ethereum.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry
-	(*v1alpha1.BeaconBlock)(nil),                         // 7: ethereum.eth.v1alpha1.BeaconBlock
-	(*v1alpha1.AttestationData)(nil),                     // 8: ethereum.eth.v1alpha1.AttestationData
-	(*v1alpha1.AggregateAttestationAndProof)(nil),        // 9: ethereum.eth.v1alpha1.AggregateAttestationAndProof
-	(*v1alpha1.VoluntaryExit)(nil),                       // 10: ethereum.eth.v1alpha1.VoluntaryExit
-	(*v1alpha1.BeaconBlockAltair)(nil),                   // 11: ethereum.eth.v1alpha1.BeaconBlockAltair
-	(*v1alpha1.SyncAggregatorSelectionData)(nil),         // 12: ethereum.eth.v1alpha1.SyncAggregatorSelectionData
-	(*v1alpha1.ContributionAndProof)(nil),                // 13: ethereum.eth.v1alpha1.ContributionAndProof
-	(*v1alpha1.BeaconBlockBellatrix)(nil),                // 14: ethereum.eth.v1alpha1.BeaconBlockBellatrix
-	(*v1alpha1.BlindedBeaconBlockBellatrix)(nil),         // 15: ethereum.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	(*v1alpha1.ValidatorRegistrationV1)(nil),             // 16: ethereum.eth.v1alpha1.ValidatorRegistrationV1
-	(*v1alpha1.BeaconBlockCapella)(nil),                  // 17: ethereum.eth.v1alpha1.BeaconBlockCapella
-	(*v1alpha1.BlindedBeaconBlockCapella)(nil),           // 18: ethereum.eth.v1alpha1.BlindedBeaconBlockCapella
-	(*v1alpha1.BeaconBlockDeneb)(nil),                    // 19: ethereum.eth.v1alpha1.BeaconBlockDeneb
-	(*v1alpha1.BlindedBeaconBlockDeneb)(nil),             // 20: ethereum.eth.v1alpha1.BlindedBeaconBlockDeneb
-	(*v1alpha1.BeaconBlockElectra)(nil),                  // 21: ethereum.eth.v1alpha1.BeaconBlockElectra
-	(*v1alpha1.BlindedBeaconBlockElectra)(nil),           // 22: ethereum.eth.v1alpha1.BlindedBeaconBlockElectra
-	(*v1alpha1.AggregateAttestationAndProofElectra)(nil), // 23: ethereum.eth.v1alpha1.AggregateAttestationAndProofElectra
-	(*v1alpha1.BlindedBeaconBlockFulu)(nil),              // 24: ethereum.eth.v1alpha1.BlindedBeaconBlockFulu
-	(*v1alpha1.BeaconBlockGloas)(nil),                    // 25: ethereum.eth.v1alpha1.BeaconBlockGloas
-	(*v1alpha1.ExecutionPayloadEnvelope)(nil),            // 26: ethereum.eth.v1alpha1.ExecutionPayloadEnvelope
-	(*v1alpha1.PayloadAttestationData)(nil),              // 27: ethereum.eth.v1alpha1.PayloadAttestationData
-	(*v1alpha1.ProposerPreferences)(nil),                 // 28: ethereum.eth.v1alpha1.ProposerPreferences
+	(SignResponse_Status)(0),                             // 0: sila.validator.accounts.v2.SignResponse.Status
+	(*SignRequest)(nil),                                  // 1: sila.validator.accounts.v2.SignRequest
+	(*SignResponse)(nil),                                 // 2: sila.validator.accounts.v2.SignResponse
+	(*ProposerOptionPayload)(nil),                        // 3: sila.validator.accounts.v2.ProposerOptionPayload
+	(*BuilderConfig)(nil),                                // 4: sila.validator.accounts.v2.BuilderConfig
+	(*ProposerSettingsPayload)(nil),                      // 5: sila.validator.accounts.v2.ProposerSettingsPayload
+	nil,                                                  // 6: sila.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry
+	(*v1alpha1.BeaconBlock)(nil),                         // 7: sila.eth.v1alpha1.BeaconBlock
+	(*v1alpha1.AttestationData)(nil),                     // 8: sila.eth.v1alpha1.AttestationData
+	(*v1alpha1.AggregateAttestationAndProof)(nil),        // 9: sila.eth.v1alpha1.AggregateAttestationAndProof
+	(*v1alpha1.VoluntaryExit)(nil),                       // 10: sila.eth.v1alpha1.VoluntaryExit
+	(*v1alpha1.BeaconBlockAltair)(nil),                   // 11: sila.eth.v1alpha1.BeaconBlockAltair
+	(*v1alpha1.SyncAggregatorSelectionData)(nil),         // 12: sila.eth.v1alpha1.SyncAggregatorSelectionData
+	(*v1alpha1.ContributionAndProof)(nil),                // 13: sila.eth.v1alpha1.ContributionAndProof
+	(*v1alpha1.BeaconBlockBellatrix)(nil),                // 14: sila.eth.v1alpha1.BeaconBlockBellatrix
+	(*v1alpha1.BlindedBeaconBlockBellatrix)(nil),         // 15: sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
+	(*v1alpha1.ValidatorRegistrationV1)(nil),             // 16: sila.eth.v1alpha1.ValidatorRegistrationV1
+	(*v1alpha1.BeaconBlockCapella)(nil),                  // 17: sila.eth.v1alpha1.BeaconBlockCapella
+	(*v1alpha1.BlindedBeaconBlockCapella)(nil),           // 18: sila.eth.v1alpha1.BlindedBeaconBlockCapella
+	(*v1alpha1.BeaconBlockDeneb)(nil),                    // 19: sila.eth.v1alpha1.BeaconBlockDeneb
+	(*v1alpha1.BlindedBeaconBlockDeneb)(nil),             // 20: sila.eth.v1alpha1.BlindedBeaconBlockDeneb
+	(*v1alpha1.BeaconBlockElectra)(nil),                  // 21: sila.eth.v1alpha1.BeaconBlockElectra
+	(*v1alpha1.BlindedBeaconBlockElectra)(nil),           // 22: sila.eth.v1alpha1.BlindedBeaconBlockElectra
+	(*v1alpha1.AggregateAttestationAndProofElectra)(nil), // 23: sila.eth.v1alpha1.AggregateAttestationAndProofElectra
+	(*v1alpha1.BlindedBeaconBlockFulu)(nil),              // 24: sila.eth.v1alpha1.BlindedBeaconBlockFulu
+	(*v1alpha1.BeaconBlockGloas)(nil),                    // 25: sila.eth.v1alpha1.BeaconBlockGloas
+	(*v1alpha1.ExecutionPayloadEnvelope)(nil),            // 26: sila.eth.v1alpha1.ExecutionPayloadEnvelope
+	(*v1alpha1.PayloadAttestationData)(nil),              // 27: sila.eth.v1alpha1.PayloadAttestationData
+	(*v1alpha1.ProposerPreferences)(nil),                 // 28: sila.eth.v1alpha1.ProposerPreferences
 }
 var file_proto_sila_v1alpha1_validator_client_keymanager_proto_depIdxs = []int32{
-	7,  // 0: ethereum.validator.accounts.v2.SignRequest.block:type_name -> ethereum.eth.v1alpha1.BeaconBlock
-	8,  // 1: ethereum.validator.accounts.v2.SignRequest.attestation_data:type_name -> ethereum.eth.v1alpha1.AttestationData
-	9,  // 2: ethereum.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof:type_name -> ethereum.eth.v1alpha1.AggregateAttestationAndProof
-	10, // 3: ethereum.validator.accounts.v2.SignRequest.exit:type_name -> ethereum.eth.v1alpha1.VoluntaryExit
-	11, // 4: ethereum.validator.accounts.v2.SignRequest.block_altair:type_name -> ethereum.eth.v1alpha1.BeaconBlockAltair
-	12, // 5: ethereum.validator.accounts.v2.SignRequest.sync_aggregator_selection_data:type_name -> ethereum.eth.v1alpha1.SyncAggregatorSelectionData
-	13, // 6: ethereum.validator.accounts.v2.SignRequest.contribution_and_proof:type_name -> ethereum.eth.v1alpha1.ContributionAndProof
-	14, // 7: ethereum.validator.accounts.v2.SignRequest.block_bellatrix:type_name -> ethereum.eth.v1alpha1.BeaconBlockBellatrix
-	15, // 8: ethereum.validator.accounts.v2.SignRequest.blinded_block_bellatrix:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	16, // 9: ethereum.validator.accounts.v2.SignRequest.registration:type_name -> ethereum.eth.v1alpha1.ValidatorRegistrationV1
-	17, // 10: ethereum.validator.accounts.v2.SignRequest.block_capella:type_name -> ethereum.eth.v1alpha1.BeaconBlockCapella
-	18, // 11: ethereum.validator.accounts.v2.SignRequest.blinded_block_capella:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockCapella
-	19, // 12: ethereum.validator.accounts.v2.SignRequest.block_deneb:type_name -> ethereum.eth.v1alpha1.BeaconBlockDeneb
-	20, // 13: ethereum.validator.accounts.v2.SignRequest.blinded_block_deneb:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockDeneb
-	21, // 14: ethereum.validator.accounts.v2.SignRequest.block_electra:type_name -> ethereum.eth.v1alpha1.BeaconBlockElectra
-	22, // 15: ethereum.validator.accounts.v2.SignRequest.blinded_block_electra:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockElectra
-	23, // 16: ethereum.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof_electra:type_name -> ethereum.eth.v1alpha1.AggregateAttestationAndProofElectra
-	21, // 17: ethereum.validator.accounts.v2.SignRequest.block_fulu:type_name -> ethereum.eth.v1alpha1.BeaconBlockElectra
-	24, // 18: ethereum.validator.accounts.v2.SignRequest.blinded_block_fulu:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockFulu
-	25, // 19: ethereum.validator.accounts.v2.SignRequest.block_gloas:type_name -> ethereum.eth.v1alpha1.BeaconBlockGloas
-	26, // 20: ethereum.validator.accounts.v2.SignRequest.execution_payload_envelope:type_name -> ethereum.eth.v1alpha1.ExecutionPayloadEnvelope
-	27, // 21: ethereum.validator.accounts.v2.SignRequest.payload_attestation_data:type_name -> ethereum.eth.v1alpha1.PayloadAttestationData
-	28, // 22: ethereum.validator.accounts.v2.SignRequest.proposer_preference:type_name -> ethereum.eth.v1alpha1.ProposerPreferences
-	0,  // 23: ethereum.validator.accounts.v2.SignResponse.status:type_name -> ethereum.validator.accounts.v2.SignResponse.Status
-	4,  // 24: ethereum.validator.accounts.v2.ProposerOptionPayload.builder:type_name -> ethereum.validator.accounts.v2.BuilderConfig
-	6,  // 25: ethereum.validator.accounts.v2.ProposerSettingsPayload.proposer_config:type_name -> ethereum.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry
-	3,  // 26: ethereum.validator.accounts.v2.ProposerSettingsPayload.default_config:type_name -> ethereum.validator.accounts.v2.ProposerOptionPayload
-	3,  // 27: ethereum.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry.value:type_name -> ethereum.validator.accounts.v2.ProposerOptionPayload
+	7,  // 0: sila.validator.accounts.v2.SignRequest.block:type_name -> sila.eth.v1alpha1.BeaconBlock
+	8,  // 1: sila.validator.accounts.v2.SignRequest.attestation_data:type_name -> sila.eth.v1alpha1.AttestationData
+	9,  // 2: sila.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof:type_name -> sila.eth.v1alpha1.AggregateAttestationAndProof
+	10, // 3: sila.validator.accounts.v2.SignRequest.exit:type_name -> sila.eth.v1alpha1.VoluntaryExit
+	11, // 4: sila.validator.accounts.v2.SignRequest.block_altair:type_name -> sila.eth.v1alpha1.BeaconBlockAltair
+	12, // 5: sila.validator.accounts.v2.SignRequest.sync_aggregator_selection_data:type_name -> sila.eth.v1alpha1.SyncAggregatorSelectionData
+	13, // 6: sila.validator.accounts.v2.SignRequest.contribution_and_proof:type_name -> sila.eth.v1alpha1.ContributionAndProof
+	14, // 7: sila.validator.accounts.v2.SignRequest.block_bellatrix:type_name -> sila.eth.v1alpha1.BeaconBlockBellatrix
+	15, // 8: sila.validator.accounts.v2.SignRequest.blinded_block_bellatrix:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
+	16, // 9: sila.validator.accounts.v2.SignRequest.registration:type_name -> sila.eth.v1alpha1.ValidatorRegistrationV1
+	17, // 10: sila.validator.accounts.v2.SignRequest.block_capella:type_name -> sila.eth.v1alpha1.BeaconBlockCapella
+	18, // 11: sila.validator.accounts.v2.SignRequest.blinded_block_capella:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockCapella
+	19, // 12: sila.validator.accounts.v2.SignRequest.block_deneb:type_name -> sila.eth.v1alpha1.BeaconBlockDeneb
+	20, // 13: sila.validator.accounts.v2.SignRequest.blinded_block_deneb:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockDeneb
+	21, // 14: sila.validator.accounts.v2.SignRequest.block_electra:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
+	22, // 15: sila.validator.accounts.v2.SignRequest.blinded_block_electra:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockElectra
+	23, // 16: sila.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof_electra:type_name -> sila.eth.v1alpha1.AggregateAttestationAndProofElectra
+	21, // 17: sila.validator.accounts.v2.SignRequest.block_fulu:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
+	24, // 18: sila.validator.accounts.v2.SignRequest.blinded_block_fulu:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockFulu
+	25, // 19: sila.validator.accounts.v2.SignRequest.block_gloas:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
+	26, // 20: sila.validator.accounts.v2.SignRequest.execution_payload_envelope:type_name -> sila.eth.v1alpha1.ExecutionPayloadEnvelope
+	27, // 21: sila.validator.accounts.v2.SignRequest.payload_attestation_data:type_name -> sila.eth.v1alpha1.PayloadAttestationData
+	28, // 22: sila.validator.accounts.v2.SignRequest.proposer_preference:type_name -> sila.eth.v1alpha1.ProposerPreferences
+	0,  // 23: sila.validator.accounts.v2.SignResponse.status:type_name -> sila.validator.accounts.v2.SignResponse.Status
+	4,  // 24: sila.validator.accounts.v2.ProposerOptionPayload.builder:type_name -> sila.validator.accounts.v2.BuilderConfig
+	6,  // 25: sila.validator.accounts.v2.ProposerSettingsPayload.proposer_config:type_name -> sila.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry
+	3,  // 26: sila.validator.accounts.v2.ProposerSettingsPayload.default_config:type_name -> sila.validator.accounts.v2.ProposerOptionPayload
+	3,  // 27: sila.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry.value:type_name -> sila.validator.accounts.v2.ProposerOptionPayload
 	28, // [28:28] is the sub-list for method output_type
 	28, // [28:28] is the sub-list for method input_type
 	28, // [28:28] is the sub-list for extension type_name

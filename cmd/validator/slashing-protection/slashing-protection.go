@@ -17,7 +17,7 @@ var Commands = &cli.Command{
 	Subcommands: []*cli.Command{
 		{
 			Name:        "export",
-			Description: `exports your validator slashing protection history into an EIP-3076 compliant JSON`,
+			Description: `exports your validator slashing protection history into an SIP-3076 compliant JSON`,
 			Flags: cmd.WrapFlags([]cli.Flag{
 				cmd.DataDirFlag,
 				flags.SlashingProtectionExportDirFlag,
@@ -46,7 +46,7 @@ var Commands = &cli.Command{
 		},
 		{
 			Name:        "import",
-			Description: `imports a selected EIP-3076 compliant slashing protection JSON to the validator database`,
+			Description: `imports a selected SIP-3076 compliant slashing protection JSON to the validator database`,
 			Flags: cmd.WrapFlags([]cli.Flag{
 				cmd.DataDirFlag,
 				flags.SlashingProtectionJSONFileFlag,

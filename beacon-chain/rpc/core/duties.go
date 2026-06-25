@@ -307,7 +307,7 @@ func ProposalDependentRoot(s state.BeaconState, epoch primitives.Epoch) ([]byte,
 // ProposalDependentRootV2 returns the dependent root for proposer duties.
 func ProposalDependentRootV2(s state.BeaconState, epoch primitives.Epoch) ([]byte, error) {
 	if s.Version() >= version.Fulu {
-		// Post-Fulu (EIP-7917) the proposer schedule is deterministic from the
+		// Post-Fulu (SIP-7917) the proposer schedule is deterministic from the
 		// previous epoch's state, so the dependent root is (prev_epoch_start - 1),
 		// matching AttestationDependentRoot. Pre-Fulu it falls back to (epoch_start - 1).
 		// See https://github.com/Sila/beacon-APIs/pull/563.

@@ -544,7 +544,7 @@ func UpdateProposerIndicesInCache(ctx context.Context, state state.ReadOnlyBeaco
 		return err
 	}
 	var proposerIndices []primitives.ValidatorIndex
-	// use the state if post fulu (EIP-7917)
+	// use the state if post fulu (SIP-7917)
 	if state.Version() >= version.Fulu {
 		lookAhead, err := state.ProposerLookahead()
 		if err != nil {

@@ -347,7 +347,7 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	MaxBuilderConsecutiveMissedSlots: 3,
 	MaxBuilderEpochMissedSlots:       5,
 	// Execution engine timeout value
-	ExecutionEngineTimeoutValue: 8, // 8 seconds default based on: https://github.com/ethereum/execution-apis/blob/main/src/engine/specification.md#core
+	ExecutionEngineTimeoutValue: 8, // 8 seconds default based on: https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/specification.md#core
 
 	// Subnet value
 	BlobsidecarSubnetCount:        6,

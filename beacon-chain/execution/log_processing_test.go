@@ -65,7 +65,7 @@ func TestProcessDepositLog_OK(t *testing.T) {
 
 	testAcc.Backend.Commit()
 
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			web3Service.cfg.depositContractAddr,
 		},
@@ -137,7 +137,7 @@ func TestProcessDepositLog_InsertsPendingDeposit(t *testing.T) {
 
 	testAcc.Backend.Commit()
 
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			web3Service.cfg.depositContractAddr,
 		},
@@ -192,7 +192,7 @@ func TestUnpackDepositLogData_OK(t *testing.T) {
 	require.NoError(t, err, "Could not deposit to deposit contract")
 	testAcc.Backend.Commit()
 
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			web3Service.cfg.depositContractAddr,
 		},
@@ -262,7 +262,7 @@ func TestProcessSilaGenesisLog_8DuplicatePubkeys(t *testing.T) {
 		testAcc.Backend.Commit()
 	}
 
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			web3Service.cfg.depositContractAddr,
 		},
@@ -335,7 +335,7 @@ func TestProcessSilaGenesisLog(t *testing.T) {
 		testAcc.Backend.Commit()
 	}
 
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			web3Service.cfg.depositContractAddr,
 		},

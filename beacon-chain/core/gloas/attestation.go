@@ -15,7 +15,7 @@ import (
 //
 // Spec v1.7.0-alpha (pseudocode):
 //
-//	# [New in Gloas:EIP7732]
+//	# [New in Gloas:SIP7732]
 //	if is_attestation_same_slot(state, data):
 //	    assert data.index == 0
 //	    payload_matches = True

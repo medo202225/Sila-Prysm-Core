@@ -1296,7 +1296,7 @@ func unmarshalBlock(_ context.Context, enc []byte) (interfaces.ReadOnlySignedBea
 			return nil, errors.Wrap(err, "could not unmarshal blinded Fulu block")
 		}
 	case hasGloasKey(enc):
-		// post Gloas we save the full beacon block as EIP-7732 separates beacon block and payload
+		// post Gloas we save the full beacon block as SIP-7732 separates beacon block and payload
 		rawBlock = &silapb.SignedBeaconBlockGloas{}
 		if err := rawBlock.UnmarshalSSZ(enc[len(gloasKey):]); err != nil {
 			return nil, errors.Wrap(err, "could not unmarshal Gloas block")

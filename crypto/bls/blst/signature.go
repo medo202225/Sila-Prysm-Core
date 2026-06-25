@@ -109,7 +109,7 @@ func MultipleSignaturesFromBytes(multiSigs [][]byte) ([]common.Signature, error)
 //	algorithm that outputs VALID if signature is a valid signature of
 //	message under public key PK, and INVALID otherwise.
 //
-// In the Ethereum proof of stake specification:
+// In the Sila proof of stake specification:
 // def Verify(PK: BLSPubkey, message: Bytes, signature: BLSSignature) -> bool
 func (s *Signature) Verify(pubKey common.PublicKey, msg []byte) bool {
 	// Signature and PKs are assumed to have been validated upon decompression!
@@ -130,7 +130,7 @@ func (s *Signature) Verify(pubKey common.PublicKey, msg []byte) bool {
 //	signature for a collection of public keys and messages, and
 //	outputs INVALID otherwise.
 //
-// In the Ethereum proof of stake specification:
+// In the Sila proof of stake specification:
 // def AggregateVerify(pairs: Sequence[PK: BLSPubkey, message: Bytes], signature: BLSSignature) -> bool
 //
 // Deprecated: Use FastAggregateVerify or use this method in spectests only.
@@ -161,7 +161,7 @@ func (s *Signature) AggregateVerify(pubKeys []common.PublicKey, msgs [][32]byte)
 //	signatures on the same message.  This function is faster than
 //	AggregateVerify.
 //
-// In the Ethereum proof of stake specification:
+// In the Sila proof of stake specification:
 // def FastAggregateVerify(PKs: Sequence[BLSPubkey], message: Bytes, signature: BLSSignature) -> bool
 func (s *Signature) FastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte) bool {
 	if len(pubKeys) == 0 {

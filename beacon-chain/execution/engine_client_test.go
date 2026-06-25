@@ -58,7 +58,7 @@ func (RPCClientBad) BatchCall([]rpc.BatchElem) error {
 }
 
 func (RPCClientBad) CallContext(context.Context, any, string, ...any) error {
-	return ethereum.NotFound
+	return sila.NotFound
 }
 
 func TestClient_IPC(t *testing.T) {
@@ -1012,13 +1012,13 @@ func TestClient_HTTP(t *testing.T) {
 				name: "happy path",
 				want: []*structs.ClientVersionV1{{
 					Code:    "GE",
-					Name:    "go-ethereum",
+					Name:    "Sila",
 					Version: "1.15.11-stable",
 					Commit:  "36b2371c",
 				}},
 				resp: []*structs.ClientVersionV1{{
 					Code:    "GE",
-					Name:    "go-ethereum",
+					Name:    "Sila",
 					Version: "1.15.11-stable",
 					Commit:  "36b2371c",
 				}},
@@ -2084,7 +2084,7 @@ func TestHeaderByHash_NotFound(t *testing.T) {
 	srv.rpcClient = RPCClientBad{}
 
 	_, err := srv.HeaderByHash(t.Context(), [32]byte{})
-	assert.Equal(t, ethereum.NotFound, err)
+	assert.Equal(t, sila.NotFound, err)
 }
 
 func TestHeaderByNumber_NotFound(t *testing.T) {
@@ -2092,7 +2092,7 @@ func TestHeaderByNumber_NotFound(t *testing.T) {
 	srv.rpcClient = RPCClientBad{}
 
 	_, err := srv.HeaderByNumber(t.Context(), big.NewInt(100))
-	assert.Equal(t, ethereum.NotFound, err)
+	assert.Equal(t, sila.NotFound, err)
 }
 
 func TestToBlockNumArg(t *testing.T) {

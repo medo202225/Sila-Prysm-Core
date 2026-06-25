@@ -22,7 +22,7 @@ const (
 	Bitvector
 	Bitlist
 
-	// Added in EIP-7916
+	// Added in SIP-7916
 	ProgressiveList
 	Union
 )

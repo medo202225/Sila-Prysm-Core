@@ -125,8 +125,8 @@ type Peer struct {
 	PeerId             string                 `protobuf:"bytes,1,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
 	Enr                string                 `protobuf:"bytes,2,opt,name=enr,proto3" json:"enr,omitempty"`
 	LastSeenP2PAddress string                 `protobuf:"bytes,3,opt,name=last_seen_p2p_address,json=lastSeenP2pAddress,proto3" json:"last_seen_p2p_address,omitempty"`
-	State              ConnectionState        `protobuf:"varint,4,opt,name=state,proto3,enum=ethereum.eth.v1.ConnectionState" json:"state,omitempty"`
-	Direction          PeerDirection          `protobuf:"varint,5,opt,name=direction,proto3,enum=ethereum.eth.v1.PeerDirection" json:"direction,omitempty"`
+	State              ConnectionState        `protobuf:"varint,4,opt,name=state,proto3,enum=sila.eth.v1.ConnectionState" json:"state,omitempty"`
+	Direction          PeerDirection          `protobuf:"varint,5,opt,name=direction,proto3,enum=sila.eth.v1.PeerDirection" json:"direction,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -252,13 +252,13 @@ func file_proto_silaapi_v1_node_proto_rawDescGZIP() []byte {
 var file_proto_silaapi_v1_node_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_proto_silaapi_v1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_silaapi_v1_node_proto_goTypes = []any{
-	(PeerDirection)(0),   // 0: ethereum.eth.v1.PeerDirection
-	(ConnectionState)(0), // 1: ethereum.eth.v1.ConnectionState
-	(*Peer)(nil),         // 2: ethereum.eth.v1.Peer
+	(PeerDirection)(0),   // 0: sila.eth.v1.PeerDirection
+	(ConnectionState)(0), // 1: sila.eth.v1.ConnectionState
+	(*Peer)(nil),         // 2: sila.eth.v1.Peer
 }
 var file_proto_silaapi_v1_node_proto_depIdxs = []int32{
-	1, // 0: ethereum.eth.v1.Peer.state:type_name -> ethereum.eth.v1.ConnectionState
-	0, // 1: ethereum.eth.v1.Peer.direction:type_name -> ethereum.eth.v1.PeerDirection
+	1, // 0: sila.eth.v1.Peer.state:type_name -> sila.eth.v1.ConnectionState
+	0, // 1: sila.eth.v1.Peer.direction:type_name -> sila.eth.v1.PeerDirection
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

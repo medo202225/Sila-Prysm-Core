@@ -384,14 +384,14 @@ func file_proto_sila_v1alpha1_sync_committee_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_sync_committee_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_sila_v1alpha1_sync_committee_proto_goTypes = []any{
-	(*SyncCommitteeMessage)(nil),       // 0: ethereum.eth.v1alpha1.SyncCommitteeMessage
-	(*SignedContributionAndProof)(nil), // 1: ethereum.eth.v1alpha1.SignedContributionAndProof
-	(*ContributionAndProof)(nil),       // 2: ethereum.eth.v1alpha1.ContributionAndProof
-	(*SyncCommitteeContribution)(nil),  // 3: ethereum.eth.v1alpha1.SyncCommitteeContribution
+	(*SyncCommitteeMessage)(nil),       // 0: sila.eth.v1alpha1.SyncCommitteeMessage
+	(*SignedContributionAndProof)(nil), // 1: sila.eth.v1alpha1.SignedContributionAndProof
+	(*ContributionAndProof)(nil),       // 2: sila.eth.v1alpha1.ContributionAndProof
+	(*SyncCommitteeContribution)(nil),  // 3: sila.eth.v1alpha1.SyncCommitteeContribution
 }
 var file_proto_sila_v1alpha1_sync_committee_proto_depIdxs = []int32{
-	2, // 0: ethereum.eth.v1alpha1.SignedContributionAndProof.message:type_name -> ethereum.eth.v1alpha1.ContributionAndProof
-	3, // 1: ethereum.eth.v1alpha1.ContributionAndProof.contribution:type_name -> ethereum.eth.v1alpha1.SyncCommitteeContribution
+	2, // 0: sila.eth.v1alpha1.SignedContributionAndProof.message:type_name -> sila.eth.v1alpha1.ContributionAndProof
+	3, // 1: sila.eth.v1alpha1.ContributionAndProof.contribution:type_name -> sila.eth.v1alpha1.SyncCommitteeContribution
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

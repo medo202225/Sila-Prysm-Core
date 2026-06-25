@@ -35,7 +35,7 @@ type GetPeerResponse struct {
 	Data *Peer `json:"data"`
 }
 
-// Added Meta to align with beacon-api: https://ethereum.github.io/beacon-APIs/#/Node/getPeers
+// Added Meta to align with beacon-api: https://sila-chain.github.io/Sila-Beacon-APIs/#/Node/getPeers
 type Meta struct {
 	Count int `json:"count"`
 }

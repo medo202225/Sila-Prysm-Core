@@ -51,14 +51,14 @@ type goodLogger struct {
 
 func (_ *goodLogger) Close() {}
 
-func (g *goodLogger) SubscribeFilterLogs(ctx context.Context, q ethereum.FilterQuery, ch chan<- gethTypes.Log) (ethereum.Subscription, error) {
+func (g *goodLogger) SubscribeFilterLogs(ctx context.Context, q sila.FilterQuery, ch chan<- gethTypes.Log) (sila.Subscription, error) {
 	if g.backend == nil {
 		return new(event.Feed).Subscribe(ch), nil
 	}
 	return g.backend.Client().SubscribeFilterLogs(ctx, q, ch)
 }
 
-func (g *goodLogger) FilterLogs(ctx context.Context, q ethereum.FilterQuery) ([]gethTypes.Log, error) {
+func (g *goodLogger) FilterLogs(ctx context.Context, q sila.FilterQuery) ([]gethTypes.Log, error) {
 	if g.backend == nil {
 		logs := make([]gethTypes.Log, 3)
 		for i := range logs {

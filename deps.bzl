@@ -741,19 +741,19 @@ def sila_deps():
         version = "v1.2.1",
     )
     go_repository(
-        name = "com_github_ethereum_c_kzg_4844_v2",
+        name = "com_github_sila_chain_c_kzg_4844_v2",
         build_directives = [
             "gazelle:resolve go github.com/supranational/blst/bindings/go @com_github_supranational_blst//:go_default_library",
         ],
-        importpath = "github.com/ethereum/c-kzg-4844/v2",
+        importpath = "github.com/sila-chain/c-kzg-4844/v2",
         patch_args = ["-p1"],
-        patches = ["//third_party:com_github_ethereum_c_kzg_4844_v2.patch"],
+        patches = ["//third_party:com_github_sila_chain_c_kzg_4844_v2.patch"],
         sum = "h1:xQymkKCT5E2Jiaoqf3v4wsNgjZLY0lRSkZn27fRjSls=",
         version = "v2.1.6",
     )
     go_repository(
-        name = "com_github_ethereum_go_bigmodexpfix",
-        importpath = "github.com/ethereum/go-bigmodexpfix",
+        name = "com_github_sila_chain_go_bigmodexpfix",
+        importpath = "github.com/sila-chain/go-bigmodexpfix",
         sum = "h1:rvv6MJhy07IMfEKuARQ9TKojGqLVNxQajaXEp/BoqSk=",
         version = "v0.0.0-20250911101455-f9e208c548ab",
     )
@@ -771,11 +771,11 @@ def sila_deps():
         version = "v1.17.3",
     )
     go_repository(
-        name = "com_github_ethereum_hid",
-        importpath = "github.com/ethereum/hid",
+        name = "com_github_sila_chain_hid",
+        importpath = "github.com/sila-chain/hid",
         patch_args = ["-p1"],
         patches = [
-            "//third_party:com_github_ethereum_hid.patch",
+            "//third_party:com_github_sila_chain_hid.patch",
         ],
         sum = "h1:eIFUceK3U/z9UV0D/kAI6cxA27eH7MPqt2ks7fbzj/k=",
         version = "v1.0.1-0.20260421154323-c2ab8d9bf68a",

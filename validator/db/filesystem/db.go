@@ -56,8 +56,8 @@ type (
 	}
 
 	// ValidatorSlashingProtection contains the latest signed block slot, the last signed attestation.
-	// It is used to protect against validator slashing, implementing the EIP-3076 minimal slashing protection database.
-	// https://eips.ethereum.org/EIPS/eip-3076
+	// It is used to protect against validator slashing, implementing the SIP-3076 minimal slashing protection database.
+	// https://sips.sila.org/SIPS/sip-3076
 	ValidatorSlashingProtection struct {
 		LatestSignedBlockSlot            *uint64 `yaml:"latestSignedBlockSlot,omitempty"`
 		LastSignedAttestationSourceEpoch uint64  `yaml:"lastSignedAttestationSourceEpoch"`

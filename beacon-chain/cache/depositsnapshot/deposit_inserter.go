@@ -17,7 +17,7 @@ import (
 
 var (
 	historicalDepositsCount = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "beacondb_all_deposits_eip4881",
+		Name: "beacondb_all_deposits_sip4881",
 		Help: "The number of total deposits in memory",
 	})
 )

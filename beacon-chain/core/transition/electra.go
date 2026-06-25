@@ -26,7 +26,7 @@ var (
 // Spec definition:
 //
 //  def process_operations(state: BeaconState, body: BeaconBlockBody) -> None:
-//      # [Modified in Electra:EIP6110]
+//      # [Modified in Electra:SIP6110]
 //      # Disable former deposit mechanism once all prior deposits are processed
 //      silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
 //      if state.silaexec_deposit_index < silaexec_deposit_index_limit:
@@ -40,14 +40,14 @@ var (
 //
 //      for_ops(body.proposer_slashings, process_proposer_slashing)
 //      for_ops(body.attester_slashings, process_attester_slashing)
-//      for_ops(body.attestations, process_attestation)  # [Modified in Electra:EIP7549]
-//      for_ops(body.deposits, process_deposit)  # [Modified in Electra:EIP7251]
-//      for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:EIP7251]
+//      for_ops(body.attestations, process_attestation)  # [Modified in Electra:SIP7549]
+//      for_ops(body.deposits, process_deposit)  # [Modified in Electra:SIP7251]
+//      for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:SIP7251]
 //      for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-//      for_ops(body.execution_payload.deposit_requests, process_deposit_request)  # [New in Electra:EIP6110]
-//      # [New in Electra:EIP7002:EIP7251]
+//      for_ops(body.execution_payload.deposit_requests, process_deposit_request)  # [New in Electra:SIP6110]
+//      # [New in Electra:SIP7002:SIP7251]
 //      for_ops(body.execution_payload.withdrawal_requests, process_withdrawal_request)
-//      # [New in Electra:EIP7251]
+//      # [New in Electra:SIP7251]
 //      for_ops(body.execution_payload.consolidation_requests, process_consolidation_request)
 
 func electraOperations(ctx context.Context, st state.BeaconState, block interfaces.ReadOnlyBeaconBlock) (state.BeaconState, error) {

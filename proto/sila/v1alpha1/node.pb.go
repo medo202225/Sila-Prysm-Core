@@ -473,8 +473,8 @@ func (x *Peers) GetPeers() []*Peer {
 type Peer struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Address         string                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Direction       PeerDirection          `protobuf:"varint,2,opt,name=direction,proto3,enum=ethereum.eth.v1alpha1.PeerDirection" json:"direction,omitempty"`
-	ConnectionState ConnectionState        `protobuf:"varint,3,opt,name=connection_state,json=connectionState,proto3,enum=ethereum.eth.v1alpha1.ConnectionState" json:"connection_state,omitempty"`
+	Direction       PeerDirection          `protobuf:"varint,2,opt,name=direction,proto3,enum=sila.eth.v1alpha1.PeerDirection" json:"direction,omitempty"`
+	ConnectionState ConnectionState        `protobuf:"varint,3,opt,name=connection_state,json=connectionState,proto3,enum=sila.eth.v1alpha1.ConnectionState" json:"connection_state,omitempty"`
 	PeerId          string                 `protobuf:"bytes,4,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
 	Enr             string                 `protobuf:"bytes,5,opt,name=enr,proto3" json:"enr,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -859,44 +859,44 @@ func file_proto_sila_v1alpha1_node_proto_rawDescGZIP() []byte {
 var file_proto_sila_v1alpha1_node_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_proto_sila_v1alpha1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_sila_v1alpha1_node_proto_goTypes = []any{
-	(PeerDirection)(0),            // 0: ethereum.eth.v1alpha1.PeerDirection
-	(ConnectionState)(0),          // 1: ethereum.eth.v1alpha1.ConnectionState
-	(*HealthRequest)(nil),         // 2: ethereum.eth.v1alpha1.HealthRequest
-	(*SyncStatus)(nil),            // 3: ethereum.eth.v1alpha1.SyncStatus
-	(*Genesis)(nil),               // 4: ethereum.eth.v1alpha1.Genesis
-	(*Version)(nil),               // 5: ethereum.eth.v1alpha1.Version
-	(*ImplementedServices)(nil),   // 6: ethereum.eth.v1alpha1.ImplementedServices
-	(*PeerRequest)(nil),           // 7: ethereum.eth.v1alpha1.PeerRequest
-	(*Peers)(nil),                 // 8: ethereum.eth.v1alpha1.Peers
-	(*Peer)(nil),                  // 9: ethereum.eth.v1alpha1.Peer
-	(*HostData)(nil),              // 10: ethereum.eth.v1alpha1.HostData
-	(*SilaExecutionConnectionStatus)(nil),  // 11: ethereum.eth.v1alpha1.SilaExecutionConnectionStatus
+	(PeerDirection)(0),            // 0: sila.eth.v1alpha1.PeerDirection
+	(ConnectionState)(0),          // 1: sila.eth.v1alpha1.ConnectionState
+	(*HealthRequest)(nil),         // 2: sila.eth.v1alpha1.HealthRequest
+	(*SyncStatus)(nil),            // 3: sila.eth.v1alpha1.SyncStatus
+	(*Genesis)(nil),               // 4: sila.eth.v1alpha1.Genesis
+	(*Version)(nil),               // 5: sila.eth.v1alpha1.Version
+	(*ImplementedServices)(nil),   // 6: sila.eth.v1alpha1.ImplementedServices
+	(*PeerRequest)(nil),           // 7: sila.eth.v1alpha1.PeerRequest
+	(*Peers)(nil),                 // 8: sila.eth.v1alpha1.Peers
+	(*Peer)(nil),                  // 9: sila.eth.v1alpha1.Peer
+	(*HostData)(nil),              // 10: sila.eth.v1alpha1.HostData
+	(*SilaExecutionConnectionStatus)(nil),  // 11: sila.eth.v1alpha1.SilaExecutionConnectionStatus
 	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
 	(*emptypb.Empty)(nil),         // 13: google.protobuf.Empty
 }
 var file_proto_sila_v1alpha1_node_proto_depIdxs = []int32{
-	12, // 0: ethereum.eth.v1alpha1.Genesis.genesis_time:type_name -> google.protobuf.Timestamp
-	9,  // 1: ethereum.eth.v1alpha1.Peers.peers:type_name -> ethereum.eth.v1alpha1.Peer
-	0,  // 2: ethereum.eth.v1alpha1.Peer.direction:type_name -> ethereum.eth.v1alpha1.PeerDirection
-	1,  // 3: ethereum.eth.v1alpha1.Peer.connection_state:type_name -> ethereum.eth.v1alpha1.ConnectionState
-	13, // 4: ethereum.eth.v1alpha1.Node.GetSyncStatus:input_type -> google.protobuf.Empty
-	13, // 5: ethereum.eth.v1alpha1.Node.GetGenesis:input_type -> google.protobuf.Empty
-	13, // 6: ethereum.eth.v1alpha1.Node.GetVersion:input_type -> google.protobuf.Empty
-	2,  // 7: ethereum.eth.v1alpha1.Node.GetHealth:input_type -> ethereum.eth.v1alpha1.HealthRequest
-	13, // 8: ethereum.eth.v1alpha1.Node.ListImplementedServices:input_type -> google.protobuf.Empty
-	13, // 9: ethereum.eth.v1alpha1.Node.GetHost:input_type -> google.protobuf.Empty
-	7,  // 10: ethereum.eth.v1alpha1.Node.GetPeer:input_type -> ethereum.eth.v1alpha1.PeerRequest
-	13, // 11: ethereum.eth.v1alpha1.Node.ListPeers:input_type -> google.protobuf.Empty
-	13, // 12: ethereum.eth.v1alpha1.Node.GetSilaExecutionConnectionStatus:input_type -> google.protobuf.Empty
-	3,  // 13: ethereum.eth.v1alpha1.Node.GetSyncStatus:output_type -> ethereum.eth.v1alpha1.SyncStatus
-	4,  // 14: ethereum.eth.v1alpha1.Node.GetGenesis:output_type -> ethereum.eth.v1alpha1.Genesis
-	5,  // 15: ethereum.eth.v1alpha1.Node.GetVersion:output_type -> ethereum.eth.v1alpha1.Version
-	13, // 16: ethereum.eth.v1alpha1.Node.GetHealth:output_type -> google.protobuf.Empty
-	6,  // 17: ethereum.eth.v1alpha1.Node.ListImplementedServices:output_type -> ethereum.eth.v1alpha1.ImplementedServices
-	10, // 18: ethereum.eth.v1alpha1.Node.GetHost:output_type -> ethereum.eth.v1alpha1.HostData
-	9,  // 19: ethereum.eth.v1alpha1.Node.GetPeer:output_type -> ethereum.eth.v1alpha1.Peer
-	8,  // 20: ethereum.eth.v1alpha1.Node.ListPeers:output_type -> ethereum.eth.v1alpha1.Peers
-	11, // 21: ethereum.eth.v1alpha1.Node.GetSilaExecutionConnectionStatus:output_type -> ethereum.eth.v1alpha1.SilaExecutionConnectionStatus
+	12, // 0: sila.eth.v1alpha1.Genesis.genesis_time:type_name -> google.protobuf.Timestamp
+	9,  // 1: sila.eth.v1alpha1.Peers.peers:type_name -> sila.eth.v1alpha1.Peer
+	0,  // 2: sila.eth.v1alpha1.Peer.direction:type_name -> sila.eth.v1alpha1.PeerDirection
+	1,  // 3: sila.eth.v1alpha1.Peer.connection_state:type_name -> sila.eth.v1alpha1.ConnectionState
+	13, // 4: sila.eth.v1alpha1.Node.GetSyncStatus:input_type -> google.protobuf.Empty
+	13, // 5: sila.eth.v1alpha1.Node.GetGenesis:input_type -> google.protobuf.Empty
+	13, // 6: sila.eth.v1alpha1.Node.GetVersion:input_type -> google.protobuf.Empty
+	2,  // 7: sila.eth.v1alpha1.Node.GetHealth:input_type -> sila.eth.v1alpha1.HealthRequest
+	13, // 8: sila.eth.v1alpha1.Node.ListImplementedServices:input_type -> google.protobuf.Empty
+	13, // 9: sila.eth.v1alpha1.Node.GetHost:input_type -> google.protobuf.Empty
+	7,  // 10: sila.eth.v1alpha1.Node.GetPeer:input_type -> sila.eth.v1alpha1.PeerRequest
+	13, // 11: sila.eth.v1alpha1.Node.ListPeers:input_type -> google.protobuf.Empty
+	13, // 12: sila.eth.v1alpha1.Node.GetSilaExecutionConnectionStatus:input_type -> google.protobuf.Empty
+	3,  // 13: sila.eth.v1alpha1.Node.GetSyncStatus:output_type -> sila.eth.v1alpha1.SyncStatus
+	4,  // 14: sila.eth.v1alpha1.Node.GetGenesis:output_type -> sila.eth.v1alpha1.Genesis
+	5,  // 15: sila.eth.v1alpha1.Node.GetVersion:output_type -> sila.eth.v1alpha1.Version
+	13, // 16: sila.eth.v1alpha1.Node.GetHealth:output_type -> google.protobuf.Empty
+	6,  // 17: sila.eth.v1alpha1.Node.ListImplementedServices:output_type -> sila.eth.v1alpha1.ImplementedServices
+	10, // 18: sila.eth.v1alpha1.Node.GetHost:output_type -> sila.eth.v1alpha1.HostData
+	9,  // 19: sila.eth.v1alpha1.Node.GetPeer:output_type -> sila.eth.v1alpha1.Peer
+	8,  // 20: sila.eth.v1alpha1.Node.ListPeers:output_type -> sila.eth.v1alpha1.Peers
+	11, // 21: sila.eth.v1alpha1.Node.GetSilaExecutionConnectionStatus:output_type -> sila.eth.v1alpha1.SilaExecutionConnectionStatus
 	13, // [13:22] is the sub-list for method output_type
 	4,  // [4:13] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
@@ -973,7 +973,7 @@ func NewNodeClient(cc grpc.ClientConnInterface) NodeClient {
 // Deprecated: Do not use.
 func (c *nodeClient) GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*SyncStatus, error) {
 	out := new(SyncStatus)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetSyncStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetSyncStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -983,7 +983,7 @@ func (c *nodeClient) GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts 
 // Deprecated: Do not use.
 func (c *nodeClient) GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Genesis, error) {
 	out := new(Genesis)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetGenesis", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetGenesis", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -993,7 +993,7 @@ func (c *nodeClient) GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...
 // Deprecated: Do not use.
 func (c *nodeClient) GetVersion(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Version, error) {
 	out := new(Version)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1003,7 +1003,7 @@ func (c *nodeClient) GetVersion(ctx context.Context, in *emptypb.Empty, opts ...
 // Deprecated: Do not use.
 func (c *nodeClient) GetHealth(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetHealth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetHealth", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1013,7 +1013,7 @@ func (c *nodeClient) GetHealth(ctx context.Context, in *HealthRequest, opts ...g
 // Deprecated: Do not use.
 func (c *nodeClient) ListImplementedServices(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ImplementedServices, error) {
 	out := new(ImplementedServices)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/ListImplementedServices", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/ListImplementedServices", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1023,7 +1023,7 @@ func (c *nodeClient) ListImplementedServices(ctx context.Context, in *emptypb.Em
 // Deprecated: Do not use.
 func (c *nodeClient) GetHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HostData, error) {
 	out := new(HostData)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetHost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetHost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1033,7 @@ func (c *nodeClient) GetHost(ctx context.Context, in *emptypb.Empty, opts ...grp
 // Deprecated: Do not use.
 func (c *nodeClient) GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.CallOption) (*Peer, error) {
 	out := new(Peer)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetPeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetPeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1043,7 +1043,7 @@ func (c *nodeClient) GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.
 // Deprecated: Do not use.
 func (c *nodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Peers, error) {
 	out := new(Peers)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/ListPeers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/ListPeers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1053,7 +1053,7 @@ func (c *nodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...g
 // Deprecated: Do not use.
 func (c *nodeClient) GetSilaExecutionConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*SilaExecutionConnectionStatus, error) {
 	out := new(SilaExecutionConnectionStatus)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetSilaExecutionConnectionStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Node/GetSilaExecutionConnectionStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1128,7 +1128,7 @@ func _Node_GetSyncStatus_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetSyncStatus",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetSyncStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetSyncStatus(ctx, req.(*emptypb.Empty))
@@ -1146,7 +1146,7 @@ func _Node_GetGenesis_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetGenesis",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetGenesis",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetGenesis(ctx, req.(*emptypb.Empty))
@@ -1164,7 +1164,7 @@ func _Node_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetVersion",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetVersion(ctx, req.(*emptypb.Empty))
@@ -1182,7 +1182,7 @@ func _Node_GetHealth_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetHealth",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetHealth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetHealth(ctx, req.(*HealthRequest))
@@ -1200,7 +1200,7 @@ func _Node_ListImplementedServices_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/ListImplementedServices",
+		FullMethod: "/sila.eth.v1alpha1.Node/ListImplementedServices",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).ListImplementedServices(ctx, req.(*emptypb.Empty))
@@ -1218,7 +1218,7 @@ func _Node_GetHost_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetHost",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetHost(ctx, req.(*emptypb.Empty))
@@ -1236,7 +1236,7 @@ func _Node_GetPeer_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetPeer",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetPeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetPeer(ctx, req.(*PeerRequest))
@@ -1254,7 +1254,7 @@ func _Node_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/ListPeers",
+		FullMethod: "/sila.eth.v1alpha1.Node/ListPeers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).ListPeers(ctx, req.(*emptypb.Empty))
@@ -1272,7 +1272,7 @@ func _Node_GetSilaExecutionConnectionStatus_Handler(srv interface{}, ctx context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetSilaExecutionConnectionStatus",
+		FullMethod: "/sila.eth.v1alpha1.Node/GetSilaExecutionConnectionStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetSilaExecutionConnectionStatus(ctx, req.(*emptypb.Empty))
@@ -1281,7 +1281,7 @@ func _Node_GetSilaExecutionConnectionStatus_Handler(srv interface{}, ctx context
 }
 
 var _Node_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "ethereum.eth.v1alpha1.Node",
+	ServiceName: "sila.eth.v1alpha1.Node",
 	HandlerType: (*NodeServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

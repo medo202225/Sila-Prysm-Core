@@ -3,7 +3,7 @@ package kzg
 import (
 	"github.com/pkg/errors"
 
-	ckzg4844 "github.com/ethereum/c-kzg-4844/v2/bindings/go"
+	ckzg4844 "github.com/sila-chain/c-kzg-4844/v2/bindings/go"
 	"github.com/sila-chain/Sila/crypto/kzg4844"
 )
 

@@ -4414,144 +4414,144 @@ func file_proto_sila_v1alpha1_beacon_chain_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_beacon_chain_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
 var file_proto_sila_v1alpha1_beacon_chain_proto_goTypes = []any{
-	(*ListIndexedAttestationsRequest)(nil),           // 0: ethereum.eth.v1alpha1.ListIndexedAttestationsRequest
-	(*ListAttestationsRequest)(nil),                  // 1: ethereum.eth.v1alpha1.ListAttestationsRequest
-	(*ListAttestationsResponse)(nil),                 // 2: ethereum.eth.v1alpha1.ListAttestationsResponse
-	(*ListAttestationsElectraResponse)(nil),          // 3: ethereum.eth.v1alpha1.ListAttestationsElectraResponse
-	(*ListIndexedAttestationsResponse)(nil),          // 4: ethereum.eth.v1alpha1.ListIndexedAttestationsResponse
-	(*ListIndexedAttestationsElectraResponse)(nil),   // 5: ethereum.eth.v1alpha1.ListIndexedAttestationsElectraResponse
-	(*ListBlocksRequest)(nil),                        // 6: ethereum.eth.v1alpha1.ListBlocksRequest
-	(*ListBeaconBlocksResponse)(nil),                 // 7: ethereum.eth.v1alpha1.ListBeaconBlocksResponse
-	(*BeaconBlockContainer)(nil),                     // 8: ethereum.eth.v1alpha1.BeaconBlockContainer
-	(*ChainHead)(nil),                                // 9: ethereum.eth.v1alpha1.ChainHead
-	(*ListCommitteesRequest)(nil),                    // 10: ethereum.eth.v1alpha1.ListCommitteesRequest
-	(*BeaconCommittees)(nil),                         // 11: ethereum.eth.v1alpha1.BeaconCommittees
-	(*ListValidatorBalancesRequest)(nil),             // 12: ethereum.eth.v1alpha1.ListValidatorBalancesRequest
-	(*ValidatorBalances)(nil),                        // 13: ethereum.eth.v1alpha1.ValidatorBalances
-	(*ListValidatorsRequest)(nil),                    // 14: ethereum.eth.v1alpha1.ListValidatorsRequest
-	(*GetValidatorRequest)(nil),                      // 15: ethereum.eth.v1alpha1.GetValidatorRequest
-	(*Validators)(nil),                               // 16: ethereum.eth.v1alpha1.Validators
-	(*GetValidatorActiveSetChangesRequest)(nil),      // 17: ethereum.eth.v1alpha1.GetValidatorActiveSetChangesRequest
-	(*ActiveSetChanges)(nil),                         // 18: ethereum.eth.v1alpha1.ActiveSetChanges
-	(*ValidatorPerformanceRequest)(nil),              // 19: ethereum.eth.v1alpha1.ValidatorPerformanceRequest
-	(*ValidatorPerformanceResponse)(nil),             // 20: ethereum.eth.v1alpha1.ValidatorPerformanceResponse
-	(*ValidatorQueue)(nil),                           // 21: ethereum.eth.v1alpha1.ValidatorQueue
-	(*ListValidatorAssignmentsRequest)(nil),          // 22: ethereum.eth.v1alpha1.ListValidatorAssignmentsRequest
-	(*ValidatorAssignments)(nil),                     // 23: ethereum.eth.v1alpha1.ValidatorAssignments
-	(*GetValidatorParticipationRequest)(nil),         // 24: ethereum.eth.v1alpha1.GetValidatorParticipationRequest
-	(*ValidatorParticipationResponse)(nil),           // 25: ethereum.eth.v1alpha1.ValidatorParticipationResponse
-	(*AttestationPoolRequest)(nil),                   // 26: ethereum.eth.v1alpha1.AttestationPoolRequest
-	(*AttestationPoolResponse)(nil),                  // 27: ethereum.eth.v1alpha1.AttestationPoolResponse
-	(*AttestationPoolElectraResponse)(nil),           // 28: ethereum.eth.v1alpha1.AttestationPoolElectraResponse
-	(*BeaconConfig)(nil),                             // 29: ethereum.eth.v1alpha1.BeaconConfig
-	(*SubmitSlashingResponse)(nil),                   // 30: ethereum.eth.v1alpha1.SubmitSlashingResponse
-	(*IndividualVotesRequest)(nil),                   // 31: ethereum.eth.v1alpha1.IndividualVotesRequest
-	(*IndividualVotesRespond)(nil),                   // 32: ethereum.eth.v1alpha1.IndividualVotesRespond
-	(*BeaconCommittees_CommitteeItem)(nil),           // 33: ethereum.eth.v1alpha1.BeaconCommittees.CommitteeItem
-	(*BeaconCommittees_CommitteesList)(nil),          // 34: ethereum.eth.v1alpha1.BeaconCommittees.CommitteesList
-	nil,                                              // 35: ethereum.eth.v1alpha1.BeaconCommittees.CommitteesEntry
-	(*ValidatorBalances_Balance)(nil),                // 36: ethereum.eth.v1alpha1.ValidatorBalances.Balance
-	(*Validators_ValidatorContainer)(nil),            // 37: ethereum.eth.v1alpha1.Validators.ValidatorContainer
-	(*ValidatorAssignments_CommitteeAssignment)(nil), // 38: ethereum.eth.v1alpha1.ValidatorAssignments.CommitteeAssignment
-	nil, // 39: ethereum.eth.v1alpha1.BeaconConfig.ConfigEntry
-	(*IndividualVotesRespond_IndividualVote)(nil), // 40: ethereum.eth.v1alpha1.IndividualVotesRespond.IndividualVote
-	(*Attestation)(nil),                           // 41: ethereum.eth.v1alpha1.Attestation
-	(*AttestationElectra)(nil),                    // 42: ethereum.eth.v1alpha1.AttestationElectra
-	(*IndexedAttestation)(nil),                    // 43: ethereum.eth.v1alpha1.IndexedAttestation
-	(*IndexedAttestationElectra)(nil),             // 44: ethereum.eth.v1alpha1.IndexedAttestationElectra
-	(*SignedBeaconBlock)(nil),                     // 45: ethereum.eth.v1alpha1.SignedBeaconBlock
-	(*SignedBeaconBlockAltair)(nil),               // 46: ethereum.eth.v1alpha1.SignedBeaconBlockAltair
-	(*SignedBeaconBlockBellatrix)(nil),            // 47: ethereum.eth.v1alpha1.SignedBeaconBlockBellatrix
-	(*SignedBlindedBeaconBlockBellatrix)(nil),     // 48: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
-	(*SignedBeaconBlockCapella)(nil),              // 49: ethereum.eth.v1alpha1.SignedBeaconBlockCapella
-	(*SignedBlindedBeaconBlockCapella)(nil),       // 50: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockCapella
-	(*SignedBeaconBlockDeneb)(nil),                // 51: ethereum.eth.v1alpha1.SignedBeaconBlockDeneb
-	(*SignedBlindedBeaconBlockDeneb)(nil),         // 52: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
-	(*SignedBeaconBlockElectra)(nil),              // 53: ethereum.eth.v1alpha1.SignedBeaconBlockElectra
-	(*SignedBlindedBeaconBlockElectra)(nil),       // 54: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockElectra
-	(*SignedBeaconBlockFulu)(nil),                 // 55: ethereum.eth.v1alpha1.SignedBeaconBlockFulu
-	(*SignedBlindedBeaconBlockFulu)(nil),          // 56: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockFulu
-	(*ValidatorParticipation)(nil),                // 57: ethereum.eth.v1alpha1.ValidatorParticipation
-	(*Validator)(nil),                             // 58: ethereum.eth.v1alpha1.Validator
+	(*ListIndexedAttestationsRequest)(nil),           // 0: sila.eth.v1alpha1.ListIndexedAttestationsRequest
+	(*ListAttestationsRequest)(nil),                  // 1: sila.eth.v1alpha1.ListAttestationsRequest
+	(*ListAttestationsResponse)(nil),                 // 2: sila.eth.v1alpha1.ListAttestationsResponse
+	(*ListAttestationsElectraResponse)(nil),          // 3: sila.eth.v1alpha1.ListAttestationsElectraResponse
+	(*ListIndexedAttestationsResponse)(nil),          // 4: sila.eth.v1alpha1.ListIndexedAttestationsResponse
+	(*ListIndexedAttestationsElectraResponse)(nil),   // 5: sila.eth.v1alpha1.ListIndexedAttestationsElectraResponse
+	(*ListBlocksRequest)(nil),                        // 6: sila.eth.v1alpha1.ListBlocksRequest
+	(*ListBeaconBlocksResponse)(nil),                 // 7: sila.eth.v1alpha1.ListBeaconBlocksResponse
+	(*BeaconBlockContainer)(nil),                     // 8: sila.eth.v1alpha1.BeaconBlockContainer
+	(*ChainHead)(nil),                                // 9: sila.eth.v1alpha1.ChainHead
+	(*ListCommitteesRequest)(nil),                    // 10: sila.eth.v1alpha1.ListCommitteesRequest
+	(*BeaconCommittees)(nil),                         // 11: sila.eth.v1alpha1.BeaconCommittees
+	(*ListValidatorBalancesRequest)(nil),             // 12: sila.eth.v1alpha1.ListValidatorBalancesRequest
+	(*ValidatorBalances)(nil),                        // 13: sila.eth.v1alpha1.ValidatorBalances
+	(*ListValidatorsRequest)(nil),                    // 14: sila.eth.v1alpha1.ListValidatorsRequest
+	(*GetValidatorRequest)(nil),                      // 15: sila.eth.v1alpha1.GetValidatorRequest
+	(*Validators)(nil),                               // 16: sila.eth.v1alpha1.Validators
+	(*GetValidatorActiveSetChangesRequest)(nil),      // 17: sila.eth.v1alpha1.GetValidatorActiveSetChangesRequest
+	(*ActiveSetChanges)(nil),                         // 18: sila.eth.v1alpha1.ActiveSetChanges
+	(*ValidatorPerformanceRequest)(nil),              // 19: sila.eth.v1alpha1.ValidatorPerformanceRequest
+	(*ValidatorPerformanceResponse)(nil),             // 20: sila.eth.v1alpha1.ValidatorPerformanceResponse
+	(*ValidatorQueue)(nil),                           // 21: sila.eth.v1alpha1.ValidatorQueue
+	(*ListValidatorAssignmentsRequest)(nil),          // 22: sila.eth.v1alpha1.ListValidatorAssignmentsRequest
+	(*ValidatorAssignments)(nil),                     // 23: sila.eth.v1alpha1.ValidatorAssignments
+	(*GetValidatorParticipationRequest)(nil),         // 24: sila.eth.v1alpha1.GetValidatorParticipationRequest
+	(*ValidatorParticipationResponse)(nil),           // 25: sila.eth.v1alpha1.ValidatorParticipationResponse
+	(*AttestationPoolRequest)(nil),                   // 26: sila.eth.v1alpha1.AttestationPoolRequest
+	(*AttestationPoolResponse)(nil),                  // 27: sila.eth.v1alpha1.AttestationPoolResponse
+	(*AttestationPoolElectraResponse)(nil),           // 28: sila.eth.v1alpha1.AttestationPoolElectraResponse
+	(*BeaconConfig)(nil),                             // 29: sila.eth.v1alpha1.BeaconConfig
+	(*SubmitSlashingResponse)(nil),                   // 30: sila.eth.v1alpha1.SubmitSlashingResponse
+	(*IndividualVotesRequest)(nil),                   // 31: sila.eth.v1alpha1.IndividualVotesRequest
+	(*IndividualVotesRespond)(nil),                   // 32: sila.eth.v1alpha1.IndividualVotesRespond
+	(*BeaconCommittees_CommitteeItem)(nil),           // 33: sila.eth.v1alpha1.BeaconCommittees.CommitteeItem
+	(*BeaconCommittees_CommitteesList)(nil),          // 34: sila.eth.v1alpha1.BeaconCommittees.CommitteesList
+	nil,                                              // 35: sila.eth.v1alpha1.BeaconCommittees.CommitteesEntry
+	(*ValidatorBalances_Balance)(nil),                // 36: sila.eth.v1alpha1.ValidatorBalances.Balance
+	(*Validators_ValidatorContainer)(nil),            // 37: sila.eth.v1alpha1.Validators.ValidatorContainer
+	(*ValidatorAssignments_CommitteeAssignment)(nil), // 38: sila.eth.v1alpha1.ValidatorAssignments.CommitteeAssignment
+	nil, // 39: sila.eth.v1alpha1.BeaconConfig.ConfigEntry
+	(*IndividualVotesRespond_IndividualVote)(nil), // 40: sila.eth.v1alpha1.IndividualVotesRespond.IndividualVote
+	(*Attestation)(nil),                           // 41: sila.eth.v1alpha1.Attestation
+	(*AttestationElectra)(nil),                    // 42: sila.eth.v1alpha1.AttestationElectra
+	(*IndexedAttestation)(nil),                    // 43: sila.eth.v1alpha1.IndexedAttestation
+	(*IndexedAttestationElectra)(nil),             // 44: sila.eth.v1alpha1.IndexedAttestationElectra
+	(*SignedBeaconBlock)(nil),                     // 45: sila.eth.v1alpha1.SignedBeaconBlock
+	(*SignedBeaconBlockAltair)(nil),               // 46: sila.eth.v1alpha1.SignedBeaconBlockAltair
+	(*SignedBeaconBlockBellatrix)(nil),            // 47: sila.eth.v1alpha1.SignedBeaconBlockBellatrix
+	(*SignedBlindedBeaconBlockBellatrix)(nil),     // 48: sila.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
+	(*SignedBeaconBlockCapella)(nil),              // 49: sila.eth.v1alpha1.SignedBeaconBlockCapella
+	(*SignedBlindedBeaconBlockCapella)(nil),       // 50: sila.eth.v1alpha1.SignedBlindedBeaconBlockCapella
+	(*SignedBeaconBlockDeneb)(nil),                // 51: sila.eth.v1alpha1.SignedBeaconBlockDeneb
+	(*SignedBlindedBeaconBlockDeneb)(nil),         // 52: sila.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
+	(*SignedBeaconBlockElectra)(nil),              // 53: sila.eth.v1alpha1.SignedBeaconBlockElectra
+	(*SignedBlindedBeaconBlockElectra)(nil),       // 54: sila.eth.v1alpha1.SignedBlindedBeaconBlockElectra
+	(*SignedBeaconBlockFulu)(nil),                 // 55: sila.eth.v1alpha1.SignedBeaconBlockFulu
+	(*SignedBlindedBeaconBlockFulu)(nil),          // 56: sila.eth.v1alpha1.SignedBlindedBeaconBlockFulu
+	(*ValidatorParticipation)(nil),                // 57: sila.eth.v1alpha1.ValidatorParticipation
+	(*Validator)(nil),                             // 58: sila.eth.v1alpha1.Validator
 	(*emptypb.Empty)(nil),                         // 59: google.protobuf.Empty
-	(*AttesterSlashing)(nil),                      // 60: ethereum.eth.v1alpha1.AttesterSlashing
-	(*AttesterSlashingElectra)(nil),               // 61: ethereum.eth.v1alpha1.AttesterSlashingElectra
-	(*ProposerSlashing)(nil),                      // 62: ethereum.eth.v1alpha1.ProposerSlashing
+	(*AttesterSlashing)(nil),                      // 60: sila.eth.v1alpha1.AttesterSlashing
+	(*AttesterSlashingElectra)(nil),               // 61: sila.eth.v1alpha1.AttesterSlashingElectra
+	(*ProposerSlashing)(nil),                      // 62: sila.eth.v1alpha1.ProposerSlashing
 }
 var file_proto_sila_v1alpha1_beacon_chain_proto_depIdxs = []int32{
-	41, // 0: ethereum.eth.v1alpha1.ListAttestationsResponse.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	42, // 1: ethereum.eth.v1alpha1.ListAttestationsElectraResponse.attestations:type_name -> ethereum.eth.v1alpha1.AttestationElectra
-	43, // 2: ethereum.eth.v1alpha1.ListIndexedAttestationsResponse.indexed_attestations:type_name -> ethereum.eth.v1alpha1.IndexedAttestation
-	44, // 3: ethereum.eth.v1alpha1.ListIndexedAttestationsElectraResponse.indexed_attestations:type_name -> ethereum.eth.v1alpha1.IndexedAttestationElectra
-	8,  // 4: ethereum.eth.v1alpha1.ListBeaconBlocksResponse.block_containers:type_name -> ethereum.eth.v1alpha1.BeaconBlockContainer
-	45, // 5: ethereum.eth.v1alpha1.BeaconBlockContainer.phase0_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlock
-	46, // 6: ethereum.eth.v1alpha1.BeaconBlockContainer.altair_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockAltair
-	47, // 7: ethereum.eth.v1alpha1.BeaconBlockContainer.bellatrix_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockBellatrix
-	48, // 8: ethereum.eth.v1alpha1.BeaconBlockContainer.blinded_bellatrix_block:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
-	49, // 9: ethereum.eth.v1alpha1.BeaconBlockContainer.capella_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockCapella
-	50, // 10: ethereum.eth.v1alpha1.BeaconBlockContainer.blinded_capella_block:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockCapella
-	51, // 11: ethereum.eth.v1alpha1.BeaconBlockContainer.deneb_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockDeneb
-	52, // 12: ethereum.eth.v1alpha1.BeaconBlockContainer.blinded_deneb_block:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
-	53, // 13: ethereum.eth.v1alpha1.BeaconBlockContainer.electra_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockElectra
-	54, // 14: ethereum.eth.v1alpha1.BeaconBlockContainer.blinded_electra_block:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockElectra
-	55, // 15: ethereum.eth.v1alpha1.BeaconBlockContainer.fulu_block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockFulu
-	56, // 16: ethereum.eth.v1alpha1.BeaconBlockContainer.blinded_fulu_block:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockFulu
-	35, // 17: ethereum.eth.v1alpha1.BeaconCommittees.committees:type_name -> ethereum.eth.v1alpha1.BeaconCommittees.CommitteesEntry
-	36, // 18: ethereum.eth.v1alpha1.ValidatorBalances.balances:type_name -> ethereum.eth.v1alpha1.ValidatorBalances.Balance
-	37, // 19: ethereum.eth.v1alpha1.Validators.validator_list:type_name -> ethereum.eth.v1alpha1.Validators.ValidatorContainer
-	38, // 20: ethereum.eth.v1alpha1.ValidatorAssignments.assignments:type_name -> ethereum.eth.v1alpha1.ValidatorAssignments.CommitteeAssignment
-	57, // 21: ethereum.eth.v1alpha1.ValidatorParticipationResponse.participation:type_name -> ethereum.eth.v1alpha1.ValidatorParticipation
-	41, // 22: ethereum.eth.v1alpha1.AttestationPoolResponse.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	42, // 23: ethereum.eth.v1alpha1.AttestationPoolElectraResponse.attestations:type_name -> ethereum.eth.v1alpha1.AttestationElectra
-	39, // 24: ethereum.eth.v1alpha1.BeaconConfig.config:type_name -> ethereum.eth.v1alpha1.BeaconConfig.ConfigEntry
-	40, // 25: ethereum.eth.v1alpha1.IndividualVotesRespond.individual_votes:type_name -> ethereum.eth.v1alpha1.IndividualVotesRespond.IndividualVote
-	33, // 26: ethereum.eth.v1alpha1.BeaconCommittees.CommitteesList.committees:type_name -> ethereum.eth.v1alpha1.BeaconCommittees.CommitteeItem
-	34, // 27: ethereum.eth.v1alpha1.BeaconCommittees.CommitteesEntry.value:type_name -> ethereum.eth.v1alpha1.BeaconCommittees.CommitteesList
-	58, // 28: ethereum.eth.v1alpha1.Validators.ValidatorContainer.validator:type_name -> ethereum.eth.v1alpha1.Validator
-	1,  // 29: ethereum.eth.v1alpha1.BeaconChain.ListAttestations:input_type -> ethereum.eth.v1alpha1.ListAttestationsRequest
-	1,  // 30: ethereum.eth.v1alpha1.BeaconChain.ListAttestationsElectra:input_type -> ethereum.eth.v1alpha1.ListAttestationsRequest
-	0,  // 31: ethereum.eth.v1alpha1.BeaconChain.ListIndexedAttestations:input_type -> ethereum.eth.v1alpha1.ListIndexedAttestationsRequest
-	0,  // 32: ethereum.eth.v1alpha1.BeaconChain.ListIndexedAttestationsElectra:input_type -> ethereum.eth.v1alpha1.ListIndexedAttestationsRequest
-	26, // 33: ethereum.eth.v1alpha1.BeaconChain.AttestationPool:input_type -> ethereum.eth.v1alpha1.AttestationPoolRequest
-	26, // 34: ethereum.eth.v1alpha1.BeaconChain.AttestationPoolElectra:input_type -> ethereum.eth.v1alpha1.AttestationPoolRequest
-	6,  // 35: ethereum.eth.v1alpha1.BeaconChain.ListBeaconBlocks:input_type -> ethereum.eth.v1alpha1.ListBlocksRequest
-	59, // 36: ethereum.eth.v1alpha1.BeaconChain.GetChainHead:input_type -> google.protobuf.Empty
-	10, // 37: ethereum.eth.v1alpha1.BeaconChain.ListBeaconCommittees:input_type -> ethereum.eth.v1alpha1.ListCommitteesRequest
-	12, // 38: ethereum.eth.v1alpha1.BeaconChain.ListValidatorBalances:input_type -> ethereum.eth.v1alpha1.ListValidatorBalancesRequest
-	14, // 39: ethereum.eth.v1alpha1.BeaconChain.ListValidators:input_type -> ethereum.eth.v1alpha1.ListValidatorsRequest
-	15, // 40: ethereum.eth.v1alpha1.BeaconChain.GetValidator:input_type -> ethereum.eth.v1alpha1.GetValidatorRequest
-	17, // 41: ethereum.eth.v1alpha1.BeaconChain.GetValidatorActiveSetChanges:input_type -> ethereum.eth.v1alpha1.GetValidatorActiveSetChangesRequest
-	59, // 42: ethereum.eth.v1alpha1.BeaconChain.GetValidatorQueue:input_type -> google.protobuf.Empty
-	19, // 43: ethereum.eth.v1alpha1.BeaconChain.GetValidatorPerformance:input_type -> ethereum.eth.v1alpha1.ValidatorPerformanceRequest
-	22, // 44: ethereum.eth.v1alpha1.BeaconChain.ListValidatorAssignments:input_type -> ethereum.eth.v1alpha1.ListValidatorAssignmentsRequest
-	24, // 45: ethereum.eth.v1alpha1.BeaconChain.GetValidatorParticipation:input_type -> ethereum.eth.v1alpha1.GetValidatorParticipationRequest
-	59, // 46: ethereum.eth.v1alpha1.BeaconChain.GetBeaconConfig:input_type -> google.protobuf.Empty
-	60, // 47: ethereum.eth.v1alpha1.BeaconChain.SubmitAttesterSlashing:input_type -> ethereum.eth.v1alpha1.AttesterSlashing
-	61, // 48: ethereum.eth.v1alpha1.BeaconChain.SubmitAttesterSlashingElectra:input_type -> ethereum.eth.v1alpha1.AttesterSlashingElectra
-	62, // 49: ethereum.eth.v1alpha1.BeaconChain.SubmitProposerSlashing:input_type -> ethereum.eth.v1alpha1.ProposerSlashing
-	31, // 50: ethereum.eth.v1alpha1.BeaconChain.GetIndividualVotes:input_type -> ethereum.eth.v1alpha1.IndividualVotesRequest
-	2,  // 51: ethereum.eth.v1alpha1.BeaconChain.ListAttestations:output_type -> ethereum.eth.v1alpha1.ListAttestationsResponse
-	3,  // 52: ethereum.eth.v1alpha1.BeaconChain.ListAttestationsElectra:output_type -> ethereum.eth.v1alpha1.ListAttestationsElectraResponse
-	4,  // 53: ethereum.eth.v1alpha1.BeaconChain.ListIndexedAttestations:output_type -> ethereum.eth.v1alpha1.ListIndexedAttestationsResponse
-	5,  // 54: ethereum.eth.v1alpha1.BeaconChain.ListIndexedAttestationsElectra:output_type -> ethereum.eth.v1alpha1.ListIndexedAttestationsElectraResponse
-	27, // 55: ethereum.eth.v1alpha1.BeaconChain.AttestationPool:output_type -> ethereum.eth.v1alpha1.AttestationPoolResponse
-	28, // 56: ethereum.eth.v1alpha1.BeaconChain.AttestationPoolElectra:output_type -> ethereum.eth.v1alpha1.AttestationPoolElectraResponse
-	7,  // 57: ethereum.eth.v1alpha1.BeaconChain.ListBeaconBlocks:output_type -> ethereum.eth.v1alpha1.ListBeaconBlocksResponse
-	9,  // 58: ethereum.eth.v1alpha1.BeaconChain.GetChainHead:output_type -> ethereum.eth.v1alpha1.ChainHead
-	11, // 59: ethereum.eth.v1alpha1.BeaconChain.ListBeaconCommittees:output_type -> ethereum.eth.v1alpha1.BeaconCommittees
-	13, // 60: ethereum.eth.v1alpha1.BeaconChain.ListValidatorBalances:output_type -> ethereum.eth.v1alpha1.ValidatorBalances
-	16, // 61: ethereum.eth.v1alpha1.BeaconChain.ListValidators:output_type -> ethereum.eth.v1alpha1.Validators
-	58, // 62: ethereum.eth.v1alpha1.BeaconChain.GetValidator:output_type -> ethereum.eth.v1alpha1.Validator
-	18, // 63: ethereum.eth.v1alpha1.BeaconChain.GetValidatorActiveSetChanges:output_type -> ethereum.eth.v1alpha1.ActiveSetChanges
-	21, // 64: ethereum.eth.v1alpha1.BeaconChain.GetValidatorQueue:output_type -> ethereum.eth.v1alpha1.ValidatorQueue
-	20, // 65: ethereum.eth.v1alpha1.BeaconChain.GetValidatorPerformance:output_type -> ethereum.eth.v1alpha1.ValidatorPerformanceResponse
-	23, // 66: ethereum.eth.v1alpha1.BeaconChain.ListValidatorAssignments:output_type -> ethereum.eth.v1alpha1.ValidatorAssignments
-	25, // 67: ethereum.eth.v1alpha1.BeaconChain.GetValidatorParticipation:output_type -> ethereum.eth.v1alpha1.ValidatorParticipationResponse
-	29, // 68: ethereum.eth.v1alpha1.BeaconChain.GetBeaconConfig:output_type -> ethereum.eth.v1alpha1.BeaconConfig
-	30, // 69: ethereum.eth.v1alpha1.BeaconChain.SubmitAttesterSlashing:output_type -> ethereum.eth.v1alpha1.SubmitSlashingResponse
-	30, // 70: ethereum.eth.v1alpha1.BeaconChain.SubmitAttesterSlashingElectra:output_type -> ethereum.eth.v1alpha1.SubmitSlashingResponse
-	30, // 71: ethereum.eth.v1alpha1.BeaconChain.SubmitProposerSlashing:output_type -> ethereum.eth.v1alpha1.SubmitSlashingResponse
-	32, // 72: ethereum.eth.v1alpha1.BeaconChain.GetIndividualVotes:output_type -> ethereum.eth.v1alpha1.IndividualVotesRespond
+	41, // 0: sila.eth.v1alpha1.ListAttestationsResponse.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	42, // 1: sila.eth.v1alpha1.ListAttestationsElectraResponse.attestations:type_name -> sila.eth.v1alpha1.AttestationElectra
+	43, // 2: sila.eth.v1alpha1.ListIndexedAttestationsResponse.indexed_attestations:type_name -> sila.eth.v1alpha1.IndexedAttestation
+	44, // 3: sila.eth.v1alpha1.ListIndexedAttestationsElectraResponse.indexed_attestations:type_name -> sila.eth.v1alpha1.IndexedAttestationElectra
+	8,  // 4: sila.eth.v1alpha1.ListBeaconBlocksResponse.block_containers:type_name -> sila.eth.v1alpha1.BeaconBlockContainer
+	45, // 5: sila.eth.v1alpha1.BeaconBlockContainer.phase0_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlock
+	46, // 6: sila.eth.v1alpha1.BeaconBlockContainer.altair_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockAltair
+	47, // 7: sila.eth.v1alpha1.BeaconBlockContainer.bellatrix_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockBellatrix
+	48, // 8: sila.eth.v1alpha1.BeaconBlockContainer.blinded_bellatrix_block:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
+	49, // 9: sila.eth.v1alpha1.BeaconBlockContainer.capella_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockCapella
+	50, // 10: sila.eth.v1alpha1.BeaconBlockContainer.blinded_capella_block:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockCapella
+	51, // 11: sila.eth.v1alpha1.BeaconBlockContainer.deneb_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockDeneb
+	52, // 12: sila.eth.v1alpha1.BeaconBlockContainer.blinded_deneb_block:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
+	53, // 13: sila.eth.v1alpha1.BeaconBlockContainer.electra_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockElectra
+	54, // 14: sila.eth.v1alpha1.BeaconBlockContainer.blinded_electra_block:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockElectra
+	55, // 15: sila.eth.v1alpha1.BeaconBlockContainer.fulu_block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockFulu
+	56, // 16: sila.eth.v1alpha1.BeaconBlockContainer.blinded_fulu_block:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockFulu
+	35, // 17: sila.eth.v1alpha1.BeaconCommittees.committees:type_name -> sila.eth.v1alpha1.BeaconCommittees.CommitteesEntry
+	36, // 18: sila.eth.v1alpha1.ValidatorBalances.balances:type_name -> sila.eth.v1alpha1.ValidatorBalances.Balance
+	37, // 19: sila.eth.v1alpha1.Validators.validator_list:type_name -> sila.eth.v1alpha1.Validators.ValidatorContainer
+	38, // 20: sila.eth.v1alpha1.ValidatorAssignments.assignments:type_name -> sila.eth.v1alpha1.ValidatorAssignments.CommitteeAssignment
+	57, // 21: sila.eth.v1alpha1.ValidatorParticipationResponse.participation:type_name -> sila.eth.v1alpha1.ValidatorParticipation
+	41, // 22: sila.eth.v1alpha1.AttestationPoolResponse.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	42, // 23: sila.eth.v1alpha1.AttestationPoolElectraResponse.attestations:type_name -> sila.eth.v1alpha1.AttestationElectra
+	39, // 24: sila.eth.v1alpha1.BeaconConfig.config:type_name -> sila.eth.v1alpha1.BeaconConfig.ConfigEntry
+	40, // 25: sila.eth.v1alpha1.IndividualVotesRespond.individual_votes:type_name -> sila.eth.v1alpha1.IndividualVotesRespond.IndividualVote
+	33, // 26: sila.eth.v1alpha1.BeaconCommittees.CommitteesList.committees:type_name -> sila.eth.v1alpha1.BeaconCommittees.CommitteeItem
+	34, // 27: sila.eth.v1alpha1.BeaconCommittees.CommitteesEntry.value:type_name -> sila.eth.v1alpha1.BeaconCommittees.CommitteesList
+	58, // 28: sila.eth.v1alpha1.Validators.ValidatorContainer.validator:type_name -> sila.eth.v1alpha1.Validator
+	1,  // 29: sila.eth.v1alpha1.BeaconChain.ListAttestations:input_type -> sila.eth.v1alpha1.ListAttestationsRequest
+	1,  // 30: sila.eth.v1alpha1.BeaconChain.ListAttestationsElectra:input_type -> sila.eth.v1alpha1.ListAttestationsRequest
+	0,  // 31: sila.eth.v1alpha1.BeaconChain.ListIndexedAttestations:input_type -> sila.eth.v1alpha1.ListIndexedAttestationsRequest
+	0,  // 32: sila.eth.v1alpha1.BeaconChain.ListIndexedAttestationsElectra:input_type -> sila.eth.v1alpha1.ListIndexedAttestationsRequest
+	26, // 33: sila.eth.v1alpha1.BeaconChain.AttestationPool:input_type -> sila.eth.v1alpha1.AttestationPoolRequest
+	26, // 34: sila.eth.v1alpha1.BeaconChain.AttestationPoolElectra:input_type -> sila.eth.v1alpha1.AttestationPoolRequest
+	6,  // 35: sila.eth.v1alpha1.BeaconChain.ListBeaconBlocks:input_type -> sila.eth.v1alpha1.ListBlocksRequest
+	59, // 36: sila.eth.v1alpha1.BeaconChain.GetChainHead:input_type -> google.protobuf.Empty
+	10, // 37: sila.eth.v1alpha1.BeaconChain.ListBeaconCommittees:input_type -> sila.eth.v1alpha1.ListCommitteesRequest
+	12, // 38: sila.eth.v1alpha1.BeaconChain.ListValidatorBalances:input_type -> sila.eth.v1alpha1.ListValidatorBalancesRequest
+	14, // 39: sila.eth.v1alpha1.BeaconChain.ListValidators:input_type -> sila.eth.v1alpha1.ListValidatorsRequest
+	15, // 40: sila.eth.v1alpha1.BeaconChain.GetValidator:input_type -> sila.eth.v1alpha1.GetValidatorRequest
+	17, // 41: sila.eth.v1alpha1.BeaconChain.GetValidatorActiveSetChanges:input_type -> sila.eth.v1alpha1.GetValidatorActiveSetChangesRequest
+	59, // 42: sila.eth.v1alpha1.BeaconChain.GetValidatorQueue:input_type -> google.protobuf.Empty
+	19, // 43: sila.eth.v1alpha1.BeaconChain.GetValidatorPerformance:input_type -> sila.eth.v1alpha1.ValidatorPerformanceRequest
+	22, // 44: sila.eth.v1alpha1.BeaconChain.ListValidatorAssignments:input_type -> sila.eth.v1alpha1.ListValidatorAssignmentsRequest
+	24, // 45: sila.eth.v1alpha1.BeaconChain.GetValidatorParticipation:input_type -> sila.eth.v1alpha1.GetValidatorParticipationRequest
+	59, // 46: sila.eth.v1alpha1.BeaconChain.GetBeaconConfig:input_type -> google.protobuf.Empty
+	60, // 47: sila.eth.v1alpha1.BeaconChain.SubmitAttesterSlashing:input_type -> sila.eth.v1alpha1.AttesterSlashing
+	61, // 48: sila.eth.v1alpha1.BeaconChain.SubmitAttesterSlashingElectra:input_type -> sila.eth.v1alpha1.AttesterSlashingElectra
+	62, // 49: sila.eth.v1alpha1.BeaconChain.SubmitProposerSlashing:input_type -> sila.eth.v1alpha1.ProposerSlashing
+	31, // 50: sila.eth.v1alpha1.BeaconChain.GetIndividualVotes:input_type -> sila.eth.v1alpha1.IndividualVotesRequest
+	2,  // 51: sila.eth.v1alpha1.BeaconChain.ListAttestations:output_type -> sila.eth.v1alpha1.ListAttestationsResponse
+	3,  // 52: sila.eth.v1alpha1.BeaconChain.ListAttestationsElectra:output_type -> sila.eth.v1alpha1.ListAttestationsElectraResponse
+	4,  // 53: sila.eth.v1alpha1.BeaconChain.ListIndexedAttestations:output_type -> sila.eth.v1alpha1.ListIndexedAttestationsResponse
+	5,  // 54: sila.eth.v1alpha1.BeaconChain.ListIndexedAttestationsElectra:output_type -> sila.eth.v1alpha1.ListIndexedAttestationsElectraResponse
+	27, // 55: sila.eth.v1alpha1.BeaconChain.AttestationPool:output_type -> sila.eth.v1alpha1.AttestationPoolResponse
+	28, // 56: sila.eth.v1alpha1.BeaconChain.AttestationPoolElectra:output_type -> sila.eth.v1alpha1.AttestationPoolElectraResponse
+	7,  // 57: sila.eth.v1alpha1.BeaconChain.ListBeaconBlocks:output_type -> sila.eth.v1alpha1.ListBeaconBlocksResponse
+	9,  // 58: sila.eth.v1alpha1.BeaconChain.GetChainHead:output_type -> sila.eth.v1alpha1.ChainHead
+	11, // 59: sila.eth.v1alpha1.BeaconChain.ListBeaconCommittees:output_type -> sila.eth.v1alpha1.BeaconCommittees
+	13, // 60: sila.eth.v1alpha1.BeaconChain.ListValidatorBalances:output_type -> sila.eth.v1alpha1.ValidatorBalances
+	16, // 61: sila.eth.v1alpha1.BeaconChain.ListValidators:output_type -> sila.eth.v1alpha1.Validators
+	58, // 62: sila.eth.v1alpha1.BeaconChain.GetValidator:output_type -> sila.eth.v1alpha1.Validator
+	18, // 63: sila.eth.v1alpha1.BeaconChain.GetValidatorActiveSetChanges:output_type -> sila.eth.v1alpha1.ActiveSetChanges
+	21, // 64: sila.eth.v1alpha1.BeaconChain.GetValidatorQueue:output_type -> sila.eth.v1alpha1.ValidatorQueue
+	20, // 65: sila.eth.v1alpha1.BeaconChain.GetValidatorPerformance:output_type -> sila.eth.v1alpha1.ValidatorPerformanceResponse
+	23, // 66: sila.eth.v1alpha1.BeaconChain.ListValidatorAssignments:output_type -> sila.eth.v1alpha1.ValidatorAssignments
+	25, // 67: sila.eth.v1alpha1.BeaconChain.GetValidatorParticipation:output_type -> sila.eth.v1alpha1.ValidatorParticipationResponse
+	29, // 68: sila.eth.v1alpha1.BeaconChain.GetBeaconConfig:output_type -> sila.eth.v1alpha1.BeaconConfig
+	30, // 69: sila.eth.v1alpha1.BeaconChain.SubmitAttesterSlashing:output_type -> sila.eth.v1alpha1.SubmitSlashingResponse
+	30, // 70: sila.eth.v1alpha1.BeaconChain.SubmitAttesterSlashingElectra:output_type -> sila.eth.v1alpha1.SubmitSlashingResponse
+	30, // 71: sila.eth.v1alpha1.BeaconChain.SubmitProposerSlashing:output_type -> sila.eth.v1alpha1.SubmitSlashingResponse
+	32, // 72: sila.eth.v1alpha1.BeaconChain.GetIndividualVotes:output_type -> sila.eth.v1alpha1.IndividualVotesRespond
 	51, // [51:73] is the sub-list for method output_type
 	29, // [29:51] is the sub-list for method input_type
 	29, // [29:29] is the sub-list for extension type_name
@@ -4713,7 +4713,7 @@ func NewBeaconChainClient(cc grpc.ClientConnInterface) BeaconChainClient {
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListAttestations(ctx context.Context, in *ListAttestationsRequest, opts ...grpc.CallOption) (*ListAttestationsResponse, error) {
 	out := new(ListAttestationsResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListAttestations", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListAttestations", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4723,7 +4723,7 @@ func (c *beaconChainClient) ListAttestations(ctx context.Context, in *ListAttest
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListAttestationsElectra(ctx context.Context, in *ListAttestationsRequest, opts ...grpc.CallOption) (*ListAttestationsElectraResponse, error) {
 	out := new(ListAttestationsElectraResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListAttestationsElectra", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListAttestationsElectra", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4733,7 +4733,7 @@ func (c *beaconChainClient) ListAttestationsElectra(ctx context.Context, in *Lis
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListIndexedAttestations(ctx context.Context, in *ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*ListIndexedAttestationsResponse, error) {
 	out := new(ListIndexedAttestationsResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListIndexedAttestations", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListIndexedAttestations", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4743,7 +4743,7 @@ func (c *beaconChainClient) ListIndexedAttestations(ctx context.Context, in *Lis
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListIndexedAttestationsElectra(ctx context.Context, in *ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*ListIndexedAttestationsElectraResponse, error) {
 	out := new(ListIndexedAttestationsElectraResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListIndexedAttestationsElectra", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListIndexedAttestationsElectra", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4753,7 +4753,7 @@ func (c *beaconChainClient) ListIndexedAttestationsElectra(ctx context.Context, 
 // Deprecated: Do not use.
 func (c *beaconChainClient) AttestationPool(ctx context.Context, in *AttestationPoolRequest, opts ...grpc.CallOption) (*AttestationPoolResponse, error) {
 	out := new(AttestationPoolResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/AttestationPool", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/AttestationPool", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4763,7 +4763,7 @@ func (c *beaconChainClient) AttestationPool(ctx context.Context, in *Attestation
 // Deprecated: Do not use.
 func (c *beaconChainClient) AttestationPoolElectra(ctx context.Context, in *AttestationPoolRequest, opts ...grpc.CallOption) (*AttestationPoolElectraResponse, error) {
 	out := new(AttestationPoolElectraResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/AttestationPoolElectra", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/AttestationPoolElectra", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4773,7 +4773,7 @@ func (c *beaconChainClient) AttestationPoolElectra(ctx context.Context, in *Atte
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListBeaconBlocks(ctx context.Context, in *ListBlocksRequest, opts ...grpc.CallOption) (*ListBeaconBlocksResponse, error) {
 	out := new(ListBeaconBlocksResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListBeaconBlocks", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListBeaconBlocks", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4783,7 +4783,7 @@ func (c *beaconChainClient) ListBeaconBlocks(ctx context.Context, in *ListBlocks
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChainHead, error) {
 	out := new(ChainHead)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetChainHead", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetChainHead", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4793,7 +4793,7 @@ func (c *beaconChainClient) GetChainHead(ctx context.Context, in *emptypb.Empty,
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListBeaconCommittees(ctx context.Context, in *ListCommitteesRequest, opts ...grpc.CallOption) (*BeaconCommittees, error) {
 	out := new(BeaconCommittees)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListBeaconCommittees", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListBeaconCommittees", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4803,7 +4803,7 @@ func (c *beaconChainClient) ListBeaconCommittees(ctx context.Context, in *ListCo
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListValidatorBalances(ctx context.Context, in *ListValidatorBalancesRequest, opts ...grpc.CallOption) (*ValidatorBalances, error) {
 	out := new(ValidatorBalances)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListValidatorBalances", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListValidatorBalances", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4813,7 +4813,7 @@ func (c *beaconChainClient) ListValidatorBalances(ctx context.Context, in *ListV
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListValidators(ctx context.Context, in *ListValidatorsRequest, opts ...grpc.CallOption) (*Validators, error) {
 	out := new(Validators)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListValidators", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListValidators", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4823,7 +4823,7 @@ func (c *beaconChainClient) ListValidators(ctx context.Context, in *ListValidato
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetValidator(ctx context.Context, in *GetValidatorRequest, opts ...grpc.CallOption) (*Validator, error) {
 	out := new(Validator)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetValidator", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetValidator", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4833,7 +4833,7 @@ func (c *beaconChainClient) GetValidator(ctx context.Context, in *GetValidatorRe
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetValidatorActiveSetChanges(ctx context.Context, in *GetValidatorActiveSetChangesRequest, opts ...grpc.CallOption) (*ActiveSetChanges, error) {
 	out := new(ActiveSetChanges)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorActiveSetChanges", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetValidatorActiveSetChanges", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4843,7 +4843,7 @@ func (c *beaconChainClient) GetValidatorActiveSetChanges(ctx context.Context, in
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetValidatorQueue(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ValidatorQueue, error) {
 	out := new(ValidatorQueue)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorQueue", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetValidatorQueue", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4853,7 +4853,7 @@ func (c *beaconChainClient) GetValidatorQueue(ctx context.Context, in *emptypb.E
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetValidatorPerformance(ctx context.Context, in *ValidatorPerformanceRequest, opts ...grpc.CallOption) (*ValidatorPerformanceResponse, error) {
 	out := new(ValidatorPerformanceResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorPerformance", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetValidatorPerformance", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4863,7 +4863,7 @@ func (c *beaconChainClient) GetValidatorPerformance(ctx context.Context, in *Val
 // Deprecated: Do not use.
 func (c *beaconChainClient) ListValidatorAssignments(ctx context.Context, in *ListValidatorAssignmentsRequest, opts ...grpc.CallOption) (*ValidatorAssignments, error) {
 	out := new(ValidatorAssignments)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/ListValidatorAssignments", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/ListValidatorAssignments", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4873,7 +4873,7 @@ func (c *beaconChainClient) ListValidatorAssignments(ctx context.Context, in *Li
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetValidatorParticipation(ctx context.Context, in *GetValidatorParticipationRequest, opts ...grpc.CallOption) (*ValidatorParticipationResponse, error) {
 	out := new(ValidatorParticipationResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorParticipation", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetValidatorParticipation", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4883,7 +4883,7 @@ func (c *beaconChainClient) GetValidatorParticipation(ctx context.Context, in *G
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*BeaconConfig, error) {
 	out := new(BeaconConfig)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetBeaconConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetBeaconConfig", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4893,7 +4893,7 @@ func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *emptypb.Emp
 // Deprecated: Do not use.
 func (c *beaconChainClient) SubmitAttesterSlashing(ctx context.Context, in *AttesterSlashing, opts ...grpc.CallOption) (*SubmitSlashingResponse, error) {
 	out := new(SubmitSlashingResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/SubmitAttesterSlashing", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/SubmitAttesterSlashing", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4903,7 +4903,7 @@ func (c *beaconChainClient) SubmitAttesterSlashing(ctx context.Context, in *Atte
 // Deprecated: Do not use.
 func (c *beaconChainClient) SubmitAttesterSlashingElectra(ctx context.Context, in *AttesterSlashingElectra, opts ...grpc.CallOption) (*SubmitSlashingResponse, error) {
 	out := new(SubmitSlashingResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/SubmitAttesterSlashingElectra", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/SubmitAttesterSlashingElectra", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4913,7 +4913,7 @@ func (c *beaconChainClient) SubmitAttesterSlashingElectra(ctx context.Context, i
 // Deprecated: Do not use.
 func (c *beaconChainClient) SubmitProposerSlashing(ctx context.Context, in *ProposerSlashing, opts ...grpc.CallOption) (*SubmitSlashingResponse, error) {
 	out := new(SubmitSlashingResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/SubmitProposerSlashing", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/SubmitProposerSlashing", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4923,7 +4923,7 @@ func (c *beaconChainClient) SubmitProposerSlashing(ctx context.Context, in *Prop
 // Deprecated: Do not use.
 func (c *beaconChainClient) GetIndividualVotes(ctx context.Context, in *IndividualVotesRequest, opts ...grpc.CallOption) (*IndividualVotesRespond, error) {
 	out := new(IndividualVotesRespond)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetIndividualVotes", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.BeaconChain/GetIndividualVotes", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5063,7 +5063,7 @@ func _BeaconChain_ListAttestations_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListAttestations",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListAttestations",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListAttestations(ctx, req.(*ListAttestationsRequest))
@@ -5081,7 +5081,7 @@ func _BeaconChain_ListAttestationsElectra_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListAttestationsElectra",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListAttestationsElectra",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListAttestationsElectra(ctx, req.(*ListAttestationsRequest))
@@ -5099,7 +5099,7 @@ func _BeaconChain_ListIndexedAttestations_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListIndexedAttestations",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListIndexedAttestations",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListIndexedAttestations(ctx, req.(*ListIndexedAttestationsRequest))
@@ -5117,7 +5117,7 @@ func _BeaconChain_ListIndexedAttestationsElectra_Handler(srv interface{}, ctx co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListIndexedAttestationsElectra",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListIndexedAttestationsElectra",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListIndexedAttestationsElectra(ctx, req.(*ListIndexedAttestationsRequest))
@@ -5135,7 +5135,7 @@ func _BeaconChain_AttestationPool_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/AttestationPool",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/AttestationPool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).AttestationPool(ctx, req.(*AttestationPoolRequest))
@@ -5153,7 +5153,7 @@ func _BeaconChain_AttestationPoolElectra_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/AttestationPoolElectra",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/AttestationPoolElectra",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).AttestationPoolElectra(ctx, req.(*AttestationPoolRequest))
@@ -5171,7 +5171,7 @@ func _BeaconChain_ListBeaconBlocks_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListBeaconBlocks",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListBeaconBlocks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListBeaconBlocks(ctx, req.(*ListBlocksRequest))
@@ -5189,7 +5189,7 @@ func _BeaconChain_GetChainHead_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetChainHead",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetChainHead",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetChainHead(ctx, req.(*emptypb.Empty))
@@ -5207,7 +5207,7 @@ func _BeaconChain_ListBeaconCommittees_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListBeaconCommittees",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListBeaconCommittees",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListBeaconCommittees(ctx, req.(*ListCommitteesRequest))
@@ -5225,7 +5225,7 @@ func _BeaconChain_ListValidatorBalances_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListValidatorBalances",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListValidatorBalances",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListValidatorBalances(ctx, req.(*ListValidatorBalancesRequest))
@@ -5243,7 +5243,7 @@ func _BeaconChain_ListValidators_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListValidators",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListValidators",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListValidators(ctx, req.(*ListValidatorsRequest))
@@ -5261,7 +5261,7 @@ func _BeaconChain_GetValidator_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetValidator",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetValidator",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetValidator(ctx, req.(*GetValidatorRequest))
@@ -5279,7 +5279,7 @@ func _BeaconChain_GetValidatorActiveSetChanges_Handler(srv interface{}, ctx cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorActiveSetChanges",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetValidatorActiveSetChanges",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetValidatorActiveSetChanges(ctx, req.(*GetValidatorActiveSetChangesRequest))
@@ -5297,7 +5297,7 @@ func _BeaconChain_GetValidatorQueue_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorQueue",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetValidatorQueue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetValidatorQueue(ctx, req.(*emptypb.Empty))
@@ -5315,7 +5315,7 @@ func _BeaconChain_GetValidatorPerformance_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorPerformance",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetValidatorPerformance",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetValidatorPerformance(ctx, req.(*ValidatorPerformanceRequest))
@@ -5333,7 +5333,7 @@ func _BeaconChain_ListValidatorAssignments_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/ListValidatorAssignments",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/ListValidatorAssignments",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).ListValidatorAssignments(ctx, req.(*ListValidatorAssignmentsRequest))
@@ -5351,7 +5351,7 @@ func _BeaconChain_GetValidatorParticipation_Handler(srv interface{}, ctx context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorParticipation",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetValidatorParticipation",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetValidatorParticipation(ctx, req.(*GetValidatorParticipationRequest))
@@ -5369,7 +5369,7 @@ func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetBeaconConfig",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetBeaconConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetBeaconConfig(ctx, req.(*emptypb.Empty))
@@ -5387,7 +5387,7 @@ func _BeaconChain_SubmitAttesterSlashing_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/SubmitAttesterSlashing",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/SubmitAttesterSlashing",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).SubmitAttesterSlashing(ctx, req.(*AttesterSlashing))
@@ -5405,7 +5405,7 @@ func _BeaconChain_SubmitAttesterSlashingElectra_Handler(srv interface{}, ctx con
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/SubmitAttesterSlashingElectra",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/SubmitAttesterSlashingElectra",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).SubmitAttesterSlashingElectra(ctx, req.(*AttesterSlashingElectra))
@@ -5423,7 +5423,7 @@ func _BeaconChain_SubmitProposerSlashing_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/SubmitProposerSlashing",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/SubmitProposerSlashing",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).SubmitProposerSlashing(ctx, req.(*ProposerSlashing))
@@ -5441,7 +5441,7 @@ func _BeaconChain_GetIndividualVotes_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetIndividualVotes",
+		FullMethod: "/sila.eth.v1alpha1.BeaconChain/GetIndividualVotes",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconChainServer).GetIndividualVotes(ctx, req.(*IndividualVotesRequest))
@@ -5450,7 +5450,7 @@ func _BeaconChain_GetIndividualVotes_Handler(srv interface{}, ctx context.Contex
 }
 
 var _BeaconChain_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "ethereum.eth.v1alpha1.BeaconChain",
+	ServiceName: "sila.eth.v1alpha1.BeaconChain",
 	HandlerType: (*BeaconChainServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -1745,78 +1745,78 @@ func file_proto_sila_v1alpha1_light_client_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_light_client_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_proto_sila_v1alpha1_light_client_proto_goTypes = []any{
-	(*LightClientBootstrapAltair)(nil),         // 0: ethereum.eth.v1alpha1.LightClientBootstrapAltair
-	(*LightClientUpdateAltair)(nil),            // 1: ethereum.eth.v1alpha1.LightClientUpdateAltair
-	(*LightClientFinalityUpdateAltair)(nil),    // 2: ethereum.eth.v1alpha1.LightClientFinalityUpdateAltair
-	(*LightClientOptimisticUpdateAltair)(nil),  // 3: ethereum.eth.v1alpha1.LightClientOptimisticUpdateAltair
-	(*LightClientHeaderAltair)(nil),            // 4: ethereum.eth.v1alpha1.LightClientHeaderAltair
-	(*LightClientBootstrapCapella)(nil),        // 5: ethereum.eth.v1alpha1.LightClientBootstrapCapella
-	(*LightClientUpdateCapella)(nil),           // 6: ethereum.eth.v1alpha1.LightClientUpdateCapella
-	(*LightClientFinalityUpdateCapella)(nil),   // 7: ethereum.eth.v1alpha1.LightClientFinalityUpdateCapella
-	(*LightClientOptimisticUpdateCapella)(nil), // 8: ethereum.eth.v1alpha1.LightClientOptimisticUpdateCapella
-	(*LightClientHeaderCapella)(nil),           // 9: ethereum.eth.v1alpha1.LightClientHeaderCapella
-	(*LightClientBootstrapDeneb)(nil),          // 10: ethereum.eth.v1alpha1.LightClientBootstrapDeneb
-	(*LightClientUpdateDeneb)(nil),             // 11: ethereum.eth.v1alpha1.LightClientUpdateDeneb
-	(*LightClientFinalityUpdateDeneb)(nil),     // 12: ethereum.eth.v1alpha1.LightClientFinalityUpdateDeneb
-	(*LightClientOptimisticUpdateDeneb)(nil),   // 13: ethereum.eth.v1alpha1.LightClientOptimisticUpdateDeneb
-	(*LightClientHeaderDeneb)(nil),             // 14: ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	(*LightClientBootstrapElectra)(nil),        // 15: ethereum.eth.v1alpha1.LightClientBootstrapElectra
-	(*LightClientUpdateElectra)(nil),           // 16: ethereum.eth.v1alpha1.LightClientUpdateElectra
-	(*LightClientFinalityUpdateElectra)(nil),   // 17: ethereum.eth.v1alpha1.LightClientFinalityUpdateElectra
-	(*SyncCommittee)(nil),                      // 18: ethereum.eth.v1alpha1.SyncCommittee
-	(*SyncAggregate)(nil),                      // 19: ethereum.eth.v1alpha1.SyncAggregate
-	(*BeaconBlockHeader)(nil),                  // 20: ethereum.eth.v1alpha1.BeaconBlockHeader
-	(*v1.ExecutionPayloadHeaderCapella)(nil),   // 21: ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	(*v1.ExecutionPayloadHeaderDeneb)(nil),     // 22: ethereum.engine.v1.ExecutionPayloadHeaderDeneb
+	(*LightClientBootstrapAltair)(nil),         // 0: sila.eth.v1alpha1.LightClientBootstrapAltair
+	(*LightClientUpdateAltair)(nil),            // 1: sila.eth.v1alpha1.LightClientUpdateAltair
+	(*LightClientFinalityUpdateAltair)(nil),    // 2: sila.eth.v1alpha1.LightClientFinalityUpdateAltair
+	(*LightClientOptimisticUpdateAltair)(nil),  // 3: sila.eth.v1alpha1.LightClientOptimisticUpdateAltair
+	(*LightClientHeaderAltair)(nil),            // 4: sila.eth.v1alpha1.LightClientHeaderAltair
+	(*LightClientBootstrapCapella)(nil),        // 5: sila.eth.v1alpha1.LightClientBootstrapCapella
+	(*LightClientUpdateCapella)(nil),           // 6: sila.eth.v1alpha1.LightClientUpdateCapella
+	(*LightClientFinalityUpdateCapella)(nil),   // 7: sila.eth.v1alpha1.LightClientFinalityUpdateCapella
+	(*LightClientOptimisticUpdateCapella)(nil), // 8: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella
+	(*LightClientHeaderCapella)(nil),           // 9: sila.eth.v1alpha1.LightClientHeaderCapella
+	(*LightClientBootstrapDeneb)(nil),          // 10: sila.eth.v1alpha1.LightClientBootstrapDeneb
+	(*LightClientUpdateDeneb)(nil),             // 11: sila.eth.v1alpha1.LightClientUpdateDeneb
+	(*LightClientFinalityUpdateDeneb)(nil),     // 12: sila.eth.v1alpha1.LightClientFinalityUpdateDeneb
+	(*LightClientOptimisticUpdateDeneb)(nil),   // 13: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb
+	(*LightClientHeaderDeneb)(nil),             // 14: sila.eth.v1alpha1.LightClientHeaderDeneb
+	(*LightClientBootstrapElectra)(nil),        // 15: sila.eth.v1alpha1.LightClientBootstrapElectra
+	(*LightClientUpdateElectra)(nil),           // 16: sila.eth.v1alpha1.LightClientUpdateElectra
+	(*LightClientFinalityUpdateElectra)(nil),   // 17: sila.eth.v1alpha1.LightClientFinalityUpdateElectra
+	(*SyncCommittee)(nil),                      // 18: sila.eth.v1alpha1.SyncCommittee
+	(*SyncAggregate)(nil),                      // 19: sila.eth.v1alpha1.SyncAggregate
+	(*BeaconBlockHeader)(nil),                  // 20: sila.eth.v1alpha1.BeaconBlockHeader
+	(*v1.ExecutionPayloadHeaderCapella)(nil),   // 21: sila.engine.v1.ExecutionPayloadHeaderCapella
+	(*v1.ExecutionPayloadHeaderDeneb)(nil),     // 22: sila.engine.v1.ExecutionPayloadHeaderDeneb
 }
 var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
-	4,  // 0: ethereum.eth.v1alpha1.LightClientBootstrapAltair.header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderAltair
-	18, // 1: ethereum.eth.v1alpha1.LightClientBootstrapAltair.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	4,  // 2: ethereum.eth.v1alpha1.LightClientUpdateAltair.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderAltair
-	18, // 3: ethereum.eth.v1alpha1.LightClientUpdateAltair.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	4,  // 4: ethereum.eth.v1alpha1.LightClientUpdateAltair.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderAltair
-	19, // 5: ethereum.eth.v1alpha1.LightClientUpdateAltair.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	4,  // 6: ethereum.eth.v1alpha1.LightClientFinalityUpdateAltair.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderAltair
-	4,  // 7: ethereum.eth.v1alpha1.LightClientFinalityUpdateAltair.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderAltair
-	19, // 8: ethereum.eth.v1alpha1.LightClientFinalityUpdateAltair.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	4,  // 9: ethereum.eth.v1alpha1.LightClientOptimisticUpdateAltair.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderAltair
-	19, // 10: ethereum.eth.v1alpha1.LightClientOptimisticUpdateAltair.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	20, // 11: ethereum.eth.v1alpha1.LightClientHeaderAltair.beacon:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	9,  // 12: ethereum.eth.v1alpha1.LightClientBootstrapCapella.header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderCapella
-	18, // 13: ethereum.eth.v1alpha1.LightClientBootstrapCapella.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	9,  // 14: ethereum.eth.v1alpha1.LightClientUpdateCapella.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderCapella
-	18, // 15: ethereum.eth.v1alpha1.LightClientUpdateCapella.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	9,  // 16: ethereum.eth.v1alpha1.LightClientUpdateCapella.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderCapella
-	19, // 17: ethereum.eth.v1alpha1.LightClientUpdateCapella.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	9,  // 18: ethereum.eth.v1alpha1.LightClientFinalityUpdateCapella.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderCapella
-	9,  // 19: ethereum.eth.v1alpha1.LightClientFinalityUpdateCapella.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderCapella
-	19, // 20: ethereum.eth.v1alpha1.LightClientFinalityUpdateCapella.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	9,  // 21: ethereum.eth.v1alpha1.LightClientOptimisticUpdateCapella.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderCapella
-	19, // 22: ethereum.eth.v1alpha1.LightClientOptimisticUpdateCapella.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	20, // 23: ethereum.eth.v1alpha1.LightClientHeaderCapella.beacon:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	21, // 24: ethereum.eth.v1alpha1.LightClientHeaderCapella.execution:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	14, // 25: ethereum.eth.v1alpha1.LightClientBootstrapDeneb.header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	18, // 26: ethereum.eth.v1alpha1.LightClientBootstrapDeneb.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	14, // 27: ethereum.eth.v1alpha1.LightClientUpdateDeneb.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	18, // 28: ethereum.eth.v1alpha1.LightClientUpdateDeneb.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	14, // 29: ethereum.eth.v1alpha1.LightClientUpdateDeneb.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	19, // 30: ethereum.eth.v1alpha1.LightClientUpdateDeneb.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	14, // 31: ethereum.eth.v1alpha1.LightClientFinalityUpdateDeneb.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	14, // 32: ethereum.eth.v1alpha1.LightClientFinalityUpdateDeneb.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	19, // 33: ethereum.eth.v1alpha1.LightClientFinalityUpdateDeneb.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	14, // 34: ethereum.eth.v1alpha1.LightClientOptimisticUpdateDeneb.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	19, // 35: ethereum.eth.v1alpha1.LightClientOptimisticUpdateDeneb.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	20, // 36: ethereum.eth.v1alpha1.LightClientHeaderDeneb.beacon:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	22, // 37: ethereum.eth.v1alpha1.LightClientHeaderDeneb.execution:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	14, // 38: ethereum.eth.v1alpha1.LightClientBootstrapElectra.header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	18, // 39: ethereum.eth.v1alpha1.LightClientBootstrapElectra.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	14, // 40: ethereum.eth.v1alpha1.LightClientUpdateElectra.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	18, // 41: ethereum.eth.v1alpha1.LightClientUpdateElectra.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	14, // 42: ethereum.eth.v1alpha1.LightClientUpdateElectra.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	19, // 43: ethereum.eth.v1alpha1.LightClientUpdateElectra.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	14, // 44: ethereum.eth.v1alpha1.LightClientFinalityUpdateElectra.attested_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	14, // 45: ethereum.eth.v1alpha1.LightClientFinalityUpdateElectra.finalized_header:type_name -> ethereum.eth.v1alpha1.LightClientHeaderDeneb
-	19, // 46: ethereum.eth.v1alpha1.LightClientFinalityUpdateElectra.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
+	4,  // 0: sila.eth.v1alpha1.LightClientBootstrapAltair.header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
+	18, // 1: sila.eth.v1alpha1.LightClientBootstrapAltair.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	4,  // 2: sila.eth.v1alpha1.LightClientUpdateAltair.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
+	18, // 3: sila.eth.v1alpha1.LightClientUpdateAltair.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	4,  // 4: sila.eth.v1alpha1.LightClientUpdateAltair.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
+	19, // 5: sila.eth.v1alpha1.LightClientUpdateAltair.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	4,  // 6: sila.eth.v1alpha1.LightClientFinalityUpdateAltair.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
+	4,  // 7: sila.eth.v1alpha1.LightClientFinalityUpdateAltair.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
+	19, // 8: sila.eth.v1alpha1.LightClientFinalityUpdateAltair.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	4,  // 9: sila.eth.v1alpha1.LightClientOptimisticUpdateAltair.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
+	19, // 10: sila.eth.v1alpha1.LightClientOptimisticUpdateAltair.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	20, // 11: sila.eth.v1alpha1.LightClientHeaderAltair.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	9,  // 12: sila.eth.v1alpha1.LightClientBootstrapCapella.header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
+	18, // 13: sila.eth.v1alpha1.LightClientBootstrapCapella.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	9,  // 14: sila.eth.v1alpha1.LightClientUpdateCapella.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
+	18, // 15: sila.eth.v1alpha1.LightClientUpdateCapella.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	9,  // 16: sila.eth.v1alpha1.LightClientUpdateCapella.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
+	19, // 17: sila.eth.v1alpha1.LightClientUpdateCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	9,  // 18: sila.eth.v1alpha1.LightClientFinalityUpdateCapella.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
+	9,  // 19: sila.eth.v1alpha1.LightClientFinalityUpdateCapella.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
+	19, // 20: sila.eth.v1alpha1.LightClientFinalityUpdateCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	9,  // 21: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
+	19, // 22: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	20, // 23: sila.eth.v1alpha1.LightClientHeaderCapella.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	21, // 24: sila.eth.v1alpha1.LightClientHeaderCapella.execution:type_name -> sila.engine.v1.ExecutionPayloadHeaderCapella
+	14, // 25: sila.eth.v1alpha1.LightClientBootstrapDeneb.header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	18, // 26: sila.eth.v1alpha1.LightClientBootstrapDeneb.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	14, // 27: sila.eth.v1alpha1.LightClientUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	18, // 28: sila.eth.v1alpha1.LightClientUpdateDeneb.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	14, // 29: sila.eth.v1alpha1.LightClientUpdateDeneb.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	19, // 30: sila.eth.v1alpha1.LightClientUpdateDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	14, // 31: sila.eth.v1alpha1.LightClientFinalityUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	14, // 32: sila.eth.v1alpha1.LightClientFinalityUpdateDeneb.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	19, // 33: sila.eth.v1alpha1.LightClientFinalityUpdateDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	14, // 34: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	19, // 35: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	20, // 36: sila.eth.v1alpha1.LightClientHeaderDeneb.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	22, // 37: sila.eth.v1alpha1.LightClientHeaderDeneb.execution:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	14, // 38: sila.eth.v1alpha1.LightClientBootstrapElectra.header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	18, // 39: sila.eth.v1alpha1.LightClientBootstrapElectra.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	14, // 40: sila.eth.v1alpha1.LightClientUpdateElectra.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	18, // 41: sila.eth.v1alpha1.LightClientUpdateElectra.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	14, // 42: sila.eth.v1alpha1.LightClientUpdateElectra.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	19, // 43: sila.eth.v1alpha1.LightClientUpdateElectra.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	14, // 44: sila.eth.v1alpha1.LightClientFinalityUpdateElectra.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	14, // 45: sila.eth.v1alpha1.LightClientFinalityUpdateElectra.finalized_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
+	19, // 46: sila.eth.v1alpha1.LightClientFinalityUpdateElectra.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
 	47, // [47:47] is the sub-list for method output_type
 	47, // [47:47] is the sub-list for method input_type
 	47, // [47:47] is the sub-list for extension type_name

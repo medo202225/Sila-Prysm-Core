@@ -26,7 +26,7 @@ var file_proto_silaapi_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
 		ExtensionType: (*string)(nil),
 		Field:         50000,
-		Name:          "ethereum.eth.ext.cast_type",
+		Name:          "sila.eth.ext.cast_type",
 		Tag:           "bytes,50000,opt,name=cast_type",
 		Filename:      "proto/silaapi/ext/options.proto",
 	},
@@ -34,7 +34,7 @@ var file_proto_silaapi_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
 		ExtensionType: (*string)(nil),
 		Field:         50001,
-		Name:          "ethereum.eth.ext.ssz_size",
+		Name:          "sila.eth.ext.ssz_size",
 		Tag:           "bytes,50001,opt,name=ssz_size",
 		Filename:      "proto/silaapi/ext/options.proto",
 	},
@@ -42,7 +42,7 @@ var file_proto_silaapi_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
 		ExtensionType: (*string)(nil),
 		Field:         50002,
-		Name:          "ethereum.eth.ext.ssz_max",
+		Name:          "sila.eth.ext.ssz_max",
 		Tag:           "bytes,50002,opt,name=ssz_max",
 		Filename:      "proto/silaapi/ext/options.proto",
 	},
@@ -50,7 +50,7 @@ var file_proto_silaapi_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
 		ExtensionType: (*string)(nil),
 		Field:         50003,
-		Name:          "ethereum.eth.ext.spec_name",
+		Name:          "sila.eth.ext.spec_name",
 		Tag:           "bytes,50003,opt,name=spec_name",
 		Filename:      "proto/silaapi/ext/options.proto",
 	},
@@ -106,10 +106,10 @@ var file_proto_silaapi_ext_options_proto_goTypes = []any{
 	(*descriptorpb.FieldOptions)(nil), // 0: google.protobuf.FieldOptions
 }
 var file_proto_silaapi_ext_options_proto_depIdxs = []int32{
-	0, // 0: ethereum.eth.ext.cast_type:extendee -> google.protobuf.FieldOptions
-	0, // 1: ethereum.eth.ext.ssz_size:extendee -> google.protobuf.FieldOptions
-	0, // 2: ethereum.eth.ext.ssz_max:extendee -> google.protobuf.FieldOptions
-	0, // 3: ethereum.eth.ext.spec_name:extendee -> google.protobuf.FieldOptions
+	0, // 0: sila.eth.ext.cast_type:extendee -> google.protobuf.FieldOptions
+	0, // 1: sila.eth.ext.ssz_size:extendee -> google.protobuf.FieldOptions
+	0, // 2: sila.eth.ext.ssz_max:extendee -> google.protobuf.FieldOptions
+	0, // 3: sila.eth.ext.spec_name:extendee -> google.protobuf.FieldOptions
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

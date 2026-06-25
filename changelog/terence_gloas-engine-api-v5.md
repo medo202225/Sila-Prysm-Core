@@ -4,4 +4,4 @@
 
 ### Changed
 
-- Bump go-Sila to v1.17.2 for EIP-7843 `Header.SlotNumber`
+- Bump go-Sila to v1.17.2 for SIP-7843 `Header.SlotNumber`

@@ -196,7 +196,7 @@ func (s *Store) HighestSignedProposal(ctx context.Context, publicKey [fieldparam
 }
 
 // SlashableProposalCheck checks if a block proposal is slashable by comparing it with the
-// block proposals history for the given public key in our complete slashing protection database defined by EIP-3076.
+// block proposals history for the given public key in our complete slashing protection database defined by SIP-3076.
 // If it is not, we then update the history.
 func (s *Store) SlashableProposalCheck(
 	ctx context.Context,
@@ -222,7 +222,7 @@ func (s *Store) SlashableProposalCheck(
 		return err
 	}
 
-	// Based on EIP-3076 - Condition 2
+	// Based on SIP-3076 - Condition 2
 	// -------------------------------
 	if lowestProposalExists {
 		// If the block slot is (strictly) less than the lowest signed proposal slot in the DB, we consider it slashable.
@@ -251,7 +251,7 @@ func (s *Store) SlashableProposalCheck(
 		}
 	}
 
-	// Based on EIP-3076 - Condition 1
+	// Based on SIP-3076 - Condition 1
 	// -------------------------------
 	// If there is a signed proposal in the DB for this slot and
 	// - there is no associated signing root, or

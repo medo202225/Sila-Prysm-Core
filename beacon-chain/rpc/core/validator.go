@@ -832,8 +832,8 @@ func (s *Service) ValidatorParticipation(
 		Participation: &silapb.ValidatorParticipation{
 			// TODO(7130): Remove these three deprecated fields.
 			GlobalParticipationRate:          float32(b.PrevEpochTargetAttested) / float32(b.ActivePrevEpoch),
-			VotedEther:                       b.PrevEpochTargetAttested,
-			EligibleEther:                    b.ActivePrevEpoch,
+			VotedSila:                       b.PrevEpochTargetAttested,
+			EligibleSila:                    b.ActivePrevEpoch,
 			CurrentEpochActiveGwei:           b.ActiveCurrentEpoch,
 			CurrentEpochAttestingGwei:        b.CurrentEpochAttested,
 			CurrentEpochTargetAttestingGwei:  b.CurrentEpochTargetAttested,

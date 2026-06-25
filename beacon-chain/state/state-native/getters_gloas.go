@@ -380,7 +380,7 @@ func (b *BeaconState) builderIndexByPubkey(pubkey [fieldparams.BLSPubkeyLength]b
 //	    withdrawal_index = state.next_withdrawal_index
 //	    withdrawals: List[Withdrawal] = []
 //
-//	    # [New in Gloas:EIP7732]
+//	    # [New in Gloas:SIP7732]
 //	    # Get builder withdrawals
 //	    builder_withdrawals, withdrawal_index, processed_builder_withdrawals_count = (
 //	        get_builder_withdrawals(state, withdrawal_index, withdrawals)
@@ -393,7 +393,7 @@ func (b *BeaconState) builderIndexByPubkey(pubkey [fieldparams.BLSPubkeyLength]b
 //	    )
 //	    withdrawals.extend(partial_withdrawals)
 //
-//	    # [New in Gloas:EIP7732]
+//	    # [New in Gloas:SIP7732]
 //	    # Get builders sweep withdrawals
 //	    builders_sweep_withdrawals, withdrawal_index, processed_builders_sweep_count = (
 //	        get_builders_sweep_withdrawals(state, withdrawal_index, withdrawals)
@@ -408,10 +408,10 @@ func (b *BeaconState) builderIndexByPubkey(pubkey [fieldparams.BLSPubkeyLength]b
 //
 //	    return ExpectedWithdrawals(
 //	        withdrawals,
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        processed_builder_withdrawals_count,
 //	        processed_partial_withdrawals_count,
-//	        # [New in Gloas:EIP7732]
+//	        # [New in Gloas:SIP7732]
 //	        processed_builders_sweep_count,
 //	        processed_validators_sweep_count,
 //	    )

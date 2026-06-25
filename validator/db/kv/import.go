@@ -19,7 +19,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ImportStandardProtection takes in EIP-3076 compliant JSON file used for slashing protection
+// ImportStandardProtection takes in SIP-3076 compliant JSON file used for slashing protection
 // by Sila validators and imports its data into Sila's internal complete representation of slashing
 // protection in the validator client's database.
 func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error {

@@ -40,12 +40,12 @@ var (
 //	    process_justification_and_finalization(state)
 //	    process_inactivity_updates(state)
 //	    process_rewards_and_penalties(state)
-//	    process_registry_updates(state)  # [Modified in Electra:EIP7251]
-//	    process_slashings(state)  # [Modified in Electra:EIP7251]
+//	    process_registry_updates(state)  # [Modified in Electra:SIP7251]
+//	    process_slashings(state)  # [Modified in Electra:SIP7251]
 //	    process_sila_execution_data_reset(state)
-//	    process_pending_deposits(state)  # [New in Electra:EIP7251]
-//	    process_pending_consolidations(state)  # [New in Electra:EIP7251]
-//	    process_effective_balance_updates(state)  # [Modified in Electra:EIP7251]
+//	    process_pending_deposits(state)  # [New in Electra:SIP7251]
+//	    process_pending_consolidations(state)  # [New in Electra:SIP7251]
+//	    process_effective_balance_updates(state)  # [Modified in Electra:SIP7251]
 //	    process_slashings_reset(state)
 //	    process_randao_mixes_reset(state)
 //	    process_historical_summaries_update(state)
@@ -124,7 +124,7 @@ func ProcessEpoch(ctx context.Context, state state.BeaconState) error {
 //
 // Spec definition:
 //
-//	# [Modified in Electra:EIP6110]
+//	# [Modified in Electra:SIP6110]
 //	  # Disable former deposit mechanism once all prior deposits are processed
 //	  silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
 //	  if state.silaexec_deposit_index < silaexec_deposit_index_limit:

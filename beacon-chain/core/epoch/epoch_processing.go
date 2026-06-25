@@ -157,7 +157,7 @@ func ProcessRegistryUpdates(ctx context.Context, st state.BeaconState) (state.Be
 //	    for index, validator in enumerate(state.validators):
 //	        if validator.slashed and epoch + EPOCHS_PER_SLASHINGS_VECTOR // 2 == validator.withdrawable_epoch:
 //	            effective_balance_increments = validator.effective_balance // increment
-//	            # [Modified in Electra:EIP7251]
+//	            # [Modified in Electra:SIP7251]
 //	            penalty = penalty_per_effective_balance_increment * effective_balance_increments
 //	            decrease_balance(state, ValidatorIndex(index), penalty)
 //
@@ -231,7 +231,7 @@ func ProcessSlashings(ctx context.Context, st state.BeaconState) error {
 	increment := params.BeaconConfig().EffectiveBalanceIncrement
 	minSlashing := min(totalSlashing*slashingMultiplier, totalBalance)
 
-	// Modified in Electra:EIP7251
+	// Modified in Electra:SIP7251
 	var penaltyPerEffectiveBalanceIncrement uint64
 	if st.Version() >= version.Electra {
 		penaltyPerEffectiveBalanceIncrement = minSlashing / (totalBalance / increment)

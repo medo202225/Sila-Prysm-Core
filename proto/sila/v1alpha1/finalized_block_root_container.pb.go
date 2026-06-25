@@ -115,7 +115,7 @@ func file_proto_sila_v1alpha1_finalized_block_root_container_proto_rawDescGZIP()
 
 var file_proto_sila_v1alpha1_finalized_block_root_container_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_sila_v1alpha1_finalized_block_root_container_proto_goTypes = []any{
-	(*FinalizedBlockRootContainer)(nil), // 0: ethereum.eth.v1alpha1.FinalizedBlockRootContainer
+	(*FinalizedBlockRootContainer)(nil), // 0: sila.eth.v1alpha1.FinalizedBlockRootContainer
 }
 var file_proto_sila_v1alpha1_finalized_block_root_container_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

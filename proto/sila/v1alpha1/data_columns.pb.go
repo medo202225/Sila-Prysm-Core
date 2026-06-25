@@ -226,12 +226,12 @@ func file_proto_sila_v1alpha1_data_columns_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_data_columns_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_sila_v1alpha1_data_columns_proto_goTypes = []any{
-	(*DataColumnSidecar)(nil),           // 0: ethereum.eth.v1alpha1.DataColumnSidecar
-	(*DataColumnsByRootIdentifier)(nil), // 1: ethereum.eth.v1alpha1.DataColumnsByRootIdentifier
-	(*SignedBeaconBlockHeader)(nil),     // 2: ethereum.eth.v1alpha1.SignedBeaconBlockHeader
+	(*DataColumnSidecar)(nil),           // 0: sila.eth.v1alpha1.DataColumnSidecar
+	(*DataColumnsByRootIdentifier)(nil), // 1: sila.eth.v1alpha1.DataColumnsByRootIdentifier
+	(*SignedBeaconBlockHeader)(nil),     // 2: sila.eth.v1alpha1.SignedBeaconBlockHeader
 }
 var file_proto_sila_v1alpha1_data_columns_proto_depIdxs = []int32{
-	2, // 0: ethereum.eth.v1alpha1.DataColumnSidecar.signed_block_header:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockHeader
+	2, // 0: sila.eth.v1alpha1.DataColumnSidecar.signed_block_header:type_name -> sila.eth.v1alpha1.SignedBeaconBlockHeader
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

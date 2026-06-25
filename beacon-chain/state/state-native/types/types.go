@@ -285,28 +285,28 @@ const (
 	LatestExecutionPayloadHeader
 	LatestExecutionPayloadHeaderCapella
 	LatestExecutionPayloadHeaderDeneb
-	LatestExecutionPayloadBid // Gloas: EIP-7732
+	LatestExecutionPayloadBid // Gloas: SIP-7732
 	NextWithdrawalIndex
 	NextWithdrawalValidatorIndex
 	HistoricalSummaries
-	DepositRequestsStartIndex     // Electra: EIP-6110
-	DepositBalanceToConsume       // Electra: EIP-7251
-	ExitBalanceToConsume          // Electra: EIP-7251
-	EarliestExitEpoch             // Electra: EIP-7251
-	ConsolidationBalanceToConsume // Electra: EIP-7251
-	EarliestConsolidationEpoch    // Electra: EIP-7251
-	PendingDeposits               // Electra: EIP-7251
-	PendingPartialWithdrawals     // Electra: EIP-7251
-	PendingConsolidations         // Electra: EIP-7251
-	ProposerLookahead             // Fulu: EIP-7917
-	Builders                      // Gloas: EIP-7732
-	NextWithdrawalBuilderIndex    // Gloas: EIP-7732
-	ExecutionPayloadAvailability  // Gloas: EIP-7732
-	BuilderPendingPayments        // Gloas: EIP-7732
-	BuilderPendingWithdrawals     // Gloas: EIP-7732
-	LatestBlockHash               // Gloas: EIP-7732
-	PayloadExpectedWithdrawals    // Gloas: EIP-7732
-	PTCWindow                     // Gloas: EIP-7732
+	DepositRequestsStartIndex     // Electra: SIP-6110
+	DepositBalanceToConsume       // Electra: SIP-7251
+	ExitBalanceToConsume          // Electra: SIP-7251
+	EarliestExitEpoch             // Electra: SIP-7251
+	ConsolidationBalanceToConsume // Electra: SIP-7251
+	EarliestConsolidationEpoch    // Electra: SIP-7251
+	PendingDeposits               // Electra: SIP-7251
+	PendingPartialWithdrawals     // Electra: SIP-7251
+	PendingConsolidations         // Electra: SIP-7251
+	ProposerLookahead             // Fulu: SIP-7917
+	Builders                      // Gloas: SIP-7732
+	NextWithdrawalBuilderIndex    // Gloas: SIP-7732
+	ExecutionPayloadAvailability  // Gloas: SIP-7732
+	BuilderPendingPayments        // Gloas: SIP-7732
+	BuilderPendingWithdrawals     // Gloas: SIP-7732
+	LatestBlockHash               // Gloas: SIP-7732
+	PayloadExpectedWithdrawals    // Gloas: SIP-7732
+	PTCWindow                     // Gloas: SIP-7732
 )
 
 // Enumerator keeps track of the number of states created since the node's start.

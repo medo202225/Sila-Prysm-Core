@@ -224,7 +224,7 @@ func TestImportExportSlashingProtection_RoundTrip(t *testing.T) {
 	require.Equal(t, http.StatusOK, wr.Code)
 	resp := &ExportSlashingProtectionResponse{}
 	require.NoError(t, json.Unmarshal(wr.Body.Bytes(), resp))
-	// Attempt to read the exported data and convert from string to EIP-3076.
+	// Attempt to read the exported data and convert from string to SIP-3076.
 	enc := []byte(resp.File)
 
 	receivedJSON := &format.EIPSlashingProtectionFormat{}

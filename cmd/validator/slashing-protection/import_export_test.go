@@ -35,7 +35,7 @@ func setupCliCtx(
 	return cli.NewContext(&app, set, nil)
 }
 
-// TestImportExportSlashingProtectionCli_RoundTrip imports a EIP-3076 interchange format JSON file,
+// TestImportExportSlashingProtectionCli_RoundTrip imports a SIP-3076 interchange format JSON file,
 // and exports it back to disk. It then compare the exported file to the original file.
 // This test is only suitable for complete slashing protection history database, since minimal
 // slashing protection history database will keep only the latest signed block slot / attestations,
@@ -138,7 +138,7 @@ func TestImportExportSlashingProtectionCli_RoundTrip(t *testing.T) {
 	}
 }
 
-// TestImportExportSlashingProtectionCli_EmptyData imports a EIP-3076 interchange format JSON file,
+// TestImportExportSlashingProtectionCli_EmptyData imports a SIP-3076 interchange format JSON file,
 // and exports it back to disk. It then compare the exported file to the original file.
 // This test is only suitable for complete slashing protection history database, since minimal
 // slashing protection history database will keep only the latest signed block slot / attestations,

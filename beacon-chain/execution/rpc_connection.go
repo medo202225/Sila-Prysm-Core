@@ -35,7 +35,7 @@ type silaLogFilterer struct {
 	client *gethRPC.Client
 }
 
-func (f *silaLogFilterer) FilterLogs(ctx context.Context, q ethereum.FilterQuery) ([]gethTypes.Log, error) {
+func (f *silaLogFilterer) FilterLogs(ctx context.Context, q sila.FilterQuery) ([]gethTypes.Log, error) {
 	arg := toSilaFilterArg(q)
 	var result []gethTypes.Log
 	if err := f.client.CallContext(ctx, &result, "sila_getLogs", arg); err != nil {
@@ -44,11 +44,11 @@ func (f *silaLogFilterer) FilterLogs(ctx context.Context, q ethereum.FilterQuery
 	return result, nil
 }
 
-func (f *silaLogFilterer) SubscribeFilterLogs(context.Context, ethereum.FilterQuery, chan<- gethTypes.Log) (ethereum.Subscription, error) {
+func (f *silaLogFilterer) SubscribeFilterLogs(context.Context, sila.FilterQuery, chan<- gethTypes.Log) (sila.Subscription, error) {
 	return nil, errors.New("sila log subscriptions are not implemented")
 }
 
-func toSilaFilterArg(q ethereum.FilterQuery) map[string]any {
+func toSilaFilterArg(q sila.FilterQuery) map[string]any {
 	arg := map[string]any{}
 
 	if q.BlockHash != nil {
@@ -100,7 +100,7 @@ func (c *silaContractCaller) CodeAt(ctx context.Context, contract common.Address
 	return result, nil
 }
 
-func (c *silaContractCaller) CallContract(ctx context.Context, call ethereum.CallMsg, blockNumber *big.Int) ([]byte, error) {
+func (c *silaContractCaller) CallContract(ctx context.Context, call sila.CallMsg, blockNumber *big.Int) ([]byte, error) {
 	from := call.From
 	arg := silaCallArg{
 		From:     &from,

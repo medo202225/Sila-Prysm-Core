@@ -103,7 +103,7 @@ func NextSyncCommittee(ctx context.Context, s state.BeaconState) (*silapb.SyncCo
 //	    offset = i % 16 * 2
 //	    random_value = bytes_to_uint64(random_bytes[offset:offset + 2])
 //	    effective_balance = state.validators[candidate_index].effective_balance
-//	    # [Modified in Electra:EIP7251]
+//	    # [Modified in Electra:SIP7251]
 //	    if effective_balance * MAX_RANDOM_VALUE >= MAX_EFFECTIVE_BALANCE_ELECTRA * random_value:
 //	        sync_committee_indices.append(candidate_index)
 //	    i += 1

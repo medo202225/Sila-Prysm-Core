@@ -16,7 +16,7 @@ import (
 )
 
 // ExportStandardProtectionJSON extracts all slashing protection data from a validator database
-// and packages it into an EIP-3076 compliant, standard
+// and packages it into an SIP-3076 compliant, standard
 func ExportStandardProtectionJSON(
 	ctx context.Context,
 	validatorDB db.Database,
@@ -109,7 +109,7 @@ func ExportStandardProtectionJSON(
 		}
 	}
 
-	// Next we turn our map into a slice as expected by the EIP-3076 JSON standard.
+	// Next we turn our map into a slice as expected by the SIP-3076 JSON standard.
 	dataList := make([]*format.ProtectionData, 0)
 	for _, item := range dataByPubKey {
 		if item.SignedAttestations == nil {

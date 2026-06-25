@@ -84,7 +84,7 @@ func (m *Miner) initAttempt(ctx context.Context, attempt int) (*os.File, error) 
 	// find geth so we can run it.
 	binaryPath, found := bazel.FindBinary("cmd/geth", "geth")
 	if !found {
-		return nil, errors.New("go-ethereum binary not found")
+		return nil, errors.New("Sila binary not found")
 	}
 
 	gethJsonPath := path.Join(path.Dir(binaryPath), "genesis.json")

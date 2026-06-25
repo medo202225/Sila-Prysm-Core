@@ -636,28 +636,28 @@ func file_proto_sila_v1alpha1_powchain_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_powchain_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_sila_v1alpha1_powchain_proto_goTypes = []any{
-	(*SilaExecutionChainData)(nil),    // 0: ethereum.eth.v1alpha1.SilaExecutionChainData
-	(*DepositSnapshot)(nil),  // 1: ethereum.eth.v1alpha1.DepositSnapshot
-	(*LatestSilaExecutionData)(nil),   // 2: ethereum.eth.v1alpha1.LatestSilaExecutionData
-	(*ChainStartData)(nil),   // 3: ethereum.eth.v1alpha1.ChainStartData
-	(*SparseMerkleTrie)(nil), // 4: ethereum.eth.v1alpha1.SparseMerkleTrie
-	(*TrieLayer)(nil),        // 5: ethereum.eth.v1alpha1.TrieLayer
-	(*DepositContainer)(nil), // 6: ethereum.eth.v1alpha1.DepositContainer
-	(*BeaconState)(nil),      // 7: ethereum.eth.v1alpha1.BeaconState
-	(*SilaExecutionData)(nil),         // 8: ethereum.eth.v1alpha1.SilaExecutionData
-	(*Deposit)(nil),          // 9: ethereum.eth.v1alpha1.Deposit
+	(*SilaExecutionChainData)(nil),    // 0: sila.eth.v1alpha1.SilaExecutionChainData
+	(*DepositSnapshot)(nil),  // 1: sila.eth.v1alpha1.DepositSnapshot
+	(*LatestSilaExecutionData)(nil),   // 2: sila.eth.v1alpha1.LatestSilaExecutionData
+	(*ChainStartData)(nil),   // 3: sila.eth.v1alpha1.ChainStartData
+	(*SparseMerkleTrie)(nil), // 4: sila.eth.v1alpha1.SparseMerkleTrie
+	(*TrieLayer)(nil),        // 5: sila.eth.v1alpha1.TrieLayer
+	(*DepositContainer)(nil), // 6: sila.eth.v1alpha1.DepositContainer
+	(*BeaconState)(nil),      // 7: sila.eth.v1alpha1.BeaconState
+	(*SilaExecutionData)(nil),         // 8: sila.eth.v1alpha1.SilaExecutionData
+	(*Deposit)(nil),          // 9: sila.eth.v1alpha1.Deposit
 }
 var file_proto_sila_v1alpha1_powchain_proto_depIdxs = []int32{
-	2,  // 0: ethereum.eth.v1alpha1.SilaExecutionChainData.current_sila_execution_data:type_name -> ethereum.eth.v1alpha1.LatestSilaExecutionData
-	3,  // 1: ethereum.eth.v1alpha1.SilaExecutionChainData.chainstart_data:type_name -> ethereum.eth.v1alpha1.ChainStartData
-	7,  // 2: ethereum.eth.v1alpha1.SilaExecutionChainData.beacon_state:type_name -> ethereum.eth.v1alpha1.BeaconState
-	4,  // 3: ethereum.eth.v1alpha1.SilaExecutionChainData.trie:type_name -> ethereum.eth.v1alpha1.SparseMerkleTrie
-	6,  // 4: ethereum.eth.v1alpha1.SilaExecutionChainData.deposit_containers:type_name -> ethereum.eth.v1alpha1.DepositContainer
-	1,  // 5: ethereum.eth.v1alpha1.SilaExecutionChainData.deposit_snapshot:type_name -> ethereum.eth.v1alpha1.DepositSnapshot
-	8,  // 6: ethereum.eth.v1alpha1.ChainStartData.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	9,  // 7: ethereum.eth.v1alpha1.ChainStartData.chainstart_deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	5,  // 8: ethereum.eth.v1alpha1.SparseMerkleTrie.layers:type_name -> ethereum.eth.v1alpha1.TrieLayer
-	9,  // 9: ethereum.eth.v1alpha1.DepositContainer.deposit:type_name -> ethereum.eth.v1alpha1.Deposit
+	2,  // 0: sila.eth.v1alpha1.SilaExecutionChainData.current_sila_execution_data:type_name -> sila.eth.v1alpha1.LatestSilaExecutionData
+	3,  // 1: sila.eth.v1alpha1.SilaExecutionChainData.chainstart_data:type_name -> sila.eth.v1alpha1.ChainStartData
+	7,  // 2: sila.eth.v1alpha1.SilaExecutionChainData.beacon_state:type_name -> sila.eth.v1alpha1.BeaconState
+	4,  // 3: sila.eth.v1alpha1.SilaExecutionChainData.trie:type_name -> sila.eth.v1alpha1.SparseMerkleTrie
+	6,  // 4: sila.eth.v1alpha1.SilaExecutionChainData.deposit_containers:type_name -> sila.eth.v1alpha1.DepositContainer
+	1,  // 5: sila.eth.v1alpha1.SilaExecutionChainData.deposit_snapshot:type_name -> sila.eth.v1alpha1.DepositSnapshot
+	8,  // 6: sila.eth.v1alpha1.ChainStartData.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	9,  // 7: sila.eth.v1alpha1.ChainStartData.chainstart_deposits:type_name -> sila.eth.v1alpha1.Deposit
+	5,  // 8: sila.eth.v1alpha1.SparseMerkleTrie.layers:type_name -> sila.eth.v1alpha1.TrieLayer
+	9,  // 9: sila.eth.v1alpha1.DepositContainer.deposit:type_name -> sila.eth.v1alpha1.Deposit
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name

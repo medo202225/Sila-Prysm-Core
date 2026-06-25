@@ -580,7 +580,7 @@ func (s *Service) initPOWService() {
 				}
 			}
 			// Handle edge case with embedded genesis state by fetching genesis header to determine
-			// its height only if the deposit requests have not started yet (Pre Pectra EIP-6110 behavior).
+			// its height only if the deposit requests have not started yet (Pre Pectra SIP-6110 behavior).
 			if s.chainStartData.Chainstarted && s.chainStartData.GenesisBlock == 0 && !s.depositRequestsStarted {
 				genHash := common.BytesToHash(s.chainStartData.SilaExecutionData.BlockHash)
 				genBlock := s.chainStartData.GenesisBlock
@@ -881,7 +881,7 @@ func (s *Service) validPowchainData(ctx context.Context) (*silapb.SilaExecutionC
 		}
 		trie, ok := s.depositTrie.(*depositsnapshot.DepositTree)
 		if !ok {
-			return nil, errors.New("deposit trie was not EIP4881 DepositTree")
+			return nil, errors.New("deposit trie was not SIP4881 DepositTree")
 		}
 		silaexecData.DepositSnapshot, err = trie.ToProto()
 		if err != nil {

@@ -162,7 +162,7 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 //	    slot=pre.slot,
 //	    fork=Fork(
 //	        previous_version=pre.fork.current_version,
-//	        current_version=ELECTRA_FORK_VERSION,  # [Modified in Electra:EIP6110]
+//	        current_version=ELECTRA_FORK_VERSION,  # [Modified in Electra:SIP6110]
 //	        epoch=epoch,
 //	    ),
 //	    # History
@@ -195,15 +195,15 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 //	    current_sync_committee=pre.current_sync_committee,
 //	    next_sync_committee=pre.next_sync_committee,
 //	    # Execution-layer
-//	    latest_execution_payload_header=latest_execution_payload_header,  # [Modified in Electra:EIP6110:EIP7002]
+//	    latest_execution_payload_header=latest_execution_payload_header,  # [Modified in Electra:SIP6110:SIP7002]
 //	    # Withdrawals
 //	    next_withdrawal_index=pre.next_withdrawal_index,
 //	    next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
 //	    # Deep history valid from Capella onwards
 //	    historical_summaries=pre.historical_summaries,
-//	    # [New in Electra:EIP6110]
+//	    # [New in Electra:SIP6110]
 //	    deposit_requests_start_index=UNSET_DEPOSIT_REQUESTS_START_INDEX,
-//	    # [New in Electra:EIP7251]
+//	    # [New in Electra:SIP7251]
 //	    deposit_balance_to_consume=0,
 //	    exit_balance_to_consume=0,
 //	    earliest_exit_epoch=earliest_exit_epoch,
@@ -217,7 +217,7 @@ func ConvertToElectra(beaconState state.BeaconState) (state.BeaconState, error) 
 //	post.exit_balance_to_consume = get_activation_exit_churn_limit(post)
 //	post.consolidation_balance_to_consume = get_consolidation_churn_limit(post)
 //
-//	# [New in Electra:EIP7251]
+//	# [New in Electra:SIP7251]
 //	# add validators that are not yet active to pending balance deposits
 //	pre_activation = sorted([
 //	    index for index, validator in enumerate(post.validators)
@@ -255,7 +255,7 @@ func UpgradeToElectra(ctx context.Context, beaconState state.BeaconState) (state
 		return nil, err
 	}
 
-	// [New in Electra:EIP7251]
+	// [New in Electra:SIP7251]
 	earliestExitEpoch := helpers.ActivationExitEpoch(time.CurrentEpoch(beaconState))
 	preActivationIndices := make([]primitives.ValidatorIndex, 0)
 	compoundWithdrawalIndices := make([]primitives.ValidatorIndex, 0)

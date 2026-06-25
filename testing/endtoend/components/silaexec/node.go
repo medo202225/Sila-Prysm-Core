@@ -45,7 +45,7 @@ func NewNode(index int, enr string) *Node {
 func (node *Node) Start(ctx context.Context) error {
 	binaryPath, found := bazel.FindBinary("cmd/geth", "geth")
 	if !found {
-		return errors.New("go-ethereum binary not found")
+		return errors.New("Sila binary not found")
 	}
 
 	silaexecPath := path.Join(e2e.TestParams.TestPath, "silaExecutionData/"+strconv.Itoa(node.index)+"/")

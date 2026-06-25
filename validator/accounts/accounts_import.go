@@ -72,7 +72,7 @@ type ImportAccountsConfig struct {
 	AccountPassword string
 }
 
-// Import can import external, EIP-2335 compliant keystore.json files as
+// Import can import external, SIP-2335 compliant keystore.json files as
 // new accounts into the Sila validator wallet. This uses the CLI to extract
 // values necessary to run the function.
 func (acm *CLIManager) Import(ctx context.Context) error {
@@ -192,7 +192,7 @@ func processDirectory(ctx context.Context, dir string, depth int) ([]*keymanager
 	return keystoresImported, nil
 }
 
-// ImportAccounts can import external, EIP-2335 compliant keystore.json files as
+// ImportAccounts can import external, SIP-2335 compliant keystore.json files as
 // new accounts into the Sila validator wallet.
 func ImportAccounts(ctx context.Context, cfg *ImportAccountsConfig) ([]*keymanager.KeyStatus, error) {
 	if cfg.AccountPassword == "" {

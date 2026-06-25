@@ -244,7 +244,7 @@ http_archive(
 )
 
 http_archive(
-    name = "eip3076_spec_tests",
+    name = "sip3076_spec_tests",
     build_file_content = """
 filegroup(
     name = "test_data",
@@ -259,7 +259,7 @@ filegroup(
 )
 
 http_archive(
-    name = "eip4881_spec_tests",
+    name = "sip4881_spec_tests",
     build_file_content = """
 filegroup(
     name = "test_data",

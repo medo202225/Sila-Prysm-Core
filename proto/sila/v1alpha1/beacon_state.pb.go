@@ -3560,125 +3560,125 @@ func file_proto_sila_v1alpha1_beacon_state_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_beacon_state_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_sila_v1alpha1_beacon_state_proto_goTypes = []any{
-	(*BeaconState)(nil),                      // 0: ethereum.eth.v1alpha1.BeaconState
-	(*PendingAttestation)(nil),               // 1: ethereum.eth.v1alpha1.PendingAttestation
-	(*HistoricalBatch)(nil),                  // 2: ethereum.eth.v1alpha1.HistoricalBatch
-	(*StateSummary)(nil),                     // 3: ethereum.eth.v1alpha1.StateSummary
-	(*SigningData)(nil),                      // 4: ethereum.eth.v1alpha1.SigningData
-	(*ForkData)(nil),                         // 5: ethereum.eth.v1alpha1.ForkData
-	(*CheckPtInfo)(nil),                      // 6: ethereum.eth.v1alpha1.CheckPtInfo
-	(*DepositMessage)(nil),                   // 7: ethereum.eth.v1alpha1.DepositMessage
-	(*PowBlock)(nil),                         // 8: ethereum.eth.v1alpha1.PowBlock
-	(*BeaconStateAltair)(nil),                // 9: ethereum.eth.v1alpha1.BeaconStateAltair
-	(*SyncAggregatorSelectionData)(nil),      // 10: ethereum.eth.v1alpha1.SyncAggregatorSelectionData
-	(*BeaconStateBellatrix)(nil),             // 11: ethereum.eth.v1alpha1.BeaconStateBellatrix
-	(*BeaconStateCapella)(nil),               // 12: ethereum.eth.v1alpha1.BeaconStateCapella
-	(*BeaconStateDeneb)(nil),                 // 13: ethereum.eth.v1alpha1.BeaconStateDeneb
-	(*BeaconStateElectra)(nil),               // 14: ethereum.eth.v1alpha1.BeaconStateElectra
-	(*BeaconStateFulu)(nil),                  // 15: ethereum.eth.v1alpha1.BeaconStateFulu
-	(*Fork)(nil),                             // 16: ethereum.eth.v1alpha1.Fork
-	(*BeaconBlockHeader)(nil),                // 17: ethereum.eth.v1alpha1.BeaconBlockHeader
-	(*SilaExecutionData)(nil),                         // 18: ethereum.eth.v1alpha1.SilaExecutionData
-	(*Validator)(nil),                        // 19: ethereum.eth.v1alpha1.Validator
-	(*Checkpoint)(nil),                       // 20: ethereum.eth.v1alpha1.Checkpoint
-	(*AttestationData)(nil),                  // 21: ethereum.eth.v1alpha1.AttestationData
-	(*SyncCommittee)(nil),                    // 22: ethereum.eth.v1alpha1.SyncCommittee
-	(*v1.ExecutionPayloadHeader)(nil),        // 23: ethereum.engine.v1.ExecutionPayloadHeader
-	(*v1.ExecutionPayloadHeaderCapella)(nil), // 24: ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	(*HistoricalSummary)(nil),                // 25: ethereum.eth.v1alpha1.HistoricalSummary
-	(*v1.ExecutionPayloadHeaderDeneb)(nil),   // 26: ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	(*PendingDeposit)(nil),                   // 27: ethereum.eth.v1alpha1.PendingDeposit
-	(*PendingPartialWithdrawal)(nil),         // 28: ethereum.eth.v1alpha1.PendingPartialWithdrawal
-	(*PendingConsolidation)(nil),             // 29: ethereum.eth.v1alpha1.PendingConsolidation
+	(*BeaconState)(nil),                      // 0: sila.eth.v1alpha1.BeaconState
+	(*PendingAttestation)(nil),               // 1: sila.eth.v1alpha1.PendingAttestation
+	(*HistoricalBatch)(nil),                  // 2: sila.eth.v1alpha1.HistoricalBatch
+	(*StateSummary)(nil),                     // 3: sila.eth.v1alpha1.StateSummary
+	(*SigningData)(nil),                      // 4: sila.eth.v1alpha1.SigningData
+	(*ForkData)(nil),                         // 5: sila.eth.v1alpha1.ForkData
+	(*CheckPtInfo)(nil),                      // 6: sila.eth.v1alpha1.CheckPtInfo
+	(*DepositMessage)(nil),                   // 7: sila.eth.v1alpha1.DepositMessage
+	(*PowBlock)(nil),                         // 8: sila.eth.v1alpha1.PowBlock
+	(*BeaconStateAltair)(nil),                // 9: sila.eth.v1alpha1.BeaconStateAltair
+	(*SyncAggregatorSelectionData)(nil),      // 10: sila.eth.v1alpha1.SyncAggregatorSelectionData
+	(*BeaconStateBellatrix)(nil),             // 11: sila.eth.v1alpha1.BeaconStateBellatrix
+	(*BeaconStateCapella)(nil),               // 12: sila.eth.v1alpha1.BeaconStateCapella
+	(*BeaconStateDeneb)(nil),                 // 13: sila.eth.v1alpha1.BeaconStateDeneb
+	(*BeaconStateElectra)(nil),               // 14: sila.eth.v1alpha1.BeaconStateElectra
+	(*BeaconStateFulu)(nil),                  // 15: sila.eth.v1alpha1.BeaconStateFulu
+	(*Fork)(nil),                             // 16: sila.eth.v1alpha1.Fork
+	(*BeaconBlockHeader)(nil),                // 17: sila.eth.v1alpha1.BeaconBlockHeader
+	(*SilaExecutionData)(nil),                         // 18: sila.eth.v1alpha1.SilaExecutionData
+	(*Validator)(nil),                        // 19: sila.eth.v1alpha1.Validator
+	(*Checkpoint)(nil),                       // 20: sila.eth.v1alpha1.Checkpoint
+	(*AttestationData)(nil),                  // 21: sila.eth.v1alpha1.AttestationData
+	(*SyncCommittee)(nil),                    // 22: sila.eth.v1alpha1.SyncCommittee
+	(*v1.ExecutionPayloadHeader)(nil),        // 23: sila.engine.v1.ExecutionPayloadHeader
+	(*v1.ExecutionPayloadHeaderCapella)(nil), // 24: sila.engine.v1.ExecutionPayloadHeaderCapella
+	(*HistoricalSummary)(nil),                // 25: sila.eth.v1alpha1.HistoricalSummary
+	(*v1.ExecutionPayloadHeaderDeneb)(nil),   // 26: sila.engine.v1.ExecutionPayloadHeaderDeneb
+	(*PendingDeposit)(nil),                   // 27: sila.eth.v1alpha1.PendingDeposit
+	(*PendingPartialWithdrawal)(nil),         // 28: sila.eth.v1alpha1.PendingPartialWithdrawal
+	(*PendingConsolidation)(nil),             // 29: sila.eth.v1alpha1.PendingConsolidation
 }
 var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
-	16, // 0: ethereum.eth.v1alpha1.BeaconState.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 1: ethereum.eth.v1alpha1.BeaconState.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 2: ethereum.eth.v1alpha1.BeaconState.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 3: ethereum.eth.v1alpha1.BeaconState.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 4: ethereum.eth.v1alpha1.BeaconState.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	1,  // 5: ethereum.eth.v1alpha1.BeaconState.previous_epoch_attestations:type_name -> ethereum.eth.v1alpha1.PendingAttestation
-	1,  // 6: ethereum.eth.v1alpha1.BeaconState.current_epoch_attestations:type_name -> ethereum.eth.v1alpha1.PendingAttestation
-	20, // 7: ethereum.eth.v1alpha1.BeaconState.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 8: ethereum.eth.v1alpha1.BeaconState.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 9: ethereum.eth.v1alpha1.BeaconState.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	21, // 10: ethereum.eth.v1alpha1.PendingAttestation.data:type_name -> ethereum.eth.v1alpha1.AttestationData
-	16, // 11: ethereum.eth.v1alpha1.CheckPtInfo.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	16, // 12: ethereum.eth.v1alpha1.BeaconStateAltair.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 13: ethereum.eth.v1alpha1.BeaconStateAltair.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 14: ethereum.eth.v1alpha1.BeaconStateAltair.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 15: ethereum.eth.v1alpha1.BeaconStateAltair.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 16: ethereum.eth.v1alpha1.BeaconStateAltair.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	20, // 17: ethereum.eth.v1alpha1.BeaconStateAltair.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 18: ethereum.eth.v1alpha1.BeaconStateAltair.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 19: ethereum.eth.v1alpha1.BeaconStateAltair.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	22, // 20: ethereum.eth.v1alpha1.BeaconStateAltair.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	22, // 21: ethereum.eth.v1alpha1.BeaconStateAltair.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	16, // 22: ethereum.eth.v1alpha1.BeaconStateBellatrix.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 23: ethereum.eth.v1alpha1.BeaconStateBellatrix.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 24: ethereum.eth.v1alpha1.BeaconStateBellatrix.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 25: ethereum.eth.v1alpha1.BeaconStateBellatrix.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 26: ethereum.eth.v1alpha1.BeaconStateBellatrix.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	20, // 27: ethereum.eth.v1alpha1.BeaconStateBellatrix.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 28: ethereum.eth.v1alpha1.BeaconStateBellatrix.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 29: ethereum.eth.v1alpha1.BeaconStateBellatrix.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	22, // 30: ethereum.eth.v1alpha1.BeaconStateBellatrix.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	22, // 31: ethereum.eth.v1alpha1.BeaconStateBellatrix.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	23, // 32: ethereum.eth.v1alpha1.BeaconStateBellatrix.latest_execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeader
-	16, // 33: ethereum.eth.v1alpha1.BeaconStateCapella.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 34: ethereum.eth.v1alpha1.BeaconStateCapella.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 35: ethereum.eth.v1alpha1.BeaconStateCapella.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 36: ethereum.eth.v1alpha1.BeaconStateCapella.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 37: ethereum.eth.v1alpha1.BeaconStateCapella.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	20, // 38: ethereum.eth.v1alpha1.BeaconStateCapella.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 39: ethereum.eth.v1alpha1.BeaconStateCapella.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 40: ethereum.eth.v1alpha1.BeaconStateCapella.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	22, // 41: ethereum.eth.v1alpha1.BeaconStateCapella.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	22, // 42: ethereum.eth.v1alpha1.BeaconStateCapella.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	24, // 43: ethereum.eth.v1alpha1.BeaconStateCapella.latest_execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	25, // 44: ethereum.eth.v1alpha1.BeaconStateCapella.historical_summaries:type_name -> ethereum.eth.v1alpha1.HistoricalSummary
-	16, // 45: ethereum.eth.v1alpha1.BeaconStateDeneb.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 46: ethereum.eth.v1alpha1.BeaconStateDeneb.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 47: ethereum.eth.v1alpha1.BeaconStateDeneb.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 48: ethereum.eth.v1alpha1.BeaconStateDeneb.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 49: ethereum.eth.v1alpha1.BeaconStateDeneb.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	20, // 50: ethereum.eth.v1alpha1.BeaconStateDeneb.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 51: ethereum.eth.v1alpha1.BeaconStateDeneb.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 52: ethereum.eth.v1alpha1.BeaconStateDeneb.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	22, // 53: ethereum.eth.v1alpha1.BeaconStateDeneb.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	22, // 54: ethereum.eth.v1alpha1.BeaconStateDeneb.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	26, // 55: ethereum.eth.v1alpha1.BeaconStateDeneb.latest_execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	25, // 56: ethereum.eth.v1alpha1.BeaconStateDeneb.historical_summaries:type_name -> ethereum.eth.v1alpha1.HistoricalSummary
-	16, // 57: ethereum.eth.v1alpha1.BeaconStateElectra.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 58: ethereum.eth.v1alpha1.BeaconStateElectra.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 59: ethereum.eth.v1alpha1.BeaconStateElectra.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 60: ethereum.eth.v1alpha1.BeaconStateElectra.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 61: ethereum.eth.v1alpha1.BeaconStateElectra.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	20, // 62: ethereum.eth.v1alpha1.BeaconStateElectra.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 63: ethereum.eth.v1alpha1.BeaconStateElectra.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 64: ethereum.eth.v1alpha1.BeaconStateElectra.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	22, // 65: ethereum.eth.v1alpha1.BeaconStateElectra.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	22, // 66: ethereum.eth.v1alpha1.BeaconStateElectra.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	26, // 67: ethereum.eth.v1alpha1.BeaconStateElectra.latest_execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	25, // 68: ethereum.eth.v1alpha1.BeaconStateElectra.historical_summaries:type_name -> ethereum.eth.v1alpha1.HistoricalSummary
-	27, // 69: ethereum.eth.v1alpha1.BeaconStateElectra.pending_deposits:type_name -> ethereum.eth.v1alpha1.PendingDeposit
-	28, // 70: ethereum.eth.v1alpha1.BeaconStateElectra.pending_partial_withdrawals:type_name -> ethereum.eth.v1alpha1.PendingPartialWithdrawal
-	29, // 71: ethereum.eth.v1alpha1.BeaconStateElectra.pending_consolidations:type_name -> ethereum.eth.v1alpha1.PendingConsolidation
-	16, // 72: ethereum.eth.v1alpha1.BeaconStateFulu.fork:type_name -> ethereum.eth.v1alpha1.Fork
-	17, // 73: ethereum.eth.v1alpha1.BeaconStateFulu.latest_block_header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	18, // 74: ethereum.eth.v1alpha1.BeaconStateFulu.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	18, // 75: ethereum.eth.v1alpha1.BeaconStateFulu.sila_execution_data_votes:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	19, // 76: ethereum.eth.v1alpha1.BeaconStateFulu.validators:type_name -> ethereum.eth.v1alpha1.Validator
-	20, // 77: ethereum.eth.v1alpha1.BeaconStateFulu.previous_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 78: ethereum.eth.v1alpha1.BeaconStateFulu.current_justified_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	20, // 79: ethereum.eth.v1alpha1.BeaconStateFulu.finalized_checkpoint:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	22, // 80: ethereum.eth.v1alpha1.BeaconStateFulu.current_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	22, // 81: ethereum.eth.v1alpha1.BeaconStateFulu.next_sync_committee:type_name -> ethereum.eth.v1alpha1.SyncCommittee
-	26, // 82: ethereum.eth.v1alpha1.BeaconStateFulu.latest_execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	25, // 83: ethereum.eth.v1alpha1.BeaconStateFulu.historical_summaries:type_name -> ethereum.eth.v1alpha1.HistoricalSummary
-	27, // 84: ethereum.eth.v1alpha1.BeaconStateFulu.pending_deposits:type_name -> ethereum.eth.v1alpha1.PendingDeposit
-	28, // 85: ethereum.eth.v1alpha1.BeaconStateFulu.pending_partial_withdrawals:type_name -> ethereum.eth.v1alpha1.PendingPartialWithdrawal
-	29, // 86: ethereum.eth.v1alpha1.BeaconStateFulu.pending_consolidations:type_name -> ethereum.eth.v1alpha1.PendingConsolidation
+	16, // 0: sila.eth.v1alpha1.BeaconState.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 1: sila.eth.v1alpha1.BeaconState.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 2: sila.eth.v1alpha1.BeaconState.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 3: sila.eth.v1alpha1.BeaconState.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 4: sila.eth.v1alpha1.BeaconState.validators:type_name -> sila.eth.v1alpha1.Validator
+	1,  // 5: sila.eth.v1alpha1.BeaconState.previous_epoch_attestations:type_name -> sila.eth.v1alpha1.PendingAttestation
+	1,  // 6: sila.eth.v1alpha1.BeaconState.current_epoch_attestations:type_name -> sila.eth.v1alpha1.PendingAttestation
+	20, // 7: sila.eth.v1alpha1.BeaconState.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 8: sila.eth.v1alpha1.BeaconState.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 9: sila.eth.v1alpha1.BeaconState.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	21, // 10: sila.eth.v1alpha1.PendingAttestation.data:type_name -> sila.eth.v1alpha1.AttestationData
+	16, // 11: sila.eth.v1alpha1.CheckPtInfo.fork:type_name -> sila.eth.v1alpha1.Fork
+	16, // 12: sila.eth.v1alpha1.BeaconStateAltair.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 13: sila.eth.v1alpha1.BeaconStateAltair.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 14: sila.eth.v1alpha1.BeaconStateAltair.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 15: sila.eth.v1alpha1.BeaconStateAltair.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 16: sila.eth.v1alpha1.BeaconStateAltair.validators:type_name -> sila.eth.v1alpha1.Validator
+	20, // 17: sila.eth.v1alpha1.BeaconStateAltair.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 18: sila.eth.v1alpha1.BeaconStateAltair.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 19: sila.eth.v1alpha1.BeaconStateAltair.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	22, // 20: sila.eth.v1alpha1.BeaconStateAltair.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	22, // 21: sila.eth.v1alpha1.BeaconStateAltair.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	16, // 22: sila.eth.v1alpha1.BeaconStateBellatrix.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 23: sila.eth.v1alpha1.BeaconStateBellatrix.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 24: sila.eth.v1alpha1.BeaconStateBellatrix.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 25: sila.eth.v1alpha1.BeaconStateBellatrix.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 26: sila.eth.v1alpha1.BeaconStateBellatrix.validators:type_name -> sila.eth.v1alpha1.Validator
+	20, // 27: sila.eth.v1alpha1.BeaconStateBellatrix.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 28: sila.eth.v1alpha1.BeaconStateBellatrix.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 29: sila.eth.v1alpha1.BeaconStateBellatrix.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	22, // 30: sila.eth.v1alpha1.BeaconStateBellatrix.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	22, // 31: sila.eth.v1alpha1.BeaconStateBellatrix.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	23, // 32: sila.eth.v1alpha1.BeaconStateBellatrix.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeader
+	16, // 33: sila.eth.v1alpha1.BeaconStateCapella.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 34: sila.eth.v1alpha1.BeaconStateCapella.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 35: sila.eth.v1alpha1.BeaconStateCapella.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 36: sila.eth.v1alpha1.BeaconStateCapella.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 37: sila.eth.v1alpha1.BeaconStateCapella.validators:type_name -> sila.eth.v1alpha1.Validator
+	20, // 38: sila.eth.v1alpha1.BeaconStateCapella.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 39: sila.eth.v1alpha1.BeaconStateCapella.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 40: sila.eth.v1alpha1.BeaconStateCapella.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	22, // 41: sila.eth.v1alpha1.BeaconStateCapella.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	22, // 42: sila.eth.v1alpha1.BeaconStateCapella.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	24, // 43: sila.eth.v1alpha1.BeaconStateCapella.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderCapella
+	25, // 44: sila.eth.v1alpha1.BeaconStateCapella.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
+	16, // 45: sila.eth.v1alpha1.BeaconStateDeneb.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 46: sila.eth.v1alpha1.BeaconStateDeneb.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 47: sila.eth.v1alpha1.BeaconStateDeneb.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 48: sila.eth.v1alpha1.BeaconStateDeneb.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 49: sila.eth.v1alpha1.BeaconStateDeneb.validators:type_name -> sila.eth.v1alpha1.Validator
+	20, // 50: sila.eth.v1alpha1.BeaconStateDeneb.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 51: sila.eth.v1alpha1.BeaconStateDeneb.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 52: sila.eth.v1alpha1.BeaconStateDeneb.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	22, // 53: sila.eth.v1alpha1.BeaconStateDeneb.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	22, // 54: sila.eth.v1alpha1.BeaconStateDeneb.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	26, // 55: sila.eth.v1alpha1.BeaconStateDeneb.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	25, // 56: sila.eth.v1alpha1.BeaconStateDeneb.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
+	16, // 57: sila.eth.v1alpha1.BeaconStateElectra.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 58: sila.eth.v1alpha1.BeaconStateElectra.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 59: sila.eth.v1alpha1.BeaconStateElectra.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 60: sila.eth.v1alpha1.BeaconStateElectra.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 61: sila.eth.v1alpha1.BeaconStateElectra.validators:type_name -> sila.eth.v1alpha1.Validator
+	20, // 62: sila.eth.v1alpha1.BeaconStateElectra.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 63: sila.eth.v1alpha1.BeaconStateElectra.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 64: sila.eth.v1alpha1.BeaconStateElectra.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	22, // 65: sila.eth.v1alpha1.BeaconStateElectra.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	22, // 66: sila.eth.v1alpha1.BeaconStateElectra.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	26, // 67: sila.eth.v1alpha1.BeaconStateElectra.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	25, // 68: sila.eth.v1alpha1.BeaconStateElectra.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
+	27, // 69: sila.eth.v1alpha1.BeaconStateElectra.pending_deposits:type_name -> sila.eth.v1alpha1.PendingDeposit
+	28, // 70: sila.eth.v1alpha1.BeaconStateElectra.pending_partial_withdrawals:type_name -> sila.eth.v1alpha1.PendingPartialWithdrawal
+	29, // 71: sila.eth.v1alpha1.BeaconStateElectra.pending_consolidations:type_name -> sila.eth.v1alpha1.PendingConsolidation
+	16, // 72: sila.eth.v1alpha1.BeaconStateFulu.fork:type_name -> sila.eth.v1alpha1.Fork
+	17, // 73: sila.eth.v1alpha1.BeaconStateFulu.latest_block_header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	18, // 74: sila.eth.v1alpha1.BeaconStateFulu.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	18, // 75: sila.eth.v1alpha1.BeaconStateFulu.sila_execution_data_votes:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	19, // 76: sila.eth.v1alpha1.BeaconStateFulu.validators:type_name -> sila.eth.v1alpha1.Validator
+	20, // 77: sila.eth.v1alpha1.BeaconStateFulu.previous_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 78: sila.eth.v1alpha1.BeaconStateFulu.current_justified_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	20, // 79: sila.eth.v1alpha1.BeaconStateFulu.finalized_checkpoint:type_name -> sila.eth.v1alpha1.Checkpoint
+	22, // 80: sila.eth.v1alpha1.BeaconStateFulu.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	22, // 81: sila.eth.v1alpha1.BeaconStateFulu.next_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
+	26, // 82: sila.eth.v1alpha1.BeaconStateFulu.latest_execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	25, // 83: sila.eth.v1alpha1.BeaconStateFulu.historical_summaries:type_name -> sila.eth.v1alpha1.HistoricalSummary
+	27, // 84: sila.eth.v1alpha1.BeaconStateFulu.pending_deposits:type_name -> sila.eth.v1alpha1.PendingDeposit
+	28, // 85: sila.eth.v1alpha1.BeaconStateFulu.pending_partial_withdrawals:type_name -> sila.eth.v1alpha1.PendingPartialWithdrawal
+	29, // 86: sila.eth.v1alpha1.BeaconStateFulu.pending_consolidations:type_name -> sila.eth.v1alpha1.PendingConsolidation
 	87, // [87:87] is the sub-list for method output_type
 	87, // [87:87] is the sub-list for method input_type
 	87, // [87:87] is the sub-list for extension type_name
@@ -3693,7 +3693,7 @@ func file_proto_sila_v1alpha1_beacon_state_proto_init() {
 	}
 	file_proto_sila_v1alpha1_attestation_proto_init()
 	file_proto_sila_v1alpha1_beacon_core_types_proto_init()
-	file_proto_sila_v1alpha1_eip_7251_proto_init()
+	file_proto_sila_v1alpha1_sip_7251_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

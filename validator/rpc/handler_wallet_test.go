@@ -316,7 +316,7 @@ func TestServer_ValidateKeystores_FailedPreconditions(t *testing.T) {
 	wr.Body = &bytes.Buffer{}
 	ss.ValidateKeystores(wr, req)
 	require.NotEqual(t, http.StatusOK, wr.Code)
-	assert.StringContains(t, "Not a valid EIP-2335 keystore", wr.Body.String())
+	assert.StringContains(t, "Not a valid SIP-2335 keystore", wr.Body.String())
 }
 
 func TestServer_ValidateKeystores_OK(t *testing.T) {

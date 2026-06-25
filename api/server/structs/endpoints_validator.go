@@ -153,8 +153,8 @@ type GetValidatorParticipationResponse struct {
 
 type ValidatorParticipation struct {
 	GlobalParticipationRate          string `json:"global_participation_rate" deprecated:"true"`
-	VotedEther                       string `json:"voted_ether" deprecated:"true"`
-	EligibleEther                    string `json:"eligible_ether" deprecated:"true"`
+	VotedSila                       string `json:"voted_sila" deprecated:"true"`
+	EligibleSila                    string `json:"eligible_sila" deprecated:"true"`
 	CurrentEpochActiveGwei           string `json:"current_epoch_active_gwei"`
 	CurrentEpochAttestingGwei        string `json:"current_epoch_attesting_gwei"`
 	CurrentEpochTargetAttestingGwei  string `json:"current_epoch_target_attesting_gwei"`

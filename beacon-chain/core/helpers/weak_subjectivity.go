@@ -68,7 +68,7 @@ func ComputeWeakSubjectivityPeriod(ctx context.Context, st state.ReadOnlyBeaconS
 		return 0, errors.New("no active validators found")
 	}
 
-	// Average effective balance in the given validator set, in Ether.
+	// Average effective balance in the given validator set, in Sila.
 	t, err := TotalActiveBalance(ctx, st)
 	if err != nil {
 		return 0, fmt.Errorf("cannot find total active balance of validators: %w", err)

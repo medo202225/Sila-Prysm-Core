@@ -12,8 +12,8 @@
 pragma solidity 0.6.11;
 
 // This interface is designed to be compatible with the Vyper version.
-/// @notice This is the Ethereum 2.0 deposit contract interface.
-/// For historical reference see the external Phase 0 specification under https://github.com/ethereum/silaconsensus.0-specs
+/// @notice This is the Sila 2.0 deposit contract interface.
+/// For historical reference see the external Phase 0 specification under https://github.com/sila-chain/silaconsensus.0-specs
 interface IDepositContract {
     /// @notice A processed deposit event.
     event DepositEvent(
@@ -46,7 +46,7 @@ interface IDepositContract {
     function get_deposit_count() external view returns (bytes memory);
 }
 
-// Based on official specification in https://eips.ethereum.org/EIPS/eip-165
+// Based on official specification in https://sips.sila.org/SIPS/sip-165
 interface ERC165 {
     /// @notice Query if a contract implements an interface
     /// @param interfaceId The interface identifier, as specified in ERC-165
@@ -59,8 +59,8 @@ interface ERC165 {
 
 // This is a rewrite of the Vyper SilaConsensus.0 deposit contract in Solidity.
 // It tries to stay as close as possible to the original source code.
-/// @notice This is the Ethereum 2.0 deposit contract interface.
-/// For historical reference see the external Phase 0 specification under https://github.com/ethereum/silaconsensus.0-specs
+/// @notice This is the Sila 2.0 deposit contract interface.
+/// For historical reference see the external Phase 0 specification under https://github.com/sila-chain/silaconsensus.0-specs
 contract DepositContract is IDepositContract, ERC165 {
     uint constant DEPOSIT_CONTRACT_TREE_DEPTH = 32;
     // NOTE: this also ensures `deposit_count` will fit into 64-bits
@@ -110,7 +110,7 @@ contract DepositContract is IDepositContract, ERC165 {
         require(signature.length == 96, "DepositContract: invalid signature length");
 
         // Check deposit amount
-        require(msg.value >= 1 ether, "DepositContract: deposit value too low");
+        require(msg.value >= 1 sila, "DepositContract: deposit value too low");
         require(msg.value % 1 gwei == 0, "DepositContract: deposit value not multiple of gwei");
         uint deposit_amount = msg.value / 1 gwei;
         require(deposit_amount <= type(uint64).max, "DepositContract: deposit value too high");

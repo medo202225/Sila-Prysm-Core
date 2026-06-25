@@ -135,7 +135,7 @@ func (s *Store) AttestationHistoryForPubKey(ctx context.Context, pubKey [fieldpa
 }
 
 // SlashableAttestationCheck checks if an attestation is slashable by comparing it with the attesting
-// history for the given public key in our complete slashing protection database defined by EIP-3076.
+// history for the given public key in our complete slashing protection database defined by SIP-3076.
 // If it is not, it updates the database.
 func (s *Store) SlashableAttestationCheck(
 	ctx context.Context,
@@ -150,7 +150,7 @@ func (s *Store) SlashableAttestationCheck(
 
 	signingRoot := signingRoot32[:]
 
-	// Based on EIP-3076, validator should refuse to sign any attestation with source epoch less
+	// Based on SIP-3076, validator should refuse to sign any attestation with source epoch less
 	// than the minimum source epoch present in that signer’s attestations.
 	lowestSourceEpoch, exists, err := s.LowestSignedSourceEpoch(ctx, pubKey)
 	if err != nil {
@@ -169,7 +169,7 @@ func (s *Store) SlashableAttestationCheck(
 	}
 	signingRootsDiffer := slashings.SigningRootsDiffer(existingSigningRoot, signingRoot)
 
-	// Based on EIP-3076, validator should refuse to sign any attestation with target epoch less
+	// Based on SIP-3076, validator should refuse to sign any attestation with target epoch less
 	// than or equal to the minimum target epoch present in that signer’s attestations, except
 	// if it is a repeat signing as determined by the signingRoot.
 	lowestTargetEpoch, exists, err := s.LowestSignedTargetEpoch(ctx, pubKey)

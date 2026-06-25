@@ -123,7 +123,7 @@ func (km *Keymanager) ImportKeypairs(ctx context.Context, privKeys, pubKeys [][]
 	return nil
 }
 
-// Retrieves the private key and public key from an EIP-2335 keystore file
+// Retrieves the private key and public key from an SIP-2335 keystore file
 // by decrypting using a specified password. If the password fails,
 // it prompts the user for the correct password until it confirms.
 func (*Keymanager) attemptDecryptKeystore(

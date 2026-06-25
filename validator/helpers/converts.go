@@ -62,7 +62,7 @@ func RootFromHex(str string) ([32]byte, error) {
 }
 
 func RootToHexString(root []byte) (string, error) {
-	// Nil signing roots are allowed in EIP-3076.
+	// Nil signing roots are allowed in SIP-3076.
 	if len(root) == 0 {
 		return "", nil
 	}

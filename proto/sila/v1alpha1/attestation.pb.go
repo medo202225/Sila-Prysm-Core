@@ -752,26 +752,26 @@ func file_proto_sila_v1alpha1_attestation_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_attestation_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_sila_v1alpha1_attestation_proto_goTypes = []any{
-	(*SignedAggregateAttestationAndProof)(nil),        // 0: ethereum.eth.v1alpha1.SignedAggregateAttestationAndProof
-	(*AggregateAttestationAndProof)(nil),              // 1: ethereum.eth.v1alpha1.AggregateAttestationAndProof
-	(*Attestation)(nil),                               // 2: ethereum.eth.v1alpha1.Attestation
-	(*AttestationData)(nil),                           // 3: ethereum.eth.v1alpha1.AttestationData
-	(*Checkpoint)(nil),                                // 4: ethereum.eth.v1alpha1.Checkpoint
-	(*SignedAggregateAttestationAndProofElectra)(nil), // 5: ethereum.eth.v1alpha1.SignedAggregateAttestationAndProofElectra
-	(*AggregateAttestationAndProofElectra)(nil),       // 6: ethereum.eth.v1alpha1.AggregateAttestationAndProofElectra
-	(*AttestationElectra)(nil),                        // 7: ethereum.eth.v1alpha1.AttestationElectra
-	(*SingleAttestation)(nil),                         // 8: ethereum.eth.v1alpha1.SingleAttestation
+	(*SignedAggregateAttestationAndProof)(nil),        // 0: sila.eth.v1alpha1.SignedAggregateAttestationAndProof
+	(*AggregateAttestationAndProof)(nil),              // 1: sila.eth.v1alpha1.AggregateAttestationAndProof
+	(*Attestation)(nil),                               // 2: sila.eth.v1alpha1.Attestation
+	(*AttestationData)(nil),                           // 3: sila.eth.v1alpha1.AttestationData
+	(*Checkpoint)(nil),                                // 4: sila.eth.v1alpha1.Checkpoint
+	(*SignedAggregateAttestationAndProofElectra)(nil), // 5: sila.eth.v1alpha1.SignedAggregateAttestationAndProofElectra
+	(*AggregateAttestationAndProofElectra)(nil),       // 6: sila.eth.v1alpha1.AggregateAttestationAndProofElectra
+	(*AttestationElectra)(nil),                        // 7: sila.eth.v1alpha1.AttestationElectra
+	(*SingleAttestation)(nil),                         // 8: sila.eth.v1alpha1.SingleAttestation
 }
 var file_proto_sila_v1alpha1_attestation_proto_depIdxs = []int32{
-	1, // 0: ethereum.eth.v1alpha1.SignedAggregateAttestationAndProof.message:type_name -> ethereum.eth.v1alpha1.AggregateAttestationAndProof
-	2, // 1: ethereum.eth.v1alpha1.AggregateAttestationAndProof.aggregate:type_name -> ethereum.eth.v1alpha1.Attestation
-	3, // 2: ethereum.eth.v1alpha1.Attestation.data:type_name -> ethereum.eth.v1alpha1.AttestationData
-	4, // 3: ethereum.eth.v1alpha1.AttestationData.source:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	4, // 4: ethereum.eth.v1alpha1.AttestationData.target:type_name -> ethereum.eth.v1alpha1.Checkpoint
-	6, // 5: ethereum.eth.v1alpha1.SignedAggregateAttestationAndProofElectra.message:type_name -> ethereum.eth.v1alpha1.AggregateAttestationAndProofElectra
-	7, // 6: ethereum.eth.v1alpha1.AggregateAttestationAndProofElectra.aggregate:type_name -> ethereum.eth.v1alpha1.AttestationElectra
-	3, // 7: ethereum.eth.v1alpha1.AttestationElectra.data:type_name -> ethereum.eth.v1alpha1.AttestationData
-	3, // 8: ethereum.eth.v1alpha1.SingleAttestation.data:type_name -> ethereum.eth.v1alpha1.AttestationData
+	1, // 0: sila.eth.v1alpha1.SignedAggregateAttestationAndProof.message:type_name -> sila.eth.v1alpha1.AggregateAttestationAndProof
+	2, // 1: sila.eth.v1alpha1.AggregateAttestationAndProof.aggregate:type_name -> sila.eth.v1alpha1.Attestation
+	3, // 2: sila.eth.v1alpha1.Attestation.data:type_name -> sila.eth.v1alpha1.AttestationData
+	4, // 3: sila.eth.v1alpha1.AttestationData.source:type_name -> sila.eth.v1alpha1.Checkpoint
+	4, // 4: sila.eth.v1alpha1.AttestationData.target:type_name -> sila.eth.v1alpha1.Checkpoint
+	6, // 5: sila.eth.v1alpha1.SignedAggregateAttestationAndProofElectra.message:type_name -> sila.eth.v1alpha1.AggregateAttestationAndProofElectra
+	7, // 6: sila.eth.v1alpha1.AggregateAttestationAndProofElectra.aggregate:type_name -> sila.eth.v1alpha1.AttestationElectra
+	3, // 7: sila.eth.v1alpha1.AttestationElectra.data:type_name -> sila.eth.v1alpha1.AttestationData
+	3, // 8: sila.eth.v1alpha1.SingleAttestation.data:type_name -> sila.eth.v1alpha1.AttestationData
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
 	9, // [9:9] is the sub-list for extension type_name

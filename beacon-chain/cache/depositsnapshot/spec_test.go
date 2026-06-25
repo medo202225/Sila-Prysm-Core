@@ -167,7 +167,7 @@ func readTestCases() ([]testCase, error) {
 		return nil, err
 	}
 	for _, ff := range testFolders {
-		if strings.Contains(ff.ShortPath, "eip4881_spec_tests") &&
+		if strings.Contains(ff.ShortPath, "sip4881_spec_tests") &&
 			strings.Contains(ff.ShortPath, "eip-4881/test_cases.yaml") {
 			enc, err := file.ReadFileAsBytes(ff.Path)
 			if err != nil {

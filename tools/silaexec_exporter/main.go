@@ -1,4 +1,4 @@
-// Prometheus exporter for Ethereum address balances.
+// Prometheus exporter for Sila address balances.
 // Forked from https://github.com/hunterlong/ethexporter
 package main
 
@@ -120,7 +120,7 @@ func CurrentBlock() uint64 {
 func ToEther(o *big.Int) *big.Float {
 	wei := big.NewFloat(0)
 	wei.SetInt(o)
-	return new(big.Float).Quo(wei, big.NewFloat(params.Ether))
+	return new(big.Float).Quo(wei, big.NewFloat(params.Sila))
 }
 
 // MetricsHTTP - HTTP response handler for /metrics.

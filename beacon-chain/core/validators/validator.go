@@ -74,7 +74,7 @@ func ExitInformation(s state.BeaconState) *ExitInfo {
 //	    if validator.exit_epoch != FAR_FUTURE_EPOCH:
 //	        return
 //
-//	    # Compute exit queue epoch [Modified in Electra:EIP7251]
+//	    # Compute exit queue epoch [Modified in Electra:SIP7251]
 //	    exit_queue_epoch = compute_exit_epoch_and_update_churn(state, validator.effective_balance)
 //
 //	    # Set validator exit epoch and withdrawable epoch
@@ -102,7 +102,7 @@ func InitiateValidatorExit(
 			return nil, err
 		}
 	} else {
-		// [Modified in Electra:EIP7251]
+		// [Modified in Electra:SIP7251]
 		// exit_queue_epoch = compute_exit_epoch_and_update_churn(state, validator.effective_balance)
 		var err error
 		exitInfo.HighestExitEpoch, err = s.ExitEpochAndUpdateChurn(ctx, primitives.Gwei(validator.EffectiveBalance))
@@ -146,7 +146,7 @@ func InitiateValidatorExitForTotalBal(
 			return nil, err
 		}
 	} else {
-		// [Modified in Electra:EIP7251]
+		// [Modified in Electra:SIP7251]
 		// exit_queue_epoch = compute_exit_epoch_and_update_churn(state, validator.effective_balance)
 		var err error
 		exitInfo.HighestExitEpoch, err = s.ExitEpochAndUpdateChurnForTotalBal(totalActiveBalance, primitives.Gwei(validator.EffectiveBalance))
@@ -216,7 +216,7 @@ func initiateValidatorExitPreElectra(ctx context.Context, s state.BeaconState, e
 //	  validator.slashed = True
 //	  validator.withdrawable_epoch = max(validator.withdrawable_epoch, Epoch(epoch + EPOCHS_PER_SLASHINGS_VECTOR))
 //	  state.slashings[epoch % EPOCHS_PER_SLASHINGS_VECTOR] += validator.effective_balance
-//	  slashing_penalty = validator.effective_balance // MIN_SLASHING_PENALTY_QUOTIENT_EIP7251  # [Modified in EIP7251]
+//	  slashing_penalty = validator.effective_balance // MIN_SLASHING_PENALTY_QUOTIENT_SIP7251  # [Modified in SIP7251]
 //	  decrease_balance(state, slashed_index, slashing_penalty)
 //
 //	  # Apply proposer and whistleblower rewards
@@ -224,7 +224,7 @@ func initiateValidatorExitPreElectra(ctx context.Context, s state.BeaconState, e
 //	  if whistleblower_index is None:
 //	      whistleblower_index = proposer_index
 //	  whistleblower_reward = Gwei(
-//	       validator.effective_balance // WHISTLEBLOWER_REWARD_QUOTIENT_ELECTRA)  # [Modified in EIP7251]
+//	       validator.effective_balance // WHISTLEBLOWER_REWARD_QUOTIENT_ELECTRA)  # [Modified in SIP7251]
 //	  proposer_reward = Gwei(whistleblower_reward * PROPOSER_WEIGHT // WEIGHT_DENOMINATOR)
 //	  increase_balance(state, proposer_index, proposer_reward)
 //	  increase_balance(state, whistleblower_index, Gwei(whistleblower_reward - proposer_reward))

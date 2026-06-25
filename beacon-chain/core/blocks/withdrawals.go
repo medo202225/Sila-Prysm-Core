@@ -125,7 +125,7 @@ func ValidateBLSToExecutionChange(st state.ReadOnlyBeaconState, signed *silapb.S
 //
 // def process_withdrawals(state: BeaconState, payload: ExecutionPayload) -> None:
 //
-//	expected_withdrawals, processed_partial_withdrawals_count = get_expected_withdrawals(state) # [Modified in Electra:EIP7251]
+//	expected_withdrawals, processed_partial_withdrawals_count = get_expected_withdrawals(state) # [Modified in Electra:SIP7251]
 //
 //	assert len(payload.withdrawals) == len(expected_withdrawals)
 //
@@ -133,7 +133,7 @@ func ValidateBLSToExecutionChange(st state.ReadOnlyBeaconState, signed *silapb.S
 //	     assert withdrawal == expected_withdrawal
 //	     decrease_balance(state, withdrawal.validator_index, withdrawal.amount)
 //
-//	# Update pending partial withdrawals [New in Electra:EIP7251]
+//	# Update pending partial withdrawals [New in Electra:SIP7251]
 //	state.pending_partial_withdrawals = state.pending_partial_withdrawals[processed_partial_withdrawals_count:]
 //
 //	# Update the next withdrawal index if this block contained withdrawals

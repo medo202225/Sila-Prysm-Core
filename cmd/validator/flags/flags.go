@@ -266,7 +266,7 @@ var (
 	// SlashingProtectionJSONFileFlag is used to enter the file path of the slashing protection JSON.
 	SlashingProtectionJSONFileFlag = &cli.StringFlag{
 		Name:  "slashing-protection-json-file",
-		Usage: "Path to an EIP-3076 compliant JSON file containing a user's slashing protection history.",
+		Usage: "Path to an SIP-3076 compliant JSON file containing a user's slashing protection history.",
 	}
 	// KeysDirFlag defines the path for a directory where keystores to be imported at stored.
 	KeysDirFlag = &cli.StringFlag{
@@ -339,7 +339,7 @@ var (
 	// for a validator's slashing protection history.
 	SlashingProtectionExportDirFlag = &cli.StringFlag{
 		Name:  "slashing-protection-export-dir",
-		Usage: "Allows users to specify the output directory to export their slashing protection EIP-3076 standard JSON File.",
+		Usage: "Allows users to specify the output directory to export their slashing protection SIP-3076 standard JSON File.",
 		Value: "",
 	}
 	// GraffitiFileFlag specifies the file path to load graffiti values.

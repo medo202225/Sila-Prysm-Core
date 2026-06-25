@@ -267,7 +267,7 @@ func (s *Server) RecoverWallet(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// ValidateKeystores checks whether a set of EIP-2335 keystores in the request
+// ValidateKeystores checks whether a set of SIP-2335 keystores in the request
 // can indeed be decrypted using a password in the request. If there is no issue,
 // we return an empty response with no error. If the password is incorrect for a single keystore,
 // we return an appropriate error.
@@ -300,7 +300,7 @@ func (*Server) ValidateKeystores(w http.ResponseWriter, r *http.Request) {
 		encoded := req.Keystores[i]
 		keystore := &keymanager.Keystore{}
 		if err := json.Unmarshal([]byte(encoded), &keystore); err != nil {
-			httputil.HandleError(w, "Not a valid EIP-2335 keystore JSON file: "+err.Error(), http.StatusBadRequest)
+			httputil.HandleError(w, "Not a valid SIP-2335 keystore JSON file: "+err.Error(), http.StatusBadRequest)
 			return
 		}
 		if keystore.Description == "" && keystore.Name != "" {

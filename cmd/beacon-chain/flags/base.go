@@ -25,7 +25,7 @@ var (
 	// MevRelayEndpoint provides an HTTP access endpoint to a MEV builder network.
 	MevRelayEndpoint = &cli.StringFlag{
 		Name:  "http-mev-relay",
-		Usage: "A MEV builder relay string http endpoint, this will be used to interact MEV builder network using API defined in: https://ethereum.github.io/builder-specs/#/Builder",
+		Usage: "A MEV builder relay string http endpoint, this will be used to interact MEV builder network using API defined in: https://sila.github.io/builder-specs/#/Builder",
 		Value: "",
 	}
 
@@ -251,7 +251,7 @@ var (
 	}
 	// EngineEndpointTimeoutSeconds defines the seconds to wait before timing out engine endpoints with execution payload execution semantics (newPayload, forkchoiceUpdated).
 	// If this flag is not used then default will be used as defined here:
-	// https://github.com/ethereum/execution-apis/blob/main/src/engine/specification.md#core
+	// https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/specification.md#core
 	EngineEndpointTimeoutSeconds = &cli.Uint64Flag{
 		Name:  "engine-endpoint-timeout-seconds",
 		Usage: "Sets the execution engine timeout (seconds) for execution payload semantics (forkchoiceUpdated, newPayload)",

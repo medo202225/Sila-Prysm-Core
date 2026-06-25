@@ -83,7 +83,7 @@ var Commands = &cli.Command{
 		},
 		{
 			Name: "backup",
-			Description: "backup accounts into EIP-2335 compliant keystore.json files zipped into a backup.zip file " +
+			Description: "backup accounts into SIP-2335 compliant keystore.json files zipped into a backup.zip file " +
 				"at a desired output directory. Accounts to backup can also " +
 				"be specified programmatically via a --backup-for-public-keys flag which specifies a comma-separated " +
 				"list of hex string public keys",
@@ -117,7 +117,7 @@ var Commands = &cli.Command{
 		},
 		{
 			Name:        "import",
-			Description: `imports validator accounts stored in EIP-2335 keystore.json files from an external directory`,
+			Description: `imports validator accounts stored in SIP-2335 keystore.json files from an external directory`,
 			Flags: cmd.WrapFlags([]cli.Flag{
 				flags.WalletDirFlag,
 				flags.KeysDirFlag,

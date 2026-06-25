@@ -60,7 +60,7 @@ func TestValidatorRegister_OK(t *testing.T) {
 	testAccount.Backend.Commit()
 	assert.NoError(t, err, "Validator registration failed")
 
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			testAccount.ContractAddr,
 		},

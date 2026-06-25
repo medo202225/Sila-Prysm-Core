@@ -44,8 +44,8 @@ func (s *Server) GetParticipation(w http.ResponseWriter, r *http.Request) {
 		Finalized: vp.Finalized,
 		Participation: &structs.ValidatorParticipation{
 			GlobalParticipationRate:          fmt.Sprintf("%f", vp.Participation.GlobalParticipationRate),
-			VotedEther:                       fmt.Sprintf("%d", vp.Participation.VotedEther),
-			EligibleEther:                    fmt.Sprintf("%d", vp.Participation.EligibleEther),
+			VotedSila:                       fmt.Sprintf("%d", vp.Participation.VotedSila),
+			EligibleSila:                    fmt.Sprintf("%d", vp.Participation.EligibleSila),
 			CurrentEpochActiveGwei:           fmt.Sprintf("%d", vp.Participation.CurrentEpochActiveGwei),
 			CurrentEpochAttestingGwei:        fmt.Sprintf("%d", vp.Participation.CurrentEpochAttestingGwei),
 			CurrentEpochTargetAttestingGwei:  fmt.Sprintf("%d", vp.Participation.CurrentEpochTargetAttestingGwei),

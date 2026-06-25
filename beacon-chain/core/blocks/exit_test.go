@@ -244,7 +244,7 @@ func TestVerifyExitAndSignature(t *testing.T) {
 			wantErr: "signature did not verify",
 		},
 		{
-			name: "EIP-7044: deneb exits should verify with capella fork information",
+			name: "SIP-7044: deneb exits should verify with capella fork information",
 			setup: func() (*silapb.Validator, *silapb.SignedVoluntaryExit, state.ReadOnlyBeaconState, error) {
 				fork := &silapb.Fork{
 					PreviousVersion: params.BeaconConfig().CapellaForkVersion,
@@ -281,7 +281,7 @@ func TestVerifyExitAndSignature(t *testing.T) {
 			},
 		},
 		{
-			name: "EIP-7251 - pending balance to withdraw must be zero",
+			name: "SIP-7251 - pending balance to withdraw must be zero",
 			setup: func() (*silapb.Validator, *silapb.SignedVoluntaryExit, state.ReadOnlyBeaconState, error) {
 				fork := &silapb.Fork{
 					PreviousVersion: params.BeaconConfig().DenebForkVersion,

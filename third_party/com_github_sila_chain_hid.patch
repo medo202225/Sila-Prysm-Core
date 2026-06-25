@@ -57,7 +57,7 @@ diff --git a/BUILD.bazel b/BUILD.bazel
 -        ],
 -        "//conditions:default": [],
 -    }),
-     importpath = "github.com/ethereum/hid",
+     importpath = "github.com/sila-chain/hid",
      visibility = ["//visibility:public"],
  )
 diff --git a/hid_disabled.go b/hid_disabled.go

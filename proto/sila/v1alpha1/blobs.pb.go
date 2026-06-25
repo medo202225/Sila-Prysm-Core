@@ -355,14 +355,14 @@ func file_proto_sila_v1alpha1_blobs_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_blobs_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_sila_v1alpha1_blobs_proto_goTypes = []any{
-	(*BlindedBlobSidecars)(nil),      // 0: ethereum.eth.v1alpha1.BlindedBlobSidecars
-	(*SignedBlindedBlobSidecar)(nil), // 1: ethereum.eth.v1alpha1.SignedBlindedBlobSidecar
-	(*BlindedBlobSidecar)(nil),       // 2: ethereum.eth.v1alpha1.BlindedBlobSidecar
-	(*BlobIdentifier)(nil),           // 3: ethereum.eth.v1alpha1.BlobIdentifier
+	(*BlindedBlobSidecars)(nil),      // 0: sila.eth.v1alpha1.BlindedBlobSidecars
+	(*SignedBlindedBlobSidecar)(nil), // 1: sila.eth.v1alpha1.SignedBlindedBlobSidecar
+	(*BlindedBlobSidecar)(nil),       // 2: sila.eth.v1alpha1.BlindedBlobSidecar
+	(*BlobIdentifier)(nil),           // 3: sila.eth.v1alpha1.BlobIdentifier
 }
 var file_proto_sila_v1alpha1_blobs_proto_depIdxs = []int32{
-	2, // 0: ethereum.eth.v1alpha1.BlindedBlobSidecars.sidecars:type_name -> ethereum.eth.v1alpha1.BlindedBlobSidecar
-	2, // 1: ethereum.eth.v1alpha1.SignedBlindedBlobSidecar.message:type_name -> ethereum.eth.v1alpha1.BlindedBlobSidecar
+	2, // 0: sila.eth.v1alpha1.BlindedBlobSidecars.sidecars:type_name -> sila.eth.v1alpha1.BlindedBlobSidecar
+	2, // 1: sila.eth.v1alpha1.SignedBlindedBlobSidecar.message:type_name -> sila.eth.v1alpha1.BlindedBlobSidecar
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

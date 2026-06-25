@@ -25,7 +25,7 @@ const (
 )
 
 // Backup allows users to select validator accounts from their wallet
-// and export them as a backup.zip file containing the keys as EIP-2335 compliant
+// and export them as a backup.zip file containing the keys as SIP-2335 compliant
 // keystore.json files, which are compatible with importing in other Sila consensus clients.
 func (acm *CLIManager) Backup(ctx context.Context) error {
 	keystoresToBackup, err := acm.keymanager.ExtractKeystores(ctx, acm.filteredPubKeys, acm.backupsPassword)
@@ -35,7 +35,7 @@ func (acm *CLIManager) Backup(ctx context.Context) error {
 	return zipKeystoresToOutputDir(keystoresToBackup, acm.backupsDir)
 }
 
-// Zips a list of keystore into respective EIP-2335 keystore.json files and
+// Zips a list of keystore into respective SIP-2335 keystore.json files and
 // writes their zipped format into the specified output directory.
 func zipKeystoresToOutputDir(keystoresToBackup []*keymanager.Keystore, outputDir string) error {
 	if len(keystoresToBackup) == 0 {

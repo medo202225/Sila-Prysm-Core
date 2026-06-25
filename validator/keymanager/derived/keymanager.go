@@ -20,7 +20,7 @@ const (
 	// DerivationPathFormat describes the structure of how keys are derived from a master key.
 	DerivationPathFormat = "m / purpose / coin_type / account_index / withdrawal_key / validating_key"
 	// ValidatingKeyDerivationPathTemplate defining the hierarchical path for validating
-	// keys for Sila validators. According to EIP-2334, the format is as follows:
+	// keys for Sila validators. According to SIP-2334, the format is as follows:
 	// m / purpose / coin_type / account_index / withdrawal_key / validating_key
 	ValidatingKeyDerivationPathTemplate = "m/12381/3600/%d/0/0"
 )
@@ -32,7 +32,7 @@ type SetupConfig struct {
 	ListenForChanges bool
 }
 
-// Keymanager implementation for derived, HD keymanager using EIP-2333 and EIP-2334.
+// Keymanager implementation for derived, HD keymanager using SIP-2333 and SIP-2334.
 type Keymanager struct {
 	localKM *local.Keymanager
 }
@@ -55,7 +55,7 @@ func NewKeymanager(
 }
 
 // RecoverAccountsFromMnemonic given a mnemonic phrase, is able to regenerate N accounts
-// from a derived seed, encrypt them according to the EIP-2334 JSON standard, and write them
+// from a derived seed, encrypt them according to the SIP-2334 JSON standard, and write them
 // to disk. Then, the mnemonic is never stored nor used by the validator.
 func (km *Keymanager) RecoverAccountsFromMnemonic(
 	ctx context.Context, mnemonic, mnemonicLanguage, mnemonicPassphrase string, numAccounts int,
@@ -81,7 +81,7 @@ func (km *Keymanager) RecoverAccountsFromMnemonic(
 
 // ExtractKeystores retrieves the secret keys for specified public keys
 // in the function input, encrypts them using the specified password,
-// and returns their respective EIP-2335 keystores.
+// and returns their respective SIP-2335 keystores.
 func (km *Keymanager) ExtractKeystores(
 	ctx context.Context, publicKeys []bls.PublicKey, password string,
 ) ([]*keymanager.Keystore, error) {

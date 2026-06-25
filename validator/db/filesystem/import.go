@@ -16,7 +16,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ImportStandardProtectionJSON takes in EIP-3076 compliant JSON file used for slashing protection
+// ImportStandardProtectionJSON takes in SIP-3076 compliant JSON file used for slashing protection
 // by Sila validators and imports its data into Sila's internal minimal representation of slashing
 // protection in the validator client's database.
 func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error {
@@ -90,7 +90,7 @@ func importBlockProposals(ctx context.Context, pubkey [fieldparams.BLSPubkeyLeng
 			return errors.Wrap(err, "could not convert slot to primitives.Slot")
 		}
 
-		// Save proposal if not slashable regarding EIP-3076 (minimal database)
+		// Save proposal if not slashable regarding SIP-3076 (minimal database)
 		if err := validatorDB.SaveProposalHistoryForSlot(ctx, pubkey, slot, []byte{}); err != nil && !strings.Contains(err.Error(), "could not sign proposal") {
 			return errors.Wrap(err, "could not save proposal history from imported JSON to database")
 		}

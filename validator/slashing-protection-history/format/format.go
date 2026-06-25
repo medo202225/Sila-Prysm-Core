@@ -1,6 +1,6 @@
 package format
 
-// InterchangeFormatVersion specified by https://eips.ethereum.org/EIPS/eip-3076.
+// InterchangeFormatVersion specified by https://sips.sila.org/SIPS/sip-3076.
 // The version Sila supports is version 5.
 const InterchangeFormatVersion = "5"
 

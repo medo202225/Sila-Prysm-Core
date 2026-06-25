@@ -83,7 +83,7 @@ func (db *ValidatorDBMock) SlashableProposalCheck(
 }
 
 // Attester protection related methods.
-// Methods to store and read blacklisted public keys from EIP-3076
+// Methods to store and read blacklisted public keys from SIP-3076
 // slashing protection imports.
 func (db *ValidatorDBMock) EIPImportBlacklistedPublicKeys(ctx context.Context) ([][fieldparams.BLSPubkeyLength]byte, error) {
 	panic("not implemented")
@@ -157,7 +157,7 @@ func (db *ValidatorDBMock) SaveProposerSettings(ctx context.Context, settings *p
 	panic("not implemented")
 }
 
-// EIP-3076 slashing protection related methods
+// SIP-3076 slashing protection related methods
 func (db *ValidatorDBMock) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error {
 	panic("not implemented")
 }

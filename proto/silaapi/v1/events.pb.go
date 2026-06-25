@@ -459,10 +459,10 @@ func file_proto_silaapi_v1_events_proto_rawDescGZIP() []byte {
 
 var file_proto_silaapi_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_silaapi_v1_events_proto_goTypes = []any{
-	(*EventHead)(nil),                // 0: ethereum.eth.v1.EventHead
-	(*EventBlock)(nil),               // 1: ethereum.eth.v1.EventBlock
-	(*EventChainReorg)(nil),          // 2: ethereum.eth.v1.EventChainReorg
-	(*EventFinalizedCheckpoint)(nil), // 3: ethereum.eth.v1.EventFinalizedCheckpoint
+	(*EventHead)(nil),                // 0: sila.eth.v1.EventHead
+	(*EventBlock)(nil),               // 1: sila.eth.v1.EventBlock
+	(*EventChainReorg)(nil),          // 2: sila.eth.v1.EventChainReorg
+	(*EventFinalizedCheckpoint)(nil), // 3: sila.eth.v1.EventFinalizedCheckpoint
 }
 var file_proto_silaapi_v1_events_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

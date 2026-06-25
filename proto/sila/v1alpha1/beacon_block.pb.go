@@ -5830,240 +5830,240 @@ func file_proto_sila_v1alpha1_beacon_block_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_beacon_block_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
 var file_proto_sila_v1alpha1_beacon_block_proto_goTypes = []any{
-	(*GenericSignedBeaconBlock)(nil),          // 0: ethereum.eth.v1alpha1.GenericSignedBeaconBlock
-	(*GenericBeaconBlock)(nil),                // 1: ethereum.eth.v1alpha1.GenericBeaconBlock
-	(*SignedBeaconBlock)(nil),                 // 2: ethereum.eth.v1alpha1.SignedBeaconBlock
-	(*BeaconBlock)(nil),                       // 3: ethereum.eth.v1alpha1.BeaconBlock
-	(*BeaconBlockBody)(nil),                   // 4: ethereum.eth.v1alpha1.BeaconBlockBody
-	(*AttesterSlashing)(nil),                  // 5: ethereum.eth.v1alpha1.AttesterSlashing
-	(*IndexedAttestation)(nil),                // 6: ethereum.eth.v1alpha1.IndexedAttestation
-	(*SignedValidatorRegistrationsV1)(nil),    // 7: ethereum.eth.v1alpha1.SignedValidatorRegistrationsV1
-	(*SignedValidatorRegistrationV1)(nil),     // 8: ethereum.eth.v1alpha1.SignedValidatorRegistrationV1
-	(*ValidatorRegistrationV1)(nil),           // 9: ethereum.eth.v1alpha1.ValidatorRegistrationV1
-	(*SignedBuilderBid)(nil),                  // 10: ethereum.eth.v1alpha1.SignedBuilderBid
-	(*BuilderBid)(nil),                        // 11: ethereum.eth.v1alpha1.BuilderBid
-	(*SignedBeaconBlockAltair)(nil),           // 12: ethereum.eth.v1alpha1.SignedBeaconBlockAltair
-	(*BeaconBlockAltair)(nil),                 // 13: ethereum.eth.v1alpha1.BeaconBlockAltair
-	(*BeaconBlockBodyAltair)(nil),             // 14: ethereum.eth.v1alpha1.BeaconBlockBodyAltair
-	(*SignedBeaconBlockBellatrix)(nil),        // 15: ethereum.eth.v1alpha1.SignedBeaconBlockBellatrix
-	(*BeaconBlockBellatrix)(nil),              // 16: ethereum.eth.v1alpha1.BeaconBlockBellatrix
-	(*BeaconBlockBodyBellatrix)(nil),          // 17: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix
-	(*SignedBlindedBeaconBlockBellatrix)(nil), // 18: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
-	(*BlindedBeaconBlockBellatrix)(nil),       // 19: ethereum.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	(*BlindedBeaconBlockBodyBellatrix)(nil),   // 20: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix
-	(*SignedBeaconBlockCapella)(nil),          // 21: ethereum.eth.v1alpha1.SignedBeaconBlockCapella
-	(*BeaconBlockCapella)(nil),                // 22: ethereum.eth.v1alpha1.BeaconBlockCapella
-	(*BeaconBlockBodyCapella)(nil),            // 23: ethereum.eth.v1alpha1.BeaconBlockBodyCapella
-	(*SignedBlindedBeaconBlockCapella)(nil),   // 24: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockCapella
-	(*BlindedBeaconBlockCapella)(nil),         // 25: ethereum.eth.v1alpha1.BlindedBeaconBlockCapella
-	(*BlindedBeaconBlockBodyCapella)(nil),     // 26: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella
-	(*SignedBuilderBidCapella)(nil),           // 27: ethereum.eth.v1alpha1.SignedBuilderBidCapella
-	(*BuilderBidCapella)(nil),                 // 28: ethereum.eth.v1alpha1.BuilderBidCapella
-	(*SignedBeaconBlockContentsDeneb)(nil),    // 29: ethereum.eth.v1alpha1.SignedBeaconBlockContentsDeneb
-	(*SignedBeaconBlockDeneb)(nil),            // 30: ethereum.eth.v1alpha1.SignedBeaconBlockDeneb
-	(*BeaconBlockContentsDeneb)(nil),          // 31: ethereum.eth.v1alpha1.BeaconBlockContentsDeneb
-	(*BeaconBlockDeneb)(nil),                  // 32: ethereum.eth.v1alpha1.BeaconBlockDeneb
-	(*BeaconBlockBodyDeneb)(nil),              // 33: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb
-	(*SignedBlindedBeaconBlockDeneb)(nil),     // 34: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
-	(*BlindedBeaconBlockDeneb)(nil),           // 35: ethereum.eth.v1alpha1.BlindedBeaconBlockDeneb
-	(*BlindedBeaconBlockBodyDeneb)(nil),       // 36: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb
-	(*SignedBuilderBidDeneb)(nil),             // 37: ethereum.eth.v1alpha1.SignedBuilderBidDeneb
-	(*BuilderBidDeneb)(nil),                   // 38: ethereum.eth.v1alpha1.BuilderBidDeneb
-	(*BuilderBidElectra)(nil),                 // 39: ethereum.eth.v1alpha1.BuilderBidElectra
-	(*SignedBuilderBidElectra)(nil),           // 40: ethereum.eth.v1alpha1.SignedBuilderBidElectra
-	(*BlobSidecars)(nil),                      // 41: ethereum.eth.v1alpha1.BlobSidecars
-	(*BlobSidecar)(nil),                       // 42: ethereum.eth.v1alpha1.BlobSidecar
-	(*SignedBeaconBlockContentsElectra)(nil),  // 43: ethereum.eth.v1alpha1.SignedBeaconBlockContentsElectra
-	(*SignedBeaconBlockElectra)(nil),          // 44: ethereum.eth.v1alpha1.SignedBeaconBlockElectra
-	(*BeaconBlockContentsElectra)(nil),        // 45: ethereum.eth.v1alpha1.BeaconBlockContentsElectra
-	(*BeaconBlockElectra)(nil),                // 46: ethereum.eth.v1alpha1.BeaconBlockElectra
-	(*BeaconBlockBodyElectra)(nil),            // 47: ethereum.eth.v1alpha1.BeaconBlockBodyElectra
-	(*SignedBlindedBeaconBlockElectra)(nil),   // 48: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockElectra
-	(*BlindedBeaconBlockElectra)(nil),         // 49: ethereum.eth.v1alpha1.BlindedBeaconBlockElectra
-	(*BlindedBeaconBlockBodyElectra)(nil),     // 50: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra
-	(*SignedBeaconBlockContentsFulu)(nil),     // 51: ethereum.eth.v1alpha1.SignedBeaconBlockContentsFulu
-	(*SignedBeaconBlockFulu)(nil),             // 52: ethereum.eth.v1alpha1.SignedBeaconBlockFulu
-	(*BeaconBlockContentsFulu)(nil),           // 53: ethereum.eth.v1alpha1.BeaconBlockContentsFulu
-	(*SignedBlindedBeaconBlockFulu)(nil),      // 54: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockFulu
-	(*BlindedBeaconBlockFulu)(nil),            // 55: ethereum.eth.v1alpha1.BlindedBeaconBlockFulu
-	(*SignedBeaconBlockGloas)(nil),            // 56: ethereum.eth.v1alpha1.SignedBeaconBlockGloas
-	(*BeaconBlockGloas)(nil),                  // 57: ethereum.eth.v1alpha1.BeaconBlockGloas
-	(*SilaExecutionData)(nil),                          // 58: ethereum.eth.v1alpha1.SilaExecutionData
-	(*ProposerSlashing)(nil),                  // 59: ethereum.eth.v1alpha1.ProposerSlashing
-	(*Attestation)(nil),                       // 60: ethereum.eth.v1alpha1.Attestation
-	(*Deposit)(nil),                           // 61: ethereum.eth.v1alpha1.Deposit
-	(*SignedVoluntaryExit)(nil),               // 62: ethereum.eth.v1alpha1.SignedVoluntaryExit
-	(*AttestationData)(nil),                   // 63: ethereum.eth.v1alpha1.AttestationData
-	(*v1.ExecutionPayloadHeader)(nil),         // 64: ethereum.engine.v1.ExecutionPayloadHeader
-	(*SyncAggregate)(nil),                     // 65: ethereum.eth.v1alpha1.SyncAggregate
-	(*v1.ExecutionPayload)(nil),               // 66: ethereum.engine.v1.ExecutionPayload
-	(*v1.ExecutionPayloadCapella)(nil),        // 67: ethereum.engine.v1.ExecutionPayloadCapella
-	(*SignedBLSToExecutionChange)(nil),        // 68: ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	(*v1.ExecutionPayloadHeaderCapella)(nil),  // 69: ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	(*v1.ExecutionPayloadDeneb)(nil),          // 70: ethereum.engine.v1.ExecutionPayloadDeneb
-	(*v1.ExecutionPayloadHeaderDeneb)(nil),    // 71: ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	(*v1.ExecutionRequests)(nil),              // 72: ethereum.engine.v1.ExecutionRequests
-	(*SignedBeaconBlockHeader)(nil),           // 73: ethereum.eth.v1alpha1.SignedBeaconBlockHeader
-	(*AttesterSlashingElectra)(nil),           // 74: ethereum.eth.v1alpha1.AttesterSlashingElectra
-	(*AttestationElectra)(nil),                // 75: ethereum.eth.v1alpha1.AttestationElectra
+	(*GenericSignedBeaconBlock)(nil),          // 0: sila.eth.v1alpha1.GenericSignedBeaconBlock
+	(*GenericBeaconBlock)(nil),                // 1: sila.eth.v1alpha1.GenericBeaconBlock
+	(*SignedBeaconBlock)(nil),                 // 2: sila.eth.v1alpha1.SignedBeaconBlock
+	(*BeaconBlock)(nil),                       // 3: sila.eth.v1alpha1.BeaconBlock
+	(*BeaconBlockBody)(nil),                   // 4: sila.eth.v1alpha1.BeaconBlockBody
+	(*AttesterSlashing)(nil),                  // 5: sila.eth.v1alpha1.AttesterSlashing
+	(*IndexedAttestation)(nil),                // 6: sila.eth.v1alpha1.IndexedAttestation
+	(*SignedValidatorRegistrationsV1)(nil),    // 7: sila.eth.v1alpha1.SignedValidatorRegistrationsV1
+	(*SignedValidatorRegistrationV1)(nil),     // 8: sila.eth.v1alpha1.SignedValidatorRegistrationV1
+	(*ValidatorRegistrationV1)(nil),           // 9: sila.eth.v1alpha1.ValidatorRegistrationV1
+	(*SignedBuilderBid)(nil),                  // 10: sila.eth.v1alpha1.SignedBuilderBid
+	(*BuilderBid)(nil),                        // 11: sila.eth.v1alpha1.BuilderBid
+	(*SignedBeaconBlockAltair)(nil),           // 12: sila.eth.v1alpha1.SignedBeaconBlockAltair
+	(*BeaconBlockAltair)(nil),                 // 13: sila.eth.v1alpha1.BeaconBlockAltair
+	(*BeaconBlockBodyAltair)(nil),             // 14: sila.eth.v1alpha1.BeaconBlockBodyAltair
+	(*SignedBeaconBlockBellatrix)(nil),        // 15: sila.eth.v1alpha1.SignedBeaconBlockBellatrix
+	(*BeaconBlockBellatrix)(nil),              // 16: sila.eth.v1alpha1.BeaconBlockBellatrix
+	(*BeaconBlockBodyBellatrix)(nil),          // 17: sila.eth.v1alpha1.BeaconBlockBodyBellatrix
+	(*SignedBlindedBeaconBlockBellatrix)(nil), // 18: sila.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
+	(*BlindedBeaconBlockBellatrix)(nil),       // 19: sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
+	(*BlindedBeaconBlockBodyBellatrix)(nil),   // 20: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix
+	(*SignedBeaconBlockCapella)(nil),          // 21: sila.eth.v1alpha1.SignedBeaconBlockCapella
+	(*BeaconBlockCapella)(nil),                // 22: sila.eth.v1alpha1.BeaconBlockCapella
+	(*BeaconBlockBodyCapella)(nil),            // 23: sila.eth.v1alpha1.BeaconBlockBodyCapella
+	(*SignedBlindedBeaconBlockCapella)(nil),   // 24: sila.eth.v1alpha1.SignedBlindedBeaconBlockCapella
+	(*BlindedBeaconBlockCapella)(nil),         // 25: sila.eth.v1alpha1.BlindedBeaconBlockCapella
+	(*BlindedBeaconBlockBodyCapella)(nil),     // 26: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella
+	(*SignedBuilderBidCapella)(nil),           // 27: sila.eth.v1alpha1.SignedBuilderBidCapella
+	(*BuilderBidCapella)(nil),                 // 28: sila.eth.v1alpha1.BuilderBidCapella
+	(*SignedBeaconBlockContentsDeneb)(nil),    // 29: sila.eth.v1alpha1.SignedBeaconBlockContentsDeneb
+	(*SignedBeaconBlockDeneb)(nil),            // 30: sila.eth.v1alpha1.SignedBeaconBlockDeneb
+	(*BeaconBlockContentsDeneb)(nil),          // 31: sila.eth.v1alpha1.BeaconBlockContentsDeneb
+	(*BeaconBlockDeneb)(nil),                  // 32: sila.eth.v1alpha1.BeaconBlockDeneb
+	(*BeaconBlockBodyDeneb)(nil),              // 33: sila.eth.v1alpha1.BeaconBlockBodyDeneb
+	(*SignedBlindedBeaconBlockDeneb)(nil),     // 34: sila.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
+	(*BlindedBeaconBlockDeneb)(nil),           // 35: sila.eth.v1alpha1.BlindedBeaconBlockDeneb
+	(*BlindedBeaconBlockBodyDeneb)(nil),       // 36: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb
+	(*SignedBuilderBidDeneb)(nil),             // 37: sila.eth.v1alpha1.SignedBuilderBidDeneb
+	(*BuilderBidDeneb)(nil),                   // 38: sila.eth.v1alpha1.BuilderBidDeneb
+	(*BuilderBidElectra)(nil),                 // 39: sila.eth.v1alpha1.BuilderBidElectra
+	(*SignedBuilderBidElectra)(nil),           // 40: sila.eth.v1alpha1.SignedBuilderBidElectra
+	(*BlobSidecars)(nil),                      // 41: sila.eth.v1alpha1.BlobSidecars
+	(*BlobSidecar)(nil),                       // 42: sila.eth.v1alpha1.BlobSidecar
+	(*SignedBeaconBlockContentsElectra)(nil),  // 43: sila.eth.v1alpha1.SignedBeaconBlockContentsElectra
+	(*SignedBeaconBlockElectra)(nil),          // 44: sila.eth.v1alpha1.SignedBeaconBlockElectra
+	(*BeaconBlockContentsElectra)(nil),        // 45: sila.eth.v1alpha1.BeaconBlockContentsElectra
+	(*BeaconBlockElectra)(nil),                // 46: sila.eth.v1alpha1.BeaconBlockElectra
+	(*BeaconBlockBodyElectra)(nil),            // 47: sila.eth.v1alpha1.BeaconBlockBodyElectra
+	(*SignedBlindedBeaconBlockElectra)(nil),   // 48: sila.eth.v1alpha1.SignedBlindedBeaconBlockElectra
+	(*BlindedBeaconBlockElectra)(nil),         // 49: sila.eth.v1alpha1.BlindedBeaconBlockElectra
+	(*BlindedBeaconBlockBodyElectra)(nil),     // 50: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra
+	(*SignedBeaconBlockContentsFulu)(nil),     // 51: sila.eth.v1alpha1.SignedBeaconBlockContentsFulu
+	(*SignedBeaconBlockFulu)(nil),             // 52: sila.eth.v1alpha1.SignedBeaconBlockFulu
+	(*BeaconBlockContentsFulu)(nil),           // 53: sila.eth.v1alpha1.BeaconBlockContentsFulu
+	(*SignedBlindedBeaconBlockFulu)(nil),      // 54: sila.eth.v1alpha1.SignedBlindedBeaconBlockFulu
+	(*BlindedBeaconBlockFulu)(nil),            // 55: sila.eth.v1alpha1.BlindedBeaconBlockFulu
+	(*SignedBeaconBlockGloas)(nil),            // 56: sila.eth.v1alpha1.SignedBeaconBlockGloas
+	(*BeaconBlockGloas)(nil),                  // 57: sila.eth.v1alpha1.BeaconBlockGloas
+	(*SilaExecutionData)(nil),                          // 58: sila.eth.v1alpha1.SilaExecutionData
+	(*ProposerSlashing)(nil),                  // 59: sila.eth.v1alpha1.ProposerSlashing
+	(*Attestation)(nil),                       // 60: sila.eth.v1alpha1.Attestation
+	(*Deposit)(nil),                           // 61: sila.eth.v1alpha1.Deposit
+	(*SignedVoluntaryExit)(nil),               // 62: sila.eth.v1alpha1.SignedVoluntaryExit
+	(*AttestationData)(nil),                   // 63: sila.eth.v1alpha1.AttestationData
+	(*v1.ExecutionPayloadHeader)(nil),         // 64: sila.engine.v1.ExecutionPayloadHeader
+	(*SyncAggregate)(nil),                     // 65: sila.eth.v1alpha1.SyncAggregate
+	(*v1.ExecutionPayload)(nil),               // 66: sila.engine.v1.ExecutionPayload
+	(*v1.ExecutionPayloadCapella)(nil),        // 67: sila.engine.v1.ExecutionPayloadCapella
+	(*SignedBLSToExecutionChange)(nil),        // 68: sila.eth.v1alpha1.SignedBLSToExecutionChange
+	(*v1.ExecutionPayloadHeaderCapella)(nil),  // 69: sila.engine.v1.ExecutionPayloadHeaderCapella
+	(*v1.ExecutionPayloadDeneb)(nil),          // 70: sila.engine.v1.ExecutionPayloadDeneb
+	(*v1.ExecutionPayloadHeaderDeneb)(nil),    // 71: sila.engine.v1.ExecutionPayloadHeaderDeneb
+	(*v1.ExecutionRequests)(nil),              // 72: sila.engine.v1.ExecutionRequests
+	(*SignedBeaconBlockHeader)(nil),           // 73: sila.eth.v1alpha1.SignedBeaconBlockHeader
+	(*AttesterSlashingElectra)(nil),           // 74: sila.eth.v1alpha1.AttesterSlashingElectra
+	(*AttestationElectra)(nil),                // 75: sila.eth.v1alpha1.AttestationElectra
 }
 var file_proto_sila_v1alpha1_beacon_block_proto_depIdxs = []int32{
-	2,   // 0: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.phase0:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlock
-	12,  // 1: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.altair:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockAltair
-	15,  // 2: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.bellatrix:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockBellatrix
-	18,  // 3: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.blinded_bellatrix:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
-	21,  // 4: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.capella:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockCapella
-	24,  // 5: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.blinded_capella:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockCapella
-	29,  // 6: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.deneb:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockContentsDeneb
-	34,  // 7: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.blinded_deneb:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
-	43,  // 8: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.electra:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockContentsElectra
-	48,  // 9: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.blinded_electra:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockElectra
-	51,  // 10: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.fulu:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockContentsFulu
-	54,  // 11: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.blinded_fulu:type_name -> ethereum.eth.v1alpha1.SignedBlindedBeaconBlockFulu
-	56,  // 12: ethereum.eth.v1alpha1.GenericSignedBeaconBlock.gloas:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockGloas
-	3,   // 13: ethereum.eth.v1alpha1.GenericBeaconBlock.phase0:type_name -> ethereum.eth.v1alpha1.BeaconBlock
-	13,  // 14: ethereum.eth.v1alpha1.GenericBeaconBlock.altair:type_name -> ethereum.eth.v1alpha1.BeaconBlockAltair
-	16,  // 15: ethereum.eth.v1alpha1.GenericBeaconBlock.bellatrix:type_name -> ethereum.eth.v1alpha1.BeaconBlockBellatrix
-	19,  // 16: ethereum.eth.v1alpha1.GenericBeaconBlock.blinded_bellatrix:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	22,  // 17: ethereum.eth.v1alpha1.GenericBeaconBlock.capella:type_name -> ethereum.eth.v1alpha1.BeaconBlockCapella
-	25,  // 18: ethereum.eth.v1alpha1.GenericBeaconBlock.blinded_capella:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockCapella
-	31,  // 19: ethereum.eth.v1alpha1.GenericBeaconBlock.deneb:type_name -> ethereum.eth.v1alpha1.BeaconBlockContentsDeneb
-	35,  // 20: ethereum.eth.v1alpha1.GenericBeaconBlock.blinded_deneb:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockDeneb
-	45,  // 21: ethereum.eth.v1alpha1.GenericBeaconBlock.electra:type_name -> ethereum.eth.v1alpha1.BeaconBlockContentsElectra
-	49,  // 22: ethereum.eth.v1alpha1.GenericBeaconBlock.blinded_electra:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockElectra
-	53,  // 23: ethereum.eth.v1alpha1.GenericBeaconBlock.fulu:type_name -> ethereum.eth.v1alpha1.BeaconBlockContentsFulu
-	55,  // 24: ethereum.eth.v1alpha1.GenericBeaconBlock.blinded_fulu:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockFulu
-	57,  // 25: ethereum.eth.v1alpha1.GenericBeaconBlock.gloas:type_name -> ethereum.eth.v1alpha1.BeaconBlockGloas
-	3,   // 26: ethereum.eth.v1alpha1.SignedBeaconBlock.block:type_name -> ethereum.eth.v1alpha1.BeaconBlock
-	4,   // 27: ethereum.eth.v1alpha1.BeaconBlock.body:type_name -> ethereum.eth.v1alpha1.BeaconBlockBody
-	58,  // 28: ethereum.eth.v1alpha1.BeaconBlockBody.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 29: ethereum.eth.v1alpha1.BeaconBlockBody.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 30: ethereum.eth.v1alpha1.BeaconBlockBody.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 31: ethereum.eth.v1alpha1.BeaconBlockBody.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 32: ethereum.eth.v1alpha1.BeaconBlockBody.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 33: ethereum.eth.v1alpha1.BeaconBlockBody.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	6,   // 34: ethereum.eth.v1alpha1.AttesterSlashing.attestation_1:type_name -> ethereum.eth.v1alpha1.IndexedAttestation
-	6,   // 35: ethereum.eth.v1alpha1.AttesterSlashing.attestation_2:type_name -> ethereum.eth.v1alpha1.IndexedAttestation
-	63,  // 36: ethereum.eth.v1alpha1.IndexedAttestation.data:type_name -> ethereum.eth.v1alpha1.AttestationData
-	8,   // 37: ethereum.eth.v1alpha1.SignedValidatorRegistrationsV1.messages:type_name -> ethereum.eth.v1alpha1.SignedValidatorRegistrationV1
-	9,   // 38: ethereum.eth.v1alpha1.SignedValidatorRegistrationV1.message:type_name -> ethereum.eth.v1alpha1.ValidatorRegistrationV1
-	11,  // 39: ethereum.eth.v1alpha1.SignedBuilderBid.message:type_name -> ethereum.eth.v1alpha1.BuilderBid
-	64,  // 40: ethereum.eth.v1alpha1.BuilderBid.header:type_name -> ethereum.engine.v1.ExecutionPayloadHeader
-	13,  // 41: ethereum.eth.v1alpha1.SignedBeaconBlockAltair.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockAltair
-	14,  // 42: ethereum.eth.v1alpha1.BeaconBlockAltair.body:type_name -> ethereum.eth.v1alpha1.BeaconBlockBodyAltair
-	58,  // 43: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 44: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 45: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 46: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 47: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 48: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 49: ethereum.eth.v1alpha1.BeaconBlockBodyAltair.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	16,  // 50: ethereum.eth.v1alpha1.SignedBeaconBlockBellatrix.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockBellatrix
-	17,  // 51: ethereum.eth.v1alpha1.BeaconBlockBellatrix.body:type_name -> ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix
-	58,  // 52: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 53: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 54: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 55: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 56: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 57: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 58: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	66,  // 59: ethereum.eth.v1alpha1.BeaconBlockBodyBellatrix.execution_payload:type_name -> ethereum.engine.v1.ExecutionPayload
-	19,  // 60: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix.block:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	20,  // 61: ethereum.eth.v1alpha1.BlindedBeaconBlockBellatrix.body:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix
-	58,  // 62: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 63: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 64: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 65: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 66: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 67: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 68: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	64,  // 69: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeader
-	22,  // 70: ethereum.eth.v1alpha1.SignedBeaconBlockCapella.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockCapella
-	23,  // 71: ethereum.eth.v1alpha1.BeaconBlockCapella.body:type_name -> ethereum.eth.v1alpha1.BeaconBlockBodyCapella
-	58,  // 72: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 73: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 74: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 75: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 76: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 77: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 78: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	67,  // 79: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.execution_payload:type_name -> ethereum.engine.v1.ExecutionPayloadCapella
-	68,  // 80: ethereum.eth.v1alpha1.BeaconBlockBodyCapella.bls_to_execution_changes:type_name -> ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	25,  // 81: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockCapella.block:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockCapella
-	26,  // 82: ethereum.eth.v1alpha1.BlindedBeaconBlockCapella.body:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella
-	58,  // 83: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 84: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 85: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 86: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 87: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 88: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 89: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	69,  // 90: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	68,  // 91: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyCapella.bls_to_execution_changes:type_name -> ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	28,  // 92: ethereum.eth.v1alpha1.SignedBuilderBidCapella.message:type_name -> ethereum.eth.v1alpha1.BuilderBidCapella
-	69,  // 93: ethereum.eth.v1alpha1.BuilderBidCapella.header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	30,  // 94: ethereum.eth.v1alpha1.SignedBeaconBlockContentsDeneb.block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockDeneb
-	32,  // 95: ethereum.eth.v1alpha1.SignedBeaconBlockDeneb.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockDeneb
-	32,  // 96: ethereum.eth.v1alpha1.BeaconBlockContentsDeneb.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockDeneb
-	33,  // 97: ethereum.eth.v1alpha1.BeaconBlockDeneb.body:type_name -> ethereum.eth.v1alpha1.BeaconBlockBodyDeneb
-	58,  // 98: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 99: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 100: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 101: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 102: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 103: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 104: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	70,  // 105: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.execution_payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	68,  // 106: ethereum.eth.v1alpha1.BeaconBlockBodyDeneb.bls_to_execution_changes:type_name -> ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	35,  // 107: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockDeneb.message:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockDeneb
-	36,  // 108: ethereum.eth.v1alpha1.BlindedBeaconBlockDeneb.body:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb
-	58,  // 109: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 110: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	5,   // 111: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashing
-	60,  // 112: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.attestations:type_name -> ethereum.eth.v1alpha1.Attestation
-	61,  // 113: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 114: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 115: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	71,  // 116: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	68,  // 117: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.bls_to_execution_changes:type_name -> ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	38,  // 118: ethereum.eth.v1alpha1.SignedBuilderBidDeneb.message:type_name -> ethereum.eth.v1alpha1.BuilderBidDeneb
-	71,  // 119: ethereum.eth.v1alpha1.BuilderBidDeneb.header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	71,  // 120: ethereum.eth.v1alpha1.BuilderBidElectra.header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	72,  // 121: ethereum.eth.v1alpha1.BuilderBidElectra.execution_requests:type_name -> ethereum.engine.v1.ExecutionRequests
-	39,  // 122: ethereum.eth.v1alpha1.SignedBuilderBidElectra.message:type_name -> ethereum.eth.v1alpha1.BuilderBidElectra
-	42,  // 123: ethereum.eth.v1alpha1.BlobSidecars.sidecars:type_name -> ethereum.eth.v1alpha1.BlobSidecar
-	73,  // 124: ethereum.eth.v1alpha1.BlobSidecar.signed_block_header:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockHeader
-	44,  // 125: ethereum.eth.v1alpha1.SignedBeaconBlockContentsElectra.block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockElectra
-	46,  // 126: ethereum.eth.v1alpha1.SignedBeaconBlockElectra.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockElectra
-	46,  // 127: ethereum.eth.v1alpha1.BeaconBlockContentsElectra.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockElectra
-	47,  // 128: ethereum.eth.v1alpha1.BeaconBlockElectra.body:type_name -> ethereum.eth.v1alpha1.BeaconBlockBodyElectra
-	58,  // 129: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 130: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	74,  // 131: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashingElectra
-	75,  // 132: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.attestations:type_name -> ethereum.eth.v1alpha1.AttestationElectra
-	61,  // 133: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 134: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 135: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	70,  // 136: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.execution_payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	68,  // 137: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.bls_to_execution_changes:type_name -> ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	72,  // 138: ethereum.eth.v1alpha1.BeaconBlockBodyElectra.execution_requests:type_name -> ethereum.engine.v1.ExecutionRequests
-	49,  // 139: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockElectra.message:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockElectra
-	50,  // 140: ethereum.eth.v1alpha1.BlindedBeaconBlockElectra.body:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra
-	58,  // 141: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
-	59,  // 142: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.proposer_slashings:type_name -> ethereum.eth.v1alpha1.ProposerSlashing
-	74,  // 143: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.attester_slashings:type_name -> ethereum.eth.v1alpha1.AttesterSlashingElectra
-	75,  // 144: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.attestations:type_name -> ethereum.eth.v1alpha1.AttestationElectra
-	61,  // 145: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.deposits:type_name -> ethereum.eth.v1alpha1.Deposit
-	62,  // 146: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.voluntary_exits:type_name -> ethereum.eth.v1alpha1.SignedVoluntaryExit
-	65,  // 147: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.sync_aggregate:type_name -> ethereum.eth.v1alpha1.SyncAggregate
-	71,  // 148: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.execution_payload_header:type_name -> ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	68,  // 149: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.bls_to_execution_changes:type_name -> ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	72,  // 150: ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra.execution_requests:type_name -> ethereum.engine.v1.ExecutionRequests
-	52,  // 151: ethereum.eth.v1alpha1.SignedBeaconBlockContentsFulu.block:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockFulu
-	46,  // 152: ethereum.eth.v1alpha1.SignedBeaconBlockFulu.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockElectra
-	46,  // 153: ethereum.eth.v1alpha1.BeaconBlockContentsFulu.block:type_name -> ethereum.eth.v1alpha1.BeaconBlockElectra
-	55,  // 154: ethereum.eth.v1alpha1.SignedBlindedBeaconBlockFulu.message:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockFulu
-	50,  // 155: ethereum.eth.v1alpha1.BlindedBeaconBlockFulu.body:type_name -> ethereum.eth.v1alpha1.BlindedBeaconBlockBodyElectra
+	2,   // 0: sila.eth.v1alpha1.GenericSignedBeaconBlock.phase0:type_name -> sila.eth.v1alpha1.SignedBeaconBlock
+	12,  // 1: sila.eth.v1alpha1.GenericSignedBeaconBlock.altair:type_name -> sila.eth.v1alpha1.SignedBeaconBlockAltair
+	15,  // 2: sila.eth.v1alpha1.GenericSignedBeaconBlock.bellatrix:type_name -> sila.eth.v1alpha1.SignedBeaconBlockBellatrix
+	18,  // 3: sila.eth.v1alpha1.GenericSignedBeaconBlock.blinded_bellatrix:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix
+	21,  // 4: sila.eth.v1alpha1.GenericSignedBeaconBlock.capella:type_name -> sila.eth.v1alpha1.SignedBeaconBlockCapella
+	24,  // 5: sila.eth.v1alpha1.GenericSignedBeaconBlock.blinded_capella:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockCapella
+	29,  // 6: sila.eth.v1alpha1.GenericSignedBeaconBlock.deneb:type_name -> sila.eth.v1alpha1.SignedBeaconBlockContentsDeneb
+	34,  // 7: sila.eth.v1alpha1.GenericSignedBeaconBlock.blinded_deneb:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockDeneb
+	43,  // 8: sila.eth.v1alpha1.GenericSignedBeaconBlock.electra:type_name -> sila.eth.v1alpha1.SignedBeaconBlockContentsElectra
+	48,  // 9: sila.eth.v1alpha1.GenericSignedBeaconBlock.blinded_electra:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockElectra
+	51,  // 10: sila.eth.v1alpha1.GenericSignedBeaconBlock.fulu:type_name -> sila.eth.v1alpha1.SignedBeaconBlockContentsFulu
+	54,  // 11: sila.eth.v1alpha1.GenericSignedBeaconBlock.blinded_fulu:type_name -> sila.eth.v1alpha1.SignedBlindedBeaconBlockFulu
+	56,  // 12: sila.eth.v1alpha1.GenericSignedBeaconBlock.gloas:type_name -> sila.eth.v1alpha1.SignedBeaconBlockGloas
+	3,   // 13: sila.eth.v1alpha1.GenericBeaconBlock.phase0:type_name -> sila.eth.v1alpha1.BeaconBlock
+	13,  // 14: sila.eth.v1alpha1.GenericBeaconBlock.altair:type_name -> sila.eth.v1alpha1.BeaconBlockAltair
+	16,  // 15: sila.eth.v1alpha1.GenericBeaconBlock.bellatrix:type_name -> sila.eth.v1alpha1.BeaconBlockBellatrix
+	19,  // 16: sila.eth.v1alpha1.GenericBeaconBlock.blinded_bellatrix:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
+	22,  // 17: sila.eth.v1alpha1.GenericBeaconBlock.capella:type_name -> sila.eth.v1alpha1.BeaconBlockCapella
+	25,  // 18: sila.eth.v1alpha1.GenericBeaconBlock.blinded_capella:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockCapella
+	31,  // 19: sila.eth.v1alpha1.GenericBeaconBlock.deneb:type_name -> sila.eth.v1alpha1.BeaconBlockContentsDeneb
+	35,  // 20: sila.eth.v1alpha1.GenericBeaconBlock.blinded_deneb:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockDeneb
+	45,  // 21: sila.eth.v1alpha1.GenericBeaconBlock.electra:type_name -> sila.eth.v1alpha1.BeaconBlockContentsElectra
+	49,  // 22: sila.eth.v1alpha1.GenericBeaconBlock.blinded_electra:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockElectra
+	53,  // 23: sila.eth.v1alpha1.GenericBeaconBlock.fulu:type_name -> sila.eth.v1alpha1.BeaconBlockContentsFulu
+	55,  // 24: sila.eth.v1alpha1.GenericBeaconBlock.blinded_fulu:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockFulu
+	57,  // 25: sila.eth.v1alpha1.GenericBeaconBlock.gloas:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
+	3,   // 26: sila.eth.v1alpha1.SignedBeaconBlock.block:type_name -> sila.eth.v1alpha1.BeaconBlock
+	4,   // 27: sila.eth.v1alpha1.BeaconBlock.body:type_name -> sila.eth.v1alpha1.BeaconBlockBody
+	58,  // 28: sila.eth.v1alpha1.BeaconBlockBody.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 29: sila.eth.v1alpha1.BeaconBlockBody.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 30: sila.eth.v1alpha1.BeaconBlockBody.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 31: sila.eth.v1alpha1.BeaconBlockBody.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 32: sila.eth.v1alpha1.BeaconBlockBody.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 33: sila.eth.v1alpha1.BeaconBlockBody.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	6,   // 34: sila.eth.v1alpha1.AttesterSlashing.attestation_1:type_name -> sila.eth.v1alpha1.IndexedAttestation
+	6,   // 35: sila.eth.v1alpha1.AttesterSlashing.attestation_2:type_name -> sila.eth.v1alpha1.IndexedAttestation
+	63,  // 36: sila.eth.v1alpha1.IndexedAttestation.data:type_name -> sila.eth.v1alpha1.AttestationData
+	8,   // 37: sila.eth.v1alpha1.SignedValidatorRegistrationsV1.messages:type_name -> sila.eth.v1alpha1.SignedValidatorRegistrationV1
+	9,   // 38: sila.eth.v1alpha1.SignedValidatorRegistrationV1.message:type_name -> sila.eth.v1alpha1.ValidatorRegistrationV1
+	11,  // 39: sila.eth.v1alpha1.SignedBuilderBid.message:type_name -> sila.eth.v1alpha1.BuilderBid
+	64,  // 40: sila.eth.v1alpha1.BuilderBid.header:type_name -> sila.engine.v1.ExecutionPayloadHeader
+	13,  // 41: sila.eth.v1alpha1.SignedBeaconBlockAltair.block:type_name -> sila.eth.v1alpha1.BeaconBlockAltair
+	14,  // 42: sila.eth.v1alpha1.BeaconBlockAltair.body:type_name -> sila.eth.v1alpha1.BeaconBlockBodyAltair
+	58,  // 43: sila.eth.v1alpha1.BeaconBlockBodyAltair.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 44: sila.eth.v1alpha1.BeaconBlockBodyAltair.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 45: sila.eth.v1alpha1.BeaconBlockBodyAltair.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 46: sila.eth.v1alpha1.BeaconBlockBodyAltair.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 47: sila.eth.v1alpha1.BeaconBlockBodyAltair.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 48: sila.eth.v1alpha1.BeaconBlockBodyAltair.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 49: sila.eth.v1alpha1.BeaconBlockBodyAltair.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	16,  // 50: sila.eth.v1alpha1.SignedBeaconBlockBellatrix.block:type_name -> sila.eth.v1alpha1.BeaconBlockBellatrix
+	17,  // 51: sila.eth.v1alpha1.BeaconBlockBellatrix.body:type_name -> sila.eth.v1alpha1.BeaconBlockBodyBellatrix
+	58,  // 52: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 53: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 54: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 55: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 56: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 57: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 58: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	66,  // 59: sila.eth.v1alpha1.BeaconBlockBodyBellatrix.execution_payload:type_name -> sila.engine.v1.ExecutionPayload
+	19,  // 60: sila.eth.v1alpha1.SignedBlindedBeaconBlockBellatrix.block:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
+	20,  // 61: sila.eth.v1alpha1.BlindedBeaconBlockBellatrix.body:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix
+	58,  // 62: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 63: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 64: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 65: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 66: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 67: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 68: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	64,  // 69: sila.eth.v1alpha1.BlindedBeaconBlockBodyBellatrix.execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeader
+	22,  // 70: sila.eth.v1alpha1.SignedBeaconBlockCapella.block:type_name -> sila.eth.v1alpha1.BeaconBlockCapella
+	23,  // 71: sila.eth.v1alpha1.BeaconBlockCapella.body:type_name -> sila.eth.v1alpha1.BeaconBlockBodyCapella
+	58,  // 72: sila.eth.v1alpha1.BeaconBlockBodyCapella.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 73: sila.eth.v1alpha1.BeaconBlockBodyCapella.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 74: sila.eth.v1alpha1.BeaconBlockBodyCapella.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 75: sila.eth.v1alpha1.BeaconBlockBodyCapella.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 76: sila.eth.v1alpha1.BeaconBlockBodyCapella.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 77: sila.eth.v1alpha1.BeaconBlockBodyCapella.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 78: sila.eth.v1alpha1.BeaconBlockBodyCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	67,  // 79: sila.eth.v1alpha1.BeaconBlockBodyCapella.execution_payload:type_name -> sila.engine.v1.ExecutionPayloadCapella
+	68,  // 80: sila.eth.v1alpha1.BeaconBlockBodyCapella.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
+	25,  // 81: sila.eth.v1alpha1.SignedBlindedBeaconBlockCapella.block:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockCapella
+	26,  // 82: sila.eth.v1alpha1.BlindedBeaconBlockCapella.body:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella
+	58,  // 83: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 84: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 85: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 86: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 87: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 88: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 89: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	69,  // 90: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderCapella
+	68,  // 91: sila.eth.v1alpha1.BlindedBeaconBlockBodyCapella.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
+	28,  // 92: sila.eth.v1alpha1.SignedBuilderBidCapella.message:type_name -> sila.eth.v1alpha1.BuilderBidCapella
+	69,  // 93: sila.eth.v1alpha1.BuilderBidCapella.header:type_name -> sila.engine.v1.ExecutionPayloadHeaderCapella
+	30,  // 94: sila.eth.v1alpha1.SignedBeaconBlockContentsDeneb.block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockDeneb
+	32,  // 95: sila.eth.v1alpha1.SignedBeaconBlockDeneb.block:type_name -> sila.eth.v1alpha1.BeaconBlockDeneb
+	32,  // 96: sila.eth.v1alpha1.BeaconBlockContentsDeneb.block:type_name -> sila.eth.v1alpha1.BeaconBlockDeneb
+	33,  // 97: sila.eth.v1alpha1.BeaconBlockDeneb.body:type_name -> sila.eth.v1alpha1.BeaconBlockBodyDeneb
+	58,  // 98: sila.eth.v1alpha1.BeaconBlockBodyDeneb.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 99: sila.eth.v1alpha1.BeaconBlockBodyDeneb.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 100: sila.eth.v1alpha1.BeaconBlockBodyDeneb.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 101: sila.eth.v1alpha1.BeaconBlockBodyDeneb.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 102: sila.eth.v1alpha1.BeaconBlockBodyDeneb.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 103: sila.eth.v1alpha1.BeaconBlockBodyDeneb.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 104: sila.eth.v1alpha1.BeaconBlockBodyDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	70,  // 105: sila.eth.v1alpha1.BeaconBlockBodyDeneb.execution_payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	68,  // 106: sila.eth.v1alpha1.BeaconBlockBodyDeneb.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
+	35,  // 107: sila.eth.v1alpha1.SignedBlindedBeaconBlockDeneb.message:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockDeneb
+	36,  // 108: sila.eth.v1alpha1.BlindedBeaconBlockDeneb.body:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb
+	58,  // 109: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 110: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	5,   // 111: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashing
+	60,  // 112: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.attestations:type_name -> sila.eth.v1alpha1.Attestation
+	61,  // 113: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 114: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 115: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	71,  // 116: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	68,  // 117: sila.eth.v1alpha1.BlindedBeaconBlockBodyDeneb.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
+	38,  // 118: sila.eth.v1alpha1.SignedBuilderBidDeneb.message:type_name -> sila.eth.v1alpha1.BuilderBidDeneb
+	71,  // 119: sila.eth.v1alpha1.BuilderBidDeneb.header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	71,  // 120: sila.eth.v1alpha1.BuilderBidElectra.header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	72,  // 121: sila.eth.v1alpha1.BuilderBidElectra.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
+	39,  // 122: sila.eth.v1alpha1.SignedBuilderBidElectra.message:type_name -> sila.eth.v1alpha1.BuilderBidElectra
+	42,  // 123: sila.eth.v1alpha1.BlobSidecars.sidecars:type_name -> sila.eth.v1alpha1.BlobSidecar
+	73,  // 124: sila.eth.v1alpha1.BlobSidecar.signed_block_header:type_name -> sila.eth.v1alpha1.SignedBeaconBlockHeader
+	44,  // 125: sila.eth.v1alpha1.SignedBeaconBlockContentsElectra.block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockElectra
+	46,  // 126: sila.eth.v1alpha1.SignedBeaconBlockElectra.block:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
+	46,  // 127: sila.eth.v1alpha1.BeaconBlockContentsElectra.block:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
+	47,  // 128: sila.eth.v1alpha1.BeaconBlockElectra.body:type_name -> sila.eth.v1alpha1.BeaconBlockBodyElectra
+	58,  // 129: sila.eth.v1alpha1.BeaconBlockBodyElectra.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 130: sila.eth.v1alpha1.BeaconBlockBodyElectra.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	74,  // 131: sila.eth.v1alpha1.BeaconBlockBodyElectra.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashingElectra
+	75,  // 132: sila.eth.v1alpha1.BeaconBlockBodyElectra.attestations:type_name -> sila.eth.v1alpha1.AttestationElectra
+	61,  // 133: sila.eth.v1alpha1.BeaconBlockBodyElectra.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 134: sila.eth.v1alpha1.BeaconBlockBodyElectra.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 135: sila.eth.v1alpha1.BeaconBlockBodyElectra.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	70,  // 136: sila.eth.v1alpha1.BeaconBlockBodyElectra.execution_payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	68,  // 137: sila.eth.v1alpha1.BeaconBlockBodyElectra.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
+	72,  // 138: sila.eth.v1alpha1.BeaconBlockBodyElectra.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
+	49,  // 139: sila.eth.v1alpha1.SignedBlindedBeaconBlockElectra.message:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockElectra
+	50,  // 140: sila.eth.v1alpha1.BlindedBeaconBlockElectra.body:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra
+	58,  // 141: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.sila_execution_data:type_name -> sila.eth.v1alpha1.SilaExecutionData
+	59,  // 142: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.proposer_slashings:type_name -> sila.eth.v1alpha1.ProposerSlashing
+	74,  // 143: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.attester_slashings:type_name -> sila.eth.v1alpha1.AttesterSlashingElectra
+	75,  // 144: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.attestations:type_name -> sila.eth.v1alpha1.AttestationElectra
+	61,  // 145: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.deposits:type_name -> sila.eth.v1alpha1.Deposit
+	62,  // 146: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.voluntary_exits:type_name -> sila.eth.v1alpha1.SignedVoluntaryExit
+	65,  // 147: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
+	71,  // 148: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.execution_payload_header:type_name -> sila.engine.v1.ExecutionPayloadHeaderDeneb
+	68,  // 149: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.bls_to_execution_changes:type_name -> sila.eth.v1alpha1.SignedBLSToExecutionChange
+	72,  // 150: sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra.execution_requests:type_name -> sila.engine.v1.ExecutionRequests
+	52,  // 151: sila.eth.v1alpha1.SignedBeaconBlockContentsFulu.block:type_name -> sila.eth.v1alpha1.SignedBeaconBlockFulu
+	46,  // 152: sila.eth.v1alpha1.SignedBeaconBlockFulu.block:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
+	46,  // 153: sila.eth.v1alpha1.BeaconBlockContentsFulu.block:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
+	55,  // 154: sila.eth.v1alpha1.SignedBlindedBeaconBlockFulu.message:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockFulu
+	50,  // 155: sila.eth.v1alpha1.BlindedBeaconBlockFulu.body:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBodyElectra
 	156, // [156:156] is the sub-list for method output_type
 	156, // [156:156] is the sub-list for method input_type
 	156, // [156:156] is the sub-list for extension type_name

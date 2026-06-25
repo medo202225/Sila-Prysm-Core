@@ -19,7 +19,7 @@ func (t Transaction) HashTreeRoot() ([32]byte, error) {
 }
 
 // Uint64Root computes the HashTreeRoot Merkleization of
-// a simple uint64 value according to the Ethereum
+// a simple uint64 value according to the Sila
 // Simple Serialize specification.
 func Uint64Root(val uint64) [32]byte {
 	buf := make([]byte, 8)
@@ -47,7 +47,7 @@ func CheckpointRoot(checkpoint *silapb.Checkpoint) ([32]byte, error) {
 }
 
 // ByteArrayRootWithLimit computes the HashTreeRoot Merkleization of
-// a list of [32]byte roots according to the Ethereum Simple Serialize
+// a list of [32]byte roots according to the Sila Simple Serialize
 // specification.
 func ByteArrayRootWithLimit(roots [][]byte, limit uint64) ([32]byte, error) {
 	newRoots := make([][32]byte, len(roots))
@@ -70,7 +70,7 @@ func ByteArrayRootWithLimit(roots [][]byte, limit uint64) ([32]byte, error) {
 }
 
 // SlashingsRoot computes the HashTreeRoot Merkleization of
-// a list of uint64 slashing values according to the Ethereum
+// a list of uint64 slashing values according to the Sila
 // Simple Serialize specification.
 func SlashingsRoot(slashings []uint64) ([32]byte, error) {
 	slashingMarshaling := make([][]byte, fieldparams.SlashingsLength)

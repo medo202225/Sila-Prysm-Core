@@ -13,7 +13,7 @@ func ZeroWei() Wei {
 	return big.NewInt(0)
 }
 
-// Wei is the smallest unit of Ether, represented as a pointer to a bigInt.
+// Wei is the smallest unit of Sila, represented as a pointer to a bigInt.
 type Wei *big.Int
 
 // Gwei is a denomination of 1e9 Wei represented as an uint64.

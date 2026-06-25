@@ -145,7 +145,7 @@ func ProcessSlot(ctx context.Context, state state.BeaconState) (state.BeaconStat
 	}
 
 	// <spec fn="process_slot" fork="gloas" lines="11-13" hash="62b28839">
-	// # [New in Gloas:EIP7732]
+	// # [New in Gloas:SIP7732]
 	// # Unset the next payload availability
 	// state.execution_payload_availability[(state.slot + 1) % SLOTS_PER_HISTORICAL_ROOT] = 0b0
 	// </spec>

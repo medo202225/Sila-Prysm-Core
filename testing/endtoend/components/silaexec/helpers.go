@@ -60,7 +60,7 @@ func WaitForBlocks(ctx context.Context, web3 *ethclient.Client, key *keystore.Ke
 		gasPrice = new(big.Int).Div(gasPrice, big.NewInt(100))
 
 		spamTX := types.NewTransaction(nonce, key.Address, big.NewInt(0), params.SpamTxGasLimit, gasPrice, []byte{})
-		signed, err := types.SignTx(spamTX, types.NewEIP155Signer(chainID), key.PrivateKey)
+		signed, err := types.SignTx(spamTX, types.NewSila155Signer(chainID), key.PrivateKey)
 		if err != nil {
 			return err
 		}

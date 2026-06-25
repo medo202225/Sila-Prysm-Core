@@ -120,7 +120,7 @@ func VerifyAttestationNoVerifySignature(
 		ci := att.GetData().CommitteeIndex
 		// Spec v1.7.0-alpha pseudocode:
 		//
-		//	# [Modified in Gloas:EIP7732]
+		//	# [Modified in Gloas:SIP7732]
 		//	assert data.index < 2
 		//
 		if beaconState.Version() >= version.Gloas {

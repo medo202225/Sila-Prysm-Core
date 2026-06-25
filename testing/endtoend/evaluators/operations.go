@@ -44,11 +44,11 @@ var depositEndEpoch = depositActivationStartEpoch + primitives.Epoch(math.Ceil(f
 var defaultExitSubmissionEpoch = primitives.Epoch(7)
 
 // ProcessesDepositsInBlocks ensures the expected amount of deposits are accepted into blocks.
-// Note: This evaluator only works for pre-Electra genesis since Electra uses EIP-6110 deposit requests.
+// Note: This evaluator only works for pre-Electra genesis since Electra uses SIP-6110 deposit requests.
 var ProcessesDepositsInBlocks = e2etypes.Evaluator{
 	Name: "processes_deposits_in_blocks_epoch_%d",
 	Policy: func(e primitives.Epoch) bool {
-		// Skip if starting at Electra or later - deposits work differently with EIP-6110
+		// Skip if starting at Electra or later - deposits work differently with SIP-6110
 		if e2etypes.GenesisFork() >= version.Electra {
 			return false
 		}
@@ -65,11 +65,11 @@ var VerifyBlockGraffiti = e2etypes.Evaluator{
 }
 
 // ActivatesDepositedValidators ensures the expected amount of validator deposits are activated into the state.
-// Note: This evaluator only works for pre-Electra genesis since Electra uses EIP-6110 deposit requests.
+// Note: This evaluator only works for pre-Electra genesis since Electra uses SIP-6110 deposit requests.
 var ActivatesDepositedValidators = e2etypes.Evaluator{
 	Name: "processes_deposit_validators_epoch_%d",
 	Policy: func(e primitives.Epoch) bool {
-		// Skip if starting at Electra or later - deposits work differently with EIP-6110
+		// Skip if starting at Electra or later - deposits work differently with SIP-6110
 		if e2etypes.GenesisFork() >= version.Electra {
 			return false
 		}
@@ -79,11 +79,11 @@ var ActivatesDepositedValidators = e2etypes.Evaluator{
 }
 
 // DepositedValidatorsAreActive ensures the expected amount of validators are active after their deposits are processed.
-// Note: This evaluator only works for pre-Electra genesis since Electra uses EIP-6110 deposit requests.
+// Note: This evaluator only works for pre-Electra genesis since Electra uses SIP-6110 deposit requests.
 var DepositedValidatorsAreActive = e2etypes.Evaluator{
 	Name: "deposited_validators_are_active_epoch_%d",
 	Policy: func(e primitives.Epoch) bool {
-		// Skip if starting at Electra or later - deposits work differently with EIP-6110
+		// Skip if starting at Electra or later - deposits work differently with SIP-6110
 		if e2etypes.GenesisFork() >= version.Electra {
 			return false
 		}

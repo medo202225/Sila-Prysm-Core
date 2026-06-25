@@ -350,7 +350,7 @@ func (x *SSZResponse) GetEncoded() []byte {
 // Deprecated: Marked as deprecated in proto/sila/v1alpha1/debug.proto.
 type LoggingLevelRequest struct {
 	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Level         LoggingLevelRequest_Level `protobuf:"varint,1,opt,name=level,proto3,enum=ethereum.eth.v1alpha1.LoggingLevelRequest_Level" json:"level,omitempty"`
+	Level         LoggingLevelRequest_Level `protobuf:"varint,1,opt,name=level,proto3,enum=sila.eth.v1alpha1.LoggingLevelRequest_Level" json:"level,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -441,8 +441,8 @@ func (x *DebugPeerResponses) GetResponses() []*DebugPeerResponse {
 type DebugPeerResponse struct {
 	state              protoimpl.MessageState      `protogen:"open.v1"`
 	ListeningAddresses []string                    `protobuf:"bytes,1,rep,name=listening_addresses,json=listeningAddresses,proto3" json:"listening_addresses,omitempty"`
-	Direction          PeerDirection               `protobuf:"varint,2,opt,name=direction,proto3,enum=ethereum.eth.v1alpha1.PeerDirection" json:"direction,omitempty"`
-	ConnectionState    ConnectionState             `protobuf:"varint,3,opt,name=connection_state,json=connectionState,proto3,enum=ethereum.eth.v1alpha1.ConnectionState" json:"connection_state,omitempty"`
+	Direction          PeerDirection               `protobuf:"varint,2,opt,name=direction,proto3,enum=sila.eth.v1alpha1.PeerDirection" json:"direction,omitempty"`
+	ConnectionState    ConnectionState             `protobuf:"varint,3,opt,name=connection_state,json=connectionState,proto3,enum=sila.eth.v1alpha1.ConnectionState" json:"connection_state,omitempty"`
 	PeerId             string                      `protobuf:"bytes,4,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
 	Enr                string                      `protobuf:"bytes,5,opt,name=enr,proto3" json:"enr,omitempty"`
 	PeerInfo           *DebugPeerResponse_PeerInfo `protobuf:"bytes,6,opt,name=peer_info,json=peerInfo,proto3" json:"peer_info,omitempty"`
@@ -1038,51 +1038,51 @@ func file_proto_sila_v1alpha1_debug_proto_rawDescGZIP() []byte {
 var file_proto_sila_v1alpha1_debug_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_sila_v1alpha1_debug_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_proto_sila_v1alpha1_debug_proto_goTypes = []any{
-	(LoggingLevelRequest_Level)(0),     // 0: ethereum.eth.v1alpha1.LoggingLevelRequest.Level
-	(*InclusionSlotRequest)(nil),       // 1: ethereum.eth.v1alpha1.InclusionSlotRequest
-	(*InclusionSlotResponse)(nil),      // 2: ethereum.eth.v1alpha1.InclusionSlotResponse
-	(*BeaconStateRequest)(nil),         // 3: ethereum.eth.v1alpha1.BeaconStateRequest
-	(*BlockRequestByRoot)(nil),         // 4: ethereum.eth.v1alpha1.BlockRequestByRoot
-	(*SSZResponse)(nil),                // 5: ethereum.eth.v1alpha1.SSZResponse
-	(*LoggingLevelRequest)(nil),        // 6: ethereum.eth.v1alpha1.LoggingLevelRequest
-	(*DebugPeerResponses)(nil),         // 7: ethereum.eth.v1alpha1.DebugPeerResponses
-	(*DebugPeerResponse)(nil),          // 8: ethereum.eth.v1alpha1.DebugPeerResponse
-	(*ScoreInfo)(nil),                  // 9: ethereum.eth.v1alpha1.ScoreInfo
-	(*TopicScoreSnapshot)(nil),         // 10: ethereum.eth.v1alpha1.TopicScoreSnapshot
-	(*DebugPeerResponse_PeerInfo)(nil), // 11: ethereum.eth.v1alpha1.DebugPeerResponse.PeerInfo
-	nil,                                // 12: ethereum.eth.v1alpha1.ScoreInfo.TopicScoresEntry
-	(PeerDirection)(0),                 // 13: ethereum.eth.v1alpha1.PeerDirection
-	(ConnectionState)(0),               // 14: ethereum.eth.v1alpha1.ConnectionState
-	(*Status)(nil),                     // 15: ethereum.eth.v1alpha1.Status
-	(*MetaDataV0)(nil),                 // 16: ethereum.eth.v1alpha1.MetaDataV0
-	(*MetaDataV1)(nil),                 // 17: ethereum.eth.v1alpha1.MetaDataV1
-	(*MetaDataV2)(nil),                 // 18: ethereum.eth.v1alpha1.MetaDataV2
+	(LoggingLevelRequest_Level)(0),     // 0: sila.eth.v1alpha1.LoggingLevelRequest.Level
+	(*InclusionSlotRequest)(nil),       // 1: sila.eth.v1alpha1.InclusionSlotRequest
+	(*InclusionSlotResponse)(nil),      // 2: sila.eth.v1alpha1.InclusionSlotResponse
+	(*BeaconStateRequest)(nil),         // 3: sila.eth.v1alpha1.BeaconStateRequest
+	(*BlockRequestByRoot)(nil),         // 4: sila.eth.v1alpha1.BlockRequestByRoot
+	(*SSZResponse)(nil),                // 5: sila.eth.v1alpha1.SSZResponse
+	(*LoggingLevelRequest)(nil),        // 6: sila.eth.v1alpha1.LoggingLevelRequest
+	(*DebugPeerResponses)(nil),         // 7: sila.eth.v1alpha1.DebugPeerResponses
+	(*DebugPeerResponse)(nil),          // 8: sila.eth.v1alpha1.DebugPeerResponse
+	(*ScoreInfo)(nil),                  // 9: sila.eth.v1alpha1.ScoreInfo
+	(*TopicScoreSnapshot)(nil),         // 10: sila.eth.v1alpha1.TopicScoreSnapshot
+	(*DebugPeerResponse_PeerInfo)(nil), // 11: sila.eth.v1alpha1.DebugPeerResponse.PeerInfo
+	nil,                                // 12: sila.eth.v1alpha1.ScoreInfo.TopicScoresEntry
+	(PeerDirection)(0),                 // 13: sila.eth.v1alpha1.PeerDirection
+	(ConnectionState)(0),               // 14: sila.eth.v1alpha1.ConnectionState
+	(*Status)(nil),                     // 15: sila.eth.v1alpha1.Status
+	(*MetaDataV0)(nil),                 // 16: sila.eth.v1alpha1.MetaDataV0
+	(*MetaDataV1)(nil),                 // 17: sila.eth.v1alpha1.MetaDataV1
+	(*MetaDataV2)(nil),                 // 18: sila.eth.v1alpha1.MetaDataV2
 	(*emptypb.Empty)(nil),              // 19: google.protobuf.Empty
-	(*PeerRequest)(nil),                // 20: ethereum.eth.v1alpha1.PeerRequest
+	(*PeerRequest)(nil),                // 20: sila.eth.v1alpha1.PeerRequest
 }
 var file_proto_sila_v1alpha1_debug_proto_depIdxs = []int32{
-	0,  // 0: ethereum.eth.v1alpha1.LoggingLevelRequest.level:type_name -> ethereum.eth.v1alpha1.LoggingLevelRequest.Level
-	8,  // 1: ethereum.eth.v1alpha1.DebugPeerResponses.responses:type_name -> ethereum.eth.v1alpha1.DebugPeerResponse
-	13, // 2: ethereum.eth.v1alpha1.DebugPeerResponse.direction:type_name -> ethereum.eth.v1alpha1.PeerDirection
-	14, // 3: ethereum.eth.v1alpha1.DebugPeerResponse.connection_state:type_name -> ethereum.eth.v1alpha1.ConnectionState
-	11, // 4: ethereum.eth.v1alpha1.DebugPeerResponse.peer_info:type_name -> ethereum.eth.v1alpha1.DebugPeerResponse.PeerInfo
-	15, // 5: ethereum.eth.v1alpha1.DebugPeerResponse.peer_status:type_name -> ethereum.eth.v1alpha1.Status
-	9,  // 6: ethereum.eth.v1alpha1.DebugPeerResponse.score_info:type_name -> ethereum.eth.v1alpha1.ScoreInfo
-	12, // 7: ethereum.eth.v1alpha1.ScoreInfo.topic_scores:type_name -> ethereum.eth.v1alpha1.ScoreInfo.TopicScoresEntry
-	16, // 8: ethereum.eth.v1alpha1.DebugPeerResponse.PeerInfo.metadataV0:type_name -> ethereum.eth.v1alpha1.MetaDataV0
-	17, // 9: ethereum.eth.v1alpha1.DebugPeerResponse.PeerInfo.metadataV1:type_name -> ethereum.eth.v1alpha1.MetaDataV1
-	18, // 10: ethereum.eth.v1alpha1.DebugPeerResponse.PeerInfo.metadataV2:type_name -> ethereum.eth.v1alpha1.MetaDataV2
-	10, // 11: ethereum.eth.v1alpha1.ScoreInfo.TopicScoresEntry.value:type_name -> ethereum.eth.v1alpha1.TopicScoreSnapshot
-	3,  // 12: ethereum.eth.v1alpha1.Debug.GetBeaconState:input_type -> ethereum.eth.v1alpha1.BeaconStateRequest
-	4,  // 13: ethereum.eth.v1alpha1.Debug.GetBlock:input_type -> ethereum.eth.v1alpha1.BlockRequestByRoot
-	6,  // 14: ethereum.eth.v1alpha1.Debug.SetLoggingLevel:input_type -> ethereum.eth.v1alpha1.LoggingLevelRequest
-	19, // 15: ethereum.eth.v1alpha1.Debug.ListPeers:input_type -> google.protobuf.Empty
-	20, // 16: ethereum.eth.v1alpha1.Debug.GetPeer:input_type -> ethereum.eth.v1alpha1.PeerRequest
-	5,  // 17: ethereum.eth.v1alpha1.Debug.GetBeaconState:output_type -> ethereum.eth.v1alpha1.SSZResponse
-	5,  // 18: ethereum.eth.v1alpha1.Debug.GetBlock:output_type -> ethereum.eth.v1alpha1.SSZResponse
-	19, // 19: ethereum.eth.v1alpha1.Debug.SetLoggingLevel:output_type -> google.protobuf.Empty
-	7,  // 20: ethereum.eth.v1alpha1.Debug.ListPeers:output_type -> ethereum.eth.v1alpha1.DebugPeerResponses
-	8,  // 21: ethereum.eth.v1alpha1.Debug.GetPeer:output_type -> ethereum.eth.v1alpha1.DebugPeerResponse
+	0,  // 0: sila.eth.v1alpha1.LoggingLevelRequest.level:type_name -> sila.eth.v1alpha1.LoggingLevelRequest.Level
+	8,  // 1: sila.eth.v1alpha1.DebugPeerResponses.responses:type_name -> sila.eth.v1alpha1.DebugPeerResponse
+	13, // 2: sila.eth.v1alpha1.DebugPeerResponse.direction:type_name -> sila.eth.v1alpha1.PeerDirection
+	14, // 3: sila.eth.v1alpha1.DebugPeerResponse.connection_state:type_name -> sila.eth.v1alpha1.ConnectionState
+	11, // 4: sila.eth.v1alpha1.DebugPeerResponse.peer_info:type_name -> sila.eth.v1alpha1.DebugPeerResponse.PeerInfo
+	15, // 5: sila.eth.v1alpha1.DebugPeerResponse.peer_status:type_name -> sila.eth.v1alpha1.Status
+	9,  // 6: sila.eth.v1alpha1.DebugPeerResponse.score_info:type_name -> sila.eth.v1alpha1.ScoreInfo
+	12, // 7: sila.eth.v1alpha1.ScoreInfo.topic_scores:type_name -> sila.eth.v1alpha1.ScoreInfo.TopicScoresEntry
+	16, // 8: sila.eth.v1alpha1.DebugPeerResponse.PeerInfo.metadataV0:type_name -> sila.eth.v1alpha1.MetaDataV0
+	17, // 9: sila.eth.v1alpha1.DebugPeerResponse.PeerInfo.metadataV1:type_name -> sila.eth.v1alpha1.MetaDataV1
+	18, // 10: sila.eth.v1alpha1.DebugPeerResponse.PeerInfo.metadataV2:type_name -> sila.eth.v1alpha1.MetaDataV2
+	10, // 11: sila.eth.v1alpha1.ScoreInfo.TopicScoresEntry.value:type_name -> sila.eth.v1alpha1.TopicScoreSnapshot
+	3,  // 12: sila.eth.v1alpha1.Debug.GetBeaconState:input_type -> sila.eth.v1alpha1.BeaconStateRequest
+	4,  // 13: sila.eth.v1alpha1.Debug.GetBlock:input_type -> sila.eth.v1alpha1.BlockRequestByRoot
+	6,  // 14: sila.eth.v1alpha1.Debug.SetLoggingLevel:input_type -> sila.eth.v1alpha1.LoggingLevelRequest
+	19, // 15: sila.eth.v1alpha1.Debug.ListPeers:input_type -> google.protobuf.Empty
+	20, // 16: sila.eth.v1alpha1.Debug.GetPeer:input_type -> sila.eth.v1alpha1.PeerRequest
+	5,  // 17: sila.eth.v1alpha1.Debug.GetBeaconState:output_type -> sila.eth.v1alpha1.SSZResponse
+	5,  // 18: sila.eth.v1alpha1.Debug.GetBlock:output_type -> sila.eth.v1alpha1.SSZResponse
+	19, // 19: sila.eth.v1alpha1.Debug.SetLoggingLevel:output_type -> google.protobuf.Empty
+	7,  // 20: sila.eth.v1alpha1.Debug.ListPeers:output_type -> sila.eth.v1alpha1.DebugPeerResponses
+	8,  // 21: sila.eth.v1alpha1.Debug.GetPeer:output_type -> sila.eth.v1alpha1.DebugPeerResponse
 	17, // [17:22] is the sub-list for method output_type
 	12, // [12:17] is the sub-list for method input_type
 	12, // [12:12] is the sub-list for extension type_name
@@ -1157,7 +1157,7 @@ func NewDebugClient(cc grpc.ClientConnInterface) DebugClient {
 // Deprecated: Do not use.
 func (c *debugClient) GetBeaconState(ctx context.Context, in *BeaconStateRequest, opts ...grpc.CallOption) (*SSZResponse, error) {
 	out := new(SSZResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Debug/GetBeaconState", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Debug/GetBeaconState", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1167,7 +1167,7 @@ func (c *debugClient) GetBeaconState(ctx context.Context, in *BeaconStateRequest
 // Deprecated: Do not use.
 func (c *debugClient) GetBlock(ctx context.Context, in *BlockRequestByRoot, opts ...grpc.CallOption) (*SSZResponse, error) {
 	out := new(SSZResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Debug/GetBlock", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Debug/GetBlock", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1177,7 +1177,7 @@ func (c *debugClient) GetBlock(ctx context.Context, in *BlockRequestByRoot, opts
 // Deprecated: Do not use.
 func (c *debugClient) SetLoggingLevel(ctx context.Context, in *LoggingLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Debug/SetLoggingLevel", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Debug/SetLoggingLevel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1187,7 +1187,7 @@ func (c *debugClient) SetLoggingLevel(ctx context.Context, in *LoggingLevelReque
 // Deprecated: Do not use.
 func (c *debugClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*DebugPeerResponses, error) {
 	out := new(DebugPeerResponses)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Debug/ListPeers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Debug/ListPeers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1197,7 +1197,7 @@ func (c *debugClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...
 // Deprecated: Do not use.
 func (c *debugClient) GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.CallOption) (*DebugPeerResponse, error) {
 	out := new(DebugPeerResponse)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Debug/GetPeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sila.eth.v1alpha1.Debug/GetPeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1252,7 +1252,7 @@ func _Debug_GetBeaconState_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Debug/GetBeaconState",
+		FullMethod: "/sila.eth.v1alpha1.Debug/GetBeaconState",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DebugServer).GetBeaconState(ctx, req.(*BeaconStateRequest))
@@ -1270,7 +1270,7 @@ func _Debug_GetBlock_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Debug/GetBlock",
+		FullMethod: "/sila.eth.v1alpha1.Debug/GetBlock",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DebugServer).GetBlock(ctx, req.(*BlockRequestByRoot))
@@ -1288,7 +1288,7 @@ func _Debug_SetLoggingLevel_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Debug/SetLoggingLevel",
+		FullMethod: "/sila.eth.v1alpha1.Debug/SetLoggingLevel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DebugServer).SetLoggingLevel(ctx, req.(*LoggingLevelRequest))
@@ -1306,7 +1306,7 @@ func _Debug_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Debug/ListPeers",
+		FullMethod: "/sila.eth.v1alpha1.Debug/ListPeers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DebugServer).ListPeers(ctx, req.(*emptypb.Empty))
@@ -1324,7 +1324,7 @@ func _Debug_GetPeer_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Debug/GetPeer",
+		FullMethod: "/sila.eth.v1alpha1.Debug/GetPeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DebugServer).GetPeer(ctx, req.(*PeerRequest))
@@ -1333,7 +1333,7 @@ func _Debug_GetPeer_Handler(srv interface{}, ctx context.Context, dec func(inter
 }
 
 var _Debug_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "ethereum.eth.v1alpha1.Debug",
+	ServiceName: "sila.eth.v1alpha1.Debug",
 	HandlerType: (*DebugServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

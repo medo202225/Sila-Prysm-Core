@@ -397,7 +397,7 @@ type ExecutionPayloadDenebJSON struct {
 }
 
 // WithdrawalRequestV1 represents an execution engine WithdrawalRequestV1 value
-// https://github.com/ethereum/execution-apis/blob/main/src/engine/prague.md#withdrawalrequestv1
+// https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/prague.md#withdrawalrequestv1
 type WithdrawalRequestV1 struct {
 	SourceAddress   *common.Address `json:"sourceAddress"`
 	ValidatorPubkey *BlsPubkey      `json:"validatorPubkey"`
@@ -418,7 +418,7 @@ func (r WithdrawalRequestV1) Validate() error {
 }
 
 // DepositRequestV1 represents an execution engine DepositRequestV1 value
-// https://github.com/ethereum/execution-apis/blob/main/src/engine/prague.md#depositrequestv1
+// https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/prague.md#depositrequestv1
 type DepositRequestV1 struct {
 	// pubkey: DATA, 48 Bytes
 	PubKey *BlsPubkey `json:"pubkey"`
@@ -452,7 +452,7 @@ func (r DepositRequestV1) Validate() error {
 }
 
 // ConsolidationRequestV1 represents an execution engine ConsolidationRequestV1 value
-// https://github.com/ethereum/execution-apis/blob/main/src/engine/prague.md#consolidationrequestv1
+// https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/prague.md#consolidationrequestv1
 type ConsolidationRequestV1 struct {
 	// sourceAddress: DATA, 20 Bytes
 	SourceAddress *common.Address `json:"sourceAddress"`

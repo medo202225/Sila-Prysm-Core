@@ -82,7 +82,7 @@ var Commands = &cli.Command{
 		{
 			Name:     "convert-complete-to-minimal",
 			Category: "db",
-			Usage:    "Convert a complete EIP-3076 slashing protection to a minimal one",
+			Usage:    "Convert a complete SIP-3076 slashing protection to a minimal one",
 			Flags: []cli.Flag{
 				SourceDataDirFlag,
 				TargetDataDirFlag,

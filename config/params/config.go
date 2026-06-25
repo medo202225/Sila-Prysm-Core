@@ -296,7 +296,7 @@ type BeaconChainConfig struct {
 	FullExitRequestAmount                 uint64 `yaml:"FULL_EXIT_REQUEST_AMOUNT" spec:"true"`                   // FullExitRequestAmount is the amount of Gwei required to request a full exit.
 	MaxWithdrawalRequestsPerPayload       uint64 `yaml:"MAX_WITHDRAWAL_REQUESTS_PER_PAYLOAD" spec:"true"`        // MaxWithdrawalRequestsPerPayload is the maximum number of execution layer withdrawal requests in each payload.
 	MaxDepositRequestsPerPayload          uint64 `yaml:"MAX_DEPOSIT_REQUESTS_PER_PAYLOAD" spec:"true"`           // MaxDepositRequestsPerPayload is the maximum number of execution layer deposits in each payload
-	UnsetDepositRequestsStartIndex        uint64 `yaml:"UNSET_DEPOSIT_REQUESTS_START_INDEX" spec:"true"`         // UnsetDepositRequestsStartIndex is used to check the start index for eip6110
+	UnsetDepositRequestsStartIndex        uint64 `yaml:"UNSET_DEPOSIT_REQUESTS_START_INDEX" spec:"true"`         // UnsetDepositRequestsStartIndex is used to check the start index for sip6110
 
 	// Values introduced in Fulu upgrade
 	SamplesPerSlot                        uint64           `yaml:"SAMPLES_PER_SLOT" spec:"true"`                             // SamplesPerSlot is the minimum number of samples for an honest node.
@@ -312,9 +312,9 @@ type BeaconChainConfig struct {
 	BuilderPaymentThresholdNumerator     uint64 `yaml:"BUILDER_PAYMENT_THRESHOLD_NUMERATOR" spec:"true"`        // BuilderPaymentThresholdNumerator is the numerator for builder payment quorum threshold calculation.
 	BuilderPaymentThresholdDenominator   uint64 `yaml:"BUILDER_PAYMENT_THRESHOLD_DENOMINATOR" spec:"true"`      // BuilderPaymentThresholdDenominator is the denominator for builder payment quorum threshold calculation.
 	MaxRequestPayloads                   uint64 `yaml:"MAX_REQUEST_PAYLOADS" spec:"true"`                       // MaxRequestPayloads is the maximum number of execution payload envelopes in a single request.
-	ChurnLimitQuotientGloas              uint64 `yaml:"CHURN_LIMIT_QUOTIENT_GLOAS" spec:"true"`                 // ChurnLimitQuotientGloas is the divisor used to compute per-epoch churn from total active balance in Gloas (EIP-8061).
-	ConsolidationChurnLimitQuotient      uint64 `yaml:"CONSOLIDATION_CHURN_LIMIT_QUOTIENT" spec:"true"`         // ConsolidationChurnLimitQuotient is the divisor used to compute the per-epoch consolidation churn limit in Gloas (EIP-8061).
-	MaxPerEpochActivationChurnLimitGloas uint64 `yaml:"MAX_PER_EPOCH_ACTIVATION_CHURN_LIMIT_GLOAS" spec:"true"` // MaxPerEpochActivationChurnLimitGloas is the per-epoch cap on activation churn in Gloas (EIP-8061).
+	ChurnLimitQuotientGloas              uint64 `yaml:"CHURN_LIMIT_QUOTIENT_GLOAS" spec:"true"`                 // ChurnLimitQuotientGloas is the divisor used to compute per-epoch churn from total active balance in Gloas (SIP-8061).
+	ConsolidationChurnLimitQuotient      uint64 `yaml:"CONSOLIDATION_CHURN_LIMIT_QUOTIENT" spec:"true"`         // ConsolidationChurnLimitQuotient is the divisor used to compute the per-epoch consolidation churn limit in Gloas (SIP-8061).
+	MaxPerEpochActivationChurnLimitGloas uint64 `yaml:"MAX_PER_EPOCH_ACTIVATION_CHURN_LIMIT_GLOAS" spec:"true"` // MaxPerEpochActivationChurnLimitGloas is the per-epoch cap on activation churn in Gloas (SIP-8061).
 
 	// Networking Specific Parameters
 	MaxPayloadSize                  uint64          `yaml:"MAX_PAYLOAD_SIZE" spec:"true"`                   // MAX_PAYLOAD_SIZE is the maximum allowed size of uncompressed payload in gossip messages and rpc chunks.

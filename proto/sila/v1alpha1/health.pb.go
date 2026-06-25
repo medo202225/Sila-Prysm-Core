@@ -120,12 +120,12 @@ func file_proto_sila_v1alpha1_health_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_health_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_sila_v1alpha1_health_proto_goTypes = []any{
-	(*LogsResponse)(nil),  // 0: ethereum.eth.v1alpha1.LogsResponse
+	(*LogsResponse)(nil),  // 0: sila.eth.v1alpha1.LogsResponse
 	(*emptypb.Empty)(nil), // 1: google.protobuf.Empty
 }
 var file_proto_sila_v1alpha1_health_proto_depIdxs = []int32{
-	1, // 0: ethereum.eth.v1alpha1.Health.StreamBeaconLogs:input_type -> google.protobuf.Empty
-	0, // 1: ethereum.eth.v1alpha1.Health.StreamBeaconLogs:output_type -> ethereum.eth.v1alpha1.LogsResponse
+	1, // 0: sila.eth.v1alpha1.Health.StreamBeaconLogs:input_type -> google.protobuf.Empty
+	0, // 1: sila.eth.v1alpha1.Health.StreamBeaconLogs:output_type -> sila.eth.v1alpha1.LogsResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -184,7 +184,7 @@ func NewHealthClient(cc grpc.ClientConnInterface) HealthClient {
 
 // Deprecated: Do not use.
 func (c *healthClient) StreamBeaconLogs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (Health_StreamBeaconLogsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Health_serviceDesc.Streams[0], "/ethereum.eth.v1alpha1.Health/StreamBeaconLogs", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Health_serviceDesc.Streams[0], "/sila.eth.v1alpha1.Health/StreamBeaconLogs", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func (x *healthStreamBeaconLogsServer) Send(m *LogsResponse) error {
 }
 
 var _Health_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "ethereum.eth.v1alpha1.Health",
+	ServiceName: "sila.eth.v1alpha1.Health",
 	HandlerType: (*HealthServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{

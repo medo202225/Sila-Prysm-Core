@@ -13,7 +13,7 @@ go_library(
     deps = [
         "//consensus-types/blocks:go_default_library",
         "@com_github_crate_crypto_go_kzg_4844//:go_default_library",
-        "@com_github_ethereum_c_kzg_4844_v2//bindings/go:go_default_library",
+        "@com_github_sila_chain_c_kzg_4844_v2//bindings/go:go_default_library",
         "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_sila_chain_sila//crypto/kzg4844:go_default_library",
         "@com_github_pkg_errors//:go_default_library",

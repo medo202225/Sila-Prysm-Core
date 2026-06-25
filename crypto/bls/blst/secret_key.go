@@ -70,7 +70,7 @@ func IsZero(sKey []byte) bool {
 //
 //	a deterministic signature given a secret key SK and a message.
 //
-// In Ethereum proof of stake specification:
+// In Sila proof of stake specification:
 // def Sign(SK: int, message: Bytes) -> BLSSignature
 func (s *bls12SecretKey) Sign(msg []byte) common.Signature {
 	signature := new(blstSignature).Sign(s.p, msg, dst)

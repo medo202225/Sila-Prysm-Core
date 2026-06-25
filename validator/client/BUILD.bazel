@@ -131,7 +131,7 @@ go_test(
         "wait_helpers_test.go",
     ],
     data = [
-        "@eip3076_spec_tests//:test_data",
+        "@sip3076_spec_tests//:test_data",
     ],
     embed = [":go_default_library"],
     deps = [

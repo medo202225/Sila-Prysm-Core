@@ -13,8 +13,8 @@ func MinimalSpecConfig() *BeaconChainConfig {
 	minimalConfig.MaxCommitteesPerSlot = 4
 	minimalConfig.TargetCommitteeSize = 4
 	minimalConfig.MaxValidatorsPerCommittee = 2048
-	minimalConfig.MinPerEpochChurnLimit = 2           // Changed in EIP7514
-	minimalConfig.MaxPerEpochActivationChurnLimit = 4 // New in EIP7514
+	minimalConfig.MinPerEpochChurnLimit = 2           // Changed in SIP7514
+	minimalConfig.MaxPerEpochActivationChurnLimit = 4 // New in SIP7514
 	minimalConfig.ChurnLimitQuotient = 32
 	minimalConfig.ShuffleRoundCount = 10
 	minimalConfig.MinGenesisActiveValidatorCount = 64
@@ -129,7 +129,7 @@ func MinimalSpecConfig() *BeaconChainConfig {
 	minimalConfig.PendingDepositsLimit = 134217728
 	minimalConfig.MaxPendingDepositsPerEpoch = 16
 
-	// New Gloas params (EIP-8061)
+	// New Gloas params (SIP-8061)
 	minimalConfig.ChurnLimitQuotientGloas = 16
 	minimalConfig.ConsolidationChurnLimitQuotient = 32
 	minimalConfig.MaxPerEpochActivationChurnLimitGloas = 128000000000

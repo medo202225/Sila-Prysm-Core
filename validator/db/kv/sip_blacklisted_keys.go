@@ -8,7 +8,7 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
-// EIPImportBlacklistedPublicKeys returns keys that were marked as blacklisted during EIP-3076 slashing
+// EIPImportBlacklistedPublicKeys returns keys that were marked as blacklisted during SIP-3076 slashing
 // protection imports, ensuring that we can prevent these keys from having duties at runtime.
 func (s *Store) EIPImportBlacklistedPublicKeys(ctx context.Context) ([][fieldparams.BLSPubkeyLength]byte, error) {
 	_, span := trace.StartSpan(ctx, "Validator.EIPImportBlacklistedPublicKeys")
@@ -30,7 +30,7 @@ func (s *Store) EIPImportBlacklistedPublicKeys(ctx context.Context) ([][fieldpar
 }
 
 // SaveEIPImportBlacklistedPublicKeys stores a list of blacklisted public keys that
-// were determined during EIP-3076 slashing protection imports.
+// were determined during SIP-3076 slashing protection imports.
 func (s *Store) SaveEIPImportBlacklistedPublicKeys(ctx context.Context, publicKeys [][fieldparams.BLSPubkeyLength]byte) error {
 	_, span := trace.StartSpan(ctx, "Validator.SaveEIPImportBlacklistedPublicKeys")
 	defer span.End()

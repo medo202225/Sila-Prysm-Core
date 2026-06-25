@@ -1149,32 +1149,32 @@ func file_proto_sila_v1alpha1_beacon_core_types_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_beacon_core_types_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_proto_sila_v1alpha1_beacon_core_types_proto_goTypes = []any{
-	(*BeaconBlockHeader)(nil),         // 0: ethereum.eth.v1alpha1.BeaconBlockHeader
-	(*SignedBeaconBlockHeader)(nil),   // 1: ethereum.eth.v1alpha1.SignedBeaconBlockHeader
-	(*SilaExecutionData)(nil),                  // 2: ethereum.eth.v1alpha1.SilaExecutionData
-	(*ProposerSlashing)(nil),          // 3: ethereum.eth.v1alpha1.ProposerSlashing
-	(*Deposit)(nil),                   // 4: ethereum.eth.v1alpha1.Deposit
-	(*SignedVoluntaryExit)(nil),       // 5: ethereum.eth.v1alpha1.SignedVoluntaryExit
-	(*VoluntaryExit)(nil),             // 6: ethereum.eth.v1alpha1.VoluntaryExit
-	(*AttesterSlashingElectra)(nil),   // 7: ethereum.eth.v1alpha1.AttesterSlashingElectra
-	(*IndexedAttestationElectra)(nil), // 8: ethereum.eth.v1alpha1.IndexedAttestationElectra
-	(*SyncAggregate)(nil),             // 9: ethereum.eth.v1alpha1.SyncAggregate
-	(*Fork)(nil),                      // 10: ethereum.eth.v1alpha1.Fork
-	(*SyncCommittee)(nil),             // 11: ethereum.eth.v1alpha1.SyncCommittee
-	(*HistoricalSummary)(nil),         // 12: ethereum.eth.v1alpha1.HistoricalSummary
-	(*Validator)(nil),                 // 13: ethereum.eth.v1alpha1.Validator
-	(*Deposit_Data)(nil),              // 14: ethereum.eth.v1alpha1.Deposit.Data
-	(*AttestationData)(nil),           // 15: ethereum.eth.v1alpha1.AttestationData
+	(*BeaconBlockHeader)(nil),         // 0: sila.eth.v1alpha1.BeaconBlockHeader
+	(*SignedBeaconBlockHeader)(nil),   // 1: sila.eth.v1alpha1.SignedBeaconBlockHeader
+	(*SilaExecutionData)(nil),                  // 2: sila.eth.v1alpha1.SilaExecutionData
+	(*ProposerSlashing)(nil),          // 3: sila.eth.v1alpha1.ProposerSlashing
+	(*Deposit)(nil),                   // 4: sila.eth.v1alpha1.Deposit
+	(*SignedVoluntaryExit)(nil),       // 5: sila.eth.v1alpha1.SignedVoluntaryExit
+	(*VoluntaryExit)(nil),             // 6: sila.eth.v1alpha1.VoluntaryExit
+	(*AttesterSlashingElectra)(nil),   // 7: sila.eth.v1alpha1.AttesterSlashingElectra
+	(*IndexedAttestationElectra)(nil), // 8: sila.eth.v1alpha1.IndexedAttestationElectra
+	(*SyncAggregate)(nil),             // 9: sila.eth.v1alpha1.SyncAggregate
+	(*Fork)(nil),                      // 10: sila.eth.v1alpha1.Fork
+	(*SyncCommittee)(nil),             // 11: sila.eth.v1alpha1.SyncCommittee
+	(*HistoricalSummary)(nil),         // 12: sila.eth.v1alpha1.HistoricalSummary
+	(*Validator)(nil),                 // 13: sila.eth.v1alpha1.Validator
+	(*Deposit_Data)(nil),              // 14: sila.eth.v1alpha1.Deposit.Data
+	(*AttestationData)(nil),           // 15: sila.eth.v1alpha1.AttestationData
 }
 var file_proto_sila_v1alpha1_beacon_core_types_proto_depIdxs = []int32{
-	0,  // 0: ethereum.eth.v1alpha1.SignedBeaconBlockHeader.header:type_name -> ethereum.eth.v1alpha1.BeaconBlockHeader
-	1,  // 1: ethereum.eth.v1alpha1.ProposerSlashing.header_1:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockHeader
-	1,  // 2: ethereum.eth.v1alpha1.ProposerSlashing.header_2:type_name -> ethereum.eth.v1alpha1.SignedBeaconBlockHeader
-	14, // 3: ethereum.eth.v1alpha1.Deposit.data:type_name -> ethereum.eth.v1alpha1.Deposit.Data
-	6,  // 4: ethereum.eth.v1alpha1.SignedVoluntaryExit.exit:type_name -> ethereum.eth.v1alpha1.VoluntaryExit
-	8,  // 5: ethereum.eth.v1alpha1.AttesterSlashingElectra.attestation_1:type_name -> ethereum.eth.v1alpha1.IndexedAttestationElectra
-	8,  // 6: ethereum.eth.v1alpha1.AttesterSlashingElectra.attestation_2:type_name -> ethereum.eth.v1alpha1.IndexedAttestationElectra
-	15, // 7: ethereum.eth.v1alpha1.IndexedAttestationElectra.data:type_name -> ethereum.eth.v1alpha1.AttestationData
+	0,  // 0: sila.eth.v1alpha1.SignedBeaconBlockHeader.header:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
+	1,  // 1: sila.eth.v1alpha1.ProposerSlashing.header_1:type_name -> sila.eth.v1alpha1.SignedBeaconBlockHeader
+	1,  // 2: sila.eth.v1alpha1.ProposerSlashing.header_2:type_name -> sila.eth.v1alpha1.SignedBeaconBlockHeader
+	14, // 3: sila.eth.v1alpha1.Deposit.data:type_name -> sila.eth.v1alpha1.Deposit.Data
+	6,  // 4: sila.eth.v1alpha1.SignedVoluntaryExit.exit:type_name -> sila.eth.v1alpha1.VoluntaryExit
+	8,  // 5: sila.eth.v1alpha1.AttesterSlashingElectra.attestation_1:type_name -> sila.eth.v1alpha1.IndexedAttestationElectra
+	8,  // 6: sila.eth.v1alpha1.AttesterSlashingElectra.attestation_2:type_name -> sila.eth.v1alpha1.IndexedAttestationElectra
+	15, // 7: sila.eth.v1alpha1.IndexedAttestationElectra.data:type_name -> sila.eth.v1alpha1.AttestationData
 	8,  // [8:8] is the sub-list for method output_type
 	8,  // [8:8] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name

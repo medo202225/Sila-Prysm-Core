@@ -48,7 +48,7 @@ func (*Store) ProposalHistoryForSlot(_ context.Context, _ [fieldparams.BLSPubkey
 	return [32]byte{}, false, false, errors.New("not implemented")
 }
 
-// SaveProposalHistoryForSlot checks if the incoming proposal is valid regarding EIP-3076 minimal slashing protection.
+// SaveProposalHistoryForSlot checks if the incoming proposal is valid regarding SIP-3076 minimal slashing protection.
 // If so, it updates the database with the incoming slot, and returns nil.
 // If not, it does not modify the database and return an error.
 func (s *Store) SaveProposalHistoryForSlot(
@@ -92,7 +92,7 @@ func (s *Store) SaveProposalHistoryForSlot(
 		return nil
 	}
 
-	// Based on EIP-3076 (minimal database), validator should refuse to sign any proposal
+	// Based on SIP-3076 (minimal database), validator should refuse to sign any proposal
 	// with slot less than or equal to the latest signed block slot in the DB.
 	if slotUInt64 <= *validatorSlashingProtection.LatestSignedBlockSlot {
 		return errors.Errorf(
@@ -121,7 +121,7 @@ func (s *Store) ProposedPublicKeys(_ context.Context) ([][fieldparams.BLSPubkeyL
 }
 
 // SlashableProposalCheck checks if a block proposal is slashable by comparing it with the
-// block proposals history for the given public key in our minimal slashing protection database defined by EIP-3076.
+// block proposals history for the given public key in our minimal slashing protection database defined by SIP-3076.
 // If it is not, it update the database.
 func (s *Store) SlashableProposalCheck(
 	ctx context.Context,
@@ -131,7 +131,7 @@ func (s *Store) SlashableProposalCheck(
 	emitAccountMetrics bool,
 	validatorProposeFailVec *prometheus.CounterVec,
 ) error {
-	// Check if the proposal is potentially slashable regarding EIP-3076 minimal conditions.
+	// Check if the proposal is potentially slashable regarding SIP-3076 minimal conditions.
 	// If not, save the new proposal into the database.
 	if err := s.SaveProposalHistoryForSlot(ctx, pubKey, signedBlock.Block().Slot(), signingRoot[:]); err != nil {
 		if strings.Contains(err.Error(), "could not sign proposal") {

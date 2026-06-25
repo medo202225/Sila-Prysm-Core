@@ -457,20 +457,20 @@ func file_proto_engine_v1_electra_proto_rawDescGZIP() []byte {
 
 var file_proto_engine_v1_electra_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_engine_v1_electra_proto_goTypes = []any{
-	(*WithdrawalRequest)(nil),      // 0: ethereum.engine.v1.WithdrawalRequest
-	(*DepositRequest)(nil),         // 1: ethereum.engine.v1.DepositRequest
-	(*ConsolidationRequest)(nil),   // 2: ethereum.engine.v1.ConsolidationRequest
-	(*ExecutionRequests)(nil),      // 3: ethereum.engine.v1.ExecutionRequests
-	(*ExecutionBundleElectra)(nil), // 4: ethereum.engine.v1.ExecutionBundleElectra
-	(*ExecutionPayloadDeneb)(nil),  // 5: ethereum.engine.v1.ExecutionPayloadDeneb
-	(*BlobsBundle)(nil),            // 6: ethereum.engine.v1.BlobsBundle
+	(*WithdrawalRequest)(nil),      // 0: sila.engine.v1.WithdrawalRequest
+	(*DepositRequest)(nil),         // 1: sila.engine.v1.DepositRequest
+	(*ConsolidationRequest)(nil),   // 2: sila.engine.v1.ConsolidationRequest
+	(*ExecutionRequests)(nil),      // 3: sila.engine.v1.ExecutionRequests
+	(*ExecutionBundleElectra)(nil), // 4: sila.engine.v1.ExecutionBundleElectra
+	(*ExecutionPayloadDeneb)(nil),  // 5: sila.engine.v1.ExecutionPayloadDeneb
+	(*BlobsBundle)(nil),            // 6: sila.engine.v1.BlobsBundle
 }
 var file_proto_engine_v1_electra_proto_depIdxs = []int32{
-	1, // 0: ethereum.engine.v1.ExecutionRequests.deposits:type_name -> ethereum.engine.v1.DepositRequest
-	0, // 1: ethereum.engine.v1.ExecutionRequests.withdrawals:type_name -> ethereum.engine.v1.WithdrawalRequest
-	2, // 2: ethereum.engine.v1.ExecutionRequests.consolidations:type_name -> ethereum.engine.v1.ConsolidationRequest
-	5, // 3: ethereum.engine.v1.ExecutionBundleElectra.payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	6, // 4: ethereum.engine.v1.ExecutionBundleElectra.blobs_bundle:type_name -> ethereum.engine.v1.BlobsBundle
+	1, // 0: sila.engine.v1.ExecutionRequests.deposits:type_name -> sila.engine.v1.DepositRequest
+	0, // 1: sila.engine.v1.ExecutionRequests.withdrawals:type_name -> sila.engine.v1.WithdrawalRequest
+	2, // 2: sila.engine.v1.ExecutionRequests.consolidations:type_name -> sila.engine.v1.ConsolidationRequest
+	5, // 3: sila.engine.v1.ExecutionBundleElectra.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	6, // 4: sila.engine.v1.ExecutionBundleElectra.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

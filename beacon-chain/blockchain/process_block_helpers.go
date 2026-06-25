@@ -462,7 +462,7 @@ func (s *Service) insertFinalizedDepositsAndPrune(ctx context.Context, fRoot [32
 	// Check if we should prune all pending deposits.
 	// In post-Electra(after the legacy deposit mechanism is deprecated),
 	// we can prune all pending deposits in the deposit cache.
-	// See: https://eips.ethereum.org/EIPS/eip-6110#silaExecutionData-poll-deprecation
+	// See: https://sips.sila.org/SIPS/sip-6110#silaExecutionData-poll-deprecation
 	if helpers.DepositRequestsStarted(finalizedState) {
 		s.pruneAllPendingDepositsAndProofs(ctx)
 		return

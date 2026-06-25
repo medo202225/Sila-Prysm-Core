@@ -69,7 +69,7 @@ func ProcessVoluntaryExits(
 		if exit == nil || exit.Exit == nil {
 			return nil, errors.New("nil voluntary exit in block body")
 		}
-		// [New in Gloas:EIP7732] Builder exits are identified by the builder index flag.
+		// [New in Gloas:SIP7732] Builder exits are identified by the builder index flag.
 		if beaconState.Version() >= version.Gloas && exit.Exit.ValidatorIndex.IsBuilderIndex() {
 			if err := verifyBuilderExitAndSignature(beaconState, exit); err != nil {
 				return nil, errors.Wrapf(err, "could not verify builder exit %d", idx)
@@ -110,7 +110,7 @@ func ProcessVoluntaryExits(
 //	 # Verify the validator has been active long enough
 //	 assert get_current_epoch(state) >= validator.activation_epoch + SHARD_COMMITTEE_PERIOD
 //	 # Only exit validator if it has no pending withdrawals in the queue
-//	 assert get_pending_balance_to_withdraw(state, voluntary_exit.validator_index) == 0  # [New in Electra:EIP7251]
+//	 assert get_pending_balance_to_withdraw(state, voluntary_exit.validator_index) == 0  # [New in Electra:SIP7251]
 //	 # Verify signature
 //	 domain = get_domain(state, DOMAIN_VOLUNTARY_EXIT, voluntary_exit.epoch)
 //	 signing_root = compute_signing_root(voluntary_exit, domain)
@@ -126,7 +126,7 @@ func VerifyExitAndSignature(
 		return errors.New("nil exit")
 	}
 
-	// [New in Gloas:EIP7732] Builder exits are verified separately.
+	// [New in Gloas:SIP7732] Builder exits are verified separately.
 	if st.Version() >= version.Gloas && signed.Exit.ValidatorIndex.IsBuilderIndex() {
 		return verifyBuilderExitAndSignature(st, signed)
 	}
@@ -134,7 +134,7 @@ func VerifyExitAndSignature(
 	fork := st.Fork()
 	genesisRoot := st.GenesisValidatorsRoot()
 
-	// EIP-7044: Beginning in Deneb, fix the fork version to Capella.
+	// SIP-7044: Beginning in Deneb, fix the fork version to Capella.
 	// This allows for signed validator exits to be valid forever.
 	if st.Version() >= version.Deneb {
 		fork = &silapb.Fork{
@@ -175,7 +175,7 @@ func VerifyExitAndSignature(
 //	 # Verify the validator has been active long enough
 //	 assert get_current_epoch(state) >= validator.activation_epoch + SHARD_COMMITTEE_PERIOD
 //	 # Only exit validator if it has no pending withdrawals in the queue
-//	 assert get_pending_balance_to_withdraw(state, voluntary_exit.validator_index) == 0  # [New in Electra:EIP7251]
+//	 assert get_pending_balance_to_withdraw(state, voluntary_exit.validator_index) == 0  # [New in Electra:SIP7251]
 //	 # Verify signature
 //	 domain = get_domain(state, DOMAIN_VOLUNTARY_EXIT, voluntary_exit.epoch)
 //	 signing_root = compute_signing_root(voluntary_exit, domain)
@@ -222,7 +222,7 @@ func verifyExitConditions(st state.ReadOnlyBeaconState, validator state.ReadOnly
 }
 
 // verifyBuilderExitAndSignature validates a builder voluntary exit.
-// [New in Gloas:EIP7732]
+// [New in Gloas:SIP7732]
 func verifyBuilderExitAndSignature(st state.ReadOnlyBeaconState, signed *silapb.SignedVoluntaryExit) error {
 	if signed == nil || signed.Exit == nil {
 		return errors.New("nil exit")
@@ -254,7 +254,7 @@ func verifyBuilderExitAndSignature(st state.ReadOnlyBeaconState, signed *silapb.
 		return fmt.Errorf("builder %d has pending balance to withdraw: %d", builderIndex, pendingBalance)
 	}
 
-	// Verify signature using builder pubkey with Capella fork version (EIP-7044).
+	// Verify signature using builder pubkey with Capella fork version (SIP-7044).
 	pubkey, err := st.BuilderPubkey(builderIndex)
 	if err != nil {
 		return errors.Wrap(err, "could not get builder pubkey")

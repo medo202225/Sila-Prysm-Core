@@ -9,7 +9,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
-// Verifies the EIP-8045 filter: any validator marked slashed when the last
+// Verifies the SIP-8045 filter: any validator marked slashed when the last
 // lookahead epoch is computed must not appear in that epoch's proposer slots.
 func TestProcessProposerLookahead_ExcludesSlashedValidators(t *testing.T) {
 	ctx := t.Context()

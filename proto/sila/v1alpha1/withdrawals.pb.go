@@ -195,11 +195,11 @@ func file_proto_sila_v1alpha1_withdrawals_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_withdrawals_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_sila_v1alpha1_withdrawals_proto_goTypes = []any{
-	(*SignedBLSToExecutionChange)(nil), // 0: ethereum.eth.v1alpha1.SignedBLSToExecutionChange
-	(*BLSToExecutionChange)(nil),       // 1: ethereum.eth.v1alpha1.BLSToExecutionChange
+	(*SignedBLSToExecutionChange)(nil), // 0: sila.eth.v1alpha1.SignedBLSToExecutionChange
+	(*BLSToExecutionChange)(nil),       // 1: sila.eth.v1alpha1.BLSToExecutionChange
 }
 var file_proto_sila_v1alpha1_withdrawals_proto_depIdxs = []int32{
-	1, // 0: ethereum.eth.v1alpha1.SignedBLSToExecutionChange.message:type_name -> ethereum.eth.v1alpha1.BLSToExecutionChange
+	1, // 0: sila.eth.v1alpha1.SignedBLSToExecutionChange.message:type_name -> sila.eth.v1alpha1.BLSToExecutionChange
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

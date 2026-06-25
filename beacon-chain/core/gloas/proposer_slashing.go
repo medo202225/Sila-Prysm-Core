@@ -13,7 +13,7 @@ import (
 // RemoveBuilderPendingPayment removes the pending builder payment for the proposal slot.
 //
 //	<spec fn="process_proposer_slashing" fork="gloas" lines="22-32" hash="4da721ef">
-//	# [New in Gloas:EIP7732]
+//	# [New in Gloas:SIP7732]
 //	# Remove the BuilderPendingPayment corresponding to
 //	# this proposal if it is still in the 2-epoch window.
 //	slot = header_1.slot

@@ -13,7 +13,7 @@ import (
 )
 
 // ExportSlashingProtection handles the rpc call returning the json slashing history.
-// The format of the export follows the EIP-3076 standard which makes it
+// The format of the export follows the SIP-3076 standard which makes it
 // easy to migrate machines or Sila consensus clients.
 //
 // Steps:
@@ -45,7 +45,7 @@ func (s *Server) ExportSlashingProtection(w http.ResponseWriter, r *http.Request
 	})
 }
 
-// ImportSlashingProtection reads an input slashing protection EIP-3076
+// ImportSlashingProtection reads an input slashing protection SIP-3076
 // standard JSON string and inserts the data into validator DB.
 //
 // Read the JSON string passed through rpc, then call the func

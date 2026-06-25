@@ -18,7 +18,7 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-type eip3076TestCase struct {
+type sip3076TestCase struct {
 	Name                  string `json:"name"`
 	GenesisValidatorsRoot string `json:"genesis_validators_root"`
 	Steps                 []struct {
@@ -60,16 +60,16 @@ type eip3076TestCase struct {
 	} `json:"steps"`
 }
 
-func setupEIP3076SpecTests(t *testing.T) []*eip3076TestCase {
+func setupSIP3076SpecTests(t *testing.T) []*sip3076TestCase {
 	testFolders, err := bazel.ListRunfiles()
 	require.NoError(t, err)
-	testCases := make([]*eip3076TestCase, 0)
+	testCases := make([]*sip3076TestCase, 0)
 	for _, ff := range testFolders {
-		if strings.Contains(ff.ShortPath, "eip3076_spec_tests") &&
+		if strings.Contains(ff.ShortPath, "sip3076_spec_tests") &&
 			strings.Contains(ff.ShortPath, "generated/") {
 			enc, err := file.ReadFileAsBytes(ff.Path)
 			require.NoError(t, err)
-			testCase := &eip3076TestCase{}
+			testCase := &sip3076TestCase{}
 			require.NoError(t, json.Unmarshal(enc, testCase))
 			testCases = append(testCases, testCase)
 		}
@@ -77,20 +77,20 @@ func setupEIP3076SpecTests(t *testing.T) []*eip3076TestCase {
 	return testCases
 }
 
-func TestEIP3076SpecTests(t *testing.T) {
+func TestSIP3076SpecTests(t *testing.T) {
 	for _, isMinimal := range []bool{false, true} {
 		slashingProtectionType := "complete"
 		if isMinimal {
 			slashingProtectionType = "minimal"
 		}
 
-		for _, tt := range setupEIP3076SpecTests(t) {
+		for _, tt := range setupSIP3076SpecTests(t) {
 			t.Run(fmt.Sprintf("%s-%s", slashingProtectionType, tt.Name), func(t *testing.T) {
 				if tt.Name == "" {
-					t.Skip("Skipping eip3076TestCase with empty name")
+					t.Skip("Skipping sip3076TestCase with empty name")
 				}
 
-				// Set up validator client, one new validator client per eip3076TestCase.
+				// Set up validator client, one new validator client per sip3076TestCase.
 				// This ensures we initialize a new (empty) slashing protection database.
 				validator, _, _, _ := setup(t, isMinimal)
 
@@ -101,7 +101,7 @@ func TestEIP3076SpecTests(t *testing.T) {
 						require.NoError(t, err)
 					}
 
-					// The eip3076TestCase config contains the interchange config in json.
+					// The sip3076TestCase config contains the interchange config in json.
 					// This loads the interchange data via ImportStandardProtectionJSON.
 					interchangeBytes, err := json.Marshal(step.Interchange)
 					if err != nil {

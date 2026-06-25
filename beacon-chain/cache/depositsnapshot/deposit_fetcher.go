@@ -18,7 +18,7 @@ import (
 
 var (
 	pendingDepositsCount = promauto.NewGauge(prometheus.GaugeOpts{
-		Name: "beacondb_pending_deposits_eip4881",
+		Name: "beacondb_pending_deposits_sip4881",
 		Help: "The number of pending deposits in memory",
 	})
 )

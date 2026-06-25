@@ -105,8 +105,8 @@ func ProcessDeposit(beaconState state.BeaconState, deposit *silapb.Deposit, allS
 //	if pubkey not in validator_pubkeys:
 //	    # Verify the deposit signature (proof of possession) which is not checked by the deposit contract
 //	    if is_valid_deposit_signature(pubkey, withdrawal_credentials, amount, signature):
-//	        add_validator_to_registry(state, pubkey, withdrawal_credentials, Gwei(0))  # [Modified in Electra:EIP7251]
-//	        # [New in Electra:EIP7251]
+//	        add_validator_to_registry(state, pubkey, withdrawal_credentials, Gwei(0))  # [Modified in Electra:SIP7251]
+//	        # [New in Electra:SIP7251]
 //	        state.pending_deposits.append(PendingDeposit(
 //	            pubkey=pubkey,
 //	            withdrawal_credentials=withdrawal_credentials,
@@ -116,7 +116,7 @@ func ProcessDeposit(beaconState state.BeaconState, deposit *silapb.Deposit, allS
 //	        ))
 //	else:
 //	    # Increase balance by deposit amount
-//	    # [Modified in Electra:EIP7251]
+//	    # [Modified in Electra:SIP7251]
 //	    state.pending_deposits.append(PendingDeposit(
 //	        pubkey=pubkey,
 //	        withdrawal_credentials=withdrawal_credentials,
@@ -141,7 +141,7 @@ func ApplyDeposit(beaconState state.BeaconState, data *silapb.Deposit_Data, allS
 			}
 		}
 
-		if err := AddValidatorToRegistry(beaconState, pubKey, withdrawalCredentials, 0); err != nil { // # [Modified in Electra:EIP7251]
+		if err := AddValidatorToRegistry(beaconState, pubKey, withdrawalCredentials, 0); err != nil { // # [Modified in Electra:SIP7251]
 			return nil, errors.Wrap(err, "could not add validator to registry")
 		}
 	}
@@ -463,7 +463,7 @@ func ApplyPendingDeposit(ctx context.Context, st state.BeaconState, deposit *sil
 // def add_validator_to_registry(state: BeaconState, pubkey: BLSPubkey, withdrawal_credentials: Bytes32, amount: uint64) -> None:
 //
 //	index = get_index_for_new_validator(state)
-//	validator = get_validator_from_deposit(pubkey, withdrawal_credentials, amount)  # [Modified in Electra:EIP7251]
+//	validator = get_validator_from_deposit(pubkey, withdrawal_credentials, amount)  # [Modified in Electra:SIP7251]
 //	set_or_append_list(state.validators, index, validator)
 //	set_or_append_list(state.balances, index, amount)
 //	set_or_append_list(state.previous_epoch_participation, index, ParticipationFlags(0b0000_0000))
@@ -511,7 +511,7 @@ func AddValidatorToRegistry(beaconState state.BeaconState, pubKey []byte, withdr
 //	    withdrawable_epoch=FAR_FUTURE_EPOCH,
 //	)
 //
-//	# [Modified in Electra:EIP7251]
+//	# [Modified in Electra:SIP7251]
 //	max_effective_balance = get_max_effective_balance(validator)
 //	validator.effective_balance = min(amount - amount % EFFECTIVE_BALANCE_INCREMENT, max_effective_balance)
 //

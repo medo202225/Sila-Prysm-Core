@@ -105,7 +105,7 @@ type Keystore struct {
 	Pubkey      string         `json:"pubkey"`
 	Version     uint           `json:"version"`
 	Description string         `json:"description"`
-	Name        string         `json:"name,omitempty"` // field deprecated in favor of description, EIP2335
+	Name        string         `json:"name,omitempty"` // field deprecated in favor of description, SIP2335
 	Path        string         `json:"path"`
 }
 
@@ -122,7 +122,7 @@ const (
 	Web3Signer
 )
 
-// IncorrectPasswordErrMsg defines a common error string representing an EIP-2335
+// IncorrectPasswordErrMsg defines a common error string representing an SIP-2335
 // keystore password was incorrect.
 const IncorrectPasswordErrMsg = "invalid checksum"
 

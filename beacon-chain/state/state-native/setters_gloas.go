@@ -438,7 +438,7 @@ func (b *BeaconState) builderInsertionIndex(currentEpoch primitives.Epoch) primi
 //	        if flag_index in participation_flag_indices and not has_flag(epoch_participation[index], flag_index):
 //	            epoch_participation[index] = add_flag(epoch_participation[index], flag_index)
 //	            proposer_reward_numerator += get_base_reward(state, index) * weight
-//	            # [New in Gloas:EIP7732]
+//	            # [New in Gloas:SIP7732]
 //	            will_set_new_flag = True
 //	    if (
 //	        will_set_new_flag

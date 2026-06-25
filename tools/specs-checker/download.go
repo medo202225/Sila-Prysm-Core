@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-const baseUrl = "https://raw.githubusercontent.com/ethereum/consensus-specs/dev"
+const baseUrl = "https://raw.githubusercontent.com/sila/consensus-specs/dev"
 
 // Regex to find Python's code snippets in markdown.
 var reg2 = regexp.MustCompile(`(?msU)^\x60\x60\x60python\n+def\s(.*)^\x60\x60\x60`)

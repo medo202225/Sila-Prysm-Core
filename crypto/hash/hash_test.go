@@ -41,7 +41,7 @@ func TestHashKeccak256(t *testing.T) {
 	assert.Equal(t, hashOf1, h)
 	assert.Equal(t, false, hashOf0 == hashOf1)
 
-	// Same hashing test from go-ethereum for keccak256
+	// Same hashing test from Sila for keccak256
 	hashOfabc, err := hex.DecodeString("4e03657aea45a94fc7d47ba826c8d667c0d1e6e33a64a036ec44f58fa12d6c45")
 	require.NoError(t, err)
 	h = hash.Keccak256([]byte("abc"))

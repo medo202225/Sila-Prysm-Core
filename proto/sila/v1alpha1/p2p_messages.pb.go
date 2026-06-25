@@ -829,16 +829,16 @@ func file_proto_sila_v1alpha1_p2p_messages_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_p2p_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_sila_v1alpha1_p2p_messages_proto_goTypes = []any{
-	(*Status)(nil),                           // 0: ethereum.eth.v1alpha1.Status
-	(*StatusV2)(nil),                         // 1: ethereum.eth.v1alpha1.StatusV2
-	(*BeaconBlocksByRangeRequest)(nil),       // 2: ethereum.eth.v1alpha1.BeaconBlocksByRangeRequest
-	(*ENRForkID)(nil),                        // 3: ethereum.eth.v1alpha1.ENRForkID
-	(*MetaDataV0)(nil),                       // 4: ethereum.eth.v1alpha1.MetaDataV0
-	(*MetaDataV1)(nil),                       // 5: ethereum.eth.v1alpha1.MetaDataV1
-	(*MetaDataV2)(nil),                       // 6: ethereum.eth.v1alpha1.MetaDataV2
-	(*BlobSidecarsByRangeRequest)(nil),       // 7: ethereum.eth.v1alpha1.BlobSidecarsByRangeRequest
-	(*DataColumnSidecarsByRangeRequest)(nil), // 8: ethereum.eth.v1alpha1.DataColumnSidecarsByRangeRequest
-	(*LightClientUpdatesByRangeRequest)(nil), // 9: ethereum.eth.v1alpha1.LightClientUpdatesByRangeRequest
+	(*Status)(nil),                           // 0: sila.eth.v1alpha1.Status
+	(*StatusV2)(nil),                         // 1: sila.eth.v1alpha1.StatusV2
+	(*BeaconBlocksByRangeRequest)(nil),       // 2: sila.eth.v1alpha1.BeaconBlocksByRangeRequest
+	(*ENRForkID)(nil),                        // 3: sila.eth.v1alpha1.ENRForkID
+	(*MetaDataV0)(nil),                       // 4: sila.eth.v1alpha1.MetaDataV0
+	(*MetaDataV1)(nil),                       // 5: sila.eth.v1alpha1.MetaDataV1
+	(*MetaDataV2)(nil),                       // 6: sila.eth.v1alpha1.MetaDataV2
+	(*BlobSidecarsByRangeRequest)(nil),       // 7: sila.eth.v1alpha1.BlobSidecarsByRangeRequest
+	(*DataColumnSidecarsByRangeRequest)(nil), // 8: sila.eth.v1alpha1.DataColumnSidecarsByRangeRequest
+	(*LightClientUpdatesByRangeRequest)(nil), // 9: sila.eth.v1alpha1.LightClientUpdatesByRangeRequest
 }
 var file_proto_sila_v1alpha1_p2p_messages_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

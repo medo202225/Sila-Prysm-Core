@@ -551,7 +551,7 @@ func (s *Service) HeaderByHash(ctx context.Context, hash common.Hash) (*types.He
 	var hdr *types.HeaderInfo
 	err := s.rpcClient.CallContext(ctx, &hdr, BlockByHashMethod, hash, false /* no transactions */)
 	if err == nil && hdr == nil {
-		err = ethereum.NotFound
+		err = sila.NotFound
 	}
 	return hdr, err
 }
@@ -561,7 +561,7 @@ func (s *Service) HeaderByNumber(ctx context.Context, number *big.Int) (*types.H
 	var hdr *types.HeaderInfo
 	err := s.rpcClient.CallContext(ctx, &hdr, BlockByNumberMethod, toBlockNumArg(number), false /* no transactions */)
 	if err == nil && hdr == nil {
-		err = ethereum.NotFound
+		err = sila.NotFound
 	}
 	return hdr, err
 }

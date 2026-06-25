@@ -12,7 +12,7 @@ import (
 )
 
 // ProcessProposerLookahead advances the cached proposer lookahead by one epoch
-// using EIP-8045 semantics: slashed validators are excluded from the candidate
+// using SIP-8045 semantics: slashed validators are excluded from the candidate
 // pool used to derive the new last-epoch proposer indices.
 func ProcessProposerLookahead(ctx context.Context, state state.BeaconState) error {
 	_, span := trace.StartSpan(ctx, "gloas.processProposerLookahead")

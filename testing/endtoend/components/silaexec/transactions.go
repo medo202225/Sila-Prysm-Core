@@ -236,7 +236,7 @@ func SendTransaction(client *rpc.Client, key *ecdsa.PrivateKey, gasPrice *big.In
 				//nolint:nilerr
 				return nil
 			}
-			// Clamp gas to avoid exceeding common EL per-tx gas caps (e.g. 16,777,216) due to EIP-7825: Transaction Gas Limit Cap
+			// Clamp gas to avoid exceeding common EL per-tx gas caps (e.g. 16,777,216) due to SIP-7825: Transaction Gas Limit Cap
 			tx = clampTxGas(tx, 16_000_000)
 
 			signedTx, err := types.SignTx(tx, types.NewLondonSigner(chainid), key)
@@ -351,7 +351,7 @@ func RandomBlobCellTx(rpc *rpc.Client, sender common.Address, nonce uint64, gasP
 		})
 
 		// Use legacy GasPrice for access list simulation to satisfy post-London requirement.
-		msg := ethereum.CallMsg{
+		msg := sila.CallMsg{
 			From:       sender,
 			To:         tx.To(),
 			Gas:        tx.Gas(),
@@ -445,7 +445,7 @@ func RandomBlobTx(rpc *rpc.Client, sender common.Address, nonce uint64, gasPrice
 		})
 
 		// Use legacy GasPrice for access list simulation to satisfy post-London requirement.
-		msg := ethereum.CallMsg{
+		msg := sila.CallMsg{
 			From:       sender,
 			To:         tx.To(),
 			Gas:        tx.Gas(),
@@ -664,7 +664,7 @@ func EncodeBlobs(data []byte) ([]kzg4844.Blob, []kzg4844.Commitment, []kzg4844.P
 
 var blobCommitmentVersionKZG uint8 = 0x01
 
-// kZGToVersionedHash implements kzg_to_versioned_hash from EIP-4844
+// kZGToVersionedHash implements kzg_to_versioned_hash from SIP-4844
 func kZGToVersionedHash(kzg kzg4844.Commitment) common.Hash {
 	h := sha256.Sum256(kzg[:])
 	h[0] = blobCommitmentVersionKZG
@@ -882,7 +882,7 @@ func randomValidTx(sender common.Address, nonce uint64, gasPrice, chainID *big.I
 			AccessList: accessList,
 		}), nil
 	case 2:
-		// DynamicFee transaction (EIP-1559)
+		// DynamicFee transaction (SIP-1559)
 		tip := new(big.Int).Div(gasPrice, big.NewInt(10)) // 10% tip
 		feeCap := new(big.Int).Add(gasPrice, tip)
 		accessList := make(types.AccessList, 0)

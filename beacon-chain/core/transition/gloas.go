@@ -28,21 +28,21 @@ import (
 //	        for operation in operations:
 //	            fn(state, operation)
 //
-//	    # [Modified in Gloas:EIP7732]
+//	    # [Modified in Gloas:SIP7732]
 //	    for_ops(body.proposer_slashings, process_proposer_slashing)
 //	    for_ops(body.attester_slashings, process_attester_slashing)
-//	    # [Modified in Gloas:EIP7732]
+//	    # [Modified in Gloas:SIP7732]
 //	    for_ops(body.attestations, process_attestation)
-//	    # [Modified in Gloas:EIP7732]
+//	    # [Modified in Gloas:SIP7732]
 //	    for_ops(body.voluntary_exits, process_voluntary_exit)
 //	    for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-//	    # [Modified in Gloas:EIP7732]
+//	    # [Modified in Gloas:SIP7732]
 //	    # Removed `process_deposit_request`
-//	    # [Modified in Gloas:EIP7732]
+//	    # [Modified in Gloas:SIP7732]
 //	    # Removed `process_withdrawal_request`
-//	    # [Modified in Gloas:EIP7732]
+//	    # [Modified in Gloas:SIP7732]
 //	    # Removed `process_consolidation_request`
-//	    # [New in Gloas:EIP7732]
+//	    # [New in Gloas:SIP7732]
 //	    for_ops(body.payload_attestations, process_payload_attestation)
 //	</spec>
 func gloasOperations(ctx context.Context, st state.BeaconState, block interfaces.ReadOnlyBeaconBlock) (state.BeaconState, error) {
@@ -105,10 +105,10 @@ func gloasOperations(ctx context.Context, st state.BeaconState, block interfaces
 //	    process_registry_updates(state)
 //	    process_slashings(state)
 //	    process_sila_execution_data_reset(state)
-//	    # [Modified in Gloas:EIP8061]
+//	    # [Modified in Gloas:SIP8061]
 //	    process_pending_deposits(state)
 //	    process_pending_consolidations(state)
-//	    # [New in Gloas:EIP7732]
+//	    # [New in Gloas:SIP7732]
 //	    process_builder_pending_payments(state)
 //	    process_effective_balance_updates(state)
 //	    process_slashings_reset(state)
@@ -117,7 +117,7 @@ func gloasOperations(ctx context.Context, st state.BeaconState, block interfaces
 //	    process_participation_flag_updates(state)
 //	    process_sync_committee_updates(state)
 //	    process_proposer_lookahead(state)
-//	    # [New in Gloas:EIP7732]
+//	    # [New in Gloas:SIP7732]
 //	    process_ptc_window(state)
 //	</spec>
 func processEpochGloas(ctx context.Context, state state.BeaconState) error {

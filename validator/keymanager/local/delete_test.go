@@ -69,7 +69,7 @@ func TestLocalKeymanager_DeleteKeystores(t *testing.T) {
 		require.Equal(t, keymanager.StatusDeleted, statuses[0].Status)
 
 		// Ensure the keystore file was written to the wallet
-		// and ensure we can decrypt it using the EIP-2335 standard.
+		// and ensure we can decrypt it using the SIP-2335 standard.
 		var encodedKeystore []byte
 		for k, v := range wallet.Files[AccountsPath] {
 			if strings.Contains(k, "keystore") {
@@ -114,7 +114,7 @@ func TestLocalKeymanager_DeleteKeystores(t *testing.T) {
 		}
 
 		// Ensure the keystore file was written to the wallet
-		// and ensure we can decrypt it using the EIP-2335 standard.
+		// and ensure we can decrypt it using the SIP-2335 standard.
 		var encodedKeystore []byte
 		for k, v := range wallet.Files[AccountsPath] {
 			if strings.Contains(k, "keystore") {

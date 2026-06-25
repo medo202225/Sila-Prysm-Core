@@ -60,7 +60,7 @@ func (s *Service) GenesisExecutionChainInfo() (uint64, *big.Int) {
 
 // ProcessSilaExecutionBlock processes logs from the provided silaexec block.
 func (s *Service) ProcessSilaExecutionBlock(ctx context.Context, blkNum *big.Int) error {
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			s.cfg.depositContractAddr,
 		},
@@ -379,7 +379,7 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 	// Appropriately bound the request, as we do not
 	// want request blocks beyond the current follow distance.
 	end = min(end, latestFollowHeight)
-	query := ethereum.FilterQuery{
+	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			s.cfg.depositContractAddr,
 		},
@@ -581,7 +581,7 @@ func (s *Service) savePowchainData(ctx context.Context) error {
 	}
 	tree, ok := fd.Deposits().(*depositsnapshot.DepositTree)
 	if !ok {
-		return errors.New("deposit tree was not EIP4881 DepositTree")
+		return errors.New("deposit tree was not SIP4881 DepositTree")
 	}
 	silaexecData.DepositSnapshot, err = tree.ToProto()
 	if err != nil {

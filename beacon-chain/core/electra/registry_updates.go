@@ -21,17 +21,17 @@ import (
 //	def process_registry_updates(state: BeaconState) -> None:
 //	    # Process activation eligibility and ejections
 //	    for index, validator in enumerate(state.validators):
-//	        if is_eligible_for_activation_queue(validator):  # [Modified in Electra:EIP7251]
+//	        if is_eligible_for_activation_queue(validator):  # [Modified in Electra:SIP7251]
 //	            validator.activation_eligibility_epoch = get_current_epoch(state) + 1
 //
 //	        if (
 //	            is_active_validator(validator, get_current_epoch(state))
 //	            and validator.effective_balance <= EJECTION_BALANCE
 //	        ):
-//	            initiate_validator_exit(state, ValidatorIndex(index))  # [Modified in Electra:EIP7251]
+//	            initiate_validator_exit(state, ValidatorIndex(index))  # [Modified in Electra:SIP7251]
 //
 //	    # Activate all eligible validators
-//	    # [Modified in Electra:EIP7251]
+//	    # [Modified in Electra:SIP7251]
 //	    activation_epoch = compute_activation_exit_epoch(get_current_epoch(state))
 //	    for validator in state.validators:
 //	        if is_eligible_for_activation(state, validator):

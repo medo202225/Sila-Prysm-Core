@@ -39,7 +39,7 @@ const (
 	AccountsKeystoreFileName = "all-accounts.keystore.json"
 )
 
-// Keymanager implementation for local keystores utilizing EIP-2335.
+// Keymanager implementation for local keystores utilizing SIP-2335.
 type Keymanager struct {
 	wallet              iface.Wallet
 	accountsStore       *accountStore
@@ -69,7 +69,7 @@ func (a *accountStore) Copy() *accountStore {
 }
 
 // AccountsKeystoreRepresentation defines an internal Sila representation
-// of validator accounts, encrypted according to the EIP-2334 standard.
+// of validator accounts, encrypted according to the SIP-2334 standard.
 type AccountsKeystoreRepresentation struct {
 	Crypto  map[string]any `json:"crypto"`
 	ID      string         `json:"uuid"`

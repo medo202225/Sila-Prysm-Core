@@ -170,7 +170,7 @@ func ValidateAttestationTime(attSlot primitives.Slot, genesis time.Time, clockDi
 		return nil
 	}
 
-	// EIP-7045: Starting in Deneb, allow any attestations from the current or previous epoch.
+	// SIP-7045: Starting in Deneb, allow any attestations from the current or previous epoch.
 	currentEpoch := slots.ToEpoch(currentSlot)
 	if attEpoch+1 < currentEpoch {
 		attError = fmt.Errorf(

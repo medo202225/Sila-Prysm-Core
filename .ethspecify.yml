@@ -173,7 +173,7 @@ exceptions:
     - Store#heze
 
   functions:
-    # Functions implemented by KZG library for EIP-4844
+    # Functions implemented by KZG library for SIP-4844
     - bit_reversal_permutation#deneb
     - blob_to_kzg_commitment#deneb
     - blob_to_polynomial#deneb
@@ -200,7 +200,7 @@ exceptions:
     - verify_kzg_proof_batch#deneb
     - verify_kzg_proof_impl#deneb
 
-    # Functions implemented by KZG library for EIP-7594
+    # Functions implemented by KZG library for SIP-7594
     - _fft_field#fulu
     - add_polynomialcoeff#fulu
     - cell_to_coset_evals#fulu

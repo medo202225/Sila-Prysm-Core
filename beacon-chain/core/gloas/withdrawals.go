@@ -13,12 +13,12 @@ import (
 // def process_withdrawals(
 //
 //	state: BeaconState,
-//	# [Modified in Gloas:EIP7732]
+//	# [Modified in Gloas:SIP7732]
 //	# Removed `payload`
 //
 // ) -> None:
 //
-//	# [New in Gloas:EIP7732]
+//	# [New in Gloas:SIP7732]
 //	# Return early if the parent block is empty
 //	if state.latest_block_hash != state.latest_execution_payload_bid.block_hash:
 //	    return
@@ -31,12 +31,12 @@ import (
 //
 //	# Update withdrawals fields in the state
 //	update_next_withdrawal_index(state, expected.withdrawals)
-//	# [New in Gloas:EIP7732]
+//	# [New in Gloas:SIP7732]
 //	update_payload_expected_withdrawals(state, expected.withdrawals)
-//	# [New in Gloas:EIP7732]
+//	# [New in Gloas:SIP7732]
 //	update_builder_pending_withdrawals(state, expected.processed_builder_withdrawals_count)
 //	update_pending_partial_withdrawals(state, expected.processed_partial_withdrawals_count)
-//	# [New in Gloas:EIP7732]
+//	# [New in Gloas:SIP7732]
 //	update_next_withdrawal_builder_index(state, expected.processed_builders_sweep_count)
 //	update_next_withdrawal_validator_index(state, expected.withdrawals)
 //

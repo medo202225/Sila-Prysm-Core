@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	// DepositContractDepth is the maximum tree depth as defined by EIP-4881.
+	// DepositContractDepth is the maximum tree depth as defined by SIP-4881.
 	DepositContractDepth = 32
 )
 
@@ -290,7 +290,7 @@ func (z *ZeroNode) GetRoot() [32]byte {
 	return trie.ZeroHashes[z.depth]
 }
 
-// IsFull returns wh   ether there is space left for deposits.
+// IsFull returns wh   sila there is space left for deposits.
 // A ZeroNode will always return false as a ZeroNode is an empty node
 // that gets replaced by a deposit.
 func (_ *ZeroNode) IsFull() bool {

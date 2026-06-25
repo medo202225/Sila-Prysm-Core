@@ -134,7 +134,7 @@ func file_proto_dbval_dbval_proto_rawDescGZIP() []byte {
 
 var file_proto_dbval_dbval_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_dbval_dbval_proto_goTypes = []any{
-	(*BackfillStatus)(nil), // 0: ethereum.eth.dbval.BackfillStatus
+	(*BackfillStatus)(nil), // 0: sila.eth.dbval.BackfillStatus
 }
 var file_proto_dbval_dbval_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

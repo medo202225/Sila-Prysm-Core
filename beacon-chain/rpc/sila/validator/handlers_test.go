@@ -158,8 +158,8 @@ func TestServer_GetValidatorParticipation_CurrentAndPrevEpoch(t *testing.T) {
 	want := &structs.GetValidatorParticipationResponse{
 		Participation: &structs.ValidatorParticipation{
 			GlobalParticipationRate:          fmt.Sprintf("%f", float32(params.BeaconConfig().EffectiveBalanceIncrement)/float32(validatorCount*params.BeaconConfig().MaxEffectiveBalance)),
-			VotedEther:                       fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
-			EligibleEther:                    fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
+			VotedSila:                       fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
+			EligibleSila:                    fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochActiveGwei:           fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochAttestingGwei:        fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
 			CurrentEpochTargetAttestingGwei:  fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
@@ -258,8 +258,8 @@ func TestServer_GetValidatorParticipation_OrphanedUntilGenesis(t *testing.T) {
 	want := &structs.GetValidatorParticipationResponse{
 		Participation: &structs.ValidatorParticipation{
 			GlobalParticipationRate:          fmt.Sprintf("%f", float32(params.BeaconConfig().EffectiveBalanceIncrement)/float32(validatorCount*params.BeaconConfig().MaxEffectiveBalance)),
-			VotedEther:                       fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
-			EligibleEther:                    fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
+			VotedSila:                       fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
+			EligibleSila:                    fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochActiveGwei:           fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochAttestingGwei:        fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
 			CurrentEpochTargetAttestingGwei:  fmt.Sprintf("%d", params.BeaconConfig().EffectiveBalanceIncrement),
@@ -388,8 +388,8 @@ func runGetValidatorParticipationCurrentEpoch(t *testing.T, genState state.Beaco
 	want := &structs.GetValidatorParticipationResponse{
 		Participation: &structs.ValidatorParticipation{
 			GlobalParticipationRate:          "1.000000",
-			VotedEther:                       fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
-			EligibleEther:                    fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
+			VotedSila:                       fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
+			EligibleSila:                    fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochActiveGwei:           fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochAttestingGwei:        fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),
 			CurrentEpochTargetAttestingGwei:  fmt.Sprintf("%d", validatorCount*params.BeaconConfig().MaxEffectiveBalance),

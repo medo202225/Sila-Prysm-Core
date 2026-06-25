@@ -7,7 +7,7 @@ import (
 )
 
 // BalanceChurnLimit for the current active balance, in gwei.
-// New in Electra EIP-7251: https://eips.ethereum.org/EIPS/eip-7251
+// New in Electra SIP-7251: https://sips.sila.org/SIPS/sip-7251
 //
 // Spec definition:
 //
@@ -29,7 +29,7 @@ func BalanceChurnLimit(activeBalance primitives.Gwei) primitives.Gwei {
 }
 
 // ActivationExitChurnLimit for the current active balance, in gwei.
-// New in Electra EIP-7251: https://eips.ethereum.org/EIPS/eip-7251
+// New in Electra SIP-7251: https://sips.sila.org/SIPS/sip-7251
 //
 // Spec definition:
 //
@@ -43,7 +43,7 @@ func ActivationExitChurnLimit(activeBalance primitives.Gwei) primitives.Gwei {
 }
 
 // ConsolidationChurnLimit for the current active balance, in gwei.
-// New in EIP-7251: https://eips.ethereum.org/EIPS/eip-7251
+// New in SIP-7251: https://sips.sila.org/SIPS/sip-7251
 //
 // Spec definition:
 //
@@ -54,7 +54,7 @@ func ConsolidationChurnLimit(activeBalance primitives.Gwei) primitives.Gwei {
 }
 
 // activationChurnLimitGloas returns the per-epoch activation churn limit, capped by
-// MAX_PER_EPOCH_ACTIVATION_CHURN_LIMIT_GLOAS. New in Gloas EIP-8061.
+// MAX_PER_EPOCH_ACTIVATION_CHURN_LIMIT_GLOAS. New in Gloas SIP-8061.
 //
 // Spec definition:
 //
@@ -72,7 +72,7 @@ func activationChurnLimitGloas(activeBalance primitives.Gwei) primitives.Gwei {
 	return min(primitives.Gwei(cfg.MaxPerEpochActivationChurnLimitGloas), primitives.Gwei(churn))
 }
 
-// exitChurnLimitGloas returns the per-epoch exit churn limit. Uncapped in Gloas EIP-8061
+// exitChurnLimitGloas returns the per-epoch exit churn limit. Uncapped in Gloas SIP-8061
 // so that exits scale with total stake.
 //
 // Spec definition:
@@ -91,7 +91,7 @@ func exitChurnLimitGloas(activeBalance primitives.Gwei) primitives.Gwei {
 
 // consolidationChurnLimitGloas returns the per-epoch consolidation churn limit, derived
 // independently from total active balance via CONSOLIDATION_CHURN_LIMIT_QUOTIENT.
-// New in Gloas EIP-8061.
+// New in Gloas SIP-8061.
 //
 // Spec definition:
 //

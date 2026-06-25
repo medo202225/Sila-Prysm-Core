@@ -1,4 +1,4 @@
-// This tool allows for simple encrypting and decrypting of EIP-2335 compliant, BLS12-381
+// This tool allows for simple encrypting and decrypting of SIP-2335 compliant, BLS12-381
 // keystore.json files which as password protected. This is helpful in development to inspect
 // the contents of keystores created by Sila validator wallets or to easily produce keystores from a
 // specified secret to move them around in a standard format between Sila consensus clients.
@@ -54,7 +54,7 @@ var (
 func main() {
 	app := &cli.App{
 		Name:        "Keystore utility",
-		Description: "Utility to encrypt and decrypt EIP-2335 compliant keystore.json files for BLS12-381 private keys",
+		Description: "Utility to encrypt and decrypt SIP-2335 compliant keystore.json files for BLS12-381 private keys",
 		Usage:       "",
 		Commands: []*cli.Command{
 			{
@@ -127,7 +127,7 @@ func decrypt(cliCtx *cli.Context) error {
 	return readAndDecryptKeystore(fullPath, password)
 }
 
-// Attempts to encrypt a passed-in BLS12-3381 private key into the EIP-2335
+// Attempts to encrypt a passed-in BLS12-3381 private key into the SIP-2335
 // keystore.json format. If a file at the specified output path exists, asks the user
 // to confirm overwriting its contents. If the value passed in is not a valid BLS12-381
 // private key, the function will fail.

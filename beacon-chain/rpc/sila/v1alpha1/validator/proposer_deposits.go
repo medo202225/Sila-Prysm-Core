@@ -72,7 +72,7 @@ func (vs *Server) packDepositsAndAttestations(
 // enough support, then use that vote for basis of determining deposits, otherwise use current state
 // silaExecutionData.
 // In the post-electra phase, this function will usually return an empty list,
-// as the legacy deposit process is deprecated. (EIP-6110)
+// as the legacy deposit process is deprecated. (SIP-6110)
 // NOTE: During the transition period, the legacy deposit process
 // may still be active and managed. This function handles that scenario.
 func (vs *Server) deposits(
@@ -131,7 +131,7 @@ func (vs *Server) deposits(
 				pendingDeps = append(pendingDeps, dep)
 			}
 		} else {
-			// Electra change EIP6110
+			// Electra change SIP6110
 			// def get_silaexec_pending_deposit_count(state: BeaconState) -> uint64:
 			//    silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
 			//    if state.silaexec_deposit_index < silaexec_deposit_index_limit:

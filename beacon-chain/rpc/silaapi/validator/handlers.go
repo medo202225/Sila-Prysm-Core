@@ -1120,7 +1120,7 @@ func (s *Server) GetProposerDuties(w http.ResponseWriter, r *http.Request) {
 
 // GetProposerDutiesV2 requests beacon node to provide all validators that are scheduled to propose a block in the given epoch.
 // V2 computes a fork-aware dependent root using core.ProposalDependentRootV2.
-// Post-Fulu (EIP-7917) this follows the previous-epoch dependency semantics.
+// Post-Fulu (SIP-7917) this follows the previous-epoch dependency semantics.
 func (s *Server) GetProposerDutiesV2(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.GetProposerDutiesV2")
 	defer span.End()
@@ -1209,7 +1209,7 @@ func (s *Server) GetProposerDutiesV2(w http.ResponseWriter, r *http.Request) {
 
 // GetSyncCommitteeDuties provides a set of sync committee duties for a particular epoch.
 //
-// The logic for calculating epoch validity comes from https://ethereum.github.io/beacon-APIs/?urls.primaryName=dev#/Validator/getSyncCommitteeDuties
+// The logic for calculating epoch validity comes from https://sila-chain.github.io/Sila-Beacon-APIs/?urls.primaryName=dev#/Validator/getSyncCommitteeDuties
 // where `epoch` is described as `epoch // EPOCHS_PER_SYNC_COMMITTEE_PERIOD <= current_epoch // EPOCHS_PER_SYNC_COMMITTEE_PERIOD + 1`.
 //
 // Algorithm:
@@ -1624,13 +1624,13 @@ func (s *Server) GetLiveness(w http.ResponseWriter, r *http.Request) {
 }
 
 // BeaconCommitteeSelections responds with appropriate message and status code according the spec:
-// https://ethereum.github.io/beacon-APIs/#/Validator/submitBeaconCommitteeSelections.
+// https://sila-chain.github.io/Sila-Beacon-APIs/#/Validator/submitBeaconCommitteeSelections.
 func (s *Server) BeaconCommitteeSelections(w http.ResponseWriter, _ *http.Request) {
 	httputil.HandleError(w, "Endpoint not implemented", 501)
 }
 
 // SyncCommitteeSelections responds with appropriate message and status code according the spec:
-// https://ethereum.github.io/beacon-APIs/#/Validator/submitSyncCommitteeSelections.
+// https://sila-chain.github.io/Sila-Beacon-APIs/#/Validator/submitSyncCommitteeSelections.
 func (s *Server) SyncCommitteeSelections(w http.ResponseWriter, _ *http.Request) {
 	httputil.HandleError(w, "Endpoint not implemented", 501)
 }

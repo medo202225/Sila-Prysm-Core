@@ -244,17 +244,17 @@ func file_proto_engine_v1_fulu_proto_rawDescGZIP() []byte {
 
 var file_proto_engine_v1_fulu_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_engine_v1_fulu_proto_goTypes = []any{
-	(*ExecutionBundleFulu)(nil),   // 0: ethereum.engine.v1.ExecutionBundleFulu
-	(*ExecutionBundleGloas)(nil),  // 1: ethereum.engine.v1.ExecutionBundleGloas
-	(*ExecutionPayloadDeneb)(nil), // 2: ethereum.engine.v1.ExecutionPayloadDeneb
-	(*BlobsBundleV2)(nil),         // 3: ethereum.engine.v1.BlobsBundleV2
-	(*ExecutionPayloadGloas)(nil), // 4: ethereum.engine.v1.ExecutionPayloadGloas
+	(*ExecutionBundleFulu)(nil),   // 0: sila.engine.v1.ExecutionBundleFulu
+	(*ExecutionBundleGloas)(nil),  // 1: sila.engine.v1.ExecutionBundleGloas
+	(*ExecutionPayloadDeneb)(nil), // 2: sila.engine.v1.ExecutionPayloadDeneb
+	(*BlobsBundleV2)(nil),         // 3: sila.engine.v1.BlobsBundleV2
+	(*ExecutionPayloadGloas)(nil), // 4: sila.engine.v1.ExecutionPayloadGloas
 }
 var file_proto_engine_v1_fulu_proto_depIdxs = []int32{
-	2, // 0: ethereum.engine.v1.ExecutionBundleFulu.payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	3, // 1: ethereum.engine.v1.ExecutionBundleFulu.blobs_bundle:type_name -> ethereum.engine.v1.BlobsBundleV2
-	4, // 2: ethereum.engine.v1.ExecutionBundleGloas.payload:type_name -> ethereum.engine.v1.ExecutionPayloadGloas
-	3, // 3: ethereum.engine.v1.ExecutionBundleGloas.blobs_bundle:type_name -> ethereum.engine.v1.BlobsBundleV2
+	2, // 0: sila.engine.v1.ExecutionBundleFulu.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	3, // 1: sila.engine.v1.ExecutionBundleFulu.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
+	4, // 2: sila.engine.v1.ExecutionBundleGloas.payload:type_name -> sila.engine.v1.ExecutionPayloadGloas
+	3, // 3: sila.engine.v1.ExecutionBundleGloas.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

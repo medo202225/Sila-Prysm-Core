@@ -136,7 +136,7 @@ func processProposerSlashing(
 	}
 
 	var err error
-	// [New in Gloas:EIP7732]: remove the BuilderPendingPayment corresponding to the slashed proposer within 2 epoch window
+	// [New in Gloas:SIP7732]: remove the BuilderPendingPayment corresponding to the slashed proposer within 2 epoch window
 	if beaconState.Version() >= version.Gloas {
 		err = gloas.RemoveBuilderPendingPayment(beaconState, slashing.Header_1.Header)
 		if err != nil {

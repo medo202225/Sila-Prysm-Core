@@ -62,7 +62,7 @@ func ComputeDomainAndSign(st state.ReadOnlyBeaconState, epoch primitives.Epoch, 
 // ComputeDomainAndSignWithoutState offers the same functionality as ComputeDomainAndSign without the need to provide a BeaconState.
 // This is particularly helpful for signing values in tests.
 func ComputeDomainAndSignWithoutState(fork *silapb.Fork, epoch primitives.Epoch, domain [4]byte, vr []byte, obj fssz.HashRoot, key bls.SecretKey) ([]byte, error) {
-	// EIP-7044: Beginning in Deneb, fix the fork version to Capella for signed exits.
+	// SIP-7044: Beginning in Deneb, fix the fork version to Capella for signed exits.
 	// This allows for signed validator exits to be valid forever.
 	if domain == params.BeaconConfig().DomainVoluntaryExit && epoch >= params.BeaconConfig().DenebForkEpoch {
 		fork = &silapb.Fork{

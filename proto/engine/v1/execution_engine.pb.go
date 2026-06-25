@@ -1743,7 +1743,7 @@ func (x *PayloadAttributesV4) GetTargetGasLimit() uint64 {
 
 type PayloadStatus struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Status          PayloadStatus_Status   `protobuf:"varint,1,opt,name=status,proto3,enum=ethereum.engine.v1.PayloadStatus_Status" json:"status,omitempty"`
+	Status          PayloadStatus_Status   `protobuf:"varint,1,opt,name=status,proto3,enum=sila.engine.v1.PayloadStatus_Status" json:"status,omitempty"`
 	LatestValidHash []byte                 `protobuf:"bytes,2,opt,name=latest_valid_hash,json=latestValidHash,proto3" json:"latest_valid_hash,omitempty" ssz-size:"32"`
 	ValidationError string                 `protobuf:"bytes,3,opt,name=validation_error,json=validationError,proto3" json:"validation_error,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -2724,46 +2724,46 @@ func file_proto_engine_v1_execution_engine_proto_rawDescGZIP() []byte {
 var file_proto_engine_v1_execution_engine_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_engine_v1_execution_engine_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_proto_engine_v1_execution_engine_proto_goTypes = []any{
-	(PayloadStatus_Status)(0),                            // 0: ethereum.engine.v1.PayloadStatus.Status
-	(*ExecutionPayload)(nil),                             // 1: ethereum.engine.v1.ExecutionPayload
-	(*ExecutionPayloadCapella)(nil),                      // 2: ethereum.engine.v1.ExecutionPayloadCapella
-	(*ExecutionPayloadDeneb)(nil),                        // 3: ethereum.engine.v1.ExecutionPayloadDeneb
-	(*ExecutionPayloadGloas)(nil),                        // 4: ethereum.engine.v1.ExecutionPayloadGloas
-	(*ExecutionPayloadCapellaWithValue)(nil),             // 5: ethereum.engine.v1.ExecutionPayloadCapellaWithValue
-	(*ExecutionPayloadDenebAndBlobsBundle)(nil),          // 6: ethereum.engine.v1.ExecutionPayloadDenebAndBlobsBundle
-	(*ExecutionPayloadDenebAndBlobsBundleV2)(nil),        // 7: ethereum.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2
-	(*ExecutionPayloadDenebWithValueAndBlobsBundle)(nil), // 8: ethereum.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle
-	(*ExecutionPayloadHeader)(nil),                       // 9: ethereum.engine.v1.ExecutionPayloadHeader
-	(*ExecutionPayloadHeaderCapella)(nil),                // 10: ethereum.engine.v1.ExecutionPayloadHeaderCapella
-	(*ExecutionPayloadHeaderDeneb)(nil),                  // 11: ethereum.engine.v1.ExecutionPayloadHeaderDeneb
-	(*PayloadAttributes)(nil),                            // 12: ethereum.engine.v1.PayloadAttributes
-	(*PayloadAttributesV2)(nil),                          // 13: ethereum.engine.v1.PayloadAttributesV2
-	(*PayloadAttributesV3)(nil),                          // 14: ethereum.engine.v1.PayloadAttributesV3
-	(*PayloadAttributesV4)(nil),                          // 15: ethereum.engine.v1.PayloadAttributesV4
-	(*PayloadStatus)(nil),                                // 16: ethereum.engine.v1.PayloadStatus
-	(*ForkchoiceState)(nil),                              // 17: ethereum.engine.v1.ForkchoiceState
-	(*Withdrawal)(nil),                                   // 18: ethereum.engine.v1.Withdrawal
-	(*BlobsBundle)(nil),                                  // 19: ethereum.engine.v1.BlobsBundle
-	(*BlobsBundleV2)(nil),                                // 20: ethereum.engine.v1.BlobsBundleV2
-	(*Blob)(nil),                                         // 21: ethereum.engine.v1.Blob
-	(*BlobAndProof)(nil),                                 // 22: ethereum.engine.v1.BlobAndProof
-	(*BlobAndProofV2)(nil),                               // 23: ethereum.engine.v1.BlobAndProofV2
+	(PayloadStatus_Status)(0),                            // 0: sila.engine.v1.PayloadStatus.Status
+	(*ExecutionPayload)(nil),                             // 1: sila.engine.v1.ExecutionPayload
+	(*ExecutionPayloadCapella)(nil),                      // 2: sila.engine.v1.ExecutionPayloadCapella
+	(*ExecutionPayloadDeneb)(nil),                        // 3: sila.engine.v1.ExecutionPayloadDeneb
+	(*ExecutionPayloadGloas)(nil),                        // 4: sila.engine.v1.ExecutionPayloadGloas
+	(*ExecutionPayloadCapellaWithValue)(nil),             // 5: sila.engine.v1.ExecutionPayloadCapellaWithValue
+	(*ExecutionPayloadDenebAndBlobsBundle)(nil),          // 6: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundle
+	(*ExecutionPayloadDenebAndBlobsBundleV2)(nil),        // 7: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2
+	(*ExecutionPayloadDenebWithValueAndBlobsBundle)(nil), // 8: sila.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle
+	(*ExecutionPayloadHeader)(nil),                       // 9: sila.engine.v1.ExecutionPayloadHeader
+	(*ExecutionPayloadHeaderCapella)(nil),                // 10: sila.engine.v1.ExecutionPayloadHeaderCapella
+	(*ExecutionPayloadHeaderDeneb)(nil),                  // 11: sila.engine.v1.ExecutionPayloadHeaderDeneb
+	(*PayloadAttributes)(nil),                            // 12: sila.engine.v1.PayloadAttributes
+	(*PayloadAttributesV2)(nil),                          // 13: sila.engine.v1.PayloadAttributesV2
+	(*PayloadAttributesV3)(nil),                          // 14: sila.engine.v1.PayloadAttributesV3
+	(*PayloadAttributesV4)(nil),                          // 15: sila.engine.v1.PayloadAttributesV4
+	(*PayloadStatus)(nil),                                // 16: sila.engine.v1.PayloadStatus
+	(*ForkchoiceState)(nil),                              // 17: sila.engine.v1.ForkchoiceState
+	(*Withdrawal)(nil),                                   // 18: sila.engine.v1.Withdrawal
+	(*BlobsBundle)(nil),                                  // 19: sila.engine.v1.BlobsBundle
+	(*BlobsBundleV2)(nil),                                // 20: sila.engine.v1.BlobsBundleV2
+	(*Blob)(nil),                                         // 21: sila.engine.v1.Blob
+	(*BlobAndProof)(nil),                                 // 22: sila.engine.v1.BlobAndProof
+	(*BlobAndProofV2)(nil),                               // 23: sila.engine.v1.BlobAndProofV2
 }
 var file_proto_engine_v1_execution_engine_proto_depIdxs = []int32{
-	18, // 0: ethereum.engine.v1.ExecutionPayloadCapella.withdrawals:type_name -> ethereum.engine.v1.Withdrawal
-	18, // 1: ethereum.engine.v1.ExecutionPayloadDeneb.withdrawals:type_name -> ethereum.engine.v1.Withdrawal
-	18, // 2: ethereum.engine.v1.ExecutionPayloadGloas.withdrawals:type_name -> ethereum.engine.v1.Withdrawal
-	2,  // 3: ethereum.engine.v1.ExecutionPayloadCapellaWithValue.payload:type_name -> ethereum.engine.v1.ExecutionPayloadCapella
-	3,  // 4: ethereum.engine.v1.ExecutionPayloadDenebAndBlobsBundle.payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	19, // 5: ethereum.engine.v1.ExecutionPayloadDenebAndBlobsBundle.blobs_bundle:type_name -> ethereum.engine.v1.BlobsBundle
-	3,  // 6: ethereum.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2.payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	20, // 7: ethereum.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2.blobs_bundle:type_name -> ethereum.engine.v1.BlobsBundleV2
-	3,  // 8: ethereum.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle.payload:type_name -> ethereum.engine.v1.ExecutionPayloadDeneb
-	19, // 9: ethereum.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle.blobs_bundle:type_name -> ethereum.engine.v1.BlobsBundle
-	18, // 10: ethereum.engine.v1.PayloadAttributesV2.withdrawals:type_name -> ethereum.engine.v1.Withdrawal
-	18, // 11: ethereum.engine.v1.PayloadAttributesV3.withdrawals:type_name -> ethereum.engine.v1.Withdrawal
-	18, // 12: ethereum.engine.v1.PayloadAttributesV4.withdrawals:type_name -> ethereum.engine.v1.Withdrawal
-	0,  // 13: ethereum.engine.v1.PayloadStatus.status:type_name -> ethereum.engine.v1.PayloadStatus.Status
+	18, // 0: sila.engine.v1.ExecutionPayloadCapella.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	18, // 1: sila.engine.v1.ExecutionPayloadDeneb.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	18, // 2: sila.engine.v1.ExecutionPayloadGloas.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	2,  // 3: sila.engine.v1.ExecutionPayloadCapellaWithValue.payload:type_name -> sila.engine.v1.ExecutionPayloadCapella
+	3,  // 4: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundle.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	19, // 5: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundle.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
+	3,  // 6: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	20, // 7: sila.engine.v1.ExecutionPayloadDenebAndBlobsBundleV2.blobs_bundle:type_name -> sila.engine.v1.BlobsBundleV2
+	3,  // 8: sila.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle.payload:type_name -> sila.engine.v1.ExecutionPayloadDeneb
+	19, // 9: sila.engine.v1.ExecutionPayloadDenebWithValueAndBlobsBundle.blobs_bundle:type_name -> sila.engine.v1.BlobsBundle
+	18, // 10: sila.engine.v1.PayloadAttributesV2.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	18, // 11: sila.engine.v1.PayloadAttributesV3.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	18, // 12: sila.engine.v1.PayloadAttributesV4.withdrawals:type_name -> sila.engine.v1.Withdrawal
+	0,  // 13: sila.engine.v1.PayloadStatus.status:type_name -> sila.engine.v1.PayloadStatus.Status
 	14, // [14:14] is the sub-list for method output_type
 	14, // [14:14] is the sub-list for method input_type
 	14, // [14:14] is the sub-list for extension type_name

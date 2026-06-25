@@ -20,7 +20,7 @@ import (
 //	        DOWNWARD_THRESHOLD = HYSTERESIS_INCREMENT * HYSTERESIS_DOWNWARD_MULTIPLIER
 //	        UPWARD_THRESHOLD = HYSTERESIS_INCREMENT * HYSTERESIS_UPWARD_MULTIPLIER
 //	        EFFECTIVE_BALANCE_LIMIT = (
-//	            MAX_EFFECTIVE_BALANCE_EIP7251 if has_compounding_withdrawal_credential(validator)
+//	            MAX_EFFECTIVE_BALANCE_SIP7251 if has_compounding_withdrawal_credential(validator)
 //	            else MIN_ACTIVATION_BALANCE
 //	        )
 //

@@ -430,18 +430,18 @@ func file_proto_silaapi_v1_attestation_proto_rawDescGZIP() []byte {
 
 var file_proto_silaapi_v1_attestation_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_silaapi_v1_attestation_proto_goTypes = []any{
-	(*Attestation)(nil),                        // 0: ethereum.eth.v1.Attestation
-	(*AggregateAttestationAndProof)(nil),       // 1: ethereum.eth.v1.AggregateAttestationAndProof
-	(*SignedAggregateAttestationAndProof)(nil), // 2: ethereum.eth.v1.SignedAggregateAttestationAndProof
-	(*AttestationData)(nil),                    // 3: ethereum.eth.v1.AttestationData
-	(*Checkpoint)(nil),                         // 4: ethereum.eth.v1.Checkpoint
+	(*Attestation)(nil),                        // 0: sila.eth.v1.Attestation
+	(*AggregateAttestationAndProof)(nil),       // 1: sila.eth.v1.AggregateAttestationAndProof
+	(*SignedAggregateAttestationAndProof)(nil), // 2: sila.eth.v1.SignedAggregateAttestationAndProof
+	(*AttestationData)(nil),                    // 3: sila.eth.v1.AttestationData
+	(*Checkpoint)(nil),                         // 4: sila.eth.v1.Checkpoint
 }
 var file_proto_silaapi_v1_attestation_proto_depIdxs = []int32{
-	3, // 0: ethereum.eth.v1.Attestation.data:type_name -> ethereum.eth.v1.AttestationData
-	0, // 1: ethereum.eth.v1.AggregateAttestationAndProof.aggregate:type_name -> ethereum.eth.v1.Attestation
-	1, // 2: ethereum.eth.v1.SignedAggregateAttestationAndProof.message:type_name -> ethereum.eth.v1.AggregateAttestationAndProof
-	4, // 3: ethereum.eth.v1.AttestationData.source:type_name -> ethereum.eth.v1.Checkpoint
-	4, // 4: ethereum.eth.v1.AttestationData.target:type_name -> ethereum.eth.v1.Checkpoint
+	3, // 0: sila.eth.v1.Attestation.data:type_name -> sila.eth.v1.AttestationData
+	0, // 1: sila.eth.v1.AggregateAttestationAndProof.aggregate:type_name -> sila.eth.v1.Attestation
+	1, // 2: sila.eth.v1.SignedAggregateAttestationAndProof.message:type_name -> sila.eth.v1.AggregateAttestationAndProof
+	4, // 3: sila.eth.v1.AttestationData.source:type_name -> sila.eth.v1.Checkpoint
+	4, // 4: sila.eth.v1.AttestationData.target:type_name -> sila.eth.v1.Checkpoint
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

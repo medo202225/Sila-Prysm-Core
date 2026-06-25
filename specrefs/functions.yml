@@ -79,7 +79,7 @@
         state: BeaconState, pubkey: BLSPubkey, withdrawal_credentials: Bytes32, amount: uint64
     ) -> None:
         index = get_index_for_new_validator(state)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         validator = get_validator_from_deposit(pubkey, withdrawal_credentials, amount)
         set_or_append_list(state.validators, index, validator)
         set_or_append_list(state.balances, index, amount)
@@ -150,12 +150,12 @@
         if pubkey not in validator_pubkeys:
             # Verify the deposit signature (proof of possession) which is not checked by the deposit contract
             if is_valid_deposit_signature(pubkey, withdrawal_credentials, amount, signature):
-                # [Modified in Electra:EIP7251]
+                # [Modified in Electra:SIP7251]
                 add_validator_to_registry(state, pubkey, withdrawal_credentials, Gwei(0))
             else:
                 return
 
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         # Increase balance by deposit amount
         state.pending_deposits.append(
             PendingDeposit(
@@ -302,7 +302,7 @@
     <spec fn="apply_withdrawals" fork="gloas" hash="4231861d">
     def apply_withdrawals(state: BeaconState, withdrawals: Sequence[Withdrawal]) -> None:
         for withdrawal in withdrawals:
-            # [Modified in Gloas:EIP7732]
+            # [Modified in Gloas:SIP7732]
             if is_builder_index(withdrawal.validator_index):
                 builder_index = convert_validator_index_to_builder_index(withdrawal.validator_index)
                 builder_balance = state.builders[builder_index].balance
@@ -410,7 +410,7 @@
                 withdrawals_root=hash_tree_root(payload.withdrawals),
             )
 
-            # [New in Deneb:EIP4844]
+            # [New in Deneb:SIP4844]
             if epoch >= DENEB_FORK_EPOCH:
                 execution_header.blob_gas_used = payload.blob_gas_used
                 execution_header.excess_blob_gas = payload.excess_blob_gas
@@ -446,7 +446,7 @@
     def block_to_light_client_header(block: SignedBeaconBlock) -> LightClientHeader:
         epoch = compute_epoch_at_slot(block.message.slot)
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
             execution_block_hash = (
                 block.message.body.signed_execution_payload_bid.message.parent_block_hash
@@ -808,7 +808,7 @@
         earliest_exit_epoch = max(
             state.earliest_exit_epoch, compute_activation_exit_epoch(get_current_epoch(state))
         )
-        # [Modified in Gloas:EIP8061]
+        # [Modified in Gloas:SIP8061]
         per_epoch_churn = get_exit_churn_limit(state)
         # New epoch for exits.
         if state.earliest_exit_epoch < earliest_exit_epoch:
@@ -891,11 +891,11 @@
         fork_version = compute_fork_version(epoch)
         base_digest = compute_fork_data_root(fork_version, genesis_validators_root)
 
-        # [New in Fulu:EIP7892]
+        # [New in Fulu:SIP7892]
         if epoch < FULU_FORK_EPOCH:
             return ForkDigest(base_digest[:4])
 
-        # [Modified in Fulu:EIP7892]
+        # [Modified in Fulu:SIP7892]
         # Bitmask digest with hash of blob parameters
         blob_parameters = get_blob_parameters(epoch)
         return ForkDigest(
@@ -1191,7 +1191,7 @@
         """
         Return the maximum number of blob sidecars in a single request.
         """
-        # [Modified in Electra:EIP7691]
+        # [Modified in Electra:SIP7691]
         return uint64(MAX_REQUEST_BLOCKS_DENEB * MAX_BLOBS_PER_BLOCK_ELECTRA)
     </spec>
 
@@ -1338,7 +1338,7 @@
             offset = i % 16 * 2
             random_value = bytes_to_uint64(random_bytes[offset : offset + 2])
             effective_balance = state.validators[candidate_index].effective_balance
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             if effective_balance * MAX_RANDOM_VALUE >= MAX_EFFECTIVE_BALANCE_ELECTRA * random_value:
                 return candidate_index
             i += 1
@@ -1373,7 +1373,7 @@
         """
         start_slot = compute_start_slot_at_epoch(epoch)
         seeds = [hash(seed + uint_to_bytes(Slot(start_slot + i))) for i in range(SLOTS_PER_EPOCH)]
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         return [
             compute_balance_weighted_selection(state, indices, seed, size=1, shuffle_indices=True)[0]
             for seed in seeds
@@ -1757,7 +1757,7 @@
         This computation takes into account the effect of:
             - validator set churn (bounded by ``get_balance_churn_limit()`` per epoch)
         A detailed calculation can be found at:
-        https://notes.ethereum.org/@CarlBeek/electra_weak_subjectivity
+        https://notes.sila.org/@CarlBeek/electra_weak_subjectivity
         """
         t = get_total_active_balance(state)
         delta = get_balance_churn_limit(state)
@@ -1778,7 +1778,7 @@
             - consolidation churn (weighted 1)
         """
         t = get_total_active_balance(state)
-        # [Modified in Gloas:EIP8061]
+        # [Modified in Gloas:SIP8061]
         delta = (
             2 * get_exit_churn_limit(state) // 3
             + get_activation_churn_limit(state) // 3
@@ -2366,7 +2366,7 @@
     def get_ancestor(store: Store, node: ForkChoiceNode, slot: Slot) -> ForkChoiceNode:
         block = store.blocks[node.root]
         if block.slot > slot:
-            # [Modified in Gloas:EIP7732]
+            # [Modified in Gloas:SIP7732]
             parent = ForkChoiceNode(
                 root=block.parent_root,
                 payload_status=get_parent_payload_status(store, block),
@@ -2549,7 +2549,7 @@
         participation_flag_indices = []
         if is_matching_source and inclusion_delay <= integer_squareroot(SLOTS_PER_EPOCH):
             participation_flag_indices.append(TIMELY_SOURCE_FLAG_INDEX)
-        # [Modified in Deneb:EIP7045]
+        # [Modified in Deneb:SIP7045]
         if is_matching_target:
             participation_flag_indices.append(TIMELY_TARGET_FLAG_INDEX)
         if is_matching_head and inclusion_delay == MIN_ATTESTATION_INCLUSION_DELAY:
@@ -2580,7 +2580,7 @@
         target_root_matches = data.target.root == target_root
         is_matching_target = is_matching_source and target_root_matches
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         if is_attestation_same_slot(state, data):
             assert data.index == 0
             payload_matches = True
@@ -2592,7 +2592,7 @@
         # Matching head
         head_root = get_block_root_at_slot(state, data.slot)
         head_root_matches = data.beacon_block_root == head_root
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         is_matching_head = is_matching_target and head_root_matches and payload_matches
 
         assert is_matching_source
@@ -2881,7 +2881,7 @@
         """
         Return the proposer indices for the given ``epoch``.
         """
-        # [Modified in Gloas:EIP8045]
+        # [Modified in Gloas:SIP8045]
         indices = [
             index
             for index in get_active_validator_indices(state, epoch)
@@ -3149,7 +3149,7 @@
         Compute the checkpoint block for epoch ``epoch`` in the chain of block ``root``
         """
         epoch_first_slot = compute_start_slot_at_epoch(epoch)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         node = ForkChoiceNode(root=root, payload_status=PAYLOAD_STATUS_PENDING)
         return get_ancestor(store, node, epoch_first_slot).root
     </spec>
@@ -3242,7 +3242,7 @@
     <spec fn="get_consolidation_churn_limit" fork="gloas" hash="1c75d0a1">
     def get_consolidation_churn_limit(state: BeaconState) -> Gwei:
         """
-        Per-epoch churn limit reserved for consolidations (EIP-7521).
+        Per-epoch churn limit reserved for consolidations (SIP-7521).
         Derived from total active balance and rounded to
         ``EFFECTIVE_BALANCE_INCREMENT``.
         """
@@ -3468,15 +3468,15 @@
   spec: |
     <spec fn="get_data_column_sidecars" fork="gloas" hash="abaf4385">
     def get_data_column_sidecars(
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `signed_block_header`
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         beacon_block_root: Root,
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         slot: Slot,
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `kzg_commitments`
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `kzg_commitments_inclusion_proof`
         cells_and_kzg_proofs: Sequence[
             Tuple[Vector[Cell, CELLS_PER_EXT_BLOB], Vector[KZGProof, CELLS_PER_EXT_BLOB]]
@@ -3494,7 +3494,7 @@
                 column_cells.append(cells[column_index])
                 column_proofs.append(proofs[column_index])
             sidecars.append(
-                # [Modified in Gloas:EIP7732]
+                # [Modified in Gloas:SIP7732]
                 DataColumnSidecar(
                     index=column_index,
                     column=column_cells,
@@ -3595,7 +3595,7 @@
         in the corresponding payload, assemble the sidecars which can be
         distributed to peers.
         """
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         return get_data_column_sidecars(
             sidecar.beacon_block_root,
             sidecar.slot,
@@ -3628,7 +3628,7 @@
             # Genesis block parent
             return Root()
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         node = ForkChoiceNode(
             root=root,
             payload_status=PAYLOAD_STATUS_PENDING,
@@ -3770,7 +3770,7 @@
   spec: |
     <spec fn="get_silaexec_vote" fork="electra" hash="978c2389">
     def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaExecutionBlock]) -> SilaExecutionData:
-        # [New in Electra:EIP6110]
+        # [New in Electra:SIP6110]
         if state.silaexec_deposit_index == state.deposit_requests_start_index:
             return state.sila_execution_data
 
@@ -3963,7 +3963,7 @@
         withdrawal_index = state.next_withdrawal_index
         withdrawals: List[Withdrawal] = []
 
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         # Get partial withdrawals
         partial_withdrawals, withdrawal_index, processed_partial_withdrawals_count = (
             get_pending_partial_withdrawals(state, withdrawal_index, withdrawals)
@@ -3978,7 +3978,7 @@
 
         return ExpectedWithdrawals(
             withdrawals,
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             processed_partial_withdrawals_count,
             processed_validators_sweep_count,
         )
@@ -3992,7 +3992,7 @@
         withdrawal_index = state.next_withdrawal_index
         withdrawals: List[Withdrawal] = []
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Get builder withdrawals
         builder_withdrawals, withdrawal_index, processed_builder_withdrawals_count = (
             get_builder_withdrawals(state, withdrawal_index, withdrawals)
@@ -4005,7 +4005,7 @@
         )
         withdrawals.extend(partial_withdrawals)
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Get builders sweep withdrawals
         builders_sweep_withdrawals, withdrawal_index, processed_builders_sweep_count = (
             get_builders_sweep_withdrawals(state, withdrawal_index, withdrawals)
@@ -4020,10 +4020,10 @@
 
         return ExpectedWithdrawals(
             withdrawals,
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             processed_builder_withdrawals_count,
             processed_partial_withdrawals_count,
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             processed_builders_sweep_count,
             processed_validators_sweep_count,
         )
@@ -4154,15 +4154,15 @@
             equivocating_indices=set(),
             blocks={anchor_root: copy(anchor_block)},
             block_states={anchor_root: copy(anchor_state)},
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             block_timeliness={anchor_root: [True, True]},
             checkpoint_states={justified_checkpoint: copy(anchor_state)},
             unrealized_justifications={anchor_root: justified_checkpoint},
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             payloads={},
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             payload_timeliness_vote={},
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             payload_data_availability_vote={},
         )
     </spec>
@@ -4195,7 +4195,7 @@
             payloads={},
             payload_timeliness_vote={},
             payload_data_availability_vote={},
-            # [New in Heze:EIP7805]
+            # [New in Heze:SIP7805]
             payload_inclusion_list_satisfaction={},
         )
     </spec>
@@ -4230,7 +4230,7 @@
         # Execute the LMD-GHOST fork-choice
         head = ForkChoiceNode(
             root=store.justified_checkpoint.root,
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             payload_status=PAYLOAD_STATUS_PENDING,
         )
 
@@ -4244,7 +4244,7 @@
                 key=lambda child: (
                     get_weight(store, child),
                     child.root,
-                    # [New in Gloas:EIP7732]
+                    # [New in Gloas:SIP7732]
                     get_payload_status_tiebreaker(store, child),
                 ),
             )
@@ -4746,11 +4746,11 @@
     def get_lc_execution_root(header: LightClientHeader) -> Root:
         epoch = compute_epoch_at_slot(header.beacon.slot)
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
             return Root(header.execution_block_hash)
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         if epoch >= DENEB_FORK_EPOCH:
             if header.beacon.slot == GENESIS_SLOT:
                 return hash_tree_root(deneb.ExecutionPayloadHeader())
@@ -4762,7 +4762,7 @@
         else:
             return Root()
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         inner = header.execution_branch[
             : len(header.execution_branch) - floorlog2(EXECUTION_PAYLOAD_GINDEX)
         ]
@@ -4911,7 +4911,7 @@
             offset = i % 16 * 2
             random_value = bytes_to_uint64(random_bytes[offset : offset + 2])
             effective_balance = state.validators[candidate_index].effective_balance
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             if effective_balance * MAX_RANDOM_VALUE >= MAX_EFFECTIVE_BALANCE_ELECTRA * random_value:
                 sync_committee_indices.append(candidate_index)
             i += 1
@@ -4982,7 +4982,7 @@
   spec: |
     <spec fn="get_node_for_root" fork="gloas" hash="75c9f337">
     def get_node_for_root(block_root: Root) -> ForkChoiceNode:
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         return ForkChoiceNode(root=block_root, payload_status=PAYLOAD_STATUS_PENDING)
     </spec>
 
@@ -5365,7 +5365,7 @@
     <spec fn="get_safe_execution_block_hash" fork="gloas" hash="4884e9d5">
     def get_safe_execution_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
         safe_block = fcr_store.store.blocks[fcr_store.confirmed_root]
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         return safe_block.body.signed_execution_payload_bid.message.parent_block_hash
     </spec>
 
@@ -5504,7 +5504,7 @@
         """
         Return a node supported by the ``message``.
         """
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         block = store.blocks[message.root]
         if block.slot < message.slot:
             if message.payload_present:
@@ -5514,7 +5514,7 @@
         else:
             payload_status = PAYLOAD_STATUS_PENDING
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         return ForkChoiceNode(root=message.root, payload_status=payload_status)
     </spec>
 
@@ -5794,7 +5794,7 @@
             withdrawable_epoch=FAR_FUTURE_EPOCH,
         )
 
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         max_effective_balance = get_max_effective_balance(validator)
         validator.effective_balance = min(
             amount - amount % EFFECTIVE_BALANCE_INCREMENT, max_effective_balance
@@ -5914,7 +5914,7 @@
                         index=withdrawal_index,
                         validator_index=validator_index,
                         address=ExecutionAddress(validator.withdrawal_credentials[12:]),
-                        # [Modified in Electra:EIP7251]
+                        # [Modified in Electra:SIP7251]
                         amount=balance - get_max_effective_balance(validator),
                     )
                 )
@@ -5974,20 +5974,20 @@
   spec: |
     <spec fn="get_weight" fork="gloas" hash="ab3e64d6">
     def get_weight(store: Store, node: ForkChoiceNode) -> Gwei:
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         if is_previous_slot_payload_decision(store, node):
             return Gwei(0)
 
         state = store.checkpoint_states[store.justified_checkpoint]
         attestation_score = get_attestation_score(store, node, state)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         if not should_apply_proposer_boost(store):
             # Return only attestation score if proposer boost should not apply
             return attestation_score
 
         # Calculate proposer score if proposer boost should apply
         proposer_score = Gwei(0)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         proposer_boost_node = ForkChoiceNode(
             root=store.proposer_boost_root, payload_status=PAYLOAD_STATUS_PENDING
         )
@@ -6246,7 +6246,7 @@
         if validator.exit_epoch != FAR_FUTURE_EPOCH:
             return
 
-        # Compute exit queue epoch [Modified in Electra:EIP7251]
+        # Compute exit queue epoch [Modified in Electra:SIP7251]
         exit_queue_epoch = compute_exit_epoch_and_update_churn(state, validator.effective_balance)
 
         # Set validator exit epoch and withdrawable epoch
@@ -6335,7 +6335,7 @@
         if node_ancestor.root != ancestor.root:
             return False
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         return (
             node_ancestor.payload_status == ancestor.payload_status
             or ancestor.payload_status == PAYLOAD_STATUS_PENDING
@@ -6622,7 +6622,7 @@
         """
         return (
             validator.activation_eligibility_epoch == FAR_FUTURE_EPOCH
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             and validator.effective_balance >= MIN_ACTIVATION_BALANCE
         )
     </spec>
@@ -6734,7 +6734,7 @@
         Check if ``validator`` is fully withdrawable.
         """
         return (
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             has_execution_withdrawal_credential(validator)
             and validator.withdrawable_epoch <= epoch
             and balance > 0
@@ -6750,7 +6750,7 @@
     ) -> bool:
         """
         Check if ``gas_limit`` is compatible with ``target_gas_limit`` under the
-        EIP-1559 transition rule from ``parent_gas_limit``.
+        SIP-1559 transition rule from ``parent_gas_limit``.
         """
         max_gas_limit_difference = max(parent_gas_limit // 1024, 1) - 1
         min_gas_limit = parent_gas_limit - max_gas_limit_difference
@@ -7026,12 +7026,12 @@
         Check if ``validator`` is partially withdrawable.
         """
         max_effective_balance = get_max_effective_balance(validator)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         has_max_effective_balance = validator.effective_balance == max_effective_balance
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         has_excess_balance = balance > max_effective_balance
         return (
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             has_execution_withdrawal_credential(validator)
             and has_max_effective_balance
             and has_excess_balance
@@ -7354,7 +7354,7 @@
     def is_valid_light_client_header(header: LightClientHeader) -> bool:
         epoch = compute_epoch_at_slot(header.beacon.slot)
 
-        # [New in Deneb:EIP4844]
+        # [New in Deneb:SIP4844]
         if epoch < DENEB_FORK_EPOCH:
             if header.execution.blob_gas_used != uint64(0):
                 return False
@@ -7383,7 +7383,7 @@
     def is_valid_light_client_header(header: LightClientHeader) -> bool:
         epoch = compute_epoch_at_slot(header.beacon.slot)
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
             return is_valid_normalized_merkle_branch(
                 leaf=Bytes32(header.execution_block_hash),
@@ -7392,7 +7392,7 @@
                 root=header.beacon.body_root,
             )
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         if epoch >= DENEB_FORK_EPOCH:
             return is_valid_normalized_merkle_branch(
                 leaf=Bytes32(header.execution_block_hash),
@@ -7401,7 +7401,7 @@
                 root=header.beacon.body_root,
             )
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         if epoch >= CAPELLA_FORK_EPOCH:
             return is_valid_normalized_merkle_branch(
                 leaf=Bytes32(header.execution_block_hash),
@@ -7410,7 +7410,7 @@
                 root=header.beacon.body_root,
             )
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         return header.execution_block_hash == Hash32() and header.execution_branch == ExecutionBranch()
     </spec>
 
@@ -7918,7 +7918,7 @@
         )
         assert store.finalized_checkpoint.root == finalized_checkpoint_block
 
-        # [New in Deneb:EIP4844]
+        # [New in Deneb:SIP4844]
         # Check if blob data is available
         # If not, this payload MAY be queued and subsequently considered when blob data becomes available
         assert is_data_available(hash_tree_root(block), block.body.blob_kzg_commitments)
@@ -7975,7 +7975,7 @@
         )
         assert store.finalized_checkpoint.root == finalized_checkpoint_block
 
-        # [Modified in Fulu:EIP7594]
+        # [Modified in Fulu:SIP7594]
         # Check if blob data is available
         # If not, this payload MAY be queued and subsequently considered when blob data becomes available
         assert is_data_available(hash_tree_root(block))
@@ -8113,7 +8113,7 @@
         # Verify the execution payload envelope
         verify_execution_payload_envelope(state, signed_envelope, EXECUTION_ENGINE)
 
-        # [New in Heze:EIP7805]
+        # [New in Heze:SIP7805]
         # Check if this payload satisfies the inclusion list constraints
         # If not, add this payload to the store as inclusion list constraints unsatisfied
         record_payload_inclusion_list_satisfaction(
@@ -8386,7 +8386,7 @@
             prev_randao=get_randao_mix(state, get_current_epoch(state)),
             suggested_fee_recipient=suggested_fee_recipient,
             withdrawals=get_expected_withdrawals(state).withdrawals,
-            # [New in Deneb:EIP4788]
+            # [New in Deneb:SIP4788]
             parent_beacon_block_root=hash_tree_root(state.latest_block_header),
         )
         return execution_engine.notify_forkchoice_updated(
@@ -8417,7 +8417,7 @@
             prev_randao=get_randao_mix(state, get_current_epoch(state)),
             suggested_fee_recipient=suggested_fee_recipient,
             withdrawals=get_expected_withdrawals(state).withdrawals,
-            # [New in Deneb:EIP4788]
+            # [New in Deneb:SIP4788]
             parent_beacon_block_root=hash_tree_root(state.latest_block_header),
         )
         return execution_engine.notify_forkchoice_updated(
@@ -8464,7 +8464,7 @@
             parent_beacon_block_root=hash_tree_root(state.latest_block_header),
             slot_number=state.slot,
             target_gas_limit=target_gas_limit,
-            # [New in Heze:EIP7805]
+            # [New in Heze:SIP7805]
             inclusion_list_transactions=get_inclusion_list_transactions(
                 get_inclusion_list_store(), state, Slot(state.slot - 1), only_timely=False
             ),
@@ -8568,7 +8568,7 @@
         data = attestation.data
         assert data.target.epoch in (get_previous_epoch(state), get_current_epoch(state))
         assert data.target.epoch == compute_epoch_at_slot(data.slot)
-        # [Modified in Deneb:EIP7045]
+        # [Modified in Deneb:SIP7045]
         assert data.slot + MIN_ATTESTATION_INCLUSION_DELAY <= state.slot
         assert data.index < get_committee_count_per_slot(state, data.target.epoch)
 
@@ -8618,7 +8618,7 @@
         assert data.target.epoch == compute_epoch_at_slot(data.slot)
         assert data.slot + MIN_ATTESTATION_INCLUSION_DELAY <= state.slot
 
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         assert data.index == 0
         committee_indices = get_committee_indices(attestation.committee_bits)
         committee_offset = 0
@@ -8677,7 +8677,7 @@
         assert data.target.epoch == compute_epoch_at_slot(data.slot)
         assert data.slot + MIN_ATTESTATION_INCLUSION_DELAY <= state.slot
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         assert data.index < 2
         committee_indices = get_committee_indices(attestation.committee_bits)
         committee_offset = 0
@@ -8703,7 +8703,7 @@
         # Verify signature
         assert is_valid_indexed_attestation(state, get_indexed_attestation(state, attestation))
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         if data.target.epoch == get_current_epoch(state):
             current_epoch_target = True
             epoch_participation = state.current_epoch_participation
@@ -8715,7 +8715,7 @@
 
         proposer_reward_numerator = 0
         for index in get_attesting_indices(state, attestation):
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             # For same-slot attestations, check if we are setting any new flags.
             # If we are, this validator has not contributed to this slot's quorum yet.
             will_set_new_flag = False
@@ -8726,10 +8726,10 @@
                 ):
                     epoch_participation[index] = add_flag(epoch_participation[index], flag_index)
                     proposer_reward_numerator += get_base_reward(state, index) * weight
-                    # [New in Gloas:EIP7732]
+                    # [New in Gloas:SIP7732]
                     will_set_new_flag = True
 
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             # Add weight for same-slot attestations when any new flag is set.
             # This ensures each validator contributes exactly once per slot.
             if (
@@ -8746,7 +8746,7 @@
         proposer_reward = Gwei(proposer_reward_numerator // proposer_reward_denominator)
         increase_balance(state, get_beacon_proposer_index(state), proposer_reward)
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Update builder payment weight
         if current_epoch_target:
             state.builder_pending_payments[SLOTS_PER_EPOCH + data.slot % SLOTS_PER_EPOCH] = payment
@@ -8851,13 +8851,13 @@
     <spec fn="process_block" fork="electra" hash="26d93faf">
     def process_block(state: BeaconState, block: BeaconBlock) -> None:
         process_block_header(state, block)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         process_withdrawals(state, block.body.execution_payload)
-        # [Modified in Electra:EIP6110]
+        # [Modified in Electra:SIP6110]
         process_execution_payload(state, block.body, EXECUTION_ENGINE)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
-        # [Modified in Electra:EIP6110:EIP7002:EIP7549:EIP7251]
+        # [Modified in Electra:SIP6110:SIP7002:SIP7549:SIP7251]
         process_operations(state, block.body)
         process_sync_aggregate(state, block.body.sync_aggregate)
     </spec>
@@ -8882,18 +8882,18 @@
   spec: |
     <spec fn="process_block" fork="gloas" hash="a911a43e">
     def process_block(state: BeaconState, block: BeaconBlock) -> None:
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         process_parent_execution_payload(state, block)
         process_block_header(state, block)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         process_withdrawals(state)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `process_execution_payload`
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         process_execution_payload_bid(state, block)
         process_randao(state, block.body)
         process_sila_execution_data(state, block.body)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         process_operations(state, block.body)
         process_sync_aggregate(state, block.body.sync_aggregate)
     </spec>
@@ -9105,7 +9105,7 @@
         # Deposits must be processed in order
         state.silaexec_deposit_index += 1
 
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         apply_deposit(
             state=state,
             pubkey=deposit.data.pubkey,
@@ -9158,11 +9158,11 @@
   spec: |
     <spec fn="process_deposit_request" fork="gloas" hash="a6fff32f">
     def process_deposit_request(state: BeaconState, deposit_request: DepositRequest) -> None:
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         builder_pubkeys = [b.pubkey for b in state.builders]
         validator_pubkeys = [v.pubkey for v in state.validators]
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Regardless of the withdrawal credentials prefix, if a builder/validator
         # already exists with this pubkey, apply the deposit to their balance
         is_builder = deposit_request.pubkey in builder_pubkeys
@@ -9230,7 +9230,7 @@
             HYSTERESIS_INCREMENT = uint64(EFFECTIVE_BALANCE_INCREMENT // HYSTERESIS_QUOTIENT)
             DOWNWARD_THRESHOLD = HYSTERESIS_INCREMENT * HYSTERESIS_DOWNWARD_MULTIPLIER
             UPWARD_THRESHOLD = HYSTERESIS_INCREMENT * HYSTERESIS_UPWARD_MULTIPLIER
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             max_effective_balance = get_max_effective_balance(validator)
 
             if (
@@ -9328,16 +9328,16 @@
         process_justification_and_finalization(state)
         process_inactivity_updates(state)
         process_rewards_and_penalties(state)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         process_registry_updates(state)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         process_slashings(state)
         process_sila_execution_data_reset(state)
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         process_pending_deposits(state)
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         process_pending_consolidations(state)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         process_effective_balance_updates(state)
         process_slashings_reset(state)
         process_randao_mixes_reset(state)
@@ -9369,7 +9369,7 @@
         process_historical_summaries_update(state)
         process_participation_flag_updates(state)
         process_sync_committee_updates(state)
-        # [New in Fulu:EIP7917]
+        # [New in Fulu:SIP7917]
         process_proposer_lookahead(state)
     </spec>
 
@@ -9384,10 +9384,10 @@
         process_registry_updates(state)
         process_slashings(state)
         process_sila_execution_data_reset(state)
-        # [Modified in Gloas:EIP8061]
+        # [Modified in Gloas:SIP8061]
         process_pending_deposits(state)
         process_pending_consolidations(state)
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         process_builder_pending_payments(state)
         process_effective_balance_updates(state)
         process_slashings_reset(state)
@@ -9396,7 +9396,7 @@
         process_participation_flag_updates(state)
         process_sync_committee_updates(state)
         process_proposer_lookahead(state)
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         process_ptc_window(state)
     </spec>
 
@@ -9529,11 +9529,11 @@
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
-        # [New in Deneb:EIP4844]
+        # [New in Deneb:SIP4844]
         # Verify commitments are under limit
         assert len(body.blob_kzg_commitments) <= MAX_BLOBS_PER_BLOCK
 
-        # [New in Deneb:EIP4844]
+        # [New in Deneb:SIP4844]
         # Compute list of versioned hashes
         versioned_hashes = [
             kzg_commitment_to_versioned_hash(commitment) for commitment in body.blob_kzg_commitments
@@ -9543,9 +9543,9 @@
         assert execution_engine.verify_and_notify_new_payload(
             NewPayloadRequest(
                 execution_payload=payload,
-                # [New in Deneb:EIP4844]
+                # [New in Deneb:SIP4844]
                 versioned_hashes=versioned_hashes,
-                # [New in Deneb:EIP4788]
+                # [New in Deneb:SIP4788]
                 parent_beacon_block_root=state.latest_block_header.parent_root,
             )
         )
@@ -9567,9 +9567,9 @@
             block_hash=payload.block_hash,
             transactions_root=hash_tree_root(payload.transactions),
             withdrawals_root=hash_tree_root(payload.withdrawals),
-            # [New in Deneb:EIP4844]
+            # [New in Deneb:SIP4844]
             blob_gas_used=payload.blob_gas_used,
-            # [New in Deneb:EIP4844]
+            # [New in Deneb:SIP4844]
             excess_blob_gas=payload.excess_blob_gas,
         )
     </spec>
@@ -9591,7 +9591,7 @@
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
-        # [Modified in Electra:EIP7691]
+        # [Modified in Electra:SIP7691]
         # Verify commitments are under limit
         assert len(body.blob_kzg_commitments) <= MAX_BLOBS_PER_BLOCK_ELECTRA
 
@@ -9650,7 +9650,7 @@
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
-        # [Modified in Fulu:EIP7892]
+        # [Modified in Fulu:SIP7892]
         # Verify commitments are under limit
         assert (
             len(body.blob_kzg_commitments)
@@ -9709,7 +9709,7 @@
         assert payload.prev_randao == get_randao_mix(state, get_current_epoch(state))
         # Verify timestamp
         assert payload.timestamp == compute_time_at_slot(state, state.slot)
-        # [Modified in Fulu:EIP7892]
+        # [Modified in Fulu:SIP7892]
         # Verify commitments are under limit
         assert (
             len(body.blob_kzg_commitments)
@@ -10118,7 +10118,7 @@
   spec: |
     <spec fn="process_operations" fork="electra" hash="643f18b4">
     def process_operations(state: BeaconState, body: BeaconBlockBody) -> None:
-        # [Modified in Electra:EIP6110]
+        # [Modified in Electra:SIP6110]
         # Disable former deposit mechanism once all prior deposits are processed
         silaexec_deposit_index_limit = min(
             state.sila_execution_data.deposit_count, state.deposit_requests_start_index
@@ -10136,17 +10136,17 @@
 
         for_ops(body.proposer_slashings, process_proposer_slashing)
         for_ops(body.attester_slashings, process_attester_slashing)
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         for_ops(body.attestations, process_attestation)
         for_ops(body.deposits, process_deposit)
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         for_ops(body.voluntary_exits, process_voluntary_exit)
         for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-        # [New in Electra:EIP6110]
+        # [New in Electra:SIP6110]
         for_ops(body.execution_requests.deposits, process_deposit_request)
-        # [New in Electra:EIP7002:EIP7251]
+        # [New in Electra:SIP7002:SIP7251]
         for_ops(body.execution_requests.withdrawals, process_withdrawal_request)
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         for_ops(body.execution_requests.consolidations, process_consolidation_request)
     </spec>
 
@@ -10185,21 +10185,21 @@
             for operation in operations:
                 fn(state, operation)
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         for_ops(body.proposer_slashings, process_proposer_slashing)
         for_ops(body.attester_slashings, process_attester_slashing)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         for_ops(body.attestations, process_attestation)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         for_ops(body.voluntary_exits, process_voluntary_exit)
         for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `process_deposit_request`
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `process_withdrawal_request`
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `process_consolidation_request`
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         for_ops(body.payload_attestations, process_payload_attestation)
     </spec>
 
@@ -10437,7 +10437,7 @@
     <spec fn="process_pending_deposits" fork="gloas" hash="1218fecc">
     def process_pending_deposits(state: BeaconState) -> None:
         next_epoch = Epoch(get_current_epoch(state) + 1)
-        # [Modified in Gloas:EIP8061]
+        # [Modified in Gloas:SIP8061]
         # Deposits still consume the activation-only churn budget in Gloas.
         available_for_processing = state.deposit_balance_to_consume + get_activation_churn_limit(state)
         processed_amount = 0
@@ -10564,7 +10564,7 @@
             signing_root = compute_signing_root(signed_header.message, domain)
             assert bls.Verify(proposer.pubkey, signing_root, signed_header.signature)
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Remove the BuilderPendingPayment corresponding to
         # this proposal if it is still in the 2-epoch window.
         slot = header_1.slot
@@ -10692,7 +10692,7 @@
             key=lambda index: (state.validators[index].activation_eligibility_epoch, index),
         )
         # Dequeued validators for activation up to activation churn limit
-        # [Modified in Deneb:EIP7514]
+        # [Modified in Deneb:SIP7514]
         for index in activation_queue[: get_validator_activation_churn_limit(state)]:
             validator = state.validators[index]
             validator.activation_epoch = compute_activation_exit_epoch(get_current_epoch(state))
@@ -10710,14 +10710,14 @@
 
         # Process activation eligibility, ejections, and activations
         for index, validator in enumerate(state.validators):
-            # [Modified in Electra:EIP7251]
+            # [Modified in Electra:SIP7251]
             if is_eligible_for_activation_queue(validator):
                 validator.activation_eligibility_epoch = current_epoch + 1
             elif (
                 is_active_validator(validator, current_epoch)
                 and validator.effective_balance <= EJECTION_BALANCE
             ):
-                # [Modified in Electra:EIP7251]
+                # [Modified in Electra:SIP7251]
                 initiate_validator_exit(state, ValidatorIndex(index))
             elif is_eligible_for_activation(state, validator):
                 validator.activation_epoch = activation_epoch
@@ -10864,7 +10864,7 @@
                 and epoch + EPOCHS_PER_SLASHINGS_VECTOR // 2 == validator.withdrawable_epoch
             ):
                 effective_balance_increments = validator.effective_balance // increment
-                # [Modified in Electra:EIP7251]
+                # [Modified in Electra:SIP7251]
                 penalty = penalty_per_effective_balance_increment * effective_balance_increments
                 decrease_balance(state, ValidatorIndex(index), penalty)
     </spec>
@@ -10913,7 +10913,7 @@
         # Cache block root
         previous_block_root = hash_tree_root(state.latest_block_header)
         state.block_roots[state.slot % SLOTS_PER_HISTORICAL_ROOT] = previous_block_root
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Unset the next payload availability
         state.execution_payload_availability[(state.slot + 1) % SLOTS_PER_HISTORICAL_ROOT] = 0b0
     </spec>
@@ -11085,7 +11085,7 @@
         # Verify the validator has been active long enough
         assert get_current_epoch(state) >= validator.activation_epoch + SHARD_COMMITTEE_PERIOD
         # Verify signature
-        # [Modified in Deneb:EIP7044]
+        # [Modified in Deneb:SIP7044]
         domain = compute_domain(
             DOMAIN_VOLUNTARY_EXIT, CAPELLA_FORK_VERSION, state.genesis_validators_root
         )
@@ -11112,7 +11112,7 @@
         assert get_current_epoch(state) >= voluntary_exit.epoch
         # Verify the validator has been active long enough
         assert get_current_epoch(state) >= validator.activation_epoch + SHARD_COMMITTEE_PERIOD
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         # Only exit validator if it has no pending withdrawals in the queue
         assert get_pending_balance_to_withdraw(state, voluntary_exit.validator_index) == 0
         # Verify signature
@@ -11141,7 +11141,7 @@
         # Exits must specify an epoch when they become valid; they are not valid before then
         assert get_current_epoch(state) >= voluntary_exit.epoch
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         if is_builder_index(voluntary_exit.validator_index):
             builder_index = convert_validator_index_to_builder_index(voluntary_exit.validator_index)
             # Verify the builder is active
@@ -11280,7 +11280,7 @@
 
         # Update withdrawals fields in the state
         update_next_withdrawal_index(state, expected.withdrawals)
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         update_pending_partial_withdrawals(state, expected.processed_partial_withdrawals_count)
         update_next_withdrawal_validator_index(state, expected.withdrawals)
     </spec>
@@ -11291,10 +11291,10 @@
     <spec fn="process_withdrawals" fork="gloas" hash="24ca56d3">
     def process_withdrawals(
         state: BeaconState,
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # Removed `payload`
     ) -> None:
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # Return early if the parent block is empty
         if state.latest_block_hash != state.latest_execution_payload_bid.block_hash:
             return
@@ -11307,12 +11307,12 @@
 
         # Update withdrawals fields in the state
         update_next_withdrawal_index(state, expected.withdrawals)
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         update_payload_expected_withdrawals(state, expected.withdrawals)
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         update_builder_pending_withdrawals(state, expected.processed_builder_withdrawals_count)
         update_pending_partial_withdrawals(state, expected.processed_partial_withdrawals_count)
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         update_next_withdrawal_builder_index(state, expected.processed_builders_sweep_count)
         update_next_withdrawal_validator_index(state, expected.withdrawals)
     </spec>
@@ -11365,10 +11365,10 @@
         seconds_since_genesis = store.time - store.genesis_time
         time_into_slot_ms = seconds_to_milliseconds(seconds_since_genesis) % SLOT_DURATION_MS
         attestation_threshold_ms = get_attestation_due_ms()
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         is_current_slot = get_current_slot(store) == block.slot
         ptc_threshold_ms = get_payload_attestation_due_ms()
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         store.block_timeliness[root] = [
             is_current_slot and time_into_slot_ms < threshold
             for threshold in [attestation_threshold_ms, ptc_threshold_ms]
@@ -11543,7 +11543,7 @@
     def should_extend_payload(store: Store, root: Root) -> bool:
         if not is_payload_verified(store, root):
             return False
-        # [New in Heze:EIP7805]
+        # [New in Heze:SIP7805]
         if not is_payload_inclusion_list_satisfied(store, root):
             return False
         proposer_root = store.proposer_boost_root
@@ -11687,7 +11687,7 @@
             validator.withdrawable_epoch, Epoch(epoch + EPOCHS_PER_SLASHINGS_VECTOR)
         )
         state.slashings[epoch % EPOCHS_PER_SLASHINGS_VECTOR] += validator.effective_balance
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         slashing_penalty = validator.effective_balance // MIN_SLASHING_PENALTY_QUOTIENT_ELECTRA
         decrease_balance(state, slashed_index, slashing_penalty)
 
@@ -11695,7 +11695,7 @@
         proposer_index = get_beacon_proposer_index(state)
         if whistleblower_index is None:
             whistleblower_index = proposer_index
-        # [Modified in Electra:EIP7251]
+        # [Modified in Electra:SIP7251]
         whistleblower_reward = Gwei(
             validator.effective_balance // WHISTLEBLOWER_REWARD_QUOTIENT_ELECTRA
         )
@@ -11868,7 +11868,7 @@
         ]
         for i in non_equivocating_attesting_indices:
             if i not in store.latest_messages or slot > store.latest_messages[i].slot:
-                # [Modified in Gloas:EIP7732]
+                # [Modified in Gloas:SIP7732]
                 store.latest_messages[i] = LatestMessage(
                     slot=slot,
                     root=beacon_block_root,
@@ -11965,7 +11965,7 @@
     <spec fn="update_proposer_boost_root" fork="gloas" hash="75ff4ddf">
     def update_proposer_boost_root(store: Store, head: Root, root: Root) -> None:
         is_first_block = store.proposer_boost_root == Root()
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         is_timely = store.block_timeliness[root][ATTESTATION_TIMELINESS_INDEX]
         is_same_dependent_root = get_dependent_root(store, root) == get_dependent_root(store, head)
 
@@ -12147,9 +12147,9 @@
                 block_hash=pre.execution.block_hash,
                 transactions_root=pre.execution.transactions_root,
                 withdrawals_root=pre.execution.withdrawals_root,
-                # [New in Deneb:EIP4844]
+                # [New in Deneb:SIP4844]
                 blob_gas_used=uint64(0),
-                # [New in Deneb:EIP4844]
+                # [New in Deneb:SIP4844]
                 excess_blob_gas=uint64(0),
             ),
             execution_branch=pre.execution_branch,
@@ -12614,9 +12614,9 @@
             block_hash=pre.latest_execution_payload_header.block_hash,
             transactions_root=pre.latest_execution_payload_header.transactions_root,
             withdrawals_root=pre.latest_execution_payload_header.withdrawals_root,
-            # [New in Deneb:EIP4844]
+            # [New in Deneb:SIP4844]
             blob_gas_used=uint64(0),
-            # [New in Deneb:EIP4844]
+            # [New in Deneb:SIP4844]
             excess_blob_gas=uint64(0),
         )
         post = BeaconState(
@@ -12649,7 +12649,7 @@
             inactivity_scores=pre.inactivity_scores,
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
-            # [Modified in Deneb:EIP4844]
+            # [Modified in Deneb:SIP4844]
             latest_execution_payload_header=latest_execution_payload_header,
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
@@ -12708,30 +12708,30 @@
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
             historical_summaries=pre.historical_summaries,
-            # [New in Electra:EIP6110]
+            # [New in Electra:SIP6110]
             deposit_requests_start_index=UNSET_DEPOSIT_REQUESTS_START_INDEX,
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             deposit_balance_to_consume=0,
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             exit_balance_to_consume=0,
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             earliest_exit_epoch=earliest_exit_epoch,
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             consolidation_balance_to_consume=0,
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             earliest_consolidation_epoch=compute_activation_exit_epoch(get_current_epoch(pre)),
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             pending_deposits=[],
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             pending_partial_withdrawals=[],
-            # [New in Electra:EIP7251]
+            # [New in Electra:SIP7251]
             pending_consolidations=[],
         )
 
         post.exit_balance_to_consume = get_activation_exit_churn_limit(post)
         post.consolidation_balance_to_consume = get_consolidation_churn_limit(post)
 
-        # [New in Electra:EIP7251]
+        # [New in Electra:SIP7251]
         # add validators that are not yet active to pending balance deposits
         pre_activation = sorted(
             [
@@ -12819,7 +12819,7 @@
             pending_deposits=pre.pending_deposits,
             pending_partial_withdrawals=pre.pending_partial_withdrawals,
             pending_consolidations=pre.pending_consolidations,
-            # [New in Fulu:EIP7917]
+            # [New in Fulu:SIP7917]
             proposer_lookahead=initialize_proposer_lookahead(pre),
         )
 
@@ -12839,7 +12839,7 @@
             slot=pre.slot,
             fork=Fork(
                 previous_version=pre.fork.current_version,
-                # [Modified in Gloas:EIP7732]
+                # [Modified in Gloas:SIP7732]
                 current_version=GLOAS_FORK_VERSION,
                 epoch=epoch,
             ),
@@ -12863,9 +12863,9 @@
             inactivity_scores=pre.inactivity_scores,
             current_sync_committee=pre.current_sync_committee,
             next_sync_committee=pre.next_sync_committee,
-            # [Modified in Gloas:EIP7732]
+            # [Modified in Gloas:SIP7732]
             # Removed `latest_execution_payload_header`
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             latest_block_hash=pre.latest_execution_payload_header.block_hash,
             next_withdrawal_index=pre.next_withdrawal_index,
             next_withdrawal_validator_index=pre.next_withdrawal_validator_index,
@@ -12880,29 +12880,29 @@
             pending_partial_withdrawals=pre.pending_partial_withdrawals,
             pending_consolidations=pre.pending_consolidations,
             proposer_lookahead=pre.proposer_lookahead,
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             builders=[],
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             next_withdrawal_builder_index=BuilderIndex(0),
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             execution_payload_availability=[0b1 for _ in range(SLOTS_PER_HISTORICAL_ROOT)],
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             builder_pending_payments=[BuilderPendingPayment() for _ in range(2 * SLOTS_PER_EPOCH)],
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             builder_pending_withdrawals=[],
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             latest_execution_payload_bid=ExecutionPayloadBid(
                 block_hash=pre.latest_execution_payload_header.block_hash,
                 gas_limit=pre.latest_execution_payload_header.gas_limit,
                 execution_requests_root=hash_tree_root(ExecutionRequests()),
             ),
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             payload_expected_withdrawals=[],
-            # [New in Gloas:EIP7732]
+            # [New in Gloas:SIP7732]
             ptc_window=initialize_ptc_window(pre),
         )
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         onboard_builders_from_pending_deposits(post)
 
         return post
@@ -12927,7 +12927,7 @@
             execution_payment=pre.latest_execution_payload_bid.execution_payment,
             blob_kzg_commitments=pre.latest_execution_payload_bid.blob_kzg_commitments,
             execution_requests_root=pre.latest_execution_payload_bid.execution_requests_root,
-            # [New in Heze:EIP7805]
+            # [New in Heze:SIP7805]
             inclusion_list_bits=Bitvector[INCLUSION_LIST_COMMITTEE_SIZE](),
         )
 
@@ -12937,7 +12937,7 @@
             slot=pre.slot,
             fork=Fork(
                 previous_version=pre.fork.current_version,
-                # [Modified in Heze:EIP7805]
+                # [Modified in Heze:SIP7805]
                 current_version=HEZE_FORK_VERSION,
                 epoch=epoch,
             ),
@@ -12980,7 +12980,7 @@
             execution_payload_availability=pre.execution_payload_availability,
             builder_pending_payments=pre.builder_pending_payments,
             builder_pending_withdrawals=pre.builder_pending_withdrawals,
-            # [Modified in Heze:EIP7805]
+            # [Modified in Heze:SIP7805]
             latest_execution_payload_bid=latest_execution_payload_bid,
             payload_expected_withdrawals=pre.payload_expected_withdrawals,
             ptc_window=pre.ptc_window,
@@ -13187,13 +13187,13 @@
         if index >= committee_count:
             raise GossipReject("committee index out of range")
 
-        # [New in Deneb:EIP7045]
+        # [New in Deneb:SIP7045]
         # [IGNORE] The aggregate attestation's slot is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
         if not is_not_from_future_slot(state, aggregate.data.slot, current_time_ms):
             raise GossipIgnore("aggregate slot is from a future slot")
 
-        # [Modified in Deneb:EIP7045]
+        # [Modified in Deneb:SIP7045]
         # [IGNORE] The aggregate attestation's epoch is either the current or previous epoch
         attestation_epoch = compute_epoch_at_slot(aggregate.data.slot)
         is_previous_epoch_attestation = is_within_slot_range(
@@ -13312,12 +13312,12 @@
         aggregate = aggregate_and_proof.aggregate
         aggregation_bits = aggregate.aggregation_bits
 
-        # [New in Electra:EIP7549]
+        # [New in Electra:SIP7549]
         # [REJECT] The aggregate attestation's data index is zero
         if aggregate.data.index != 0:
             raise GossipReject("aggregate data index is non-zero")
 
-        # [New in Electra:EIP7549]
+        # [New in Electra:SIP7549]
         # [REJECT] Exactly one committee is specified by the committee bits
         committee_indices = get_committee_indices(aggregate.committee_bits)
         if len(committee_indices) != 1:
@@ -13365,7 +13365,7 @@
         if len(attesting_indices) < 1:
             raise GossipReject("aggregate has no participants")
 
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         # [IGNORE] A valid aggregate with a superset of aggregation bits has not already been seen
         aggregate_data_root = hash_tree_root(aggregate.data)
         aggregate_cache_key = (aggregate_data_root, index)
@@ -13558,13 +13558,13 @@
         if expected_subnet != subnet_id:
             raise GossipReject("attestation is for wrong subnet")
 
-        # [Modified in Deneb:EIP7045]
+        # [Modified in Deneb:SIP7045]
         # [IGNORE] The attestation's slot is not from a future slot
         # (MAY be queued for processing at the appropriate slot)
         if not is_not_from_future_slot(state, data.slot, current_time_ms):
             raise GossipIgnore("attestation slot is from a future slot")
 
-        # [Modified in Deneb:EIP7045]
+        # [Modified in Deneb:SIP7045]
         # [IGNORE] The attestation's epoch is either the current or previous epoch
         attestation_epoch = compute_epoch_at_slot(data.slot)
         is_previous_epoch_attestation = is_within_slot_range(
@@ -13640,7 +13640,7 @@
         seen: Seen,
         store: Store,
         state: BeaconState,
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         attestation: SingleAttestation,
         current_time_ms: uint64,
         subnet_id: SubnetID,
@@ -13650,12 +13650,12 @@
         Raises GossipIgnore or GossipReject on validation failure.
         """
         data = attestation.data
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         committee_index = attestation.committee_index
         attester_index = attestation.attester_index
         target_epoch = data.target.epoch
 
-        # [New in Electra:EIP7549]
+        # [New in Electra:SIP7549]
         # [REJECT] The attestation's data index is zero
         if data.index != 0:
             raise GossipReject("attestation data index is non-zero")
@@ -13698,18 +13698,18 @@
         if target_epoch != compute_epoch_at_slot(data.slot):
             raise GossipReject("attestation epoch does not match target epoch")
 
-        # [New in Electra:EIP7549]
+        # [New in Electra:SIP7549]
         # [REJECT] The attester is a member of the committee
         committee = get_beacon_committee(state, data.slot, committee_index)
         if attester_index not in committee:
             raise GossipReject("attester is not a member of the committee")
 
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         # [IGNORE] No other valid attestation seen for this validator and target epoch
         if (attester_index, target_epoch) in seen.attestation_validator_epochs:
             raise GossipIgnore("already seen attestation from this validator for this epoch")
 
-        # [Modified in Electra:EIP7549]
+        # [Modified in Electra:SIP7549]
         # [REJECT] The attestation signature is valid
         attester = state.validators[attester_index]
         domain = get_domain(state, DOMAIN_BEACON_ATTESTER, target_epoch)
@@ -14097,7 +14097,7 @@
         if checkpoint_block != store.finalized_checkpoint.root:
             raise GossipReject("finalized checkpoint is not an ancestor of block")
 
-        # [New in Deneb:EIP4844]
+        # [New in Deneb:SIP4844]
         # [REJECT] The length of KZG commitments is less than or equal to the limit
         if len(block.body.blob_kzg_commitments) > MAX_BLOBS_PER_BLOCK:
             raise GossipReject("too many blob kzg commitments")
@@ -14196,7 +14196,7 @@
         if checkpoint_block != store.finalized_checkpoint.root:
             raise GossipReject("finalized checkpoint is not an ancestor of block")
 
-        # [Modified in Electra:EIP7691]
+        # [Modified in Electra:SIP7691]
         # [REJECT] The length of KZG commitments is less than or equal to the limit
         if len(block.body.blob_kzg_commitments) > MAX_BLOBS_PER_BLOCK_ELECTRA:
             raise GossipReject("too many blob kzg commitments")
@@ -14297,7 +14297,7 @@
         if checkpoint_block != store.finalized_checkpoint.root:
             raise GossipReject("finalized checkpoint is not an ancestor of block")
 
-        # [Modified in Fulu:EIP7892]
+        # [Modified in Fulu:SIP7892]
         # [REJECT] The length of KZG commitments is less than or equal to the limit
         max_blobs = get_blob_parameters(get_current_epoch(state)).max_blobs_per_block
         if len(block.body.blob_kzg_commitments) > max_blobs:
@@ -14428,7 +14428,7 @@
         """
         block_header = blob_sidecar.signed_block_header.message
 
-        # [Modified in Electra:EIP7691]
+        # [Modified in Electra:SIP7691]
         # [REJECT] The sidecar's index is consistent with MAX_BLOBS_PER_BLOCK_ELECTRA
         if blob_sidecar.index >= MAX_BLOBS_PER_BLOCK_ELECTRA:
             raise GossipReject("blob index out of range")
@@ -14836,11 +14836,11 @@
         block_slot = store.blocks[attestation.data.beacon_block_root].slot
         assert block_slot <= attestation.data.slot
 
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         assert attestation.data.index in [0, 1]
         if block_slot == attestation.data.slot:
             assert attestation.data.index == 0
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         # If attesting for a full node, the payload must be known
         if attestation.data.index == 1:
             assert is_payload_verified(store, attestation.data.beacon_block_root)
@@ -15320,7 +15320,7 @@
         if current_epoch < validator.activation_epoch + SHARD_COMMITTEE_PERIOD:
             raise GossipReject("validator has not been active long enough")
 
-        # [Modified in Deneb:EIP7044]
+        # [Modified in Deneb:SIP7044]
         # [REJECT] The signature is valid
         domain = compute_domain(
             DOMAIN_VOLUNTARY_EXIT, CAPELLA_FORK_VERSION, state.genesis_validators_root
@@ -15404,7 +15404,7 @@
     <spec fn="verify_data_column_sidecar" fork="gloas" hash="71548b68">
     def verify_data_column_sidecar(
         sidecar: DataColumnSidecar,
-        # [New in Gloas:EIP7732]
+        # [New in Gloas:SIP7732]
         kzg_commitments: List[KZGCommitment, MAX_BLOB_COMMITMENTS_PER_BLOCK],
     ) -> bool:
         """
@@ -15414,12 +15414,12 @@
         if sidecar.index >= NUMBER_OF_COLUMNS:
             return False
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # A sidecar for zero blobs is invalid
         if len(sidecar.column) == 0:
             return False
 
-        # [Modified in Gloas:EIP7732]
+        # [Modified in Gloas:SIP7732]
         # The column length must be equal to the number of commitments/proofs
         if len(sidecar.column) != len(kzg_commitments) or len(sidecar.column) != len(
             sidecar.kzg_proofs

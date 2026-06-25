@@ -43,7 +43,7 @@ func (s *Service) validateDataColumnGloas(
 	dataColumnSidecarSubTopic string,
 ) (blocks.VerifiedRODataColumn, error) {
 	// data_column_sidecar_{subnet_id}
-	// [Modified in Gloas:EIP7732]
+	// [Modified in Gloas:SIP7732]
 	//
 	// [IGNORE] A valid block for the sidecar's slot has been seen (via gossip or non-gossip sources).
 	// If not yet seen, a client MUST queue the sidecar for deferred validation and possible processing once

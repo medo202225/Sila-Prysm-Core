@@ -93,19 +93,19 @@ var (
 	}, []string{"state"})
 	prevEpochActiveBalances = promauto.NewGauge(prometheus.GaugeOpts{
 		Name: "beacon_prev_epoch_active_gwei",
-		Help: "The total amount of ether, in gwei, that was active for voting of previous epoch",
+		Help: "The total amount of sila, in gwei, that was active for voting of previous epoch",
 	})
 	prevEpochSourceBalances = promauto.NewGauge(prometheus.GaugeOpts{
 		Name: "beacon_prev_epoch_source_gwei",
-		Help: "The total amount of ether, in gwei, that has been used in voting attestation source of previous epoch",
+		Help: "The total amount of sila, in gwei, that has been used in voting attestation source of previous epoch",
 	})
 	prevEpochTargetBalances = promauto.NewGauge(prometheus.GaugeOpts{
 		Name: "beacon_prev_epoch_target_gwei",
-		Help: "The total amount of ether, in gwei, that has been used in voting attestation target of previous epoch",
+		Help: "The total amount of sila, in gwei, that has been used in voting attestation target of previous epoch",
 	})
 	prevEpochHeadBalances = promauto.NewGauge(prometheus.GaugeOpts{
 		Name: "beacon_prev_epoch_head_gwei",
-		Help: "The total amount of ether, in gwei, that has been used in voting attestation head of previous epoch",
+		Help: "The total amount of sila, in gwei, that has been used in voting attestation head of previous epoch",
 	})
 	reorgCount = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "beacon_reorgs_total",

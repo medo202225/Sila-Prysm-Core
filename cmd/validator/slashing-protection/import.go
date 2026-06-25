@@ -17,7 +17,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Reads an input slashing protection EIP-3076
+// Reads an input slashing protection SIP-3076
 // standard JSON file and attempts to insert its data into our validator DB.
 //
 // Steps:

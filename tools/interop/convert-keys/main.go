@@ -1,5 +1,5 @@
 // Used for converting keys.yaml files from an external interop reference for testing.
-// External reference: https://github.com/ethereum/silaconsensus.0-pm/tree/master/interop/mocked_start
+// External reference: https://github.com/sila-chain/silaconsensus.0-pm/tree/master/interop/mocked_start
 //
 // This code can be discarded after interop testing.
 package main

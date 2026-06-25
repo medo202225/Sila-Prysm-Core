@@ -128,9 +128,9 @@ func ActiveValidatorIndices(ctx context.Context, s state.ReadOnlyBeaconState, ep
 
 // ActiveNonSlashedValidatorIndices returns the indices of validators that are
 // both active at “epoch“ and not slashed. It is used to build the
-// EIP-8045 proposer lookahead.
+// SIP-8045 proposer lookahead.
 //
-// Spec pseudocode definition (EIP-8045):
+// Spec pseudocode definition (SIP-8045):
 //
 //	indices = [i for i in get_active_validator_indices(state, epoch)
 //	           if not state.validators[i].slashed]
@@ -365,7 +365,7 @@ func BeaconProposerIndexAtSlot(ctx context.Context, state state.ReadOnlyBeaconSt
 //	       offset = i % 16 * 2
 //	       random_value = bytes_to_uint64(random_bytes[offset:offset + 2])
 //	       effective_balance = state.validators[candidate_index].effective_balance
-//	       # [Modified in Electra:EIP7251]
+//	       # [Modified in Electra:SIP7251]
 //	       if effective_balance * MAX_RANDOM_VALUE >= MAX_EFFECTIVE_BALANCE_ELECTRA * random_value:
 //	           return candidate_index
 //	       i += 1
@@ -425,7 +425,7 @@ func ComputeProposerIndex(bState state.ReadOnlyBeaconState, activeIndices []prim
 //	    """
 //	    return (
 //	        validator.activation_eligibility_epoch == FAR_FUTURE_EPOCH
-//	        and validator.effective_balance >= MIN_ACTIVATION_BALANCE  # [Modified in Electra:EIP7251]
+//	        and validator.effective_balance >= MIN_ACTIVATION_BALANCE  # [Modified in Electra:SIP7251]
 //	    )
 func IsEligibleForActivationQueue(validator state.ReadOnlyValidator, currentEpoch primitives.Epoch) bool {
 	if currentEpoch >= params.BeaconConfig().ElectraForkEpoch {
@@ -461,7 +461,7 @@ func isEligibleForActivationQueue(activationEligibilityEpoch primitives.Epoch, e
 //	    """
 //	    return (
 //	        validator.activation_eligibility_epoch == FAR_FUTURE_EPOCH
-//	        and validator.effective_balance >= MIN_ACTIVATION_BALANCE  # [Modified in Electra:EIP7251]
+//	        and validator.effective_balance >= MIN_ACTIVATION_BALANCE  # [Modified in Electra:SIP7251]
 //	    )
 func isEligibleForActivationQueueElectra(activationEligibilityEpoch primitives.Epoch, effectiveBalance uint64) bool {
 	return activationEligibilityEpoch == params.BeaconConfig().FarFutureEpoch &&
@@ -540,7 +540,7 @@ func IsSameWithdrawalCredentials(a, b *silapb.Validator) bool {
 //	    Check if ``validator`` is fully withdrawable.
 //	    """
 //	    return (
-//	        has_execution_withdrawal_credential(validator)  # [Modified in Electra:EIP7251]
+//	        has_execution_withdrawal_credential(validator)  # [Modified in Electra:SIP7251]
 //	        and validator.withdrawable_epoch <= epoch
 //	        and balance > 0
 //	    )
@@ -549,7 +549,7 @@ func IsFullyWithdrawableValidator(val state.ReadOnlyValidator, balance uint64, e
 		return false
 	}
 
-	// Electra / EIP-7251 logic
+	// Electra / SIP-7251 logic
 	if fork >= version.Electra {
 		return val.HasExecutionWithdrawalCredentials() && val.WithdrawableEpoch() <= epoch
 	}
@@ -583,10 +583,10 @@ func IsPartiallyWithdrawableValidator(val state.ReadOnlyValidator, balance uint6
 //	Check if ``validator`` is partially withdrawable.
 //	"""
 //	max_effective_balance = get_max_effective_balance(validator)
-//	has_max_effective_balance = validator.effective_balance == max_effective_balance  # [Modified in Electra:EIP7251]
-//	has_excess_balance = balance > max_effective_balance  # [Modified in Electra:EIP7251]
+//	has_max_effective_balance = validator.effective_balance == max_effective_balance  # [Modified in Electra:SIP7251]
+//	has_excess_balance = balance > max_effective_balance  # [Modified in Electra:SIP7251]
 //	return (
-//	    has_execution_withdrawal_credential(validator)  # [Modified in Electra:EIP7251]
+//	    has_execution_withdrawal_credential(validator)  # [Modified in Electra:SIP7251]
 //	    and has_max_effective_balance
 //	    and has_excess_balance
 //	)

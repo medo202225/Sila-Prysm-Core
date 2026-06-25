@@ -325,7 +325,7 @@ func ProcessBlockNoVerifyAnySig(
 // Spec pseudocode definition:
 //
 //	def process_operations(state: BeaconState, body: BeaconBlockBody) -> None:
-//	    # [Modified in Electra:EIP6110]
+//	    # [Modified in Electra:SIP6110]
 //	    # Disable former deposit mechanism once all prior deposits are processed
 //	    silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
 //	    if state.silaexec_deposit_index < silaexec_deposit_index_limit:
@@ -339,14 +339,14 @@ func ProcessBlockNoVerifyAnySig(
 //
 //	    for_ops(body.proposer_slashings, process_proposer_slashing)
 //	    for_ops(body.attester_slashings, process_attester_slashing)
-//	    for_ops(body.attestations, process_attestation)  # [Modified in Electra:EIP7549]
-//	    for_ops(body.deposits, process_deposit)  # [Modified in Electra:EIP7251]
-//	    for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:EIP7251]
+//	    for_ops(body.attestations, process_attestation)  # [Modified in Electra:SIP7549]
+//	    for_ops(body.deposits, process_deposit)  # [Modified in Electra:SIP7251]
+//	    for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:SIP7251]
 //	    for_ops(body.bls_to_execution_changes, process_bls_to_execution_change)
-//	    # [New in Electra:EIP7002:EIP7251]
+//	    # [New in Electra:SIP7002:SIP7251]
 //	    for_ops(body.execution_payload.withdrawal_requests, process_execution_layer_withdrawal_request)
-//	    for_ops(body.execution_payload.deposit_requests, process_deposit_requests)  # [New in Electra:EIP6110]
-//	    for_ops(body.consolidations, process_consolidation)  # [New in Electra:EIP7251]
+//	    for_ops(body.execution_payload.deposit_requests, process_deposit_requests)  # [New in Electra:SIP6110]
+//	    for_ops(body.consolidations, process_consolidation)  # [New in Electra:SIP7251]
 func ProcessOperationsNoVerifyAttsSigs(
 	ctx context.Context,
 	state state.BeaconState,
@@ -444,18 +444,18 @@ func ProcessBlockForStateRoot(
 	if state.Version() >= version.Gloas {
 		// <spec fn="process_block" fork="gloas" hash="a911a43e">
 		// def process_block(state: BeaconState, block: BeaconBlock) -> None:
-		//     # [New in Gloas:EIP7732]
+		//     # [New in Gloas:SIP7732]
 		//     process_parent_execution_payload(state, block)
 		//     process_block_header(state, block)
-		//     # [Modified in Gloas:EIP7732]
+		//     # [Modified in Gloas:SIP7732]
 		//     process_withdrawals(state)
-		//     # [Modified in Gloas:EIP7732]
+		//     # [Modified in Gloas:SIP7732]
 		//     # Removed `process_execution_payload`
-		//     # [New in Gloas:EIP7732]
+		//     # [New in Gloas:SIP7732]
 		//     process_execution_payload_bid(state, block)
 		//     process_randao(state, block.body)
 		//     process_sila_execution_data(state, block.body)
-		//     # [Modified in Gloas:EIP7732]
+		//     # [Modified in Gloas:SIP7732]
 		//     process_operations(state, block.body)
 		//     process_sync_aggregate(state, block.body.sync_aggregate)
 		// </spec>
