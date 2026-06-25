@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	ssz "github.com/prysmaticlabs/fastssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 func TestDefaultParams(t *testing.T) {

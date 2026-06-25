@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"testing"
 
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	common "github.com/OffchainLabs/prysm/v7/testing/spectest/shared/common/ssz_static"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	common "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/ssz_static"
 	"github.com/pkg/errors"
-	fssz "github.com/prysmaticlabs/fastssz"
+	fssz "github.com/sila-chain/fastssz"
 )
 
 func ExampleRunSSZStaticTests() {

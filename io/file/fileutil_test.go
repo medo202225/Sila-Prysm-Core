@@ -27,10 +27,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestPathExpansion(t *testing.T) {

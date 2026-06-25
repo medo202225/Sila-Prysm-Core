@@ -6,13 +6,13 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/contracts/deposit"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/ethclient/simulated"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit"
+	"github.com/sila-chain/Sila/accounts/abi"
+	"github.com/sila-chain/Sila/accounts/abi/bind"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/core/types"
+	"github.com/sila-chain/Sila/crypto"
+	"github.com/sila-chain/Sila/ethclient/simulated"
 )
 
 var (

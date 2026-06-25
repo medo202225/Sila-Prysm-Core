@@ -6,18 +6,18 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/peerdas"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
 // processDataColumnSidecarsFromReconstruction, after a random delay, attempts to reconstruct,
 // broadcast and receive missing data column sidecars for the given block root.
-// https:github.com/ethereum/consensus-specs/blob/master/specs/fulu/das-core.md#reconstruction-and-cross-seeding
+// https:github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/das-core.md#reconstruction-and-cross-seeding
 func (s *Service) processDataColumnSidecarsFromReconstruction(ctx context.Context, sidecar blocks.VerifiedRODataColumn) error {
 	key := fmt.Sprintf("%#x", sidecar.BlockRoot())
 	if _, err, _ := s.reconstructionSingleFlight.Do(key, func() (any, error) {

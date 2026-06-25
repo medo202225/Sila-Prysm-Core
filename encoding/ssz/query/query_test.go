@@ -4,11 +4,11 @@ import (
 	"math"
 	"testing"
 
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz/query"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz/query/testutil"
-	sszquerypb "github.com/OffchainLabs/prysm/v7/proto/ssz_query/testing"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/query"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/query/testutil"
+	sszquerypb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/ssz_query/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestSize(t *testing.T) {

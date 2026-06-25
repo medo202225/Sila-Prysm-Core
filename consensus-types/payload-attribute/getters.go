@@ -1,9 +1,9 @@
 package payloadattribute
 
 import (
-	consensus_types "github.com/OffchainLabs/prysm/v7/consensus-types"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 )
 
 // Version returns the version of the payload attribute.

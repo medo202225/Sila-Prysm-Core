@@ -1,5 +1,5 @@
 """
-Easily add exclusions to nogo_config.json. The tool also allows for hand written entries in the 
+Easily add exclusions to nogo_config.json. The tool also allows for hand written entries in the
 input file to be preserved.
 
 Example usage:
@@ -64,7 +64,7 @@ nogo_config_exclude = rule(
         "tool": attr.label(
             executable = True,
             cfg = "exec",
-            default = Label("@prysm//tools/nogo_config:nogo_config"),
+            default = Label("@sila//tools/nogo_config:nogo_config"),
             doc = "The nogo config exclusion tool.",
         ),
     },

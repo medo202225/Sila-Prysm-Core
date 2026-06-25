@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 	"github.com/spf13/afero"
 )
 

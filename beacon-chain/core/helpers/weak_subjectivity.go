@@ -8,20 +8,20 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/time"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	v1alpha1 "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	v1alpha1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 )
 
 // ComputeWeakSubjectivityPeriod returns weak subjectivity period for the active validator count and finalized epoch.
 //
 // Reference spec implementation:
-// https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/weak-subjectivity.md#calculating-the-weak-subjectivity-period
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/weak-subjectivity.md#calculating-the-weak-subjectivity-period
 //
 // def compute_weak_subjectivity_period(state: BeaconState) -> uint64:
 //
@@ -108,7 +108,7 @@ func ComputeWeakSubjectivityPeriod(ctx context.Context, st state.ReadOnlyBeaconS
 // at a given epoch matches that of the checkpoint.
 //
 // Reference implementation:
-// https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/weak-subjectivity.md#checking-for-stale-weak-subjectivity-checkpoint
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/weak-subjectivity.md#checking-for-stale-weak-subjectivity-checkpoint
 //
 // def is_within_weak_subjectivity_period(store: Store, ws_state: BeaconState, ws_checkpoint: Checkpoint) -> bool:
 //

@@ -3,9 +3,9 @@ package peerdas_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/peerdas"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/p2p/enode"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/p2p/enode"
 )
 
 func TestInfo(t *testing.T) {

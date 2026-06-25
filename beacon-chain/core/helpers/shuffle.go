@@ -4,11 +4,11 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/container/slice"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/slice"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
 )
 
 const seedSize = int8(32)

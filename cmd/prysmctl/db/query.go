@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 	bolt "go.etcd.io/bbolt"

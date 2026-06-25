@@ -3,13 +3,13 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/signing"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 )
 
 func TestService_HeadSyncCommitteeIndices(t *testing.T) {

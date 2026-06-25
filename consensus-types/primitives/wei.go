@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"slices"
 
-	fssz "github.com/prysmaticlabs/fastssz"
+	fssz "github.com/sila-chain/fastssz"
 )
 
 // ZW returns a non-nil zero value for primitives.Wei

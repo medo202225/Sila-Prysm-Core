@@ -3,7 +3,7 @@ package eth_test
 import (
 	"testing"
 
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 func TestCopyAttestation_Fuzz(t *testing.T) {

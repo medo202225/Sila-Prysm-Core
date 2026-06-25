@@ -3,8 +3,8 @@ package stateutil
 import (
 	"encoding/binary"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
 )
 
 // ProposerLookaheadRoot computes the hash tree root of the proposer lookahead

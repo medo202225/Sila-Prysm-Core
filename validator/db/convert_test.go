@@ -5,17 +5,17 @@ import (
 	"path/filepath"
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/proposer"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/db/common"
-	"github.com/OffchainLabs/prysm/v7/validator/db/filesystem"
-	"github.com/OffchainLabs/prysm/v7/validator/db/iface"
-	"github.com/OffchainLabs/prysm/v7/validator/db/kv"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/common"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 func getPubkeyFromString(t *testing.T, pubkeyString string) [fieldparams.BLSPubkeyLength]byte {

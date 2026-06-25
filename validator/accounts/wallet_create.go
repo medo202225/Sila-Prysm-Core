@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/OffchainLabs/prysm/v7/validator/accounts/wallet"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/derived"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/local"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/derived"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
 	"github.com/pkg/errors"
 )
 

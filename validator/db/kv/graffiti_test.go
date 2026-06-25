@@ -3,9 +3,9 @@ package kv
 import (
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestStore_GraffitiOrderedIndex_ReadAndWrite(t *testing.T) {

@@ -3,12 +3,12 @@ package state_native_test
 import (
 	"testing"
 
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	stateTesting "github.com/OffchainLabs/prysm/v7/beacon-chain/state/testing"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	stateTesting "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestDepositBalanceToConsume(t *testing.T) {

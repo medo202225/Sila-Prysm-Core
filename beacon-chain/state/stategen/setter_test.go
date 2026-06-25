@@ -3,13 +3,13 @@ package stategen
 import (
 	"testing"
 
-	testDB "github.com/OffchainLabs/prysm/v7/beacon-chain/db/testing"
-	doublylinkedtree "github.com/OffchainLabs/prysm/v7/beacon-chain/forkchoice/doubly-linked-tree"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
+	doublylinkedtree "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 

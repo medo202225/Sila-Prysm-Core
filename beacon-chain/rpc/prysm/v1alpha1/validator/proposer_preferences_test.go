@@ -3,16 +3,16 @@ package validator
 import (
 	"testing"
 
-	chainMock "github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/testing"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	p2pmock "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/testing"
-	mockSync "github.com/OffchainLabs/prysm/v7/beacon-chain/sync/initial-sync/testing"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	chainMock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	p2pmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
+	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 

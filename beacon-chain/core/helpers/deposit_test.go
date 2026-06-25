@@ -3,17 +3,17 @@ package helpers_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/signing"
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestBatchVerifyDepositsSignatures_Ok(t *testing.T) {

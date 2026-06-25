@@ -3,9 +3,9 @@ package kzg
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/crypto/random"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/random"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	GoKZG "github.com/crate-crypto/go-kzg-4844"
 )
 

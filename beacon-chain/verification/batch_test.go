@@ -3,9 +3,9 @@ package verification
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 )

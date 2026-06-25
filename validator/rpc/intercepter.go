@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

@@ -8,14 +8,14 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/accounts/iface"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/local"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
 )
 
 func TestImportAccounts_NoPassword(t *testing.T) {

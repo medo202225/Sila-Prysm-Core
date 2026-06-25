@@ -1,13 +1,13 @@
 package interfaces
 
 import (
-	field_params "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
+	field_params "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
 	"github.com/pkg/errors"
-	ssz "github.com/prysmaticlabs/fastssz"
+	ssz "github.com/sila-chain/fastssz"
 	"google.golang.org/protobuf/proto"
 )
 

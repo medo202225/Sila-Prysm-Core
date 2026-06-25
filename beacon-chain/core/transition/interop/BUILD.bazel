@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -7,7 +7,7 @@ go_library(
         "write_block_to_disk.go",
         "write_state_to_disk.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/core/transition/interop",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition/interop",
     visibility = [
         "//beacon-chain:__subpackages__",
         "//tools:__subpackages__",

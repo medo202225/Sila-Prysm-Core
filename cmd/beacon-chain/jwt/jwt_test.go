@@ -6,10 +6,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/urfave/cli/v2"
 )
 

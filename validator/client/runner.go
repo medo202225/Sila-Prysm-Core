@@ -6,13 +6,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api/client"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	prysmTrace "github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
-	"github.com/OffchainLabs/prysm/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	prysmTrace "github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc/codes"
@@ -268,7 +268,7 @@ func performRoles(slotCtx context.Context, allRoles map[[48]byte][]iface.Validat
 			if err := recover(); err != nil { // catch any panic in logging
 				log.WithField("error", err).
 					Error("Panic occurred when logging validator report. This" +
-						" should never happen! Please file a report at github.com/prysmaticlabs/prysm/issues/new")
+						" should never happen! Please file a report at github.com/sila-chain/prysm/issues/new")
 			}
 		}()
 		// Log performance in the previous slot

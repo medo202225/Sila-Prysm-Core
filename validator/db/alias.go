@@ -1,6 +1,6 @@
 package db
 
-import "github.com/OffchainLabs/prysm/v7/validator/db/iface"
+import "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
 
 // Database defines the necessary methods for Sila-Prysm's validator client backend which may be implemented by any
 // key-value or relational database in practice. This is the full database interface which should

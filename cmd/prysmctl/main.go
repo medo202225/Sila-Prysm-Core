@@ -3,12 +3,12 @@ package main
 import (
 	"os"
 
-	"github.com/OffchainLabs/prysm/v7/cmd/prysmctl/checkpointsync"
-	"github.com/OffchainLabs/prysm/v7/cmd/prysmctl/db"
-	"github.com/OffchainLabs/prysm/v7/cmd/prysmctl/p2p"
-	"github.com/OffchainLabs/prysm/v7/cmd/prysmctl/testnet"
-	"github.com/OffchainLabs/prysm/v7/cmd/prysmctl/validator"
-	"github.com/OffchainLabs/prysm/v7/cmd/prysmctl/weaksubjectivity"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl/checkpointsync"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl/testnet"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl/validator"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl/weaksubjectivity"
 	"github.com/urfave/cli/v2"
 )
 

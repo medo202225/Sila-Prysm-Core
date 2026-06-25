@@ -7,11 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/rand"
-	pb "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/rpc"
 	"github.com/sirupsen/logrus"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )

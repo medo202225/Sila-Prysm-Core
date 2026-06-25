@@ -3,9 +3,9 @@ package blockchain
 import (
 	"testing"
 
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 )
 
 func TestReportEpochMetrics_BadAttestation(t *testing.T) {

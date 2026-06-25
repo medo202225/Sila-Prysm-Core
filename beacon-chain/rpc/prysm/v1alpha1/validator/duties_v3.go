@@ -3,14 +3,14 @@ package validator
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/core"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

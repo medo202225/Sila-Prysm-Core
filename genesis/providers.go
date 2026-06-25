@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/OffchainLabs/prysm/v7/api/client"
-	"github.com/OffchainLabs/prysm/v7/api/client/beacon"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz/detect"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/beacon"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/detect"
 	"github.com/pkg/errors"
 )
 

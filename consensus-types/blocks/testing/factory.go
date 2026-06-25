@@ -1,9 +1,9 @@
 package testing
 
 import (
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"github.com/pkg/errors"
 )
 

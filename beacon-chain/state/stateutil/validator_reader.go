@@ -1,7 +1,7 @@
 package stateutil
 
 import (
-	multi_value_slice "github.com/OffchainLabs/prysm/v7/container/multi-value-slice"
+	multi_value_slice "github.com/sila-chain/Sila-Prysm-Core/v7/container/multi-value-slice"
 )
 
 // ValReader specifies an interface through which we can access the validator registry.

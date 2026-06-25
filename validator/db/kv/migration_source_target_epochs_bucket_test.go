@@ -6,16 +6,16 @@ import (
 	"reflect"
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	bolt "go.etcd.io/bbolt"
 )
 
 func TestStore_migrateSourceTargetEpochsBucketUp(t *testing.T) {
 	numEpochs := uint64(100)
 	// numKeys should be more than batch size for testing.
-	// See: https://github.com/prysmaticlabs/prysm/issues/8509
+	// See: https://github.com/sila-chain/prysm/issues/8509
 	numKeys := 2*publicKeyMigrationBatchSize + 1
 	pubKeys := make([][fieldparams.BLSPubkeyLength]byte, numKeys)
 	for i := range numKeys {
@@ -116,7 +116,7 @@ func TestStore_migrateSourceTargetEpochsBucketUp(t *testing.T) {
 
 func TestStore_migrateSourceTargetEpochsBucketDown(t *testing.T) {
 	// numKeys should be more than batch size for testing.
-	// See: https://github.com/prysmaticlabs/prysm/issues/8509
+	// See: https://github.com/sila-chain/prysm/issues/8509
 	numKeys := 2*publicKeyMigrationBatchSize + 1
 	pubKeys := make([][fieldparams.BLSPubkeyLength]byte, numKeys)
 	for i := range numKeys {

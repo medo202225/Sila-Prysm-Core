@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -18,7 +18,7 @@ go_library(
         "upgrade.go",
         "withdrawals.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/core/gloas",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/gloas",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/cache:go_default_library",
@@ -88,8 +88,8 @@ go_test(
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_prysmaticlabs_fastssz//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_fastssz//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
         "@org_golang_google_protobuf//proto:go_default_library",
     ],
 )

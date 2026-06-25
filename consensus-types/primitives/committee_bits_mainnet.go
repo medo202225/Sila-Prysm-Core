@@ -2,7 +2,7 @@
 
 package primitives
 
-import "github.com/OffchainLabs/go-bitfield"
+import "github.com/sila-chain/go-bitfield"
 
 func NewAttestationCommitteeBits() bitfield.Bitvector64 {
 	return bitfield.NewBitvector64()

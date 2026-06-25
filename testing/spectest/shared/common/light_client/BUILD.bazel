@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -7,7 +7,7 @@ go_library(
         "single_merkle_proof.go",
         "update_ranking.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/spectest/shared/common/light_client",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/light_client",
     visibility = ["//testing/spectest:__subpackages__"],
     deps = [
         "//beacon-chain/core/helpers:go_default_library",

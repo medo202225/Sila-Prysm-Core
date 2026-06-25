@@ -7,17 +7,17 @@ import (
 	"strings"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	p2ptypes "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/types"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	p2ptypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 	libp2pcore "github.com/libp2p/go-libp2p/core"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/pkg/errors"
-	ssz "github.com/prysmaticlabs/fastssz"
+	ssz "github.com/sila-chain/fastssz"
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,7 +38,7 @@ type rpcHandler func(context.Context, any, libp2pcore.Stream) error
 
 // rpcHandlerByTopicFromFork returns the RPC handlers for a given fork index.
 func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandler, error) {
-	// Gloas: https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/p2p-interface.md#messages
+	// Gloas: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/gloas/p2p-interface.md#messages
 	if forkIndex >= version.Gloas {
 		return map[string]rpcHandler{
 			p2p.RPCStatusTopicV2:                           s.statusRPCHandler,
@@ -56,7 +56,7 @@ func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandle
 		}, nil
 	}
 
-	// Fulu: https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#messages
+	// Fulu: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#messages
 	if forkIndex >= version.Fulu {
 		return map[string]rpcHandler{
 			p2p.RPCStatusTopicV2:                    s.statusRPCHandler, // Updated in Fulu
@@ -72,7 +72,7 @@ func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandle
 		}, nil
 	}
 
-	// Electra: https://github.com/ethereum/consensus-specs/blob/master/specs/electra/p2p-interface.md#messages
+	// Electra: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/electra/p2p-interface.md#messages
 	if forkIndex >= version.Electra {
 		return map[string]rpcHandler{
 			p2p.RPCStatusTopicV1:              s.statusRPCHandler,
@@ -86,7 +86,7 @@ func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandle
 		}, nil
 	}
 
-	// Deneb: https://github.com/ethereum/consensus-specs/blob/master/specs/deneb/p2p-interface.md#messages
+	// Deneb: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/deneb/p2p-interface.md#messages
 	if forkIndex >= version.Deneb {
 		return map[string]rpcHandler{
 			p2p.RPCStatusTopicV1:              s.statusRPCHandler,
@@ -100,9 +100,9 @@ func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandle
 		}, nil
 	}
 
-	// Capella: https://github.com/ethereum/consensus-specs/blob/master/specs/capella/p2p-interface.md#messages
-	// Bellatrix: https://github.com/ethereum/consensus-specs/blob/master/specs/bellatrix/p2p-interface.md#messages
-	// Altair: https://github.com/ethereum/consensus-specs/blob/master/specs/altair/p2p-interface.md#messages
+	// Capella: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/capella/p2p-interface.md#messages
+	// Bellatrix: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/bellatrix/p2p-interface.md#messages
+	// Altair: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/altair/p2p-interface.md#messages
 	if forkIndex >= version.Altair {
 		handler := map[string]rpcHandler{
 			p2p.RPCStatusTopicV1:        s.statusRPCHandler,
@@ -123,7 +123,7 @@ func (s *Service) rpcHandlerByTopicFromFork(forkIndex int) (map[string]rpcHandle
 		return handler, nil
 	}
 
-	// PhaseO: https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/p2p-interface.md#messages
+	// PhaseO: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/p2p-interface.md#messages
 	if forkIndex >= version.Phase0 {
 		return map[string]rpcHandler{
 			p2p.RPCStatusTopicV1:        s.statusRPCHandler,

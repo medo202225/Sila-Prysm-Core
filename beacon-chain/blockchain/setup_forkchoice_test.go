@@ -3,14 +3,14 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	consensusblocks "github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	consensusblocks "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 

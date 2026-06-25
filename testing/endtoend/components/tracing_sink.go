@@ -11,9 +11,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/testing/endtoend/helpers"
-	e2e "github.com/OffchainLabs/prysm/v7/testing/endtoend/params"
-	"github.com/OffchainLabs/prysm/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
 	"github.com/pkg/errors"
 )
 

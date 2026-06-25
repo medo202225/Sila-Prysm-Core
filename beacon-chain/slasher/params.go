@@ -1,8 +1,8 @@
 package slasher
 
 import (
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ssz "github.com/prysmaticlabs/fastssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // Parameters for slashing detection.

@@ -1,9 +1,9 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
     srcs = ["interface.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/db/iface",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface",
     visibility = [
         "//cmd/validator/slashing-protection:__subpackages__",
         "//config:__subpackages__",

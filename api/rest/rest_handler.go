@@ -10,11 +10,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/api/apiutil"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/apiutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

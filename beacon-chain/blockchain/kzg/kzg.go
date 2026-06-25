@@ -4,7 +4,7 @@ import (
 	"github.com/pkg/errors"
 
 	ckzg4844 "github.com/ethereum/c-kzg-4844/v2/bindings/go"
-	"github.com/ethereum/go-ethereum/crypto/kzg4844"
+	"github.com/sila-chain/Sila/crypto/kzg4844"
 )
 
 // BytesPerBlob is the number of bytes in a single blob.

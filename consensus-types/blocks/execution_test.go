@@ -3,13 +3,13 @@ package blocks_test
 import (
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	consensus_types "github.com/OffchainLabs/prysm/v7/consensus-types"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestWrapExecutionPayload(t *testing.T) {

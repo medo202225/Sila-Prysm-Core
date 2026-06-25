@@ -4,16 +4,16 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/startup"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/pkg/errors"
-	ssz "github.com/prysmaticlabs/fastssz"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 var errNilPubsubMessage = errors.New("nil pubsub message")

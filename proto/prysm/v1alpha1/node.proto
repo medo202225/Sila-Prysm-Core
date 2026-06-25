@@ -1,4 +1,4 @@
-// Copyright 2020 Prysmatic Labs.
+// Copyright 2020 Sila Labs.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import "google/protobuf/timestamp.proto";
 import "proto/eth/ext/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
-option go_package = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1;eth";
+option go_package = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1;eth";
 option java_multiple_files = true;
 option java_outer_classname = "NodeProto";
 option java_package = "org.ethereum.eth.v1alpha1";

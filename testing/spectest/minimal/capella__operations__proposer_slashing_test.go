@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/capella/operations"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/capella/operations"
 )
 
 func TestMinimal_Capella_Operations_ProposerSlashing(t *testing.T) {

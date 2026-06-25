@@ -1,13 +1,13 @@
 package db
 
-import "github.com/OffchainLabs/prysm/v7/beacon-chain/db/iface"
+import "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/iface"
 
 // ReadOnlyDatabase exposes Sila-Prysm's Sila data backend for read access only, no information about
-// head info. For head info, use github.com/prysmaticlabs/prysm/blockchain.HeadFetcher.
+// head info. For head info, use github.com/sila-chain/prysm/blockchain.HeadFetcher.
 type ReadOnlyDatabase = iface.ReadOnlyDatabase
 
 // NoHeadAccessDatabase exposes Sila-Prysm's Sila data backend for read/write access, no information
-// about head info. For head info, use github.com/prysmaticlabs/prysm/blockchain.HeadFetcher.
+// about head info. For head info, use github.com/sila-chain/prysm/blockchain.HeadFetcher.
 type NoHeadAccessDatabase = iface.NoHeadAccessDatabase
 
 // ReadOnlyDatabaseWithSeqNum exposes Sila-Prysm's Sila data backend for read access only, no information about
@@ -20,7 +20,7 @@ type ReadOnlyDatabaseWithSeqNum = iface.ReadOnlyDatabaseWithSeqNum
 // of truth around chain head information while this interface serves as persistent storage for the
 // head fetcher.
 //
-// See github.com/prysmaticlabs/prysm/blockchain.HeadFetcher
+// See github.com/sila-chain/prysm/blockchain.HeadFetcher
 type HeadAccessDatabase = iface.HeadAccessDatabase
 
 // Database defines the necessary methods for Sila-Prysm's Sila backend which may be implemented by any

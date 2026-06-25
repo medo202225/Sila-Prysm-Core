@@ -3,7 +3,7 @@ package comparesame
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/build/bazel"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/build/bazel"
 	"golang.org/x/tools/go/analysis/analysistest"
 )
 

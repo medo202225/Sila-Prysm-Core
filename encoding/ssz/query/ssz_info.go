@@ -150,7 +150,7 @@ func (info *SszInfo) String() string {
 		if info.vectorInfo.element.String() == "uint8" {
 			// Handle byte vectors as BytesN
 			// See Aliases section in SSZ spec:
-			// https://github.com/ethereum/consensus-specs/blob/master/ssz/simple-serialize.md#aliases
+			// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/ssz/simple-serialize.md#aliases
 			return fmt.Sprintf("Bytes%d", info.vectorInfo.length)
 		}
 		return fmt.Sprintf("Vector[%s, %d]", info.vectorInfo.element, info.vectorInfo.length)

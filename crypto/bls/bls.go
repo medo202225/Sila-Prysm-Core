@@ -6,9 +6,9 @@ package bls
 import (
 	"runtime"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls/blst"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls/common"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls/herumi"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/blst"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/herumi"
 )
 
 // Initialize herumi temporarily while we transition to blst for ethdo.

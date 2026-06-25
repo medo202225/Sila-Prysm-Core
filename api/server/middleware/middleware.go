@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/api/apiutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/apiutil"
 	"github.com/rs/cors"
 )
 

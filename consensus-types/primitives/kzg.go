@@ -3,7 +3,7 @@ package primitives
 import (
 	"crypto/sha256"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/sila-chain/Sila/common"
 )
 
 const blobCommitmentVersionKZG uint8 = 0x01

@@ -1,7 +1,7 @@
 package bls
 
 import (
-	"github.com/OffchainLabs/prysm/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
 )
 
 // PublicKey represents a BLS public key.

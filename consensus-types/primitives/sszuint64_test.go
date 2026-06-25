@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 func TestSSZUint64_Limit(t *testing.T) {

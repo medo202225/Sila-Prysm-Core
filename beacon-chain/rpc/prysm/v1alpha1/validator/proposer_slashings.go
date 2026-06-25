@@ -3,11 +3,11 @@ package validator
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	v "github.com/OffchainLabs/prysm/v7/beacon-chain/core/validators"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	v "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 func (vs *Server) getSlashings(ctx context.Context, head state.BeaconState) ([]*ethpb.ProposerSlashing, []ethpb.AttSlashing) {

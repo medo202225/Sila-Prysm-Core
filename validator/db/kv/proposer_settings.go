@@ -3,9 +3,9 @@ package kv
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/config/proposer"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
 	"github.com/pkg/errors"
 	bolt "go.etcd.io/bbolt"
 	"google.golang.org/protobuf/proto"

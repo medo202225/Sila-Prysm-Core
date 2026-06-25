@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/fulu/networking"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/fulu/networking"
 )
 
 func TestMainnet_Fulu_Networking_CustodyGroups(t *testing.T) {

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -11,7 +11,7 @@ go_library(
         "log.go",
         "merkle_tree.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/cache/depositsnapshot",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache/depositsnapshot",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/cache:go_default_library",
@@ -23,7 +23,7 @@ go_library(
         "//math:go_default_library",
         "//monitoring/tracing/trace:go_default_library",
         "//proto/prysm/v1alpha1:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
         "@com_github_prometheus_client_golang//prometheus:go_default_library",
         "@com_github_prometheus_client_golang//prometheus/promauto:go_default_library",

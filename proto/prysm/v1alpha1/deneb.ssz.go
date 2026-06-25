@@ -2,9 +2,9 @@
 package eth
 
 import (
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	v1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	ssz "github.com/prysmaticlabs/fastssz"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	v1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // MarshalSSZ ssz marshals the SignedBeaconBlockContentsDeneb object
@@ -591,10 +591,10 @@ func (b *BeaconBlockDeneb) UnmarshalSSZ(buf []byte) error {
 	var o4 uint64
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[0:8])
+	b.Slot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[0:8])
 
 	// Field (1) 'ProposerIndex'
-	b.ProposerIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
+	b.ProposerIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
 
 	// Field (2) 'ParentRoot'
 	if cap(b.ParentRoot) == 0 {
@@ -1454,10 +1454,10 @@ func (b *BlindedBeaconBlockDeneb) UnmarshalSSZ(buf []byte) error {
 	var o4 uint64
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[0:8])
+	b.Slot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[0:8])
 
 	// Field (1) 'ProposerIndex'
-	b.ProposerIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
+	b.ProposerIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
 
 	// Field (2) 'ParentRoot'
 	if cap(b.ParentRoot) == 0 {
@@ -3024,7 +3024,7 @@ func (b *BeaconStateDeneb) UnmarshalSSZ(buf []byte) error {
 	b.GenesisValidatorsRoot = append(b.GenesisValidatorsRoot, buf[8:40]...)
 
 	// Field (2) 'Slot'
-	b.Slot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[40:48])
+	b.Slot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[40:48])
 
 	// Field (3) 'Fork'
 	if b.Fork == nil {
@@ -3180,7 +3180,7 @@ func (b *BeaconStateDeneb) UnmarshalSSZ(buf []byte) error {
 	b.NextWithdrawalIndex = ssz.UnmarshallUint[uint64](buf[2736633:2736641])
 
 	// Field (26) 'NextWithdrawalValidatorIndex'
-	b.NextWithdrawalValidatorIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[2736641:2736649])
+	b.NextWithdrawalValidatorIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[2736641:2736649])
 
 	// Offset (27) 'HistoricalSummaries'
 	if o27 = ssz.ReadOffset(buf[2736649:2736653]); o27 > size || o24 > o27 {
@@ -3993,7 +3993,7 @@ func (l *LightClientUpdateDeneb) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (6) 'SignatureSlot'
-	l.SignatureSlot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[25144:25152])
+	l.SignatureSlot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[25144:25152])
 
 	// Field (0) 'AttestedHeader'
 	{
@@ -4212,7 +4212,7 @@ func (l *LightClientFinalityUpdateDeneb) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (4) 'SignatureSlot'
-	l.SignatureSlot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[360:368])
+	l.SignatureSlot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[360:368])
 
 	// Field (0) 'AttestedHeader'
 	{
@@ -4370,7 +4370,7 @@ func (l *LightClientOptimisticUpdateDeneb) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (2) 'SignatureSlot'
-	l.SignatureSlot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[164:172])
+	l.SignatureSlot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[164:172])
 
 	// Field (0) 'AttestedHeader'
 	{

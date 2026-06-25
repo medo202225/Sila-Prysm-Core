@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/capella/finality"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/capella/finality"
 )
 
 func TestMinimal_Capella_Finality(t *testing.T) {

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -7,14 +7,14 @@ go_library(
         "ssz_static.go",
         "types.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/spectest/shared/common/ssz_static",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/ssz_static",
     visibility = ["//testing/spectest:__subpackages__"],
     deps = [
         "//testing/require:go_default_library",
         "//testing/spectest/utils:go_default_library",
         "//testing/util:go_default_library",
         "@com_github_golang_snappy//:go_default_library",
-        "@com_github_prysmaticlabs_fastssz//:go_default_library",
+        "@com_github_sila_fastssz//:go_default_library",
     ],
 )
 
@@ -28,6 +28,6 @@ go_test(
         "//proto/prysm/v1alpha1:go_default_library",
         "//testing/require:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
-        "@com_github_prysmaticlabs_fastssz//:go_default_library",
+        "@com_github_sila_fastssz//:go_default_library",
     ],
 )

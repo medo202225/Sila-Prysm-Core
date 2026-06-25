@@ -6,8 +6,8 @@ package state
 import (
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 const (

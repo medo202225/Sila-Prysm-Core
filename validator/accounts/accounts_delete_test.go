@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/local"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
+	"github.com/sila-chain/Sila/common/hexutil"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 

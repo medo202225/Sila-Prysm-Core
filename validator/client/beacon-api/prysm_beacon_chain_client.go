@@ -9,12 +9,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api/apiutil"
-	"github.com/OffchainLabs/prysm/v7/api/rest"
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	validator2 "github.com/OffchainLabs/prysm/v7/consensus-types/validator"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/apiutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/rest"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	validator2 "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
 	"github.com/pkg/errors"
 )
 

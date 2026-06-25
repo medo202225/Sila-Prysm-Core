@@ -5,9 +5,9 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/OffchainLabs/go-bitfield"
-	aggtesting "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/attestation/aggregation/testing"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
+	"github.com/sila-chain/go-bitfield"
+	aggtesting "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation/aggregation/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
 )
 
 func TestMaxCover_MaxCoverCandidates_filter(t *testing.T) {

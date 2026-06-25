@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -8,7 +8,7 @@ go_library(
         "rest_connection_provider.go",
         "rest_handler.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/api/rest",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/api/rest",
     visibility = ["//visibility:public"],
     deps = [
         "//api:go_default_library",

@@ -3,12 +3,12 @@ package state_native
 import (
 	"runtime"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native/types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stateutil"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	multi_value_slice "github.com/OffchainLabs/prysm/v7/container/multi-value-slice"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	multi_value_slice "github.com/sila-chain/Sila-Prysm-Core/v7/container/multi-value-slice"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )

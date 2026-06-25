@@ -3,7 +3,7 @@ package cache
 import (
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 // PayloadAttestationCache tracks seen payload attestation messages for a single slot.

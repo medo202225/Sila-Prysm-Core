@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/fulu/sanity"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/fulu/sanity"
 )
 
 func TestMinimal_Fulu_Random(t *testing.T) {

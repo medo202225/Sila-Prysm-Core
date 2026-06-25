@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -31,7 +31,7 @@ go_library(
         "validator_reader.go",
         "validator_root.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/state/stateutil",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/transition/stateutils:go_default_library",

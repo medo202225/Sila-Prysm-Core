@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
 	"github.com/golang/snappy"
 )
 

@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	e2etypes "github.com/OffchainLabs/prysm/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
 	"google.golang.org/grpc"
 )
 

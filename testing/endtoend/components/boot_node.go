@@ -9,9 +9,9 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/OffchainLabs/prysm/v7/testing/endtoend/helpers"
-	e2e "github.com/OffchainLabs/prysm/v7/testing/endtoend/params"
-	e2etypes "github.com/OffchainLabs/prysm/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
+	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 

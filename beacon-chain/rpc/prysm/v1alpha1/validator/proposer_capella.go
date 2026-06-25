@@ -1,10 +1,10 @@
 package validator
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 )
 
 // Sets the bls to exec data for a block.

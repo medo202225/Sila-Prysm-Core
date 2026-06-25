@@ -3,7 +3,7 @@ package grpc_api
 import (
 	"sync"
 
-	validatorHelpers "github.com/OffchainLabs/prysm/v7/validator/helpers"
+	validatorHelpers "github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
 	"google.golang.org/grpc"
 )
 

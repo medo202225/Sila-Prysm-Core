@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -15,7 +15,7 @@ go_library(
         "round_robin.go",
         "service.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/sync/initial-sync",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync",
     visibility = ["//beacon-chain:__subpackages__"],
     deps = [
         "//async/abool:go_default_library",
@@ -113,7 +113,7 @@ go_test(
         "//testing/util:go_default_library",
         "//time:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_ethereum_go_ethereum//p2p/enr:go_default_library",
+        "@com_github_sila_chain_sila//p2p/enr:go_default_library",
         "@com_github_libp2p_go_libp2p//:go_default_library",
         "@com_github_libp2p_go_libp2p//core:go_default_library",
         "@com_github_libp2p_go_libp2p//core/crypto:go_default_library",

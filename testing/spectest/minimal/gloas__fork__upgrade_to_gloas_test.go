@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/gloas/fork"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/gloas/fork"
 )
 
 func TestMinimal_UpgradeToGloas(t *testing.T) {

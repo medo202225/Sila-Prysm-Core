@@ -7,8 +7,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 )

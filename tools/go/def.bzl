@@ -11,7 +11,7 @@ def _go_test_transition_impl(settings, attr):
         settings["@io_bazel_rules_go//go/config:tags"] = ["minimal"] + settings["@io_bazel_rules_go//go/config:tags"]
     elif attr.eth_network == "mainnet":  # Default / optional
         settings["//proto:network"] = "mainnet"
-        settings["@io_bazel_rules_go//go/config:tags"] = ["mainnet"] + settings["@io_bazel_rules_go//go/config:tags"] 
+        settings["@io_bazel_rules_go//go/config:tags"] = ["mainnet"] + settings["@io_bazel_rules_go//go/config:tags"]
 
     if attr.gotags:
         settings["@io_bazel_rules_go//go/config:tags"] = attr.gotags + settings["@io_bazel_rules_go//go/config:tags"]
@@ -64,7 +64,7 @@ def go_repository(name, **kwargs):
         directives = kwargs["build_directives"]
 
     directives += [
-        "gazelle:map_kind go_library go_library @prysm//tools/go:def.bzl",
+        "gazelle:map_kind go_library go_library @sila//tools/go:def.bzl",
     ]
     kwargs["build_directives"] = directives
     maybe(_go_repository, name, **kwargs)

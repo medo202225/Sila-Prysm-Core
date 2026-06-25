@@ -1,10 +1,10 @@
 package interfaces
 
 import (
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	pb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	ssz "github.com/prysmaticlabs/fastssz"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	ssz "github.com/sila-chain/fastssz"
 	"google.golang.org/protobuf/proto"
 )
 

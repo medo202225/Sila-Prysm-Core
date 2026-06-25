@@ -3,7 +3,7 @@ package kv
 import (
 	"testing"
 
-	v2 "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	v2 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 func TestStore_SavePowchainData(t *testing.T) {

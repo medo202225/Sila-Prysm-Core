@@ -10,14 +10,14 @@ import "proto/prysm/v1alpha1/withdrawals.proto";
 import "proto/prysm/v1alpha1/beacon_core_types.proto";
 import "proto/prysm/v1alpha1/eip_7251.proto";
 
-option go_package = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1;eth";
+option go_package = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1;eth";
 
 // =============================================================================
 // Gloas Fork Specification
 // =============================================================================
 // This file implements the Gloas fork of the Sila consensus specification
 // Reference:
-// https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/beacon-chain.md
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/gloas/beacon-chain.md
 
 // ExecutionPayloadBid represents an execution payload bid in the Gloas fork.
 //
@@ -43,19 +43,19 @@ message ExecutionPayloadBid {
   bytes fee_recipient = 5 [ (ethereum.eth.ext.ssz_size) = "20" ];
   uint64 gas_limit = 6;
   uint64 builder_index = 7 [ (ethereum.eth.ext.cast_type) =
-                                 "github.com/OffchainLabs/prysm/v7/"
+                                 "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];
   uint64 slot = 8 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   uint64 value = 9 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   uint64 execution_payment = 10 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   repeated bytes blob_kzg_commitments = 11 [
     (ethereum.eth.ext.ssz_size) = "?,48",
@@ -89,11 +89,11 @@ message ProposerPreferences {
   bytes dependent_root = 1 [ (ethereum.eth.ext.ssz_size) = "32" ];
   uint64 proposal_slot = 2 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   uint64 validator_index = 3
       [ (ethereum.eth.ext.cast_type) =
-            "github.com/OffchainLabs/prysm/v7/consensus-types/"
+            "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
             "primitives.ValidatorIndex" ];
   bytes fee_recipient = 4 [ (ethereum.eth.ext.ssz_size) = "20" ];
   uint64 target_gas_limit = 5;
@@ -129,7 +129,7 @@ message PayloadAttestationData {
   bytes beacon_block_root = 1 [ (ethereum.eth.ext.ssz_size) = "32" ];
   uint64 slot = 2 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   bool payload_present = 3;
   bool blob_data_available = 4;
@@ -163,7 +163,7 @@ message PayloadAttestation {
 message PayloadAttestationMessage {
   uint64 validator_index = 1
       [ (ethereum.eth.ext.cast_type) =
-            "github.com/OffchainLabs/prysm/v7/consensus-types/"
+            "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
             "primitives.ValidatorIndex" ];
   PayloadAttestationData data = 2;
   bytes signature = 3 [ (ethereum.eth.ext.ssz_size) = "96" ];
@@ -175,10 +175,10 @@ message PayloadAttestationMessage {
 message BeaconBlockGloas {
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
   bytes parent_root = 3 [ (ethereum.eth.ext.ssz_size) = "32" ];
   bytes state_root = 4 [ (ethereum.eth.ext.ssz_size) = "32" ];
@@ -263,7 +263,7 @@ message BeaconStateGloas {
   bytes genesis_validators_root = 1002 [ (ethereum.eth.ext.ssz_size) = "32" ];
   uint64 slot = 1003 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   Fork fork = 1004;
 
@@ -308,7 +308,7 @@ message BeaconStateGloas {
   bytes justification_bits = 8001 [
     (ethereum.eth.ext.ssz_size) = "1",
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/go-bitfield.Bitvector4"
+        "github.com/sila-chain/go-bitfield.Bitvector4"
   ];
   Checkpoint previous_justified_checkpoint = 8002;
   Checkpoint current_justified_checkpoint = 8003;
@@ -328,7 +328,7 @@ message BeaconStateGloas {
   uint64 next_withdrawal_index = 11001;
   uint64 next_withdrawal_validator_index = 11002
       [ (ethereum.eth.ext.cast_type) =
-            "github.com/OffchainLabs/prysm/v7/consensus-types/"
+            "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
             "primitives.ValidatorIndex" ];
   repeated HistoricalSummary historical_summaries = 11003
       [ (ethereum.eth.ext.ssz_max) = "16777216" ];
@@ -337,23 +337,23 @@ message BeaconStateGloas {
   uint64 deposit_requests_start_index = 12001;
   uint64 deposit_balance_to_consume = 12002 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   uint64 exit_balance_to_consume = 12003 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   uint64 earliest_exit_epoch = 12004 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"
   ];
   uint64 consolidation_balance_to_consume = 12005 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   uint64 earliest_consolidation_epoch = 12006 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"
   ];
   repeated PendingDeposit pending_deposits = 12007
       [ (ethereum.eth.ext.ssz_max) = "pending_deposits_limit" ];
@@ -366,7 +366,7 @@ message BeaconStateGloas {
   repeated uint64 proposer_lookahead = 13001 [
     (ethereum.eth.ext.ssz_size) = "proposer_lookahead_size",
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
         "primitives.ValidatorIndex"
   ];
 
@@ -375,7 +375,7 @@ message BeaconStateGloas {
       [ (ethereum.eth.ext.ssz_max) = "builder_registry_limit" ];
   uint64 next_withdrawal_builder_index = 14002
       [ (ethereum.eth.ext.cast_type) =
-            "github.com/OffchainLabs/prysm/v7/consensus-types/"
+            "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
             "primitives.BuilderIndex" ];
   bytes execution_payload_availability = 14003
       [ (ethereum.eth.ext.ssz_size) = "execution_payload_availability.size" ];
@@ -398,7 +398,7 @@ message PTCs {
   repeated uint64 validator_indices = 1 [
     (ethereum.eth.ext.ssz_size) = "ptc_committee_indices.size",
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
         "primitives.ValidatorIndex"
   ];
 }
@@ -444,7 +444,7 @@ message SignedExecutionPayloadEnvelopeContents {
 message BuilderPendingPayment {
   uint64 weight = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   BuilderPendingWithdrawal withdrawal = 2;
 }
@@ -460,11 +460,11 @@ message BuilderPendingWithdrawal {
   bytes fee_recipient = 1 [ (ethereum.eth.ext.ssz_size) = "20" ];
   uint64 amount = 2 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   uint64 builder_index = 3
       [ (ethereum.eth.ext.cast_type) =
-            "github.com/OffchainLabs/prysm/v7/consensus-types/"
+            "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
             "primitives.BuilderIndex" ];
 }
 
@@ -491,7 +491,7 @@ message DataColumnSidecarGloas {
   ];
   uint64 slot = 5 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   bytes beacon_block_root = 6 [ (ethereum.eth.ext.ssz_size) = "32" ];
 }
@@ -511,7 +511,7 @@ message ExecutionPayloadEnvelope {
   ethereum.engine.v1.ExecutionPayloadGloas payload = 1;
   ethereum.engine.v1.ExecutionRequests execution_requests = 2;
   uint64 builder_index = 3 [ (ethereum.eth.ext.cast_type) =
-                                 "github.com/OffchainLabs/prysm/v7/"
+                                 "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];
   bytes beacon_block_root = 4 [ (ethereum.eth.ext.ssz_size) = "32" ];
   bytes parent_beacon_block_root = 5 [ (ethereum.eth.ext.ssz_size) = "32" ];
@@ -538,12 +538,12 @@ message BlindedExecutionPayloadEnvelope {
   bytes block_hash = 1 [ (ethereum.eth.ext.ssz_size) = "32" ];
   ethereum.engine.v1.ExecutionRequests execution_requests = 2;
   uint64 builder_index = 3 [ (ethereum.eth.ext.cast_type) =
-                                 "github.com/OffchainLabs/prysm/v7/"
+                                 "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];
   bytes beacon_block_root = 4 [ (ethereum.eth.ext.ssz_size) = "32" ];
   uint64 slot = 5 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
   bytes parent_block_hash = 7 [ (ethereum.eth.ext.ssz_size) = "32" ];
   bytes parent_beacon_block_root = 8 [ (ethereum.eth.ext.ssz_size) = "32" ];
@@ -562,7 +562,7 @@ message WireBlindedExecutionPayloadEnvelope {
   bytes payload_root = 1 [ (ethereum.eth.ext.ssz_size) = "32" ];
   ethereum.engine.v1.ExecutionRequests execution_requests = 2;
   uint64 builder_index = 3 [ (ethereum.eth.ext.cast_type) =
-                                 "github.com/OffchainLabs/prysm/v7/"
+                                 "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                  "consensus-types/primitives.BuilderIndex" ];
   bytes beacon_block_root = 4 [ (ethereum.eth.ext.ssz_size) = "32" ];
   bytes parent_beacon_block_root = 5 [ (ethereum.eth.ext.ssz_size) = "32" ];
@@ -589,14 +589,14 @@ message Builder {
   bytes execution_address = 3 [ (ethereum.eth.ext.ssz_size) = "20" ];
   uint64 balance = 4 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Gwei"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Gwei"
   ];
   uint64 deposit_epoch = 5 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"
   ];
   uint64 withdrawable_epoch = 6 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"
   ];
 }

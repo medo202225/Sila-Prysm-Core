@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/OffchainLabs/prysm/v7/crypto/rand"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 

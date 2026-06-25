@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/OffchainLabs/go-bitfield"
+	"github.com/sila-chain/go-bitfield"
 )
 
 // bitlistInfo holds information about a SSZ Bitlist type.
@@ -56,7 +56,7 @@ func (l *bitlistInfo) SetLengthFromBytes(rawBytes []byte) error {
 // which results in ceil((length + 1) / 8) bytes.
 // Note that `(length / 8) + 1` is equivalent to `ceil((length + 1) / 8)`.
 // Example: length=0 -> size=1, length=7 -> size=1, length=8 -> size=2
-// Reference: https://github.com/ethereum/consensus-specs/blob/master/ssz/simple-serialize.md#bitlistn-progressivebitlist
+// Reference: https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/ssz/simple-serialize.md#bitlistn-progressivebitlist
 func (l *bitlistInfo) Size() uint64 {
 	if l == nil {
 		return 0

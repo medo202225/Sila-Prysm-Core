@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/async/event"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
 	"github.com/sirupsen/logrus"
 )
 

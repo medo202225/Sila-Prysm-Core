@@ -3,7 +3,7 @@ package initialsync
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func BenchmarkStateMachine_trigger(b *testing.B) {

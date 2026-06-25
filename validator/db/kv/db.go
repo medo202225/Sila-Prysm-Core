@@ -8,16 +8,16 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/async/abool"
-	"github.com/OffchainLabs/prysm/v7/async/event"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	"github.com/OffchainLabs/prysm/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async/abool"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
-	prombolt "github.com/prysmaticlabs/prombbolt"
+	prombolt "github.com/sila-chain/prombbolt"
 	bolt "go.etcd.io/bbolt"
 )
 
@@ -42,7 +42,7 @@ var (
 
 // blockedBuckets represents the buckets that we want to restrict
 // from our metrics fetching for performance reasons. For a detailed
-// summary, it can be read in https://github.com/prysmaticlabs/prysm/issues/8274.
+// summary, it can be read in https://github.com/sila-chain/prysm/issues/8274.
 var blockedBuckets = [][]byte{
 	deprecatedAttestationHistoryBucket,
 	lowestSignedSourceBucket,

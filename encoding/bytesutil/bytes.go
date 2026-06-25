@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"unsafe"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 // ToBytes48Array is a convenience method for converting an array of

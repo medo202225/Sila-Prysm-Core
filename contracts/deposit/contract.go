@@ -6,12 +6,12 @@ import (
 	"math/big"
 	"strings"
 
-	ethereum "github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/event"
+	ethereum "github.com/sila-chain/Sila"
+	"github.com/sila-chain/Sila/accounts/abi"
+	"github.com/sila-chain/Sila/accounts/abi/bind"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/core/types"
+	"github.com/sila-chain/Sila/event"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

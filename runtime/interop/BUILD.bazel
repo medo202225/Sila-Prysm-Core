@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -10,7 +10,7 @@ go_library(
         "premine-state.go",
         "premined_genesis_state.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/runtime/interop",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop",
     visibility = ["//visibility:public"],
     deps = [
         "//async:go_default_library",
@@ -33,11 +33,11 @@ go_library(
         "//runtime/version:go_default_library",
         "//time:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
-        "@com_github_ethereum_go_ethereum//core:go_default_library",
-        "@com_github_ethereum_go_ethereum//core/types:go_default_library",
-        "@com_github_ethereum_go_ethereum//params:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//core:go_default_library",
+        "@com_github_sila_chain_sila//core/types:go_default_library",
+        "@com_github_sila_chain_sila//params:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
@@ -64,8 +64,8 @@ go_test(
         "//runtime/version:go_default_library",
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
-        "@com_github_ethereum_go_ethereum//core/types:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//core/types:go_default_library",
         "@com_github_go_yaml_yaml//:go_default_library",
         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
     ],

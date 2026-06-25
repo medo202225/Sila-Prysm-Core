@@ -4,16 +4,16 @@ import (
 	"testing"
 	"time"
 
-	mock "github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/testing"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/core"
-	mockSync "github.com/OffchainLabs/prysm/v7/beacon-chain/sync/initial-sync/testing"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
+	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -24,7 +24,7 @@ func TestAttestationDataAtSlot_HandlesFarAwayJustifiedEpoch(t *testing.T) {
 	// Last justified slot = epoch start of 1500
 	// HistoricalRootsLimit = 8192
 	//
-	// More background: https://github.com/prysmaticlabs/prysm/issues/2153
+	// More background: https://github.com/sila-chain/prysm/issues/2153
 	// This test breaks if it doesn't use mainnet config
 
 	// Ensure HistoricalRootsLimit matches scenario

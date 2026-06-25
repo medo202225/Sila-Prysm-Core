@@ -3,7 +3,7 @@ package query
 import "fmt"
 
 // SSZType represents the type supported by SSZ.
-// https://github.com/ethereum/consensus-specs/blob/master/ssz/simple-serialize.md#typing
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/ssz/simple-serialize.md#typing
 type SSZType int
 
 // SSZ type constants.

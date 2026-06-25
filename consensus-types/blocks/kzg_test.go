@@ -5,13 +5,13 @@ import (
 	"errors"
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash/htr"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func Test_MerkleProofKZGCommitment_Altair(t *testing.T) {

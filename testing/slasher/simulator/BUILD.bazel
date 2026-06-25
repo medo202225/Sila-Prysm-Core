@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -8,7 +8,7 @@ go_library(
         "block_generator.go",
         "simulator.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/slasher/simulator",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/slasher/simulator",
     visibility = [
         "//testing/endtoend:__subpackages__",
     ],

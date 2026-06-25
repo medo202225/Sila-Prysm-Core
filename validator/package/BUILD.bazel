@@ -41,7 +41,7 @@ pkg_deb(
     ],
     data = ":debian-data",
     description = "Sila-Prysm Validator Client - consensus",
-    homepage = "https://prysmaticlabs.com/",
+    homepage = "https://sila.com/",
     maintainer = "Sila-Prysm <security@silachain.com>",
     package = "prysm-validator",
     postinst = "postinst.sh",

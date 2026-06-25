@@ -1,7 +1,7 @@
 package accounts
 
 import (
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
 )
 
 var (

@@ -5,9 +5,9 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 // HeaderInfo specifies the block header information in the ETH 1.0 chain.

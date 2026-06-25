@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/time"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/validators"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 // ProcessRegistryUpdates processes all validators eligible for the activation queue, all validators

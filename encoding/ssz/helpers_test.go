@@ -3,10 +3,10 @@ package ssz_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 const merkleizingListLimitError = "merkleizing list that is too large, over limit"

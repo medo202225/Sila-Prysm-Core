@@ -3,12 +3,12 @@ package precompute_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/epoch/precompute"
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch/precompute"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestNew(t *testing.T) {

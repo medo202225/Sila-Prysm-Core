@@ -3,8 +3,8 @@ package customtypes
 import (
 	"fmt"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	fssz "github.com/prysmaticlabs/fastssz"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	fssz "github.com/sila-chain/fastssz"
 )
 
 var _ fssz.HashRoot = (RandaoMixes)([][32]byte{})

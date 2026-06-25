@@ -5,7 +5,7 @@ package accounts_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/validator/accounts"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts"
 )
 
 func FuzzValidateMnemonic(f *testing.F) {

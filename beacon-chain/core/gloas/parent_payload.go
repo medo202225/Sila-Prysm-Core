@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"context"
 
-	requests "github.com/OffchainLabs/prysm/v7/beacon-chain/core/requests"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
+	requests "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/requests"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
 	"github.com/pkg/errors"
 )
 

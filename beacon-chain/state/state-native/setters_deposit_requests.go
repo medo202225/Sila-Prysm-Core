@@ -1,8 +1,8 @@
 package state_native
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native/types"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 )
 
 // SetDepositRequestsStartIndex for the beacon state. Updates the DepositRequestsStartIndex

@@ -6,14 +6,14 @@ import (
 	"slices"
 	"time"
 
-	"github.com/OffchainLabs/go-bitfield"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	forkchoice2 "github.com/OffchainLabs/prysm/v7/consensus-types/forkchoice"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/go-bitfield"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	forkchoice2 "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/forkchoice"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 )
 

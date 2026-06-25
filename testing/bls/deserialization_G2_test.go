@@ -4,9 +4,9 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/testing/bls/utils"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/bls/utils"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"github.com/ghodss/yaml"
 )
 

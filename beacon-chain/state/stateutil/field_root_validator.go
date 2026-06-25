@@ -6,9 +6,9 @@ import (
 	"runtime"
 	"sync"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash/htr"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

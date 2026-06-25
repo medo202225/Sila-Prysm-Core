@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
 	"github.com/urfave/cli/v2"
 	"github.com/urfave/cli/v2/altsrc"
 )
@@ -250,8 +250,8 @@ var (
 		Usage: `WARNING: The gRPC API will remain the default and fully supported through v8 (expected in 2026) but will be eventually removed in favor of REST API..
 		Integer to define max receive message call size (in bytes).
 		If serving a public gRPC server, set this to a more reasonable size to avoid
-		resource exhaustion from large messages. 
-		Validators with as many as 10000 keys can be run with a max message size of less than 
+		resource exhaustion from large messages.
+		Validators with as many as 10000 keys can be run with a max message size of less than
 		50Mb. The default here is set to a very high value for local users.`,
 		Value: math.MaxInt32,
 	}

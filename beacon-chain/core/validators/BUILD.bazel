@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -6,7 +6,7 @@ go_library(
         "slashing.go",
         "validator.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/core/validators",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators",
     visibility = [
         "//beacon-chain:__subpackages__",
         "//testing/endtoend:__subpackages__",

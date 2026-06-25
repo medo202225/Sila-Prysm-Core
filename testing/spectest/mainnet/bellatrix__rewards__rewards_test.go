@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/bellatrix/rewards"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/bellatrix/rewards"
 )
 
 func TestMainnet_Bellatrix_Rewards(t *testing.T) {

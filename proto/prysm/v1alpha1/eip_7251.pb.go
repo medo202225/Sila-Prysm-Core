@@ -10,8 +10,8 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -29,7 +29,7 @@ type PendingDeposit struct {
 	WithdrawalCredentials []byte                                                           `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
 	Amount                uint64                                                           `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
 	Signature             []byte                                                           `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
-	Slot                  github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	Slot                  github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -92,18 +92,18 @@ func (x *PendingDeposit) GetSignature() []byte {
 	return nil
 }
 
-func (x *PendingDeposit) GetSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *PendingDeposit) GetSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type PendingPartialWithdrawal struct {
 	state             protoimpl.MessageState                                                     `protogen:"open.v1"`
-	Index             github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	Index             github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	Amount            uint64                                                                     `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
-	WithdrawableEpoch github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch          `protobuf:"varint,3,opt,name=withdrawable_epoch,json=withdrawableEpoch,proto3" json:"withdrawable_epoch,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
+	WithdrawableEpoch github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch          `protobuf:"varint,3,opt,name=withdrawable_epoch,json=withdrawableEpoch,proto3" json:"withdrawable_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -138,11 +138,11 @@ func (*PendingPartialWithdrawal) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_eip_7251_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *PendingPartialWithdrawal) GetIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *PendingPartialWithdrawal) GetIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.Index
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 func (x *PendingPartialWithdrawal) GetAmount() uint64 {
@@ -152,17 +152,17 @@ func (x *PendingPartialWithdrawal) GetAmount() uint64 {
 	return 0
 }
 
-func (x *PendingPartialWithdrawal) GetWithdrawableEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *PendingPartialWithdrawal) GetWithdrawableEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		return x.WithdrawableEpoch
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
 type PendingConsolidation struct {
 	state         protoimpl.MessageState                                                     `protogen:"open.v1"`
-	SourceIndex   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=source_index,json=sourceIndex,proto3" json:"source_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
-	TargetIndex   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=target_index,json=targetIndex,proto3" json:"target_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	SourceIndex   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=source_index,json=sourceIndex,proto3" json:"source_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
+	TargetIndex   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=target_index,json=targetIndex,proto3" json:"target_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -197,18 +197,18 @@ func (*PendingConsolidation) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_eip_7251_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *PendingConsolidation) GetSourceIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *PendingConsolidation) GetSourceIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.SourceIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
-func (x *PendingConsolidation) GetTargetIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *PendingConsolidation) GetTargetIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.TargetIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 var File_proto_prysm_v1alpha1_eip_7251_proto protoreflect.FileDescriptor

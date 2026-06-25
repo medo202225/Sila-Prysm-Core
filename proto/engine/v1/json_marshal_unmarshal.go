@@ -6,13 +6,13 @@ import (
 	"reflect"
 	"strings"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	gethtypes "github.com/ethereum/go-ethereum/core/types"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/common/hexutil"
+	gethtypes "github.com/sila-chain/Sila/core/types"
 	"github.com/pkg/errors"
 )
 

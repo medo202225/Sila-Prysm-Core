@@ -313,7 +313,7 @@ func analyzeVectorType(value reflect.Value, elementInfo *SszInfo, length uint64,
 	}
 
 	// Validate the given length.
-	// https://github.com/ethereum/consensus-specs/blob/master/ssz/simple-serialize.md#illegal-types
+	// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/ssz/simple-serialize.md#illegal-types
 	if length == 0 {
 		return nil, fmt.Errorf("vector length must be greater than 0, got %d", length)
 	}

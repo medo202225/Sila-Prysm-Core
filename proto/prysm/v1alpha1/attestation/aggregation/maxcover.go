@@ -3,7 +3,7 @@ package aggregation
 import (
 	"sort"
 
-	"github.com/OffchainLabs/go-bitfield"
+	"github.com/sila-chain/go-bitfield"
 	"github.com/pkg/errors"
 )
 

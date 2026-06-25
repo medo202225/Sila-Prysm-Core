@@ -6,18 +6,18 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	slottest "github.com/OffchainLabs/prysm/v7/time/slots/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	slottest "github.com/sila-chain/Sila-Prysm-Core/v7/time/slots/testing"
 	"github.com/sirupsen/logrus"
 
-	dbtest "github.com/OffchainLabs/prysm/v7/beacon-chain/db/testing"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	dbtest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 

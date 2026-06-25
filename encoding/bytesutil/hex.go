@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/OffchainLabs/prysm/v7/container/slice"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/slice"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 

@@ -5,10 +5,10 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"github.com/golang/snappy"
-	fastssz "github.com/prysmaticlabs/fastssz"
+	fastssz "github.com/sila-chain/fastssz"
 	"google.golang.org/protobuf/proto"
 )
 

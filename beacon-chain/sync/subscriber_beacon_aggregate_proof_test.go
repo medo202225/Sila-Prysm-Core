@@ -3,15 +3,15 @@ package sync
 import (
 	"testing"
 
-	"github.com/OffchainLabs/go-bitfield"
-	mock "github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/testing"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/operations/attestations"
-	lruwrpr "github.com/OffchainLabs/prysm/v7/cache/lru"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	"github.com/sila-chain/go-bitfield"
+	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations"
+	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 )
 
 func TestBeaconAggregateProofSubscriber_CanSaveAggregatedAttestation(t *testing.T) {

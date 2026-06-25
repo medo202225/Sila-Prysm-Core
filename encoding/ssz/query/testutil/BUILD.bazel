@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -8,12 +8,12 @@ go_library(
         "type.go",
         "util.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/encoding/ssz/query/testutil",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/query/testutil",
     visibility = ["//visibility:public"],
     deps = [
         "//encoding/ssz/query:go_default_library",
         "//testing/require:go_default_library",
-        "@com_github_prysmaticlabs_fastssz//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_fastssz//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
     ],
 )

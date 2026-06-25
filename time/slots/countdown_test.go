@@ -6,9 +6,9 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
 	"github.com/sirupsen/logrus"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )

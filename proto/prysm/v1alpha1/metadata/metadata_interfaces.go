@@ -1,9 +1,9 @@
 package metadata
 
 import (
-	"github.com/OffchainLabs/go-bitfield"
-	pb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	ssz "github.com/prysmaticlabs/fastssz"
+	"github.com/sila-chain/go-bitfield"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // Metadata returns the interface of a p2p metadata type.

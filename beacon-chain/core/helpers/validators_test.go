@@ -4,20 +4,20 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/time"
-	forkchoicetypes "github.com/OffchainLabs/prysm/v7/beacon-chain/forkchoice/types"
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
+	forkchoicetypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/types"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestIsActiveValidator_OK(t *testing.T) {
@@ -607,7 +607,7 @@ func TestComputeProposerIndex(t *testing.T) {
 			},
 			want: 2,
 		},
-		{ // Regression test for https://github.com/prysmaticlabs/prysm/issues/4259.
+		{ // Regression test for https://github.com/sila-chain/prysm/issues/4259.
 			name: "1_active_index",
 			args: args{
 				validators: []*ethpb.Validator{

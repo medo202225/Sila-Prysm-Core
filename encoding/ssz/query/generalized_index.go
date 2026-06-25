@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
 )
 
 const listBaseIndex = 2

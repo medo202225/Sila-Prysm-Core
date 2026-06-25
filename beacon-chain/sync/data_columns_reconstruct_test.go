@@ -6,15 +6,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/kzg"
-	mockChain "github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/testing"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/peerdas"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db/filesystem"
-	p2ptest "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/testing"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
+	mockChain "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
+	p2ptest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 )
 
 func TestProcessDataColumnSidecarsFromReconstruction(t *testing.T) {

@@ -13,7 +13,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
 	"github.com/pkg/errors"
 )
 

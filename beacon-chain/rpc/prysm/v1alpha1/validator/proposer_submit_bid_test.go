@@ -3,12 +3,12 @@ package validator
 import (
 	"testing"
 
-	p2pmock "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/testing"
-	mockSync "github.com/OffchainLabs/prysm/v7/beacon-chain/sync/initial-sync/testing"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	p2pmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
+	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 

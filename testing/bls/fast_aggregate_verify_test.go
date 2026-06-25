@@ -5,11 +5,11 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls/common"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/testing/bls/utils"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/bls/utils"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"github.com/ghodss/yaml"
 )
 
@@ -40,7 +40,7 @@ func testFastAggregateVerify(t *testing.T) {
 			}
 
 			msg := test.Input.Message
-			// TODO(#7632): Remove when https://github.com/ethereum/consensus-spec-tests/issues/22 is resolved.
+			// TODO(#7632): Remove when https://github.com/sila-chain/Sila-Consensus-Spec-Tests/issues/22 is resolved.
 			if msg == "" {
 				msg = test.Input.Messages
 			}

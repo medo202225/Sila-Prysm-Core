@@ -1,7 +1,7 @@
 // Copyright 2014 The go-ethereum Authors
 // This file is part of the go-ethereum library.
 //
-// Modified by Prysmatic Labs 2018
+// Modified by Sila Labs 2018
 //
 // The go-ethereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -25,8 +25,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
 )
 
 func aesCTRXOR(key, inText, iv []byte) ([]byte, error) {

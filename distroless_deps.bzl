@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_repository")  # gazelle:keep
+load("@sila//tools/go:def.bzl", "go_repository")  # gazelle:keep
 
 def distroless_deps():
     go_repository(
@@ -7,7 +7,7 @@ def distroless_deps():
         sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
         version = "v0.5.11",
     )
-    
+
     go_repository(
         name = "com_github_spdx_tools_golang",
         importpath = "github.com/spdx/tools-golang",

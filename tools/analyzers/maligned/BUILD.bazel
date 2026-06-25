@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -6,7 +6,7 @@ go_library(
         "analyzer.go",
         "maligned.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/tools/analyzers/maligned",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/tools/analyzers/maligned",
     visibility = ["//visibility:public"],
     deps = [
         "@org_golang_x_tools//go/analysis:go_default_library",

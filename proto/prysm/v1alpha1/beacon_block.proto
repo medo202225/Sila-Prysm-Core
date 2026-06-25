@@ -1,4 +1,4 @@
-// Copyright 2020 Prysmatic Labs.
+// Copyright 2020 Sila Labs.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import "proto/engine/v1/execution_engine.proto";
 import "proto/engine/v1/electra.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
-option go_package = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1;eth";
+option go_package = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1;eth";
 option java_multiple_files = true;
 option java_outer_classname = "BeaconBlockProto";
 option java_package = "org.ethereum.eth.v1alpha1";
@@ -145,12 +145,12 @@ message BeaconBlock {
   // Beacon chain slot that this block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -177,7 +177,7 @@ message BeaconBlockBody {
 
   // Block operations
   // Refer to spec constants at
-  // https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
+  // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
 
   // At most MAX_PROPOSER_SLASHINGS.
   repeated ProposerSlashing proposer_slashings = 4
@@ -265,12 +265,12 @@ message BeaconBlockAltair {
   // Beacon chain slot that this block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -297,7 +297,7 @@ message BeaconBlockBodyAltair {
 
   // Block operations
   // Refer to spec constants at
-  // https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
+  // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
 
   // At most MAX_PROPOSER_SLASHINGS.
   repeated ProposerSlashing proposer_slashings = 4
@@ -338,12 +338,12 @@ message BeaconBlockBellatrix {
   // Beacon chain slot that this block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -369,7 +369,7 @@ message BeaconBlockBodyBellatrix {
 
   // Block operations
   // Refer to spec constants at
-  // https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
+  // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
 
   // At most MAX_PROPOSER_SLASHINGS.
   repeated ProposerSlashing proposer_slashings = 4
@@ -409,12 +409,12 @@ message BlindedBeaconBlockBellatrix {
   // Beacon chain slot that this blinded block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -480,12 +480,12 @@ message BeaconBlockCapella {
   // Beacon chain slot that this block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -511,7 +511,7 @@ message BeaconBlockBodyCapella {
 
   // Block operations
   // Refer to spec constants at
-  // https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
+  // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/beacon-chain.md#max-operations-per-block
 
   // At most MAX_PROPOSER_SLASHINGS.
   repeated ProposerSlashing proposer_slashings = 4
@@ -554,12 +554,12 @@ message BlindedBeaconBlockCapella {
   // Beacon chain slot that this blinded block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -664,12 +664,12 @@ message BeaconBlockDeneb {
   // Beacon chain slot that this block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -695,7 +695,7 @@ message BeaconBlockBodyDeneb {
 
   // Block operations
   // Refer to spec constants at
-  // https://github.com/ethereum/consensus-specs/blob/master/specs/core/0_beacon-chain.md#max-operations-per-block
+  // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/core/0_beacon-chain.md#max-operations-per-block
 
   // At most MAX_PROPOSER_SLASHINGS.
   repeated ProposerSlashing proposer_slashings = 4
@@ -743,12 +743,12 @@ message BlindedBeaconBlockDeneb {
   // Beacon chain slot that this blinded block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -894,12 +894,12 @@ message BeaconBlockElectra {
   // Beacon chain slot that this block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -925,7 +925,7 @@ message BeaconBlockBodyElectra {
 
   // Block operations
   // Refer to spec constants at
-  // https://github.com/ethereum/consensus-specs/blob/master/specs/core/0_beacon-chain.md#max-operations-per-block
+  // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/core/0_beacon-chain.md#max-operations-per-block
 
   // At most MAX_PROPOSER_SLASHINGS.
   repeated ProposerSlashing proposer_slashings = 4
@@ -979,12 +979,12 @@ message BlindedBeaconBlockElectra {
   // Beacon chain slot that this blinded block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.
@@ -1095,12 +1095,12 @@ message BlindedBeaconBlockFulu {
   // Beacon chain slot that this blinded block represents.
   uint64 slot = 1 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
   ];
 
   // Validator index of the validator that proposed the block header.
   uint64 proposer_index = 2 [ (ethereum.eth.ext.cast_type) =
-                                  "github.com/OffchainLabs/prysm/v7/"
+                                  "github.com/sila-chain/Sila-Prysm-Core/v7/"
                                   "consensus-types/primitives.ValidatorIndex" ];
 
   // 32 byte root of the parent block.

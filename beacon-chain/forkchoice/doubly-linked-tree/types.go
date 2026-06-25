@@ -4,11 +4,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/forkchoice"
-	forkchoicetypes "github.com/OffchainLabs/prysm/v7/beacon-chain/forkchoice/types"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice"
+	forkchoicetypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/types"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 // ForkChoice defines the overall fork choice store which includes all block nodes, validator's latest votes and balances.

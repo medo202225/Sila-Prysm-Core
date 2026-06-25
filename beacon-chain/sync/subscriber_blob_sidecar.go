@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed"
-	opfeed "github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed/operation"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed"
+	opfeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
 	"google.golang.org/protobuf/proto"
 )
 

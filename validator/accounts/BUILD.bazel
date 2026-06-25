@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -17,7 +17,7 @@ go_library(
         "wallet_create.go",
         "wallet_recover.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/accounts",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts",
     visibility = [
         "//cmd/validator:__subpackages__",
         "//validator:__pkg__",
@@ -47,7 +47,7 @@ go_library(
         "//validator/keymanager:go_default_library",
         "//validator/keymanager/derived:go_default_library",
         "//validator/keymanager/local:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_google_uuid//:go_default_library",
         "@com_github_logrusorgru_aurora//:go_default_library",
         "@com_github_manifoldco_promptui//:go_default_library",
@@ -91,7 +91,7 @@ go_test(
         "//validator/keymanager/derived:go_default_library",
         "//validator/keymanager/local:go_default_library",
         "//validator/testing:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_google_uuid//:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
         "@com_github_sirupsen_logrus//hooks/test:go_default_library",

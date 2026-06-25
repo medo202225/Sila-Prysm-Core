@@ -11,17 +11,17 @@ import (
 	"os"
 	"testing"
 
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	consensusblocks "github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/math"
-	v1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	consensusblocks "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	v1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 
@@ -141,8 +141,8 @@ var testExampleHeaderResponseDeneb = `{
 		"block_hash": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
         "transactions_root": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
         "withdrawals_root": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
-		"blob_gas_used": "1",	
-		"excess_blob_gas": "2"	
+		"blob_gas_used": "1",
+		"excess_blob_gas": "2"
       },
       "blob_kzg_commitments": [
           "0x8dab030c51e16e84be9caab84ee3d0b8bbec1db4a0e4de76439da8424d9b957370a10a78851f97e4b54d2ce1ab0d686f"
@@ -232,8 +232,8 @@ var testExampleHeaderResponseDenebNoBundle = `{
 		"block_hash": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
         "transactions_root": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
         "withdrawals_root": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
-		"blob_gas_used": "1",	
-		"excess_blob_gas": "2"	
+		"blob_gas_used": "1",
+		"excess_blob_gas": "2"
       },
       "value": "652312848583266388373324160190187140051835877600158453279131187530910662656",
       "pubkey": "0x93247f2209abcacf57b75a51dafae777f9dd38bc7053d1af526f220a7489a6d3a2753e5f3e8b1cfe39b56f43611df74a"
@@ -290,8 +290,8 @@ var testExampleHeaderResponseDenebTooManyBlobs = `{
 		"block_hash": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
         "transactions_root": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
         "withdrawals_root": "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2",
-		"blob_gas_used": "1",	
-		"excess_blob_gas": "2"	
+		"blob_gas_used": "1",
+		"excess_blob_gas": "2"
       },
       "blob_kzg_commitments": [
           "","","","","","",""

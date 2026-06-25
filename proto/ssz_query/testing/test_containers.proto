@@ -4,7 +4,7 @@ package testing;
 
 import "proto/eth/ext/options.proto";
 
-option go_package = "github.com/OffchainLabs/prysm/v7/proto/ssz_query/testing;testing";
+option go_package = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/ssz_query/testing;testing";
 
 // ===== FIXED-SIZE TEST CONTAINERS =====
 // These containers are designed to test SSZ query functionality with
@@ -57,13 +57,13 @@ message FixedTestContainer {
   bytes bitvector64_field = 8 [
     (ethereum.eth.ext.ssz_size) = "8",
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/go-bitfield.Bitvector64"
+        "github.com/sila-chain/go-bitfield.Bitvector64"
   ]; // Test: Bitvector64 (8 bytes), offset: 437
 
   bytes bitvector512_field = 9 [
     (ethereum.eth.ext.ssz_size) = "64",
     (ethereum.eth.ext.cast_type) =
-        "github.com/OffchainLabs/go-bitfield.Bitvector512"
+        "github.com/sila-chain/go-bitfield.Bitvector512"
   ]; // Test: Bitvector512 (64 bytes), offset: 445
 
   // Additional bytes field - test field ordering and offset calculation
@@ -134,7 +134,7 @@ message VariableTestContainer {
   // Bitlist type - test bitlist serialization
   bytes bitlist_field = 7 [
     (ethereum.eth.ext.ssz_max) = "2048",
-    (ethereum.eth.ext.cast_type) = "github.com/OffchainLabs/go-bitfield.Bitlist"
+    (ethereum.eth.ext.cast_type) = "github.com/sila-chain/go-bitfield.Bitlist"
   ];
 
   // 2D bytes list - test list of bytelists.

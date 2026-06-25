@@ -3,11 +3,11 @@ package electra_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/electra"
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/fuzz"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/electra"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/fuzz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	gofuzz "github.com/google/gofuzz"
 )
 

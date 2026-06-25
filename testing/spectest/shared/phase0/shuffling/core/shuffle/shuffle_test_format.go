@@ -1,6 +1,6 @@
 package shuffle
 
-import "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+import "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 
 // TestCase --
 type TestCase struct {

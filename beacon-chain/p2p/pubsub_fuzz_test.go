@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/encoder"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
 )
 
 func FuzzMsgID(f *testing.F) {

@@ -33,7 +33,7 @@ func WrapFlags(flags []cli.Flag) []cli.Flag {
 		case *cli.PathFlag:
 			f = altsrc.NewPathFlag(t)
 		case *cli.Int64Flag:
-			// Int64Flag does not work. See https://github.com/prysmaticlabs/prysm/issues/6478
+			// Int64Flag does not work. See https://github.com/sila-chain/prysm/issues/6478
 			panic(fmt.Sprintf("unsupported flag type %T", f)) // lint:nopanic -- This is evaluated at application start.
 		case *cli.IntSliceFlag:
 			f = altsrc.NewIntSliceFlag(t)

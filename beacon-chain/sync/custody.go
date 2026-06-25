@@ -5,12 +5,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/async"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/peerdas"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/flags"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

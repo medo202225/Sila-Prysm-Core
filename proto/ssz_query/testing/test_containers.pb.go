@@ -10,8 +10,8 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_go_bitfield "github.com/OffchainLabs/go-bitfield"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -84,8 +84,8 @@ type FixedTestContainer struct {
 	Nested                 *FixedNestedContainer                            `protobuf:"bytes,5,opt,name=nested,proto3" json:"nested,omitempty"`
 	VectorField            []uint64                                         `protobuf:"varint,6,rep,packed,name=vector_field,json=vectorField,proto3" json:"vector_field,omitempty" ssz-size:"24"`
 	TwoDimensionBytesField [][]byte                                         `protobuf:"bytes,7,rep,name=two_dimension_bytes_field,json=twoDimensionBytesField,proto3" json:"two_dimension_bytes_field,omitempty" ssz-size:"5,32"`
-	Bitvector64Field       github_com_OffchainLabs_go_bitfield.Bitvector64  `protobuf:"bytes,8,opt,name=bitvector64_field,json=bitvector64Field,proto3" json:"bitvector64_field,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector64" ssz-size:"8"`
-	Bitvector512Field      github_com_OffchainLabs_go_bitfield.Bitvector512 `protobuf:"bytes,9,opt,name=bitvector512_field,json=bitvector512Field,proto3" json:"bitvector512_field,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector512" ssz-size:"64"`
+	Bitvector64Field       github_com_sila_chain_go_bitfield.Bitvector64  `protobuf:"bytes,8,opt,name=bitvector64_field,json=bitvector64Field,proto3" json:"bitvector64_field,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
+	Bitvector512Field      github_com_sila_chain_go_bitfield.Bitvector512 `protobuf:"bytes,9,opt,name=bitvector512_field,json=bitvector512Field,proto3" json:"bitvector512_field,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector512" ssz-size:"64"`
 	TrailingField          []byte                                           `protobuf:"bytes,10,opt,name=trailing_field,json=trailingField,proto3" json:"trailing_field,omitempty" ssz-size:"56"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -170,18 +170,18 @@ func (x *FixedTestContainer) GetTwoDimensionBytesField() [][]byte {
 	return nil
 }
 
-func (x *FixedTestContainer) GetBitvector64Field() github_com_OffchainLabs_go_bitfield.Bitvector64 {
+func (x *FixedTestContainer) GetBitvector64Field() github_com_sila_chain_go_bitfield.Bitvector64 {
 	if x != nil {
 		return x.Bitvector64Field
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector64(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector64(nil)
 }
 
-func (x *FixedTestContainer) GetBitvector512Field() github_com_OffchainLabs_go_bitfield.Bitvector512 {
+func (x *FixedTestContainer) GetBitvector512Field() github_com_sila_chain_go_bitfield.Bitvector512 {
 	if x != nil {
 		return x.Bitvector512Field
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector512(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector512(nil)
 }
 
 func (x *FixedTestContainer) GetTrailingField() []byte {
@@ -311,7 +311,7 @@ type VariableTestContainer struct {
 	FieldListBytes32      [][]byte                                    `protobuf:"bytes,4,rep,name=field_list_bytes32,json=fieldListBytes32,proto3" json:"field_list_bytes32,omitempty" ssz-max:"100" ssz-size:"?,32"`
 	Nested                *VariableNestedContainer                    `protobuf:"bytes,5,opt,name=nested,proto3" json:"nested,omitempty"`
 	VariableContainerList []*VariableOuterContainer                   `protobuf:"bytes,6,rep,name=variable_container_list,json=variableContainerList,proto3" json:"variable_container_list,omitempty" ssz-max:"10"`
-	BitlistField          github_com_OffchainLabs_go_bitfield.Bitlist `protobuf:"bytes,7,opt,name=bitlist_field,json=bitlistField,proto3" json:"bitlist_field,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitlist" ssz-max:"2048"`
+	BitlistField          github_com_sila_chain_go_bitfield.Bitlist `protobuf:"bytes,7,opt,name=bitlist_field,json=bitlistField,proto3" json:"bitlist_field,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitlist" ssz-max:"2048"`
 	NestedListField       [][]byte                                    `protobuf:"bytes,8,rep,name=nested_list_field,json=nestedListField,proto3" json:"nested_list_field,omitempty" ssz-max:"100,50" ssz-size:"?,?"`
 	TrailingField         []byte                                      `protobuf:"bytes,9,opt,name=trailing_field,json=trailingField,proto3" json:"trailing_field,omitempty" ssz-size:"56"`
 	unknownFields         protoimpl.UnknownFields
@@ -390,11 +390,11 @@ func (x *VariableTestContainer) GetVariableContainerList() []*VariableOuterConta
 	return nil
 }
 
-func (x *VariableTestContainer) GetBitlistField() github_com_OffchainLabs_go_bitfield.Bitlist {
+func (x *VariableTestContainer) GetBitlistField() github_com_sila_chain_go_bitfield.Bitlist {
 	if x != nil {
 		return x.BitlistField
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitlist(nil)
+	return github_com_sila_chain_go_bitfield.Bitlist(nil)
 }
 
 func (x *VariableTestContainer) GetNestedListField() [][]byte {

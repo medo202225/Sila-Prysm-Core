@@ -7,21 +7,21 @@ import (
 	"io"
 	"slices"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/encoder"
-	p2ptypes "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/verification"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
+	p2ptypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/peer"
 	goPeer "github.com/libp2p/go-libp2p/core/peer"
@@ -600,7 +600,7 @@ func isSidecarSlotRequested(request *ethpb.DataColumnSidecarsByRangeRequest) (Da
 
 // areSidecarsOrdered enforces the p2p spec rule:
 // "The following data column sidecars, where they exist, MUST be sent in (slot, column_index) order."
-// via https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#datacolumnsidecarsbyrange-v1
+// via https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#datacolumnsidecarsbyrange-v1
 func areSidecarsOrdered() DataColumnResponseValidation {
 	var prevSlot primitives.Slot
 	var prevIdx uint64

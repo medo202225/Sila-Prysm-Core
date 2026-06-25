@@ -2,7 +2,7 @@
 package ssz_query
 
 import (
-	ssz "github.com/prysmaticlabs/fastssz"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // MarshalSSZ ssz marshals the SSZQueryProof object

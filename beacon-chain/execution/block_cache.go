@@ -5,9 +5,9 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/execution/types"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila/common"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"k8s.io/client-go/tools/cache"

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -19,7 +19,7 @@ go_library(
         "withdrawal_request.go",
         "withdrawals.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/spectest/shared/electra/operations",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/electra/operations",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/electra:go_default_library",

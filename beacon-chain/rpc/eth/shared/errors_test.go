@@ -6,10 +6,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/lookup"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stategen"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
 	"github.com/pkg/errors"
 )
 

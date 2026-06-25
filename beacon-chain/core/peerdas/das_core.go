@@ -5,11 +5,11 @@ import (
 	"math"
 	"slices"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/ethereum/go-ethereum/p2p/enode"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/holiman/uint256"
 	"github.com/pkg/errors"
 )
@@ -25,7 +25,7 @@ var (
 )
 
 // CustodyGroups computes the custody groups the node should participate in for custody.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/das-core.md#get_custody_groups
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/das-core.md#get_custody_groups
 func CustodyGroups(nodeId enode.ID, custodyGroupCount uint64) ([]uint64, error) {
 	numberOfCustodyGroups := params.BeaconConfig().NumberOfCustodyGroups
 
@@ -88,7 +88,7 @@ func CustodyGroups(nodeId enode.ID, custodyGroupCount uint64) ([]uint64, error) 
 }
 
 // ComputeColumnsForCustodyGroup computes the columns for a given custody group.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/das-core.md#compute_columns_for_custody_group
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/das-core.md#compute_columns_for_custody_group
 func ComputeColumnsForCustodyGroup(custodyGroup uint64) ([]uint64, error) {
 	cfg := params.BeaconConfig()
 	numberOfCustodyGroups := cfg.NumberOfCustodyGroups

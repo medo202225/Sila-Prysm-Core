@@ -3,9 +3,9 @@ package payloadattribute
 import (
 	"testing"
 
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestPayloadAttributeGetters(t *testing.T) {

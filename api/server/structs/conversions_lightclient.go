@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 

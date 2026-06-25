@@ -3,7 +3,7 @@ package filesystem
 import (
 	"context"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 

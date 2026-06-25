@@ -7,21 +7,21 @@ import (
 	"slices"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed/operation"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/verification"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/crypto/rand"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/logging"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/logging"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
@@ -29,7 +29,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#the-gossip-domain-gossipsub
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#the-gossip-domain-gossipsub
 func (s *Service) validateDataColumn(ctx context.Context, pid peer.ID, msg *pubsub.Message) (pubsub.ValidationResult, error) {
 	const dataColumnSidecarSubTopic = "/data_column_sidecar_%d/"
 

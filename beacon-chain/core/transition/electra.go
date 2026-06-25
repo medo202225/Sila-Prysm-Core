@@ -3,14 +3,14 @@ package transition
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/electra"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	coreRequests "github.com/OffchainLabs/prysm/v7/beacon-chain/core/requests"
-	v "github.com/OffchainLabs/prysm/v7/beacon-chain/core/validators"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/electra"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	coreRequests "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/requests"
+	v "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
 	"github.com/pkg/errors"
 )
 

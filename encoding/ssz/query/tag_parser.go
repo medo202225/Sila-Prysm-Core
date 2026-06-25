@@ -17,7 +17,7 @@ const (
 	sszSizeTag = "ssz-size"
 
 	// castTypeTag specifies special custom casting instructions.
-	// e.g., "github.com/OffchainLabs/go-bitfield.Bitlist".
+	// e.g., "github.com/sila-chain/go-bitfield.Bitlist".
 	castTypeTag = "cast-type"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"github.com/pkg/errors"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )

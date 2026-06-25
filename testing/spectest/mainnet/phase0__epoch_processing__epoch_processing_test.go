@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
 )
 
 func TestMain(m *testing.M) {

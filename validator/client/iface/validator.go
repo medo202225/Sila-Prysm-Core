@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api/client/event"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/proposer"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/event"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
 )
 
 // ValidatorRole defines the validator role.

@@ -3,8 +3,8 @@ package helpers
 import (
 	"context"
 
-	grpcutil "github.com/OffchainLabs/prysm/v7/api/grpc"
-	"github.com/OffchainLabs/prysm/v7/api/rest"
+	grpcutil "github.com/sila-chain/Sila-Prysm-Core/v7/api/grpc"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/rest"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 )

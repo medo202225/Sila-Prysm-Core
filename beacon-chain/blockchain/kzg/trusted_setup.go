@@ -6,12 +6,12 @@ import (
 
 	GoKZG "github.com/crate-crypto/go-kzg-4844"
 	CKZG "github.com/ethereum/c-kzg-4844/v2/bindings/go"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 
 var (
-	// https://github.com/ethereum/consensus-specs/blob/master/presets/mainnet/trusted_setups/trusted_setup_4096.json
+	// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/presets/mainnet/trusted_setups/trusted_setup_4096.json
 	//go:embed trusted_setup_4096.json
 	embeddedTrustedSetup []byte // 1.2Mb
 	kzgContext           *GoKZG.Context

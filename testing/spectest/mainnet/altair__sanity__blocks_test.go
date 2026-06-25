@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/altair/sanity"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/altair/sanity"
 )
 
 func TestMainnet_Altair_Sanity_Blocks(t *testing.T) {

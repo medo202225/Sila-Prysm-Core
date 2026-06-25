@@ -7,7 +7,7 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/async"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async"
 )
 
 func TestEveryRuns(t *testing.T) {

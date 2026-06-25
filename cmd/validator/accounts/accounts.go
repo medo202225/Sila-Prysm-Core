@@ -3,10 +3,10 @@ package accounts
 import (
 	"os"
 
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/cmd/validator/flags"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	"github.com/OffchainLabs/prysm/v7/runtime/tos"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
 	"github.com/urfave/cli/v2"
 )
 

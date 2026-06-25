@@ -1,11 +1,11 @@
 package builder
 
 import (
-	"github.com/OffchainLabs/prysm/v7/api/client/builder"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db"
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/builder"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
 	"github.com/urfave/cli/v2"
 )
 

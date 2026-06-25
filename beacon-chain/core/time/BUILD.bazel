@@ -1,9 +1,9 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
     srcs = ["slot_epoch.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/core/time",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/state:go_default_library",

@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"

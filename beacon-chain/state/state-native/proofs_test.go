@@ -3,11 +3,11 @@ package state_native_test
 import (
 	"testing"
 
-	statenative "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	statenative "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 func TestBeaconStateMerkleProofs_phase0_notsupported(t *testing.T) {

@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	lruwrpr "github.com/OffchainLabs/prysm/v7/cache/lru"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"

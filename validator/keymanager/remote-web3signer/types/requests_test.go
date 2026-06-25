@@ -5,13 +5,13 @@ import (
 	"reflect"
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer/types"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer/types/mock"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types/mock"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 func TestGetAggregateAndProofV2SignRequest(t *testing.T) {

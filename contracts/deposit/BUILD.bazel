@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -8,7 +8,7 @@ go_library(
         "helper.go",
         "logs.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/contracts/deposit",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/signing:go_default_library",
@@ -16,12 +16,12 @@ go_library(
         "//crypto/bls:go_default_library",
         "//crypto/hash:go_default_library",
         "//proto/prysm/v1alpha1:go_default_library",
-        "@com_github_ethereum_go_ethereum//:go_default_library",
-        "@com_github_ethereum_go_ethereum//accounts/abi:go_default_library",
-        "@com_github_ethereum_go_ethereum//accounts/abi/bind:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
-        "@com_github_ethereum_go_ethereum//core/types:go_default_library",
-        "@com_github_ethereum_go_ethereum//event:go_default_library",
+        "@com_github_sila_chain_sila//:go_default_library",
+        "@com_github_sila_chain_sila//accounts/abi:go_default_library",
+        "@com_github_sila_chain_sila//accounts/abi/bind:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
+        "@com_github_sila_chain_sila//core/types:go_default_library",
+        "@com_github_sila_chain_sila//event:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
@@ -46,8 +46,8 @@ go_test(
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
-        "@com_github_ethereum_go_ethereum//:go_default_library",
-        "@com_github_ethereum_go_ethereum//accounts/abi/bind:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
+        "@com_github_sila_chain_sila//:go_default_library",
+        "@com_github_sila_chain_sila//accounts/abi/bind:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
     ],
 )

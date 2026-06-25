@@ -3,20 +3,20 @@ package fulu
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/time"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 )
 
 // UpgradeToFulu updates inputs a generic state to return the version Fulu state.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/fork.md#upgrading-the-state
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/fork.md#upgrading-the-state
 func UpgradeToFulu(ctx context.Context, beaconState state.BeaconState) (state.BeaconState, error) {
 	s, err := ConvertToFulu(beaconState)
 	if err != nil {

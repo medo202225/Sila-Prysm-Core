@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/OffchainLabs/prysm/v7/runtime/maxprocs"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/params"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/ethclient"
+	"github.com/sila-chain/Sila/params"
 	"github.com/sirupsen/logrus"
 )
 

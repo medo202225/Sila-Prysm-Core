@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	v1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	v1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -92,7 +92,7 @@ type LightClientUpdateAltair struct {
 	FinalizedHeader         *LightClientHeaderAltair                                         `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
 	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot           github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot           github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -169,11 +169,11 @@ func (x *LightClientUpdateAltair) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientUpdateAltair) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientUpdateAltair) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientFinalityUpdateAltair struct {
@@ -182,7 +182,7 @@ type LightClientFinalityUpdateAltair struct {
 	FinalizedHeader *LightClientHeaderAltair                                         `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
 	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -245,18 +245,18 @@ func (x *LightClientFinalityUpdateAltair) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientFinalityUpdateAltair) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientFinalityUpdateAltair) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientOptimisticUpdateAltair struct {
 	state          protoimpl.MessageState                                           `protogen:"open.v1"`
 	AttestedHeader *LightClientHeaderAltair                                         `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
 	SyncAggregate  *SyncAggregate                                                   `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot  github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot  github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -305,11 +305,11 @@ func (x *LightClientOptimisticUpdateAltair) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientOptimisticUpdateAltair) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientOptimisticUpdateAltair) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientHeaderAltair struct {
@@ -424,7 +424,7 @@ type LightClientUpdateCapella struct {
 	FinalizedHeader         *LightClientHeaderCapella                                        `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
 	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot           github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot           github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -501,11 +501,11 @@ func (x *LightClientUpdateCapella) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientUpdateCapella) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientUpdateCapella) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientFinalityUpdateCapella struct {
@@ -514,7 +514,7 @@ type LightClientFinalityUpdateCapella struct {
 	FinalizedHeader *LightClientHeaderCapella                                        `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
 	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -577,18 +577,18 @@ func (x *LightClientFinalityUpdateCapella) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientFinalityUpdateCapella) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientFinalityUpdateCapella) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientOptimisticUpdateCapella struct {
 	state          protoimpl.MessageState                                           `protogen:"open.v1"`
 	AttestedHeader *LightClientHeaderCapella                                        `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
 	SyncAggregate  *SyncAggregate                                                   `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot  github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot  github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -637,11 +637,11 @@ func (x *LightClientOptimisticUpdateCapella) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientOptimisticUpdateCapella) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientOptimisticUpdateCapella) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientHeaderCapella struct {
@@ -772,7 +772,7 @@ type LightClientUpdateDeneb struct {
 	FinalizedHeader         *LightClientHeaderDeneb                                          `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
 	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot           github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot           github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -849,11 +849,11 @@ func (x *LightClientUpdateDeneb) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientUpdateDeneb) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientUpdateDeneb) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientFinalityUpdateDeneb struct {
@@ -862,7 +862,7 @@ type LightClientFinalityUpdateDeneb struct {
 	FinalizedHeader *LightClientHeaderDeneb                                          `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
 	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -925,18 +925,18 @@ func (x *LightClientFinalityUpdateDeneb) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientFinalityUpdateDeneb) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientFinalityUpdateDeneb) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientOptimisticUpdateDeneb struct {
 	state          protoimpl.MessageState                                           `protogen:"open.v1"`
 	AttestedHeader *LightClientHeaderDeneb                                          `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
 	SyncAggregate  *SyncAggregate                                                   `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot  github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot  github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -985,11 +985,11 @@ func (x *LightClientOptimisticUpdateDeneb) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientOptimisticUpdateDeneb) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientOptimisticUpdateDeneb) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientHeaderDeneb struct {
@@ -1120,7 +1120,7 @@ type LightClientUpdateElectra struct {
 	FinalizedHeader         *LightClientHeaderDeneb                                          `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"7,32"`
 	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot           github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot           github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -1197,11 +1197,11 @@ func (x *LightClientUpdateElectra) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientUpdateElectra) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientUpdateElectra) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type LightClientFinalityUpdateElectra struct {
@@ -1210,7 +1210,7 @@ type LightClientFinalityUpdateElectra struct {
 	FinalizedHeader *LightClientHeaderDeneb                                          `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
 	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"7,32"`
 	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	SignatureSlot   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SignatureSlot   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1273,11 +1273,11 @@ func (x *LightClientFinalityUpdateElectra) GetSyncAggregate() *SyncAggregate {
 	return nil
 }
 
-func (x *LightClientFinalityUpdateElectra) GetSignatureSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *LightClientFinalityUpdateElectra) GetSignatureSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SignatureSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 var File_proto_prysm_v1alpha1_light_client_proto protoreflect.FileDescriptor

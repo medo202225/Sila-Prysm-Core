@@ -8,12 +8,12 @@ import (
 	"fmt"
 	"sync"
 
-	lruwrpr "github.com/OffchainLabs/prysm/v7/cache/lru"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/container/slice"
-	mathutil "github.com/OffchainLabs/prysm/v7/math"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
+	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/slice"
+	mathutil "github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
@@ -220,7 +220,7 @@ func startEndIndices(c *Committees, index uint64) (uint64, uint64) {
 // Using seed as source for key to handle reorgs in the same epoch.
 // The seed is derived from state's array of randao mixes and epoch value
 // hashed together. This avoids collisions on different validator set. Spec definition:
-// https://github.com/ethereum/consensus-specs/blob/v0.9.3/specs/core/0_beacon-chain.md#get_seed
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/v0.9.3/specs/core/0_beacon-chain.md#get_seed
 func key(seed [32]byte) string {
 	return string(seed[:])
 }

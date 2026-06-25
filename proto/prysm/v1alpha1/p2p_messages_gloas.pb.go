@@ -10,8 +10,8 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -25,7 +25,7 @@ const (
 
 type ExecutionPayloadEnvelopesByRangeRequest struct {
 	state         protoimpl.MessageState                                           `protogen:"open.v1"`
-	StartSlot     github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	StartSlot     github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -61,11 +61,11 @@ func (*ExecutionPayloadEnvelopesByRangeRequest) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_p2p_messages_gloas_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ExecutionPayloadEnvelopesByRangeRequest) GetStartSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *ExecutionPayloadEnvelopesByRangeRequest) GetStartSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.StartSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 func (x *ExecutionPayloadEnvelopesByRangeRequest) GetCount() uint64 {

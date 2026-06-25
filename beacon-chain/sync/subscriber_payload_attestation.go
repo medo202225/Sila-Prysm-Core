@@ -3,10 +3,10 @@ package sync
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed"
-	opfeed "github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed/operation"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/gloas"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed"
+	opfeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/gloas"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"google.golang.org/protobuf/proto"
 )
 

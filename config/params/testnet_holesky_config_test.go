@@ -4,8 +4,8 @@ import (
 	"path"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 

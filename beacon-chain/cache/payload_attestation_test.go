@@ -3,8 +3,8 @@ package cache_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 	"github.com/stretchr/testify/require"
 )
 

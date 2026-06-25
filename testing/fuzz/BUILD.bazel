@@ -1,8 +1,8 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
     srcs = ["fuzz.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/fuzz",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/fuzz",
     visibility = ["//visibility:public"],
 )

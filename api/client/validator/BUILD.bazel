@@ -1,9 +1,9 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
     srcs = ["client.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/api/client/validator",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/api/client/validator",
     visibility = ["//visibility:public"],
     deps = [
         "//api/client:go_default_library",

@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_go_bitfield "github.com/OffchainLabs/go-bitfield"
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -27,7 +27,7 @@ const (
 
 type Attestation struct {
 	state           protoimpl.MessageState                      `protogen:"open.v1"`
-	AggregationBits github_com_OffchainLabs_go_bitfield.Bitlist `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitlist" ssz-max:"2048"`
+	AggregationBits github_com_sila_chain_go_bitfield.Bitlist `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitlist" ssz-max:"2048"`
 	Data            *AttestationData                            `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	Signature       []byte                                      `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields   protoimpl.UnknownFields
@@ -64,11 +64,11 @@ func (*Attestation) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_attestation_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Attestation) GetAggregationBits() github_com_OffchainLabs_go_bitfield.Bitlist {
+func (x *Attestation) GetAggregationBits() github_com_sila_chain_go_bitfield.Bitlist {
 	if x != nil {
 		return x.AggregationBits
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitlist(nil)
+	return github_com_sila_chain_go_bitfield.Bitlist(nil)
 }
 
 func (x *Attestation) GetData() *AttestationData {
@@ -87,7 +87,7 @@ func (x *Attestation) GetSignature() []byte {
 
 type AggregateAttestationAndProof struct {
 	state           protoimpl.MessageState                                                     `protogen:"open.v1"`
-	AggregatorIndex github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=aggregator_index,json=aggregatorIndex,proto3" json:"aggregator_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	AggregatorIndex github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=aggregator_index,json=aggregatorIndex,proto3" json:"aggregator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	Aggregate       *Attestation                                                               `protobuf:"bytes,3,opt,name=aggregate,proto3" json:"aggregate,omitempty"`
 	SelectionProof  []byte                                                                     `protobuf:"bytes,2,opt,name=selection_proof,json=selectionProof,proto3" json:"selection_proof,omitempty" ssz-size:"96"`
 	unknownFields   protoimpl.UnknownFields
@@ -124,11 +124,11 @@ func (*AggregateAttestationAndProof) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_attestation_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AggregateAttestationAndProof) GetAggregatorIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *AggregateAttestationAndProof) GetAggregatorIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.AggregatorIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 func (x *AggregateAttestationAndProof) GetAggregate() *Attestation {
@@ -199,8 +199,8 @@ func (x *SignedAggregateAttestationAndProof) GetSignature() []byte {
 
 type AttestationData struct {
 	state           protoimpl.MessageState                                                     `protogen:"open.v1"`
-	Slot            github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
-	Index           github_com_OffchainLabs_prysm_v7_consensus_types_primitives.CommitteeIndex `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.CommitteeIndex"`
+	Slot            github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
+	Index           github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.CommitteeIndex `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.CommitteeIndex"`
 	BeaconBlockRoot []byte                                                                     `protobuf:"bytes,3,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	Source          *Checkpoint                                                                `protobuf:"bytes,4,opt,name=source,proto3" json:"source,omitempty"`
 	Target          *Checkpoint                                                                `protobuf:"bytes,5,opt,name=target,proto3" json:"target,omitempty"`
@@ -238,18 +238,18 @@ func (*AttestationData) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_attestation_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *AttestationData) GetSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *AttestationData) GetSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *AttestationData) GetIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.CommitteeIndex {
+func (x *AttestationData) GetIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.CommitteeIndex {
 	if x != nil {
 		return x.Index
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.CommitteeIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.CommitteeIndex(0)
 }
 
 func (x *AttestationData) GetBeaconBlockRoot() []byte {
@@ -275,7 +275,7 @@ func (x *AttestationData) GetTarget() *Checkpoint {
 
 type Checkpoint struct {
 	state         protoimpl.MessageState                                            `protogen:"open.v1"`
-	Epoch         github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
+	Epoch         github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
 	Root          []byte                                                            `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty" ssz-size:"32"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -311,11 +311,11 @@ func (*Checkpoint) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_attestation_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *Checkpoint) GetEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *Checkpoint) GetEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		return x.Epoch
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
 func (x *Checkpoint) GetRoot() []byte {

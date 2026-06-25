@@ -4,15 +4,15 @@ import (
 	"context"
 	"fmt"
 
-	p2pTypes "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/types"
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/flags"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	p2ppb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	p2pTypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	p2ppb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -103,7 +103,7 @@ func (f *blocksFetcher) nonSkippedSlotAfterWithPeersTarget(
 	// Quickly find the close enough epoch where a non-empty slot definitely exists.
 	// Only single random slot per epoch is checked - allowing to move forward relatively quickly.
 	// This method has been changed to account for our spec change where step can only be 1 in a
-	// block by range request. https://github.com/ethereum/consensus-specs/pull/2856
+	// block by range request. https://github.com/sila-chain/Sila-Consensus-Specs/pull/2856
 	// The downside is that this method will be less effective during periods without
 	// finality.
 	slot += nonSkippedSlotsFullSearchEpochs * slotsPerEpoch

@@ -1,9 +1,9 @@
 package state_native
 
 import (
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native/types"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 // SetJustificationBits for the beacon state.

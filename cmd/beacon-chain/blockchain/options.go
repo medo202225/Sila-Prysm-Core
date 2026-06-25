@@ -1,10 +1,10 @@
 package blockchaincmd
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
 	"github.com/urfave/cli/v2"
 )
 

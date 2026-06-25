@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/core"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/eth/shared"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/shared"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 // GetParticipation retrieves the validator participation information for a given epoch,

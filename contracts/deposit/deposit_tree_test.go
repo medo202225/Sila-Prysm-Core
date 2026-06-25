@@ -4,13 +4,13 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	depositcontract "github.com/OffchainLabs/prysm/v7/contracts/deposit/mock"
-	"github.com/OffchainLabs/prysm/v7/runtime/interop"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	depositcontract "github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit/mock"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/accounts/abi/bind"
 )
 
 func TestDepositTrieRoot_OK(t *testing.T) {

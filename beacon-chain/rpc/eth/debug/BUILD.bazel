@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -6,7 +6,7 @@ go_library(
         "handlers.go",
         "server.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/eth/debug",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/debug",
     visibility = ["//visibility:public"],
     deps = [
         "//api:go_default_library",
@@ -26,7 +26,7 @@ go_library(
         "//network/httputil:go_default_library",
         "//proto/prysm/v1alpha1:go_default_library",
         "//runtime/version:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
@@ -53,6 +53,6 @@ go_test(
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
     ],
 )

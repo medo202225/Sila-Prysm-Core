@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -7,7 +7,7 @@ go_library(
         "//config:mainnet": ["mainnet.go"],
         "//config:minimal": ["minimal.go"],
     }),
-    importpath = "github.com/OffchainLabs/prysm/v7/config/fieldparams",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams",
     visibility = ["//visibility:public"],
 )
 

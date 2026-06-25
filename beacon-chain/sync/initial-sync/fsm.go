@@ -6,9 +6,9 @@ import (
 	"slices"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 )
 
 const (

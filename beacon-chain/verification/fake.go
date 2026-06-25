@@ -3,7 +3,7 @@ package verification
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
 )
 
 // FakeVerifyForTest can be used by tests that need a VerifiedROBlob but don't want to do all the

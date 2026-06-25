@@ -14,9 +14,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
-	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/sila-chain/Sila/core/types"
 )
 
 // params struct defines the parameters needed for running E2E tests to properly handle test sharding.

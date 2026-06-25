@@ -3,7 +3,7 @@ package stateutil
 import (
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
 )
 
 // ExecutionPayloadAvailabilityRoot computes the merkle root of an execution payload availability bitvector.

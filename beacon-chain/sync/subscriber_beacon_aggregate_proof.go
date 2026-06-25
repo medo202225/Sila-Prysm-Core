@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"google.golang.org/protobuf/proto"
 )
 

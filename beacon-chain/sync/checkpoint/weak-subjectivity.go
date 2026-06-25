@@ -3,13 +3,13 @@ package checkpoint
 import (
 	"context"
 
-	base "github.com/OffchainLabs/prysm/v7/api/client"
-	"github.com/OffchainLabs/prysm/v7/api/client/beacon"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz/detect"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	base "github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/beacon"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/detect"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 )
 

@@ -117,6 +117,6 @@ consensus_spec_tests = repository_rule(
         "repo": attr.string(default = "ethereum/consensus-specs"),
         "workflow": attr.string(default = "nightly-reftests.yml"),
         "branch": attr.string(default = "master"),
-        "release_url_template": attr.string(default = "https://github.com/ethereum/consensus-specs/releases/download/%s"),
+        "release_url_template": attr.string(default = "https://github.com/sila-chain/Sila-Consensus-Specs/releases/download/%s"),
     },
 )

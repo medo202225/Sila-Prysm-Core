@@ -4,12 +4,12 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/eth/shared"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/lookup"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stategen"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/shared"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

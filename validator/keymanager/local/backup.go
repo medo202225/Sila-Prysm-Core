@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	keystorev4 "github.com/wealdtech/go-eth2-wallet-encryptor-keystorev4"

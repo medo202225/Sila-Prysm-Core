@@ -7,10 +7,10 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
 	"github.com/minio/highwayhash"
 	"github.com/minio/sha256-simd"
-	fastssz "github.com/prysmaticlabs/fastssz"
+	fastssz "github.com/sila-chain/fastssz"
 	"golang.org/x/crypto/sha3"
 	"google.golang.org/protobuf/proto"
 )
@@ -24,7 +24,7 @@ var sha256Pool = sync.Pool{New: func() any {
 }}
 
 // Hash defines a function that returns the sha256 checksum of the data passed in.
-// https://github.com/ethereum/consensus-specs/blob/v0.9.3/specs/core/0_beacon-chain.md#hash
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/v0.9.3/specs/core/0_beacon-chain.md#hash
 func Hash(data []byte) [32]byte {
 	h, ok := sha256Pool.Get().(hash.Hash)
 	if !ok {

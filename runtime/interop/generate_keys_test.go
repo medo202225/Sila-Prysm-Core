@@ -5,11 +5,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/runtime/interop"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/go-yaml/yaml"
 )
 

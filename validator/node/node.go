@@ -17,29 +17,29 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api/server/middleware"
-	"github.com/OffchainLabs/prysm/v7/async/event"
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/cmd/validator/flags"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/config/proposer"
-	"github.com/OffchainLabs/prysm/v7/config/proposer/loader"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	"github.com/OffchainLabs/prysm/v7/monitoring/prometheus"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing"
-	"github.com/OffchainLabs/prysm/v7/runtime"
-	"github.com/OffchainLabs/prysm/v7/runtime/prereqs"
-	"github.com/OffchainLabs/prysm/v7/validator/accounts/wallet"
-	"github.com/OffchainLabs/prysm/v7/validator/client"
-	"github.com/OffchainLabs/prysm/v7/validator/db"
-	"github.com/OffchainLabs/prysm/v7/validator/db/filesystem"
-	"github.com/OffchainLabs/prysm/v7/validator/db/iface"
-	"github.com/OffchainLabs/prysm/v7/validator/db/kv"
-	g "github.com/OffchainLabs/prysm/v7/validator/graffiti"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/local"
-	remoteweb3signer "github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer"
-	"github.com/OffchainLabs/prysm/v7/validator/rpc"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/middleware"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer/loader"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/prometheus"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/prereqs"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
+	g "github.com/sila-chain/Sila-Prysm-Core/v7/validator/graffiti"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
+	remoteweb3signer "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/rpc"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -181,7 +181,7 @@ func (c *ValidatorClient) getLegacyDatabaseLocation(
 	}
 
 	// We look in the previous, legacy directories.
-	// See https://github.com/prysmaticlabs/prysm/issues/13391
+	// See https://github.com/sila-chain/prysm/issues/13391
 	legacyDataDir := c.wallet.AccountsDir()
 	if isWeb3SignerURLFlagSet {
 		legacyDataDir = walletDir
@@ -258,7 +258,7 @@ func (c *ValidatorClient) initializeDB(cliCtx *cli.Context) error {
 	clearFlag := cliCtx.Bool(cmd.ClearDB.Name)
 	forceClearFlag := cliCtx.Bool(cmd.ForceClearDB.Name)
 
-	// Workaround for https://github.com/prysmaticlabs/prysm/issues/13391
+	// Workaround for https://github.com/sila-chain/prysm/issues/13391
 	kvDataDir, _, err := c.getLegacyDatabaseLocation(
 		isInteropNumValidatorsSet,
 		isWeb3SignerURLFlagSet,

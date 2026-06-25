@@ -3,7 +3,7 @@ package encoder
 import (
 	"io"
 
-	ssz "github.com/prysmaticlabs/fastssz"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // NetworkEncoding represents an encoder compatible with Sila consensus p2p.

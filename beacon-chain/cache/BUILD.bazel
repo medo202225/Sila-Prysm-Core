@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -35,7 +35,7 @@ go_library(
         "sync_subnet_ids.go",
         "tracked_validators.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/cache",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache",
     visibility = [
         "//beacon-chain:__subpackages__",
         "//testing/spectest:__subpackages__",
@@ -61,7 +61,7 @@ go_library(
         "//proto/prysm/v1alpha1/attestation:go_default_library",
         "//runtime/version:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
         "@com_github_hashicorp_golang_lru//:go_default_library",
         "@com_github_patrickmn_go_cache//:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
@@ -114,10 +114,10 @@ go_test(
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_google_gofuzz//:go_default_library",
         "@com_github_hashicorp_golang_lru//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
         "@com_github_stretchr_testify//require:go_default_library",
         "@org_golang_google_protobuf//proto:go_default_library",
     ],

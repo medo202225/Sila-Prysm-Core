@@ -1,11 +1,11 @@
 package node
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/builder"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db/filesystem"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/execution"
-	"github.com/OffchainLabs/prysm/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/builder"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
 )
 
 // Option for beacon node configuration.

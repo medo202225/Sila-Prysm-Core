@@ -3,13 +3,13 @@ package operations
 import (
 	"testing"
 
-	b "github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	common "github.com/OffchainLabs/prysm/v7/testing/spectest/shared/common/operations"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	b "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	common "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/operations"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 )
 
 func blockWithAttestation(attestationSSZ []byte) (interfaces.SignedBeaconBlock, error) {

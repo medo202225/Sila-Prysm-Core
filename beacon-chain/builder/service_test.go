@@ -4,13 +4,13 @@ import (
 	"testing"
 	"time"
 
-	buildertesting "github.com/OffchainLabs/prysm/v7/api/client/builder/testing"
-	blockchainTesting "github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/testing"
-	dbtesting "github.com/OffchainLabs/prysm/v7/beacon-chain/db/testing"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	buildertesting "github.com/sila-chain/Sila-Prysm-Core/v7/api/client/builder/testing"
+	blockchainTesting "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
+	dbtesting "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func Test_NewServiceWithBuilder(t *testing.T) {

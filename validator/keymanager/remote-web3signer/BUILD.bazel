@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -7,7 +7,7 @@ go_library(
         "log.go",
         "metrics.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer",
     visibility = [
         "//cmd/validator:__subpackages__",
         "//validator:__subpackages__",
@@ -25,7 +25,7 @@ go_library(
         "//validator/keymanager:go_default_library",
         "//validator/keymanager/remote-web3signer/internal:go_default_library",
         "//validator/keymanager/remote-web3signer/types:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_fsnotify_fsnotify//:go_default_library",
         "@com_github_go_playground_validator_v10//:go_default_library",
         "@com_github_logrusorgru_aurora//:go_default_library",
@@ -49,7 +49,7 @@ go_test(
         "//validator/keymanager:go_default_library",
         "//validator/keymanager/remote-web3signer/internal:go_default_library",
         "//validator/keymanager/remote-web3signer/types/mock:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_sirupsen_logrus//hooks/test:go_default_library",
         "@com_github_stretchr_testify//assert:go_default_library",
     ],

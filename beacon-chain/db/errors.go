@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
 )
 
 // ErrNotFound can be used to determine if an error from a method in the database package

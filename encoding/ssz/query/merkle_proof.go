@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	fastssz "github.com/prysmaticlabs/fastssz"
+	fastssz "github.com/sila-chain/fastssz"
 )
 
 // Prove is the entrypoint to generate an SSZ Merkle proof for the given generalized index.

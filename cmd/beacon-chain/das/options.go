@@ -1,10 +1,10 @@
 package options
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/das"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/node"
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/das/flags"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/das"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/node"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/das/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )

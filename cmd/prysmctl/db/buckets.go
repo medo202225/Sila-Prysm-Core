@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
 	"github.com/urfave/cli/v2"
 )
 

@@ -3,8 +3,8 @@ package mock
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 // PoolMock is a fake implementation of PoolManager.

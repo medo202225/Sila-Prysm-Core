@@ -1,7 +1,7 @@
 package cache
 
 import (
-	lruwrpr "github.com/OffchainLabs/prysm/v7/cache/lru"
+	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"

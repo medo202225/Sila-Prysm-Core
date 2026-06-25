@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz/query"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/query"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestParseSSZTag(t *testing.T) {

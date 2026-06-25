@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/OffchainLabs/go-bitfield"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/go-bitfield"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

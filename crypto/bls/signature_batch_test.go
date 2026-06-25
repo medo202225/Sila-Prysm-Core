@@ -7,9 +7,9 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/crypto/bls/common"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 const TestSignature = "test signature"

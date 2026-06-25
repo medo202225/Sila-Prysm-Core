@@ -3,14 +3,14 @@ package grpc_api
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/validator"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	mock "github.com/OffchainLabs/prysm/v7/testing/validator-mock"
-	"github.com/OffchainLabs/prysm/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	mock "github.com/sila-chain/Sila-Prysm-Core/v7/testing/validator-mock"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
 	"go.uber.org/mock/gomock"
 )
 

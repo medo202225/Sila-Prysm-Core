@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_test(
     name = "go_default_test",
@@ -27,7 +27,7 @@ go_library(
         "log.go",
         "node.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/node",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/node",
     visibility = [
         "//cmd/validator:__subpackages__",
         "//validator:__subpackages__",

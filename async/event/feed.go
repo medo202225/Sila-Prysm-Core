@@ -17,7 +17,7 @@
 package event
 
 import (
-	geth_event "github.com/ethereum/go-ethereum/event"
+	geth_event "github.com/sila-chain/Sila/event"
 )
 
 // Feed is a re-export of the go-ethereum event feed.

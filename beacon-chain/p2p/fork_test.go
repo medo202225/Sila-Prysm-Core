@@ -8,14 +8,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/startup"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	pb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/enr"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common/hexutil"
+	"github.com/sila-chain/Sila/p2p/enode"
+	"github.com/sila-chain/Sila/p2p/enr"
 )
 
 func TestCompareForkENR(t *testing.T) {

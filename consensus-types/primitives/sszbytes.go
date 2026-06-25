@@ -1,7 +1,7 @@
 package primitives
 
 import (
-	fssz "github.com/prysmaticlabs/fastssz"
+	fssz "github.com/sila-chain/fastssz"
 )
 
 // SSZBytes --

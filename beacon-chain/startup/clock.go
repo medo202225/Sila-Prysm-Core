@@ -3,8 +3,8 @@ package startup
 import (
 	"time"
 
-	types "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 )
 
 // Nower is a function that can return the current time.

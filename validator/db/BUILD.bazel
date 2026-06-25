@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -9,7 +9,7 @@ go_library(
         "migrate.go",
         "restore.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/db",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db",
     visibility = [
         "//cmd/validator:__subpackages__",
         "//validator:__subpackages__",
@@ -54,7 +54,7 @@ go_test(
         "//validator/db/iface:go_default_library",
         "//validator/db/kv:go_default_library",
         "//validator/db/testing:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_sirupsen_logrus//hooks/test:go_default_library",
         "@com_github_urfave_cli_v2//:go_default_library",
     ],

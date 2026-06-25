@@ -1,9 +1,9 @@
 package db
 
 import (
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/runtime/tos"
-	validatordb "github.com/OffchainLabs/prysm/v7/validator/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
+	validatordb "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db"
 	"github.com/urfave/cli/v2"
 )
 

@@ -6,19 +6,19 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api/pagination"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db/filters"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/operations/attestations"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stategen"
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/attestation"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/pagination"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filters"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -315,7 +315,7 @@ func (bs *Server) ListIndexedAttestationsElectra(
 // that it was included in a block. The attestation may have expired.
 // Refer to the Sila consensus specification for more details on how
 // attestations are processed and when they are no longer valid.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/phase0/beacon-chain.md#attestations
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/phase0/beacon-chain.md#attestations
 func (bs *Server) AttestationPool(_ context.Context, req *ethpb.AttestationPoolRequest) (*ethpb.AttestationPoolResponse, error) {
 	var atts []*ethpb.Attestation
 	var err error

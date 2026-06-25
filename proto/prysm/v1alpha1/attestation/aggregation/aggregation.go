@@ -4,7 +4,7 @@ package aggregation
 import (
 	"errors"
 
-	"github.com/OffchainLabs/go-bitfield"
+	"github.com/sila-chain/go-bitfield"
 )
 
 var (

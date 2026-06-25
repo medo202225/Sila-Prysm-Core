@@ -13,7 +13,7 @@ offering an optimal solution.
 
 Attesting histories are kept for each validator in two separate arrays known
 as min and max spans, which are explained in our design document:
-https://hackmd.io/@prysmaticlabs/slasher.
+https://hackmd.io/@sila/slasher.
 
 This is known as 2D chunking, pioneered by the Sigma Prime team here:
 https://hackmd.io/@sproul/min-max-slasher. The parameters H, C, and K will be

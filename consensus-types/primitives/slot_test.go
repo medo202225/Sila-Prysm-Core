@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	mathprysm "github.com/OffchainLabs/prysm/v7/math"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	mathprysm "github.com/sila-chain/Sila-Prysm-Core/v7/math"
 )
 
 func TestSlot_Casting(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/sila-chain/Sila/common"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/util/yaml"
 )

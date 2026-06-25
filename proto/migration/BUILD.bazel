@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -6,7 +6,7 @@ go_library(
         "enums.go",
         "v1alpha1_to_v1.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/proto/migration",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/migration",
     visibility = ["//visibility:public"],
     deps = [
         "//proto/eth/v1:go_default_library",

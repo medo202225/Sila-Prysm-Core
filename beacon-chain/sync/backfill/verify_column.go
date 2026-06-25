@@ -3,9 +3,9 @@ package backfill
 import (
 	"io"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/peerdas"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/das"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/das"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 )

@@ -5,11 +5,11 @@ import (
 	"math"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	mathutil "github.com/OffchainLabs/prysm/v7/math"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	mathutil "github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

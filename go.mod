@@ -1,10 +1,10 @@
-module github.com/OffchainLabs/prysm/v7
+module github.com/sila-chain/Sila-Prysm-Core/v7
 
 go 1.26.4
 
 require (
-	github.com/OffchainLabs/go-bitfield v0.0.0-20260504143531-5cbb6d0f5f2e
-	github.com/OffchainLabs/hashtree v0.2.3
+	github.com/sila-chain/go-bitfield v0.0.0-20260504143531-5cbb6d0f5f2e
+	github.com/SilaLabs/hashtree v0.2.3
 	github.com/aristanetworks/goarista v0.0.0-20200805130819-fd197cf57d96
 	github.com/bazelbuild/rules_go v0.23.2
 	github.com/btcsuite/btcd/btcec/v2 v2.3.4
@@ -15,7 +15,7 @@ require (
 	github.com/dustin/go-humanize v1.0.1
 	github.com/emicklei/dot v1.6.2
 	github.com/ethereum/c-kzg-4844/v2 v2.1.6
-	github.com/ethereum/go-ethereum v1.17.3
+	github.com/sila-chain/Sila v1.17.3
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-yaml/yaml v2.1.0+incompatible
@@ -59,9 +59,9 @@ require (
 	github.com/prometheus/client_golang v1.22.0
 	github.com/prometheus/client_model v0.6.2
 	github.com/prometheus/prom2json v1.3.0
-	github.com/prysmaticlabs/fastssz v0.0.0-20260421202104-7a6eb71e6e45
-	github.com/prysmaticlabs/prombbolt v0.0.0-20210126082820-9b7adba6db7c
-	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20230228205207-28762a7b9294
+	github.com/sila-chain/fastssz v0.0.0-20260421202104-7a6eb71e6e45
+	github.com/sila-chain/prombbolt v0.0.0-20210126082820-9b7adba6db7c
+	github.com/sila-chain/protoc-gen-go-cast v0.0.0-20230228205207-28762a7b9294
 	github.com/r3labs/sse/v2 v2.10.0
 	github.com/rs/cors v1.7.0
 	github.com/schollz/progressbar/v3 v3.3.4
@@ -275,7 +275,7 @@ require (
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-playground/validator/v10 v10.13.0
 	github.com/peterh/liner v1.2.0 // indirect
-	github.com/prysmaticlabs/gohashtree v0.0.5-beta
+	github.com/sila-chain/gohashtree v0.0.5-beta
 	golang.org/x/sys v0.41.0 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect

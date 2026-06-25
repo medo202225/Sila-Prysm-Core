@@ -8,12 +8,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/execution"
-	pb "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/ethereum/go-ethereum/beacon/engine"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila/beacon/engine"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/core/types"
 	"github.com/pkg/errors"
 )
 

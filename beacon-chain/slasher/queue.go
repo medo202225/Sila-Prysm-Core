@@ -3,7 +3,7 @@ package slasher
 import (
 	"sync"
 
-	slashertypes "github.com/OffchainLabs/prysm/v7/beacon-chain/slasher/types"
+	slashertypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/slasher/types"
 )
 
 // Struct for handling a thread-safe list of indexed attestation wrappers.

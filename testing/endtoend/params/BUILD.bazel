@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -7,11 +7,11 @@ go_library(
         "const.go",
         "params.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/endtoend/params",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params",
     visibility = ["//visibility:public"],
     deps = [
         "//io/file:go_default_library",
-        "@com_github_ethereum_go_ethereum//core/types:go_default_library",
+        "@com_github_sila_chain_sila//core/types:go_default_library",
         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
     ],
 )

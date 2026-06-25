@@ -4,9 +4,9 @@ package slots
 import (
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
 )
 
 // The Ticker interface defines a type which can expose a

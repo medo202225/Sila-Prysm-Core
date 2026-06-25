@@ -6,9 +6,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	slashing "github.com/OffchainLabs/prysm/v7/validator/slashing-protection-history"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	slashing "github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history"
 	"github.com/pkg/errors"
 )
 

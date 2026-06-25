@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -6,7 +6,7 @@ go_library(
         "double_votes.go",
         "surround_votes.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/slashings",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/slashings",
     visibility = ["//visibility:public"],
     deps = ["//proto/prysm/v1alpha1:go_default_library"],
 )

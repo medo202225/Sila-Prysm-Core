@@ -3,11 +3,11 @@ package light_client
 import (
 	"fmt"
 
-	consensustypes "github.com/OffchainLabs/prysm/v7/consensus-types"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	pb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	consensustypes "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"google.golang.org/protobuf/proto"
 )
 

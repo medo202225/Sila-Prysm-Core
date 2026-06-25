@@ -6,10 +6,10 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"github.com/btcsuite/btcd/btcec/v2"
-	gcrypto "github.com/ethereum/go-ethereum/crypto"
+	gcrypto "github.com/sila-chain/Sila/crypto"
 	"github.com/libp2p/go-libp2p/core/crypto"
 )
 

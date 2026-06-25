@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api/server/middleware"
-	"github.com/OffchainLabs/prysm/v7/runtime"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/middleware"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime"
 	"github.com/pkg/errors"
 )
 

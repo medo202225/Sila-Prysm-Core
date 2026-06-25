@@ -3,10 +3,10 @@ package rpc
 import (
 	"net/http"
 
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	"github.com/OffchainLabs/prysm/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
 	"github.com/pkg/errors"
 )
 

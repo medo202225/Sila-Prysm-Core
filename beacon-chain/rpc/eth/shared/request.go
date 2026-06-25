@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/sync"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 func UintFromQuery(w http.ResponseWriter, r *http.Request, name string, required bool) (string, uint64, bool) {

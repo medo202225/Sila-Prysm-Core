@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -17,7 +17,7 @@ go_library(
         "server.go",
         "structs.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/rpc",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/rpc",
     visibility = [
         "//visibility:public",
     ],
@@ -67,8 +67,8 @@ go_library(
         "//validator/slashing-protection-history:go_default_library",
         "//validator/slashing-protection-history/format:go_default_library",
         "//validator/web:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_fsnotify_fsnotify//:go_default_library",
         "@com_github_golang_jwt_jwt_v4//:go_default_library",
         "@com_github_grpc_ecosystem_go_grpc_middleware//:go_default_library",
@@ -139,8 +139,8 @@ go_test(
         "//validator/keymanager/remote-web3signer:go_default_library",
         "//validator/slashing-protection-history/format:go_default_library",
         "//validator/testing:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_golang_jwt_jwt_v4//:go_default_library",
         "@com_github_golang_protobuf//ptypes/empty",
         "@com_github_google_uuid//:go_default_library",

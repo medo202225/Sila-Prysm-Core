@@ -4,10 +4,10 @@ import (
 	"net"
 	"time"
 
-	statefeed "github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed/state"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/startup"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stategen"
+	statefeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
 	"github.com/sirupsen/logrus"
 )
 

@@ -2,8 +2,8 @@
 package v1
 
 import (
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ssz "github.com/prysmaticlabs/fastssz"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // MarshalSSZ ssz marshals the Attestation object
@@ -182,7 +182,7 @@ func (a *AggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 	var o1 uint64
 
 	// Field (0) 'AggregatorIndex'
-	a.AggregatorIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[0:8])
+	a.AggregatorIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[0:8])
 
 	// Offset (1) 'Aggregate'
 	if o1 = ssz.ReadOffset(buf[8:12]); o1 > size {
@@ -412,10 +412,10 @@ func (a *AttestationData) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	a.Slot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[0:8])
+	a.Slot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[0:8])
 
 	// Field (1) 'Index'
-	a.Index = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.CommitteeIndex](buf[8:16])
+	a.Index = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.CommitteeIndex](buf[8:16])
 
 	// Field (2) 'BeaconBlockRoot'
 	if cap(a.BeaconBlockRoot) == 0 {
@@ -515,7 +515,7 @@ func (c *Checkpoint) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Epoch'
-	c.Epoch = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch](buf[0:8])
+	c.Epoch = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch](buf[0:8])
 
 	// Field (1) 'Root'
 	if cap(c.Root) == 0 {
@@ -612,10 +612,10 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	var o4 uint64
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[0:8])
+	b.Slot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[0:8])
 
 	// Field (1) 'ProposerIndex'
-	b.ProposerIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
+	b.ProposerIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
 
 	// Field (2) 'ParentRoot'
 	if cap(b.ParentRoot) == 0 {
@@ -1582,10 +1582,10 @@ func (v *VoluntaryExit) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Epoch'
-	v.Epoch = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch](buf[0:8])
+	v.Epoch = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch](buf[0:8])
 
 	// Field (1) 'ValidatorIndex'
-	v.ValidatorIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
+	v.ValidatorIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
 
 	return err
 }
@@ -1837,10 +1837,10 @@ func (b *BeaconBlockHeader) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot](buf[0:8])
+	b.Slot = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[0:8])
 
 	// Field (1) 'ProposerIndex'
-	b.ProposerIndex = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
+	b.ProposerIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
 
 	// Field (2) 'ParentRoot'
 	if cap(b.ParentRoot) == 0 {
@@ -2400,16 +2400,16 @@ func (v *Validator) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (4) 'ActivationEligibilityEpoch'
-	v.ActivationEligibilityEpoch = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch](buf[89:97])
+	v.ActivationEligibilityEpoch = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch](buf[89:97])
 
 	// Field (5) 'ActivationEpoch'
-	v.ActivationEpoch = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch](buf[97:105])
+	v.ActivationEpoch = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch](buf[97:105])
 
 	// Field (6) 'ExitEpoch'
-	v.ExitEpoch = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch](buf[105:113])
+	v.ExitEpoch = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch](buf[105:113])
 
 	// Field (7) 'WithdrawableEpoch'
-	v.WithdrawableEpoch = ssz.UnmarshallUint[github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch](buf[113:121])
+	v.WithdrawableEpoch = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch](buf[113:121])
 
 	return err
 }

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"sync"
 
-	forkchoicetypes "github.com/OffchainLabs/prysm/v7/beacon-chain/forkchoice/types"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	forkchoicetypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 type AttestationConsensusData struct {

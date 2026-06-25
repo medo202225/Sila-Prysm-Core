@@ -6,10 +6,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	pb "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/rpc"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common/hexutil"
+	"github.com/sila-chain/Sila/rpc"
 )
 
 var mockHandlerDefaultName = "__default__"

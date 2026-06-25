@@ -6,17 +6,17 @@ import (
 	"testing"
 	"time"
 
-	dbutil "github.com/OffchainLabs/prysm/v7/beacon-chain/db/testing"
-	mockExecution "github.com/OffchainLabs/prysm/v7/beacon-chain/execution/testing"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/execution/types"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	contracts "github.com/OffchainLabs/prysm/v7/contracts/deposit"
-	"github.com/OffchainLabs/prysm/v7/contracts/deposit/mock"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	gethTypes "github.com/ethereum/go-ethereum/core/types"
+	dbutil "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
+	mockExecution "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	contracts "github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit/mock"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/common/hexutil"
+	gethTypes "github.com/sila-chain/Sila/core/types"
 )
 
 func setDefaultMocks(service *Service) *Service {

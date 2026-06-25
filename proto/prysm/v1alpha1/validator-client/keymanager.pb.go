@@ -10,10 +10,10 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	github_com_OffchainLabs_prysm_v7_consensus_types_validator "github.com/OffchainLabs/prysm/v7/consensus-types/validator"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
-	v1alpha1 "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_validator "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
+	v1alpha1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -111,7 +111,7 @@ type SignRequest struct {
 	//	*SignRequest_PayloadAttestationData
 	//	*SignRequest_ProposerPreference
 	Object        isSignRequest_Object                                             `protobuf_oneof:"object"`
-	SigningSlot   github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,6,opt,name=signing_slot,json=signingSlot,proto3" json:"signing_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	SigningSlot   github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,6,opt,name=signing_slot,json=signingSlot,proto3" json:"signing_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -210,22 +210,22 @@ func (x *SignRequest) GetExit() *v1alpha1.VoluntaryExit {
 	return nil
 }
 
-func (x *SignRequest) GetSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *SignRequest) GetSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		if x, ok := x.Object.(*SignRequest_Slot); ok {
 			return x.Slot
 		}
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *SignRequest) GetEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *SignRequest) GetEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		if x, ok := x.Object.(*SignRequest_Epoch); ok {
 			return x.Epoch
 		}
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
 func (x *SignRequest) GetBlockAltair() *v1alpha1.BeaconBlockAltair {
@@ -408,11 +408,11 @@ func (x *SignRequest) GetProposerPreference() *v1alpha1.ProposerPreferences {
 	return nil
 }
 
-func (x *SignRequest) GetSigningSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *SignRequest) GetSigningSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SigningSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type isSignRequest_Object interface {
@@ -436,11 +436,11 @@ type SignRequest_Exit struct {
 }
 
 type SignRequest_Slot struct {
-	Slot github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,105,opt,name=slot,proto3,oneof" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	Slot github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,105,opt,name=slot,proto3,oneof" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 }
 
 type SignRequest_Epoch struct {
-	Epoch github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch `protobuf:"varint,106,opt,name=epoch,proto3,oneof" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
+	Epoch github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,106,opt,name=epoch,proto3,oneof" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
 }
 
 type SignRequest_BlockAltair struct {
@@ -690,7 +690,7 @@ func (x *ProposerOptionPayload) GetGraffiti() string {
 type BuilderConfig struct {
 	state         protoimpl.MessageState                                            `protogen:"open.v1"`
 	Enabled       bool                                                              `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	GasLimit      github_com_OffchainLabs_prysm_v7_consensus_types_validator.Uint64 `protobuf:"varint,2,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/validator.Uint64"`
+	GasLimit      github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_validator.Uint64 `protobuf:"varint,2,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator.Uint64"`
 	Relays        []string                                                          `protobuf:"bytes,3,rep,name=relays,proto3" json:"relays,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -733,11 +733,11 @@ func (x *BuilderConfig) GetEnabled() bool {
 	return false
 }
 
-func (x *BuilderConfig) GetGasLimit() github_com_OffchainLabs_prysm_v7_consensus_types_validator.Uint64 {
+func (x *BuilderConfig) GetGasLimit() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_validator.Uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_validator.Uint64(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_validator.Uint64(0)
 }
 
 func (x *BuilderConfig) GetRelays() []string {

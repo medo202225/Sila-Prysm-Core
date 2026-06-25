@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	rpctesting "github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/eth/shared/testing"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	rpctesting "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/shared/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 // TestBlocks_NewSignedBeaconBlock_EquivocationFix tests that blocks.NewSignedBeaconBlock

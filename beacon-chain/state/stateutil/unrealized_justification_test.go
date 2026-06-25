@@ -3,9 +3,9 @@ package stateutil
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	multi_value_slice "github.com/OffchainLabs/prysm/v7/container/multi-value-slice"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	multi_value_slice "github.com/sila-chain/Sila-Prysm-Core/v7/container/multi-value-slice"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestState_UnrealizedCheckpointBalances(t *testing.T) {

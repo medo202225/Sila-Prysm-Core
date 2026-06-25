@@ -7,12 +7,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api/rest"
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/network/httputil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/rest"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"github.com/pkg/errors"
 )
 

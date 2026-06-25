@@ -4,9 +4,9 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/OffchainLabs/hashtree"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	"github.com/prysmaticlabs/gohashtree"
+	"github.com/SilaLabs/hashtree"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/gohashtree"
 )
 
 const minSliceSizeToParallelize = 5000

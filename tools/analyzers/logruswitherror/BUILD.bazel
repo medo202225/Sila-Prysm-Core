@@ -1,9 +1,9 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
     srcs = ["analyzer.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/tools/analyzers/logruswitherror",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/tools/analyzers/logruswitherror",
     visibility = ["//visibility:public"],
     deps = [
         "@org_golang_x_tools//go/analysis:go_default_library",

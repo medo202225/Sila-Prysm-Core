@@ -3,8 +3,8 @@ package slashings
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/operations/slashings/mock"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/slashings/mock"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 var (

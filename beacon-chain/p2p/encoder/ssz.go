@@ -5,12 +5,12 @@ import (
 	"io"
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/math"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/snappy"
 	"github.com/pkg/errors"
-	fastssz "github.com/prysmaticlabs/fastssz"
+	fastssz "github.com/sila-chain/fastssz"
 )
 
 var _ NetworkEncoding = (*SszNetworkEncoder)(nil)

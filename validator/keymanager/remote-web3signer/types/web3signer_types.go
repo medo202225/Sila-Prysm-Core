@@ -5,7 +5,7 @@ package types
 import (
 	"encoding/json"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 // AggregationSlotSignRequest is a request object for web3signer sign api.

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -17,7 +17,7 @@ go_library(
         "mock.go",
         "pruner.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/db/filesystem",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem",
     visibility = ["//visibility:public"],
     deps = [
         "//async:go_default_library",
@@ -32,7 +32,7 @@ go_library(
         "//io/file:go_default_library",
         "//runtime/logging:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
         "@com_github_prometheus_client_golang//prometheus:go_default_library",
         "@com_github_prometheus_client_golang//prometheus/promauto:go_default_library",
@@ -67,7 +67,7 @@ go_test(
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_prysmaticlabs_fastssz//:go_default_library",
+        "@com_github_sila_fastssz//:go_default_library",
         "@com_github_spf13_afero//:go_default_library",
     ],
 )

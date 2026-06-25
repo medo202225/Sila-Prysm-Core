@@ -1,9 +1,9 @@
 package kv
 
 import (
-	"github.com/OffchainLabs/go-bitfield"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/attestation"
+	"github.com/sila-chain/go-bitfield"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation"
 	"github.com/patrickmn/go-cache"
 	"github.com/pkg/errors"
 )

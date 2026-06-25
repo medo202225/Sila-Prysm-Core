@@ -4,8 +4,8 @@ import (
 	"context"
 	"math/big"
 
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/ethereum/go-ethereum/common"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila/common"
 )
 
 // DepositCache combines the interfaces for retrieving and inserting deposit information.

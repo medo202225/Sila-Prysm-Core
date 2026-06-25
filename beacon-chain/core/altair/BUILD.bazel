@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -14,7 +14,7 @@ go_library(
         "transition.go",
         "upgrade.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/core/altair",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/altair",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/blocks:go_default_library",
@@ -89,7 +89,7 @@ go_test(
         "//time:go_default_library",
         "//time/slots:go_default_library",
         "@com_github_google_gofuzz//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
         "@org_golang_google_protobuf//proto:go_default_library",
     ],
 )

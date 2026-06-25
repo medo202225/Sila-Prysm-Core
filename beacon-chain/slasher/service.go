@@ -1,7 +1,7 @@
 // Package slasher implements slashing detection for Sila, able to catch slashable attestations
 // and proposals that it receives via two event feeds, respectively. Any found slashings
 // are then submitted to the beacon node's slashing operations pool. See the design document
-// here https://hackmd.io/@prysmaticlabs/slasher.
+// here https://hackmd.io/@sila/slasher.
 package slasher
 
 import (
@@ -9,19 +9,19 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/async/event"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	statefeed "github.com/OffchainLabs/prysm/v7/beacon-chain/core/feed/state"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/operations/slashings"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/slasher/types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/startup"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stategen"
-	beaconChainSync "github.com/OffchainLabs/prysm/v7/beacon-chain/sync"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	statefeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/slashings"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/slasher/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
+	beaconChainSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 )
 
 const (

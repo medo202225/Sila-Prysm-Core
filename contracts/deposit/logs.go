@@ -3,7 +3,7 @@ package deposit
 import (
 	"bytes"
 
-	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/sila-chain/Sila/accounts/abi"
 	"github.com/pkg/errors"
 )
 

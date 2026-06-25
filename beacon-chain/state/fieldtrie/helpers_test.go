@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"testing"
 
-	customtypes "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native/custom-types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native/types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stateutil"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	multi_value_slice "github.com/OffchainLabs/prysm/v7/container/multi-value-slice"
-	mvslice "github.com/OffchainLabs/prysm/v7/container/multi-value-slice"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	customtypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/custom-types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	multi_value_slice "github.com/sila-chain/Sila-Prysm-Core/v7/container/multi-value-slice"
+	mvslice "github.com/sila-chain/Sila-Prysm-Core/v7/container/multi-value-slice"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/common/hexutil"
 )
 
 func Test_handlePendingAttestation_OutOfRange(t *testing.T) {

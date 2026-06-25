@@ -25,7 +25,7 @@ exit status 1
 To install formatter, use `go get`:
 
 ```sh
-$ go get github.com/prysmaticlabs/prysm/runtime/logging/logrus-prefixed-formatter
+$ go get github.com/sila-chain/prysm/runtime/logging/logrus-prefixed-formatter
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ Here is how it should be used:
 package main
 
 import (
-	prefixed "github.com/prysmaticlabs/prysm/runtime/logging/logrus-prefixed-formatter"
+	prefixed "github.com/sila-chain/prysm/runtime/logging/logrus-prefixed-formatter"
 	"github.com/sirupsen/logrus"
 )
 

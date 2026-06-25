@@ -3,7 +3,7 @@ package helpers
 import (
 	"os"
 
-	"github.com/ethereum/go-ethereum/accounts/keystore"
+	"github.com/sila-chain/Sila/accounts/keystore"
 	"github.com/pkg/errors"
 )
 

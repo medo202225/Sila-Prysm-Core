@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -13,7 +13,7 @@ go_library(
         "password_reader.go",
         "wrap_flags.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/cmd",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd",
     visibility = ["//visibility:public"],
     deps = [
         "//config/fieldparams:go_default_library",

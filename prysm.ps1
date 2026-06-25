@@ -4,21 +4,21 @@ $ProgressPreference = 'SilentlyContinue' # Disable Invoke-WebRequest progress ba
 # Complain if invalid arguments were provided.
 if ("beacon-chain", "validator", "client-stats" -notcontains $args[0]) {
     Write-Host @"
-Usage: ./prysm.sh1 PROCESS FLAGS.
+Usage: ./sila.sh1 PROCESS FLAGS.
 
 PROCESS can be beacon-chain, validator, or client-stats.
 FLAGS are the flags or arguments passed to the PROCESS.
- 
+
 Use this script to download the latest Sila-Prysm release binaries.
 Downloaded binaries are saved to .\dist
- 
+
 To specify a specific release version:
   `$env:USE_PRYSM_VERSION="v1.0.0-beta.3"
  to resume using the latest release:
   Remove-Item env:USE_PRYSM_VERSION
- 
+
 To automatically restart crashed processes:
-  `$env:PRYSM_AUTORESTART=`$TRUE ; .\prysm.sh1 beacon-chain
+  `$env:PRYSM_AUTORESTART=`$TRUE ; .\sila.sh1 beacon-chain
  to stop autorestart run:
   Remove-Item env:PRYSM_AUTORESTART
 "@;
@@ -44,7 +44,7 @@ if (Test-Path env:USE_PRYSM_VERSION) {
 }
 else {
     try {
-        $response = Invoke-WebRequest -Uri "https://prysmaticlabs.com/releases/latest";
+        $response = Invoke-WebRequest -Uri "https://sila.com/releases/latest";
         $version = $response.Content.Trim();
 
         Write-Host "Using (latest) prysm version: $version";
@@ -67,9 +67,9 @@ else {
     try {
         Write-Host "Downloading $fileName" -ForegroundColor Green;
 
-        Invoke-WebRequest -Uri "https://prysmaticlabs.com/releases/$fileName" -OutFile "$folderBin";
-        Invoke-WebRequest -Uri "https://prysmaticlabs.com/releases/$fileName.sha256" -OutFile "$folderBin.sha256";
-        Invoke-WebRequest -Uri "https://prysmaticlabs.com/releases/$fileName.sig" -OutFile "$folderBin.sig";
+        Invoke-WebRequest -Uri "https://sila.com/releases/$fileName" -OutFile "$folderBin";
+        Invoke-WebRequest -Uri "https://sila.com/releases/$fileName.sha256" -OutFile "$folderBin.sha256";
+        Invoke-WebRequest -Uri "https://sila.com/releases/$fileName.sig" -OutFile "$folderBin.sig";
 
         Write-Host "Downloading complete!" -ForegroundColor Green;
     }
@@ -122,6 +122,6 @@ do {
     else {
         $process = Start-Process -FilePath $folderBin -NoNewWindow -PassThru -Wait;
     }
-    
+
     $restart = (Test-Path env:PRYSM_AUTORESTART) -and $env:PRYSM_AUTORESTART -eq $TRUE -and $process.ExitCode -ne 0;
 } while ($restart)

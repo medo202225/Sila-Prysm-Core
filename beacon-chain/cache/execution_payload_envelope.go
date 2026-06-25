@@ -3,8 +3,8 @@ package cache
 import (
 	"sync"
 
-	consensusblocks "github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	consensusblocks "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 // ExecutionPayloadContents holds the producer's envelope with precomputed

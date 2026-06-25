@@ -351,9 +351,9 @@ ssz_gen_marshal(
 go_proto_library(
     name = "go_proto",
     compilers = [
-        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast_grpc",
+        "@com_github_sila_protoc_gen_go_cast//:go_cast_grpc",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1",
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -362,7 +362,7 @@ go_proto_library(
         "//proto/engine/v1:go_default_library",
         "//proto/eth/ext:go_default_library",
         "@com_github_golang_protobuf//proto:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
         "@googleapis//google/api:annotations_go_proto",
         "@io_bazel_rules_go//proto/wkt:descriptor_go_proto",
         "@io_bazel_rules_go//proto/wkt:timestamp_go_proto",
@@ -400,7 +400,7 @@ go_library(
         ":ssz_generated_phase0",  # keep
     ],
     embed = [":go_proto"],
-    importpath = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1",
     visibility = ["//visibility:public"],
     deps = SSZ_DEPS + [
         "//consensus-types/primitives:go_default_library",
@@ -411,7 +411,7 @@ go_library(
         "//runtime/version:go_default_library",
         "@com_github_golang_protobuf//proto:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
+        "@com_github_sila_go_bitfield//:go_default_library",  # keep
         "@com_github_sirupsen_logrus//:go_default_library",
         "@com_github_sirupsen_logrus//hooks/test:go_default_library",
         "@googleapis//google/api:annotations_go_proto",

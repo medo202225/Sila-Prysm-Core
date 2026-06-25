@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api/client"
-	"github.com/OffchainLabs/prysm/v7/api/client/beacon"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/sync/checkpoint"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/beacon"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/checkpoint"
 	"github.com/urfave/cli/v2"
 )
 

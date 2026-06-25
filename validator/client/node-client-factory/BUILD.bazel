@@ -1,9 +1,9 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
     srcs = ["node_client_factory.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/validator/client/node-client-factory",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/node-client-factory",
     visibility = ["//visibility:public"],
     deps = [
         "//config/features:go_default_library",

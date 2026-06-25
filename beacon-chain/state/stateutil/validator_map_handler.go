@@ -3,10 +3,10 @@ package stateutil
 import (
 	"sync"
 
-	coreutils "github.com/OffchainLabs/prysm/v7/beacon-chain/core/transition/stateutils"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	coreutils "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition/stateutils"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 // ValidatorMapHandler is a container to hold the map and a reference tracker for how many

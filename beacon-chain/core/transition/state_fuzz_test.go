@@ -3,9 +3,9 @@ package transition
 import (
 	"testing"
 
-	state_native "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	fuzz "github.com/google/gofuzz"
 )
 

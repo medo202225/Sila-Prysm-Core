@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/flags"
-	"github.com/OffchainLabs/prysm/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
 	"github.com/sirupsen/logrus"
 )
 

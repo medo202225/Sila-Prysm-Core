@@ -1,13 +1,13 @@
 package beacon
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain"
-	beacondb "github.com/OffchainLabs/prysm/v7/beacon-chain/db"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/core"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/lookup"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stategen"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
+	beacondb "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
 )
 
 type Server struct {

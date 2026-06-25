@@ -1,9 +1,9 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
     srcs = ["readonly_message.go"],
-    importpath = "github.com/OffchainLabs/prysm/v7/consensus-types/payload-attestation",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/payload-attestation",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/signing:go_default_library",

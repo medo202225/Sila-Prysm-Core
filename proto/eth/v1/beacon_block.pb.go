@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_go_bitfield "github.com/OffchainLabs/go-bitfield"
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -27,8 +27,8 @@ const (
 
 type BeaconBlock struct {
 	state         protoimpl.MessageState                                                     `protogen:"open.v1"`
-	Slot          github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
-	ProposerIndex github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	Slot          github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
+	ProposerIndex github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	ParentRoot    []byte                                                                     `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
 	StateRoot     []byte                                                                     `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
 	Body          *BeaconBlockBody                                                           `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`
@@ -66,18 +66,18 @@ func (*BeaconBlock) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_beacon_block_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *BeaconBlock) GetSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *BeaconBlock) GetSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *BeaconBlock) GetProposerIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *BeaconBlock) GetProposerIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.ProposerIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 func (x *BeaconBlock) GetParentRoot() []byte {
@@ -411,8 +411,8 @@ func (x *Deposit) GetData() *Deposit_Data {
 
 type VoluntaryExit struct {
 	state          protoimpl.MessageState                                                     `protogen:"open.v1"`
-	Epoch          github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
-	ValidatorIndex github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	Epoch          github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
+	ValidatorIndex github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -447,18 +447,18 @@ func (*VoluntaryExit) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_beacon_block_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *VoluntaryExit) GetEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *VoluntaryExit) GetEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		return x.Epoch
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
-func (x *VoluntaryExit) GetValidatorIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *VoluntaryExit) GetValidatorIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.ValidatorIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 type SignedVoluntaryExit struct {
@@ -575,8 +575,8 @@ func (x *Eth1Data) GetBlockHash() []byte {
 
 type BeaconBlockHeader struct {
 	state         protoimpl.MessageState                                                     `protogen:"open.v1"`
-	Slot          github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
-	ProposerIndex github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	Slot          github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
+	ProposerIndex github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	ParentRoot    []byte                                                                     `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
 	StateRoot     []byte                                                                     `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
 	BodyRoot      []byte                                                                     `protobuf:"bytes,5,opt,name=body_root,json=bodyRoot,proto3" json:"body_root,omitempty" ssz-size:"32"`
@@ -614,18 +614,18 @@ func (*BeaconBlockHeader) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_beacon_block_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *BeaconBlockHeader) GetSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *BeaconBlockHeader) GetSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.Slot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *BeaconBlockHeader) GetProposerIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *BeaconBlockHeader) GetProposerIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.ProposerIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 func (x *BeaconBlockHeader) GetParentRoot() []byte {
@@ -763,7 +763,7 @@ func (x *IndexedAttestation) GetSignature() []byte {
 
 type SyncAggregate struct {
 	state                  protoimpl.MessageState                           `protogen:"open.v1"`
-	SyncCommitteeBits      github_com_OffchainLabs_go_bitfield.Bitvector512 `protobuf:"bytes,1,opt,name=sync_committee_bits,json=syncCommitteeBits,proto3" json:"sync_committee_bits,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector512" ssz-size:"64"`
+	SyncCommitteeBits      github_com_sila_chain_go_bitfield.Bitvector512 `protobuf:"bytes,1,opt,name=sync_committee_bits,json=syncCommitteeBits,proto3" json:"sync_committee_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector512" ssz-size:"64"`
 	SyncCommitteeSignature []byte                                           `protobuf:"bytes,2,opt,name=sync_committee_signature,json=syncCommitteeSignature,proto3" json:"sync_committee_signature,omitempty" ssz-size:"96"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -799,11 +799,11 @@ func (*SyncAggregate) Descriptor() ([]byte, []int) {
 	return file_proto_eth_v1_beacon_block_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *SyncAggregate) GetSyncCommitteeBits() github_com_OffchainLabs_go_bitfield.Bitvector512 {
+func (x *SyncAggregate) GetSyncCommitteeBits() github_com_sila_chain_go_bitfield.Bitvector512 {
 	if x != nil {
 		return x.SyncCommitteeBits
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector512(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector512(nil)
 }
 
 func (x *SyncAggregate) GetSyncCommitteeSignature() []byte {

@@ -7,13 +7,13 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stateutil"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ssz "github.com/OffchainLabs/prysm/v7/encoding/ssz"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	sszquerypb "github.com/OffchainLabs/prysm/v7/proto/ssz_query/testing"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ssz "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	sszquerypb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/ssz_query/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestProofCollector_New(t *testing.T) {

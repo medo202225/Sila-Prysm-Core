@@ -1,7 +1,7 @@
 package deposit
 
 import (
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/sila-chain/Sila/accounts/abi/bind"
 )
 
 // NewDepositContractCallerFromBoundContract creates a new instance of DepositContractCaller, bound to

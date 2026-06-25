@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	structs "github.com/OffchainLabs/prysm/v7/api/server/structs"
-	primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	structs "github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 	gomock "go.uber.org/mock/gomock"
 )
 

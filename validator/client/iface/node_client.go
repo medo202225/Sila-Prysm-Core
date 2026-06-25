@@ -3,7 +3,7 @@ package iface
 import (
 	"context"
 
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 

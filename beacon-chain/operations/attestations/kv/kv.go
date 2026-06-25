@@ -7,10 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/operations/attestations/attmap"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/attestation"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations/attmap"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation"
 	"github.com/patrickmn/go-cache"
 )
 

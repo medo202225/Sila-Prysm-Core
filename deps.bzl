@@ -1,6 +1,6 @@
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")  # gazelle:keep
-load("@prysm//tools/go:def.bzl", "go_repository", "maybe")  # gazelle:keep
+load("@sila//tools/go:def.bzl", "go_repository", "maybe")  # gazelle:keep
 
 # Prysm's third party / external dependencies.
 #
@@ -33,7 +33,7 @@ load("@prysm//tools/go:def.bzl", "go_repository", "maybe")  # gazelle:keep
 ##################################################################
 #           Make sure you have read DEPENDENCIES.md!
 ##################################################################
-def prysm_deps():
+def sila_deps():
     go_repository(
         name = "co_honnef_go_tools",
         importpath = "honnef.co/go/tools",
@@ -758,14 +758,14 @@ def prysm_deps():
         version = "v0.0.0-20250911101455-f9e208c548ab",
     )
     go_repository(
-        name = "com_github_ethereum_go_ethereum",
+        name = "com_github_sila_chain_sila",
         build_directives = [
-            "gazelle:resolve go github.com/karalabe/usb @prysm//third_party/usb:go_default_library",
+            "gazelle:resolve go github.com/karalabe/usb @sila//third_party/usb:go_default_library",
         ],
-        importpath = "github.com/ethereum/go-ethereum",
+        importpath = "github.com/sila-chain/Sila",
         patch_args = ["-p1"],
         patches = [
-            "//third_party:com_github_ethereum_go_ethereum_secp256k1.patch",
+            "//third_party:com_github_sila_chain_sila_secp256k1.patch",
         ],
         sum = "h1:Ev/sQHH+UdKZHWjuVzhu2pxhi/sXaPZl23Q+Q5LDd4Q=",
         version = "v1.17.3",
@@ -2343,7 +2343,7 @@ def prysm_deps():
     go_repository(
         name = "com_github_offchainlabs_hashtree",
         build_file_generation = "off",
-        importpath = "github.com/OffchainLabs/hashtree",
+        importpath = "github.com/SilaLabs/hashtree",
         patch_args = ["-p1"],
         patches = ["//third_party:com_github_offchainlabs_hashtree.patch"],
         sum = "h1:nM8dBAQZzHLzzM14FaAHXnHTAXZIst69v5xWuS48y/c=",
@@ -2782,32 +2782,32 @@ def prysm_deps():
         version = "v0.2.2",
     )
     go_repository(
-        name = "com_github_prysmaticlabs_fastssz",
-        importpath = "github.com/prysmaticlabs/fastssz",
+        name = "com_github_sila_fastssz",
+        importpath = "github.com/sila-chain/fastssz",
         sum = "h1:UkcU1rqEBOInBQdP1mCE4Smo90Eux82VEOyBhEK9TA0=",
         version = "v0.0.0-20260421202104-7a6eb71e6e45",
     )
     go_repository(
-        name = "com_github_prysmaticlabs_go_bitfield",
-        importpath = "github.com/OffchainLabs/go-bitfield",
+        name = "com_github_sila_go_bitfield",
+        importpath = "github.com/sila-chain/go-bitfield",
         sum = "h1:M9Ia6En5b8/imySo4xQeeoJPG2tOOJEKk/GnfBI86Hk=",
         version = "v0.0.0-20260504143531-5cbb6d0f5f2e",
     )
     go_repository(
-        name = "com_github_prysmaticlabs_gohashtree",
-        importpath = "github.com/prysmaticlabs/gohashtree",
+        name = "com_github_sila_gohashtree",
+        importpath = "github.com/sila-chain/gohashtree",
         sum = "h1:ct41mg7HyIZd7uoSM/ud23f+3DxQG9tlMlQG+BVX23c=",
         version = "v0.0.5-beta",
     )
     go_repository(
-        name = "com_github_prysmaticlabs_prombbolt",
-        importpath = "github.com/prysmaticlabs/prombbolt",
+        name = "com_github_sila_prombbolt",
+        importpath = "github.com/sila-chain/prombbolt",
         sum = "h1:9PHRCuO/VN0s9k+RmLykho7AjDxblNYI5bYKed16NPU=",
         version = "v0.0.0-20210126082820-9b7adba6db7c",
     )
     go_repository(
-        name = "com_github_prysmaticlabs_protoc_gen_go_cast",
-        importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
+        name = "com_github_sila_protoc_gen_go_cast",
+        importpath = "github.com/sila-chain/protoc-gen-go-cast",
         sum = "h1:q9wE0ZZRdTUAAeyFP/w0SwBEnCqlVy2+on6X2/e+eAU=",
         version = "v0.0.0-20230228205207-28762a7b9294",
     )
@@ -4607,8 +4607,8 @@ def prysm_deps():
         name = "org_uber_go_automaxprocs",
         build_directives = [
             # Do not use this library directly.
-            # Rather, load maxprocs from github.com/prysmaticlabs/runtime/maxprocs.
-            "gazelle:go_visibility @prysm//runtime/maxprocs:__pkg__",
+            # Rather, load maxprocs from github.com/sila-chain/runtime/maxprocs.
+            "gazelle:go_visibility @sila//runtime/maxprocs:__pkg__",
         ],
         importpath = "go.uber.org/automaxprocs",
         sum = "h1:2LxUOGiR3O6tw8ui5sZa2LAaHnsviZdVOUZw4fvbnME=",

@@ -3,16 +3,16 @@ package transition
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/electra"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/epoch/precompute"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/gloas"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	v "github.com/OffchainLabs/prysm/v7/beacon-chain/core/validators"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/electra"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch/precompute"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/gloas"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	v "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
 	"github.com/pkg/errors"
 )
 

@@ -5,12 +5,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/derived"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/local"
-	remoteweb3signer "github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/derived"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
+	remoteweb3signer "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer"
 )
 
 var (

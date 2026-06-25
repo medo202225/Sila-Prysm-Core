@@ -5,12 +5,12 @@ import (
 	"path"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/epoch"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/epoch/precompute"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/utils"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch/precompute"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils"
 )
 
 // RunSlashingsTests executes "epoch_processing/slashings" tests.

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -6,7 +6,7 @@ go_library(
         "attestation_utils.go",
         "id.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/attestation",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/signing:go_default_library",
@@ -17,7 +17,7 @@ go_library(
         "//proto/prysm/v1alpha1:go_default_library",
         "//runtime/version:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
     ],
 )
 
@@ -36,6 +36,6 @@ go_test(
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
     ],
 )

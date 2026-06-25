@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_go_bitfield "github.com/OffchainLabs/go-bitfield"
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -29,9 +29,9 @@ type Status struct {
 	state          protoimpl.MessageState                                            `protogen:"open.v1"`
 	ForkDigest     []byte                                                            `protobuf:"bytes,1,opt,name=fork_digest,json=forkDigest,proto3" json:"fork_digest,omitempty" ssz-size:"4"`
 	FinalizedRoot  []byte                                                            `protobuf:"bytes,2,opt,name=finalized_root,json=finalizedRoot,proto3" json:"finalized_root,omitempty" ssz-size:"32"`
-	FinalizedEpoch github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
+	FinalizedEpoch github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
 	HeadRoot       []byte                                                            `protobuf:"bytes,4,opt,name=head_root,json=headRoot,proto3" json:"head_root,omitempty" ssz-size:"32"`
-	HeadSlot       github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot  `protobuf:"varint,5,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	HeadSlot       github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,5,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -80,11 +80,11 @@ func (x *Status) GetFinalizedRoot() []byte {
 	return nil
 }
 
-func (x *Status) GetFinalizedEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *Status) GetFinalizedEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		return x.FinalizedEpoch
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
 func (x *Status) GetHeadRoot() []byte {
@@ -94,21 +94,21 @@ func (x *Status) GetHeadRoot() []byte {
 	return nil
 }
 
-func (x *Status) GetHeadSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *Status) GetHeadSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.HeadSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type StatusV2 struct {
 	state                 protoimpl.MessageState                                            `protogen:"open.v1"`
 	ForkDigest            []byte                                                            `protobuf:"bytes,1,opt,name=fork_digest,json=forkDigest,proto3" json:"fork_digest,omitempty" ssz-size:"4"`
 	FinalizedRoot         []byte                                                            `protobuf:"bytes,2,opt,name=finalized_root,json=finalizedRoot,proto3" json:"finalized_root,omitempty" ssz-size:"32"`
-	FinalizedEpoch        github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
+	FinalizedEpoch        github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
 	HeadRoot              []byte                                                            `protobuf:"bytes,4,opt,name=head_root,json=headRoot,proto3" json:"head_root,omitempty" ssz-size:"32"`
-	HeadSlot              github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot  `protobuf:"varint,5,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
-	EarliestAvailableSlot github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot  `protobuf:"varint,6,opt,name=earliest_available_slot,json=earliestAvailableSlot,proto3" json:"earliest_available_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	HeadSlot              github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,5,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
+	EarliestAvailableSlot github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,6,opt,name=earliest_available_slot,json=earliestAvailableSlot,proto3" json:"earliest_available_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -157,11 +157,11 @@ func (x *StatusV2) GetFinalizedRoot() []byte {
 	return nil
 }
 
-func (x *StatusV2) GetFinalizedEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *StatusV2) GetFinalizedEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		return x.FinalizedEpoch
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
 func (x *StatusV2) GetHeadRoot() []byte {
@@ -171,23 +171,23 @@ func (x *StatusV2) GetHeadRoot() []byte {
 	return nil
 }
 
-func (x *StatusV2) GetHeadSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *StatusV2) GetHeadSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.HeadSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
-func (x *StatusV2) GetEarliestAvailableSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *StatusV2) GetEarliestAvailableSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.EarliestAvailableSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type BeaconBlocksByRangeRequest struct {
 	state         protoimpl.MessageState                                           `protogen:"open.v1"`
-	StartSlot     github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	StartSlot     github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	Step          uint64                                                           `protobuf:"varint,3,opt,name=step,proto3" json:"step,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -224,11 +224,11 @@ func (*BeaconBlocksByRangeRequest) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_p2p_messages_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *BeaconBlocksByRangeRequest) GetStartSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *BeaconBlocksByRangeRequest) GetStartSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.StartSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 func (x *BeaconBlocksByRangeRequest) GetCount() uint64 {
@@ -249,7 +249,7 @@ type ENRForkID struct {
 	state             protoimpl.MessageState                                            `protogen:"open.v1"`
 	CurrentForkDigest []byte                                                            `protobuf:"bytes,1,opt,name=current_fork_digest,json=currentForkDigest,proto3" json:"current_fork_digest,omitempty" ssz-size:"4"`
 	NextForkVersion   []byte                                                            `protobuf:"bytes,2,opt,name=next_fork_version,json=nextForkVersion,proto3" json:"next_fork_version,omitempty" ssz-size:"4"`
-	NextForkEpoch     github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=next_fork_epoch,json=nextForkEpoch,proto3" json:"next_fork_epoch,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Epoch"`
+	NextForkEpoch     github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=next_fork_epoch,json=nextForkEpoch,proto3" json:"next_fork_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Epoch"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -298,17 +298,17 @@ func (x *ENRForkID) GetNextForkVersion() []byte {
 	return nil
 }
 
-func (x *ENRForkID) GetNextForkEpoch() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch {
+func (x *ENRForkID) GetNextForkEpoch() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch {
 	if x != nil {
 		return x.NextForkEpoch
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Epoch(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
 type MetaDataV0 struct {
 	state         protoimpl.MessageState                          `protogen:"open.v1"`
 	SeqNumber     uint64                                          `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
-	Attnets       github_com_OffchainLabs_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector64" ssz-size:"8"`
+	Attnets       github_com_sila_chain_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -350,18 +350,18 @@ func (x *MetaDataV0) GetSeqNumber() uint64 {
 	return 0
 }
 
-func (x *MetaDataV0) GetAttnets() github_com_OffchainLabs_go_bitfield.Bitvector64 {
+func (x *MetaDataV0) GetAttnets() github_com_sila_chain_go_bitfield.Bitvector64 {
 	if x != nil {
 		return x.Attnets
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector64(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector64(nil)
 }
 
 type MetaDataV1 struct {
 	state         protoimpl.MessageState                          `protogen:"open.v1"`
 	SeqNumber     uint64                                          `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
-	Attnets       github_com_OffchainLabs_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector64" ssz-size:"8"`
-	Syncnets      github_com_OffchainLabs_go_bitfield.Bitvector4  `protobuf:"bytes,3,opt,name=syncnets,proto3" json:"syncnets,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector4" ssz-size:"1"`
+	Attnets       github_com_sila_chain_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
+	Syncnets      github_com_sila_chain_go_bitfield.Bitvector4  `protobuf:"bytes,3,opt,name=syncnets,proto3" json:"syncnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -403,25 +403,25 @@ func (x *MetaDataV1) GetSeqNumber() uint64 {
 	return 0
 }
 
-func (x *MetaDataV1) GetAttnets() github_com_OffchainLabs_go_bitfield.Bitvector64 {
+func (x *MetaDataV1) GetAttnets() github_com_sila_chain_go_bitfield.Bitvector64 {
 	if x != nil {
 		return x.Attnets
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector64(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector64(nil)
 }
 
-func (x *MetaDataV1) GetSyncnets() github_com_OffchainLabs_go_bitfield.Bitvector4 {
+func (x *MetaDataV1) GetSyncnets() github_com_sila_chain_go_bitfield.Bitvector4 {
 	if x != nil {
 		return x.Syncnets
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector4(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector4(nil)
 }
 
 type MetaDataV2 struct {
 	state             protoimpl.MessageState                          `protogen:"open.v1"`
 	SeqNumber         uint64                                          `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
-	Attnets           github_com_OffchainLabs_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector64" ssz-size:"8"`
-	Syncnets          github_com_OffchainLabs_go_bitfield.Bitvector4  `protobuf:"bytes,3,opt,name=syncnets,proto3" json:"syncnets,omitempty" cast-type:"github.com/OffchainLabs/go-bitfield.Bitvector4" ssz-size:"1"`
+	Attnets           github_com_sila_chain_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
+	Syncnets          github_com_sila_chain_go_bitfield.Bitvector4  `protobuf:"bytes,3,opt,name=syncnets,proto3" json:"syncnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
 	CustodyGroupCount uint64                                          `protobuf:"varint,4,opt,name=custody_group_count,json=custodyGroupCount,proto3" json:"custody_group_count,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -464,18 +464,18 @@ func (x *MetaDataV2) GetSeqNumber() uint64 {
 	return 0
 }
 
-func (x *MetaDataV2) GetAttnets() github_com_OffchainLabs_go_bitfield.Bitvector64 {
+func (x *MetaDataV2) GetAttnets() github_com_sila_chain_go_bitfield.Bitvector64 {
 	if x != nil {
 		return x.Attnets
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector64(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector64(nil)
 }
 
-func (x *MetaDataV2) GetSyncnets() github_com_OffchainLabs_go_bitfield.Bitvector4 {
+func (x *MetaDataV2) GetSyncnets() github_com_sila_chain_go_bitfield.Bitvector4 {
 	if x != nil {
 		return x.Syncnets
 	}
-	return github_com_OffchainLabs_go_bitfield.Bitvector4(nil)
+	return github_com_sila_chain_go_bitfield.Bitvector4(nil)
 }
 
 func (x *MetaDataV2) GetCustodyGroupCount() uint64 {
@@ -487,7 +487,7 @@ func (x *MetaDataV2) GetCustodyGroupCount() uint64 {
 
 type BlobSidecarsByRangeRequest struct {
 	state         protoimpl.MessageState                                           `protogen:"open.v1"`
-	StartSlot     github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	StartSlot     github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -523,11 +523,11 @@ func (*BlobSidecarsByRangeRequest) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_p2p_messages_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *BlobSidecarsByRangeRequest) GetStartSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *BlobSidecarsByRangeRequest) GetStartSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.StartSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 func (x *BlobSidecarsByRangeRequest) GetCount() uint64 {
@@ -539,7 +539,7 @@ func (x *BlobSidecarsByRangeRequest) GetCount() uint64 {
 
 type DataColumnSidecarsByRangeRequest struct {
 	state         protoimpl.MessageState                                           `protogen:"open.v1"`
-	StartSlot     github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.Slot"`
+	StartSlot     github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
 	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	Columns       []uint64                                                         `protobuf:"varint,3,rep,packed,name=columns,proto3" json:"columns,omitempty" ssz-max:"128"`
 	unknownFields protoimpl.UnknownFields
@@ -576,11 +576,11 @@ func (*DataColumnSidecarsByRangeRequest) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_p2p_messages_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *DataColumnSidecarsByRangeRequest) GetStartSlot() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot {
+func (x *DataColumnSidecarsByRangeRequest) GetStartSlot() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.StartSlot
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 func (x *DataColumnSidecarsByRangeRequest) GetCount() uint64 {

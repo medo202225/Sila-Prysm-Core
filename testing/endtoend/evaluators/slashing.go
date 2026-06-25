@@ -4,19 +4,19 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/signing"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/container/slice"
-	"github.com/OffchainLabs/prysm/v7/crypto/bls"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	eth "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	e2e "github.com/OffchainLabs/prysm/v7/testing/endtoend/params"
-	"github.com/OffchainLabs/prysm/v7/testing/endtoend/policies"
-	e2eTypes "github.com/OffchainLabs/prysm/v7/testing/endtoend/types"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/slice"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/policies"
+	e2eTypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -145,7 +145,7 @@ func insertDoubleAttestationIntoPool(_ *e2eTypes.EvaluationContext, conns ...*gr
 		}
 
 		// Need to send proposal to both beacon nodes to avoid flakiness.
-		// See: https://github.com/prysmaticlabs/prysm/issues/12415#issuecomment-1874643269
+		// See: https://github.com/sila-chain/prysm/issues/12415#issuecomment-1874643269
 		c := eth.NewBeaconNodeValidatorClient(conns[0])
 		att, err := h.getSlashableAttestation(i)
 		if err != nil {

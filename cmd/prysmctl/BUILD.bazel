@@ -1,5 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 load("//tools:prysm_image.bzl", "prysm_image_upload")
 
 go_library(
@@ -8,7 +8,7 @@ go_library(
         "log.go",
         "main.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/cmd/prysmctl",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/prysmctl",
     visibility = ["//visibility:private"],
     deps = [
         "//cmd/prysmctl/checkpointsync:go_default_library",

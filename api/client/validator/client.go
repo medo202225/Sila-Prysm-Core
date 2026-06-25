@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/api/client"
-	"github.com/OffchainLabs/prysm/v7/validator/rpc"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/rpc"
 	"github.com/pkg/errors"
 )
 

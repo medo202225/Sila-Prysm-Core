@@ -95,7 +95,7 @@ ssz_gen_marshal = rule(
         "srcs": attr.label_list(allow_files = True),
         "go_proto": attr.label(providers = [GoLibrary]),
         "sszgen": attr.label(
-            default = Label("@com_github_prysmaticlabs_fastssz//sszgen:sszgen"),
+            default = Label("@com_github_sila_fastssz//sszgen:sszgen"),
             executable = True,
             cfg = "exec",
         ),
@@ -107,4 +107,4 @@ ssz_gen_marshal = rule(
     toolchains = ["@io_bazel_rules_go//go:toolchain"],
 )
 
-SSZ_DEPS = ["@com_github_prysmaticlabs_fastssz//:go_default_library"]
+SSZ_DEPS = ["@com_github_sila_fastssz//:go_default_library"]

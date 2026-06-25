@@ -1,9 +1,9 @@
 package genesis
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/node"
-	"github.com/OffchainLabs/prysm/v7/cmd/beacon-chain/sync/checkpoint"
-	"github.com/OffchainLabs/prysm/v7/genesis"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/node"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/checkpoint"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/genesis"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )

@@ -5,13 +5,13 @@ import (
 	"math/big"
 	"time"
 
-	clparams "github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/params"
+	clparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/common/hexutil"
+	"github.com/sila-chain/Sila/core"
+	"github.com/sila-chain/Sila/core/types"
+	"github.com/sila-chain/Sila/params"
 )
 
 // defaultMinerAddress is used to send deposits and test transactions in the e2e test.

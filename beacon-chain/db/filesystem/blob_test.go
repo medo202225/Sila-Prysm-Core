@@ -8,15 +8,15 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/db"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/verification"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/testing/util"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
-	ssz "github.com/prysmaticlabs/fastssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	ssz "github.com/sila-chain/fastssz"
 	"github.com/spf13/afero"
 )
 
@@ -106,7 +106,7 @@ func TestBlobStorage_SaveBlobData(t *testing.T) {
 		// There was a bug where saving the same blob in multiple go routines would cause a partial blob
 		// to be empty. This test ensures that several routines can safely save the same blob at the
 		// same time. This isn't ideal behavior from the caller, but should be handled safely anyway.
-		// See https://github.com/prysmaticlabs/prysm/pull/13648
+		// See https://github.com/sila-chain/prysm/pull/13648
 		b, err := NewBlobStorage(WithBasePath(t.TempDir()))
 		require.NoError(t, err)
 		blob := testSidecars[0]

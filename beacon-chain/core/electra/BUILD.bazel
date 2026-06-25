@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -15,7 +15,7 @@ go_library(
         "upgrade.go",
         "validator.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/core/electra",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/electra",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/altair:go_default_library",
@@ -81,7 +81,7 @@ go_test(
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
         "@com_github_google_gofuzz//:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
     ],

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -10,7 +10,7 @@ go_library(
         "optimistic_update.go",
         "update.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/consensus-types/light-client",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/light-client",
     visibility = ["//visibility:public"],
     deps = [
         "//config/fieldparams:go_default_library",

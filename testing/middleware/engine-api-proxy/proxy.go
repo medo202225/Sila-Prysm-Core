@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/network"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

@@ -6,9 +6,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	ecdsaprysm "github.com/OffchainLabs/prysm/v7/crypto/ecdsa"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 	"github.com/libp2p/go-libp2p"
 	mplex "github.com/libp2p/go-libp2p-mplex"
 	"github.com/libp2p/go-libp2p/core/network"
@@ -64,7 +64,7 @@ func MultiAddressBuilder(ip net.IP, tcpPort, quicPort uint) ([]ma.Multiaddr, err
 // default high water mark, we create a new connection manager with a high water mark
 // that is higher than MaxPeers. Otherwise, we do not set a connection manager option
 // and allow the libp2p fallback defaults to be applied. Rationale below:
-// see: https://github.com/OffchainLabs/prysm/issues/15607
+// see: https://github.com/sila-chain/Sila-Prysm-Core/issues/15607
 func setConnManagerOption(cfg *Config, opts []libp2p.Option) ([]libp2p.Option, error) {
 	low, high := cfg.connManagerLowHigh()
 	cm, err := connmgr.NewConnManager(low, high)

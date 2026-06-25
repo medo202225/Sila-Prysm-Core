@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	v "github.com/OffchainLabs/prysm/v7/beacon-chain/core/validators"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	v "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
 )
 
 func RunAttesterSlashingTest(t *testing.T, config string, fork string, block blockWithSSZObject, sszToState SSZToState) {

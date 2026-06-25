@@ -3,8 +3,8 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/common/forkchoice"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/forkchoice"
 )
 
 func TestMainnet_Gloas_Forkchoice(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/OffchainLabs/prysm/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
 )
 
 var (

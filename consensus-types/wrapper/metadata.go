@@ -1,10 +1,10 @@
 package wrapper
 
 import (
-	"github.com/OffchainLabs/go-bitfield"
-	pb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/metadata"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/go-bitfield"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/metadata"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 	"google.golang.org/protobuf/proto"
 )
 

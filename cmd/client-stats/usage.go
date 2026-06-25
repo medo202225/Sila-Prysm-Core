@@ -1,12 +1,12 @@
-// This code was adapted from https://github.com/ethereum/go-ethereum/blob/master/cmd/geth/usage.go
+// This code was adapted from https://github.com/sila-chain/Sila/blob/master/cmd/geth/usage.go
 package main
 
 import (
 	"io"
 	"sort"
 
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/cmd/client-stats/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/client-stats/flags"
 	"github.com/urfave/cli/v2"
 )
 

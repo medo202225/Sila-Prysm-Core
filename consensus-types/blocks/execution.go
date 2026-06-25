@@ -3,14 +3,14 @@ package blocks
 import (
 	"bytes"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	consensus_types "github.com/OffchainLabs/prysm/v7/consensus-types"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
 	"github.com/pkg/errors"
-	fastssz "github.com/prysmaticlabs/fastssz"
+	fastssz "github.com/sila-chain/fastssz"
 	"google.golang.org/protobuf/proto"
 )
 

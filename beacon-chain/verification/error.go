@@ -3,7 +3,7 @@ package verification
 import (
 	"errors"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
 )
 
 // ErrInvalid is a general purpose verification failure that can be wrapped or joined to indicate

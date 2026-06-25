@@ -6,14 +6,14 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stateutil"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash/htr"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
-	"github.com/OffchainLabs/prysm/v7/monitoring/tracing/trace"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 )
 
 const (

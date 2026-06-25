@@ -12,7 +12,7 @@ exit_code=0
 exec 5>&1
 
 echo "Checking deps.bzl is in sync with go.mod..."
-bazel --batch --bazelrc=.buildkite-bazelrc run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%prysm_deps -prune=true
+bazel --batch --bazelrc=.buildkite-bazelrc run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%sila_deps -prune=true
 
 if git diff --exit-code deps.bzl; then
   echo "OK: deps.bzl is in sync with go.mod"
@@ -38,7 +38,7 @@ if [ $exit_code -eq 0 ]; then
   echo "All gazelle checks passed"
 else
   echo "Gazelle checks failed. Please run:"
-  echo "  bazel run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%prysm_deps -prune=true"
+  echo "  bazel run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%sila_deps -prune=true"
   echo "  bazel run //:gazelle -- fix"
 fi
 

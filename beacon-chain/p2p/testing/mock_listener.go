@@ -1,7 +1,7 @@
 package testing
 
 import (
-	"github.com/ethereum/go-ethereum/p2p/enode"
+	"github.com/sila-chain/Sila/p2p/enode"
 )
 
 // MockListener is a mock implementation of the Listener and ListenerRebooter interfaces

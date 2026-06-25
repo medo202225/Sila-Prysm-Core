@@ -4,7 +4,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 )
 
 const (

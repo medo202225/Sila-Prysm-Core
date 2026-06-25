@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
 	"github.com/sirupsen/logrus"
 )
 

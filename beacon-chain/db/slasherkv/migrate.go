@@ -5,8 +5,8 @@ import (
 	"encoding/binary"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	bolt "go.etcd.io/bbolt"
@@ -15,10 +15,10 @@ import (
 // Migrate , its corresponding usage and tests can be totally removed once Electra is on mainnet.
 // Previously, the first 8 bytes of keys of `attestation-data-roots` and `proposal-records` buckets
 // were stored as little-endian respectively epoch and slots. It was the source of
-// https://github.com/prysmaticlabs/prysm/issues/14142 and potentially
-// https://github.com/prysmaticlabs/prysm/issues/13658.
+// https://github.com/sila-chain/prysm/issues/14142 and potentially
+// https://github.com/sila-chain/prysm/issues/13658.
 // To solve this (or these) issue(s), we decided to store the first 8 bytes of keys as big-endian.
-// See https://github.com/prysmaticlabs/prysm/pull/14151.
+// See https://github.com/sila-chain/prysm/pull/14151.
 // However, not to break the backward compatibility, we need to migrate the existing data.
 // The strategy is quite simple: If, for these bucket keys in the store, we detect
 // a slot (resp. epoch) higher, than the current slot (resp. epoch), then we consider that the data

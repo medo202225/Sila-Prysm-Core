@@ -1,12 +1,12 @@
 package peerdas
 
 import (
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/kzg"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	"github.com/ethereum/go-ethereum/p2p/enr"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	"github.com/sila-chain/Sila/p2p/enr"
 	"github.com/pkg/errors"
 )
 
@@ -24,13 +24,13 @@ var (
 	ErrCannotLoadCustodyGroupCount = errors.New("cannot load the custody group count from peer")
 )
 
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#custody-group-count
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#custody-group-count
 type Cgc uint64
 
 func (Cgc) ENRKey() string { return params.BeaconNetworkConfig().CustodyGroupCountKey }
 
 // VerifyDataColumnSidecar verifies if the data column sidecar is valid.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#verify_data_column_sidecar
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#verify_data_column_sidecar
 func VerifyDataColumnSidecar(sidecar blocks.RODataColumn) error {
 	// The sidecar index must be within the valid range.
 	index := sidecar.Index()
@@ -70,7 +70,7 @@ func VerifyDataColumnSidecar(sidecar blocks.RODataColumn) error {
 // while we are verifying all the KZG proofs from multiple sidecars in a batch.
 // This is done to improve performance since the internal KZG library is way more
 // efficient when verifying in batch.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/p2p-interface.md#modified-verify_data_column_sidecar_kzg_proofs
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/gloas/p2p-interface.md#modified-verify_data_column_sidecar_kzg_proofs
 func VerifyDataColumnsSidecarKZGProofs(sidecars []blocks.RODataColumn) error {
 	commitmentsBySidecar := make([][][]byte, len(sidecars))
 	for i := range sidecars {
@@ -156,7 +156,7 @@ func verifyDataColumnsSidecarKZGProofs(sidecars []blocks.RODataColumn, commitmen
 }
 
 // VerifyDataColumnSidecarInclusionProof verifies if the given KZG commitments included in the given beacon block.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#verify_data_column_sidecar_inclusion_proof
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#verify_data_column_sidecar_inclusion_proof
 func VerifyDataColumnSidecarInclusionProof(sidecar blocks.RODataColumn) error {
 	if sidecar.IsGloas() {
 		return nil
@@ -203,7 +203,7 @@ func VerifyDataColumnSidecarInclusionProof(sidecar blocks.RODataColumn) error {
 }
 
 // ComputeSubnetForDataColumnSidecar computes the subnet for a data column sidecar.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#compute_subnet_for_data_column_sidecar
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#compute_subnet_for_data_column_sidecar
 func ComputeSubnetForDataColumnSidecar(columnIndex uint64) uint64 {
 	dataColumnSidecarSubnetCount := params.BeaconConfig().DataColumnSidecarSubnetCount
 	return columnIndex % dataColumnSidecarSubnetCount

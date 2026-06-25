@@ -4,13 +4,13 @@ import (
 	"encoding/binary"
 	"testing"
 
-	depositcontract "github.com/OffchainLabs/prysm/v7/contracts/deposit"
-	"github.com/OffchainLabs/prysm/v7/contracts/deposit/mock"
-	"github.com/OffchainLabs/prysm/v7/runtime/interop"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
+	depositcontract "github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit/mock"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila"
+	"github.com/sila-chain/Sila/common"
 )
 
 func TestSetupRegistrationContract_OK(t *testing.T) {

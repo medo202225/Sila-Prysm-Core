@@ -1,10 +1,10 @@
 package state_native
 
 import (
-	customtypes "github.com/OffchainLabs/prysm/v7/beacon-chain/state/state-native/custom-types"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state/stateutil"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
+	customtypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/custom-types"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
 	"github.com/pkg/errors"
 )
 

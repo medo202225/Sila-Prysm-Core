@@ -6,12 +6,12 @@ import (
 	"net"
 	"testing"
 
-	testDB "github.com/OffchainLabs/prysm/v7/beacon-chain/db/testing"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/p2p/enode"
+	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila/crypto"
+	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/libp2p/go-libp2p/core/peer"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )

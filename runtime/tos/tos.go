@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	"github.com/OffchainLabs/prysm/v7/io/prompt"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/prompt"
 	"github.com/logrusorgru/aurora"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
@@ -20,13 +20,13 @@ Prysm Terms of Use
 By downloading, accessing or using the Prysm implementation (“Prysm”), you (referenced herein
 as “you” or the “user”) certify that you have read and agreed to the terms and conditions below.
 
-TERMS AND CONDITIONS: https://github.com/prysmaticlabs/prysm/blob/develop/TERMS_OF_SERVICE.md
+TERMS AND CONDITIONS: https://github.com/sila-chain/prysm/blob/develop/TERMS_OF_SERVICE.md
 
 
 Type "accept" to accept this terms and conditions [accept/decline]:`
 	acceptTosPromptErrText = `could not scan text input, if you are trying to run in non-interactive environment, you
-can use the --accept-terms-of-use flag after reading the terms and conditions here: 
-https://github.com/prysmaticlabs/prysm/blob/develop/TERMS_OF_SERVICE.md`
+can use the --accept-terms-of-use flag after reading the terms and conditions here:
+https://github.com/sila-chain/prysm/blob/develop/TERMS_OF_SERVICE.md`
 )
 
 var (

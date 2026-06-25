@@ -1,16 +1,16 @@
 package types
 
 import (
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/interfaces"
-	lightclientConsensusTypes "github.com/OffchainLabs/prysm/v7/consensus-types/light-client"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/wrapper"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	enginev1 "github.com/OffchainLabs/prysm/v7/proto/engine/v1"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/metadata"
-	ssz "github.com/prysmaticlabs/fastssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	lightclientConsensusTypes "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/light-client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/wrapper"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/metadata"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 func init() {

@@ -1,7 +1,7 @@
 package params
 
 import (
-	eth1Params "github.com/ethereum/go-ethereum/params"
+	eth1Params "github.com/sila-chain/Sila/params"
 )
 
 // UseSepoliaNetworkConfig uses the Sepolia beacon chain specific network config.

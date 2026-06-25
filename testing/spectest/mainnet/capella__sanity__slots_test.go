@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/capella/sanity"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/capella/sanity"
 )
 
 func TestMainnet_Capella_Sanity_Slots(t *testing.T) {

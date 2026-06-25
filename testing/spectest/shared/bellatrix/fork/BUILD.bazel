@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -7,7 +7,7 @@ go_library(
         "transition.go",
         "upgrade_to_bellatrix.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/testing/spectest/shared/bellatrix/fork",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/bellatrix/fork",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/execution:go_default_library",

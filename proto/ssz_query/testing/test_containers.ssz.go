@@ -2,7 +2,7 @@
 package testing
 
 import (
-	ssz "github.com/prysmaticlabs/fastssz"
+	ssz "github.com/sila-chain/fastssz"
 )
 
 // MarshalSSZ ssz marshals the FixedNestedContainer object

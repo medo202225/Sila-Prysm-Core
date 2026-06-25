@@ -16,9 +16,9 @@ mainnet = {
     "slashings.size": "8192",  # EPOCHS_PER_SLASHINGS_VECTOR
     "sync_committee_bits.size": "512",  # SYNC_COMMITTEE_SIZE
     "sync_committee_bytes.size": "64",
-    "sync_committee_bits.type": "github.com/OffchainLabs/go-bitfield.Bitvector512",
+    "sync_committee_bits.type": "github.com/sila-chain/go-bitfield.Bitvector512",
     "sync_committee_aggregate_bytes.size": "16",
-    "sync_committee_aggregate_bits.type": "github.com/OffchainLabs/go-bitfield.Bitvector128",
+    "sync_committee_aggregate_bits.type": "github.com/sila-chain/go-bitfield.Bitvector128",
     "withdrawal.size": "16",
     "blob.size": "131072",  # BYTES_PER_FIELD_ELEMENT * FIELD_ELEMENTS_PER_BLOB
     "logs_bloom.size": "256",
@@ -32,7 +32,7 @@ mainnet = {
     "max_attesting_indices.size": "131072",
     "max_committees_per_slot.size": "64",
     "committee_bits.size": "8",
-    "committee_bits.type": "github.com/OffchainLabs/go-bitfield.Bitvector64",
+    "committee_bits.type": "github.com/sila-chain/go-bitfield.Bitvector64",
     "pending_deposits_limit": "134217728",
     "pending_partial_withdrawals_limit": "134217728",
     "pending_consolidations_limit": "262144",
@@ -46,7 +46,7 @@ mainnet = {
     "ptc_window.size": "96",  # (2 + MIN_SEED_LOOKAHEAD) * SLOTS_PER_EPOCH
     "ptc_committee_indices.size": "512",  # PTC_SIZE
     "ptc.size": "64",  # Gloas: Payload Timeliness Committee aggregation bits (PTC_SIZE = 512)
-    "ptc.type": "github.com/OffchainLabs/go-bitfield.Bitvector512",
+    "ptc.type": "github.com/sila-chain/go-bitfield.Bitvector512",
     "payload_attestation.size": "4",  # Gloas: MAX_PAYLOAD_ATTESTATIONS defined in block body
     "execution_payload_availability.size": "1024",  # Gloas: SLOTS_PER_HISTORICAL_ROOT
     "builder_pending_payments.size": "64",  # Gloas: vector length (2 * SLOTS_PER_EPOCH)
@@ -63,9 +63,9 @@ minimal = {
     "slashings.size": "64",
     "sync_committee_bits.size": "32",
     "sync_committee_bytes.size": "4",
-    "sync_committee_bits.type": "github.com/OffchainLabs/go-bitfield.Bitvector32",
+    "sync_committee_bits.type": "github.com/sila-chain/go-bitfield.Bitvector32",
     "sync_committee_aggregate_bytes.size": "1",
-    "sync_committee_aggregate_bits.type": "github.com/OffchainLabs/go-bitfield.Bitvector8",
+    "sync_committee_aggregate_bits.type": "github.com/sila-chain/go-bitfield.Bitvector8",
     "withdrawal.size": "4",
     "blob.size": "131072",
     "logs_bloom.size": "256",
@@ -79,7 +79,7 @@ minimal = {
     "max_attesting_indices.size": "8192",
     "max_committees_per_slot.size": "4",
     "committee_bits.size": "1",
-    "committee_bits.type": "github.com/OffchainLabs/go-bitfield.Bitvector4",
+    "committee_bits.type": "github.com/sila-chain/go-bitfield.Bitvector4",
     "pending_deposits_limit": "134217728",
     "pending_partial_withdrawals_limit": "64",
     "pending_consolidations_limit": "64",
@@ -93,7 +93,7 @@ minimal = {
     "ptc_window.size": "24",  # (2 + MIN_SEED_LOOKAHEAD) * SLOTS_PER_EPOCH
     "ptc_committee_indices.size": "16",  # PTC_SIZE
     "ptc.size": "2",  # Gloas: Payload Timeliness Committee aggregation bits (PTC_SIZE = 16)
-    "ptc.type": "github.com/OffchainLabs/go-bitfield.Bitvector16",
+    "ptc.type": "github.com/sila-chain/go-bitfield.Bitvector16",
     "payload_attestation.size": "4",  # Gloas: MAX_PAYLOAD_ATTESTATIONS defined in block body
     "execution_payload_availability.size": "8",  # Gloas: SLOTS_PER_HISTORICAL_ROOT
     "builder_pending_payments.size": "16",  # Gloas: vector length (2 * SLOTS_PER_EPOCH)

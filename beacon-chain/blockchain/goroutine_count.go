@@ -4,7 +4,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 const goroutineSampleWindow = 10

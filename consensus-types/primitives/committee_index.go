@@ -3,7 +3,7 @@ package primitives
 import (
 	"fmt"
 
-	fssz "github.com/prysmaticlabs/fastssz"
+	fssz "github.com/sila-chain/fastssz"
 )
 
 var _ fssz.HashRoot = (CommitteeIndex)(0)

@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -8,6 +8,6 @@ go_library(
         "json_mainnet.go",
         "json_minimal.go",  # keep
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/eth/shared/testing",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/shared/testing",
     visibility = ["//visibility:public"],
 )

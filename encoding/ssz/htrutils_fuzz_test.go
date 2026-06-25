@@ -5,11 +5,11 @@ package ssz_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/encoding/ssz"
-	pb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 	"github.com/pkg/errors"
-	fssz "github.com/prysmaticlabs/fastssz"
+	fssz "github.com/sila-chain/fastssz"
 )
 
 func FuzzUint64Root(f *testing.F) {

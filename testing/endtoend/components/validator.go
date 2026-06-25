@@ -11,20 +11,20 @@ import (
 	"strings"
 	"syscall"
 
-	cmdshared "github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/cmd/validator/flags"
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/io/file"
-	validatorpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/OffchainLabs/prysm/v7/runtime/interop"
-	"github.com/OffchainLabs/prysm/v7/testing/endtoend/helpers"
-	e2e "github.com/OffchainLabs/prysm/v7/testing/endtoend/params"
-	e2etypes "github.com/OffchainLabs/prysm/v7/testing/endtoend/types"
+	cmdshared "github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
+	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila/common"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 
@@ -181,7 +181,7 @@ func (v *ValidatorNode) Start(ctx context.Context) error {
 	var pkg, target string
 	if v.config.UsePrysmShValidator {
 		pkg = ""
-		target = "prysm_sh"
+		target = "sila_sh"
 	} else {
 		pkg = "cmd/validator"
 		target = "validator"
@@ -283,7 +283,7 @@ func (v *ValidatorNode) Start(ctx context.Context) error {
 
 	if v.config.UsePrysmShValidator {
 		args = append([]string{"validator"}, args...)
-		log.Warning("Using latest release validator via prysm.sh")
+		log.Warning("Using latest release validator via sila.sh")
 	}
 
 	cmd := exec.CommandContext(ctx, binaryPath, args...) // #nosec G204 -- Safe

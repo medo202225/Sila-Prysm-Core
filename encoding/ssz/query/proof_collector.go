@@ -10,13 +10,13 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/OffchainLabs/go-bitfield"
-	"github.com/OffchainLabs/prysm/v7/container/trie"
-	"github.com/OffchainLabs/prysm/v7/crypto/hash/htr"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	ssz "github.com/OffchainLabs/prysm/v7/encoding/ssz"
-	"github.com/OffchainLabs/prysm/v7/math"
-	fastssz "github.com/prysmaticlabs/fastssz"
+	"github.com/sila-chain/go-bitfield"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	ssz "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	fastssz "github.com/sila-chain/fastssz"
 )
 
 // proofCollector collects sibling hashes and leaves needed for Merkle proofs.

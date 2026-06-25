@@ -1,12 +1,12 @@
 package beacon_chain_client_factory
 
 import (
-	"github.com/OffchainLabs/prysm/v7/config/features"
-	beaconApi "github.com/OffchainLabs/prysm/v7/validator/client/beacon-api"
-	grpcApi "github.com/OffchainLabs/prysm/v7/validator/client/grpc-api"
-	"github.com/OffchainLabs/prysm/v7/validator/client/iface"
-	nodeClientFactory "github.com/OffchainLabs/prysm/v7/validator/client/node-client-factory"
-	validatorHelpers "github.com/OffchainLabs/prysm/v7/validator/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	beaconApi "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-api"
+	grpcApi "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/grpc-api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	nodeClientFactory "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/node-client-factory"
+	validatorHelpers "github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
 )
 
 func NewChainClient(validatorConn validatorHelpers.NodeConnection) iface.ChainClient {

@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/electra/rewards"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/electra/rewards"
 )
 
 func TestMainnet_Electra_Rewards(t *testing.T) {

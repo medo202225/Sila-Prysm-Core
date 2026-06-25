@@ -3,9 +3,9 @@ package attestations
 import (
 	"context"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/operations/attestations/kv"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations/kv"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
 )
 
 // Pool defines the necessary methods for Sila-Prysm attestations pool to serve

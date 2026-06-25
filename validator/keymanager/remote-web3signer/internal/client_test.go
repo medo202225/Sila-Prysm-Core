@@ -9,9 +9,9 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager/remote-web3signer/internal"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/internal"
+	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/stretchr/testify/assert"
 )
 

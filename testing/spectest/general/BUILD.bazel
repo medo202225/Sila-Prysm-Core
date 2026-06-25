@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_test")
+load("@sila//tools/go:def.bzl", "go_test")
 
 go_test(
     name = "go_default_test",
@@ -19,7 +19,7 @@ go_test(
         "//testing/require:go_default_library",
         "//testing/spectest/utils:go_default_library",
         "//testing/util:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_ghodss_yaml//:go_default_library",
     ],
 )

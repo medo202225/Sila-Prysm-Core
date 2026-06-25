@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/gloas/operations"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/gloas/operations"
 )
 
 func TestMainnet_Gloas_Operations_AttesterSlashing(t *testing.T) {

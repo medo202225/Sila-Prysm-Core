@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/sirupsen/logrus"
 )

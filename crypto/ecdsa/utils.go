@@ -5,7 +5,7 @@ import (
 	"math/big"
 
 	"github.com/btcsuite/btcd/btcec/v2"
-	gcrypto "github.com/ethereum/go-ethereum/crypto"
+	gcrypto "github.com/sila-chain/Sila/crypto"
 	"github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/pkg/errors"
 )

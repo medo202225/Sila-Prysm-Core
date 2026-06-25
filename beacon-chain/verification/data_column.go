@@ -7,16 +7,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/helpers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/peerdas"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/transition"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
-	"github.com/OffchainLabs/prysm/v7/runtime/logging"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/logging"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -24,7 +24,7 @@ import (
 var (
 	// GossipDataColumnSidecarRequirements defines the set of requirements that DataColumnSidecars received on gossip
 	// must satisfy in order to upgrade an RODataColumn to a VerifiedRODataColumn.
-	// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#data_column_sidecar_subnet_id
+	// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#data_column_sidecar_subnet_id
 	GossipDataColumnSidecarRequirements = []Requirement{
 		RequireValidFields,
 		RequireCorrectSubnet,
@@ -42,7 +42,7 @@ var (
 
 	// ByRangeRequestDataColumnSidecarRequirements defines the set of requirements that DataColumnSidecars received
 	// via the by range request must satisfy in order to upgrade an RODataColumn to a VerifiedRODataColumn.
-	// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#datacolumnsidecarsbyrange-v1
+	// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#datacolumnsidecarsbyrange-v1
 	ByRangeRequestDataColumnSidecarRequirements = []Requirement{
 		RequireValidFields,
 		RequireSidecarInclusionProven,
@@ -51,7 +51,7 @@ var (
 
 	// ByRootRequestDataColumnSidecarRequirements defines the set of requirements that DataColumnSidecars received
 	// via the by root request must satisfy in order to upgrade an RODataColumn to a VerifiedRODataColumn.
-	// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/p2p-interface.md#datacolumnsidecarsbyroot-v1
+	// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/p2p-interface.md#datacolumnsidecarsbyroot-v1
 	ByRootRequestDataColumnSidecarRequirements = []Requirement{
 		RequireValidFields,
 		RequireSidecarInclusionProven,

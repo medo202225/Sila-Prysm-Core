@@ -3,14 +3,14 @@ package voluntaryexits
 import (
 	"sync"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/core/blocks"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	types "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	doublylinkedlist "github.com/OffchainLabs/prysm/v7/container/doubly-linked-list"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/runtime/version"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	doublylinkedlist "github.com/sila-chain/Sila-Prysm-Core/v7/container/doubly-linked-list"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/sirupsen/logrus"
 )
 

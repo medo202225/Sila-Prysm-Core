@@ -1,4 +1,4 @@
-workspace(name = "prysm")
+workspace(name = "sila")
 
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -70,13 +70,13 @@ register_toolchains(
     #    "@zig_sdk//toolchain:windows_amd64",
 )
 
-load("@prysm//tools/cross-toolchain:darwin_cc_hack.bzl", "configure_nonhermetic_darwin")
+load("@sila//tools/cross-toolchain:darwin_cc_hack.bzl", "configure_nonhermetic_darwin")
 
 configure_nonhermetic_darwin()
 
-load("@prysm//tools/cross-toolchain:prysm_toolchains.bzl", "configure_prysm_toolchains")
+load("@sila//tools/cross-toolchain:sila_toolchains.bzl", "configure_sila_toolchains")
 
-configure_prysm_toolchains()
+configure_sila_toolchains()
 
 http_archive(
     name = "bazel_skylib",
@@ -191,7 +191,7 @@ load("@rules_oci//oci:pull.bzl", "oci_pull")
 oci_pull(
     name = "linux_debian11_multiarch_base",  # Debian bullseye
     digest = "sha256:55a5e011b2c4246b4c51e01fcc2b452d151e03df052e357465f0392fcd59fddf",
-    image = "gcr.io/prysmaticlabs/distroless/cc-debian11",
+    image = "gcr.io/sila/distroless/cc-debian11",
     platforms = [
         "linux/amd64",
         "linux/arm64/v8",
@@ -199,9 +199,9 @@ oci_pull(
     reproducible = True,
 )
 
-load("@prysm//tools:image_deps.bzl", "prysm_image_deps")
+load("@sila//tools:image_deps.bzl", "sila_image_deps")
 
-prysm_image_deps()
+sila_image_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -270,12 +270,12 @@ filegroup(
 )
     """,
     sha256 = "89cb659498c0d196fc9f957f8b849b2e1a5c041c3b2b3ae5432ac5c26944297e",
-    url = "https://github.com/ethereum/EIPs/archive/5480440fe51742ed23342b68cf106cefd427e39d.tar.gz",
+    url = "https://github.com/sila-chain/Sila-Improvement-Proposals/archive/5480440fe51742ed23342b68cf106cefd427e39d.tar.gz",
 )
 
 consensus_spec_version = "v1.7.0-alpha.10"
 
-load("@prysm//tools:download_spectests.bzl", "consensus_spec_tests")
+load("@sila//tools:download_spectests.bzl", "consensus_spec_tests")
 
 consensus_spec_tests(
     name = "consensus_spec_tests",
@@ -300,7 +300,7 @@ filegroup(
     """,
     integrity = "sha256-a3naXiY2eXKGLBoAPetHfgKq98/vO6SI1xueoNCZnYQ=",
     strip_prefix = "consensus-specs-" + consensus_spec_version[1:],
-    url = "https://github.com/ethereum/consensus-specs/archive/refs/tags/%s.tar.gz" % consensus_spec_version,
+    url = "https://github.com/sila-chain/Sila-Consensus-Specs/archive/refs/tags/%s.tar.gz" % consensus_spec_version,
 )
 
 bls_test_version = "v0.1.1"
@@ -317,7 +317,7 @@ filegroup(
 )
     """,
     sha256 = "93c7d006e7c5b882cbd11dc9ec6c5d0e07f4a8c6b27a32f964eb17cf2db9763a",
-    url = "https://github.com/ethereum/bls12-381-tests/releases/download/%s/bls_tests_yaml.tar.gz" % bls_test_version,
+    url = "https://github.com/sila-chain/Sila-BLS12-381-Tests/releases/download/%s/bls_tests_yaml.tar.gz" % bls_test_version,
 )
 
 http_archive(
@@ -410,16 +410,16 @@ switched_rules_by_language(
     go = True,
 )
 
-load("//:deps.bzl", "prysm_deps")
+load("//:deps.bzl", "sila_deps")
 
-# gazelle:repository_macro deps.bzl%prysm_deps
-prysm_deps()
+# gazelle:repository_macro deps.bzl%sila_deps
+sila_deps()
 
-load("@prysm//third_party/herumi:herumi.bzl", "bls_dependencies")
+load("@sila//third_party/herumi:herumi.bzl", "bls_dependencies")
 
 bls_dependencies()
 
-load("@prysm//testing/endtoend:deps.bzl", "e2e_deps")
+load("@sila//testing/endtoend:deps.bzl", "e2e_deps")
 
 e2e_deps()
 

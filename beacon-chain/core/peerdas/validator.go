@@ -3,14 +3,14 @@ package peerdas
 import (
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/kzg"
-	beaconState "github.com/OffchainLabs/prysm/v7/beacon-chain/state"
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/blocks"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
+	beaconState "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 	"github.com/pkg/errors"
 )
 
@@ -89,7 +89,7 @@ func PopulateFromBid(block blocks.ROBlock) *BidReconstructionSource {
 }
 
 // ValidatorsCustodyRequirement returns the number of custody groups regarding the validator indices attached to the beacon node.
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/validator.md#validator-custody
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/validator.md#validator-custody
 func ValidatorsCustodyRequirement(st beaconState.ReadOnlyBalances, validatorsIndex map[primitives.ValidatorIndex]bool) (uint64, error) {
 	cfg := params.BeaconConfig()
 	idxs := make([]primitives.ValidatorIndex, 0, len(validatorsIndex))
@@ -113,10 +113,10 @@ func ValidatorsCustodyRequirement(st beaconState.ReadOnlyBalances, validatorsInd
 // block, assembles sidecars which can be distributed to peers.
 // cellsPerBlob and proofsPerBlob are parallel slices where each index represents a blob sidecar.
 // This is an adapted version of
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/validator.md#get_data_column_sidecars,
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/validator.md#get_data_column_sidecars,
 // which is designed to be used both when constructing sidecars from a block and from a sidecar, replacing
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/validator.md#get_data_column_sidecars_from_block and
-// https://github.com/ethereum/consensus-specs/blob/master/specs/fulu/validator.md#get_data_column_sidecars_from_column_sidecar
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/validator.md#get_data_column_sidecars_from_block and
+// https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/fulu/validator.md#get_data_column_sidecars_from_column_sidecar
 func DataColumnSidecars(cellsPerBlob [][]kzg.Cell, proofsPerBlob [][]kzg.Proof, src ConstructionPopulator) ([]blocks.RODataColumn, error) {
 	const numberOfColumns = uint64(fieldparams.NumberOfColumns)
 

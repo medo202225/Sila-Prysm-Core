@@ -3,8 +3,8 @@ package flags
 import (
 	"fmt"
 
-	"github.com/OffchainLabs/prysm/v7/cmd"
-	"github.com/OffchainLabs/prysm/v7/config/features"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )

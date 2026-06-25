@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
 )
 
 // SetConfig sets the global params for spec tests depending on the option chosen.

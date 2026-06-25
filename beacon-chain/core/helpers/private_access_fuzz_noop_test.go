@@ -2,7 +2,7 @@
 
 package helpers
 
-import "github.com/OffchainLabs/prysm/v7/beacon-chain/cache"
+import "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
 
 func CommitteeCache() *cache.FakeCommitteeCache {
 	return committeeCache

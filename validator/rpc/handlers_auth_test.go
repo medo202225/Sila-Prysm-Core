@@ -8,10 +8,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
-	"github.com/OffchainLabs/prysm/v7/validator/accounts"
-	"github.com/OffchainLabs/prysm/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
 )
 
 func TestInitialize(t *testing.T) {

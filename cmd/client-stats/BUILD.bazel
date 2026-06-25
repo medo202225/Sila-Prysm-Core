@@ -1,5 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
-load("@prysm//tools/go:def.bzl", "go_library")
+load("@sila//tools/go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -8,7 +8,7 @@ go_library(
         "main.go",
         "usage.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/cmd/client-stats",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/client-stats",
     visibility = ["//visibility:private"],
     deps = [
         "//cmd:go_default_library",

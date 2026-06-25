@@ -5,7 +5,7 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
 	bolt "go.etcd.io/bbolt"
 )
 

@@ -1,6 +1,6 @@
 package eth
 
-import "github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
+import "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
 
 // Copy --
 func (pd *PendingDeposit) Copy() *PendingDeposit {

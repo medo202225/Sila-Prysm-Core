@@ -10,14 +10,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/api/server/structs"
-	chainMock "github.com/OffchainLabs/prysm/v7/beacon-chain/blockchain/testing"
-	p2pMock "github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/testing"
-	mockSync "github.com/OffchainLabs/prysm/v7/beacon-chain/sync/initial-sync/testing"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	chainMock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
+	p2pMock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
+	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 	"google.golang.org/protobuf/proto"
 )
 

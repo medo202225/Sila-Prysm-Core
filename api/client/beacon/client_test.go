@@ -4,8 +4,8 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/api/client"
-	"github.com/OffchainLabs/prysm/v7/testing/require"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
 )
 
 func TestParseNodeVersion(t *testing.T) {

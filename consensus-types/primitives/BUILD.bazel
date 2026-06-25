@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -19,13 +19,13 @@ go_library(
         "validator.go",
         "wei.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/consensus-types/primitives",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives",
     visibility = ["//visibility:public"],
     deps = [
         "//math:go_default_library",
-        "@com_github_ethereum_go_ethereum//common:go_default_library",
-        "@com_github_prysmaticlabs_fastssz//:go_default_library",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@com_github_sila_chain_sila//common:go_default_library",
+        "@com_github_sila_fastssz//:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
     ],
 )
 

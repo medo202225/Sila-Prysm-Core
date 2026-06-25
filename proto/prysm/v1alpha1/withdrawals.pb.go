@@ -10,8 +10,8 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_OffchainLabs_prysm_v7_consensus_types_primitives "github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	_ "github.com/OffchainLabs/prysm/v7/proto/eth/ext"
+	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -77,7 +77,7 @@ func (x *SignedBLSToExecutionChange) GetSignature() []byte {
 
 type BLSToExecutionChange struct {
 	state              protoimpl.MessageState                                                     `protogen:"open.v1"`
-	ValidatorIndex     github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/OffchainLabs/prysm/v7/consensus-types/primitives.ValidatorIndex"`
+	ValidatorIndex     github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	FromBlsPubkey      []byte                                                                     `protobuf:"bytes,2,opt,name=from_bls_pubkey,json=fromBlsPubkey,proto3" json:"from_bls_pubkey,omitempty" ssz-size:"48"`
 	ToExecutionAddress []byte                                                                     `protobuf:"bytes,3,opt,name=to_execution_address,json=toExecutionAddress,proto3" json:"to_execution_address,omitempty" ssz-size:"20"`
 	unknownFields      protoimpl.UnknownFields
@@ -114,11 +114,11 @@ func (*BLSToExecutionChange) Descriptor() ([]byte, []int) {
 	return file_proto_prysm_v1alpha1_withdrawals_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *BLSToExecutionChange) GetValidatorIndex() github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex {
+func (x *BLSToExecutionChange) GetValidatorIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.ValidatorIndex
 	}
-	return github_com_OffchainLabs_prysm_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 func (x *BLSToExecutionChange) GetFromBlsPubkey() []byte {

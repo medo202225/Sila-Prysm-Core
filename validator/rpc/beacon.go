@@ -1,14 +1,14 @@
 package rpc
 
 import (
-	grpcutil "github.com/OffchainLabs/prysm/v7/api/grpc"
-	"github.com/OffchainLabs/prysm/v7/api/rest"
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/validator/client"
-	beaconChainClientFactory "github.com/OffchainLabs/prysm/v7/validator/client/beacon-chain-client-factory"
-	nodeClientFactory "github.com/OffchainLabs/prysm/v7/validator/client/node-client-factory"
-	validatorClientFactory "github.com/OffchainLabs/prysm/v7/validator/client/validator-client-factory"
-	validatorHelpers "github.com/OffchainLabs/prysm/v7/validator/helpers"
+	grpcutil "github.com/sila-chain/Sila-Prysm-Core/v7/api/grpc"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api/rest"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client"
+	beaconChainClientFactory "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-chain-client-factory"
+	nodeClientFactory "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/node-client-factory"
+	validatorClientFactory "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/validator-client-factory"
+	validatorHelpers "github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
 	middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpcretry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpcopentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"

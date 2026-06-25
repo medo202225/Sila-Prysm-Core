@@ -4,9 +4,9 @@ import (
 	"math"
 	"time"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
 )
 
 // MainnetConfig returns the configuration to be used in the main network.
@@ -195,9 +195,9 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	// While eth1 mainnet block times are closer to 13s, we must conform with other clients in
 	// order to vote on the correct eth1 blocks.
 	//
-	// Additional context: https://github.com/ethereum/consensus-specs/issues/2132
-	// Bug prompting this change: https://github.com/prysmaticlabs/prysm/issues/7856
-	// Future optimization: https://github.com/prysmaticlabs/prysm/issues/7739
+	// Additional context: https://github.com/sila-chain/Sila-Consensus-Specs/issues/2132
+	// Bug prompting this change: https://github.com/sila-chain/prysm/issues/7856
+	// Future optimization: https://github.com/sila-chain/prysm/issues/7739
 	SecondsPerETH1Block: 14,
 
 	// State list length constants.

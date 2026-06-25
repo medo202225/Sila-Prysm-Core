@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/electra/finality"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/electra/finality"
 )
 
 func TestMinimal_Electra_Finality(t *testing.T) {

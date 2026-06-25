@@ -3,8 +3,8 @@ package doublylinkedtree
 import (
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/time/slots"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
 )
 
 // orphanLateBlockProposingEarly determines the maximum threshold that we

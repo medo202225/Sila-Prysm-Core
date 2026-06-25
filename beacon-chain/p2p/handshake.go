@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/peers"
-	"github.com/OffchainLabs/prysm/v7/beacon-chain/p2p/peers/peerdata"
-	prysmTime "github.com/OffchainLabs/prysm/v7/time"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/peerdata"
+	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/peer"

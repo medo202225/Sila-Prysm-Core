@@ -3,9 +3,9 @@ package fdlimits_test
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/runtime/fdlimits"
-	"github.com/OffchainLabs/prysm/v7/testing/assert"
-	gethLimit "github.com/ethereum/go-ethereum/common/fdlimit"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/fdlimits"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	gethLimit "github.com/sila-chain/Sila/common/fdlimit"
 )
 
 func TestSetMaxFdLimits(t *testing.T) {

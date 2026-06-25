@@ -1,4 +1,4 @@
-load("@prysm//tools/go:def.bzl", "go_library", "go_test")
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
@@ -7,7 +7,7 @@ go_library(
         "sync.go",
         "validator_status.go",
     ],
-    importpath = "github.com/OffchainLabs/prysm/v7/beacon-chain/rpc/eth/helpers",
+    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/helpers",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/blockchain:go_default_library",
@@ -24,7 +24,7 @@ go_library(
         "//encoding/bytesutil:go_default_library",
         "//network/httputil:go_default_library",
         "//time/slots:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
         "@org_golang_google_grpc//status:go_default_library",
@@ -59,7 +59,7 @@ go_test(
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
-        "@com_github_ethereum_go_ethereum//common/hexutil:go_default_library",
+        "@com_github_sila_chain_sila//common/hexutil:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )

@@ -8,9 +8,9 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/OffchainLabs/prysm/v7/api"
-	"github.com/OffchainLabs/prysm/v7/config/params"
-	"github.com/OffchainLabs/prysm/v7/io/file"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
 	"github.com/urfave/cli/v2"
 )
 
@@ -27,7 +27,7 @@ var (
 	// DisableAccountMetricsFlag disables the prometheus metrics for validator accounts, default false.
 	DisableAccountMetricsFlag = &cli.BoolFlag{
 		Name: "disable-account-metrics",
-		Usage: `Disables prometheus metrics for validator accounts. Operators with high volumes 
+		Usage: `Disables prometheus metrics for validator accounts. Operators with high volumes
 		of validating keys may wish to disable granular prometheus metrics as it increases
 		the data cardinality.`,
 	}
@@ -48,8 +48,8 @@ var (
 	// BeaconRESTApiHeaders defines a list of headers to send with all HTTP requests to the beacon node.
 	BeaconRESTApiHeaders = &cli.StringFlag{
 		Name: "beacon-rest-api-headers",
-		Usage: `Comma-separated list of key value pairs to pass as headers for all HTTP calls to the beacon node. 
-		To provide multiple values for the same key, specify the same key for each value. 
+		Usage: `Comma-separated list of key value pairs to pass as headers for all HTTP calls to the beacon node.
+		To provide multiple values for the same key, specify the same key for each value.
 		Example: --grpc-headers=key1=value1,key1=value2,key2=value3`,
 	}
 	// CertFlag defines a flag for the node's TLS certificate.
@@ -366,7 +366,7 @@ var (
 		Name: "suggested-fee-recipient",
 		Usage: `Sets ALL validators' mapping to a suggested eth address to receive gas fees when proposing a block.
 		Note that this is only a suggestion when integrating with a Builder API, which may choose to specify
-		a different fee recipient as payment for the blocks it builds.For additional setting overrides use the 
+		a different fee recipient as payment for the blocks it builds.For additional setting overrides use the
 		--` + ProposerSettingsFlag.Name + " or --" + ProposerSettingsURLFlag.Name + " flags.",
 		Value: params.BeaconConfig().EthBurnAddressHex,
 	}

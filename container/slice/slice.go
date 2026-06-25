@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/OffchainLabs/prysm/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
 )
 
 // SubsetUint64 returns true if the first array is

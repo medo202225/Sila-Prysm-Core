@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/OffchainLabs/prysm/v7/testing/spectest/shared/capella/fork"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/capella/fork"
 )
 
 func TestMinimal_Capella_Transition(t *testing.T) {

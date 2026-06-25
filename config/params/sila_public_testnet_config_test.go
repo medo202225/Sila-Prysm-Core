@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	fieldparams "github.com/OffchainLabs/prysm/v7/config/fieldparams"
+	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
 )
 
 func TestSilaPublicTestnetConfig(t *testing.T) {

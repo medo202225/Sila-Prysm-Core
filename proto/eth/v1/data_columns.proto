@@ -1,4 +1,4 @@
-// Copyright 2024 Offchain Labs.
+// Copyright 2024 Sila Labs.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import "proto/eth/ext/options.proto";
 import "proto/prysm/v1alpha1/beacon_block.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
-option go_package = "github.com/prysmaticlabs/prysm/v5/proto/prysm/v1alpha1;eth";
+option go_package = "github.com/sila-chain/prysm/v5/proto/prysm/v1alpha1;eth";
 option java_multiple_files = true;
 option java_outer_classname = "DataColumnsProto";
 option java_package = "org.ethereum.eth.v1alpha1";

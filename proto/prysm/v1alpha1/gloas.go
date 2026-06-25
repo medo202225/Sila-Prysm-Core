@@ -1,7 +1,7 @@
 package eth
 
 import (
-	"github.com/OffchainLabs/prysm/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
 )
 
 // Copy creates a deep copy of ExecutionPayloadBid.

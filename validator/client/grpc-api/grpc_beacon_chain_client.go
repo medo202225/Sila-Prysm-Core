@@ -3,9 +3,9 @@ package grpc_api
 import (
 	"context"
 
-	ethpb "github.com/OffchainLabs/prysm/v7/proto/prysm/v1alpha1"
-	"github.com/OffchainLabs/prysm/v7/validator/client/iface"
-	validatorHelpers "github.com/OffchainLabs/prysm/v7/validator/helpers"
+	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	validatorHelpers "github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
