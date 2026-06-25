@@ -355,7 +355,7 @@ exceptions:
     - validate_sync_committee_message_gossip#altair
     # bellatrix
     - get_sila_payload#bellatrix
-    - get_safe_execution_block_hash#bellatrix
+    - get_safe_sila_block_hash#bellatrix
     - is_merge_transition_block#bellatrix
     - is_optimistic_candidate_block#bellatrix
     - latest_verified_ancestor#bellatrix
@@ -475,7 +475,7 @@ exceptions:
     - get_node_children#gloas
     - get_node_for_root#gloas
     - get_parent_payload_status#gloas
-    - get_safe_execution_block_hash#gloas
+    - get_safe_sila_block_hash#gloas
     - get_supported_node#gloas
     - is_ancestor#gloas
     - is_previous_slot_payload_decision#gloas

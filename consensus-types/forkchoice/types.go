@@ -63,7 +63,7 @@ type DumpV2 struct {
 type NodeV2 struct {
 	BlockRoot                       []byte
 	ParentRoot                      []byte
-	ExecutionBlockHash              []byte
+	SilaBlockHash              []byte
 	Target                          []byte
 	Timestamp                       time.Time
 	Slot                            primitives.Slot
@@ -106,6 +106,6 @@ type Node struct {
 	Timestamp                time.Time
 	BlockRoot                []byte
 	ParentRoot               []byte
-	ExecutionBlockHash       []byte
+	SilaBlockHash       []byte
 	Target                   []byte
 }

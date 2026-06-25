@@ -142,7 +142,7 @@ func Test_NotifyForkchoiceUpdate(t *testing.T) {
 			}(),
 		},
 		{
-			name: "not execution block",
+			name: "not sila block",
 			blk: func() interfaces.ReadOnlySignedBeaconBlock {
 				b, err := consensusblocks.NewSignedBeaconBlock(&silapb.SignedBeaconBlockBellatrix{Block: &silapb.BeaconBlockBellatrix{
 					Body: &silapb.BeaconBlockBodyBellatrix{
@@ -609,14 +609,14 @@ func Test_NotifyNewPayload(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			e := &mockExecution.SilaEngineClient{ErrNewPayload: tt.newPayloadErr, BlockByHashMap: map[[32]byte]*v1.ExecutionBlock{}}
-			e.BlockByHashMap[[32]byte{'a'}] = &v1.ExecutionBlock{
+			e := &mockExecution.SilaEngineClient{ErrNewPayload: tt.newPayloadErr, BlockByHashMap: map[[32]byte]*v1.SilaBlock{}}
+			e.BlockByHashMap[[32]byte{'a'}] = &v1.SilaBlock{
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
 				},
 				TotalDifficulty: "0x2",
 			}
-			e.BlockByHashMap[[32]byte{'b'}] = &v1.ExecutionBlock{
+			e.BlockByHashMap[[32]byte{'b'}] = &v1.SilaBlock{
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("3")),
 				},
@@ -661,14 +661,14 @@ func Test_NotifyNewPayload_SetOptimisticToValid(t *testing.T) {
 	require.NoError(t, err)
 	rob, err := consensusblocks.NewROBlock(bellatrixBlk)
 	require.NoError(t, err)
-	e := &mockExecution.SilaEngineClient{BlockByHashMap: map[[32]byte]*v1.ExecutionBlock{}}
-	e.BlockByHashMap[[32]byte{'a'}] = &v1.ExecutionBlock{
+	e := &mockExecution.SilaEngineClient{BlockByHashMap: map[[32]byte]*v1.SilaBlock{}}
+	e.BlockByHashMap[[32]byte{'a'}] = &v1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: common.BytesToHash([]byte("b")),
 		},
 		TotalDifficulty: "0x2",
 	}
-	e.BlockByHashMap[[32]byte{'b'}] = &v1.ExecutionBlock{
+	e.BlockByHashMap[[32]byte{'b'}] = &v1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: common.BytesToHash([]byte("3")),
 		},

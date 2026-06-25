@@ -254,7 +254,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		BlobReceiver:                     s.cfg.BlobReceiver,
 		DataColumnReceiver:               s.cfg.DataColumnReceiver,
 		MockSilaExecutionVotes:                    s.cfg.MockSilaExecutionVotes,
-		SilaExecutionBlockFetcher:                 s.cfg.ExecutionChainService,
+		SilaBlockFetcher:                 s.cfg.ExecutionChainService,
 		PendingDepositsFetcher:           s.cfg.PendingDepositFetcher,
 		SlashingsPool:                    s.cfg.SlashingsPool,
 		StateGen:                         s.cfg.StateGen,

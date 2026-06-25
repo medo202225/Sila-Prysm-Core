@@ -23,7 +23,7 @@ import (
 var (
 	// This is the recommended mock silaexec block hash according to the Sila consensus interop guidelines.
 	// https://github.com/sila-chain/silaconsensus.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
-	mockSilaExecutionBlockHash = []byte{66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66}
+	mockSilaBlockHash = []byte{66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66}
 )
 
 // GenerateGenesisState deterministically given a genesis time and number of validators.
@@ -63,7 +63,7 @@ func GenerateGenesisStateFromDepositData(
 	beaconState, err := coreState.GenesisBeaconState(ctx, deposits, genesisTime, &silapb.SilaExecutionData{
 		DepositRoot:  root[:],
 		DepositCount: uint64(len(deposits)),
-		BlockHash:    mockSilaExecutionBlockHash,
+		BlockHash:    mockSilaBlockHash,
 	})
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "could not generate genesis state")

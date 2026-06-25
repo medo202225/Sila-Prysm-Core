@@ -107,18 +107,18 @@ func Test_validateMergeBlock(t *testing.T) {
 	service, tr := minimalTestService(t)
 	ctx := tr.ctx
 
-	engine := &mocks.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.ExecutionBlock{}}
+	engine := &mocks.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.SilaBlock{}}
 	service.cfg.SilaEngineCaller = engine
 	a := [32]byte{'a'}
 	b := [32]byte{'b'}
 	mergeBlockParentHash := [32]byte{'3'}
-	engine.BlockByHashMap[a] = &silaenginev1.ExecutionBlock{
+	engine.BlockByHashMap[a] = &silaenginev1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: b,
 		},
 		TotalDifficulty: "0x2",
 	}
-	engine.BlockByHashMap[b] = &silaenginev1.ExecutionBlock{
+	engine.BlockByHashMap[b] = &silaenginev1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: mergeBlockParentHash,
 		},
@@ -149,12 +149,12 @@ func Test_getBlkParentHashAndTD(t *testing.T) {
 	service, tr := minimalTestService(t)
 	ctx := tr.ctx
 
-	engine := &mocks.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.ExecutionBlock{}}
+	engine := &mocks.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.SilaBlock{}}
 	service.cfg.SilaEngineCaller = engine
 	h := [32]byte{'a'}
 	p := [32]byte{'b'}
 	td := "0x1"
-	engine.BlockByHashMap[h] = &silaenginev1.ExecutionBlock{
+	engine.BlockByHashMap[h] = &silaenginev1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: p,
 		},
@@ -172,7 +172,7 @@ func Test_getBlkParentHashAndTD(t *testing.T) {
 	_, _, err = service.getBlkParentHashAndTD(ctx, h[:])
 	require.ErrorContains(t, "pow block is nil", err)
 
-	engine.BlockByHashMap[h] = &silaenginev1.ExecutionBlock{
+	engine.BlockByHashMap[h] = &silaenginev1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: p,
 		},
@@ -181,7 +181,7 @@ func Test_getBlkParentHashAndTD(t *testing.T) {
 	_, _, err = service.getBlkParentHashAndTD(ctx, h[:])
 	require.ErrorContains(t, "could not decode merge block total difficulty: hex string without 0x prefix", err)
 
-	engine.BlockByHashMap[h] = &silaenginev1.ExecutionBlock{
+	engine.BlockByHashMap[h] = &silaenginev1.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: p,
 		},

@@ -79,7 +79,7 @@ type BeaconChainConfig struct {
 	ShardCommitteePeriod             primitives.Epoch `yaml:"SHARD_COMMITTEE_PERIOD" spec:"true"`              // ShardCommitteePeriod is the minimum amount of epochs a validator must participate before exiting.
 	MinEpochsToInactivityPenalty     primitives.Epoch `yaml:"MIN_EPOCHS_TO_INACTIVITY_PENALTY" spec:"true"`    // MinEpochsToInactivityPenalty defines the minimum amount of epochs since finality to begin penalizing inactivity.
 	SilaExecutionFollowDistance               uint64           `yaml:"SilaExecution_FOLLOW_DISTANCE" spec:"true"`                // SilaExecutionFollowDistance is the number of silaexec.0 blocks to wait before considering a new deposit for voting. This only applies after the chain as been started.
-	SecondsPerSilaExecutionBlock              uint64           `yaml:"SECONDS_PER_SilaExecution_BLOCK" spec:"true"`              // SecondsPerSilaExecutionBlock is the approximate time for a single silaexec block to be produced.
+	SecondsPerSilaBlock              uint64           `yaml:"SECONDS_PER_SilaExecution_BLOCK" spec:"true"`              // SecondsPerSilaBlock is the approximate time for a single silaexec block to be produced.
 
 	// Fork choice algorithm constants.
 	ProposerScoreBoost              uint64           `yaml:"PROPOSER_SCORE_BOOST" spec:"true"`                // ProposerScoreBoost defines a value that is a % of the committee weight for fork-choice boosting.

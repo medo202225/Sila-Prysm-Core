@@ -104,8 +104,8 @@ func (vs *Server) deposits(
 		return nil, err
 	}
 
-	_, genesisSilaExecutionBlock := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
-	if genesisSilaExecutionBlock.Cmp(canonicalSilaExecutionDataHeight) == 0 {
+	_, genesisSilaBlock := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
+	if genesisSilaBlock.Cmp(canonicalSilaExecutionDataHeight) == 0 {
 		return []*silapb.Deposit{}, nil
 	}
 

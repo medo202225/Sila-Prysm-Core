@@ -95,7 +95,7 @@ func assertEqualConfigs(t *testing.T, name string, fields []string, expected, ac
 	assert.Equal(t, expected.TargetAggregatorsPerCommittee, actual.TargetAggregatorsPerCommittee, "%s: TargetAggregatorsPerCommittee", name)
 	assert.Equal(t, expected.RandomSubnetsPerValidator, actual.RandomSubnetsPerValidator, "%s: RandomSubnetsPerValidator", name)
 	assert.Equal(t, expected.EpochsPerRandomSubnetSubscription, actual.EpochsPerRandomSubnetSubscription, "%s: EpochsPerRandomSubnetSubscription", name)
-	assert.Equal(t, expected.SecondsPerSilaExecutionBlock, actual.SecondsPerSilaExecutionBlock, "%s: SecondsPerSilaExecutionBlock", name)
+	assert.Equal(t, expected.SecondsPerSilaBlock, actual.SecondsPerSilaBlock, "%s: SecondsPerSilaBlock", name)
 
 	// Deposit contract.
 	assert.Equal(t, expected.DepositChainID, actual.DepositChainID, "%s: DepositChainID", name)

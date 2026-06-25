@@ -145,17 +145,17 @@ func TestClient_IPC(t *testing.T) {
 		require.DeepEqual(t, bytesutil.ToBytes32(want.LatestValidHash), bytesutil.ToBytes32(latestValidHash))
 	})
 	t.Run(BlockByNumberMethod, func(t *testing.T) {
-		want, ok := fix["ExecutionBlock"].(*pb.ExecutionBlock)
+		want, ok := fix["SilaBlock"].(*pb.SilaBlock)
 		require.Equal(t, true, ok)
-		resp, err := srv.LatestExecutionBlock(ctx)
+		resp, err := srv.LatestSilaBlock(ctx)
 		require.NoError(t, err)
 		require.DeepEqual(t, want, resp)
 	})
 	t.Run(BlockByHashMethod, func(t *testing.T) {
-		want, ok := fix["ExecutionBlock"].(*pb.ExecutionBlock)
+		want, ok := fix["SilaBlock"].(*pb.SilaBlock)
 		require.Equal(t, true, ok)
 		arg := common.BytesToHash([]byte("foo"))
-		resp, err := srv.ExecutionBlockByHash(ctx, arg, true /* with txs */)
+		resp, err := srv.SilaBlockByHash(ctx, arg, true /* with txs */)
 		require.NoError(t, err)
 		require.DeepEqual(t, want, resp)
 	})
@@ -933,7 +933,7 @@ func TestClient_HTTP(t *testing.T) {
 		require.DeepEqual(t, []uint8(nil), resp)
 	})
 	t.Run(BlockByNumberMethod, func(t *testing.T) {
-		want, ok := fix["ExecutionBlock"].(*pb.ExecutionBlock)
+		want, ok := fix["SilaBlock"].(*pb.SilaBlock)
 		require.Equal(t, true, ok)
 		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
@@ -958,13 +958,13 @@ func TestClient_HTTP(t *testing.T) {
 		service.rpcClient = rpcClient
 
 		// We call the RPC method via HTTP and expect a proper result.
-		resp, err := service.LatestExecutionBlock(ctx)
+		resp, err := service.LatestSilaBlock(ctx)
 		require.NoError(t, err)
 		require.DeepEqual(t, want, resp)
 	})
 	t.Run(BlockByHashMethod, func(t *testing.T) {
 		arg := common.BytesToHash([]byte("foo"))
-		want, ok := fix["ExecutionBlock"].(*pb.ExecutionBlock)
+		want, ok := fix["SilaBlock"].(*pb.SilaBlock)
 		require.Equal(t, true, ok)
 		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
@@ -996,7 +996,7 @@ func TestClient_HTTP(t *testing.T) {
 		service.rpcClient = rpcClient
 
 		// We call the RPC method via HTTP and expect a proper result.
-		resp, err := service.ExecutionBlockByHash(ctx, arg, true /* with txs */)
+		resp, err := service.SilaBlockByHash(ctx, arg, true /* with txs */)
 		require.NoError(t, err)
 		require.DeepEqual(t, want, resp)
 	})
@@ -1290,7 +1290,7 @@ func TestReconstructFullBellatrixBlockBatch(t *testing.T) {
 		// Make sure empty blocks are handled correctly
 		require.DeepEqual(t, wantedWrappedEmpty, reconstructed[0])
 
-		// Handle normal execution blocks correctly
+		// Handle normal sila blocks correctly
 		got, err := reconstructed[1].Block().Body().Execution()
 		require.NoError(t, err)
 		require.DeepEqual(t, payload, got.Proto())
@@ -1368,8 +1368,8 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 	tests := []struct {
 		name                  string
 		paramsTd              string
-		currentPowBlock       *pb.ExecutionBlock
-		parentPowBlock        *pb.ExecutionBlock
+		currentPowBlock       *pb.SilaBlock
+		parentPowBlock        *pb.SilaBlock
 		errLatestExecutionBlk error
 		wantTerminalBlockHash []byte
 		wantExists            bool
@@ -1381,29 +1381,29 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 			errString: "could not convert terminal total difficulty to uint256",
 		},
 		{
-			name:                  "could not get latest execution block",
+			name:                  "could not get latest sila block",
 			paramsTd:              "1",
 			errLatestExecutionBlk: errors.New("blah"),
-			errString:             "could not get latest execution block",
+			errString:             "could not get latest sila block",
 		},
 		{
-			name:      "nil latest execution block",
+			name:      "nil latest sila block",
 			paramsTd:  "1",
-			errString: "latest execution block is nil",
+			errString: "latest sila block is nil",
 		},
 		{
-			name:     "current execution block invalid TD",
+			name:     "current sila block invalid TD",
 			paramsTd: "1",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash:            common.BytesToHash([]byte("a")),
 				TotalDifficulty: "1115792089237316195423570985008687907853269984665640564039457584007913129638912",
 			},
 			errString: "could not convert total difficulty to uint256",
 		},
 		{
-			name:     "current execution block has zero hash parent",
+			name:     "current sila block has zero hash parent",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash(params.BeaconConfig().ZeroHash[:]),
@@ -1414,26 +1414,26 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 		{
 			name:     "could not get parent block",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
 				},
 				TotalDifficulty: "0x3",
 			},
-			errString: "could not get parent execution block",
+			errString: "could not get parent sila block",
 		},
 		{
-			name:     "parent execution block invalid TD",
+			name:     "parent sila block invalid TD",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
 				},
 				TotalDifficulty: "0x3",
 			},
-			parentPowBlock: &pb.ExecutionBlock{
+			parentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("b")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("c")),
@@ -1445,14 +1445,14 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 		{
 			name:     "happy case",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
 				},
 				TotalDifficulty: "0x3",
 			},
-			parentPowBlock: &pb.ExecutionBlock{
+			parentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("b")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("c")),
@@ -1465,7 +1465,7 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 		{
 			name:     "happy case, but invalid timestamp",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
@@ -1473,7 +1473,7 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 				},
 				TotalDifficulty: "0x3",
 			},
-			parentPowBlock: &pb.ExecutionBlock{
+			parentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("b")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("c")),
@@ -1484,14 +1484,14 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 		{
 			name:     "ttd not reached",
 			paramsTd: "3",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
 				},
 				TotalDifficulty: "0x2",
 			},
-			parentPowBlock: &pb.ExecutionBlock{
+			parentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("b")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("c")),
@@ -1505,15 +1505,15 @@ func TestServer_getPowBlockHashAtTerminalTotalDifficulty(t *testing.T) {
 			cfg := params.BeaconConfig().Copy()
 			cfg.TerminalTotalDifficulty = tt.paramsTd
 			params.OverrideBeaconConfig(cfg)
-			var m map[[32]byte]*pb.ExecutionBlock
+			var m map[[32]byte]*pb.SilaBlock
 			if tt.parentPowBlock != nil {
-				m = map[[32]byte]*pb.ExecutionBlock{
+				m = map[[32]byte]*pb.SilaBlock{
 					tt.parentPowBlock.Hash: tt.parentPowBlock,
 				}
 			}
 			client := mocks.SilaEngineClient{
 				ErrLatestExecBlock: tt.errLatestExecutionBlk,
-				ExecutionBlock:     tt.currentPowBlock,
+				SilaBlock:     tt.currentPowBlock,
 				BlockByHashMap:     m,
 			}
 			b, e, err := client.GetTerminalBlockHash(t.Context(), 1)
@@ -1673,7 +1673,7 @@ func newTestIPCServer(t *testing.T) *rpc.Server {
 func fixtures() map[string]any {
 	s := fixturesStruct()
 	return map[string]any{
-		"ExecutionBlock":                    s.ExecutionBlock,
+		"SilaBlock":                    s.SilaBlock,
 		"SilaPayloadBody":              s.SilaPayloadBody,
 		"SilaPayload":                  s.SilaPayload,
 		"SilaPayloadCapella":           s.SilaPayloadCapella,
@@ -1954,7 +1954,7 @@ func fixturesStruct() *payloadFixtures {
 	transactionsRoot := bytesutil.PadTo([]byte("transactionsRoot"), fieldparams.RootLength)
 	receiptsRoot := bytesutil.PadTo([]byte("receiptsRoot"), fieldparams.RootLength)
 	logsBloom := bytesutil.PadTo([]byte("logs"), fieldparams.LogsBloomLength)
-	executionBlock := &pb.ExecutionBlock{
+	silaBlock := &pb.SilaBlock{
 		Version: version.Bellatrix,
 		Header: gethtypes.Header{
 			ParentHash:  common.BytesToHash(parent),
@@ -2032,7 +2032,7 @@ func fixturesStruct() *payloadFixtures {
 		LatestValidHash: foo[:],
 	}
 	return &payloadFixtures{
-		ExecutionBlock:                    executionBlock,
+		SilaBlock:                    silaBlock,
 		SilaPayloadBody:              silaPayloadBodyFixture,
 		SilaPayload:                  silaPayloadFixture,
 		SilaPayloadCapella:           silaPayloadFixtureCapella,
@@ -2057,7 +2057,7 @@ func fixturesStruct() *payloadFixtures {
 }
 
 type payloadFixtures struct {
-	ExecutionBlock                    *pb.ExecutionBlock
+	SilaBlock                    *pb.SilaBlock
 	SilaPayloadBody              *pb.SilaPayloadBody
 	SilaPayload                  *pb.SilaPayload
 	SilaPayloadCapella           *pb.SilaPayloadCapella
@@ -2157,9 +2157,9 @@ func (*testEngineService) NoArgsRets() {}
 
 func (*testEngineService) GetBlockByHash(
 	_ context.Context, _ common.Hash, _ bool,
-) *pb.ExecutionBlock {
+) *pb.SilaBlock {
 	fix := fixtures()
-	item, ok := fix["ExecutionBlock"].(*pb.ExecutionBlock)
+	item, ok := fix["SilaBlock"].(*pb.SilaBlock)
 	if !ok {
 		panic("not found")
 	}
@@ -2168,9 +2168,9 @@ func (*testEngineService) GetBlockByHash(
 
 func (*testEngineService) GetBlockByNumber(
 	_ context.Context, _ string, _ bool,
-) *pb.ExecutionBlock {
+) *pb.SilaBlock {
 	fix := fixtures()
-	item, ok := fix["ExecutionBlock"].(*pb.ExecutionBlock)
+	item, ok := fix["SilaBlock"].(*pb.SilaBlock)
 	if !ok {
 		panic("not found")
 	}
@@ -2821,14 +2821,14 @@ func testNewBlobVerifier() verification.NewBlobVerifier {
 	}
 }
 
-func TestGloasPayloadFromExecutionBlock_PropagatesBlockAccessList(t *testing.T) {
+func TestGloasPayloadFromSilaBlock_PropagatesBlockAccessList(t *testing.T) {
 	hash := common.BytesToHash([]byte("block-hash"))
 	blobGasUsed := uint64(123)
 	excessBlobGas := uint64(456)
 	slotNumber := uint64(789)
 	bal := []byte{0x01, 0x02, 0x03, 0x04}
 
-	blk := &pb.ExecutionBlock{
+	blk := &pb.SilaBlock{
 		Hash: hash,
 		Header: gethtypes.Header{
 			ParentHash:    common.BytesToHash([]byte("parent")),
@@ -2844,14 +2844,14 @@ func TestGloasPayloadFromExecutionBlock_PropagatesBlockAccessList(t *testing.T) 
 		BlockAccessList: bal,
 	}
 
-	payload, err := gloasPayloadFromExecutionBlock(hash, blk)
+	payload, err := gloasPayloadFromSilaBlock(hash, blk)
 	require.NoError(t, err)
 	require.DeepEqual(t, bal, payload.BlockAccessList)
 }
 
-func TestExecutionBlock_MarshalUnmarshalJSON_BlockAccessList(t *testing.T) {
+func TestSilaBlock_MarshalUnmarshalJSON_BlockAccessList(t *testing.T) {
 	bal := hexutil.Bytes{0xde, 0xad, 0xbe, 0xef}
-	original := &pb.ExecutionBlock{
+	original := &pb.SilaBlock{
 		Version: version.Gloas,
 		Hash:    common.BytesToHash([]byte("block-hash")),
 		Header: gethtypes.Header{
@@ -2866,7 +2866,7 @@ func TestExecutionBlock_MarshalUnmarshalJSON_BlockAccessList(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, true, strings.Contains(string(enc), "blockAccessList"))
 
-	decoded := &pb.ExecutionBlock{}
+	decoded := &pb.SilaBlock{}
 	require.NoError(t, decoded.UnmarshalJSON(enc))
 	require.DeepEqual(t, []byte(bal), []byte(decoded.BlockAccessList))
 }

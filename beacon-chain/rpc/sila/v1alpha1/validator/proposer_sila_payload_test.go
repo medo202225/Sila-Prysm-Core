@@ -121,7 +121,7 @@ func TestServer_getSilaPayload(t *testing.T) {
 		{
 			name:      "transition not-completed, latest exec block is nil",
 			st:        nonTransitionSt,
-			errString: "latest execution block is nil",
+			errString: "latest sila block is nil",
 		},
 		{
 			name:              "transition not-completed, activation epoch not reached",
@@ -361,8 +361,8 @@ func TestServer_getTerminalBlockHashIfExists(t *testing.T) {
 		name                  string
 		paramsTerminalHash    []byte
 		paramsTd              string
-		currentPowBlock       *pb.ExecutionBlock
-		parentPowBlock        *pb.ExecutionBlock
+		currentPowBlock       *pb.SilaBlock
+		parentPowBlock        *pb.SilaBlock
 		wantTerminalBlockHash []byte
 		wantExists            bool
 		errString             string
@@ -383,14 +383,14 @@ func TestServer_getTerminalBlockHashIfExists(t *testing.T) {
 		{
 			name:     "use terminal total difficulty",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
 				},
 				TotalDifficulty: "0x3",
 			},
-			parentPowBlock: &pb.ExecutionBlock{
+			parentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("b")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("c")),
@@ -403,7 +403,7 @@ func TestServer_getTerminalBlockHashIfExists(t *testing.T) {
 		{
 			name:     "use terminal total difficulty but fails timestamp",
 			paramsTd: "2",
-			currentPowBlock: &pb.ExecutionBlock{
+			currentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("a")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("b")),
@@ -411,7 +411,7 @@ func TestServer_getTerminalBlockHashIfExists(t *testing.T) {
 				},
 				TotalDifficulty: "0x3",
 			},
-			parentPowBlock: &pb.ExecutionBlock{
+			parentPowBlock: &pb.SilaBlock{
 				Hash: common.BytesToHash([]byte("b")),
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("c")),
@@ -426,18 +426,18 @@ func TestServer_getTerminalBlockHashIfExists(t *testing.T) {
 			cfg.TerminalTotalDifficulty = tt.paramsTd
 			cfg.TerminalBlockHash = common.BytesToHash(tt.paramsTerminalHash)
 			params.OverrideBeaconConfig(cfg)
-			var m map[[32]byte]*pb.ExecutionBlock
+			var m map[[32]byte]*pb.SilaBlock
 			if tt.parentPowBlock != nil {
-				m = map[[32]byte]*pb.ExecutionBlock{
+				m = map[[32]byte]*pb.SilaBlock{
 					tt.parentPowBlock.Hash: tt.parentPowBlock,
 				}
 			}
 			c := powtesting.New()
 			c.HashesByHeight[0] = tt.wantTerminalBlockHash
 			vs := &Server{
-				SilaExecutionBlockFetcher: c,
+				SilaBlockFetcher: c,
 				SilaEngineCaller: &powtesting.SilaEngineClient{
-					ExecutionBlock: tt.currentPowBlock,
+					SilaBlock: tt.currentPowBlock,
 					BlockByHashMap: m,
 				},
 			}

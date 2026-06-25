@@ -29,10 +29,10 @@ var (
 type DepositTree struct {
 	tree                    MerkleTreeNode
 	depositCount            uint64 // number of deposits in the tree, reference implementation calls this mix_in_length.
-	finalizedExecutionBlock executionBlock
+	finalizedSilaBlock silaBlock
 }
 
-type executionBlock struct {
+type silaBlock struct {
 	Hash  [32]byte
 	Depth uint64
 }
@@ -44,7 +44,7 @@ func NewDepositTree() *DepositTree {
 	return &DepositTree{
 		tree:                    merkle,
 		depositCount:            0,
-		finalizedExecutionBlock: executionBlock{},
+		finalizedSilaBlock: silaBlock{},
 	}
 }
 
@@ -52,7 +52,7 @@ func NewDepositTree() *DepositTree {
 func (d *DepositTree) GetSnapshot() (DepositTreeSnapshot, error) {
 	var finalized [][32]byte
 	depositCount, finalized := d.tree.GetFinalized(finalized)
-	return fromTreeParts(finalized, depositCount, d.finalizedExecutionBlock)
+	return fromTreeParts(finalized, depositCount, d.finalizedSilaBlock)
 }
 
 // fromSnapshot returns a deposit tree from a deposit tree snapshot.
@@ -74,7 +74,7 @@ func fromSnapshot(snapshot DepositTreeSnapshot) (*DepositTree, error) {
 	return &DepositTree{
 		tree:                    tree,
 		depositCount:            snapshot.depositCount,
-		finalizedExecutionBlock: snapshot.executionBlock,
+		finalizedSilaBlock: snapshot.silaBlock,
 	}, nil
 }
 
@@ -82,7 +82,7 @@ func fromSnapshot(snapshot DepositTreeSnapshot) (*DepositTree, error) {
 func (d *DepositTree) Finalize(silaExecutionDepositIndex int64, executionHash common.Hash, executionNumber uint64) error {
 	var blockHash [32]byte
 	copy(blockHash[:], executionHash[:])
-	d.finalizedExecutionBlock = executionBlock{
+	d.finalizedSilaBlock = silaBlock{
 		Hash:  blockHash,
 		Depth: executionNumber,
 	}

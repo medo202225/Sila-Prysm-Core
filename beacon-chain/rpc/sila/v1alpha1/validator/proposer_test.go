@@ -287,7 +287,7 @@ func TestServer_GetBeaconBlock_Bellatrix(t *testing.T) {
 	}
 
 	proposerServer := getProposerServer(ctx, db, beaconState, parentRoot[:])
-	proposerServer.SilaExecutionBlockFetcher = c
+	proposerServer.SilaBlockFetcher = c
 	ed, err := blocks.NewWrappedExecutionData(payload)
 	require.NoError(t, err)
 	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
@@ -891,7 +891,7 @@ func getProposerServer(ctx context.Context, db db.HeadAccessDatabase, headState 
 		BlockReceiver:         mockChainService,
 		ChainStartFetcher:     &mockExecution.Chain{},
 		SilaExecutionInfoFetcher:       &mockExecution.Chain{},
-		SilaExecutionBlockFetcher:      &mockExecution.Chain{},
+		SilaBlockFetcher:      &mockExecution.Chain{},
 		FinalizationFetcher:   mockChainService,
 		ForkFetcher:           mockChainService,
 		ForkchoiceFetcher:     mockChainService,
@@ -1329,7 +1329,7 @@ func TestProposer_ComputeStateRoot_OK(t *testing.T) {
 	proposerServer := &Server{
 		ChainStartFetcher: &mockExecution.Chain{},
 		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-		SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+		SilaBlockFetcher:  &mockExecution.Chain{},
 		StateGen:          stategen.New(db, doublylinkedtree.New()),
 		BlockReceiver: &mock.ChainService{
 			State:           beaconState.Copy(),
@@ -1458,7 +1458,7 @@ func TestProposer_PendingDeposits_SilaExecutionDataVoteOK(t *testing.T) {
 	bs := &Server{
 		ChainStartFetcher: p,
 		SilaExecutionInfoFetcher:   p,
-		SilaExecutionBlockFetcher:  p,
+		SilaBlockFetcher:  p,
 		BlockReceiver:     &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:       &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 	}
@@ -1519,7 +1519,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 	readyDeposits := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			SilaExecutionBlockHeight: 2,
+			SilaBlockHeight: 2,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -1529,7 +1529,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 		},
 		{
 			Index:           1,
-			SilaExecutionBlockHeight: 8,
+			SilaBlockHeight: 8,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("b"), 48),
@@ -1542,7 +1542,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 	recentDeposits := []*silapb.DepositContainer{
 		{
 			Index:           2,
-			SilaExecutionBlockHeight: 400,
+			SilaBlockHeight: 400,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("c"), 48),
@@ -1552,7 +1552,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 		},
 		{
 			Index:           3,
-			SilaExecutionBlockHeight: 600,
+			SilaBlockHeight: 600,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("d"), 48),
@@ -1574,12 +1574,12 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 		assert.NoError(t, depositTrie.Insert(depositHash[:], int(dp.Index)))
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root))
+		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root))
 	}
 	for _, dp := range recentDeposits {
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root)
+		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root)
 	}
 
 	blk := util.NewBeaconBlock()
@@ -1591,7 +1591,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -1610,7 +1610,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 	assert.Equal(t, 0, len(deposits), "Received unexpected number of pending deposits")
 }
 
-func TestProposer_PendingDeposits_FollowsCorrectSilaExecutionBlock(t *testing.T) {
+func TestProposer_PendingDeposits_FollowsCorrectSilaBlock(t *testing.T) {
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
@@ -1658,7 +1658,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaExecutionBlock(t *testing.T)
 	readyDeposits := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			SilaExecutionBlockHeight: 8,
+			SilaBlockHeight: 8,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -1668,7 +1668,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaExecutionBlock(t *testing.T)
 		},
 		{
 			Index:           1,
-			SilaExecutionBlockHeight: 14,
+			SilaBlockHeight: 14,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("b"), 48),
@@ -1681,7 +1681,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaExecutionBlock(t *testing.T)
 	recentDeposits := []*silapb.DepositContainer{
 		{
 			Index:           2,
-			SilaExecutionBlockHeight: 5000,
+			SilaBlockHeight: 5000,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("c"), 48),
@@ -1691,7 +1691,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaExecutionBlock(t *testing.T)
 		},
 		{
 			Index:           3,
-			SilaExecutionBlockHeight: 6000,
+			SilaBlockHeight: 6000,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("d"), 48),
@@ -1713,18 +1713,18 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaExecutionBlock(t *testing.T)
 		assert.NoError(t, depositTrie.Insert(depositHash[:], int(dp.Index)))
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root))
+		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root))
 	}
 	for _, dp := range recentDeposits {
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root)
+		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root)
 	}
 
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -1827,7 +1827,7 @@ func TestProposer_PendingDeposits_CantReturnBelowStateSilaExecutionDepositIndex(
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -1927,7 +1927,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanMax(t *testing.T) {
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -2027,7 +2027,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanDepositCount(t *testing.T) {
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 	}
@@ -2072,7 +2072,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 	finalizedDeposits := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			SilaExecutionBlockHeight: 10,
+			SilaBlockHeight: 10,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -2082,7 +2082,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 		},
 		{
 			Index:           1,
-			SilaExecutionBlockHeight: 10,
+			SilaBlockHeight: 10,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("b"), 48),
@@ -2095,7 +2095,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 	recentDeposits := []*silapb.DepositContainer{
 		{
 			Index:           2,
-			SilaExecutionBlockHeight: 11,
+			SilaBlockHeight: 11,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("c"), 48),
@@ -2105,7 +2105,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 		},
 		{
 			Index:           3,
-			SilaExecutionBlockHeight: 11,
+			SilaBlockHeight: 11,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("d"), 48),
@@ -2127,18 +2127,18 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 		assert.NoError(t, depositTrie.Insert(depositHash[:], int(dp.Index)))
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root))
+		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root))
 	}
 	for _, dp := range recentDeposits {
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root)
+		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root)
 	}
 
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -2188,7 +2188,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 	finalizedDeposits := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			SilaExecutionBlockHeight: 10,
+			SilaBlockHeight: 10,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -2198,7 +2198,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 		},
 		{
 			Index:           1,
-			SilaExecutionBlockHeight: 10,
+			SilaBlockHeight: 10,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("b"), 48),
@@ -2211,7 +2211,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 	recentDeposits := []*silapb.DepositContainer{
 		{
 			Index:           2,
-			SilaExecutionBlockHeight: 11,
+			SilaBlockHeight: 11,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("c"), 48),
@@ -2221,7 +2221,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 		},
 		{
 			Index:           3,
-			SilaExecutionBlockHeight: 11,
+			SilaBlockHeight: 11,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("d"), 48),
@@ -2243,12 +2243,12 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 		assert.NoError(t, depositTrie.Insert(depositHash[:], int(dp.Index)))
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root))
+		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root))
 	}
 	for _, dp := range recentDeposits {
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root)
+		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root)
 	}
 	d := depositCache.AllDepositContainers(ctx)
 	origDeposit, ok := proto.Clone(d[0].Deposit).(*silapb.Deposit)
@@ -2267,7 +2267,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -2377,7 +2377,7 @@ func TestProposer_SilaExecutionData_MajorityVote_SpansGenesis(t *testing.T) {
 	ps := &Server{
 		ChainStartFetcher: p,
 		SilaExecutionInfoFetcher:   p,
-		SilaExecutionBlockFetcher:  p,
+		SilaBlockFetcher:  p,
 		BlockFetcher:      p,
 		DepositFetcher:    depositCache,
 		HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{BlockHash: headBlockHash, DepositCount: 0}},
@@ -2396,14 +2396,14 @@ func TestProposer_SilaExecutionData_MajorityVote_SpansGenesis(t *testing.T) {
 }
 
 func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
-	followDistanceSecs := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaExecutionBlock
+	followDistanceSecs := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaBlock
 	followSlots := followDistanceSecs / params.BeaconConfig().SecondsPerSlot
 	slot := primitives.Slot(64 + followSlots)
 	earliestValidTime, latestValidTime := majorityVoteBoundaryTime(slot)
 
 	dc := silapb.DepositContainer{
 		Index:           0,
-		SilaExecutionBlockHeight: 0,
+		SilaBlockHeight: 0,
 		Deposit: &silapb.Deposit{
 			Data: &silapb.Deposit_Data{
 				PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -2417,7 +2417,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 	require.NoError(t, err)
 	root, err := depositTrie.HashTreeRoot()
 	require.NoError(t, err)
-	assert.NoError(t, depositCache.InsertDeposit(t.Context(), dc.Deposit, dc.SilaExecutionBlockHeight, dc.Index, root))
+	assert.NoError(t, depositCache.InsertDeposit(t.Context(), dc.Deposit, dc.SilaBlockHeight, dc.Index, root))
 
 	t.Run("choose highest count", func(t *testing.T) {
 		t.Skip()
@@ -2440,7 +2440,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2476,7 +2476,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2512,7 +2512,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2549,7 +2549,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2586,7 +2586,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2623,7 +2623,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2653,7 +2653,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: currentSilaExecutionData},
@@ -2688,7 +2688,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2718,7 +2718,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2750,7 +2750,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: currentSilaExecutionData},
@@ -2786,7 +2786,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2823,7 +2823,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2854,7 +2854,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2888,7 +2888,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 1}},
@@ -2927,7 +2927,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 			HeadFetcher:       &mock.ChainService{SILAExecutionData: &silapb.SilaExecutionData{DepositCount: 0}},
@@ -2963,7 +2963,7 @@ func TestProposer_SilaExecutionData_MajorityVote(t *testing.T) {
 		ps := &Server{
 			ChainStartFetcher: p,
 			SilaExecutionInfoFetcher:   p,
-			SilaExecutionBlockFetcher:  p,
+			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
 		}
@@ -3073,7 +3073,7 @@ func TestProposer_FilterAttestation(t *testing.T) {
 	}
 }
 
-func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaExecutionDataEqGenesisSilaExecutionBlock(t *testing.T) {
+func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaExecutionDataEqGenesisSilaBlock(t *testing.T) {
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
@@ -3082,7 +3082,7 @@ func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaExecutionDataEqGenesisSi
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
 		},
-		GenesisSilaExecutionBlock: height,
+		GenesisSilaBlock: height,
 	}
 
 	beaconState, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
@@ -3160,7 +3160,7 @@ func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaExecutionDataEqGenesisSi
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 	}
@@ -3365,8 +3365,8 @@ func TestProposer_SubmitValidatorRegistrations(t *testing.T) {
 func majorityVoteBoundaryTime(slot primitives.Slot) (uint64, uint64) {
 	s := params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().EpochsPerSilaExecutionVotingPeriod))
 	slotStartTime := uint64(mockExecution.GenesisTime) + uint64((slot - (slot % (s))).Mul(params.BeaconConfig().SecondsPerSlot))
-	earliestValidTime := slotStartTime - 2*params.BeaconConfig().SecondsPerSilaExecutionBlock*params.BeaconConfig().SilaExecutionFollowDistance
-	latestValidTime := slotStartTime - params.BeaconConfig().SecondsPerSilaExecutionBlock*params.BeaconConfig().SilaExecutionFollowDistance
+	earliestValidTime := slotStartTime - 2*params.BeaconConfig().SecondsPerSilaBlock*params.BeaconConfig().SilaExecutionFollowDistance
+	latestValidTime := slotStartTime - params.BeaconConfig().SecondsPerSilaBlock*params.BeaconConfig().SilaExecutionFollowDistance
 
 	return earliestValidTime, latestValidTime
 }
@@ -3427,7 +3427,7 @@ func TestProposer_GetParentHeadState(t *testing.T) {
 	proposerServer := &Server{
 		ChainStartFetcher: &mockExecution.Chain{},
 		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-		SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+		SilaBlockFetcher:  &mockExecution.Chain{},
 		ForkchoiceFetcher: &mock.ChainService{},
 		StateGen:          stategen.New(db, doublylinkedtree.New()),
 	}
@@ -3563,7 +3563,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
 			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-			SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
 			HeadFetcher:       c,
@@ -3612,7 +3612,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
 			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-			SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
 			HeadFetcher:       c,
@@ -3660,7 +3660,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
 			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-			SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
 			HeadFetcher:       c,
@@ -3709,7 +3709,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
 			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-			SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
 			HeadFetcher:       c,
@@ -3752,7 +3752,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
 			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-			SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
 			HeadFetcher:       c,
@@ -3804,7 +3804,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
 			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
-			SilaExecutionBlockFetcher:  &mockExecution.Chain{},
+			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
 			HeadFetcher:       c,

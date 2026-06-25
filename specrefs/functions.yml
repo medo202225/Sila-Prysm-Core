@@ -448,26 +448,26 @@
 
         # [Modified in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
-            execution_block_hash = (
+            sila_block_hash = (
                 block.message.body.signed_sila_payload_bid.message.parent_block_hash
             )
             execution_branch = ExecutionBranch(
-                compute_merkle_proof(block.message.body, EXECUTION_BLOCK_HASH_GINDEX_GLOAS)
+                compute_merkle_proof(block.message.body, SILA_BLOCK_HASH_GINDEX_GLOAS)
             )
         elif epoch >= DENEB_FORK_EPOCH:
-            execution_block_hash = block.message.body.sila_payload.block_hash
+            sila_block_hash = block.message.body.sila_payload.block_hash
             execution_branch = ExecutionBranch(
                 normalize_merkle_branch(
-                    compute_merkle_proof(block.message.body, EXECUTION_BLOCK_HASH_GINDEX_DENEB),
-                    EXECUTION_BLOCK_HASH_GINDEX_GLOAS,
+                    compute_merkle_proof(block.message.body, SILA_BLOCK_HASH_GINDEX_DENEB),
+                    SILA_BLOCK_HASH_GINDEX_GLOAS,
                 )
             )
         elif epoch >= CAPELLA_FORK_EPOCH:
-            execution_block_hash = block.message.body.sila_payload.block_hash
+            sila_block_hash = block.message.body.sila_payload.block_hash
             execution_branch = ExecutionBranch(
                 normalize_merkle_branch(
-                    compute_merkle_proof(block.message.body, EXECUTION_BLOCK_HASH_GINDEX),
-                    EXECUTION_BLOCK_HASH_GINDEX_GLOAS,
+                    compute_merkle_proof(block.message.body, SILA_BLOCK_HASH_GINDEX),
+                    SILA_BLOCK_HASH_GINDEX_GLOAS,
                 )
             )
         else:
@@ -475,7 +475,7 @@
             # While Bellatrix blocks also contain an `SilaPayload` (minus `withdrawals_root`),
             # it was not included in the corresponding light client data. To ensure compatibility
             # with legacy data going through `upgrade_lc_header_to_capella`, leave out execution data.
-            execution_block_hash = Hash32()
+            sila_block_hash = Hash32()
             execution_branch = ExecutionBranch()
 
         return LightClientHeader(
@@ -486,7 +486,7 @@
                 state_root=block.message.state_root,
                 body_root=hash_tree_root(block.message.body),
             ),
-            execution_block_hash=execution_block_hash,
+            sila_block_hash=sila_block_hash,
             execution_branch=execution_branch,
         )
     </spec>
@@ -3731,7 +3731,7 @@
   sources: []
   spec: |
     <spec fn="get_silaexec_vote" fork="phase0" hash="850a63eb">
-    def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaExecutionBlock]) -> SilaExecutionData:
+    def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaBlock]) -> SilaExecutionData:
         period_start = voting_period_start_time(state)
         # `silaexec_chain` abstractly represents all blocks in the silaexec chain sorted by ascending block height
         votes_to_consider = [
@@ -3769,7 +3769,7 @@
   sources: []
   spec: |
     <spec fn="get_silaexec_vote" fork="electra" hash="978c2389">
-    def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaExecutionBlock]) -> SilaExecutionData:
+    def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaBlock]) -> SilaExecutionData:
         # [New in Electra:SIP6110]
         if state.silaexec_deposit_index == state.deposit_requests_start_index:
             return state.sila_execution_data
@@ -4748,7 +4748,7 @@
 
         # [New in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
-            return Root(header.execution_block_hash)
+            return Root(header.sila_block_hash)
 
         # [Modified in Gloas:SIP7732]
         if epoch >= DENEB_FORK_EPOCH:
@@ -4767,7 +4767,7 @@
             : len(header.execution_branch) - floorlog2(SILA_PAYLOAD_GINDEX)
         ]
         return compute_merkle_branch_root(
-            leaf=Bytes32(header.execution_block_hash),
+            leaf=Bytes32(header.sila_block_hash),
             branch=inner[len(inner) - floorlog2(BLOCK_HASH_GINDEX) :],
             depth=floorlog2(BLOCK_HASH_GINDEX),
             index=get_subtree_index(BLOCK_HASH_GINDEX),
@@ -5350,20 +5350,20 @@
         return state.randao_mixes[epoch % EPOCHS_PER_HISTORICAL_VECTOR]
     </spec>
 
-- name: get_safe_execution_block_hash#bellatrix
+- name: get_safe_sila_block_hash#bellatrix
   sources: []
   spec: |
-    <spec fn="get_safe_execution_block_hash" fork="bellatrix" hash="ccd5f801">
-    def get_safe_execution_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
+    <spec fn="get_safe_sila_block_hash" fork="bellatrix" hash="ccd5f801">
+    def get_safe_sila_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
         safe_block = fcr_store.store.blocks[fcr_store.confirmed_root]
         return safe_block.body.sila_payload.block_hash
     </spec>
 
-- name: get_safe_execution_block_hash#gloas
+- name: get_safe_sila_block_hash#gloas
   sources: []
   spec: |
-    <spec fn="get_safe_execution_block_hash" fork="gloas" hash="4884e9d5">
-    def get_safe_execution_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
+    <spec fn="get_safe_sila_block_hash" fork="gloas" hash="4884e9d5">
+    def get_safe_sila_block_hash(fcr_store: FastConfirmationStore) -> Hash32:
         safe_block = fcr_store.store.blocks[fcr_store.confirmed_root]
         # [Modified in Gloas:SIP7732]
         return safe_block.body.signed_sila_payload_bid.message.parent_block_hash
@@ -6459,7 +6459,7 @@
   sources: []
   spec: |
     <spec fn="is_candidate_block" fork="phase0" hash="c588dc0a">
-    def is_candidate_block(block: SilaExecutionBlock, period_start: uint64) -> bool:
+    def is_candidate_block(block: SilaBlock, period_start: uint64) -> bool:
         return (
             block.timestamp + SECONDS_PER_SilaExecution_BLOCK * SilaExecution_FOLLOW_DISTANCE <= period_start
             and block.timestamp + SECONDS_PER_SilaExecution_BLOCK * SilaExecution_FOLLOW_DISTANCE * 2 >= period_start
@@ -6644,13 +6644,13 @@
         )
     </spec>
 
-- name: is_execution_block#bellatrix
+- name: is_sila_block#bellatrix
   sources:
     - file: beacon-chain/core/blocks/payload.go
-      search: func IsExecutionBlock(
+      search: func IsSilaBlock(
   spec: |
-    <spec fn="is_execution_block" fork="bellatrix" hash="26be0b84">
-    def is_execution_block(block: BeaconBlock) -> bool:
+    <spec fn="is_sila_block" fork="bellatrix" hash="26be0b84">
+    def is_sila_block(block: BeaconBlock) -> bool:
         return block.body.sila_payload != SilaPayload()
     </spec>
 
@@ -6949,7 +6949,7 @@
     def is_optimistic_candidate_block(
         opt_store: OptimisticStore, current_slot: Slot, block: BeaconBlock
     ) -> bool:
-        if is_execution_block(opt_store.blocks[block.parent_root]):
+        if is_sila_block(opt_store.blocks[block.parent_root]):
             return True
 
         if block.slot + SAFE_SLOTS_TO_IMPORT_OPTIMISTICALLY <= current_slot:
@@ -7386,32 +7386,32 @@
         # [New in Gloas:SIP7732]
         if epoch >= GLOAS_FORK_EPOCH:
             return is_valid_normalized_merkle_branch(
-                leaf=Bytes32(header.execution_block_hash),
+                leaf=Bytes32(header.sila_block_hash),
                 branch=header.execution_branch,
-                gindex=EXECUTION_BLOCK_HASH_GINDEX_GLOAS,
+                gindex=SILA_BLOCK_HASH_GINDEX_GLOAS,
                 root=header.beacon.body_root,
             )
 
         # [Modified in Gloas:SIP7732]
         if epoch >= DENEB_FORK_EPOCH:
             return is_valid_normalized_merkle_branch(
-                leaf=Bytes32(header.execution_block_hash),
+                leaf=Bytes32(header.sila_block_hash),
                 branch=header.execution_branch,
-                gindex=EXECUTION_BLOCK_HASH_GINDEX_DENEB,
+                gindex=SILA_BLOCK_HASH_GINDEX_DENEB,
                 root=header.beacon.body_root,
             )
 
         # [Modified in Gloas:SIP7732]
         if epoch >= CAPELLA_FORK_EPOCH:
             return is_valid_normalized_merkle_branch(
-                leaf=Bytes32(header.execution_block_hash),
+                leaf=Bytes32(header.sila_block_hash),
                 branch=header.execution_branch,
-                gindex=EXECUTION_BLOCK_HASH_GINDEX,
+                gindex=SILA_BLOCK_HASH_GINDEX,
                 root=header.beacon.body_root,
             )
 
         # [Modified in Gloas:SIP7732]
-        return header.execution_block_hash == Hash32() and header.execution_branch == ExecutionBranch()
+        return header.sila_block_hash == Hash32() and header.execution_branch == ExecutionBranch()
     </spec>
 
 - name: is_valid_merkle_branch#phase0
@@ -12182,12 +12182,12 @@
             BLOCK_HASH_GINDEX = get_generalized_index(deneb.SilaPayloadHeader, "block_hash")
             return LightClientHeader(
                 beacon=pre.beacon,
-                execution_block_hash=pre.execution.block_hash,
+                sila_block_hash=pre.execution.block_hash,
                 execution_branch=ExecutionBranch(
                     normalize_merkle_branch(
                         list(compute_merkle_proof(pre.execution, BLOCK_HASH_GINDEX))
                         + list(pre.execution_branch),
-                        EXECUTION_BLOCK_HASH_GINDEX_GLOAS,
+                        SILA_BLOCK_HASH_GINDEX_GLOAS,
                     )
                 ),
             )
@@ -12213,12 +12213,12 @@
             BLOCK_HASH_GINDEX = get_generalized_index(capella.SilaPayloadHeader, "block_hash")
             return LightClientHeader(
                 beacon=pre.beacon,
-                execution_block_hash=pre.execution.block_hash,
+                sila_block_hash=pre.execution.block_hash,
                 execution_branch=ExecutionBranch(
                     normalize_merkle_branch(
                         list(compute_merkle_proof(execution_header, BLOCK_HASH_GINDEX))
                         + list(pre.execution_branch),
-                        EXECUTION_BLOCK_HASH_GINDEX_GLOAS,
+                        SILA_BLOCK_HASH_GINDEX_GLOAS,
                     )
                 ),
             )

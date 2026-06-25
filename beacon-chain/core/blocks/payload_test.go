@@ -213,7 +213,7 @@ func Test_IsMergeCompleteCapella(t *testing.T) {
 	require.Equal(t, got, true)
 }
 
-func Test_IsExecutionBlock(t *testing.T) {
+func Test_IsSilaBlock(t *testing.T) {
 	tests := []struct {
 		name    string
 		payload *silaenginev1.SilaPayload
@@ -240,19 +240,19 @@ func Test_IsExecutionBlock(t *testing.T) {
 			blk.Block.Body.SilaPayload = tt.payload
 			wrappedBlock, err := consensusblocks.NewBeaconBlock(blk.Block)
 			require.NoError(t, err)
-			got, err := blocks.IsExecutionBlock(wrappedBlock.Body())
+			got, err := blocks.IsSilaBlock(wrappedBlock.Body())
 			require.NoError(t, err)
 			require.Equal(t, tt.want, got)
 		})
 	}
 }
 
-func Test_IsExecutionBlockCapella(t *testing.T) {
+func Test_IsSilaBlockCapella(t *testing.T) {
 	blk := util.NewBeaconBlockCapella()
 	blk.Block.Body.SilaPayload = emptyPayloadCapella()
 	wrappedBlock, err := consensusblocks.NewBeaconBlock(blk.Block)
 	require.NoError(t, err)
-	got, err := blocks.IsExecutionBlock(wrappedBlock.Body())
+	got, err := blocks.IsSilaBlock(wrappedBlock.Body())
 	require.NoError(t, err)
 	// #14614
 	require.Equal(t, true, got)

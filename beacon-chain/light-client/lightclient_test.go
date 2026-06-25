@@ -128,7 +128,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()
@@ -236,7 +236,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()
@@ -311,7 +311,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()
@@ -388,7 +388,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()
@@ -462,7 +462,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()
@@ -539,7 +539,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()
@@ -613,7 +613,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 				require.DeepSSZEqual(t, proof[i], leaf[:], "Leaf is not equal")
 			}
 
-			// Check Execution BlockHash
+			// Check Sila BlockHash
 			payloadInterface, err := l.FinalizedBlock.Block().Body().Execution()
 			require.NoError(t, err)
 			transactionsRoot, err := payloadInterface.TransactionsRoot()

@@ -120,7 +120,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 	readyDeposits := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			SilaExecutionBlockHeight: 8,
+			SilaBlockHeight: 8,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -130,7 +130,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		},
 		{
 			Index:           1,
-			SilaExecutionBlockHeight: 14,
+			SilaBlockHeight: 14,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("b"), 48),
@@ -143,7 +143,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 	recentDeposits := []*silapb.DepositContainer{
 		{
 			Index:           2,
-			SilaExecutionBlockHeight: 5000,
+			SilaBlockHeight: 5000,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("c"), 48),
@@ -153,7 +153,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		},
 		{
 			Index:           3,
-			SilaExecutionBlockHeight: 6000,
+			SilaBlockHeight: 6000,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("d"), 48),
@@ -175,18 +175,18 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		assert.NoError(t, depositTrie.Insert(depositHash[:], int(dp.Index)))
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root))
+		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root))
 	}
 	for _, dp := range recentDeposits {
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root)
+		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaBlockHeight, dp.Index, root)
 	}
 
 	bs := &Server{
 		ChainStartFetcher:      p,
 		SilaExecutionInfoFetcher:        p,
-		SilaExecutionBlockFetcher:       p,
+		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},

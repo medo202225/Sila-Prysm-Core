@@ -44,7 +44,7 @@ type ForkChoiceNode struct {
 	FinalizedEpoch     string                   `json:"finalized_epoch"`
 	Weight             string                   `json:"weight"`
 	Validity           string                   `json:"validity"`
-	ExecutionBlockHash string                   `json:"execution_block_hash"`
+	SilaBlockHash string                   `json:"sila_block_hash"`
 	ExtraData          *ForkChoiceNodeExtraData `json:"extra_data"`
 }
 
@@ -71,7 +71,7 @@ type ForkChoiceNodeV2 struct {
 	ParentRoot         string                     `json:"parent_root"`
 	Weight             string                     `json:"weight"`
 	Validity           string                     `json:"validity"`
-	ExecutionBlockHash string                     `json:"execution_block_hash"`
+	SilaBlockHash string                     `json:"sila_block_hash"`
 	ExtraData          *ForkChoiceNodeV2ExtraData `json:"extra_data"`
 }
 

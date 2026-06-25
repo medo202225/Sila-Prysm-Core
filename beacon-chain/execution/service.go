@@ -199,7 +199,7 @@ func NewService(ctx context.Context, opts ...Option) (*Service, error) {
 		},
 		lastReceivedMerkleIndex: -1,
 		preGenesisState:         genState,
-		silaexecHeadTicker:          time.NewTicker(time.Duration(params.BeaconConfig().SecondsPerSilaExecutionBlock) * time.Second),
+		silaexecHeadTicker:          time.NewTicker(time.Duration(params.BeaconConfig().SecondsPerSilaBlock) * time.Second),
 		capabilityCache:         &capabilityCache{},
 	}
 
@@ -344,7 +344,7 @@ func (s *Service) updateGraffitiInfo() {
 // refers to the latest silaexec block which follows the condition: silaexec_timestamp +
 // SECONDS_PER_SilaExecution_BLOCK * SilaExecution_FOLLOW_DISTANCE <= current_unix_time
 func (s *Service) followedBlockHeight(ctx context.Context) (uint64, error) {
-	followTime := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaExecutionBlock
+	followTime := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaBlock
 	latestBlockTime := uint64(0)
 	if s.latestSilaExecutionData.BlockTime > followTime {
 		latestBlockTime = s.latestSilaExecutionData.BlockTime - followTime
@@ -414,7 +414,7 @@ func (s *Service) initDepositCaches(ctx context.Context, ctrs []*silapb.DepositC
 	// is more than the current index in state.
 	if uint64(len(ctrs)) > currIndex {
 		for _, c := range ctrs[currIndex:] {
-			s.cfg.depositCache.InsertPendingDeposit(ctx, c.Deposit, c.SilaExecutionBlockHeight, c.Index, bytesutil.ToBytes32(c.DepositRoot))
+			s.cfg.depositCache.InsertPendingDeposit(ctx, c.Deposit, c.SilaBlockHeight, c.Index, bytesutil.ToBytes32(c.DepositRoot))
 		}
 	}
 	return nil
@@ -758,7 +758,7 @@ func (s *Service) determineEarliestVotingBlock(ctx context.Context, followBlock 
 		return 0, nil
 	}
 	votingTime := slots.VotingPeriodStartTime(genesisTime, currSlot)
-	followBackDist := 2 * params.BeaconConfig().SecondsPerSilaExecutionBlock * params.BeaconConfig().SilaExecutionFollowDistance
+	followBackDist := 2 * params.BeaconConfig().SecondsPerSilaBlock * params.BeaconConfig().SilaExecutionFollowDistance
 	if followBackDist > votingTime {
 		return 0, errors.Errorf("invalid genesis time provided. %d > %d", followBackDist, votingTime)
 	}

@@ -49,12 +49,12 @@ func (s *Service) notifyForkchoiceUpdate(ctx context.Context, arg *fcuConfig) (*
 		return nil, nil
 	}
 	// Must not call fork choice updated until the transition conditions are met on the Pow network.
-	isExecutionBlk, err := blocks.IsExecutionBlock(headBlk.Body())
+	isSilaBlk, err := blocks.IsSilaBlock(headBlk.Body())
 	if err != nil {
-		log.WithError(err).Error("Could not determine if head block is execution block")
+		log.WithError(err).Error("Could not determine if head block is sila block")
 		return nil, nil
 	}
-	if !isExecutionBlk {
+	if !isSilaBlk {
 		return nil, nil
 	}
 	headPayload, err := headBlk.Body().Execution()

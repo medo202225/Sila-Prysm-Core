@@ -31,7 +31,7 @@ type Chain struct {
 	TimesByHeight     map[int]uint64
 	BlockNumberByTime map[uint64]*big.Int
 	SilaExecutionData          *silapb.SilaExecutionData
-	GenesisSilaExecutionBlock  *big.Int
+	GenesisSilaBlock  *big.Int
 	GenesisState      state.BeaconState
 	CurrEndpoint      string
 	CurrError         error
@@ -53,7 +53,7 @@ func New() *Chain {
 
 // GenesisExecutionChainInfo --
 func (m *Chain) GenesisExecutionChainInfo() (uint64, *big.Int) {
-	blk := m.GenesisSilaExecutionBlock
+	blk := m.GenesisSilaBlock
 	if blk == nil {
 		blk = big.NewInt(GenesisTime)
 	}

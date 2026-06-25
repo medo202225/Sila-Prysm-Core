@@ -159,7 +159,7 @@ type EngineCaller interface {
 		ctx context.Context, state *pb.ForkchoiceState, attrs payloadattribute.Attributer,
 	) (*pb.PayloadIDBytes, []byte, error)
 	GetPayload(ctx context.Context, payloadId [8]byte, slot primitives.Slot) (*blocks.GetPayloadResponse, error)
-	ExecutionBlockByHash(ctx context.Context, hash common.Hash, withTxs bool) (*pb.ExecutionBlock, error)
+	SilaBlockByHash(ctx context.Context, hash common.Hash, withTxs bool) (*pb.SilaBlock, error)
 	GetTerminalBlockHash(ctx context.Context, transitionTime uint64) ([]byte, bool, error)
 	GetClientVersionV1(ctx context.Context) ([]*structs.ClientVersionV1, error)
 }
@@ -423,12 +423,12 @@ func (s *Service) GetTerminalBlockHash(ctx context.Context, transitionTime uint6
 	if overflows {
 		return nil, false, errors.New("could not convert terminal total difficulty to uint256")
 	}
-	blk, err := s.LatestExecutionBlock(ctx)
+	blk, err := s.LatestSilaBlock(ctx)
 	if err != nil {
-		return nil, false, errors.Wrap(err, "could not get latest execution block")
+		return nil, false, errors.Wrap(err, "could not get latest sila block")
 	}
 	if blk == nil {
-		return nil, false, errors.New("latest execution block is nil")
+		return nil, false, errors.New("latest sila block is nil")
 	}
 
 	for {
@@ -445,12 +445,12 @@ func (s *Service) GetTerminalBlockHash(ctx context.Context, transitionTime uint6
 		if parentHash == params.BeaconConfig().ZeroHash {
 			return nil, false, nil
 		}
-		parentBlk, err := s.ExecutionBlockByHash(ctx, parentHash, false /* no txs */)
+		parentBlk, err := s.SilaBlockByHash(ctx, parentHash, false /* no txs */)
 		if err != nil {
-			return nil, false, errors.Wrap(err, "could not get parent execution block")
+			return nil, false, errors.Wrap(err, "could not get parent sila block")
 		}
 		if parentBlk == nil {
-			return nil, false, errors.New("parent execution block is nil")
+			return nil, false, errors.New("parent sila block is nil")
 		}
 
 		if blockReachedTTD {
@@ -485,13 +485,13 @@ func (s *Service) GetTerminalBlockHash(ctx context.Context, transitionTime uint6
 	}
 }
 
-// LatestExecutionBlock fetches the latest SilaEngine block by calling
+// LatestSilaBlock fetches the latest SilaEngine block by calling
 // sila_blockByNumber via JSON-RPC.
-func (s *Service) LatestExecutionBlock(ctx context.Context) (*pb.ExecutionBlock, error) {
-	ctx, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.LatestExecutionBlock")
+func (s *Service) LatestSilaBlock(ctx context.Context) (*pb.SilaBlock, error) {
+	ctx, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.LatestSilaBlock")
 	defer span.End()
 
-	result := &pb.ExecutionBlock{}
+	result := &pb.SilaBlock{}
 	err := s.rpcClient.CallContext(
 		ctx,
 		result,
@@ -502,29 +502,29 @@ func (s *Service) LatestExecutionBlock(ctx context.Context) (*pb.ExecutionBlock,
 	return result, handleRPCError(err)
 }
 
-// ExecutionBlockByHash fetches an SilaEngine block by hash by calling
+// SilaBlockByHash fetches an SilaEngine block by hash by calling
 // sila_blockByHash via JSON-RPC.
-func (s *Service) ExecutionBlockByHash(ctx context.Context, hash common.Hash, withTxs bool) (*pb.ExecutionBlock, error) {
-	ctx, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.ExecutionBlockByHash")
+func (s *Service) SilaBlockByHash(ctx context.Context, hash common.Hash, withTxs bool) (*pb.SilaBlock, error) {
+	ctx, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.SilaBlockByHash")
 	defer span.End()
-	result := &pb.ExecutionBlock{}
+	result := &pb.SilaBlock{}
 	err := s.rpcClient.CallContext(ctx, result, BlockByHashMethod, hash, withTxs)
 	return result, handleRPCError(err)
 }
 
-// ExecutionBlocksByHashes fetches a batch of SilaEngine blocks by hash by calling
+// SilaBlocksByHashes fetches a batch of SilaEngine blocks by hash by calling
 // sila_blockByHash via JSON-RPC.
-func (s *Service) ExecutionBlocksByHashes(ctx context.Context, hashes []common.Hash, withTxs bool) ([]*pb.ExecutionBlock, error) {
-	_, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.ExecutionBlocksByHashes")
+func (s *Service) SilaBlocksByHashes(ctx context.Context, hashes []common.Hash, withTxs bool) ([]*pb.SilaBlock, error) {
+	_, span := trace.StartSpan(ctx, "powchain.silaengine-api-client.SilaBlocksByHashes")
 	defer span.End()
 	numOfHashes := len(hashes)
 	elems := make([]gethRPC.BatchElem, 0, numOfHashes)
-	execBlks := make([]*pb.ExecutionBlock, 0, numOfHashes)
+	execBlks := make([]*pb.SilaBlock, 0, numOfHashes)
 	if numOfHashes == 0 {
 		return execBlks, nil
 	}
 	for _, h := range hashes {
-		blk := &pb.ExecutionBlock{}
+		blk := &pb.SilaBlock{}
 		newH := h
 		elems = append(elems, gethRPC.BatchElem{
 			Method: BlockByHashMethod,
@@ -732,13 +732,13 @@ func (s *Service) ReconstructFullGloasSilaPayloadsByHash(
 		return payloads, nil
 	}
 
-	var execBlocks []*pb.ExecutionBlock
+	var execBlocks []*pb.SilaBlock
 	bodiesV2 := make([]*pb.SilaPayloadBodyV2, 0)
 	g, gctx := errgroup.WithContext(ctx)
 	g.Go(func() error {
-		blks, err := s.ExecutionBlocksByHashes(gctx, requestHashes, false)
+		blks, err := s.SilaBlocksByHashes(gctx, requestHashes, false)
 		if err != nil {
-			return errors.Wrap(err, "could not fetch execution blocks by hash")
+			return errors.Wrap(err, "could not fetch sila blocks by hash")
 		}
 		execBlocks = blks
 		return nil
@@ -758,7 +758,7 @@ func (s *Service) ReconstructFullGloasSilaPayloadsByHash(
 
 	for i, h := range requestHashes {
 		blk := execBlocks[i]
-		payload, err := gloasPayloadFromExecutionBlock(h, blk)
+		payload, err := gloasPayloadFromSilaBlock(h, blk)
 		if err != nil {
 			return nil, err
 		}
@@ -775,31 +775,31 @@ func (s *Service) ReconstructFullGloasSilaPayloadsByHash(
 	return payloads, nil
 }
 
-// gloasPayloadFromExecutionBlock extracts header fields from an execution block.
-func gloasPayloadFromExecutionBlock(
-	requestedHash [32]byte, blk *pb.ExecutionBlock,
+// gloasPayloadFromSilaBlock extracts header fields from an sila block.
+func gloasPayloadFromSilaBlock(
+	requestedHash [32]byte, blk *pb.SilaBlock,
 ) (*pb.SilaPayloadGloas, error) {
 	if blk == nil {
-		return nil, errors.New("execution block not found")
+		return nil, errors.New("sila block not found")
 	}
 	if blk.Hash == (common.Hash{}) || blk.Hash != requestedHash {
-		return nil, errors.New("execution block hash mismatch")
+		return nil, errors.New("sila block hash mismatch")
 	}
 	if blk.Number == nil {
-		return nil, errors.New("execution block number is nil")
+		return nil, errors.New("sila block number is nil")
 	}
 	if blk.BaseFee == nil {
-		return nil, errors.New("execution block base fee is nil")
+		return nil, errors.New("sila block base fee is nil")
 	}
 
 	if blk.BlobGasUsed == nil {
-		return nil, errors.New("execution block blob gas used is nil")
+		return nil, errors.New("sila block blob gas used is nil")
 	}
 	if blk.ExcessBlobGas == nil {
-		return nil, errors.New("execution block excess blob gas is nil")
+		return nil, errors.New("sila block excess blob gas is nil")
 	}
 	if blk.SlotNumber == nil {
-		return nil, errors.New("execution block slot number is nil")
+		return nil, errors.New("sila block slot number is nil")
 	}
 
 	return &pb.SilaPayloadGloas{
@@ -981,7 +981,7 @@ func fullPayloadFromPayloadBody(
 	header interfaces.ExecutionData, body *pb.SilaPayloadBody, bVersion int,
 ) (interfaces.ExecutionData, error) {
 	if header == nil || header.IsNil() || body == nil {
-		return nil, errors.New("execution block and header cannot be nil")
+		return nil, errors.New("sila block and header cannot be nil")
 	}
 
 	if bVersion >= version.Deneb {
@@ -1054,7 +1054,7 @@ func fullPayloadFromPayloadBody(
 		})
 	}
 
-	return nil, fmt.Errorf("unknown execution block version for payload %s", version.String(bVersion))
+	return nil, fmt.Errorf("unknown sila block version for payload %s", version.String(bVersion))
 }
 
 // Handles errors received from the RPC server according to the specification.

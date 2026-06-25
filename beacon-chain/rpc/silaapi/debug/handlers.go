@@ -208,7 +208,7 @@ func (s *Server) GetForkChoice(w http.ResponseWriter, r *http.Request) {
 			JustifiedEpoch:     fmt.Sprintf("%d", n.JustifiedEpoch),
 			FinalizedEpoch:     fmt.Sprintf("%d", n.FinalizedEpoch),
 			Weight:             fmt.Sprintf("%d", n.Weight),
-			ExecutionBlockHash: hexutil.Encode(n.ExecutionBlockHash),
+			SilaBlockHash: hexutil.Encode(n.SilaBlockHash),
 			Validity:           n.Validity.String(),
 			ExtraData: &structs.ForkChoiceNodeExtraData{
 				UnrealizedJustifiedEpoch: fmt.Sprintf("%d", n.UnrealizedJustifiedEpoch),
@@ -273,7 +273,7 @@ func (s *Server) GetForkChoiceV2(w http.ResponseWriter, r *http.Request) {
 			ParentRoot:         hexutil.Encode(n.ParentRoot),
 			Weight:             fmt.Sprintf("%d", n.Weight),
 			Validity:           n.Validity.String(),
-			ExecutionBlockHash: hexutil.Encode(n.ExecutionBlockHash),
+			SilaBlockHash: hexutil.Encode(n.SilaBlockHash),
 			ExtraData:          extra,
 		}
 	}

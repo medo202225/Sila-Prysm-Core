@@ -52,14 +52,14 @@ func clientTimedOutError(err error) bool {
 	return strings.Contains(err.Error(), errTimedOut.Error())
 }
 
-// GenesisExecutionChainInfo retrieves the genesis time and execution block number of the beacon chain
+// GenesisExecutionChainInfo retrieves the genesis time and sila block number of the beacon chain
 // from the deposit contract.
 func (s *Service) GenesisExecutionChainInfo() (uint64, *big.Int) {
 	return s.chainStartData.GenesisTime, big.NewInt(int64(s.chainStartData.GenesisBlock))
 }
 
-// ProcessSilaExecutionBlock processes logs from the provided silaexec block.
-func (s *Service) ProcessSilaExecutionBlock(ctx context.Context, blkNum *big.Int) error {
+// ProcessSilaBlock processes logs from the provided silaexec block.
+func (s *Service) ProcessSilaBlock(ctx context.Context, blkNum *big.Int) error {
 	query := sila.FilterQuery{
 		Addresses: []common.Address{
 			s.cfg.depositContractAddr,
@@ -312,7 +312,7 @@ func (s *Service) processPastLogs(ctx context.Context) error {
 	additiveFactor := uint64(float64(batchSize) * additiveFactorMultiplier)
 
 	log.WithFields(logrus.Fields{
-		"currentSilaExecutionBlock": latestFollowHeight,
+		"currentSilaBlock": latestFollowHeight,
 		"currentLogCount":  logCount,
 	}).Debug("Processing historical deposit logs")
 
@@ -478,7 +478,7 @@ func (s *Service) requestBatchedHeadersAndLogs(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		err = s.ProcessSilaExecutionBlock(ctx, new(big.Int).SetUint64(i))
+		err = s.ProcessSilaBlock(ctx, new(big.Int).SetUint64(i))
 		if err != nil {
 			return err
 		}

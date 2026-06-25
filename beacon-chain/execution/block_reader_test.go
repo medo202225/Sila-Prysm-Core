@@ -222,7 +222,7 @@ func TestService_BlockNumberByTimestamp(t *testing.T) {
 	// simulated backend sets silaexec block
 	params.SetupTestConfigCleanup(t)
 	conf := params.BeaconConfig().Copy()
-	conf.SecondsPerSilaExecutionBlock = 1
+	conf.SecondsPerSilaBlock = 1
 	params.OverrideBeaconConfig(conf)
 	initialHead, err := testAcc.Backend.Client().HeaderByNumber(ctx, nil)
 	require.NoError(t, err)
@@ -270,11 +270,11 @@ func TestService_BlockNumberByTimestampLessTargetTime(t *testing.T) {
 	defer cancel()
 
 	// Provide an unattainable target time
-	_, err = web3Service.findMaxTargetSilaExecutionBlock(ctx, hd.Number, hd.Time/2)
+	_, err = web3Service.findMaxTargetSilaBlock(ctx, hd.Number, hd.Time/2)
 	require.ErrorContains(t, context.DeadlineExceeded.Error(), err)
 
 	// Provide an attainable target time
-	blk, err := web3Service.findMaxTargetSilaExecutionBlock(t.Context(), hd.Number, hd.Time-5)
+	blk, err := web3Service.findMaxTargetSilaBlock(t.Context(), hd.Number, hd.Time-5)
 	require.NoError(t, err)
 	require.NotEqual(t, hd.Number.Uint64(), blk.Number.Uint64(), "retrieved block is not less than the head")
 }
@@ -308,11 +308,11 @@ func TestService_BlockNumberByTimestampMoreTargetTime(t *testing.T) {
 	defer cancel()
 
 	// Provide an unattainable target time with respect to head
-	_, err = web3Service.findMinTargetSilaExecutionBlock(ctx, big.NewInt(0).Div(hd.Number, big.NewInt(2)), hd.Time)
+	_, err = web3Service.findMinTargetSilaBlock(ctx, big.NewInt(0).Div(hd.Number, big.NewInt(2)), hd.Time)
 	require.ErrorContains(t, context.DeadlineExceeded.Error(), err)
 
 	// Provide an attainable target time with respect to head
-	blk, err := web3Service.findMinTargetSilaExecutionBlock(t.Context(), big.NewInt(0).Sub(hd.Number, big.NewInt(5)), hd.Time)
+	blk, err := web3Service.findMinTargetSilaBlock(t.Context(), big.NewInt(0).Sub(hd.Number, big.NewInt(5)), hd.Time)
 	require.NoError(t, err)
 	require.Equal(t, hd.Number.Uint64(), blk.Number.Uint64(), "retrieved block is not equal to the head")
 }

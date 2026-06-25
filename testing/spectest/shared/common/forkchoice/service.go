@@ -118,11 +118,11 @@ func (m *engineMock) ForkchoiceUpdatedV2(context.Context, *pb.ForkchoiceState, p
 	return nil, m.latestValidHash, m.payloadStatus
 }
 
-func (m *engineMock) LatestExecutionBlock(context.Context) (*pb.ExecutionBlock, error) {
+func (m *engineMock) LatestSilaBlock(context.Context) (*pb.SilaBlock, error) {
 	return nil, nil
 }
 
-func (m *engineMock) ExecutionBlockByHash(_ context.Context, hash common.Hash, _ bool) (*pb.ExecutionBlock, error) {
+func (m *engineMock) SilaBlockByHash(_ context.Context, hash common.Hash, _ bool) (*pb.SilaBlock, error) {
 	b, ok := m.powBlocks[bytesutil.ToBytes32(hash.Bytes())]
 	if !ok {
 		return nil, nil
@@ -130,7 +130,7 @@ func (m *engineMock) ExecutionBlockByHash(_ context.Context, hash common.Hash, _
 
 	td := new(big.Int).SetBytes(bytesutil.ReverseByteOrder(b.TotalDifficulty))
 	tdHex := hexutil.EncodeBig(td)
-	return &pb.ExecutionBlock{
+	return &pb.SilaBlock{
 		Header: gethtypes.Header{
 			ParentHash: common.BytesToHash(b.ParentHash),
 		},

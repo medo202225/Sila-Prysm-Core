@@ -18,7 +18,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// LatestBlockHash returns the hash of the latest execution block.
+// LatestBlockHash returns the hash of the latest sila block.
 func (b *BeaconState) LatestBlockHash() ([32]byte, error) {
 	if b.version < version.Gloas {
 		return [32]byte{}, errNotSupported("LatestBlockHash", b.version)

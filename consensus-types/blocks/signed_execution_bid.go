@@ -92,7 +92,7 @@ func (s signedSilaPayloadBid) Signature() [96]byte {
 	return [96]byte(s.bid.Signature)
 }
 
-// ParentBlockHash returns the hash of the parent execution block.
+// ParentBlockHash returns the hash of the parent sila block.
 func (h silaPayloadBidGloas) ParentBlockHash() [32]byte {
 	return [32]byte(h.payload.ParentBlockHash)
 }
@@ -102,17 +102,17 @@ func (h silaPayloadBidGloas) ParentBlockRoot() [32]byte {
 	return [32]byte(h.payload.ParentBlockRoot)
 }
 
-// PrevRandao returns the previous randao value for the execution block.
+// PrevRandao returns the previous randao value for the sila block.
 func (h silaPayloadBidGloas) PrevRandao() [32]byte {
 	return [32]byte(h.payload.PrevRandao)
 }
 
-// BlockHash returns the hash of the execution block.
+// BlockHash returns the hash of the sila block.
 func (h silaPayloadBidGloas) BlockHash() [32]byte {
 	return [32]byte(h.payload.BlockHash)
 }
 
-// GasLimit returns the gas limit for the execution block.
+// GasLimit returns the gas limit for the sila block.
 func (h silaPayloadBidGloas) GasLimit() uint64 {
 	return h.payload.GasLimit
 }

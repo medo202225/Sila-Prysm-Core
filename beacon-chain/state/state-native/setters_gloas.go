@@ -226,7 +226,7 @@ func (b *BeaconState) UpdateSilaPayloadAvailabilityAtIndex(idx uint64, val byte)
 	return nil
 }
 
-// SetLatestBlockHash sets the latest execution block hash.
+// SetLatestBlockHash sets the latest sila block hash.
 func (b *BeaconState) SetLatestBlockHash(hash [32]byte) error {
 	if b.version < version.Gloas {
 		return errNotSupported("SetLatestBlockHash", b.version)

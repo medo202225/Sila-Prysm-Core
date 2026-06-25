@@ -13,22 +13,22 @@ func TestPrunePendingDeposits_ZeroMerkleIndex(t *testing.T) {
 	dc := Cache{}
 
 	dc.pendingDeposits = []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 2, Index: 2},
-		{SilaExecutionBlockHeight: 4, Index: 4},
-		{SilaExecutionBlockHeight: 6, Index: 6},
-		{SilaExecutionBlockHeight: 8, Index: 8},
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 2, Index: 2},
+		{SilaBlockHeight: 4, Index: 4},
+		{SilaBlockHeight: 6, Index: 6},
+		{SilaBlockHeight: 8, Index: 8},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 
 	dc.PrunePendingDeposits(t.Context(), 0)
 	expected := []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 2, Index: 2},
-		{SilaExecutionBlockHeight: 4, Index: 4},
-		{SilaExecutionBlockHeight: 6, Index: 6},
-		{SilaExecutionBlockHeight: 8, Index: 8},
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 2, Index: 2},
+		{SilaBlockHeight: 4, Index: 4},
+		{SilaBlockHeight: 6, Index: 6},
+		{SilaBlockHeight: 8, Index: 8},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 	assert.DeepEqual(t, expected, dc.pendingDeposits)
 }
@@ -37,37 +37,37 @@ func TestPrunePendingDeposits_OK(t *testing.T) {
 	dc := Cache{}
 
 	dc.pendingDeposits = []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 2, Index: 2},
-		{SilaExecutionBlockHeight: 4, Index: 4},
-		{SilaExecutionBlockHeight: 6, Index: 6},
-		{SilaExecutionBlockHeight: 8, Index: 8},
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 2, Index: 2},
+		{SilaBlockHeight: 4, Index: 4},
+		{SilaBlockHeight: 6, Index: 6},
+		{SilaBlockHeight: 8, Index: 8},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 
 	dc.PrunePendingDeposits(t.Context(), 6)
 	expected := []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 6, Index: 6},
-		{SilaExecutionBlockHeight: 8, Index: 8},
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 6, Index: 6},
+		{SilaBlockHeight: 8, Index: 8},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 
 	assert.DeepEqual(t, expected, dc.pendingDeposits)
 
 	dc.pendingDeposits = []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 2, Index: 2},
-		{SilaExecutionBlockHeight: 4, Index: 4},
-		{SilaExecutionBlockHeight: 6, Index: 6},
-		{SilaExecutionBlockHeight: 8, Index: 8},
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 2, Index: 2},
+		{SilaBlockHeight: 4, Index: 4},
+		{SilaBlockHeight: 6, Index: 6},
+		{SilaBlockHeight: 8, Index: 8},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 
 	dc.PrunePendingDeposits(t.Context(), 10)
 	expected = []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 
 	assert.DeepEqual(t, expected, dc.pendingDeposits)
@@ -77,12 +77,12 @@ func TestPruneAllPendingDeposits(t *testing.T) {
 	dc := Cache{}
 
 	dc.pendingDeposits = []*silapb.DepositContainer{
-		{SilaExecutionBlockHeight: 2, Index: 2},
-		{SilaExecutionBlockHeight: 4, Index: 4},
-		{SilaExecutionBlockHeight: 6, Index: 6},
-		{SilaExecutionBlockHeight: 8, Index: 8},
-		{SilaExecutionBlockHeight: 10, Index: 10},
-		{SilaExecutionBlockHeight: 12, Index: 12},
+		{SilaBlockHeight: 2, Index: 2},
+		{SilaBlockHeight: 4, Index: 4},
+		{SilaBlockHeight: 6, Index: 6},
+		{SilaBlockHeight: 8, Index: 8},
+		{SilaBlockHeight: 10, Index: 10},
+		{SilaBlockHeight: 12, Index: 12},
 	}
 
 	dc.PruneAllPendingDeposits(t.Context())

@@ -48,14 +48,14 @@ def voting_period_start_time(state: BeaconState) -> uint64:
     return compute_time_at_slot(state, silaexec_voting_period_start_slot)
 ```
 ```python
-def is_candidate_block(block: SilaExecutionBlock, period_start: uint64) -> bool:
+def is_candidate_block(block: SilaBlock, period_start: uint64) -> bool:
     return (
         block.timestamp + SECONDS_PER_SilaExecution_BLOCK * SilaExecution_FOLLOW_DISTANCE <= period_start
         and block.timestamp + SECONDS_PER_SilaExecution_BLOCK * SilaExecution_FOLLOW_DISTANCE * 2 >= period_start
     )
 ```
 ```python
-def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaExecutionBlock]) -> SilaExecutionData:
+def get_silaexec_vote(state: BeaconState, silaexec_chain: Sequence[SilaBlock]) -> SilaExecutionData:
     period_start = voting_period_start_time(state)
     # `silaexec_chain` abstractly represents all blocks in the silaexec chain sorted by ascending block height
     votes_to_consider = [

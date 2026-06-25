@@ -12,7 +12,7 @@ type DepositTreeSnapshot struct {
 	finalized      [][32]byte
 	depositRoot    [32]byte
 	depositCount   uint64
-	executionBlock executionBlock
+	silaBlock silaBlock
 }
 
 // CalculateRoot returns the root of a deposit tree snapshot.
@@ -36,12 +36,12 @@ func (ds *DepositTreeSnapshot) CalculateRoot() ([32]byte, error) {
 }
 
 // fromTreeParts constructs the deposit tree from pre-existing data.
-func fromTreeParts(finalised [][32]byte, depositCount uint64, executionBlock executionBlock) (DepositTreeSnapshot, error) {
+func fromTreeParts(finalised [][32]byte, depositCount uint64, silaBlock silaBlock) (DepositTreeSnapshot, error) {
 	snapshot := DepositTreeSnapshot{
 		finalized:      finalised,
 		depositRoot:    trie.ZeroHashes[0],
 		depositCount:   depositCount,
-		executionBlock: executionBlock,
+		silaBlock: silaBlock,
 	}
 	root, err := snapshot.CalculateRoot()
 	if err != nil {
@@ -57,8 +57,8 @@ func (ds *DepositTreeSnapshot) ToProto() *protodb.DepositSnapshot {
 		Finalized:      make([][]byte, len(ds.finalized)),
 		DepositRoot:    bytesutil.SafeCopyBytes(ds.depositRoot[:]),
 		DepositCount:   ds.depositCount,
-		ExecutionHash:  bytesutil.SafeCopyBytes(ds.executionBlock.Hash[:]),
-		ExecutionDepth: ds.executionBlock.Depth,
+		SilaHash:  bytesutil.SafeCopyBytes(ds.silaBlock.Hash[:]),
+		SilaDepth: ds.silaBlock.Depth,
 	}
 	for i := range ds.finalized {
 		tree.Finalized[i] = bytesutil.SafeCopyBytes(ds.finalized[i][:])
@@ -76,9 +76,9 @@ func DepositTreeFromSnapshotProto(snapshotProto *protodb.DepositSnapshot) (*Depo
 		finalized:    finalized,
 		depositRoot:  bytesutil.ToBytes32(snapshotProto.DepositRoot),
 		depositCount: snapshotProto.DepositCount,
-		executionBlock: executionBlock{
-			Hash:  bytesutil.ToBytes32(snapshotProto.ExecutionHash),
-			Depth: snapshotProto.ExecutionDepth,
+		silaBlock: silaBlock{
+			Hash:  bytesutil.ToBytes32(snapshotProto.SilaHash),
+			Depth: snapshotProto.SilaDepth,
 		},
 	}
 	return fromSnapshot(snapshot)

@@ -26,7 +26,7 @@ type SilaEngineClient struct {
 	NewPayloadResp              []byte
 	PayloadIDBytes              *pb.PayloadIDBytes
 	ForkChoiceUpdatedResp       []byte
-	ExecutionBlock              *pb.ExecutionBlock
+	SilaBlock              *pb.SilaBlock
 	Err                         error
 	ErrLatestExecBlock          error
 	ErrExecBlockByHash          error
@@ -34,7 +34,7 @@ type SilaEngineClient struct {
 	ErrNewPayload               error
 	SilaPayloadByBlockHash map[[32]byte]*pb.SilaPayload
 	SlotByBlockHash             map[[32]byte]primitives.Slot
-	BlockByHashMap              map[[32]byte]*pb.ExecutionBlock
+	BlockByHashMap              map[[32]byte]*pb.SilaBlock
 	NumReconstructedPayloads    uint64
 	TerminalBlockHash           []byte
 	TerminalBlockHashExists     bool
@@ -69,13 +69,13 @@ func (e *SilaEngineClient) GetPayload(_ context.Context, _ [8]byte, _ primitives
 	return e.GetPayloadResponse, e.ErrGetPayload
 }
 
-// LatestExecutionBlock --
-func (e *SilaEngineClient) LatestExecutionBlock(_ context.Context) (*pb.ExecutionBlock, error) {
-	return e.ExecutionBlock, e.ErrLatestExecBlock
+// LatestSilaBlock --
+func (e *SilaEngineClient) LatestSilaBlock(_ context.Context) (*pb.SilaBlock, error) {
+	return e.SilaBlock, e.ErrLatestExecBlock
 }
 
-// ExecutionBlockByHash --
-func (e *SilaEngineClient) ExecutionBlockByHash(_ context.Context, h common.Hash, _ bool) (*pb.ExecutionBlock, error) {
+// SilaBlockByHash --
+func (e *SilaEngineClient) SilaBlockByHash(_ context.Context, h common.Hash, _ bool) (*pb.SilaBlock, error) {
 	b, ok := e.BlockByHashMap[h]
 	if !ok {
 		return nil, errors.New("block not found")
@@ -217,12 +217,12 @@ func (e *SilaEngineClient) GetTerminalBlockHash(ctx context.Context, transitionT
 	if overflows {
 		return nil, false, errors.New("could not convert terminal total difficulty to uint256")
 	}
-	blk, err := e.LatestExecutionBlock(ctx)
+	blk, err := e.LatestSilaBlock(ctx)
 	if err != nil {
-		return nil, false, errors.Wrap(err, "could not get latest execution block")
+		return nil, false, errors.Wrap(err, "could not get latest sila block")
 	}
 	if blk == nil {
-		return nil, false, errors.New("latest execution block is nil")
+		return nil, false, errors.New("latest sila block is nil")
 	}
 
 	for {
@@ -237,9 +237,9 @@ func (e *SilaEngineClient) GetTerminalBlockHash(ctx context.Context, transitionT
 		if parentHash == params.BeaconConfig().ZeroHash {
 			return nil, false, nil
 		}
-		parentBlk, err := e.ExecutionBlockByHash(ctx, parentHash, false /* with txs */)
+		parentBlk, err := e.SilaBlockByHash(ctx, parentHash, false /* with txs */)
 		if err != nil {
-			return nil, false, errors.Wrap(err, "could not get parent execution block")
+			return nil, false, errors.Wrap(err, "could not get parent sila block")
 		}
 		if blockReachedTTD {
 			b, err := hexutil.DecodeBig(parentBlk.TotalDifficulty)

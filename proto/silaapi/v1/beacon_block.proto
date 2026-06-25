@@ -175,7 +175,7 @@ message SilaExecutionData {
   // including the deposits in this block.
   uint64 deposit_count = 2;
 
-  // The 32 byte block hash of the Sila execution block considered for deposit
+  // The 32 byte block hash of the Sila sila block considered for deposit
   // inclusion.
   bytes block_hash = 3 [ (sila.eth.ext.ssz_size) = "32" ];
 }

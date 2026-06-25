@@ -78,7 +78,7 @@ type Server struct {
 	BlobReceiver                     blockchain.BlobReceiver
 	DataColumnReceiver               blockchain.DataColumnReceiver
 	MockSilaExecutionVotes                    bool
-	SilaExecutionBlockFetcher                 execution.POWBlockFetcher
+	SilaBlockFetcher                 execution.POWBlockFetcher
 	PendingDepositsFetcher           depositsnapshot.PendingDepositsFetcher
 	OperationNotifier                opfeed.Notifier
 	StateGen                         stategen.StateManager

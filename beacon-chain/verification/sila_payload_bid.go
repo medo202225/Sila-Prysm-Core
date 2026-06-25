@@ -186,7 +186,7 @@ func (v *BidVerifier) VerifyBidSlotHigherThanParent(parentSlot primitives.Slot) 
 	return nil
 }
 
-// VerifyParentBlockHash verifies the parent execution block hash matches forkchoice for the bid parent root.
+// VerifyParentBlockHash verifies the parent sila block hash matches forkchoice for the bid parent root.
 func (v *BidVerifier) VerifyParentBlockHash(resolveBlockHash func([32]byte) ([32]byte, error)) (err error) {
 	defer v.record(RequireBidParentBlockHashValid, &err)
 

@@ -273,7 +273,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 			bytesutil.PadTo([]byte{'k'}, 131072),
 			bytesutil.PadTo([]byte{'l'}, 131072)}, pb.BlobsBundle.Blobs)
 	})
-	t.Run("execution block", func(t *testing.T) {
+	t.Run("sila block", func(t *testing.T) {
 		baseFeePerGas := big.NewInt(1770307273)
 		want := &gethtypes.Header{
 			Number:      big.NewInt(1),
@@ -306,7 +306,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		encodedPayloadItems, err := json.Marshal(payloadItems)
 		require.NoError(t, err)
 
-		payloadPb := &silaenginev1.ExecutionBlock{}
+		payloadPb := &silaenginev1.SilaBlock{}
 		require.NoError(t, json.Unmarshal(encodedPayloadItems, payloadPb))
 
 		require.DeepEqual(t, blockHash, payloadPb.Hash)
@@ -328,7 +328,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.DeepEqual(t, want.MixDigest, payloadPb.MixDigest)
 		require.DeepEqual(t, want.Nonce, payloadPb.Nonce)
 	})
-	t.Run("execution block with txs as hashes", func(t *testing.T) {
+	t.Run("sila block with txs as hashes", func(t *testing.T) {
 		baseFeePerGas := big.NewInt(1770307273)
 		want := &gethtypes.Header{
 			Number:      big.NewInt(1),
@@ -362,7 +362,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		encodedPayloadItems, err := json.Marshal(payloadItems)
 		require.NoError(t, err)
 
-		payloadPb := &silaenginev1.ExecutionBlock{}
+		payloadPb := &silaenginev1.SilaBlock{}
 		require.NoError(t, json.Unmarshal(encodedPayloadItems, payloadPb))
 
 		require.DeepEqual(t, blockHash, payloadPb.Hash)
@@ -387,7 +387,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		// Expect no transaction objects in the unmarshaled data.
 		require.Equal(t, 0, len(payloadPb.Transactions))
 	})
-	t.Run("execution block with full transaction data", func(t *testing.T) {
+	t.Run("sila block with full transaction data", func(t *testing.T) {
 		baseFeePerGas := big.NewInt(1770307273)
 		want := &gethtypes.Header{
 			Number:      big.NewInt(1),
@@ -431,7 +431,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		encodedPayloadItems, err := json.Marshal(payloadItems)
 		require.NoError(t, err)
 
-		payloadPb := &silaenginev1.ExecutionBlock{}
+		payloadPb := &silaenginev1.SilaBlock{}
 		require.NoError(t, json.Unmarshal(encodedPayloadItems, payloadPb))
 
 		require.DeepEqual(t, blockHash, payloadPb.Hash)
@@ -455,7 +455,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.Equal(t, 1, len(payloadPb.Transactions))
 		require.DeepEqual(t, txs[0].Hash(), payloadPb.Transactions[0].Hash())
 	})
-	t.Run("execution block with withdrawals", func(t *testing.T) {
+	t.Run("sila block with withdrawals", func(t *testing.T) {
 		baseFeePerGas := big.NewInt(1770307273)
 		want := &gethtypes.Header{
 			Number:      big.NewInt(1),
@@ -511,7 +511,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		encodedPayloadItems, err := json.Marshal(payloadItems)
 		require.NoError(t, err)
 
-		payloadPb := &silaenginev1.ExecutionBlock{}
+		payloadPb := &silaenginev1.SilaBlock{}
 		require.NoError(t, json.Unmarshal(encodedPayloadItems, payloadPb))
 
 		require.DeepEqual(t, blockHash, payloadPb.Hash)
@@ -542,7 +542,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.DeepEqual(t, bytesutil.PadTo([]byte("address2"), 20), payloadPb.Withdrawals[1].Address)
 		require.Equal(t, uint64(200), payloadPb.Withdrawals[1].Amount)
 	})
-	t.Run("execution block with deneb blob data", func(t *testing.T) {
+	t.Run("sila block with deneb blob data", func(t *testing.T) {
 		baseFeePerGas := big.NewInt(1770307273)
 		blobGas := uint64(3000)
 		excessGas := uint64(7000)
@@ -580,7 +580,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		encodedPayloadItems, err := json.Marshal(payloadItems)
 		require.NoError(t, err)
 
-		payloadPb := &silaenginev1.ExecutionBlock{}
+		payloadPb := &silaenginev1.SilaBlock{}
 		require.NoError(t, json.Unmarshal(encodedPayloadItems, payloadPb))
 
 		require.DeepEqual(t, blockHash, payloadPb.Hash)
@@ -728,13 +728,13 @@ func TestSilaPayloadBody_MarshalUnmarshalJSON(t *testing.T) {
 	require.DeepEqual(t, pBody, res)
 }
 
-func TestExecutionBlock_MarshalUnmarshalJSON_MainnetBlock(t *testing.T) {
-	newBlock := &silaenginev1.ExecutionBlock{}
+func TestSilaBlock_MarshalUnmarshalJSON_MainnetBlock(t *testing.T) {
+	newBlock := &silaenginev1.SilaBlock{}
 	require.NoError(t, newBlock.UnmarshalJSON([]byte(blockJson)))
 	_, err := newBlock.MarshalJSON()
 	require.NoError(t, err)
 
-	newBlock = &silaenginev1.ExecutionBlock{}
+	newBlock = &silaenginev1.SilaBlock{}
 	require.NoError(t, newBlock.UnmarshalJSON([]byte(blockNoTxJson)))
 	_, err = newBlock.MarshalJSON()
 	require.NoError(t, err)

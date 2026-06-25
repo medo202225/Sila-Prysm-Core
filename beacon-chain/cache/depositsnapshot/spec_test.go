@@ -128,8 +128,8 @@ func (sd *snapshot) UnmarshalYAML(value *yaml.Node) error {
 		Finalized            []string `yaml:"finalized"`
 		DepositRoot          string   `yaml:"deposit_root"`
 		DepositCount         string   `yaml:"deposit_count"`
-		ExecutionBlockHash   string   `yaml:"execution_block_hash"`
-		ExecutionBlockHeight string   `yaml:"execution_block_height"`
+		SilaBlockHash   string   `yaml:"sila_block_hash"`
+		SilaBlockHeight string   `yaml:"sila_block_height"`
 	}{}
 	err := value.Decode(&raw)
 	if err != nil {
@@ -150,11 +150,11 @@ func (sd *snapshot) UnmarshalYAML(value *yaml.Node) error {
 	if err != nil {
 		return err
 	}
-	sd.executionBlock.Hash, err = hexStringToByteArray(raw.ExecutionBlockHash)
+	sd.silaBlock.Hash, err = hexStringToByteArray(raw.SilaBlockHash)
 	if err != nil {
 		return err
 	}
-	sd.executionBlock.Depth, err = stringToUint64(raw.ExecutionBlockHeight)
+	sd.silaBlock.Depth, err = stringToUint64(raw.SilaBlockHeight)
 	if err != nil {
 		return err
 	}
@@ -357,7 +357,7 @@ func TestInvalidSnapshot(t *testing.T) {
 		finalized:    nil,
 		depositRoot:  trie.ZeroHashes[0],
 		depositCount: 0,
-		executionBlock: executionBlock{
+		silaBlock: silaBlock{
 			Hash:  trie.ZeroHashes[0],
 			Depth: 0,
 		},

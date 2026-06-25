@@ -112,8 +112,8 @@ type DepositSnapshot struct {
 	Finalized      [][]byte               `protobuf:"bytes,1,rep,name=finalized,proto3" json:"finalized,omitempty" ssz-max:"32" ssz-size:"?,32"`
 	DepositRoot    []byte                 `protobuf:"bytes,2,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty" ssz-size:"32"`
 	DepositCount   uint64                 `protobuf:"varint,3,opt,name=deposit_count,json=depositCount,proto3" json:"deposit_count,omitempty"`
-	ExecutionHash  []byte                 `protobuf:"bytes,4,opt,name=execution_hash,json=executionHash,proto3" json:"execution_hash,omitempty" ssz-size:"32"`
-	ExecutionDepth uint64                 `protobuf:"varint,5,opt,name=execution_depth,json=executionDepth,proto3" json:"execution_depth,omitempty"`
+	SilaHash  []byte                 `protobuf:"bytes,4,opt,name=execution_hash,json=executionHash,proto3" json:"execution_hash,omitempty" ssz-size:"32"`
+	SilaDepth uint64                 `protobuf:"varint,5,opt,name=execution_depth,json=executionDepth,proto3" json:"execution_depth,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -169,16 +169,16 @@ func (x *DepositSnapshot) GetDepositCount() uint64 {
 	return 0
 }
 
-func (x *DepositSnapshot) GetExecutionHash() []byte {
+func (x *DepositSnapshot) GetSilaHash() []byte {
 	if x != nil {
-		return x.ExecutionHash
+		return x.SilaHash
 	}
 	return nil
 }
 
-func (x *DepositSnapshot) GetExecutionDepth() uint64 {
+func (x *DepositSnapshot) GetSilaDepth() uint64 {
 	if x != nil {
-		return x.ExecutionDepth
+		return x.SilaDepth
 	}
 	return 0
 }
@@ -434,7 +434,7 @@ func (x *TrieLayer) GetLayer() [][]byte {
 type DepositContainer struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Index           int64                  `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
-	SilaExecutionBlockHeight uint64                 `protobuf:"varint,2,opt,name=silaexec_block_height,json=silaExecutionBlockHeight,proto3" json:"silaexec_block_height,omitempty"`
+	SilaBlockHeight uint64                 `protobuf:"varint,2,opt,name=silaexec_block_height,json=silaBlockHeight,proto3" json:"silaexec_block_height,omitempty"`
 	Deposit         *Deposit               `protobuf:"bytes,3,opt,name=deposit,proto3" json:"deposit,omitempty"`
 	DepositRoot     []byte                 `protobuf:"bytes,4,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -478,9 +478,9 @@ func (x *DepositContainer) GetIndex() int64 {
 	return 0
 }
 
-func (x *DepositContainer) GetSilaExecutionBlockHeight() uint64 {
+func (x *DepositContainer) GetSilaBlockHeight() uint64 {
 	if x != nil {
-		return x.SilaExecutionBlockHeight
+		return x.SilaBlockHeight
 	}
 	return 0
 }

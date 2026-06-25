@@ -68,9 +68,9 @@ func (b PayloadIDBytes) MarshalJSON() ([]byte, error) {
 	return json.Marshal(hexutil.Bytes(b[:]))
 }
 
-// ExecutionBlock is the response kind received by the sila_getBlockByHash and
+// SilaBlock is the response kind received by the sila_getBlockByHash and
 // sila_getBlockByNumber endpoints via JSON-RPC.
-type ExecutionBlock struct {
+type SilaBlock struct {
 	Version int
 	gethtypes.Header
 	Hash            common.Hash              `json:"hash"`
@@ -80,7 +80,7 @@ type ExecutionBlock struct {
 	BlockAccessList hexutil.Bytes            `json:"blockAccessList"`
 }
 
-func (e *ExecutionBlock) MarshalJSON() ([]byte, error) {
+func (e *SilaBlock) MarshalJSON() ([]byte, error) {
 	decoded := make(map[string]any)
 	encodedHeader, err := e.Header.MarshalJSON()
 	if err != nil {
@@ -103,7 +103,7 @@ func (e *ExecutionBlock) MarshalJSON() ([]byte, error) {
 	return json.Marshal(decoded)
 }
 
-func (e *ExecutionBlock) UnmarshalJSON(enc []byte) error {
+func (e *SilaBlock) UnmarshalJSON(enc []byte) error {
 	type transactionsJson struct {
 		Transactions []*gethtypes.Transaction `json:"transactions"`
 	}

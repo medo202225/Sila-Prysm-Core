@@ -55,7 +55,7 @@ func MinimalSpecConfig() *BeaconChainConfig {
 	minimalConfig.ShardCommitteePeriod = 64
 	minimalConfig.MinEpochsToInactivityPenalty = 4
 	minimalConfig.SilaExecutionFollowDistance = 16
-	minimalConfig.SecondsPerSilaExecutionBlock = 14
+	minimalConfig.SecondsPerSilaBlock = 14
 
 	// State vector lengths
 	minimalConfig.EpochsPerHistoricalVector = 64

@@ -23,7 +23,7 @@ func ExampleRunSSZStaticTests() {
 			obj = &silapb.Attestation{}
 		case "BeaconState":
 			obj = &silapb.BeaconState{}
-		case "SilaExecutionBlock":
+		case "SilaBlock":
 			// Some types may not apply to sila, but exist in the spec test folders. It is OK to
 			// skip these tests with a valid justification. Otherwise, the test should fail with an
 			// unsupported type.

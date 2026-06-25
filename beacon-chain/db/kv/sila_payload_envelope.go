@@ -17,7 +17,7 @@ import (
 // with its block hash. The full payload can later be retrieved from the EL via
 // silaEngine_getPayloadBodiesByHash.
 // A secondary index from BlockHash → BeaconBlockRoot is maintained so that
-// envelopes can be looked up by execution block hash.
+// envelopes can be looked up by sila block hash.
 func (s *Store) SaveSilaPayloadEnvelope(ctx context.Context, env *silapb.SignedSilaPayloadEnvelope) error {
 	_, span := trace.StartSpan(ctx, "BeaconDB.SaveSilaPayloadEnvelope")
 	defer span.End()
@@ -63,7 +63,7 @@ func (s *Store) SilaPayloadEnvelope(ctx context.Context, blockRoot [32]byte) (*s
 }
 
 // SilaPayloadEnvelopeByBlockHash retrieves the blinded signed sila payload envelope
-// by execution block hash. It uses the secondary BlockHash → BeaconBlockRoot index and then
+// by sila block hash. It uses the secondary BlockHash → BeaconBlockRoot index and then
 // fetches the envelope from the primary bucket.
 func (s *Store) SilaPayloadEnvelopeByBlockHash(ctx context.Context, blockHash [32]byte) (*silapb.SignedBlindedSilaPayloadEnvelope, error) {
 	_, span := trace.StartSpan(ctx, "BeaconDB.SilaPayloadEnvelopeByBlockHash")

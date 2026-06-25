@@ -117,7 +117,7 @@ func FuzzSilaPayload(f *testing.F) {
 	})
 }
 
-func FuzzExecutionBlock(f *testing.F) {
+func FuzzSilaBlock(f *testing.F) {
 	f.Skip("Is skipped until false positive rate can be resolved.")
 	logsBloom := [256]byte{'j', 'u', 'n', 'k'}
 	addr := common.HexToAddress("095e7baea6a6c7c4c2dfeb977efac326af552d87")
@@ -137,7 +137,7 @@ func FuzzExecutionBlock(f *testing.F) {
 		S: big.NewInt(math.MaxInt),
 	}
 	tx := types.NewTx(innerData)
-	execBlock := &pb.ExecutionBlock{
+	execBlock := &pb.SilaBlock{
 		Header: types.Header{
 			ParentHash:  common.Hash([32]byte{0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01}),
 			Root:        common.Hash([32]byte{0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01, 0xFF, 0x01}),
@@ -162,7 +162,7 @@ func FuzzExecutionBlock(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
 		gethResp := make(map[string]any)
-		silaResp := &pb.ExecutionBlock{}
+		silaResp := &pb.SilaBlock{}
 		gethErr := json.Unmarshal(jsonBlob, &gethResp)
 		silaErr := json.Unmarshal(jsonBlob, silaResp)
 		// Nothing to marshal if we have an error.
@@ -196,7 +196,7 @@ func FuzzExecutionBlock(f *testing.F) {
 	})
 }
 
-func isBogusTransactionHash(blk *pb.ExecutionBlock, jsonMap map[string]any) bool {
+func isBogusTransactionHash(blk *pb.SilaBlock, jsonMap map[string]any) bool {
 	if blk.Transactions == nil {
 		return false
 	}
@@ -219,7 +219,7 @@ func isBogusTransactionHash(blk *pb.ExecutionBlock, jsonMap map[string]any) bool
 
 func compareHeaders(t *testing.T, jsonBlob []byte) {
 	gethResp := &types.Header{}
-	silaResp := &pb.ExecutionBlock{}
+	silaResp := &pb.SilaBlock{}
 	gethErr := json.Unmarshal(jsonBlob, gethResp)
 	silaErr := json.Unmarshal(jsonBlob, silaResp)
 	assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
@@ -241,9 +241,9 @@ func compareHeaders(t *testing.T, jsonBlob []byte) {
 	assert.DeepEqual(t, newGethResp, newGethResp2)
 }
 
-func validateBlockConsistency(execBlock *pb.ExecutionBlock, jsonMap map[string]any) error {
+func validateBlockConsistency(execBlock *pb.SilaBlock, jsonMap map[string]any) error {
 	blockVal := reflect.ValueOf(execBlock).Elem()
-	bType := reflect.TypeFor[pb.ExecutionBlock]()
+	bType := reflect.TypeFor[pb.SilaBlock]()
 
 	fieldnum := bType.NumField()
 
@@ -275,8 +275,8 @@ func validateBlockConsistency(execBlock *pb.ExecutionBlock, jsonMap map[string]a
 	return nil
 }
 
-func jsonFieldsAreValid(execBlock *pb.ExecutionBlock, jsonMap map[string]any) (bool, error) {
-	bType := reflect.TypeFor[pb.ExecutionBlock]()
+func jsonFieldsAreValid(execBlock *pb.SilaBlock, jsonMap map[string]any) (bool, error) {
+	bType := reflect.TypeFor[pb.SilaBlock]()
 
 	fieldnum := bType.NumField()
 

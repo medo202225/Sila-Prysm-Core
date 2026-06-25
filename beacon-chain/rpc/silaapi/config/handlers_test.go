@@ -64,7 +64,7 @@ func TestGetSpec(t *testing.T) {
 	config.TargetAggregatorsPerCommittee = 14
 	config.RandomSubnetsPerValidator = 15
 	config.EpochsPerRandomSubnetSubscription = 16
-	config.SecondsPerSilaExecutionBlock = 17
+	config.SecondsPerSilaBlock = 17
 	config.DepositChainID = 18
 	config.DepositNetworkID = 19
 	config.DepositContractAddress = "DepositContractAddress"

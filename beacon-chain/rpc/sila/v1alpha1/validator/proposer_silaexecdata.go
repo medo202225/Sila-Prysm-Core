@@ -54,7 +54,7 @@ func (vs *Server) silaexecDataMajorityVote(ctx context.Context, beaconState stat
 	silaexecDataNotification = false
 
 	genesisTime, _ := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
-	followDistanceSeconds := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaExecutionBlock
+	followDistanceSeconds := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaBlock
 	latestValidTime := votingPeriodStartTime - followDistanceSeconds
 	earliestValidTime := votingPeriodStartTime - 2*followDistanceSeconds
 
@@ -66,7 +66,7 @@ func (vs *Server) silaexecDataMajorityVote(ctx context.Context, beaconState stat
 		return vs.HeadFetcher.HeadSilaExecutionData(), nil
 	}
 
-	lastBlockByLatestValidTime, err := vs.SilaExecutionBlockFetcher.BlockByTimestamp(ctx, latestValidTime)
+	lastBlockByLatestValidTime, err := vs.SilaBlockFetcher.BlockByTimestamp(ctx, latestValidTime)
 	if err != nil {
 		log.WithError(err).Error("Could not get last block by latest valid time")
 		return vs.randomSilaExecutionDataVote(ctx)
@@ -81,7 +81,7 @@ func (vs *Server) silaexecDataMajorityVote(ctx context.Context, beaconState stat
 	}
 
 	if lastBlockDepositCount >= vs.HeadFetcher.HeadSilaExecutionData().DepositCount {
-		h, err := vs.SilaExecutionBlockFetcher.BlockHashByHeight(ctx, lastBlockByLatestValidTime.Number)
+		h, err := vs.SilaBlockFetcher.BlockHashByHeight(ctx, lastBlockByLatestValidTime.Number)
 		if err != nil {
 			log.WithError(err).Error("Could not get hash of last block by latest valid time")
 			return vs.randomSilaExecutionDataVote(ctx)
@@ -126,7 +126,7 @@ func (vs *Server) canonicalSilaExecutionData(
 	if features.Get().DisableStakinContractCheck && silaexecBlockHash == [32]byte{} {
 		return canonicalSilaExecutionData, new(big.Int).SetInt64(0), nil
 	}
-	_, canonicalSilaExecutionDataHeight, err := vs.SilaExecutionBlockFetcher.BlockExists(ctx, silaexecBlockHash)
+	_, canonicalSilaExecutionDataHeight, err := vs.SilaBlockFetcher.BlockExists(ctx, silaexecBlockHash)
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "could not fetch silaExecutionData height")
 	}

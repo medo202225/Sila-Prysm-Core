@@ -355,7 +355,7 @@ func TestProcessSilaGenesisLog(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	err = web3Service.ProcessSilaExecutionBlock(t.Context(), big.NewInt(int64(logs[len(logs)-1].BlockNumber)))
+	err = web3Service.ProcessSilaBlock(t.Context(), big.NewInt(int64(logs[len(logs)-1].BlockNumber)))
 	require.NoError(t, err)
 
 	cachedDeposits := web3Service.chainStartData.ChainstartDeposits
@@ -410,7 +410,7 @@ func TestProcessSilaGenesisLog_CorrectNumOfDeposits(t *testing.T) {
 	web3Service.latestSilaExecutionData.BlockTime = block.Time()
 	bConfig := params.MinimalSpecConfig().Copy()
 	bConfig.MinGenesisTime = 0
-	bConfig.SecondsPerSilaExecutionBlock = 1
+	bConfig.SecondsPerSilaBlock = 1
 	params.OverrideBeaconConfig(bConfig)
 	nConfig := params.BeaconNetworkConfig()
 	nConfig.ContractDeploymentBlock = 0
@@ -511,7 +511,7 @@ func TestProcessLogs_DepositRequestsStarted(t *testing.T) {
 	web3Service.latestSilaExecutionData.BlockTime = block.Time()
 	bConfig := params.MinimalSpecConfig().Copy()
 	bConfig.MinGenesisTime = 0
-	bConfig.SecondsPerSilaExecutionBlock = 1
+	bConfig.SecondsPerSilaBlock = 1
 	params.OverrideBeaconConfig(bConfig)
 	nConfig := params.BeaconNetworkConfig()
 	nConfig.ContractDeploymentBlock = 0
@@ -597,7 +597,7 @@ func TestProcessSilaGenesisLog_LargePeriodOfNoLogs(t *testing.T) {
 	web3Service.latestSilaExecutionData.BlockHeight = b.NumberU64()
 	web3Service.latestSilaExecutionData.BlockTime = b.Time()
 	bConfig := params.MinimalSpecConfig().Copy()
-	bConfig.SecondsPerSilaExecutionBlock = 10
+	bConfig.SecondsPerSilaBlock = 10
 	params.OverrideBeaconConfig(bConfig)
 	nConfig := params.BeaconNetworkConfig()
 	nConfig.ContractDeploymentBlock = 0

@@ -218,7 +218,7 @@ func TestFollowBlock_OK(t *testing.T) {
 	// simulated backend sets silaexec block
 	params.SetupTestConfigCleanup(t)
 	conf := params.BeaconConfig().Copy()
-	conf.SecondsPerSilaExecutionBlock = 1
+	conf.SecondsPerSilaBlock = 1
 	params.OverrideBeaconConfig(conf)
 
 	web3Service = setDefaultMocks(web3Service)
@@ -359,9 +359,9 @@ func TestLogTillGenesis_OK(t *testing.T) {
 
 func TestInitDepositCache_OK(t *testing.T) {
 	ctrs := []*silapb.DepositContainer{
-		{Index: 0, SilaExecutionBlockHeight: 2, Deposit: &silapb.Deposit{Proof: [][]byte{[]byte("A")}, Data: &silapb.Deposit_Data{PublicKey: []byte{}}}},
-		{Index: 1, SilaExecutionBlockHeight: 4, Deposit: &silapb.Deposit{Proof: [][]byte{[]byte("B")}, Data: &silapb.Deposit_Data{PublicKey: []byte{}}}},
-		{Index: 2, SilaExecutionBlockHeight: 6, Deposit: &silapb.Deposit{Proof: [][]byte{[]byte("c")}, Data: &silapb.Deposit_Data{PublicKey: []byte{}}}},
+		{Index: 0, SilaBlockHeight: 2, Deposit: &silapb.Deposit{Proof: [][]byte{[]byte("A")}, Data: &silapb.Deposit_Data{PublicKey: []byte{}}}},
+		{Index: 1, SilaBlockHeight: 4, Deposit: &silapb.Deposit{Proof: [][]byte{[]byte("B")}, Data: &silapb.Deposit_Data{PublicKey: []byte{}}}},
+		{Index: 2, SilaBlockHeight: 6, Deposit: &silapb.Deposit{Proof: [][]byte{[]byte("c")}, Data: &silapb.Deposit_Data{PublicKey: []byte{}}}},
 	}
 	gs, _ := util.DeterministicGenesisState(t, 1)
 	beaconDB := dbutil.SetupDB(t)
@@ -393,7 +393,7 @@ func TestInitDepositCacheWithFinalization_OK(t *testing.T) {
 	ctrs := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			SilaExecutionBlockHeight: 2,
+			SilaBlockHeight: 2,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte{0}, 48),
@@ -404,7 +404,7 @@ func TestInitDepositCacheWithFinalization_OK(t *testing.T) {
 		},
 		{
 			Index:           1,
-			SilaExecutionBlockHeight: 4,
+			SilaBlockHeight: 4,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte{1}, 48),
@@ -415,7 +415,7 @@ func TestInitDepositCacheWithFinalization_OK(t *testing.T) {
 		},
 		{
 			Index:           2,
-			SilaExecutionBlockHeight: 6,
+			SilaBlockHeight: 6,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte{2}, 48),
@@ -484,7 +484,7 @@ func TestNewService_EarliestVotingBlock(t *testing.T) {
 	// time as 10 seconds
 	params.SetupTestConfigCleanup(t)
 	conf := params.BeaconConfig().Copy()
-	conf.SecondsPerSilaExecutionBlock = 10
+	conf.SecondsPerSilaBlock = 10
 	conf.SilaExecutionFollowDistance = 50
 	params.OverrideBeaconConfig(conf)
 
@@ -696,7 +696,7 @@ func TestService_ValidateDepositContainers(t *testing.T) {
 			ctrsFunc: func() []*silapb.DepositContainer {
 				ctrs := make([]*silapb.DepositContainer, 0)
 				for i := range 10 {
-					ctrs = append(ctrs, &silapb.DepositContainer{Index: int64(i), SilaExecutionBlockHeight: uint64(i + 10)})
+					ctrs = append(ctrs, &silapb.DepositContainer{Index: int64(i), SilaBlockHeight: uint64(i + 10)})
 				}
 				return ctrs
 			},
@@ -707,7 +707,7 @@ func TestService_ValidateDepositContainers(t *testing.T) {
 			ctrsFunc: func() []*silapb.DepositContainer {
 				ctrs := make([]*silapb.DepositContainer, 0)
 				for i := 1; i < 10; i++ {
-					ctrs = append(ctrs, &silapb.DepositContainer{Index: int64(i), SilaExecutionBlockHeight: uint64(i + 10)})
+					ctrs = append(ctrs, &silapb.DepositContainer{Index: int64(i), SilaBlockHeight: uint64(i + 10)})
 				}
 				return ctrs
 			},
@@ -721,7 +721,7 @@ func TestService_ValidateDepositContainers(t *testing.T) {
 					if i == 5 || i == 7 {
 						continue
 					}
-					ctrs = append(ctrs, &silapb.DepositContainer{Index: int64(i), SilaExecutionBlockHeight: uint64(i + 10)})
+					ctrs = append(ctrs, &silapb.DepositContainer{Index: int64(i), SilaBlockHeight: uint64(i + 10)})
 				}
 				return ctrs
 			},
@@ -782,7 +782,7 @@ func TestService_CacheBlockHeaders(t *testing.T) {
 }
 
 func TestService_FollowBlock(t *testing.T) {
-	followTime := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaExecutionBlock
+	followTime := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaBlock
 	followTime += 10000
 	bMap := make(map[uint64]*types.HeaderInfo)
 	for i := uint64(3000); i > 0; i-- {

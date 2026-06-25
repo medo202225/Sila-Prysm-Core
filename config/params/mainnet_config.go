@@ -198,7 +198,7 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	// Additional context: https://github.com/sila-chain/Sila-Consensus-Specs/issues/2132
 	// Bug prompting this change: https://github.com/sila-chain/sila/issues/7856
 	// Future optimization: https://github.com/sila-chain/sila/issues/7739
-	SecondsPerSilaExecutionBlock: 14,
+	SecondsPerSilaBlock: 14,
 
 	// State list length constants.
 	EpochsPerHistoricalVector: 65536,

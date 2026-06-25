@@ -1168,14 +1168,14 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			e := &mockExecution.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.ExecutionBlock{}}
-			e.BlockByHashMap[aHash] = &silaenginev1.ExecutionBlock{
+			e := &mockExecution.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.SilaBlock{}}
+			e.BlockByHashMap[aHash] = &silaenginev1.SilaBlock{
 				Header: gethtypes.Header{
 					ParentHash: bHash,
 				},
 				TotalDifficulty: "0x2",
 			}
-			e.BlockByHashMap[bHash] = &silaenginev1.ExecutionBlock{
+			e.BlockByHashMap[bHash] = &silaenginev1.SilaBlock{
 				Header: gethtypes.Header{
 					ParentHash: common.BytesToHash([]byte("3")),
 				},

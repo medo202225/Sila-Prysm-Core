@@ -333,7 +333,7 @@ func (s *Store) nodeTreeDump(ctx context.Context, n *Node, nodes []*forkchoice2.
 		Balance:                  n.balance,
 		Weight:                   n.weight,
 		ExecutionOptimistic:      optimistic,
-		ExecutionBlockHash:       n.blockHash[:],
+		SilaBlockHash:       n.blockHash[:],
 		Timestamp:                timestamp,
 		Target:                   target[:],
 	}
@@ -387,7 +387,7 @@ func (s *Store) nodeTreeDumpV2(ctx context.Context, n *Node, nodes []*forkchoice
 		Balance:                         n.balance,
 		ExecutionOptimistic:             optimistic,
 		Timestamp:                       en.timestamp,
-		ExecutionBlockHash:              n.blockHash[:],
+		SilaBlockHash:              n.blockHash[:],
 		Target:                          target[:],
 		JustifiedEpoch:                  n.justifiedEpoch,
 		FinalizedEpoch:                  n.finalizedEpoch,
@@ -414,7 +414,7 @@ func (s *Store) nodeTreeDumpV2(ctx context.Context, n *Node, nodes []*forkchoice
 		Validity:            pending.Validity,
 		ExecutionOptimistic: en.optimistic,
 		Timestamp:           en.timestamp,
-		ExecutionBlockHash:  n.blockHash[:],
+		SilaBlockHash:  n.blockHash[:],
 	}
 	nodes = append(nodes, emptyEntry)
 
@@ -429,7 +429,7 @@ func (s *Store) nodeTreeDumpV2(ctx context.Context, n *Node, nodes []*forkchoice
 			Validity:            pending.Validity,
 			ExecutionOptimistic: fn.optimistic,
 			Timestamp:           fn.timestamp,
-			ExecutionBlockHash:  n.blockHash[:],
+			SilaBlockHash:  n.blockHash[:],
 			GasLimit:            fn.gasLimit,
 		}
 		nodes = append(nodes, fullEntry)

@@ -33,7 +33,7 @@ tests/mainnet/whisk/ssz_static/ContributionAndProof
 tests/mainnet/whisk/ssz_static/Deposit
 tests/mainnet/whisk/ssz_static/DepositData
 tests/mainnet/whisk/ssz_static/DepositMessage
-tests/mainnet/whisk/ssz_static/SilaExecutionBlock
+tests/mainnet/whisk/ssz_static/SilaBlock
 tests/mainnet/whisk/ssz_static/SilaExecutionData
 tests/mainnet/whisk/ssz_static/SilaPayload
 tests/mainnet/whisk/ssz_static/SilaPayloadHeader
@@ -80,7 +80,7 @@ tests/minimal/whisk/ssz_static/ContributionAndProof
 tests/minimal/whisk/ssz_static/Deposit
 tests/minimal/whisk/ssz_static/DepositData
 tests/minimal/whisk/ssz_static/DepositMessage
-tests/minimal/whisk/ssz_static/SilaExecutionBlock
+tests/minimal/whisk/ssz_static/SilaBlock
 tests/minimal/whisk/ssz_static/SilaExecutionData
 tests/minimal/whisk/ssz_static/SilaPayload
 tests/minimal/whisk/ssz_static/SilaPayloadHeader

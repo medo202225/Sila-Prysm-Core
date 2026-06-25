@@ -115,7 +115,7 @@ func (s *Service) BlockByTimestamp(ctx context.Context, time uint64) (*types.Hea
 
 	var numOfBlocks uint64
 	estimatedBlk := cursorNum.Uint64()
-	maxTimeBuffer := searchThreshold * params.BeaconConfig().SecondsPerSilaExecutionBlock
+	maxTimeBuffer := searchThreshold * params.BeaconConfig().SecondsPerSilaBlock
 	// Terminate if we can't find an acceptable block after
 	// repeated searches.
 	for range repeatedSearches {
@@ -123,7 +123,7 @@ func (s *Service) BlockByTimestamp(ctx context.Context, time uint64) (*types.Hea
 			return nil, ctx.Err()
 		}
 		if time > cursorTime+maxTimeBuffer {
-			numOfBlocks = (time - cursorTime) / params.BeaconConfig().SecondsPerSilaExecutionBlock
+			numOfBlocks = (time - cursorTime) / params.BeaconConfig().SecondsPerSilaBlock
 			// In the event we have an infeasible estimated block, this is a defensive
 			// check to ensure it does not exceed rational bounds.
 			if cursorNum.Uint64()+numOfBlocks > latestBlkHeight {
@@ -131,7 +131,7 @@ func (s *Service) BlockByTimestamp(ctx context.Context, time uint64) (*types.Hea
 			}
 			estimatedBlk = cursorNum.Uint64() + numOfBlocks
 		} else if time+maxTimeBuffer < cursorTime {
-			numOfBlocks = (cursorTime - time) / params.BeaconConfig().SecondsPerSilaExecutionBlock
+			numOfBlocks = (cursorTime - time) / params.BeaconConfig().SecondsPerSilaBlock
 			// In the event we have an infeasible number of blocks
 			// we exit early.
 			if numOfBlocks >= cursorNum.Uint64() {
@@ -156,14 +156,14 @@ func (s *Service) BlockByTimestamp(ctx context.Context, time uint64) (*types.Hea
 		return s.retrieveHeaderInfo(ctx, cursorNum.Uint64())
 	}
 	if cursorTime > time {
-		return s.findMaxTargetSilaExecutionBlock(ctx, new(big.Int).SetUint64(estimatedBlk), time)
+		return s.findMaxTargetSilaBlock(ctx, new(big.Int).SetUint64(estimatedBlk), time)
 	}
-	return s.findMinTargetSilaExecutionBlock(ctx, new(big.Int).SetUint64(estimatedBlk), time)
+	return s.findMinTargetSilaBlock(ctx, new(big.Int).SetUint64(estimatedBlk), time)
 }
 
 // Performs a search to find a target silaexec block which is earlier than or equal to the
 // target time. This method is used when head.time > targetTime
-func (s *Service) findMaxTargetSilaExecutionBlock(ctx context.Context, upperBoundBlk *big.Int, targetTime uint64) (*types.HeaderInfo, error) {
+func (s *Service) findMaxTargetSilaBlock(ctx context.Context, upperBoundBlk *big.Int, targetTime uint64) (*types.HeaderInfo, error) {
 	for bn := upperBoundBlk; ; bn = new(big.Int).Sub(bn, big.NewInt(1)) {
 		if ctx.Err() != nil {
 			return nil, ctx.Err()
@@ -180,7 +180,7 @@ func (s *Service) findMaxTargetSilaExecutionBlock(ctx context.Context, upperBoun
 
 // Performs a search to find a target silaexec block which is just earlier than or equal to the
 // target time. This method is used when head.time < targetTime
-func (s *Service) findMinTargetSilaExecutionBlock(ctx context.Context, lowerBoundBlk *big.Int, targetTime uint64) (*types.HeaderInfo, error) {
+func (s *Service) findMinTargetSilaBlock(ctx context.Context, lowerBoundBlk *big.Int, targetTime uint64) (*types.HeaderInfo, error) {
 	for bn := lowerBoundBlk; ; bn = new(big.Int).Add(bn, big.NewInt(1)) {
 		if ctx.Err() != nil {
 			return nil, ctx.Err()

@@ -928,11 +928,11 @@
         index: uint64
     </spec>
 
-- name: SilaExecutionBlock#phase0
+- name: SilaBlock#phase0
   sources: []
   spec: |
-    <spec ssz_object="SilaExecutionBlock" fork="phase0" hash="0a5c6b45">
-    class SilaExecutionBlock(Container):
+    <spec ssz_object="SilaBlock" fork="phase0" hash="0a5c6b45">
+    class SilaBlock(Container):
         timestamp: uint64
         deposit_root: Root
         deposit_count: uint64
@@ -1378,7 +1378,7 @@
         # [Modified in Gloas:SIP7732]
         # Removed `execution`
         # [New in Gloas:SIP7732]
-        execution_block_hash: Hash32
+        sila_block_hash: Hash32
         # [Modified in Gloas:SIP7732]
         execution_branch: ExecutionBranch
     </spec>

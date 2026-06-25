@@ -200,7 +200,7 @@ func (p *blindedSilaPayloadEnvelope) BlockHash() [field_params.RootLength]byte {
 	return [field_params.RootLength]byte(p.p.BlockHash)
 }
 
-// BlockBuiltOnEnvelope checks if the block's parent hash matches the envelope's execution block hash.
+// BlockBuiltOnEnvelope checks if the block's parent hash matches the envelope's sila block hash.
 func BlockBuiltOnEnvelope(env interfaces.ROSignedSilaPayloadEnvelope, blk ROBlock) (bool, error) {
 	msg, err := env.Envelope()
 	if err != nil {

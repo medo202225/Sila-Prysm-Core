@@ -707,7 +707,7 @@
 - name: SECONDS_PER_SilaExecution_BLOCK#phase0
   sources:
     - file: config/params/config.go
-      search: SecondsPerSilaExecutionBlock\s+uint64
+      search: SecondsPerSilaBlock\s+uint64
       regex: true
   spec: |
     <spec config_var="SECONDS_PER_SilaExecution_BLOCK" fork="phase0" hash="90c9f3d1">

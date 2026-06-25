@@ -51,13 +51,13 @@ func IsMergeTransitionComplete(st state.BeaconState) (bool, error) {
 	return !isEmpty, nil
 }
 
-// IsExecutionBlock returns whether the block has a non-empty SilaPayload.
+// IsSilaBlock returns whether the block has a non-empty SilaPayload.
 //
 // Spec code:
-// def is_execution_block(block: ReadOnlyBeaconBlock) -> bool:
+// def is_sila_block(block: ReadOnlyBeaconBlock) -> bool:
 //
 //	return block.body.sila_payload != SilaPayload()
-func IsExecutionBlock(body interfaces.ReadOnlyBeaconBlockBody) (bool, error) {
+func IsSilaBlock(body interfaces.ReadOnlyBeaconBlockBody) (bool, error) {
 	if body == nil {
 		return false, errors.New("nil block body")
 	}
@@ -113,7 +113,7 @@ func IsExecutionEnabledUsingHeader(header interfaces.ExecutionData, body interfa
 	if !isEmpty {
 		return true, nil
 	}
-	return IsExecutionBlock(body)
+	return IsSilaBlock(body)
 }
 
 // IsPreBellatrixVersion returns true if input version is before bellatrix fork.
