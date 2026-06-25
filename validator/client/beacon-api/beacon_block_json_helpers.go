@@ -19,11 +19,11 @@ func jsonifyTransactions(transactions [][]byte) []string {
 	return jsonTransactions
 }
 
-func jsonifyEth1Data(eth1Data *silapb.Eth1Data) *structs.Eth1Data {
-	return &structs.Eth1Data{
-		BlockHash:    hexutil.Encode(eth1Data.BlockHash),
-		DepositCount: apiutil.Uint64ToString(eth1Data.DepositCount),
-		DepositRoot:  hexutil.Encode(eth1Data.DepositRoot),
+func jsonifySilaExecutionData(silaexecData *silapb.SilaExecutionData) *structs.SilaExecutionData {
+	return &structs.SilaExecutionData{
+		BlockHash:    hexutil.Encode(silaexecData.BlockHash),
+		DepositCount: apiutil.Uint64ToString(silaexecData.DepositCount),
+		DepositRoot:  hexutil.Encode(silaexecData.DepositRoot),
 	}
 }
 

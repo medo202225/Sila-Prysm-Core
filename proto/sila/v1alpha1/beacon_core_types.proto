@@ -51,8 +51,8 @@ message SignedBeaconBlockHeader {
   bytes signature = 2 [ (ethereum.eth.ext.ssz_size) = "96" ];
 }
 
-// Eth1Data represents references to the Sila deposit contract.
-message Eth1Data {
+// SilaExecutionData represents references to the Sila deposit contract.
+message SilaExecutionData {
   // The 32 byte deposit tree root for the last deposit included in this
   // block.
   bytes deposit_root = 1 [ (ethereum.eth.ext.ssz_size) = "32" ];

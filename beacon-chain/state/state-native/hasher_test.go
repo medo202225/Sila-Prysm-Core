@@ -27,9 +27,9 @@ func TestComputeFieldRootsWithHasher_Phase0(t *testing.T) {
 	historicalRoots, err := util.PrepareRoots(int(params.BeaconConfig().SlotsPerHistoricalRoot))
 	require.NoError(t, err)
 	require.NoError(t, beaconState.SetHistoricalRoots(historicalRoots))
-	require.NoError(t, beaconState.SetEth1Data(eth1Data()))
-	require.NoError(t, beaconState.SetEth1DataVotes([]*silapb.Eth1Data{eth1Data()}))
-	require.NoError(t, beaconState.SetEth1DepositIndex(123))
+	require.NoError(t, beaconState.SetSilaExecutionData(silaexecData()))
+	require.NoError(t, beaconState.SetSilaExecutionDataVotes([]*silapb.SilaExecutionData{silaexecData()}))
+	require.NoError(t, beaconState.SetSilaExecutionDepositIndex(123))
 	require.NoError(t, beaconState.SetValidators([]*silapb.Validator{validator()}))
 	require.NoError(t, beaconState.SetBalances([]uint64{1, 2, 3}))
 	randaoMixes, err := util.PrepareRoots(int(params.BeaconConfig().EpochsPerHistoricalVector))
@@ -91,9 +91,9 @@ func TestComputeFieldRootsWithHasher_Altair(t *testing.T) {
 	historicalRoots, err := util.PrepareRoots(int(params.BeaconConfig().SlotsPerHistoricalRoot))
 	require.NoError(t, err)
 	require.NoError(t, beaconState.SetHistoricalRoots(historicalRoots))
-	require.NoError(t, beaconState.SetEth1Data(eth1Data()))
-	require.NoError(t, beaconState.SetEth1DataVotes([]*silapb.Eth1Data{eth1Data()}))
-	require.NoError(t, beaconState.SetEth1DepositIndex(123))
+	require.NoError(t, beaconState.SetSilaExecutionData(silaexecData()))
+	require.NoError(t, beaconState.SetSilaExecutionDataVotes([]*silapb.SilaExecutionData{silaexecData()}))
+	require.NoError(t, beaconState.SetSilaExecutionDepositIndex(123))
 	require.NoError(t, beaconState.SetValidators([]*silapb.Validator{validator()}))
 	require.NoError(t, beaconState.SetBalances([]uint64{1, 2, 3}))
 	randaoMixes, err := util.PrepareRoots(int(params.BeaconConfig().EpochsPerHistoricalVector))
@@ -161,9 +161,9 @@ func TestComputeFieldRootsWithHasher_Bellatrix(t *testing.T) {
 	historicalRoots, err := util.PrepareRoots(int(params.BeaconConfig().SlotsPerHistoricalRoot))
 	require.NoError(t, err)
 	require.NoError(t, beaconState.SetHistoricalRoots(historicalRoots))
-	require.NoError(t, beaconState.SetEth1Data(eth1Data()))
-	require.NoError(t, beaconState.SetEth1DataVotes([]*silapb.Eth1Data{eth1Data()}))
-	require.NoError(t, beaconState.SetEth1DepositIndex(123))
+	require.NoError(t, beaconState.SetSilaExecutionData(silaexecData()))
+	require.NoError(t, beaconState.SetSilaExecutionDataVotes([]*silapb.SilaExecutionData{silaexecData()}))
+	require.NoError(t, beaconState.SetSilaExecutionDepositIndex(123))
 	require.NoError(t, beaconState.SetValidators([]*silapb.Validator{validator()}))
 	require.NoError(t, beaconState.SetBalances([]uint64{1, 2, 3}))
 	randaoMixes, err := util.PrepareRoots(int(params.BeaconConfig().EpochsPerHistoricalVector))
@@ -235,9 +235,9 @@ func TestComputeFieldRootsWithHasher_Capella(t *testing.T) {
 	historicalRoots, err := util.PrepareRoots(int(params.BeaconConfig().SlotsPerHistoricalRoot))
 	require.NoError(t, err)
 	require.NoError(t, beaconState.SetHistoricalRoots(historicalRoots))
-	require.NoError(t, beaconState.SetEth1Data(eth1Data()))
-	require.NoError(t, beaconState.SetEth1DataVotes([]*silapb.Eth1Data{eth1Data()}))
-	require.NoError(t, beaconState.SetEth1DepositIndex(123))
+	require.NoError(t, beaconState.SetSilaExecutionData(silaexecData()))
+	require.NoError(t, beaconState.SetSilaExecutionDataVotes([]*silapb.SilaExecutionData{silaexecData()}))
+	require.NoError(t, beaconState.SetSilaExecutionDepositIndex(123))
 	require.NoError(t, beaconState.SetValidators([]*silapb.Validator{validator()}))
 	require.NoError(t, beaconState.SetBalances([]uint64{1, 2, 3}))
 	randaoMixes, err := util.PrepareRoots(int(params.BeaconConfig().EpochsPerHistoricalVector))
@@ -335,10 +335,10 @@ func latestBlockHeader() *silapb.BeaconBlockHeader {
 	}
 }
 
-func eth1Data() *silapb.Eth1Data {
+func silaexecData() *silapb.SilaExecutionData {
 	dr := bytesutil.ToBytes32([]byte("deposit"))
 	bh := bytesutil.ToBytes32([]byte("block"))
-	return &silapb.Eth1Data{
+	return &silapb.SilaExecutionData{
 		DepositRoot:  dr[:],
 		DepositCount: 123,
 		BlockHash:    bh[:],

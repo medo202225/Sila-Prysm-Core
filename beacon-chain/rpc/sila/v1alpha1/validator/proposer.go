@@ -39,11 +39,11 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// eth1DataNotification is a latch to stop flooding logs with the same warning.
-var eth1DataNotification bool
+// silaexecDataNotification is a latch to stop flooding logs with the same warning.
+var silaexecDataNotification bool
 
 const (
-	eth1dataTimeout           = 2 * time.Second
+	silaExecutionDataTimeout           = 2 * time.Second
 	defaultBuilderBoostFactor = primitives.Gwei(100)
 )
 
@@ -201,16 +201,16 @@ func (vs *Server) BuildBlockParallel(ctx context.Context, sBlk interfaces.Signed
 	// Build consensus fields in background
 	var wg sync.WaitGroup
 	wg.Go(func() {
-		// Set eth1 data.
-		eth1Data, err := vs.eth1DataMajorityVote(ctx, head)
+		// Set silaexec data.
+		silaexecData, err := vs.silaexecDataMajorityVote(ctx, head)
 		if err != nil {
-			eth1Data = &silapb.Eth1Data{DepositRoot: params.BeaconConfig().ZeroHash[:], BlockHash: params.BeaconConfig().ZeroHash[:]}
-			log.WithError(err).Error("Could not get eth1data")
+			silaexecData = &silapb.SilaExecutionData{DepositRoot: params.BeaconConfig().ZeroHash[:], BlockHash: params.BeaconConfig().ZeroHash[:]}
+			log.WithError(err).Error("Could not get silaExecutionData")
 		}
-		sBlk.SetEth1Data(eth1Data)
+		sBlk.SetSilaExecutionData(silaexecData)
 
 		// Set deposit and attestation.
-		deposits, atts, err := vs.packDepositsAndAttestations(ctx, head, sBlk.Block().Slot(), eth1Data) // TODO: split attestations and deposits
+		deposits, atts, err := vs.packDepositsAndAttestations(ctx, head, sBlk.Block().Slot(), silaexecData) // TODO: split attestations and deposits
 		if err != nil {
 			sBlk.SetDeposits([]*silapb.Deposit{})
 			if err := sBlk.SetAttestations([]silapb.Att{}); err != nil {

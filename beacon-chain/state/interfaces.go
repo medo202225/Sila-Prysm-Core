@@ -52,7 +52,7 @@ type ReadOnlyBeaconState interface {
 	ReadOnlyBlockRoots
 	ReadOnlyStateRoots
 	ReadOnlyRandaoMixes
-	ReadOnlyEth1Data
+	ReadOnlySilaExecutionData
 	ReadOnlyExits
 	ReadOnlyValidators
 	ReadOnlyBalances
@@ -91,7 +91,7 @@ type WriteOnlyBeaconState interface {
 	WriteOnlyBlockRoots
 	WriteOnlyStateRoots
 	WriteOnlyRandaoMixes
-	WriteOnlyEth1Data
+	WriteOnlySilaExecutionData
 	WriteOnlyValidators
 	WriteOnlyBalances
 	WriteOnlyCheckpoint
@@ -128,7 +128,7 @@ type ReadOnlyValidator interface {
 	GetWithdrawalCredentials() []byte
 	Copy() *silapb.Validator
 	Slashed() bool
-	HasETH1WithdrawalCredentials() bool
+	HasSilaExecutionWithdrawalCredentials() bool
 	HasCompoundingWithdrawalCredentials() bool
 	HasExecutionWithdrawalCredentials() bool
 }
@@ -187,11 +187,11 @@ type ReadOnlyRandaoMixes interface {
 	RandaoMixesLength() int
 }
 
-// ReadOnlyEth1Data defines a struct which only has read access to eth1 data methods.
-type ReadOnlyEth1Data interface {
-	Eth1Data() *silapb.Eth1Data
-	Eth1DataVotes() []*silapb.Eth1Data
-	Eth1DepositIndex() uint64
+// ReadOnlySilaExecutionData defines a struct which only has read access to silaexec data methods.
+type ReadOnlySilaExecutionData interface {
+	SilaExecutionData() *silapb.SilaExecutionData
+	SilaExecutionDataVotes() []*silapb.SilaExecutionData
+	SilaExecutionDepositIndex() uint64
 }
 
 // ReadOnlyExits defines a struct which only has read access to Exit related methods.
@@ -266,12 +266,12 @@ type WriteOnlyStateRoots interface {
 	UpdateStateRootAtIndex(idx uint64, stateRoot [32]byte) error
 }
 
-// WriteOnlyEth1Data defines a struct which only has write access to eth1 data methods.
-type WriteOnlyEth1Data interface {
-	SetEth1Data(val *silapb.Eth1Data) error
-	SetEth1DataVotes(val []*silapb.Eth1Data) error
-	AppendEth1DataVotes(val *silapb.Eth1Data) error
-	SetEth1DepositIndex(val uint64) error
+// WriteOnlySilaExecutionData defines a struct which only has write access to silaexec data methods.
+type WriteOnlySilaExecutionData interface {
+	SetSilaExecutionData(val *silapb.SilaExecutionData) error
+	SetSilaExecutionDataVotes(val []*silapb.SilaExecutionData) error
+	AppendSilaExecutionDataVotes(val *silapb.SilaExecutionData) error
+	SetSilaExecutionDepositIndex(val uint64) error
 	ExitEpochAndUpdateChurn(ctx context.Context, exitBalance primitives.Gwei) (primitives.Epoch, error)
 	ExitEpochAndUpdateChurnForTotalBal(totalActiveBalance primitives.Gwei, exitBalance primitives.Gwei) (primitives.Epoch, error)
 	SetExitBalanceToConsume(val primitives.Gwei) error

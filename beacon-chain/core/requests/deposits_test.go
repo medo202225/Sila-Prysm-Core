@@ -32,7 +32,7 @@ func TestProcessDepositRequests(t *testing.T) {
 
 	vals := st.Validators()
 	vals[0].PublicKey = sk.PublicKey().Marshal()
-	vals[0].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+	vals[0].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 	require.NoError(t, st.SetValidators(vals))
 	bals := st.Balances()
 	bals[0] = params.BeaconConfig().MinActivationBalance + 2000

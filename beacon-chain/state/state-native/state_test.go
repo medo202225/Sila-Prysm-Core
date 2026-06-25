@@ -388,7 +388,7 @@ func generateState(t *testing.T) state.BeaconState {
 		},
 		Validators: vals,
 		Balances:   bals,
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: make([]byte, 32),
 			BlockHash:   make([]byte, 32),
 		},

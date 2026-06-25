@@ -108,7 +108,7 @@ func createMockBlockBodyWithPayloadAttestation(att *eth.PayloadAttestation) (*et
 		PayloadAttestations: []*eth.PayloadAttestation{att},
 		// Default values
 		RandaoReveal:          make([]byte, 96),
-		Eth1Data:              &eth.Eth1Data{},
+		SilaExecutionData:              &eth.SilaExecutionData{},
 		Graffiti:              make([]byte, 32),
 		ProposerSlashings:     []*eth.ProposerSlashing{},
 		AttesterSlashings:     []*eth.AttesterSlashingElectra{},

@@ -264,7 +264,7 @@ func (b BlockSignatureBatches) Batch() *bls.SignatureBatch {
 //	def process_block(state: BeaconState, block: ReadOnlyBeaconBlock) -> None:
 //	  process_block_header(state, block)
 //	  process_randao(state, block.body)
-//	  process_eth1_data(state, block.body)
+//	  process_sila_execution_data(state, block.body)
 //	  process_operations(state, block.body)
 func ProcessBlockNoVerifyAnySig(
 	ctx context.Context,
@@ -327,9 +327,9 @@ func ProcessBlockNoVerifyAnySig(
 //	def process_operations(state: BeaconState, body: BeaconBlockBody) -> None:
 //	    # [Modified in Electra:EIP6110]
 //	    # Disable former deposit mechanism once all prior deposits are processed
-//	    eth1_deposit_index_limit = min(state.eth1_data.deposit_count, state.deposit_requests_start_index)
-//	    if state.eth1_deposit_index < eth1_deposit_index_limit:
-//	        assert len(body.deposits) == min(MAX_DEPOSITS, eth1_deposit_index_limit - state.eth1_deposit_index)
+//	    silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
+//	    if state.silaexec_deposit_index < silaexec_deposit_index_limit:
+//	        assert len(body.deposits) == min(MAX_DEPOSITS, silaexec_deposit_index_limit - state.silaexec_deposit_index)
 //	    else:
 //	        assert len(body.deposits) == 0
 //
@@ -407,7 +407,7 @@ func ProcessOperationsNoVerifyAttsSigs(
 //	if is_execution_enabled(state, block.body):
 //	    process_execution_payload(state, block.body.execution_payload, EXECUTION_ENGINE)  # [New in Bellatrix]
 //	process_randao(state, block.body)
-//	process_eth1_data(state, block.body)
+//	process_sila_execution_data(state, block.body)
 //	process_operations(state, block.body)
 //	process_sync_aggregate(state, block.body.sync_aggregate)
 func ProcessBlockForStateRoot(
@@ -454,7 +454,7 @@ func ProcessBlockForStateRoot(
 		//     # [New in Gloas:EIP7732]
 		//     process_execution_payload_bid(state, block)
 		//     process_randao(state, block.body)
-		//     process_eth1_data(state, block.body)
+		//     process_sila_execution_data(state, block.body)
 		//     # [Modified in Gloas:EIP7732]
 		//     process_operations(state, block.body)
 		//     process_sync_aggregate(state, block.body.sync_aggregate)
@@ -494,10 +494,10 @@ func ProcessBlockForStateRoot(
 		return nil, errors.Wrap(ErrProcessRandaoFailed, err.Error())
 	}
 
-	state, err = b.ProcessEth1DataInBlock(ctx, state, signed.Block().Body().Eth1Data())
+	state, err = b.ProcessSilaExecutionDataInBlock(ctx, state, signed.Block().Body().SilaExecutionData())
 	if err != nil {
 		tracing.AnnotateError(span, err)
-		return nil, errors.Wrap(ErrProcessEth1DataFailed, err.Error())
+		return nil, errors.Wrap(ErrProcessSilaExecutionDataFailed, err.Error())
 	}
 
 	state, err = ProcessOperationsNoVerifyAttsSigs(ctx, state, signed.Block())

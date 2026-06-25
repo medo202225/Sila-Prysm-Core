@@ -30,9 +30,9 @@ func ConvertToAltair(state state.BeaconState) (state.BeaconState, error) {
 		BlockRoots:                  state.BlockRoots(),
 		StateRoots:                  state.StateRoots(),
 		HistoricalRoots:             state.HistoricalRoots(),
-		Eth1Data:                    state.Eth1Data(),
-		Eth1DataVotes:               state.Eth1DataVotes(),
-		Eth1DepositIndex:            state.Eth1DepositIndex(),
+		SilaExecutionData:                    state.SilaExecutionData(),
+		SilaExecutionDataVotes:               state.SilaExecutionDataVotes(),
+		SilaExecutionDepositIndex:            state.SilaExecutionDepositIndex(),
 		Validators:                  state.Validators(),
 		Balances:                    state.Balances(),
 		RandaoMixes:                 state.RandaoMixes(),
@@ -73,10 +73,10 @@ func ConvertToAltair(state state.BeaconState) (state.BeaconState, error) {
 //	    block_roots=pre.block_roots,
 //	    state_roots=pre.state_roots,
 //	    historical_roots=pre.historical_roots,
-//	    # Eth1
-//	    eth1_data=pre.eth1_data,
-//	    eth1_data_votes=pre.eth1_data_votes,
-//	    eth1_deposit_index=pre.eth1_deposit_index,
+//	    # SilaExecution
+//	    sila_execution_data=pre.sila_execution_data,
+//	    sila_execution_data_votes=pre.sila_execution_data_votes,
+//	    silaexec_deposit_index=pre.silaexec_deposit_index,
 //	    # Registry
 //	    validators=pre.validators,
 //	    balances=pre.balances,

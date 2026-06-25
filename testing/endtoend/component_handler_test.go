@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
-	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/eth1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/silaexec"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
@@ -27,11 +27,11 @@ type componentHandler struct {
 	tracingSink              e2etypes.ComponentRunner
 	web3Signer               e2etypes.ComponentRunner
 	bootnode                 e2etypes.ComponentRunner
-	eth1Miner                e2etypes.ComponentRunner
+	silaexecMiner                e2etypes.ComponentRunner
 	txGen                    e2etypes.ComponentRunner
 	builders                 e2etypes.MultipleComponentRunners
-	eth1Proxy                e2etypes.MultipleComponentRunners
-	eth1Nodes                e2etypes.MultipleComponentRunners
+	silaexecProxy                e2etypes.MultipleComponentRunners
+	silaexecNodes                e2etypes.MultipleComponentRunners
 	beaconNodes              e2etypes.MultipleComponentRunners
 	validatorNodes           e2etypes.MultipleComponentRunners
 	lighthouseBeaconNodes    e2etypes.MultipleComponentRunners
@@ -48,7 +48,7 @@ func NewComponentHandler(cfg *e2etypes.E2EConfig, t *testing.T) *componentHandle
 		group:     g,
 		cfg:       cfg,
 		t:         t,
-		eth1Miner: eth1.NewMiner(),
+		silaexecMiner: silaexec.NewMiner(),
 	}
 }
 
@@ -103,46 +103,46 @@ func (c *componentHandler) setup() {
 	})
 	c.bootnode = bootNode
 
-	miner, ok := c.eth1Miner.(*eth1.Miner)
+	miner, ok := c.silaexecMiner.(*silaexec.Miner)
 	if !ok {
 		g.Go(func() error {
-			return errors.New("c.eth1Miner fails type assertion to *eth1.Miner")
+			return errors.New("c.silaexecMiner fails type assertion to *silaexec.Miner")
 		})
 		return
 	}
-	// ETH1 miner.
+	// SILAEXEC miner.
 	g.Go(func() error {
 		if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{bootNode}); err != nil {
 			return errors.Wrap(err, "miner require boot node to run")
 		}
 		miner.SetBootstrapENR(bootNode.ENR())
 		if err := miner.Start(ctx); err != nil {
-			return errors.Wrap(err, "failed to start the ETH1 miner")
+			return errors.Wrap(err, "failed to start the SILAEXEC miner")
 		}
 		return nil
 	})
 
-	// ETH1 non-mining nodes.
-	eth1Nodes := eth1.NewNodeSet()
+	// SILAEXEC non-mining nodes.
+	silaexecNodes := silaexec.NewNodeSet()
 	g.Go(func() error {
 		if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{miner}); err != nil {
 			return errors.Wrap(err, "execution nodes require miner to run")
 		}
-		eth1Nodes.SetMinerENR(miner.ENR())
-		if err := eth1Nodes.Start(ctx); err != nil {
-			return errors.Wrap(err, "failed to start ETH1 nodes")
+		silaexecNodes.SetMinerENR(miner.ENR())
+		if err := silaexecNodes.Start(ctx); err != nil {
+			return errors.Wrap(err, "failed to start SILAEXEC nodes")
 		}
 		return nil
 	})
-	c.eth1Nodes = eth1Nodes
+	c.silaexecNodes = silaexecNodes
 
 	var builders *components.BuilderSet
-	var proxies *eth1.ProxySet
+	var proxies *silaexec.ProxySet
 	if config.UseBuilder {
 		// Builder
 		builders = components.NewBuilderSet()
 		g.Go(func() error {
-			if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{eth1Nodes}); err != nil {
+			if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{silaexecNodes}); err != nil {
 				return errors.Wrap(err, "builders require execution nodes to run")
 			}
 			if err := builders.Start(ctx); err != nil {
@@ -153,9 +153,9 @@ func (c *componentHandler) setup() {
 		c.builders = builders
 	} else {
 		// Proxies
-		proxies = eth1.NewProxySet()
+		proxies = silaexec.NewProxySet()
 		g.Go(func() error {
-			if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{eth1Nodes}); err != nil {
+			if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{silaexecNodes}); err != nil {
 				return errors.Wrap(err, "proxies require execution nodes to run")
 			}
 			if err := proxies.Start(ctx); err != nil {
@@ -163,13 +163,13 @@ func (c *componentHandler) setup() {
 			}
 			return nil
 		})
-		c.eth1Proxy = proxies
+		c.silaexecProxy = proxies
 	}
 
 	// Beacon nodes.
 	beaconNodes := components.NewBeaconNodes(config)
 	g.Go(func() error {
-		wantedComponents := []e2etypes.ComponentRunner{eth1Nodes, bootNode}
+		wantedComponents := []e2etypes.ComponentRunner{silaexecNodes, bootNode}
 		if config.UseBuilder {
 			wantedComponents = append(wantedComponents, builders)
 		} else {
@@ -189,7 +189,7 @@ func (c *componentHandler) setup() {
 	if multiClientActive {
 		lighthouseNodes = components.NewLighthouseBeaconNodes(config)
 		g.Go(func() error {
-			wantedComponents := []e2etypes.ComponentRunner{eth1Nodes, bootNode, beaconNodes}
+			wantedComponents := []e2etypes.ComponentRunner{silaexecNodes, bootNode, beaconNodes}
 			if config.UseBuilder {
 				wantedComponents = append(wantedComponents, builders)
 			} else {
@@ -243,12 +243,12 @@ func (c *componentHandler) setup() {
 func (c *componentHandler) required() []e2etypes.ComponentRunner {
 	multiClientActive := e2e.TestParams.LighthouseBeaconNodeCount > 0
 	requiredComponents := []e2etypes.ComponentRunner{
-		c.tracingSink, c.eth1Nodes, c.bootnode, c.beaconNodes, c.validatorNodes,
+		c.tracingSink, c.silaexecNodes, c.bootnode, c.beaconNodes, c.validatorNodes,
 	}
 	if c.cfg.UseBuilder {
 		requiredComponents = append(requiredComponents, c.builders)
 	} else {
-		requiredComponents = append(requiredComponents, c.eth1Proxy)
+		requiredComponents = append(requiredComponents, c.silaexecProxy)
 	}
 	if multiClientActive {
 		requiredComponents = append(requiredComponents, []e2etypes.ComponentRunner{c.keygen, c.lighthouseBeaconNodes, c.lighthouseValidatorNodes}...)
@@ -270,7 +270,7 @@ func (c *componentHandler) printPIDs(logger func(string, ...any)) {
 		msg += fmt.Sprintf("Lighthouse validators: %v\n", PIDsFromMultiComponentRunner(c.lighthouseValidatorNodes))
 	}
 	msg += fmt.Sprintf("Validators: %v\n", PIDsFromMultiComponentRunner(c.validatorNodes))
-	msg += fmt.Sprintf("ETH1 nodes: %v\n", PIDsFromMultiComponentRunner(c.eth1Nodes))
+	msg += fmt.Sprintf("SILAEXEC nodes: %v\n", PIDsFromMultiComponentRunner(c.silaexecNodes))
 
 	logger(msg)
 }

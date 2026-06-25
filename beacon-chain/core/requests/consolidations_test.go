@@ -102,7 +102,7 @@ func TestProcessConsolidationRequests(t *testing.T) {
 					SourcePubkey:  []byte("val_5"),
 					TargetPubkey:  []byte("val_6"),
 				},
-				// Target does not have their withdrawal credentials set appropriately. (Using eth1 address prefix)
+				// Target does not have their withdrawal credentials set appropriately. (Using silaexec address prefix)
 				{
 					SourceAddress: append(bytesutil.PadTo(nil, 19), byte(7)),
 					SourcePubkey:  []byte("val_7"),
@@ -267,7 +267,7 @@ func TestProcessConsolidationRequests(t *testing.T) {
 					PendingConsolidations: make([]*eth.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit),
 				}
 				// To allow compounding consolidation requests.
-				st.Validators[3].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+				st.Validators[3].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 				s, err := state_native.InitializeFromProtoElectra(st)
 				require.NoError(t, err)
 				return s

@@ -261,7 +261,7 @@ func isValidSwitchToCompoundingRequest(st state.BeaconState, req *enginev1.Conso
 		return false
 	}
 
-	if !srcV.HasETH1WithdrawalCredentials() {
+	if !srcV.HasSilaExecutionWithdrawalCredentials() {
 		return false
 	}
 

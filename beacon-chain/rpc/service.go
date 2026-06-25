@@ -98,7 +98,7 @@ type Config struct {
 	ExecutionChainInfoFetcher        execution.ChainInfoFetcher
 	GenesisTimeFetcher               blockchain.TimeFetcher
 	GenesisFetcher                   blockchain.GenesisFetcher
-	MockEth1Votes                    bool
+	MockSilaExecutionVotes                    bool
 	EnableDebugRPCEndpoints          bool
 	AttestationCache                 *cache.AttestationCache
 	AttestationsPool                 attestations.Pool
@@ -240,7 +240,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		BlockFetcher:                     s.cfg.ExecutionChainService,
 		DepositFetcher:                   s.cfg.DepositFetcher,
 		ChainStartFetcher:                s.cfg.ChainStartFetcher,
-		Eth1InfoFetcher:                  s.cfg.ExecutionChainService,
+		SilaExecutionInfoFetcher:                  s.cfg.ExecutionChainService,
 		OptimisticModeFetcher:            s.cfg.OptimisticModeFetcher,
 		SyncChecker:                      s.cfg.SyncService,
 		StateNotifier:                    s.cfg.StateNotifier,
@@ -253,8 +253,8 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		ExecutionPayloadEnvelopeReceiver: s.cfg.ExecutionPayloadEnvelopeReceiver,
 		BlobReceiver:                     s.cfg.BlobReceiver,
 		DataColumnReceiver:               s.cfg.DataColumnReceiver,
-		MockEth1Votes:                    s.cfg.MockEth1Votes,
-		Eth1BlockFetcher:                 s.cfg.ExecutionChainService,
+		MockSilaExecutionVotes:                    s.cfg.MockSilaExecutionVotes,
+		SilaExecutionBlockFetcher:                 s.cfg.ExecutionChainService,
 		PendingDepositsFetcher:           s.cfg.PendingDepositFetcher,
 		SlashingsPool:                    s.cfg.SlashingsPool,
 		StateGen:                         s.cfg.StateGen,

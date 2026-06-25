@@ -86,10 +86,10 @@ func WithStateGen(gen *stategen.State) Option {
 	}
 }
 
-// WithEth1HeaderRequestLimit to set the upper limit of eth1 header requests.
-func WithEth1HeaderRequestLimit(limit uint64) Option {
+// WithSilaExecutionHeaderRequestLimit to set the upper limit of silaexec header requests.
+func WithSilaExecutionHeaderRequestLimit(limit uint64) Option {
 	return func(s *Service) error {
-		s.cfg.eth1HeaderReqLimit = limit
+		s.cfg.silaexecHeaderReqLimit = limit
 		return nil
 	}
 }

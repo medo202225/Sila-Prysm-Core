@@ -65,12 +65,12 @@ func ProcessDeposits(
 //		leaf=hash_tree_root(deposit.data),
 //		branch=deposit.proof,
 //		depth=DEPOSIT_CONTRACT_TREE_DEPTH + 1,  # Add 1 for the List length mix-in
-//		index=state.eth1_deposit_index,
-//		root=state.eth1_data.deposit_root,
+//		index=state.silaexec_deposit_index,
+//		root=state.sila_execution_data.deposit_root,
 //	)
 //
 //	 # Deposits must be processed in order
-//	 state.eth1_deposit_index += 1
+//	 state.silaexec_deposit_index += 1
 //
 //	 apply_deposit(
 //	  state=state,
@@ -86,7 +86,7 @@ func ProcessDeposit(beaconState state.BeaconState, deposit *silapb.Deposit, allS
 		}
 		return nil, errors.Wrapf(err, "could not verify deposit from %#x", bytesutil.Trunc(deposit.Data.PublicKey))
 	}
-	if err := beaconState.SetEth1DepositIndex(beaconState.Eth1DepositIndex() + 1); err != nil {
+	if err := beaconState.SetSilaExecutionDepositIndex(beaconState.SilaExecutionDepositIndex() + 1); err != nil {
 		return nil, err
 	}
 	return ApplyDeposit(beaconState, deposit.Data, allSignaturesVerified)
@@ -184,7 +184,7 @@ func verifyDepositDataSigningRoot(obj *silapb.Deposit_Data, domain []byte) error
 
 // ProcessPendingDeposits implements the spec definition below. This method mutates the state.
 // Iterating over `pending_deposits` queue this function runs the following checks before applying pending deposit:
-// 1. All Eth1 bridge deposits are processed before the first deposit request gets processed.
+// 1. All SilaExecution bridge deposits are processed before the first deposit request gets processed.
 // 2. Deposit position in the queue is finalized.
 // 3. Deposit does not exceed the `MAX_PENDING_DEPOSITS_PER_EPOCH` limit.
 // 4. Deposit does not exceed the activation churn limit.
@@ -202,12 +202,12 @@ func verifyDepositDataSigningRoot(obj *silapb.Deposit_Data, domain []byte) error
 //	finalized_slot = compute_start_slot_at_epoch(state.finalized_checkpoint.epoch)
 //
 //	for deposit in state.pending_deposits:
-//	    # Do not process deposit requests if Eth1 bridge deposits are not yet applied.
+//	    # Do not process deposit requests if SilaExecution bridge deposits are not yet applied.
 //	    if (
 //	        # Is deposit request
 //	        deposit.slot > GENESIS_SLOT and
-//	        # There are pending Eth1 bridge deposits
-//	        state.eth1_deposit_index < state.deposit_requests_start_index
+//	        # There are pending SilaExecution bridge deposits
+//	        state.silaexec_deposit_index < state.deposit_requests_start_index
 //	    ):
 //	        break
 //
@@ -292,8 +292,8 @@ func ProcessPendingDeposits(ctx context.Context, st state.BeaconState, activeBal
 		return err
 	}
 	for _, pendingDeposit := range pendingDeposits {
-		// Do not process pendingDeposit requests if Eth1 bridge deposits are not yet applied.
-		if pendingDeposit.Slot > params.BeaconConfig().GenesisSlot && st.Eth1DepositIndex() < startIndex {
+		// Do not process pendingDeposit requests if SilaExecution bridge deposits are not yet applied.
+		if pendingDeposit.Slot > params.BeaconConfig().GenesisSlot && st.SilaExecutionDepositIndex() < startIndex {
 			break
 		}
 

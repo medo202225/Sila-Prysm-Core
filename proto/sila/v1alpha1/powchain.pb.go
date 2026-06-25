@@ -23,9 +23,9 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ETH1ChainData struct {
+type SilaExecutionChainData struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	CurrentEth1Data   *LatestETH1Data        `protobuf:"bytes,1,opt,name=current_eth1_data,json=currentEth1Data,proto3" json:"current_eth1_data,omitempty"`
+	CurrentSilaExecutionData   *LatestSilaExecutionData        `protobuf:"bytes,1,opt,name=current_sila_execution_data,json=currentSilaExecutionData,proto3" json:"current_sila_execution_data,omitempty"`
 	ChainstartData    *ChainStartData        `protobuf:"bytes,2,opt,name=chainstart_data,json=chainstartData,proto3" json:"chainstart_data,omitempty"`
 	BeaconState       *BeaconState           `protobuf:"bytes,3,opt,name=beacon_state,json=beaconState,proto3" json:"beacon_state,omitempty"`
 	Trie              *SparseMerkleTrie      `protobuf:"bytes,4,opt,name=trie,proto3" json:"trie,omitempty"`
@@ -35,20 +35,20 @@ type ETH1ChainData struct {
 	sizeCache         protoimpl.SizeCache
 }
 
-func (x *ETH1ChainData) Reset() {
-	*x = ETH1ChainData{}
+func (x *SilaExecutionChainData) Reset() {
+	*x = SilaExecutionChainData{}
 	mi := &file_proto_sila_v1alpha1_powchain_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ETH1ChainData) String() string {
+func (x *SilaExecutionChainData) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ETH1ChainData) ProtoMessage() {}
+func (*SilaExecutionChainData) ProtoMessage() {}
 
-func (x *ETH1ChainData) ProtoReflect() protoreflect.Message {
+func (x *SilaExecutionChainData) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_powchain_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -60,47 +60,47 @@ func (x *ETH1ChainData) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ETH1ChainData.ProtoReflect.Descriptor instead.
-func (*ETH1ChainData) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaExecutionChainData.ProtoReflect.Descriptor instead.
+func (*SilaExecutionChainData) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_powchain_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ETH1ChainData) GetCurrentEth1Data() *LatestETH1Data {
+func (x *SilaExecutionChainData) GetCurrentSilaExecutionData() *LatestSilaExecutionData {
 	if x != nil {
-		return x.CurrentEth1Data
+		return x.CurrentSilaExecutionData
 	}
 	return nil
 }
 
-func (x *ETH1ChainData) GetChainstartData() *ChainStartData {
+func (x *SilaExecutionChainData) GetChainstartData() *ChainStartData {
 	if x != nil {
 		return x.ChainstartData
 	}
 	return nil
 }
 
-func (x *ETH1ChainData) GetBeaconState() *BeaconState {
+func (x *SilaExecutionChainData) GetBeaconState() *BeaconState {
 	if x != nil {
 		return x.BeaconState
 	}
 	return nil
 }
 
-func (x *ETH1ChainData) GetTrie() *SparseMerkleTrie {
+func (x *SilaExecutionChainData) GetTrie() *SparseMerkleTrie {
 	if x != nil {
 		return x.Trie
 	}
 	return nil
 }
 
-func (x *ETH1ChainData) GetDepositContainers() []*DepositContainer {
+func (x *SilaExecutionChainData) GetDepositContainers() []*DepositContainer {
 	if x != nil {
 		return x.DepositContainers
 	}
 	return nil
 }
 
-func (x *ETH1ChainData) GetDepositSnapshot() *DepositSnapshot {
+func (x *SilaExecutionChainData) GetDepositSnapshot() *DepositSnapshot {
 	if x != nil {
 		return x.DepositSnapshot
 	}
@@ -183,7 +183,7 @@ func (x *DepositSnapshot) GetExecutionDepth() uint64 {
 	return 0
 }
 
-type LatestETH1Data struct {
+type LatestSilaExecutionData struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	BlockHeight        uint64                 `protobuf:"varint,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
 	BlockTime          uint64                 `protobuf:"varint,3,opt,name=block_time,json=blockTime,proto3" json:"block_time,omitempty"`
@@ -193,20 +193,20 @@ type LatestETH1Data struct {
 	sizeCache          protoimpl.SizeCache
 }
 
-func (x *LatestETH1Data) Reset() {
-	*x = LatestETH1Data{}
+func (x *LatestSilaExecutionData) Reset() {
+	*x = LatestSilaExecutionData{}
 	mi := &file_proto_sila_v1alpha1_powchain_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *LatestETH1Data) String() string {
+func (x *LatestSilaExecutionData) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LatestETH1Data) ProtoMessage() {}
+func (*LatestSilaExecutionData) ProtoMessage() {}
 
-func (x *LatestETH1Data) ProtoReflect() protoreflect.Message {
+func (x *LatestSilaExecutionData) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_powchain_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -218,33 +218,33 @@ func (x *LatestETH1Data) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use LatestETH1Data.ProtoReflect.Descriptor instead.
-func (*LatestETH1Data) Descriptor() ([]byte, []int) {
+// Deprecated: Use LatestSilaExecutionData.ProtoReflect.Descriptor instead.
+func (*LatestSilaExecutionData) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_powchain_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *LatestETH1Data) GetBlockHeight() uint64 {
+func (x *LatestSilaExecutionData) GetBlockHeight() uint64 {
 	if x != nil {
 		return x.BlockHeight
 	}
 	return 0
 }
 
-func (x *LatestETH1Data) GetBlockTime() uint64 {
+func (x *LatestSilaExecutionData) GetBlockTime() uint64 {
 	if x != nil {
 		return x.BlockTime
 	}
 	return 0
 }
 
-func (x *LatestETH1Data) GetBlockHash() []byte {
+func (x *LatestSilaExecutionData) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
 	return nil
 }
 
-func (x *LatestETH1Data) GetLastRequestedBlock() uint64 {
+func (x *LatestSilaExecutionData) GetLastRequestedBlock() uint64 {
 	if x != nil {
 		return x.LastRequestedBlock
 	}
@@ -256,7 +256,7 @@ type ChainStartData struct {
 	Chainstarted       bool                   `protobuf:"varint,1,opt,name=chainstarted,proto3" json:"chainstarted,omitempty"`
 	GenesisTime        uint64                 `protobuf:"varint,2,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
 	GenesisBlock       uint64                 `protobuf:"varint,3,opt,name=genesis_block,json=genesisBlock,proto3" json:"genesis_block,omitempty"`
-	Eth1Data           *Eth1Data              `protobuf:"bytes,4,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
+	SilaExecutionData           *SilaExecutionData              `protobuf:"bytes,4,opt,name=sila_execution_data,json=silaexecData,proto3" json:"sila_execution_data,omitempty"`
 	ChainstartDeposits []*Deposit             `protobuf:"bytes,5,rep,name=chainstart_deposits,json=chainstartDeposits,proto3" json:"chainstart_deposits,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -313,9 +313,9 @@ func (x *ChainStartData) GetGenesisBlock() uint64 {
 	return 0
 }
 
-func (x *ChainStartData) GetEth1Data() *Eth1Data {
+func (x *ChainStartData) GetSilaExecutionData() *SilaExecutionData {
 	if x != nil {
-		return x.Eth1Data
+		return x.SilaExecutionData
 	}
 	return nil
 }
@@ -434,7 +434,7 @@ func (x *TrieLayer) GetLayer() [][]byte {
 type DepositContainer struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Index           int64                  `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
-	Eth1BlockHeight uint64                 `protobuf:"varint,2,opt,name=eth1_block_height,json=eth1BlockHeight,proto3" json:"eth1_block_height,omitempty"`
+	SilaExecutionBlockHeight uint64                 `protobuf:"varint,2,opt,name=silaexec_block_height,json=silaExecutionBlockHeight,proto3" json:"silaexec_block_height,omitempty"`
 	Deposit         *Deposit               `protobuf:"bytes,3,opt,name=deposit,proto3" json:"deposit,omitempty"`
 	DepositRoot     []byte                 `protobuf:"bytes,4,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -478,9 +478,9 @@ func (x *DepositContainer) GetIndex() int64 {
 	return 0
 }
 
-func (x *DepositContainer) GetEth1BlockHeight() uint64 {
+func (x *DepositContainer) GetSilaExecutionBlockHeight() uint64 {
 	if x != nil {
-		return x.Eth1BlockHeight
+		return x.SilaExecutionBlockHeight
 	}
 	return 0
 }
@@ -636,25 +636,25 @@ func file_proto_sila_v1alpha1_powchain_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_powchain_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_sila_v1alpha1_powchain_proto_goTypes = []any{
-	(*ETH1ChainData)(nil),    // 0: ethereum.eth.v1alpha1.ETH1ChainData
+	(*SilaExecutionChainData)(nil),    // 0: ethereum.eth.v1alpha1.SilaExecutionChainData
 	(*DepositSnapshot)(nil),  // 1: ethereum.eth.v1alpha1.DepositSnapshot
-	(*LatestETH1Data)(nil),   // 2: ethereum.eth.v1alpha1.LatestETH1Data
+	(*LatestSilaExecutionData)(nil),   // 2: ethereum.eth.v1alpha1.LatestSilaExecutionData
 	(*ChainStartData)(nil),   // 3: ethereum.eth.v1alpha1.ChainStartData
 	(*SparseMerkleTrie)(nil), // 4: ethereum.eth.v1alpha1.SparseMerkleTrie
 	(*TrieLayer)(nil),        // 5: ethereum.eth.v1alpha1.TrieLayer
 	(*DepositContainer)(nil), // 6: ethereum.eth.v1alpha1.DepositContainer
 	(*BeaconState)(nil),      // 7: ethereum.eth.v1alpha1.BeaconState
-	(*Eth1Data)(nil),         // 8: ethereum.eth.v1alpha1.Eth1Data
+	(*SilaExecutionData)(nil),         // 8: ethereum.eth.v1alpha1.SilaExecutionData
 	(*Deposit)(nil),          // 9: ethereum.eth.v1alpha1.Deposit
 }
 var file_proto_sila_v1alpha1_powchain_proto_depIdxs = []int32{
-	2,  // 0: ethereum.eth.v1alpha1.ETH1ChainData.current_eth1_data:type_name -> ethereum.eth.v1alpha1.LatestETH1Data
-	3,  // 1: ethereum.eth.v1alpha1.ETH1ChainData.chainstart_data:type_name -> ethereum.eth.v1alpha1.ChainStartData
-	7,  // 2: ethereum.eth.v1alpha1.ETH1ChainData.beacon_state:type_name -> ethereum.eth.v1alpha1.BeaconState
-	4,  // 3: ethereum.eth.v1alpha1.ETH1ChainData.trie:type_name -> ethereum.eth.v1alpha1.SparseMerkleTrie
-	6,  // 4: ethereum.eth.v1alpha1.ETH1ChainData.deposit_containers:type_name -> ethereum.eth.v1alpha1.DepositContainer
-	1,  // 5: ethereum.eth.v1alpha1.ETH1ChainData.deposit_snapshot:type_name -> ethereum.eth.v1alpha1.DepositSnapshot
-	8,  // 6: ethereum.eth.v1alpha1.ChainStartData.eth1_data:type_name -> ethereum.eth.v1alpha1.Eth1Data
+	2,  // 0: ethereum.eth.v1alpha1.SilaExecutionChainData.current_sila_execution_data:type_name -> ethereum.eth.v1alpha1.LatestSilaExecutionData
+	3,  // 1: ethereum.eth.v1alpha1.SilaExecutionChainData.chainstart_data:type_name -> ethereum.eth.v1alpha1.ChainStartData
+	7,  // 2: ethereum.eth.v1alpha1.SilaExecutionChainData.beacon_state:type_name -> ethereum.eth.v1alpha1.BeaconState
+	4,  // 3: ethereum.eth.v1alpha1.SilaExecutionChainData.trie:type_name -> ethereum.eth.v1alpha1.SparseMerkleTrie
+	6,  // 4: ethereum.eth.v1alpha1.SilaExecutionChainData.deposit_containers:type_name -> ethereum.eth.v1alpha1.DepositContainer
+	1,  // 5: ethereum.eth.v1alpha1.SilaExecutionChainData.deposit_snapshot:type_name -> ethereum.eth.v1alpha1.DepositSnapshot
+	8,  // 6: ethereum.eth.v1alpha1.ChainStartData.sila_execution_data:type_name -> ethereum.eth.v1alpha1.SilaExecutionData
 	9,  // 7: ethereum.eth.v1alpha1.ChainStartData.chainstart_deposits:type_name -> ethereum.eth.v1alpha1.Deposit
 	5,  // 8: ethereum.eth.v1alpha1.SparseMerkleTrie.layers:type_name -> ethereum.eth.v1alpha1.TrieLayer
 	9,  // 9: ethereum.eth.v1alpha1.DepositContainer.deposit:type_name -> ethereum.eth.v1alpha1.Deposit

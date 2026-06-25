@@ -299,14 +299,14 @@
     EPOCHS_PER_SUBNET_SUBSCRIPTION = 256
     </spec>
 
-- name: ETH1_FOLLOW_DISTANCE#phase0
+- name: SilaExecution_FOLLOW_DISTANCE#phase0
   sources:
     - file: config/params/config.go
-      search: Eth1FollowDistance\s+uint64
+      search: SilaExecutionFollowDistance\s+uint64
       regex: true
   spec: |
-    <spec config_var="ETH1_FOLLOW_DISTANCE" fork="phase0" hash="2f5ba1a0">
-    ETH1_FOLLOW_DISTANCE: uint64 = 2048
+    <spec config_var="SilaExecution_FOLLOW_DISTANCE" fork="phase0" hash="2f5ba1a0">
+    SilaExecution_FOLLOW_DISTANCE: uint64 = 2048
     </spec>
 
 - name: FULU_FORK_EPOCH#fulu
@@ -704,14 +704,14 @@
     SAMPLES_PER_SLOT = 8
     </spec>
 
-- name: SECONDS_PER_ETH1_BLOCK#phase0
+- name: SECONDS_PER_SilaExecution_BLOCK#phase0
   sources:
     - file: config/params/config.go
-      search: SecondsPerETH1Block\s+uint64
+      search: SecondsPerSilaExecutionBlock\s+uint64
       regex: true
   spec: |
-    <spec config_var="SECONDS_PER_ETH1_BLOCK" fork="phase0" hash="90c9f3d1">
-    SECONDS_PER_ETH1_BLOCK: uint64 = 14
+    <spec config_var="SECONDS_PER_SilaExecution_BLOCK" fork="phase0" hash="90c9f3d1">
+    SECONDS_PER_SilaExecution_BLOCK: uint64 = 14
     </spec>
 
 - name: SHARD_COMMITTEE_PERIOD#phase0

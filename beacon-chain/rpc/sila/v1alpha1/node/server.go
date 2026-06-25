@@ -280,14 +280,14 @@ func (ns *Server) ListPeers(ctx context.Context, _ *empty.Empty) (*silapb.Peers,
 
 // Deprecated: The gRPC API will remain the default and fully supported through v8 (expected in 2026) but will be eventually removed in favor of REST API.
 //
-// GetETH1ConnectionStatus gets data about the ETH1 endpoints.
-func (ns *Server) GetETH1ConnectionStatus(_ context.Context, _ *empty.Empty) (*silapb.ETH1ConnectionStatus, error) {
+// GetSilaExecutionConnectionStatus gets data about the SILAEXEC endpoints.
+func (ns *Server) GetSilaExecutionConnectionStatus(_ context.Context, _ *empty.Empty) (*silapb.SilaExecutionConnectionStatus, error) {
 	var currErr string
 	err := ns.POWChainInfoFetcher.ExecutionClientConnectionErr()
 	if err != nil {
 		currErr = err.Error()
 	}
-	return &silapb.ETH1ConnectionStatus{
+	return &silapb.SilaExecutionConnectionStatus{
 		CurrentAddress:         ns.POWChainInfoFetcher.ExecutionClientEndpoint(),
 		CurrentConnectionError: currErr,
 		Addresses:              []string{ns.POWChainInfoFetcher.ExecutionClientEndpoint()},

@@ -1,5 +1,5 @@
 // Package endtoend performs full a end-to-end test for Sila,
-// including spinning up an ETH1 dev chain, sending deposits to the deposit
+// including spinning up an SILAEXEC dev chain, sending deposits to the deposit
 // contract, and making sure the beacon node and validators are running and
 // performing properly for a few epochs.
 package endtoend
@@ -29,7 +29,7 @@ import (
 	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
-	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/eth1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/silaexec"
 	ev "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/evaluators"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
@@ -62,7 +62,7 @@ type testRunner struct {
 	t          *testing.T
 	config     *e2etypes.E2EConfig
 	comHandler *componentHandler
-	depositor  *eth1.Depositor
+	depositor  *silaexec.Depositor
 	genesis    state.BeaconState
 }
 
@@ -79,12 +79,12 @@ type runEvent func() error
 func (r *testRunner) runBase(runEvents []runEvent) {
 	r.comHandler = NewComponentHandler(r.config, r.t)
 	r.comHandler.group.Go(func() error {
-		miner, ok := r.comHandler.eth1Miner.(*eth1.Miner)
+		miner, ok := r.comHandler.silaexecMiner.(*silaexec.Miner)
 		if !ok {
-			return errors.New("in runBase, comHandler.eth1Miner fails type assertion to *eth1.Miner")
+			return errors.New("in runBase, comHandler.silaexecMiner fails type assertion to *silaexec.Miner")
 		}
 		if err := helpers.ComponentsStarted(r.comHandler.ctx, []e2etypes.ComponentRunner{miner}); err != nil {
-			return errors.Wrap(err, "eth1Miner component never started - cannot send deposits")
+			return errors.Wrap(err, "silaexecMiner component never started - cannot send deposits")
 		}
 		keyPath, err := e2e.TestParams.Paths.MinerKeyPath()
 		if err != nil {
@@ -98,7 +98,7 @@ func (r *testRunner) runBase(runEvents []runEvent) {
 		if err != nil {
 			return errors.Wrap(err, "failed to initialize a client to connect to the miner EL node")
 		}
-		r.depositor = &eth1.Depositor{Key: key, Client: client, NetworkId: big.NewInt(eth1.NetworkId)}
+		r.depositor = &silaexec.Depositor{Key: key, Client: client, NetworkId: big.NewInt(silaexec.NetworkId)}
 		if err := r.depositor.Start(r.comHandler.ctx); err != nil {
 			return errors.Wrap(err, "depositor.Start failed")
 		}
@@ -175,7 +175,7 @@ func (r *testRunner) waitForChainStart() {
 // postStartConfigure runs at the end of waitForChainStart to set up common runtime dependencies
 // like genesis state and configuration (fork schedule) setup.
 // It needs to run later because the genesis state cannot be correctly generated until after the
-// miner EL component finishes startup and sets the eth1block.
+// miner EL component finishes startup and sets the silaexecblock.
 func (r *testRunner) postStartConfigure() {
 	// set up genesis state with the same value it will have for components
 	gs, err := components.GenerateGenesis(r.t.Context())
@@ -253,11 +253,11 @@ func (r *testRunner) testDepositsAndTx(ctx context.Context, g *errgroup.Group,
 }
 
 func (r *testRunner) testTxGeneration(ctx context.Context, g *errgroup.Group, keystorePath string, requiredNodes []e2etypes.ComponentRunner) {
-	txGenerator := eth1.NewTransactionGenerator(keystorePath, r.config.Seed, r.config.UseLargeBlobs)
+	txGenerator := silaexec.NewTransactionGenerator(keystorePath, r.config.Seed, r.config.UseLargeBlobs)
 	r.comHandler.txGen = txGenerator
 	g.Go(func() error {
 		if err := helpers.ComponentsStarted(ctx, requiredNodes); err != nil {
-			return fmt.Errorf("transaction generator requires eth1 nodes to be run: %w", err)
+			return fmt.Errorf("transaction generator requires silaexec nodes to be run: %w", err)
 		}
 		return txGenerator.Start(ctx)
 	})
@@ -298,14 +298,14 @@ func (r *testRunner) waitForMatchingHead(ctx context.Context, timeout time.Durat
 
 func (r *testRunner) testCheckpointSync(ctx context.Context, g *errgroup.Group, i int, conns []*grpc.ClientConn, bnAPI, enr, minerEnr string) error {
 	matchTimeout := 5 * time.Minute
-	ethNode := eth1.NewNode(i, minerEnr)
+	ethNode := silaexec.NewNode(i, minerEnr)
 	g.Go(func() error {
 		return ethNode.Start(ctx)
 	})
 	if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{ethNode}); err != nil {
 		return fmt.Errorf("sync beacon node not ready: %w", err)
 	}
-	proxyNode := eth1.NewProxy(i)
+	proxyNode := silaexec.NewProxy(i)
 	g.Go(func() error {
 		return proxyNode.Start(ctx)
 	})
@@ -365,14 +365,14 @@ func (r *testRunner) testBeaconChainSync(ctx context.Context, g *errgroup.Group,
 	conns []*grpc.ClientConn, tickingStartTime time.Time, bootnodeEnr, minerEnr string) error {
 	t, config := r.t, r.config
 	index := e2e.TestParams.BeaconNodeCount + e2e.TestParams.LighthouseBeaconNodeCount
-	ethNode := eth1.NewNode(index, minerEnr)
+	ethNode := silaexec.NewNode(index, minerEnr)
 	g.Go(func() error {
 		return ethNode.Start(ctx)
 	})
 	if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{ethNode}); err != nil {
 		return fmt.Errorf("sync beacon node not ready: %w", err)
 	}
-	proxyNode := eth1.NewProxy(index)
+	proxyNode := silaexec.NewProxy(index)
 	g.Go(func() error {
 		return proxyNode.Start(ctx)
 	})
@@ -495,7 +495,7 @@ func (r *testRunner) defaultEndToEndRun() error {
 	if t.Failed() {
 		return errors.New("chain cannot start")
 	}
-	eth1Miner, ok := r.comHandler.eth1Miner.(*eth1.Miner)
+	silaexecMiner, ok := r.comHandler.silaexecMiner.(*silaexec.Miner)
 	if !ok {
 		return errors.New("incorrect component type")
 	}
@@ -546,7 +546,7 @@ func (r *testRunner) defaultEndToEndRun() error {
 
 	index := e2e.TestParams.BeaconNodeCount + e2e.TestParams.LighthouseBeaconNodeCount
 	if config.TestSync {
-		if err := r.testBeaconChainSync(ctx, g, conns, tickingStartTime, bootNode.ENR(), eth1Miner.ENR()); err != nil {
+		if err := r.testBeaconChainSync(ctx, g, conns, tickingStartTime, bootNode.ENR(), silaexecMiner.ENR()); err != nil {
 			return errors.Wrap(err, "beacon chain sync test failed")
 		}
 		index += 1
@@ -556,7 +556,7 @@ func (r *testRunner) defaultEndToEndRun() error {
 	}
 	if config.TestCheckpointSync {
 		httpEndpoints := helpers.BeaconAPIHostnames(e2e.TestParams.BeaconNodeCount)
-		menr := eth1Miner.ENR()
+		menr := silaexecMiner.ENR()
 		benr := bootNode.ENR()
 		if err := r.testCheckpointSync(ctx, g, index, conns, httpEndpoints[0], benr, menr); err != nil {
 			return errors.Wrap(err, "checkpoint sync test failed")
@@ -694,7 +694,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		return true
 	case optimisticStartEpoch:
 		// Set it for sila beacon node.
-		component, err := r.comHandler.eth1Proxy.ComponentAtIndex(0)
+		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
 		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
 			return &enginev1.PayloadStatus{
@@ -705,7 +705,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 			return true
 		})
 		// Set it for lighthouse beacon node.
-		component, err = r.comHandler.eth1Proxy.ComponentAtIndex(2)
+		component, err = r.comHandler.silaexecProxy.ComponentAtIndex(2)
 		require.NoError(r.t, err)
 		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
 			return &enginev1.PayloadStatus{
@@ -732,7 +732,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		evs := []e2etypes.Evaluator{ev.OptimisticSyncEnabled}
 		r.executeProvidedEvaluators(ec, epoch, []*grpc.ClientConn{conns[0]}, evs)
 		// Disable Interceptor
-		component, err := r.comHandler.eth1Proxy.ComponentAtIndex(0)
+		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
 		engineProxy, ok := component.(e2etypes.EngineProxy)
 		require.Equal(r.t, true, ok)
@@ -740,7 +740,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		engineProxy.ReleaseBackedUpRequests(newPayloadMethod)
 
 		// Remove for lighthouse too
-		component, err = r.comHandler.eth1Proxy.ComponentAtIndex(2)
+		component, err = r.comHandler.silaexecProxy.ComponentAtIndex(2)
 		require.NoError(r.t, err)
 		engineProxy, ok = component.(e2etypes.EngineProxy)
 		require.Equal(r.t, true, ok)
@@ -760,10 +760,10 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 func (r *testRunner) eeOffline(_ *e2etypes.EvaluationContext, epoch uint64, _ []*grpc.ClientConn) bool {
 	switch epoch {
 	case 9:
-		require.NoError(r.t, r.comHandler.eth1Miner.Pause())
+		require.NoError(r.t, r.comHandler.silaexecMiner.Pause())
 		return true
 	case 10:
-		require.NoError(r.t, r.comHandler.eth1Miner.Resume())
+		require.NoError(r.t, r.comHandler.silaexecMiner.Resume())
 		return true
 	case 11, 12:
 		// Allow 2 epochs for the network to finalize again.
@@ -819,7 +819,7 @@ func (r *testRunner) multiScenario(ec *e2etypes.EvaluationContext, epoch uint64,
 		require.NoError(r.t, r.comHandler.validatorNodes.ResumeAtIndex(1))
 		return true
 	case optimisticStartEpoch:
-		component, err := r.comHandler.eth1Proxy.ComponentAtIndex(0)
+		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
 		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
 			return &enginev1.PayloadStatus{
@@ -834,7 +834,7 @@ func (r *testRunner) multiScenario(ec *e2etypes.EvaluationContext, epoch uint64,
 		evs := []e2etypes.Evaluator{ev.OptimisticSyncEnabled}
 		r.executeProvidedEvaluators(ec, epoch, []*grpc.ClientConn{conns[0]}, evs)
 		// Disable Interceptor
-		component, err := r.comHandler.eth1Proxy.ComponentAtIndex(0)
+		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
 		engineProxy, ok := component.(e2etypes.EngineProxy)
 		require.Equal(r.t, true, ok)

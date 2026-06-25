@@ -142,7 +142,7 @@ func TestFastAggregateVerify_ReturnsFalseOnEmptyPubKeyList(t *testing.T) {
 	assert.Equal(t, false, aggSig.FastAggregateVerify(pubkeys, msg), "Expected FastAggregateVerify to return false with empty input ")
 }
 
-func TestEth2FastAggregateVerify(t *testing.T) {
+func TestSilaConsensusFastAggregateVerify(t *testing.T) {
 	pubkeys := make([]common.PublicKey, 0, 100)
 	sigs := make([]common.Signature, 0, 100)
 	msg := [32]byte{'h', 'e', 'l', 'l', 'o'}
@@ -155,25 +155,25 @@ func TestEth2FastAggregateVerify(t *testing.T) {
 		sigs = append(sigs, sig)
 	}
 	aggSig := AggregateSignatures(sigs)
-	assert.Equal(t, true, aggSig.Eth2FastAggregateVerify(pubkeys, msg), "Signature did not verify")
+	assert.Equal(t, true, aggSig.SilaConsensusFastAggregateVerify(pubkeys, msg), "Signature did not verify")
 
 }
 
-func TestEth2FastAggregateVerify_ReturnsFalseOnEmptyPubKeyList(t *testing.T) {
+func TestSilaConsensusFastAggregateVerify_ReturnsFalseOnEmptyPubKeyList(t *testing.T) {
 	var pubkeys []common.PublicKey
 	msg := [32]byte{'h', 'e', 'l', 'l', 'o'}
 
 	aggSig := NewAggregateSignature()
-	assert.Equal(t, false, aggSig.Eth2FastAggregateVerify(pubkeys, msg), "Expected Eth2FastAggregateVerify to return false with empty input ")
+	assert.Equal(t, false, aggSig.SilaConsensusFastAggregateVerify(pubkeys, msg), "Expected SilaConsensusFastAggregateVerify to return false with empty input ")
 }
 
-func TestEth2FastAggregateVerify_ReturnsTrueOnG2PointAtInfinity(t *testing.T) {
+func TestSilaConsensusFastAggregateVerify_ReturnsTrueOnG2PointAtInfinity(t *testing.T) {
 	var pubkeys []common.PublicKey
 	msg := [32]byte{'h', 'e', 'l', 'l', 'o'}
 
 	aggSig, err := SignatureFromBytes(common.InfiniteSignature[:])
 	require.NoError(t, err)
-	assert.Equal(t, true, aggSig.Eth2FastAggregateVerify(pubkeys, msg))
+	assert.Equal(t, true, aggSig.SilaConsensusFastAggregateVerify(pubkeys, msg))
 }
 
 func TestSignatureFromBytes(t *testing.T) {

@@ -22,7 +22,7 @@ func TestProcessDeposits_SameValidatorMultipleDepositsSameBlock(t *testing.T) {
 	// Same validator created 3 valid deposits within the same block
 	dep, _, err := util.DeterministicDepositsAndKeysSameValidator(3)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(dep))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(dep))
 	require.NoError(t, err)
 	registry := []*silapb.Validator{
 		{
@@ -34,7 +34,7 @@ func TestProcessDeposits_SameValidatorMultipleDepositsSameBlock(t *testing.T) {
 	beaconState, err := state_native.InitializeFromProtoAltair(&silapb.BeaconStateAltair{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data:   eth1Data,
+		SilaExecutionData:   silaexecData,
 		Fork: &silapb.Fork{
 			PreviousVersion: params.BeaconConfig().GenesisForkVersion,
 			CurrentVersion:  params.BeaconConfig().GenesisForkVersion,
@@ -49,7 +49,7 @@ func TestProcessDeposits_SameValidatorMultipleDepositsSameBlock(t *testing.T) {
 func TestProcessDeposits_AddsNewValidatorDeposit(t *testing.T) {
 	dep, _, err := util.DeterministicDepositsAndKeys(1)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(dep))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(dep))
 	require.NoError(t, err)
 
 	registry := []*silapb.Validator{
@@ -62,7 +62,7 @@ func TestProcessDeposits_AddsNewValidatorDeposit(t *testing.T) {
 	beaconState, err := state_native.InitializeFromProtoAltair(&silapb.BeaconStateAltair{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data:   eth1Data,
+		SilaExecutionData:   silaexecData,
 		Fork: &silapb.Fork{
 			PreviousVersion: params.BeaconConfig().GenesisForkVersion,
 			CurrentVersion:  params.BeaconConfig().GenesisForkVersion,
@@ -120,7 +120,7 @@ func TestProcessDeposits_RepeatedDeposit_IncreasesValidatorBalance(t *testing.T)
 	beaconState, err := state_native.InitializeFromProtoAltair(&silapb.BeaconStateAltair{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: root[:],
 			BlockHash:   root[:],
 		},
@@ -135,7 +135,7 @@ func TestProcessDeposit_AddsNewValidatorDeposit(t *testing.T) {
 	// Similar to TestProcessDeposits_AddsNewValidatorDeposit except that this test directly calls ProcessDeposit
 	dep, _, err := util.DeterministicDepositsAndKeys(1)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(dep))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(dep))
 	require.NoError(t, err)
 
 	registry := []*silapb.Validator{
@@ -148,7 +148,7 @@ func TestProcessDeposit_AddsNewValidatorDeposit(t *testing.T) {
 	beaconState, err := state_native.InitializeFromProtoAltair(&silapb.BeaconStateAltair{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data:   eth1Data,
+		SilaExecutionData:   silaexecData,
 		Fork: &silapb.Fork{
 			PreviousVersion: params.BeaconConfig().GenesisForkVersion,
 			CurrentVersion:  params.BeaconConfig().GenesisForkVersion,
@@ -177,7 +177,7 @@ func TestProcessDeposit_SkipsInvalidDeposit(t *testing.T) {
 	require.NoError(t, err)
 	root, err := dt.HashTreeRoot()
 	require.NoError(t, err)
-	eth1Data := &silapb.Eth1Data{
+	silaexecData := &silapb.SilaExecutionData{
 		DepositRoot:  root[:],
 		DepositCount: 1,
 	}
@@ -191,7 +191,7 @@ func TestProcessDeposit_SkipsInvalidDeposit(t *testing.T) {
 	beaconState, err := state_native.InitializeFromProtoAltair(&silapb.BeaconStateAltair{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data:   eth1Data,
+		SilaExecutionData:   silaexecData,
 		Fork: &silapb.Fork{
 			PreviousVersion: params.BeaconConfig().GenesisForkVersion,
 			CurrentVersion:  params.BeaconConfig().GenesisForkVersion,
@@ -201,10 +201,10 @@ func TestProcessDeposit_SkipsInvalidDeposit(t *testing.T) {
 	newState, err := altair.ProcessDeposit(beaconState, dep[0], false)
 	require.NoError(t, err, "Expected invalid block deposit to be ignored without error")
 
-	if newState.Eth1DepositIndex() != 1 {
+	if newState.SilaExecutionDepositIndex() != 1 {
 		t.Errorf(
-			"Expected Eth1DepositIndex to be increased by 1 after processing an invalid deposit, received change: %v",
-			newState.Eth1DepositIndex(),
+			"Expected SilaExecutionDepositIndex to be increased by 1 after processing an invalid deposit, received change: %v",
+			newState.SilaExecutionDepositIndex(),
 		)
 	}
 	if len(newState.Validators()) != 1 {
@@ -234,7 +234,7 @@ func TestPreGenesisDeposits_SkipInvalidDeposit(t *testing.T) {
 	root, err := dt.HashTreeRoot()
 	require.NoError(t, err)
 
-	eth1Data := &silapb.Eth1Data{
+	silaexecData := &silapb.SilaExecutionData{
 		DepositRoot:  root[:],
 		DepositCount: 1,
 	}
@@ -248,7 +248,7 @@ func TestPreGenesisDeposits_SkipInvalidDeposit(t *testing.T) {
 	beaconState, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data:   eth1Data,
+		SilaExecutionData:   silaexecData,
 		Fork: &silapb.Fork{
 			PreviousVersion: params.BeaconConfig().GenesisForkVersion,
 			CurrentVersion:  params.BeaconConfig().GenesisForkVersion,
@@ -268,10 +268,10 @@ func TestPreGenesisDeposits_SkipInvalidDeposit(t *testing.T) {
 		require.Equal(t, primitives.Epoch(0), val.ActivationEpoch)
 		require.Equal(t, primitives.Epoch(0), val.ActivationEligibilityEpoch)
 	}
-	if newState.Eth1DepositIndex() != 100 {
+	if newState.SilaExecutionDepositIndex() != 100 {
 		t.Errorf(
-			"Expected Eth1DepositIndex to be increased by 99 after processing an invalid deposit, received change: %v",
-			newState.Eth1DepositIndex(),
+			"Expected SilaExecutionDepositIndex to be increased by 99 after processing an invalid deposit, received change: %v",
+			newState.SilaExecutionDepositIndex(),
 		)
 	}
 	if len(newState.Validators()) != 100 {
@@ -326,7 +326,7 @@ func TestProcessDeposit_RepeatedDeposit_IncreasesValidatorBalance(t *testing.T) 
 	beaconState, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
 		Validators: registry,
 		Balances:   balances,
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: root[:],
 			BlockHash:   root[:],
 		},
@@ -362,7 +362,7 @@ func TestProcessDeposits_MerkleBranchFailsVerification(t *testing.T) {
 		},
 	}
 	beaconState, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: []byte{0},
 			BlockHash:   []byte{1},
 		},

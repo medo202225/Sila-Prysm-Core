@@ -61,7 +61,7 @@ func (d *AuthorizationData) ToHeaderValue() (string, error) {
 }
 
 // HttpEndpoint extracts an httputils.Endpoint from the provider parameter.
-func HttpEndpoint(eth1Provider string) Endpoint {
+func HttpEndpoint(silaexecProvider string) Endpoint {
 	endpoint := Endpoint{
 		Url: "",
 		Auth: AuthorizationData{
@@ -69,11 +69,11 @@ func HttpEndpoint(eth1Provider string) Endpoint {
 			Value:  "",
 		}}
 
-	authValues := strings.Split(eth1Provider, ",")
+	authValues := strings.Split(silaexecProvider, ",")
 	endpoint.Url = strings.TrimSpace(authValues[0])
 	if len(authValues) > 2 {
 		log.Errorf(
-			"ETH1 endpoint string can contain one comma for specifying the authorization header to access the provider."+
+			"SILAEXEC endpoint string can contain one comma for specifying the authorization header to access the provider."+
 				" String contains too many commas: %d. Skipping authorization.", len(authValues)-1)
 	} else if len(authValues) == 2 {
 		switch Method(strings.TrimSpace(authValues[1])) {

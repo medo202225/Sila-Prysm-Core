@@ -139,9 +139,9 @@ func (node *Builder) Start(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	jwtPath := path.Join(e2e.TestParams.TestPath, "eth1data/"+strconv.Itoa(node.index)+"/")
+	jwtPath := path.Join(e2e.TestParams.TestPath, "silaExecutionData/"+strconv.Itoa(node.index)+"/")
 	if node.index == 0 {
-		jwtPath = path.Join(e2e.TestParams.TestPath, "eth1data/miner/")
+		jwtPath = path.Join(e2e.TestParams.TestPath, "silaExecutionData/miner/")
 	}
 	jwtPath = path.Join(jwtPath, "geth/jwtsecret")
 	secret, err := parseJWTSecretFromFile(jwtPath)
@@ -149,8 +149,8 @@ func (node *Builder) Start(ctx context.Context) error {
 		return err
 	}
 	opts := []builder.Option{
-		builder.WithDestinationAddress(fmt.Sprintf("http://127.0.0.1:%d", e2e.TestParams.Ports.Eth1AuthRPCPort+node.index)),
-		builder.WithPort(e2e.TestParams.Ports.Eth1ProxyPort + node.index),
+		builder.WithDestinationAddress(fmt.Sprintf("http://127.0.0.1:%d", e2e.TestParams.Ports.SilaExecutionAuthRPCPort+node.index)),
+		builder.WithPort(e2e.TestParams.Ports.SilaExecutionProxyPort + node.index),
 		builder.WithLogger(logrus.New()),
 		builder.WithLogFile(f),
 		builder.WithJwtSecret(string(secret)),
@@ -159,7 +159,7 @@ func (node *Builder) Start(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	log.Infof("Starting builder %d with port: %d and file %s", node.index, e2e.TestParams.Ports.Eth1ProxyPort+node.index, f.Name())
+	log.Infof("Starting builder %d with port: %d and file %s", node.index, e2e.TestParams.Ports.SilaExecutionProxyPort+node.index, f.Name())
 
 	// Set cancel into context.
 	ctx, cancel := context.WithCancel(ctx)

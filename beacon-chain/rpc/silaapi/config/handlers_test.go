@@ -60,11 +60,11 @@ func TestGetSpec(t *testing.T) {
 	config.HysteresisQuotient = 9
 	config.HysteresisDownwardMultiplier = 10
 	config.HysteresisUpwardMultiplier = 11
-	config.Eth1FollowDistance = 13
+	config.SilaExecutionFollowDistance = 13
 	config.TargetAggregatorsPerCommittee = 14
 	config.RandomSubnetsPerValidator = 15
 	config.EpochsPerRandomSubnetSubscription = 16
-	config.SecondsPerETH1Block = 17
+	config.SecondsPerSilaExecutionBlock = 17
 	config.DepositChainID = 18
 	config.DepositNetworkID = 19
 	config.DepositContractAddress = "DepositContractAddress"
@@ -90,7 +90,7 @@ func TestGetSpec(t *testing.T) {
 	config.MinBuilderWithdrawabilityDelay = 111
 	config.MaxBuildersPerWithdrawalsSweep = 112
 	config.BLSWithdrawalPrefixByte = byte('b')
-	config.ETH1AddressWithdrawalPrefixByte = byte('c')
+	config.SilaExecutionAddressWithdrawalPrefixByte = byte('c')
 	config.BuilderWithdrawalPrefixByte = byte('e')
 	config.GenesisDelay = 24
 	config.SecondsPerSlot = 25
@@ -99,7 +99,7 @@ func TestGetSpec(t *testing.T) {
 	config.SlotsPerEpoch = 27
 	config.MinSeedLookahead = 28
 	config.MaxSeedLookahead = 29
-	config.EpochsPerEth1VotingPeriod = 30
+	config.EpochsPerSilaExecutionVotingPeriod = 30
 	config.SlotsPerHistoricalRoot = 31
 	config.MinValidatorWithdrawabilityDelay = 32
 	config.ShardCommitteePeriod = 33
@@ -267,13 +267,13 @@ func TestGetSpec(t *testing.T) {
 				assert.Equal(t, "11", v)
 			case "SAFE_SLOTS_TO_UPDATE_JUSTIFIED":
 				assert.Equal(t, "0", v)
-			case "ETH1_FOLLOW_DISTANCE":
+			case "SilaExecution_FOLLOW_DISTANCE":
 				assert.Equal(t, "13", v)
 			case "TARGET_AGGREGATORS_PER_COMMITTEE":
 				assert.Equal(t, "14", v)
 			case "RANDOM_SUBNETS_PER_VALIDATOR":
 				assert.Equal(t, "15", v)
-			case "SECONDS_PER_ETH1_BLOCK":
+			case "SECONDS_PER_SilaExecution_BLOCK":
 				assert.Equal(t, "17", v)
 			case "DEPOSIT_CHAIN_ID":
 				assert.Equal(t, "18", v)
@@ -327,7 +327,7 @@ func TestGetSpec(t *testing.T) {
 				assert.Equal(t, "1000", v)
 			case "BLS_WITHDRAWAL_PREFIX":
 				assert.Equal(t, "0x62", v)
-			case "ETH1_ADDRESS_WITHDRAWAL_PREFIX":
+			case "SilaExecution_ADDRESS_WITHDRAWAL_PREFIX":
 				assert.Equal(t, "0x63", v)
 			case "GENESIS_DELAY":
 				assert.Equal(t, "24", v)
@@ -343,7 +343,7 @@ func TestGetSpec(t *testing.T) {
 				assert.Equal(t, "28", v)
 			case "MAX_SEED_LOOKAHEAD":
 				assert.Equal(t, "29", v)
-			case "EPOCHS_PER_ETH1_VOTING_PERIOD":
+			case "EPOCHS_PER_SilaExecution_VOTING_PERIOD":
 				assert.Equal(t, "30", v)
 			case "SLOTS_PER_HISTORICAL_ROOT":
 				assert.Equal(t, "31", v)

@@ -79,7 +79,7 @@ func WithdrawalCredentialsHash(withdrawalKey bls.SecretKey) []byte {
 	return append([]byte{params.BeaconConfig().BLSWithdrawalPrefixByte}, h[1:]...)[:32]
 }
 
-// VerifyDepositSignature verifies the correctness of Eth1 deposit BLS signature
+// VerifyDepositSignature verifies the correctness of SilaExecution deposit BLS signature
 func VerifyDepositSignature(dd *silapb.Deposit_Data, domain []byte) error {
 	ddCopy := dd.Copy()
 	publicKey, err := bls.PublicKeyFromBytes(ddCopy.PublicKey)

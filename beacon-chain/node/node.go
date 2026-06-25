@@ -324,8 +324,8 @@ func configureBeacon(cliCtx *cli.Context) error {
 		return errors.Wrap(err, "could not configure slots per archived point")
 	}
 
-	if err := configureEth1Config(cliCtx); err != nil {
-		return errors.Wrap(err, "could not configure eth1 config")
+	if err := configureSilaExecutionConfig(cliCtx); err != nil {
+		return errors.Wrap(err, "could not configure silaexec config")
 	}
 
 	configureNetwork(cliCtx)
@@ -973,7 +973,7 @@ func (b *BeaconNode) registerRPCService(router *http.ServeMux) error {
 	beaconMonitoringPort := b.cliCtx.Int(flags.MonitoringPortFlag.Name)
 	cert := b.cliCtx.String(flags.CertFlag.Name)
 	key := b.cliCtx.String(flags.KeyFlag.Name)
-	mockEth1DataVotes := b.cliCtx.Bool(flags.InteropMockEth1DataVotesFlag.Name)
+	mockSilaExecutionDataVotes := b.cliCtx.Bool(flags.InteropMockSilaExecutionDataVotesFlag.Name)
 	maxMsgSize := b.cliCtx.Int(cmd.GrpcMaxCallRecvMsgSizeFlag.Name)
 	enableDebugRPCEndpoints := !b.cliCtx.Bool(flags.DisableDebugRPCEndpoints.Name)
 
@@ -1017,7 +1017,7 @@ func (b *BeaconNode) registerRPCService(router *http.ServeMux) error {
 		ExecutionChainService:            web3Service,
 		ExecutionChainInfoFetcher:        web3Service,
 		ChainStartFetcher:                chainStartFetcher,
-		MockEth1Votes:                    mockEth1DataVotes,
+		MockSilaExecutionVotes:                    mockSilaExecutionDataVotes,
 		SyncService:                      syncService,
 		DepositFetcher:                   depositFetcher,
 		PendingDepositFetcher:            b.depositCache,

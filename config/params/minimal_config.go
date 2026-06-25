@@ -30,7 +30,7 @@ func MinimalSpecConfig() *BeaconChainConfig {
 
 	// Initial values
 	minimalConfig.BLSWithdrawalPrefixByte = byte(0)
-	minimalConfig.ETH1AddressWithdrawalPrefixByte = byte(1)
+	minimalConfig.SilaExecutionAddressWithdrawalPrefixByte = byte(1)
 	minimalConfig.BuilderWithdrawalPrefixByte = byte(3)
 
 	// Time parameters
@@ -48,14 +48,14 @@ func MinimalSpecConfig() *BeaconChainConfig {
 	minimalConfig.SqrRootSlotsPerEpoch = 2
 	minimalConfig.MinSeedLookahead = 1
 	minimalConfig.MaxSeedLookahead = 4
-	minimalConfig.EpochsPerEth1VotingPeriod = 4
+	minimalConfig.EpochsPerSilaExecutionVotingPeriod = 4
 	minimalConfig.SlotsPerHistoricalRoot = 64
 	minimalConfig.MinValidatorWithdrawabilityDelay = 256
 	minimalConfig.MinBuilderWithdrawabilityDelay = 2
 	minimalConfig.ShardCommitteePeriod = 64
 	minimalConfig.MinEpochsToInactivityPenalty = 4
-	minimalConfig.Eth1FollowDistance = 16
-	minimalConfig.SecondsPerETH1Block = 14
+	minimalConfig.SilaExecutionFollowDistance = 16
+	minimalConfig.SecondsPerSilaExecutionBlock = 14
 
 	// State vector lengths
 	minimalConfig.EpochsPerHistoricalVector = 64
@@ -135,8 +135,8 @@ func MinimalSpecConfig() *BeaconChainConfig {
 	minimalConfig.MaxPerEpochActivationChurnLimitGloas = 128000000000
 
 	// Sila execution-layer PoW compatibility parameters.
-	minimalConfig.DepositChainID = 5   // Chain ID of eth1 goerli.
-	minimalConfig.DepositNetworkID = 5 // Network ID of eth1 goerli.
+	minimalConfig.DepositChainID = 5   // Chain ID of silaexec goerli.
+	minimalConfig.DepositNetworkID = 5 // Network ID of silaexec goerli.
 	minimalConfig.DepositContractAddress = "0x1234567890123456789012345678901234567890"
 	// 2**256-2**10 for fake minimal network
 	minimalConfig.TerminalTotalDifficulty = "115792089237316195423570985008687907853269984665640564039457584007913129638912"

@@ -154,7 +154,7 @@ func VerifySyncCommitteeSig(s state.BeaconState, syncKeys []bls.PublicKey, syncS
 	if err != nil {
 		return err
 	}
-	if !sig.Eth2FastAggregateVerify(syncKeys, r) {
+	if !sig.SilaConsensusFastAggregateVerify(syncKeys, r) {
 		return errors.New("invalid sync committee signature")
 	}
 	return nil

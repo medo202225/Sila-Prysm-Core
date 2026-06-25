@@ -93,7 +93,7 @@ func TestApplyDiff(t *testing.T) {
 	target, err := transition.ExecuteStateTransition(ctx, source, wsb)
 	require.NoError(t, err)
 
-	// Add non-trivial eth1Data, regression check
+	// Add non-trivial silaexecData, regression check
 	depositRoot := make([]byte, fieldparams.RootLength)
 	for i := range depositRoot {
 		depositRoot[i] = byte(i + 42)
@@ -102,7 +102,7 @@ func TestApplyDiff(t *testing.T) {
 	for i := range blockHash {
 		blockHash[i] = byte(i + 100)
 	}
-	require.NoError(t, target.SetEth1Data(&silapb.Eth1Data{
+	require.NoError(t, target.SetSilaExecutionData(&silapb.SilaExecutionData{
 		DepositRoot:  depositRoot,
 		DepositCount: 99999,
 		BlockHash:    blockHash,
@@ -836,25 +836,25 @@ func Test_diffStateRoots(t *testing.T) {
 	require.NotEqual(t, [32]byte{}, diff.stateRoots[1])
 }
 
-func Test_shouldAppendEth1DataVotes(t *testing.T) {
+func Test_shouldAppendSilaExecutionDataVotes(t *testing.T) {
 	// Test empty votes
 	root1 := make([]byte, 32)
 	root1[0] = 0x01
-	require.Equal(t, true, shouldAppendEth1DataVotes([]*silapb.Eth1Data{}, []*silapb.Eth1Data{{BlockHash: root1}}))
+	require.Equal(t, true, shouldAppendSilaExecutionDataVotes([]*silapb.SilaExecutionData{}, []*silapb.SilaExecutionData{{BlockHash: root1}}))
 
 	// Test appending to existing votes
 	root2 := make([]byte, 32)
 	root2[0] = 0x02
-	sourceVotes := []*silapb.Eth1Data{{BlockHash: root1}}
-	targetVotes := []*silapb.Eth1Data{{BlockHash: root1}, {BlockHash: root2}}
-	require.Equal(t, true, shouldAppendEth1DataVotes(sourceVotes, targetVotes))
+	sourceVotes := []*silapb.SilaExecutionData{{BlockHash: root1}}
+	targetVotes := []*silapb.SilaExecutionData{{BlockHash: root1}, {BlockHash: root2}}
+	require.Equal(t, true, shouldAppendSilaExecutionDataVotes(sourceVotes, targetVotes))
 
 	// Test complete replacement
 	root3 := make([]byte, 32)
 	root3[0] = 0x03
-	sourceVotes = []*silapb.Eth1Data{{BlockHash: root1}, {BlockHash: root2}}
-	targetVotes = []*silapb.Eth1Data{{BlockHash: root3}}
-	require.Equal(t, false, shouldAppendEth1DataVotes(sourceVotes, targetVotes))
+	sourceVotes = []*silapb.SilaExecutionData{{BlockHash: root1}, {BlockHash: root2}}
+	targetVotes = []*silapb.SilaExecutionData{{BlockHash: root3}}
+	require.Equal(t, false, shouldAppendSilaExecutionDataVotes(sourceVotes, targetVotes))
 }
 
 // Test key serialization methods
@@ -964,15 +964,15 @@ func Test_readPendingAttestation(t *testing.T) {
 	require.ErrorContains(t, "data is too small", err)
 }
 
-// Test readEth1Data - regression test for bug where indices were off by 1
-func Test_readEth1Data(t *testing.T) {
+// Test readSilaExecutionData - regression test for bug where indices were off by 1
+func Test_readSilaExecutionData(t *testing.T) {
 	diff := &stateDiff{}
 
 	// Test nil marker
 	data := []byte{nilMarker}
-	err := diff.readEth1Data(&data)
+	err := diff.readSilaExecutionData(&data)
 	require.NoError(t, err)
-	require.IsNil(t, diff.eth1Data)
+	require.IsNil(t, diff.silaexecData)
 	require.Equal(t, 0, len(data))
 
 	// Test successful read with actual data
@@ -995,25 +995,25 @@ func Test_readEth1Data(t *testing.T) {
 	data = append(data, blockHash...)
 
 	diff = &stateDiff{}
-	err = diff.readEth1Data(&data)
+	err = diff.readSilaExecutionData(&data)
 	require.NoError(t, err)
-	require.NotNil(t, diff.eth1Data)
-	require.DeepEqual(t, depositRoot, diff.eth1Data.DepositRoot)
-	require.Equal(t, depositCount, diff.eth1Data.DepositCount)
-	require.DeepEqual(t, blockHash, diff.eth1Data.BlockHash)
+	require.NotNil(t, diff.silaexecData)
+	require.DeepEqual(t, depositRoot, diff.silaexecData.DepositRoot)
+	require.Equal(t, depositCount, diff.silaexecData.DepositCount)
+	require.DeepEqual(t, blockHash, diff.silaexecData.BlockHash)
 	require.Equal(t, 0, len(data))
 
 	// Test insufficient data for marker
 	data = []byte{}
 	diff = &stateDiff{}
-	err = diff.readEth1Data(&data)
-	require.ErrorContains(t, "eth1Data", err)
+	err = diff.readSilaExecutionData(&data)
+	require.ErrorContains(t, "silaexecData", err)
 
 	// Test insufficient data after marker
 	data = []byte{notNilMarker}
 	diff = &stateDiff{}
-	err = diff.readEth1Data(&data)
-	require.ErrorContains(t, "eth1Data", err)
+	err = diff.readSilaExecutionData(&data)
+	require.ErrorContains(t, "silaexecData", err)
 }
 
 func BenchmarkGetDiff(b *testing.B) {

@@ -60,9 +60,9 @@ func ComputeBlockBodyFieldRoots(ctx context.Context, blockBody *BeaconBlockBody)
 	}
 	copy(fieldRoots[0], root[:])
 
-	// eth1_data
-	eth1 := blockBody.Eth1Data()
-	root, err = eth1.HashTreeRoot()
+	// sila_execution_data
+	silaexec := blockBody.SilaExecutionData()
+	root, err = silaexec.HashTreeRoot()
 	if err != nil {
 		return nil, err
 	}

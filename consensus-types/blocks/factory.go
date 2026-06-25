@@ -391,7 +391,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 				StateRoot:     stateRoot[:],
 				Body: &eth.BeaconBlockBodyBellatrix{
 					RandaoReveal:      randaoReveal[:],
-					Eth1Data:          b.Body().Eth1Data(),
+					SilaExecutionData:          b.Body().SilaExecutionData(),
 					Graffiti:          graffiti[:],
 					ProposerSlashings: b.Body().ProposerSlashings(),
 					AttesterSlashings: attSlashings,
@@ -443,7 +443,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 				StateRoot:     stateRoot[:],
 				Body: &eth.BeaconBlockBodyCapella{
 					RandaoReveal:          randaoReveal[:],
-					Eth1Data:              b.Body().Eth1Data(),
+					SilaExecutionData:              b.Body().SilaExecutionData(),
 					Graffiti:              graffiti[:],
 					ProposerSlashings:     b.Body().ProposerSlashings(),
 					AttesterSlashings:     attSlashings,
@@ -500,7 +500,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 				StateRoot:     stateRoot[:],
 				Body: &eth.BeaconBlockBodyDeneb{
 					RandaoReveal:          randaoReveal[:],
-					Eth1Data:              b.Body().Eth1Data(),
+					SilaExecutionData:              b.Body().SilaExecutionData(),
 					Graffiti:              graffiti[:],
 					ProposerSlashings:     b.Body().ProposerSlashings(),
 					AttesterSlashings:     attSlashings,
@@ -564,7 +564,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 				StateRoot:     stateRoot[:],
 				Body: &eth.BeaconBlockBodyElectra{
 					RandaoReveal:          randaoReveal[:],
-					Eth1Data:              b.Body().Eth1Data(),
+					SilaExecutionData:              b.Body().SilaExecutionData(),
 					Graffiti:              graffiti[:],
 					ProposerSlashings:     b.Body().ProposerSlashings(),
 					AttesterSlashings:     attSlashings,
@@ -629,7 +629,7 @@ func BuildSignedBeaconBlockFromExecutionPayload(blk interfaces.ReadOnlySignedBea
 				StateRoot:     stateRoot[:],
 				Body: &eth.BeaconBlockBodyElectra{
 					RandaoReveal:          randaoReveal[:],
-					Eth1Data:              b.Body().Eth1Data(),
+					SilaExecutionData:              b.Body().SilaExecutionData(),
 					Graffiti:              graffiti[:],
 					ProposerSlashings:     b.Body().ProposerSlashings(),
 					AttesterSlashings:     attSlashings,

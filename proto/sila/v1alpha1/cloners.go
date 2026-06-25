@@ -173,8 +173,8 @@ func copyBeaconBlockBodyGloas(body *BeaconBlockBodyGloas) *BeaconBlockBodyGloas 
 		Graffiti:     bytesutil.SafeCopyBytes(body.Graffiti),
 	}
 
-	if body.Eth1Data != nil {
-		copied.Eth1Data = body.Eth1Data.Copy()
+	if body.SilaExecutionData != nil {
+		copied.SilaExecutionData = body.SilaExecutionData.Copy()
 	}
 
 	if body.SyncAggregate != nil {

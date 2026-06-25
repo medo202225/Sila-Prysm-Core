@@ -13,7 +13,7 @@ var (
 	StatePath = &cli.PathFlag{
 		Name: "genesis-state",
 		Usage: "Load a genesis state from ssz file. Testnet genesis files can be found in the " +
-			"external eth2-clients/eth2-testnets repository on github.",
+			"external silaconsensus-clients/silaconsensus-testnets repository on github.",
 	}
 	BeaconAPIURL = &cli.StringFlag{
 		Name: "genesis-beacon-api-url",

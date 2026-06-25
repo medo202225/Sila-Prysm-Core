@@ -77,7 +77,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					vals[i] = val
 				}
 				require.NoError(t, s.SetValidators(vals))
@@ -99,7 +99,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 
 					vals[i] = val
 				}
@@ -131,7 +131,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 
 					vals[i] = val
 				}
@@ -160,7 +160,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					val.WithdrawalCredentials[31] = byte(i)
 					vals[i] = val
 				}
@@ -198,7 +198,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					val.WithdrawalCredentials[31] = byte(i)
 					vals[i] = val
 				}
@@ -226,7 +226,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(0),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					val.WithdrawalCredentials[31] = byte(i)
 					vals[i] = val
 				}
@@ -254,7 +254,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(0),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					val.WithdrawalCredentials[31] = byte(i)
 					vals[i] = val
 				}
@@ -283,7 +283,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					val.WithdrawalCredentials[31] = byte(i)
 					vals[i] = val
 				}
@@ -307,7 +307,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 						EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 						WithdrawableEpoch:     primitives.Epoch(1),
 					}
-					val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					val.WithdrawalCredentials[31] = byte(i)
 					vals[i] = val
 				}
@@ -379,7 +379,7 @@ func TestExpectedWithdrawals(t *testing.T) {
 				WithdrawableEpoch:     primitives.Epoch(1),
 				ExitEpoch:             params.BeaconConfig().FarFutureEpoch,
 			}
-			val.WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+			val.WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 			val.WithdrawalCredentials[31] = byte(i)
 			vals[i] = val
 		}

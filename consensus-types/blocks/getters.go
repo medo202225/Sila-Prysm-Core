@@ -203,7 +203,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 					StateRoot:     b.block.stateRoot[:],
 					Body: &eth.BlindedBeaconBlockBodyElectra{
 						RandaoReveal:           b.block.body.randaoReveal[:],
-						Eth1Data:               b.block.body.eth1Data,
+						SilaExecutionData:               b.block.body.silaexecData,
 						Graffiti:               b.block.body.graffiti[:],
 						ProposerSlashings:      b.block.body.proposerSlashings,
 						AttesterSlashings:      b.block.body.attesterSlashingsElectra,
@@ -239,7 +239,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 					StateRoot:     b.block.stateRoot[:],
 					Body: &eth.BlindedBeaconBlockBodyElectra{
 						RandaoReveal:           b.block.body.randaoReveal[:],
-						Eth1Data:               b.block.body.eth1Data,
+						SilaExecutionData:               b.block.body.silaexecData,
 						Graffiti:               b.block.body.graffiti[:],
 						ProposerSlashings:      b.block.body.proposerSlashings,
 						AttesterSlashings:      b.block.body.attesterSlashingsElectra,
@@ -272,7 +272,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 					StateRoot:     b.block.stateRoot[:],
 					Body: &eth.BlindedBeaconBlockBodyBellatrix{
 						RandaoReveal:           b.block.body.randaoReveal[:],
-						Eth1Data:               b.block.body.eth1Data,
+						SilaExecutionData:               b.block.body.silaexecData,
 						Graffiti:               b.block.body.graffiti[:],
 						ProposerSlashings:      b.block.body.proposerSlashings,
 						AttesterSlashings:      b.block.body.attesterSlashings,
@@ -299,7 +299,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 					StateRoot:     b.block.stateRoot[:],
 					Body: &eth.BlindedBeaconBlockBodyCapella{
 						RandaoReveal:           b.block.body.randaoReveal[:],
-						Eth1Data:               b.block.body.eth1Data,
+						SilaExecutionData:               b.block.body.silaexecData,
 						Graffiti:               b.block.body.graffiti[:],
 						ProposerSlashings:      b.block.body.proposerSlashings,
 						AttesterSlashings:      b.block.body.attesterSlashings,
@@ -327,7 +327,7 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 					StateRoot:     b.block.stateRoot[:],
 					Body: &eth.BlindedBeaconBlockBodyDeneb{
 						RandaoReveal:           b.block.body.randaoReveal[:],
-						Eth1Data:               b.block.body.eth1Data,
+						SilaExecutionData:               b.block.body.silaexecData,
 						Graffiti:               b.block.body.graffiti[:],
 						ProposerSlashings:      b.block.body.proposerSlashings,
 						AttesterSlashings:      b.block.body.attesterSlashings,
@@ -1164,9 +1164,9 @@ func (b *BeaconBlockBody) RandaoReveal() [field_params.BLSSignatureLength]byte {
 	return b.randaoReveal
 }
 
-// Eth1Data returns the eth1 data in the block.
-func (b *BeaconBlockBody) Eth1Data() *eth.Eth1Data {
-	return b.eth1Data
+// SilaExecutionData returns the silaexec data in the block.
+func (b *BeaconBlockBody) SilaExecutionData() *eth.SilaExecutionData {
+	return b.silaexecData
 }
 
 // Graffiti returns the graffiti in the block.

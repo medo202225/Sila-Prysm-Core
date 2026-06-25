@@ -78,8 +78,8 @@ func (s Signature) FastAggregateVerify(_ []common.PublicKey, _ [32]byte) bool {
 	panic(err)
 }
 
-// Eth2FastAggregateVerify -- stub
-func (s Signature) Eth2FastAggregateVerify(_ []common.PublicKey, _ [32]byte) bool {
+// SilaConsensusFastAggregateVerify -- stub
+func (s Signature) SilaConsensusFastAggregateVerify(_ []common.PublicKey, _ [32]byte) bool {
 	panic(err)
 }
 

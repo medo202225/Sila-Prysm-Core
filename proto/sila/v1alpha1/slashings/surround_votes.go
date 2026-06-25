@@ -4,7 +4,7 @@ import silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 
 // IsSurround checks if an attestation, a, is surrounding
 // another one, b, based on the Ethereum slashing conditions specified
-// by @protolambda https://github.com/protolambda/eth2-surround#definition.
+// by @protolambda https://github.com/protolambda/silaconsensus-surround#definition.
 //
 //	s: source
 //	t: target

@@ -435,7 +435,7 @@ func TestServer_getTerminalBlockHashIfExists(t *testing.T) {
 			c := powtesting.New()
 			c.HashesByHeight[0] = tt.wantTerminalBlockHash
 			vs := &Server{
-				Eth1BlockFetcher: c,
+				SilaExecutionBlockFetcher: c,
 				ExecutionEngineCaller: &powtesting.EngineClient{
 					ExecutionBlock: tt.currentPowBlock,
 					BlockByHashMap: m,

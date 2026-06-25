@@ -101,25 +101,25 @@ func ComputeFieldRootsWithHasher(ctx context.Context, state *BeaconState) ([][]b
 	}
 	fieldRoots[types.HistoricalRoots.RealPosition()] = historicalRootsRt[:]
 
-	// Eth1Data data structure root.
-	eth1HashTreeRoot, err := stateutil.Eth1Root(state.eth1Data)
+	// SilaExecutionData data structure root.
+	silaexecHashTreeRoot, err := stateutil.SilaExecutionRoot(state.silaexecData)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not compute eth1data merkleization")
+		return nil, errors.Wrap(err, "could not compute silaExecutionData merkleization")
 	}
-	fieldRoots[types.Eth1Data.RealPosition()] = eth1HashTreeRoot[:]
+	fieldRoots[types.SilaExecutionData.RealPosition()] = silaexecHashTreeRoot[:]
 
-	// Eth1DataVotes slice root.
-	eth1VotesRoot, err := stateutil.Eth1DataVotesRoot(state.eth1DataVotes)
+	// SilaExecutionDataVotes slice root.
+	silaexecVotesRoot, err := stateutil.SilaExecutionDataVotesRoot(state.silaExecutionDataVotes)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not compute eth1data votes merkleization")
+		return nil, errors.Wrap(err, "could not compute silaExecutionData votes merkleization")
 	}
-	fieldRoots[types.Eth1DataVotes.RealPosition()] = eth1VotesRoot[:]
+	fieldRoots[types.SilaExecutionDataVotes.RealPosition()] = silaexecVotesRoot[:]
 
-	// Eth1DepositIndex root.
-	eth1DepositIndexBuf := make([]byte, 8)
-	binary.LittleEndian.PutUint64(eth1DepositIndexBuf, state.eth1DepositIndex)
-	eth1DepositBuf := bytesutil.ToBytes32(eth1DepositIndexBuf)
-	fieldRoots[types.Eth1DepositIndex.RealPosition()] = eth1DepositBuf[:]
+	// SilaExecutionDepositIndex root.
+	silaExecutionDepositIndexBuf := make([]byte, 8)
+	binary.LittleEndian.PutUint64(silaExecutionDepositIndexBuf, state.silaExecutionDepositIndex)
+	silaexecDepositBuf := bytesutil.ToBytes32(silaExecutionDepositIndexBuf)
+	fieldRoots[types.SilaExecutionDepositIndex.RealPosition()] = silaexecDepositBuf[:]
 
 	// Validators slice root.
 	validatorsRoot, err := stateutil.ValidatorRegistryRoot(state.validatorsCompactVal())

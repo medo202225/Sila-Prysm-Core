@@ -83,7 +83,7 @@ func TestProcessPendingConsolidations(t *testing.T) {
 				// v1 withdrawal credentials should not be updated.
 				v1, err := st.ValidatorAtIndex(1)
 				require.NoError(t, err)
-				require.Equal(t, params.BeaconConfig().ETH1AddressWithdrawalPrefixByte, v1.WithdrawalCredentials[0])
+				require.Equal(t, params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, v1.WithdrawalCredentials[0])
 			},
 			wantErr: false,
 		},
@@ -243,7 +243,7 @@ func TestIsValidSwitchToCompoundingRequest(t *testing.T) {
 		})
 		require.Equal(t, false, ok)
 	})
-	t.Run("incorrect eth1 withdrawal credential", func(t *testing.T) {
+	t.Run("incorrect silaexec withdrawal credential", func(t *testing.T) {
 		v, err := st.ValidatorAtIndex(0)
 		require.NoError(t, err)
 		pubkey := v.PublicKey

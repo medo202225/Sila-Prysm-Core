@@ -192,7 +192,7 @@ message BeaconBlockGloas {
 // Spec:
 // class BeaconBlockBody(Container):
 //     randao_reveal: BLSSignature
-//     eth1_data: Eth1Data
+//     sila_execution_data: SilaExecutionData
 //     graffiti: Bytes32
 //     proposer_slashings: List[ProposerSlashing, MAX_PROPOSER_SLASHINGS]
 //     attester_slashings: List[AttesterSlashing, MAX_ATTESTER_SLASHINGS_ELECTRA]
@@ -206,7 +206,7 @@ message BeaconBlockGloas {
 //     parent_execution_requests: ExecutionRequests
 message BeaconBlockBodyGloas {
   bytes randao_reveal = 1 [ (ethereum.eth.ext.ssz_size) = "96" ];
-  Eth1Data eth1_data = 2;
+  SilaExecutionData sila_execution_data = 2;
   bytes graffiti = 3 [ (ethereum.eth.ext.ssz_size) = "32" ];
   repeated ProposerSlashing proposer_slashings = 4
       [ (ethereum.eth.ext.ssz_max) = "16" ];
@@ -278,11 +278,11 @@ message BeaconStateGloas {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001

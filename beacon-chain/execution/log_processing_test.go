@@ -44,7 +44,7 @@ func TestProcessDepositLog_OK(t *testing.T) {
 		WithDatabase(beaconDB),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
@@ -113,7 +113,7 @@ func TestProcessDepositLog_InsertsPendingDeposit(t *testing.T) {
 		WithDatabase(beaconDB),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
@@ -173,7 +173,7 @@ func TestUnpackDepositLogData_OK(t *testing.T) {
 		WithDepositContractAddress(testAcc.ContractAddr),
 		WithDatabase(beaconDB),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
@@ -229,7 +229,7 @@ func TestProcessSilaGenesisLog_8DuplicatePubkeys(t *testing.T) {
 		WithDatabase(beaconDB),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
@@ -304,7 +304,7 @@ func TestProcessSilaGenesisLog(t *testing.T) {
 		WithDatabase(beaconDB),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
@@ -355,7 +355,7 @@ func TestProcessSilaGenesisLog(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	err = web3Service.ProcessETH1Block(t.Context(), big.NewInt(int64(logs[len(logs)-1].BlockNumber)))
+	err = web3Service.ProcessSilaExecutionBlock(t.Context(), big.NewInt(int64(logs[len(logs)-1].BlockNumber)))
 	require.NoError(t, err)
 
 	cachedDeposits := web3Service.chainStartData.ChainstartDeposits
@@ -397,20 +397,20 @@ func TestProcessSilaGenesisLog_CorrectNumOfDeposits(t *testing.T) {
 		WithDatabase(kvStore),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
 	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
-	web3Service.latestEth1Data.LastRequestedBlock = 0
+	web3Service.latestSilaExecutionData.LastRequestedBlock = 0
 	block, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
-	web3Service.latestEth1Data.BlockHeight = block.NumberU64()
-	web3Service.latestEth1Data.BlockTime = block.Time()
+	web3Service.latestSilaExecutionData.BlockHeight = block.NumberU64()
+	web3Service.latestSilaExecutionData.BlockTime = block.Time()
 	bConfig := params.MinimalSpecConfig().Copy()
 	bConfig.MinGenesisTime = 0
-	bConfig.SecondsPerETH1Block = 1
+	bConfig.SecondsPerSilaExecutionBlock = 1
 	params.OverrideBeaconConfig(bConfig)
 	nConfig := params.BeaconNetworkConfig()
 	nConfig.ContractDeploymentBlock = 0
@@ -442,13 +442,13 @@ func TestProcessSilaGenesisLog_CorrectNumOfDeposits(t *testing.T) {
 		}
 	}
 	// Forward the chain to account for the follow distance
-	for i := uint64(0); i < params.BeaconConfig().Eth1FollowDistance; i++ {
+	for i := uint64(0); i < params.BeaconConfig().SilaExecutionFollowDistance; i++ {
 		testAcc.Backend.Commit()
 	}
 	b, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
-	web3Service.latestEth1Data.BlockHeight = b.NumberU64()
-	web3Service.latestEth1Data.BlockTime = b.Time()
+	web3Service.latestSilaExecutionData.BlockHeight = b.NumberU64()
+	web3Service.latestSilaExecutionData.BlockTime = b.Time()
 
 	// Set up our subscriber now to listen for the chain started event.
 	stateChannel := make(chan *feed.Event, 1)
@@ -498,20 +498,20 @@ func TestProcessLogs_DepositRequestsStarted(t *testing.T) {
 		WithDatabase(kvStore),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
 	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
-	web3Service.latestEth1Data.LastRequestedBlock = 0
+	web3Service.latestSilaExecutionData.LastRequestedBlock = 0
 	block, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
-	web3Service.latestEth1Data.BlockHeight = block.NumberU64()
-	web3Service.latestEth1Data.BlockTime = block.Time()
+	web3Service.latestSilaExecutionData.BlockHeight = block.NumberU64()
+	web3Service.latestSilaExecutionData.BlockTime = block.Time()
 	bConfig := params.MinimalSpecConfig().Copy()
 	bConfig.MinGenesisTime = 0
-	bConfig.SecondsPerETH1Block = 1
+	bConfig.SecondsPerSilaExecutionBlock = 1
 	params.OverrideBeaconConfig(bConfig)
 	nConfig := params.BeaconNetworkConfig()
 	nConfig.ContractDeploymentBlock = 0
@@ -543,13 +543,13 @@ func TestProcessLogs_DepositRequestsStarted(t *testing.T) {
 		}
 	}
 	// Forward the chain to account for the follow distance
-	for i := uint64(0); i < params.BeaconConfig().Eth1FollowDistance; i++ {
+	for i := uint64(0); i < params.BeaconConfig().SilaExecutionFollowDistance; i++ {
 		testAcc.Backend.Commit()
 	}
 	b, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
-	web3Service.latestEth1Data.BlockHeight = b.NumberU64()
-	web3Service.latestEth1Data.BlockTime = b.Time()
+	web3Service.latestSilaExecutionData.BlockHeight = b.NumberU64()
+	web3Service.latestSilaExecutionData.BlockTime = b.Time()
 
 	// Set up our subscriber now to listen for the chain started event.
 	stateChannel := make(chan *feed.Event, 1)
@@ -585,19 +585,19 @@ func TestProcessSilaGenesisLog_LargePeriodOfNoLogs(t *testing.T) {
 		WithDatabase(kvStore),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
 	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
-	web3Service.latestEth1Data.LastRequestedBlock = 0
+	web3Service.latestSilaExecutionData.LastRequestedBlock = 0
 	b, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
-	web3Service.latestEth1Data.BlockHeight = b.NumberU64()
-	web3Service.latestEth1Data.BlockTime = b.Time()
+	web3Service.latestSilaExecutionData.BlockHeight = b.NumberU64()
+	web3Service.latestSilaExecutionData.BlockTime = b.Time()
 	bConfig := params.MinimalSpecConfig().Copy()
-	bConfig.SecondsPerETH1Block = 10
+	bConfig.SecondsPerSilaExecutionBlock = 10
 	params.OverrideBeaconConfig(bConfig)
 	nConfig := params.BeaconNetworkConfig()
 	nConfig.ContractDeploymentBlock = 0
@@ -638,13 +638,13 @@ func TestProcessSilaGenesisLog_LargePeriodOfNoLogs(t *testing.T) {
 	wantedGenesisTime := genesisBlock.Time()
 
 	// Forward the chain to account for the follow distance
-	for i := uint64(0); i < params.BeaconConfig().Eth1FollowDistance; i++ {
+	for i := uint64(0); i < params.BeaconConfig().SilaExecutionFollowDistance; i++ {
 		testAcc.Backend.Commit()
 	}
 	currBlock, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
-	web3Service.latestEth1Data.BlockHeight = currBlock.NumberU64()
-	web3Service.latestEth1Data.BlockTime = currBlock.Time()
+	web3Service.latestSilaExecutionData.BlockHeight = currBlock.NumberU64()
+	web3Service.latestSilaExecutionData.BlockTime = currBlock.Time()
 
 	// Set the genesis time 500 blocks ahead of the last
 	// deposit log.
@@ -689,7 +689,7 @@ func TestCheckForChainstart_NoValidator(t *testing.T) {
 	require.LogsDoNotContain(t, hook, "Could not determine active validator count from pre genesis state")
 }
 
-func newPowchainService(t *testing.T, eth1Backend *mock.TestAccount, beaconDB db.Database) *Service {
+func newPowchainService(t *testing.T, silaexecBackend *mock.TestAccount, beaconDB db.Database) *Service {
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
 	server, endpoint, err := mockExecution.SetupRPCServer()
@@ -699,17 +699,17 @@ func newPowchainService(t *testing.T, eth1Backend *mock.TestAccount, beaconDB db
 	})
 	web3Service, err := NewService(t.Context(),
 		WithHttpEndpoint(endpoint),
-		WithDepositContractAddress(eth1Backend.ContractAddr),
+		WithDepositContractAddress(silaexecBackend.ContractAddr),
 		WithDatabase(beaconDB),
 		WithDepositCache(depositCache),
 	)
-	require.NoError(t, err, "unable to setup web3 ETH1.0 chain service")
+	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(eth1Backend.ContractAddr, eth1Backend.Backend.Client())
+	web3Service.depositContractCaller, err = contracts.NewDepositContractCaller(silaexecBackend.ContractAddr, silaexecBackend.Backend.Client())
 	require.NoError(t, err)
 
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: eth1Backend.Backend}
-	web3Service.httpLogger = &goodLogger{backend: eth1Backend.Backend}
+	web3Service.rpcClient = &mockExecution.RPCClient{Backend: silaexecBackend.Backend}
+	web3Service.httpLogger = &goodLogger{backend: silaexecBackend.Backend}
 	params.SetupTestConfigCleanup(t)
 	bConfig := params.MinimalSpecConfig().Copy()
 	bConfig.MinGenesisTime = 0

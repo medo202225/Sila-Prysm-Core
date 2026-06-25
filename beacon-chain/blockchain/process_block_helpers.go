@@ -462,7 +462,7 @@ func (s *Service) insertFinalizedDepositsAndPrune(ctx context.Context, fRoot [32
 	// Check if we should prune all pending deposits.
 	// In post-Electra(after the legacy deposit mechanism is deprecated),
 	// we can prune all pending deposits in the deposit cache.
-	// See: https://eips.ethereum.org/EIPS/eip-6110#eth1data-poll-deprecation
+	// See: https://eips.ethereum.org/EIPS/eip-6110#silaExecutionData-poll-deprecation
 	if helpers.DepositRequestsStarted(finalizedState) {
 		s.pruneAllPendingDepositsAndProofs(ctx)
 		return
@@ -470,30 +470,30 @@ func (s *Service) insertFinalizedDepositsAndPrune(ctx context.Context, fRoot [32
 
 	// We update the cache up to the last deposit index in the finalized block's state.
 	// We can be confident that these deposits will be included in some block
-	// because the Eth1 follow distance makes such long-range reorgs extremely unlikely.
-	eth1DepositIndex, err := mathutil.Int(finalizedState.Eth1DepositIndex())
+	// because the SilaExecution follow distance makes such long-range reorgs extremely unlikely.
+	silaExecutionDepositIndex, err := mathutil.Int(finalizedState.SilaExecutionDepositIndex())
 	if err != nil {
-		log.WithError(err).Error("Could not cast eth1 deposit index")
+		log.WithError(err).Error("Could not cast silaexec deposit index")
 		return
 	}
 	// The deposit index in the state is always the index of the next deposit
 	// to be included(rather than the last one to be processed). This was most likely
 	// done as the state cannot represent signed integers.
-	finalizedEth1DepIdx := eth1DepositIndex - 1
-	if err = s.cfg.DepositCache.InsertFinalizedDeposits(ctx, int64(finalizedEth1DepIdx), common.Hash(finalizedState.Eth1Data().BlockHash),
+	finalizedSilaExecutionDepIdx := silaExecutionDepositIndex - 1
+	if err = s.cfg.DepositCache.InsertFinalizedDeposits(ctx, int64(finalizedSilaExecutionDepIdx), common.Hash(finalizedState.SilaExecutionData().BlockHash),
 		0 /* Setting a zero value as we have no access to block height */); err != nil {
 		log.WithError(err).Error("Could not insert finalized deposits")
 		return
 	}
 	// Deposit proofs are only used during state transition and can be safely removed to save space.
-	if err = s.cfg.DepositCache.PruneProofs(ctx, int64(finalizedEth1DepIdx)); err != nil {
+	if err = s.cfg.DepositCache.PruneProofs(ctx, int64(finalizedSilaExecutionDepIdx)); err != nil {
 		log.WithError(err).Error("Could not prune deposit proofs")
 	}
 	// Prune deposits which have already been finalized, the below method prunes all pending deposits (non-inclusive) up
-	// to the provided eth1 deposit index.
-	s.cfg.DepositCache.PrunePendingDeposits(ctx, int64(eth1DepositIndex)) // lint:ignore uintcast -- Deposit index should not exceed int64 in your lifetime.
+	// to the provided silaexec deposit index.
+	s.cfg.DepositCache.PrunePendingDeposits(ctx, int64(silaExecutionDepositIndex)) // lint:ignore uintcast -- Deposit index should not exceed int64 in your lifetime.
 
-	log.WithField("duration", time.Since(startTime).String()).Debugf("Finalized deposit insertion completed at index %d", finalizedEth1DepIdx)
+	log.WithField("duration", time.Since(startTime).String()).Debugf("Finalized deposit insertion completed at index %d", finalizedSilaExecutionDepIdx)
 }
 
 // pruneAllPendingDepositsAndProofs prunes all proofs and pending deposits in the cache.

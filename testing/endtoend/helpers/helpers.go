@@ -408,7 +408,7 @@ func GracefulStop(p *os.Process) error {
 }
 
 func MinerRPCClient() (*ethclient.Client, error) {
-	client, err := rpc.DialHTTP(e2e.TestParams.Eth1RPCURL(e2e.MinerComponentOffset).String())
+	client, err := rpc.DialHTTP(e2e.TestParams.SilaExecutionRPCURL(e2e.MinerComponentOffset).String())
 	if err != nil {
 		return nil, err
 	}

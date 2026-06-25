@@ -296,7 +296,7 @@ func TestService_ValidateBlsToExecutionChange(t *testing.T) {
 				st, keys := util.DeterministicGenesisStateCapella(t, 128)
 				assert.NoError(t, st.ApplyToEveryValidator(func(idx int, val state.ReadOnlyValidator) (*silapb.Validator, error) {
 					newCreds := make([]byte, 32)
-					newCreds[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+					newCreds[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 					copy(newCreds[12:], wantedExecAddress)
 					newVal := val.Copy()
 					newVal.WithdrawalCredentials = newCreds

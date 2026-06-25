@@ -19,8 +19,8 @@ type FaultyExecutionChain struct {
 	HashesByHeight map[int][]byte
 }
 
-// Eth2GenesisPowchainInfo --
-func (*FaultyExecutionChain) Eth2GenesisPowchainInfo() (uint64, *big.Int) {
+// SilaConsensusGenesisPowchainInfo --
+func (*FaultyExecutionChain) SilaConsensusGenesisPowchainInfo() (uint64, *big.Int) {
 	return 0, big.NewInt(0)
 }
 
@@ -48,9 +48,9 @@ func (*FaultyExecutionChain) BlockByTimestamp(context.Context, uint64) (*types.H
 	return &types.HeaderInfo{Number: big.NewInt(0)}, nil
 }
 
-// ChainStartEth1Data --
-func (*FaultyExecutionChain) ChainStartEth1Data() *silapb.Eth1Data {
-	return &silapb.Eth1Data{}
+// ChainStartSilaExecutionData --
+func (*FaultyExecutionChain) ChainStartSilaExecutionData() *silapb.SilaExecutionData {
+	return &silapb.SilaExecutionData{}
 }
 
 // PreGenesisState --
@@ -67,7 +67,7 @@ func (*FaultyExecutionChain) ClearPreGenesisData() {
 	// no-op
 }
 
-// IsConnectedToETH1 --
-func (*FaultyExecutionChain) IsConnectedToETH1() bool {
+// IsConnectedToSilaExecution --
+func (*FaultyExecutionChain) IsConnectedToSilaExecution() bool {
 	return true
 }

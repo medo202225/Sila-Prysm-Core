@@ -33,9 +33,9 @@ func DefaultDataDir() string {
 	if home != "" {
 		switch runtime.GOOS {
 		case "darwin":
-			return filepath.Join(home, "Library", "Eth2")
+			return filepath.Join(home, "Library", "SilaConsensus")
 		case "windows":
-			return filepath.Join(home, "AppData", "Local", "Eth2")
+			return filepath.Join(home, "AppData", "Local", "SilaConsensus")
 		default:
 			return filepath.Join(home, ".sila")
 		}
@@ -68,7 +68,7 @@ func FixDefaultDataDir(prevDataDir, curDataDir string) error {
 		return err
 	}
 	if !prevDataDirExists {
-		// If no previous "%APPDATA%\Eth2" found, nothing to patch and move to new default location.
+		// If no previous "%APPDATA%\SilaConsensus" found, nothing to patch and move to new default location.
 		return nil
 	}
 

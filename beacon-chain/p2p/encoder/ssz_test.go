@@ -53,7 +53,7 @@ type AttesterSlashingElectraCreator struct{}
 type DepositCreator struct{}
 type VoluntaryExitCreator struct{}
 type SignedVoluntaryExitCreator struct{}
-type Eth1DataCreator struct{}
+type SilaExecutionDataCreator struct{}
 type BeaconBlockHeaderCreator struct{}
 type SignedBeaconBlockHeaderCreator struct{}
 type IndexedAttestationCreator struct{}
@@ -164,7 +164,7 @@ func (VoluntaryExitCreator) Create() MarshalerProtoMessage { return &silapb.Volu
 func (SignedVoluntaryExitCreator) Create() MarshalerProtoMessage {
 	return &silapb.SignedVoluntaryExit{}
 }
-func (Eth1DataCreator) Create() MarshalerProtoMessage          { return &silapb.Eth1Data{} }
+func (SilaExecutionDataCreator) Create() MarshalerProtoMessage          { return &silapb.SilaExecutionData{} }
 func (BeaconBlockHeaderCreator) Create() MarshalerProtoMessage { return &silapb.BeaconBlockHeader{} }
 func (SignedBeaconBlockHeaderCreator) Create() MarshalerProtoMessage {
 	return &silapb.SignedBeaconBlockHeader{}
@@ -340,7 +340,7 @@ var creators = []MarshalerProtoCreator{
 	DepositCreator{},
 	VoluntaryExitCreator{},
 	SignedVoluntaryExitCreator{},
-	Eth1DataCreator{},
+	SilaExecutionDataCreator{},
 	BeaconBlockHeaderCreator{},
 	SignedBeaconBlockHeaderCreator{},
 	IndexedAttestationCreator{},

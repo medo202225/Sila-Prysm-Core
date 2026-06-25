@@ -161,12 +161,12 @@ func VerifyDeposit(beaconState state.ReadOnlyBeaconState, deposit *silapb.Deposi
 	if deposit == nil || deposit.Data == nil {
 		return errors.New("received nil deposit or nil deposit data")
 	}
-	eth1Data := beaconState.Eth1Data()
-	if eth1Data == nil {
-		return errors.New("received nil eth1data in the beacon state")
+	silaexecData := beaconState.SilaExecutionData()
+	if silaexecData == nil {
+		return errors.New("received nil silaExecutionData in the beacon state")
 	}
 
-	receiptRoot := eth1Data.DepositRoot
+	receiptRoot := silaexecData.DepositRoot
 	leaf, err := deposit.Data.HashTreeRoot()
 	if err != nil {
 		return errors.Wrap(err, "could not tree hash deposit data")
@@ -174,7 +174,7 @@ func VerifyDeposit(beaconState state.ReadOnlyBeaconState, deposit *silapb.Deposi
 	if ok := trie.VerifyMerkleProofWithDepth(
 		receiptRoot,
 		leaf[:],
-		beaconState.Eth1DepositIndex(),
+		beaconState.SilaExecutionDepositIndex(),
 		deposit.Proof,
 		params.BeaconConfig().DepositContractTreeDepth,
 	); !ok {

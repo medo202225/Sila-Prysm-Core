@@ -12,7 +12,7 @@ import (
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	logTest "github.com/sirupsen/logrus/hooks/test"
-	keystorev4 "github.com/wealdtech/go-eth2-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 func TestLocalKeymanager_DeleteKeystores(t *testing.T) {

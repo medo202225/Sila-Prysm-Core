@@ -174,7 +174,7 @@ func (s *Signature) FastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte
 	return s.s.FastAggregateVerify(true, rawKeys, msg[:], dst)
 }
 
-// Eth2FastAggregateVerify implements a wrapper on top of bls's FastAggregateVerify. It accepts G2_POINT_AT_INFINITY signature
+// SilaConsensusFastAggregateVerify implements a wrapper on top of bls's FastAggregateVerify. It accepts G2_POINT_AT_INFINITY signature
 // when pubkeys empty.
 //
 // Spec code:
@@ -186,7 +186,7 @@ func (s *Signature) FastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte
 //	if len(pubkeys) == 0 and signature == G2_POINT_AT_INFINITY:
 //	    return True
 //	return bls.FastAggregateVerify(pubkeys, message, signature)
-func (s *Signature) Eth2FastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte) bool {
+func (s *Signature) SilaConsensusFastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte) bool {
 	if len(pubKeys) == 0 && bytes.Equal(s.Marshal(), common.InfiniteSignature[:]) {
 		return true
 	}

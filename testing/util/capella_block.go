@@ -87,9 +87,9 @@ func GenerateFullBlockCapella(
 
 	numToGen = conf.NumDeposits
 	var newDeposits []*silapb.Deposit
-	eth1Data := bState.Eth1Data()
+	silaexecData := bState.SilaExecutionData()
 	if numToGen > 0 {
-		newDeposits, eth1Data, err = generateDepositsAndEth1Data(bState, numToGen)
+		newDeposits, silaexecData, err = generateDepositsAndSilaExecutionData(bState, numToGen)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed generating %d deposits:", numToGen)
 		}
@@ -200,7 +200,7 @@ func GenerateFullBlockCapella(
 		ParentRoot:    parentRoot[:],
 		ProposerIndex: idx,
 		Body: &silapb.BeaconBlockBodyCapella{
-			Eth1Data:              eth1Data,
+			SilaExecutionData:              silaexecData,
 			RandaoReveal:          reveal,
 			ProposerSlashings:     pSlashings,
 			AttesterSlashings:     aSlashings,

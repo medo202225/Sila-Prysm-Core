@@ -144,7 +144,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 					StateRoot:     make([]byte, fieldparams.RootLength),
 					Body: &eth.BeaconBlockBody{
 						RandaoReveal: make([]byte, 32),
-						Eth1Data: &eth.Eth1Data{
+						SilaExecutionData: &eth.SilaExecutionData{
 							DepositRoot:  make([]byte, fieldparams.RootLength),
 							DepositCount: 0,
 							BlockHash:    make([]byte, 32),
@@ -257,7 +257,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 					StateRoot:     make([]byte, fieldparams.RootLength),
 					Body: &eth.BeaconBlockBodyAltair{
 						RandaoReveal: make([]byte, 32),
-						Eth1Data: &eth.Eth1Data{
+						SilaExecutionData: &eth.SilaExecutionData{
 							DepositRoot:  make([]byte, fieldparams.RootLength),
 							DepositCount: 0,
 							BlockHash:    make([]byte, 32),
@@ -803,7 +803,7 @@ func BeaconBlockAltair() *types.BeaconBlockAltair {
 		StateRoot:     make([]byte, fieldparams.RootLength),
 		Body: &types.BeaconBlockBodyAltair{
 			RandaoReveal: make([]byte, 32),
-			Eth1Data: &types.Eth1Data{
+			SilaExecutionData: &types.SilaExecutionData{
 				DepositRoot:  make([]byte, fieldparams.RootLength),
 				DepositCount: "0",
 				BlockHash:    make([]byte, 32),
@@ -873,7 +873,7 @@ func BeaconBlockAltair() *types.BeaconBlockAltair {
 func BeaconBlockBody() *types.BeaconBlockBody {
 	return &types.BeaconBlockBody{
 		RandaoReveal: make([]byte, 32),
-		Eth1Data: &types.Eth1Data{
+		SilaExecutionData: &types.SilaExecutionData{
 			DepositRoot:  make([]byte, fieldparams.RootLength),
 			DepositCount: "0",
 			BlockHash:    make([]byte, 32),

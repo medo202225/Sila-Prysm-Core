@@ -47,7 +47,7 @@ func (c *Cache) InsertDeposit(ctx context.Context, d *silapb.Deposit, blockNum u
 	}
 	// Keep the slice sorted on insertion in order to avoid costly sorting on retrieval.
 	heightIdx := sort.Search(len(c.deposits), func(i int) bool { return c.deposits[i].Index >= index })
-	depCtr := &silapb.DepositContainer{Deposit: d, Eth1BlockHeight: blockNum, DepositRoot: depositRoot[:], Index: index}
+	depCtr := &silapb.DepositContainer{Deposit: d, SilaExecutionBlockHeight: blockNum, DepositRoot: depositRoot[:], Index: index}
 	newDeposits := append(
 		[]*silapb.DepositContainer{depCtr},
 		c.deposits[heightIdx:]...)
@@ -83,8 +83,8 @@ func (c *Cache) InsertDepositContainers(ctx context.Context, ctrs []*silapb.Depo
 	historicalDepositsCount.Add(float64(len(ctrs)))
 }
 
-// InsertFinalizedDeposits inserts deposits up to eth1DepositIndex (inclusive) into the finalized deposits cache.
-func (c *Cache) InsertFinalizedDeposits(ctx context.Context, eth1DepositIndex int64,
+// InsertFinalizedDeposits inserts deposits up to silaExecutionDepositIndex (inclusive) into the finalized deposits cache.
+func (c *Cache) InsertFinalizedDeposits(ctx context.Context, silaExecutionDepositIndex int64,
 	executionHash common.Hash, executionNumber uint64) error {
 	ctx, span := trace.StartSpan(ctx, "Cache.InsertFinalizedDeposits")
 	defer span.End()
@@ -105,19 +105,19 @@ func (c *Cache) InsertFinalizedDeposits(ctx context.Context, eth1DepositIndex in
 	}
 	// In the event we have less deposits than we need to
 	// finalize we finalize till the index on which we do have it.
-	if len(c.deposits) <= int(eth1DepositIndex) {
-		eth1DepositIndex = int64(len(c.deposits)) - 1
+	if len(c.deposits) <= int(silaExecutionDepositIndex) {
+		silaExecutionDepositIndex = int64(len(c.deposits)) - 1
 	}
 	// If we finalize to some lower deposit index, we
 	// ignore it.
-	if int(eth1DepositIndex) < insertIndex {
+	if int(silaExecutionDepositIndex) < insertIndex {
 		return nil
 	}
 	currIdx := int64(depositTrie.depositCount) - 1
 
 	// Insert deposits into deposit trie.
 	for _, ctr := range c.deposits {
-		if ctr.Index > currIdx && ctr.Index <= eth1DepositIndex {
+		if ctr.Index > currIdx && ctr.Index <= silaExecutionDepositIndex {
 			rt, err := ctr.Deposit.Data.HashTreeRoot()
 			if err != nil {
 				return err
@@ -128,13 +128,13 @@ func (c *Cache) InsertFinalizedDeposits(ctx context.Context, eth1DepositIndex in
 		}
 	}
 
-	if err := depositTrie.Finalize(eth1DepositIndex, executionHash, executionNumber); err != nil {
+	if err := depositTrie.Finalize(silaExecutionDepositIndex, executionHash, executionNumber); err != nil {
 		return err
 	}
 
 	c.finalizedDeposits = finalizedDepositsContainer{
 		depositTree:     depositTrie,
-		merkleTrieIndex: eth1DepositIndex,
+		merkleTrieIndex: silaExecutionDepositIndex,
 	}
 	return nil
 }

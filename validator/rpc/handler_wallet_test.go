@@ -25,7 +25,7 @@ import (
 	validatorTesting "github.com/sila-chain/Sila-Consensus-Core/v7/validator/testing"
 	"github.com/google/uuid"
 	"github.com/tyler-smith/go-bip39"
-	keystorev4 "github.com/wealdtech/go-eth2-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 const strongPass = "29384283xasjasd32%%&*@*#*"

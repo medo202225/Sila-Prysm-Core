@@ -47,9 +47,9 @@ func TestUpgradeToFulu(t *testing.T) {
 	hr2 := mSt.HistoricalRoots()
 	require.DeepEqual(t, hr1, hr2)
 
-	require.DeepSSZEqual(t, preForkState.Eth1Data(), mSt.Eth1Data())
-	require.DeepSSZEqual(t, preForkState.Eth1DataVotes(), mSt.Eth1DataVotes())
-	require.DeepSSZEqual(t, preForkState.Eth1DepositIndex(), mSt.Eth1DepositIndex())
+	require.DeepSSZEqual(t, preForkState.SilaExecutionData(), mSt.SilaExecutionData())
+	require.DeepSSZEqual(t, preForkState.SilaExecutionDataVotes(), mSt.SilaExecutionDataVotes())
+	require.DeepSSZEqual(t, preForkState.SilaExecutionDepositIndex(), mSt.SilaExecutionDepositIndex())
 	require.DeepSSZEqual(t, preForkState.Validators(), mSt.Validators())
 	require.DeepSSZEqual(t, preForkState.Balances(), mSt.Balances())
 	require.DeepSSZEqual(t, preForkState.RandaoMixes(), mSt.RandaoMixes())

@@ -9,9 +9,9 @@ type BeaconState struct {
 	BlockRoots                  []string              `json:"block_roots"`
 	StateRoots                  []string              `json:"state_roots"`
 	HistoricalRoots             []string              `json:"historical_roots"`
-	Eth1Data                    *Eth1Data             `json:"eth1_data"`
-	Eth1DataVotes               []*Eth1Data           `json:"eth1_data_votes"`
-	Eth1DepositIndex            string                `json:"eth1_deposit_index"`
+	SilaExecutionData                    *SilaExecutionData             `json:"sila_execution_data"`
+	SilaExecutionDataVotes               []*SilaExecutionData           `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex            string                `json:"silaexec_deposit_index"`
 	Validators                  []*Validator          `json:"validators"`
 	Balances                    []string              `json:"balances"`
 	RandaoMixes                 []string              `json:"randao_mixes"`
@@ -33,9 +33,9 @@ type BeaconStateAltair struct {
 	BlockRoots                  []string           `json:"block_roots"`
 	StateRoots                  []string           `json:"state_roots"`
 	HistoricalRoots             []string           `json:"historical_roots"`
-	Eth1Data                    *Eth1Data          `json:"eth1_data"`
-	Eth1DataVotes               []*Eth1Data        `json:"eth1_data_votes"`
-	Eth1DepositIndex            string             `json:"eth1_deposit_index"`
+	SilaExecutionData                    *SilaExecutionData          `json:"sila_execution_data"`
+	SilaExecutionDataVotes               []*SilaExecutionData        `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex            string             `json:"silaexec_deposit_index"`
 	Validators                  []*Validator       `json:"validators"`
 	Balances                    []string           `json:"balances"`
 	RandaoMixes                 []string           `json:"randao_mixes"`
@@ -60,9 +60,9 @@ type BeaconStateBellatrix struct {
 	BlockRoots                   []string                `json:"block_roots"`
 	StateRoots                   []string                `json:"state_roots"`
 	HistoricalRoots              []string                `json:"historical_roots"`
-	Eth1Data                     *Eth1Data               `json:"eth1_data"`
-	Eth1DataVotes                []*Eth1Data             `json:"eth1_data_votes"`
-	Eth1DepositIndex             string                  `json:"eth1_deposit_index"`
+	SilaExecutionData                     *SilaExecutionData               `json:"sila_execution_data"`
+	SilaExecutionDataVotes                []*SilaExecutionData             `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex             string                  `json:"silaexec_deposit_index"`
 	Validators                   []*Validator            `json:"validators"`
 	Balances                     []string                `json:"balances"`
 	RandaoMixes                  []string                `json:"randao_mixes"`
@@ -88,9 +88,9 @@ type BeaconStateCapella struct {
 	BlockRoots                   []string                       `json:"block_roots"`
 	StateRoots                   []string                       `json:"state_roots"`
 	HistoricalRoots              []string                       `json:"historical_roots"`
-	Eth1Data                     *Eth1Data                      `json:"eth1_data"`
-	Eth1DataVotes                []*Eth1Data                    `json:"eth1_data_votes"`
-	Eth1DepositIndex             string                         `json:"eth1_deposit_index"`
+	SilaExecutionData                     *SilaExecutionData                      `json:"sila_execution_data"`
+	SilaExecutionDataVotes                []*SilaExecutionData                    `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex             string                         `json:"silaexec_deposit_index"`
 	Validators                   []*Validator                   `json:"validators"`
 	Balances                     []string                       `json:"balances"`
 	RandaoMixes                  []string                       `json:"randao_mixes"`
@@ -119,9 +119,9 @@ type BeaconStateDeneb struct {
 	BlockRoots                   []string                     `json:"block_roots"`
 	StateRoots                   []string                     `json:"state_roots"`
 	HistoricalRoots              []string                     `json:"historical_roots"`
-	Eth1Data                     *Eth1Data                    `json:"eth1_data"`
-	Eth1DataVotes                []*Eth1Data                  `json:"eth1_data_votes"`
-	Eth1DepositIndex             string                       `json:"eth1_deposit_index"`
+	SilaExecutionData                     *SilaExecutionData                    `json:"sila_execution_data"`
+	SilaExecutionDataVotes                []*SilaExecutionData                  `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex             string                       `json:"silaexec_deposit_index"`
 	Validators                   []*Validator                 `json:"validators"`
 	Balances                     []string                     `json:"balances"`
 	RandaoMixes                  []string                     `json:"randao_mixes"`
@@ -150,9 +150,9 @@ type BeaconStateElectra struct {
 	BlockRoots                    []string                     `json:"block_roots"`
 	StateRoots                    []string                     `json:"state_roots"`
 	HistoricalRoots               []string                     `json:"historical_roots"`
-	Eth1Data                      *Eth1Data                    `json:"eth1_data"`
-	Eth1DataVotes                 []*Eth1Data                  `json:"eth1_data_votes"`
-	Eth1DepositIndex              string                       `json:"eth1_deposit_index"`
+	SilaExecutionData                      *SilaExecutionData                    `json:"sila_execution_data"`
+	SilaExecutionDataVotes                 []*SilaExecutionData                  `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex              string                       `json:"silaexec_deposit_index"`
 	Validators                    []*Validator                 `json:"validators"`
 	Balances                      []string                     `json:"balances"`
 	RandaoMixes                   []string                     `json:"randao_mixes"`
@@ -190,9 +190,9 @@ type BeaconStateFulu struct {
 	BlockRoots                    []string                     `json:"block_roots"`
 	StateRoots                    []string                     `json:"state_roots"`
 	HistoricalRoots               []string                     `json:"historical_roots"`
-	Eth1Data                      *Eth1Data                    `json:"eth1_data"`
-	Eth1DataVotes                 []*Eth1Data                  `json:"eth1_data_votes"`
-	Eth1DepositIndex              string                       `json:"eth1_deposit_index"`
+	SilaExecutionData                      *SilaExecutionData                    `json:"sila_execution_data"`
+	SilaExecutionDataVotes                 []*SilaExecutionData                  `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex              string                       `json:"silaexec_deposit_index"`
 	Validators                    []*Validator                 `json:"validators"`
 	Balances                      []string                     `json:"balances"`
 	RandaoMixes                   []string                     `json:"randao_mixes"`
@@ -231,9 +231,9 @@ type BeaconStateGloas struct {
 	BlockRoots                    []string                    `json:"block_roots"`
 	StateRoots                    []string                    `json:"state_roots"`
 	HistoricalRoots               []string                    `json:"historical_roots"`
-	Eth1Data                      *Eth1Data                   `json:"eth1_data"`
-	Eth1DataVotes                 []*Eth1Data                 `json:"eth1_data_votes"`
-	Eth1DepositIndex              string                      `json:"eth1_deposit_index"`
+	SilaExecutionData                      *SilaExecutionData                   `json:"sila_execution_data"`
+	SilaExecutionDataVotes                 []*SilaExecutionData                 `json:"sila_execution_data_votes"`
+	SilaExecutionDepositIndex              string                      `json:"silaexec_deposit_index"`
 	Validators                    []*Validator                `json:"validators"`
 	Balances                      []string                    `json:"balances"`
 	RandaoMixes                   []string                    `json:"randao_mixes"`

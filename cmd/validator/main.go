@@ -245,7 +245,7 @@ func main() {
 			}).Info("Sila Validator started")
 
 			// Fix data dir for Windows users.
-			outdatedDataDir := filepath.Join(file.HomeDir(), "AppData", "Roaming", "Eth2Validators")
+			outdatedDataDir := filepath.Join(file.HomeDir(), "AppData", "Roaming", "SilaConsensusValidators")
 			currentDataDir := flags.DefaultValidatorDir()
 			if err := cmd.FixDefaultDataDir(outdatedDataDir, currentDataDir); err != nil {
 				log.WithError(err).Error("Cannot update data directory")

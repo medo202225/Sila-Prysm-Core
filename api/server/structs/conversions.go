@@ -745,8 +745,8 @@ func (sc *SyncCommittee) ToConsensus() (*eth.SyncCommittee, error) {
 	}, nil
 }
 
-func Eth1DataFromConsensus(e1d *eth.Eth1Data) *Eth1Data {
-	return &Eth1Data{
+func SilaExecutionDataFromConsensus(e1d *eth.SilaExecutionData) *SilaExecutionData {
+	return &SilaExecutionData{
 		DepositRoot:  hexutil.Encode(e1d.DepositRoot),
 		DepositCount: fmt.Sprintf("%d", e1d.DepositCount),
 		BlockHash:    hexutil.Encode(e1d.BlockHash),

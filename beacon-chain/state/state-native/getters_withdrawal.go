@@ -15,7 +15,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const ETH1AddressOffset = 12
+const SilaExecutionAddressOffset = 12
 
 // NextWithdrawalIndex returns the index that will be assigned to the next withdrawal.
 func (b *BeaconState) NextWithdrawalIndex() (uint64, error) {
@@ -215,7 +215,7 @@ func (b *BeaconState) appendValidatorsSweepWithdrawals(withdrawalIndex uint64, w
 			ws = append(ws, &enginev1.Withdrawal{
 				Index:          withdrawalIndex,
 				ValidatorIndex: validatorIndex,
-				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[ETH1AddressOffset:]),
+				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[SilaExecutionAddressOffset:]),
 				Amount:         balance,
 			})
 			withdrawalIndex++
@@ -223,7 +223,7 @@ func (b *BeaconState) appendValidatorsSweepWithdrawals(withdrawalIndex uint64, w
 			ws = append(ws, &enginev1.Withdrawal{
 				Index:          withdrawalIndex,
 				ValidatorIndex: validatorIndex,
-				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[ETH1AddressOffset:]),
+				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[SilaExecutionAddressOffset:]),
 				Amount:         balance - helpers.ValidatorMaxEffectiveBalance(val),
 			})
 			withdrawalIndex++

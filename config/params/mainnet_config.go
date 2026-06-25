@@ -140,7 +140,7 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 
 	// Initial value constants.
 	BLSWithdrawalPrefixByte:         byte(0),
-	ETH1AddressWithdrawalPrefixByte: byte(1),
+	SilaExecutionAddressWithdrawalPrefixByte: byte(1),
 	CompoundingWithdrawalPrefixByte: byte(2),
 	BuilderWithdrawalPrefixByte:     byte(3),
 	BuilderIndexSelfBuild:           primitives.BuilderIndex(math.MaxUint64),
@@ -154,13 +154,13 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	SqrRootSlotsPerEpoch:             5,
 	MinSeedLookahead:                 1,
 	MaxSeedLookahead:                 4,
-	EpochsPerEth1VotingPeriod:        64,
+	EpochsPerSilaExecutionVotingPeriod:        64,
 	SlotsPerHistoricalRoot:           8192,
 	MinValidatorWithdrawabilityDelay: 256,
 	MinBuilderWithdrawabilityDelay:   8192,
 	ShardCommitteePeriod:             256,
 	MinEpochsToInactivityPenalty:     4,
-	Eth1FollowDistance:               2048,
+	SilaExecutionFollowDistance:               2048,
 
 	// Fork choice algorithm constants.
 	ProposerScoreBoost:              40,
@@ -184,21 +184,21 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	EquivocationEarlyDueBPS:  primitives.BP(7500),
 
 	// Sila execution-layer PoW compatibility parameters.
-	DepositChainID:         1, // Chain ID of eth1 mainnet.
-	DepositNetworkID:       1, // Network ID of eth1 mainnet.
+	DepositChainID:         1, // Chain ID of silaexec mainnet.
+	DepositNetworkID:       1, // Network ID of silaexec mainnet.
 	DepositContractAddress: "0x00000000219ab540356cBB839Cbe05303d7705Fa",
 
 	// Validator params.
 	RandomSubnetsPerValidator:         1 << 0,
 	EpochsPerRandomSubnetSubscription: 1 << 8,
 
-	// While eth1 mainnet block times are closer to 13s, we must conform with other clients in
-	// order to vote on the correct eth1 blocks.
+	// While silaexec mainnet block times are closer to 13s, we must conform with other clients in
+	// order to vote on the correct silaexec blocks.
 	//
 	// Additional context: https://github.com/sila-chain/Sila-Consensus-Specs/issues/2132
 	// Bug prompting this change: https://github.com/sila-chain/sila/issues/7856
 	// Future optimization: https://github.com/sila-chain/sila/issues/7739
-	SecondsPerETH1Block: 14,
+	SecondsPerSilaExecutionBlock: 14,
 
 	// State list length constants.
 	EpochsPerHistoricalVector: 65536,

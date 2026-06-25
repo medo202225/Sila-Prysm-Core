@@ -194,7 +194,7 @@ func (s *PremineGenesisConfig) empty() (state.BeaconState, error) {
 	if err = e.SetFinalizedCheckpoint(zcp); err != nil {
 		return nil, err
 	}
-	if err = e.SetEth1DataVotes([]*silapb.Eth1Data{}); err != nil {
+	if err = e.SetSilaExecutionDataVotes([]*silapb.SilaExecutionData{}); err != nil {
 		return nil, err
 	}
 	if s.Version == version.Phase0 {
@@ -213,10 +213,10 @@ func (s *PremineGenesisConfig) processDeposits(ctx context.Context, g state.Beac
 	if err != nil {
 		return err
 	}
-	if err = s.setEth1Data(g); err != nil {
+	if err = s.setSilaExecutionData(g); err != nil {
 		return err
 	}
-	if _, err = helpers.UpdateGenesisEth1Data(g, deposits, g.Eth1Data()); err != nil {
+	if _, err = helpers.UpdateGenesisSilaExecutionData(g, deposits, g.SilaExecutionData()); err != nil {
 		return err
 	}
 
@@ -263,15 +263,15 @@ func (s *PremineGenesisConfig) keys() ([]bls.SecretKey, []bls.PublicKey, error) 
 	return prv, pub, nil
 }
 
-func (s *PremineGenesisConfig) setEth1Data(g state.BeaconState) error {
-	if err := g.SetEth1DepositIndex(0); err != nil {
+func (s *PremineGenesisConfig) setSilaExecutionData(g state.BeaconState) error {
+	if err := g.SetSilaExecutionDepositIndex(0); err != nil {
 		return err
 	}
 	dr, err := emptyDepositRoot()
 	if err != nil {
 		return err
 	}
-	return g.SetEth1Data(&silapb.Eth1Data{DepositRoot: dr[:], BlockHash: s.GB.Hash().Bytes()})
+	return g.SetSilaExecutionData(&silapb.SilaExecutionData{DepositRoot: dr[:], BlockHash: s.GB.Hash().Bytes()})
 }
 
 func emptyDepositRoot() ([32]byte, error) {
@@ -325,8 +325,8 @@ func (s *PremineGenesisConfig) populate(g state.BeaconState) error {
 	}
 
 	// For pre-mined genesis, we want to keep the deposit root set to the root of an empty trie.
-	// This needs to be set again because the methods used by processDeposits mutate the state's eth1data.
-	return s.setEth1Data(g)
+	// This needs to be set again because the methods used by processDeposits mutate the state's silaExecutionData.
+	return s.setSilaExecutionData(g)
 }
 
 func (s *PremineGenesisConfig) setGenesisValidatorsRoot(g state.BeaconState) error {
@@ -444,7 +444,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Phase0:
 		body = &silapb.BeaconBlockBody{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},
@@ -453,7 +453,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Altair:
 		body = &silapb.BeaconBlockBodyAltair{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},
@@ -466,7 +466,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Bellatrix:
 		body = &silapb.BeaconBlockBodyBellatrix{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},
@@ -491,7 +491,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Capella:
 		body = &silapb.BeaconBlockBodyCapella{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},
@@ -518,7 +518,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Deneb:
 		body = &silapb.BeaconBlockBodyDeneb{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},
@@ -546,7 +546,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Electra:
 		body = &silapb.BeaconBlockBodyElectra{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},
@@ -579,7 +579,7 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 	case version.Fulu:
 		body = &silapb.BeaconBlockBodyElectra{
 			RandaoReveal: make([]byte, 96),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot: make([]byte, 32),
 				BlockHash:   make([]byte, 32),
 			},

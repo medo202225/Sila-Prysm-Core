@@ -55,7 +55,7 @@ type ReadOnlyDatabase interface {
 	// Deposit contract related handlers.
 	DepositContractAddress(ctx context.Context) ([]byte, error)
 	// ExecutionChainData operations.
-	ExecutionChainData(ctx context.Context) (*silapb.ETH1ChainData, error)
+	ExecutionChainData(ctx context.Context) (*silapb.SilaExecutionChainData, error)
 	// Fee recipients operations.
 	FeeRecipientByValidatorID(ctx context.Context, id primitives.ValidatorIndex) (common.Address, error)
 	RegistrationByValidatorID(ctx context.Context, id primitives.ValidatorIndex) (*silapb.ValidatorRegistrationV1, error)
@@ -111,7 +111,7 @@ type NoHeadAccessDatabase interface {
 	// Deposit contract related handlers.
 	SaveDepositContractAddress(ctx context.Context, addr common.Address) error
 	// SaveExecutionChainData operations.
-	SaveExecutionChainData(ctx context.Context, data *silapb.ETH1ChainData) error
+	SaveExecutionChainData(ctx context.Context, data *silapb.SilaExecutionChainData) error
 	// Run any required database migrations.
 	RunMigrations(ctx context.Context) error
 	// Fee recipients operations.

@@ -43,24 +43,24 @@ func (m *MockNodeClient) EXPECT() *MockNodeClientMockRecorder {
 	return m.recorder
 }
 
-// GetETH1ConnectionStatus mocks base method.
-func (m *MockNodeClient) GetETH1ConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.ETH1ConnectionStatus, error) {
+// GetSilaExecutionConnectionStatus mocks base method.
+func (m *MockNodeClient) GetSilaExecutionConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.SilaExecutionConnectionStatus, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "GetETH1ConnectionStatus", varargs...)
-	ret0, _ := ret[0].(*eth.ETH1ConnectionStatus)
+	ret := m.ctrl.Call(m, "GetSilaExecutionConnectionStatus", varargs...)
+	ret0, _ := ret[0].(*eth.SilaExecutionConnectionStatus)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetETH1ConnectionStatus indicates an expected call of GetETH1ConnectionStatus.
-func (mr *MockNodeClientMockRecorder) GetETH1ConnectionStatus(ctx, in any, opts ...any) *gomock.Call {
+// GetSilaExecutionConnectionStatus indicates an expected call of GetSilaExecutionConnectionStatus.
+func (mr *MockNodeClientMockRecorder) GetSilaExecutionConnectionStatus(ctx, in any, opts ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetETH1ConnectionStatus", reflect.TypeOf((*MockNodeClient)(nil).GetETH1ConnectionStatus), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSilaExecutionConnectionStatus", reflect.TypeOf((*MockNodeClient)(nil).GetSilaExecutionConnectionStatus), varargs...)
 }
 
 // GetGenesis mocks base method.

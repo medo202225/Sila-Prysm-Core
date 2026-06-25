@@ -72,12 +72,12 @@ func ProcessDeposits(
 //		leaf=hash_tree_root(deposit.data),
 //		branch=deposit.proof,
 //		depth=DEPOSIT_CONTRACT_TREE_DEPTH + 1,  # Add 1 for the List length mix-in
-//		index=state.eth1_deposit_index,
-//		root=state.eth1_data.deposit_root,
+//		index=state.silaexec_deposit_index,
+//		root=state.sila_execution_data.deposit_root,
 //	)
 //
 //	 # Deposits must be processed in order
-//	 state.eth1_deposit_index += 1
+//	 state.silaexec_deposit_index += 1
 //
 //	 apply_deposit(
 //	  state=state,
@@ -93,7 +93,7 @@ func ProcessDeposit(beaconState state.BeaconState, deposit *silapb.Deposit, allS
 		}
 		return nil, errors.Wrapf(err, "could not verify deposit from %#x", bytesutil.Trunc(deposit.Data.PublicKey))
 	}
-	if err := beaconState.SetEth1DepositIndex(beaconState.Eth1DepositIndex() + 1); err != nil {
+	if err := beaconState.SetSilaExecutionDepositIndex(beaconState.SilaExecutionDepositIndex() + 1); err != nil {
 		return nil, err
 	}
 

@@ -233,9 +233,9 @@ func (node *BeaconNode) Start(ctx context.Context) error {
 	if node.config.TestCheckpointSync {
 		expectedNumOfPeers += 1
 	}
-	jwtPath := path.Join(e2e.TestParams.TestPath, "eth1data/"+strconv.Itoa(node.index)+"/")
+	jwtPath := path.Join(e2e.TestParams.TestPath, "silaExecutionData/"+strconv.Itoa(node.index)+"/")
 	if index == 0 {
-		jwtPath = path.Join(e2e.TestParams.TestPath, "eth1data/miner/")
+		jwtPath = path.Join(e2e.TestParams.TestPath, "silaExecutionData/miner/")
 	}
 	jwtPath = path.Join(jwtPath, "geth/jwtsecret")
 
@@ -253,7 +253,7 @@ func (node *BeaconNode) Start(ctx context.Context) error {
 		fmt.Sprintf("--%s=%s", cmdshared.LogFileName.Name, stdOutFile.Name()),
 		fmt.Sprintf("--%s=%s", flags.DepositContractFlag.Name, params.BeaconConfig().DepositContractAddress),
 		fmt.Sprintf("--%s=%d", flags.RPCPort.Name, e2e.TestParams.Ports.SilaBeaconNodeRPCPort+index),
-		fmt.Sprintf("--%s=http://127.0.0.1:%d", flags.ExecutionEngineEndpoint.Name, e2e.TestParams.Ports.Eth1ProxyPort+index),
+		fmt.Sprintf("--%s=http://127.0.0.1:%d", flags.ExecutionEngineEndpoint.Name, e2e.TestParams.Ports.SilaExecutionProxyPort+index),
 		fmt.Sprintf("--%s=%s", flags.ExecutionJWTSecretFlag.Name, jwtPath),
 		fmt.Sprintf("--%s=%d", flags.MinSyncPeers.Name, 1),
 		fmt.Sprintf("--%s=%d", cmdshared.P2PUDPPort.Name, e2e.TestParams.Ports.SilaBeaconNodeUDPPort+index),
@@ -287,7 +287,7 @@ func (node *BeaconNode) Start(ctx context.Context) error {
 		args = append(args, features.E2EBeaconChainFlags...)
 	}
 	if config.UseBuilder {
-		args = append(args, fmt.Sprintf("--%s=%s:%d", flags.MevRelayEndpoint.Name, "http://127.0.0.1", e2e.TestParams.Ports.Eth1ProxyPort+index))
+		args = append(args, fmt.Sprintf("--%s=%s:%d", flags.MevRelayEndpoint.Name, "http://127.0.0.1", e2e.TestParams.Ports.SilaExecutionProxyPort+index))
 	}
 	args = append(args, config.BeaconFlags...)
 
@@ -352,10 +352,10 @@ func (node *BeaconNode) UnderlyingProcess() *os.Process {
 }
 
 func GenerateGenesis(ctx context.Context) (state.BeaconState, error) {
-	if e2e.TestParams.Eth1GenesisBlock == nil {
-		return nil, errors.New("Cannot construct bellatrix block, e2e.TestParams.Eth1GenesisBlock == nil")
+	if e2e.TestParams.SilaExecutionGenesisBlock == nil {
+		return nil, errors.New("Cannot construct bellatrix block, e2e.TestParams.SilaExecutionGenesisBlock == nil")
 	}
-	gb := e2e.TestParams.Eth1GenesisBlock
+	gb := e2e.TestParams.SilaExecutionGenesisBlock
 	t := e2e.TestParams.CLGenesisTime
 	pcreds := e2e.TestParams.NumberOfExecutionCreds
 	nvals := params.BeaconConfig().MinGenesisActiveValidatorCount

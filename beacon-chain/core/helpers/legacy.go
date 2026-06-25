@@ -16,5 +16,5 @@ func DepositRequestsStarted(beaconState state.BeaconState) bool {
 		return false
 	}
 
-	return beaconState.Eth1DepositIndex() == requestsStartIndex
+	return beaconState.SilaExecutionDepositIndex() == requestsStartIndex
 }

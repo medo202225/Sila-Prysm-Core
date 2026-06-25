@@ -965,7 +965,7 @@ func (x *ValidatorStatusRequest) GetPublicKey() []byte {
 type ValidatorStatusResponse struct {
 	state                     protoimpl.MessageState                                            `protogen:"open.v1"`
 	Status                    ValidatorStatus                                                   `protobuf:"varint,1,opt,name=status,proto3,enum=ethereum.eth.v1alpha1.ValidatorStatus" json:"status,omitempty"`
-	Eth1DepositBlockNumber    uint64                                                            `protobuf:"varint,2,opt,name=eth1_deposit_block_number,json=eth1DepositBlockNumber,proto3" json:"eth1_deposit_block_number,omitempty"`
+	SilaExecutionDepositBlockNumber    uint64                                                            `protobuf:"varint,2,opt,name=silaexec_deposit_block_number,json=silaexecDepositBlockNumber,proto3" json:"silaexec_deposit_block_number,omitempty"`
 	DepositInclusionSlot      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,3,opt,name=deposit_inclusion_slot,json=depositInclusionSlot,proto3" json:"deposit_inclusion_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	ActivationEpoch           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,4,opt,name=activation_epoch,json=activationEpoch,proto3" json:"activation_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	PositionInActivationQueue uint64                                                            `protobuf:"varint,5,opt,name=position_in_activation_queue,json=positionInActivationQueue,proto3" json:"position_in_activation_queue,omitempty"`
@@ -1010,9 +1010,9 @@ func (x *ValidatorStatusResponse) GetStatus() ValidatorStatus {
 	return ValidatorStatus_UNKNOWN_STATUS
 }
 
-func (x *ValidatorStatusResponse) GetEth1DepositBlockNumber() uint64 {
+func (x *ValidatorStatusResponse) GetSilaExecutionDepositBlockNumber() uint64 {
 	if x != nil {
-		return x.Eth1DepositBlockNumber
+		return x.SilaExecutionDepositBlockNumber
 	}
 	return 0
 }

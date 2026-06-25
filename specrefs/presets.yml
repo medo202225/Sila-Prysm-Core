@@ -52,14 +52,14 @@
     EFFECTIVE_BALANCE_INCREMENT: Gwei = 1000000000
     </spec>
 
-- name: EPOCHS_PER_ETH1_VOTING_PERIOD#phase0
+- name: EPOCHS_PER_SilaExecution_VOTING_PERIOD#phase0
   sources:
     - file: config/params/config.go
-      search: EpochsPerEth1VotingPeriod\s+.*yaml:"EPOCHS_PER_ETH1_VOTING_PERIOD"
+      search: EpochsPerSilaExecutionVotingPeriod\s+.*yaml:"EPOCHS_PER_SilaExecution_VOTING_PERIOD"
       regex: true
   spec: |
-    <spec preset_var="EPOCHS_PER_ETH1_VOTING_PERIOD" fork="phase0" hash="6b6a0053">
-    EPOCHS_PER_ETH1_VOTING_PERIOD: uint64 = 64
+    <spec preset_var="EPOCHS_PER_SilaExecution_VOTING_PERIOD" fork="phase0" hash="6b6a0053">
+    EPOCHS_PER_SilaExecution_VOTING_PERIOD: uint64 = 64
     </spec>
 
 - name: EPOCHS_PER_HISTORICAL_VECTOR#phase0

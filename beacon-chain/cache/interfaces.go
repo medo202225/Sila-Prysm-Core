@@ -31,7 +31,7 @@ type DepositFetcher interface {
 type DepositInserter interface {
 	InsertDeposit(ctx context.Context, d *silapb.Deposit, blockNum uint64, index int64, depositRoot [32]byte) error
 	InsertDepositContainers(ctx context.Context, ctrs []*silapb.DepositContainer)
-	InsertFinalizedDeposits(ctx context.Context, eth1DepositIndex int64, executionHash common.Hash, executionNumber uint64) error
+	InsertFinalizedDeposits(ctx context.Context, silaExecutionDepositIndex int64, executionHash common.Hash, executionNumber uint64) error
 }
 
 // FinalizedFetcher is a smaller interface defined to be the bare minimum to satisfy “Service”.

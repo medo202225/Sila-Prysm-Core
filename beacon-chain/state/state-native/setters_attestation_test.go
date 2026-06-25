@@ -46,7 +46,7 @@ func TestAppendBeyondIndicesLimit(t *testing.T) {
 		CurrentEpochAttestations:  []*silapb.PendingAttestation{{Data: &silapb.AttestationData{Slot: 456}}},
 		PreviousEpochAttestations: []*silapb.PendingAttestation{{Data: &silapb.AttestationData{Slot: 123}}},
 		Validators:                []*silapb.Validator{},
-		Eth1Data:                  &silapb.Eth1Data{},
+		SilaExecutionData:                  &silapb.SilaExecutionData{},
 		BlockRoots:                mockblockRoots,
 		StateRoots:                mockstateRoots,
 		RandaoMixes:               mockrandaoMixes,

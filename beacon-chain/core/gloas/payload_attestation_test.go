@@ -275,7 +275,7 @@ func buildBody(t *testing.T, atts ...*eth.PayloadAttestation) interfaces.ReadOnl
 	body := &eth.BeaconBlockBodyGloas{
 		PayloadAttestations:   atts,
 		RandaoReveal:          make([]byte, 96),
-		Eth1Data:              &eth.Eth1Data{},
+		SilaExecutionData:              &eth.SilaExecutionData{},
 		Graffiti:              make([]byte, 32),
 		ProposerSlashings:     []*eth.ProposerSlashing{},
 		AttesterSlashings:     []*eth.AttesterSlashingElectra{},

@@ -60,7 +60,7 @@ type Server struct {
 	BlockFetcher                     execution.POWBlockFetcher
 	DepositFetcher                   cache.DepositFetcher
 	ChainStartFetcher                execution.ChainStartFetcher
-	Eth1InfoFetcher                  execution.ChainInfoFetcher
+	SilaExecutionInfoFetcher                  execution.ChainInfoFetcher
 	OptimisticModeFetcher            blockchain.OptimisticModeFetcher
 	SyncChecker                      silaSync.Checker
 	StateNotifier                    statefeed.Notifier
@@ -77,8 +77,8 @@ type Server struct {
 	ExecutionPayloadEnvelopeReceiver blockchain.ExecutionPayloadEnvelopeReceiver
 	BlobReceiver                     blockchain.BlobReceiver
 	DataColumnReceiver               blockchain.DataColumnReceiver
-	MockEth1Votes                    bool
-	Eth1BlockFetcher                 execution.POWBlockFetcher
+	MockSilaExecutionVotes                    bool
+	SilaExecutionBlockFetcher                 execution.POWBlockFetcher
 	PendingDepositsFetcher           depositsnapshot.PendingDepositsFetcher
 	OperationNotifier                opfeed.Notifier
 	StateGen                         stategen.StateManager

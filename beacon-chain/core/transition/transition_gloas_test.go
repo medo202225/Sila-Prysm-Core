@@ -81,7 +81,7 @@ func newGloasState(t *testing.T, slot primitives.Slot, availability []byte) stat
 			BlobKzgCommitments:    [][]byte{make([]byte, 48)},
 			ExecutionRequestsRoot: make([]byte, 32),
 		},
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: make([]byte, 32),
 			BlockHash:   make([]byte, 32),
 		},

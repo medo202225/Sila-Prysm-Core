@@ -262,9 +262,9 @@ func TestDataColumnSidecarsByRootReq_Marshal(t *testing.T) {
 
 		Python code to generate the expected value
 
-		# pip install eth2spec # external Ethereum spec helper
+		# pip install silaconsensusspec # external Ethereum spec helper
 
-		from eth2spec.utils.ssz import ssz_typing  # external helper
+		from silaconsensusspec.utils.ssz import ssz_typing  # external helper
 
 		Container = ssz_typing.Container
 		List = ssz_typing.List

@@ -3240,29 +3240,29 @@ def sila_deps():
         version = "v1.1.1",
     )
     go_repository(
-        name = "com_github_wealdtech_go_eth2_types_v2",
+        name = "com_github_wealdtech_go_silaconsensus_types_v2",
         build_directives = [
             "gazelle:resolve go github.com/herumi/bls-eth-go-binary/bls @herumi_bls_eth_go_binary//:go_default_library",
         ],
-        importpath = "github.com/wealdtech/go-eth2-types/v2",
+        importpath = "github.com/wealdtech/go-silaconsensus-types/v2",
         sum = "h1:b5aXlNBLKgjAg/Fft9VvGlqAUCQMP5LzYhlHRrr4yPg=",
         version = "v2.8.2",
     )
     go_repository(
-        name = "com_github_wealdtech_go_eth2_util",
-        importpath = "github.com/wealdtech/go-eth2-util",
+        name = "com_github_wealdtech_go_silaconsensus_util",
+        importpath = "github.com/wealdtech/go-silaconsensus-util",
         sum = "h1:2INPeOR35x5LdFFpSzyw954WzTD+DFyHe3yKlJnG5As=",
         version = "v1.6.3",
     )
     go_repository(
-        name = "com_github_wealdtech_go_eth2_wallet_encryptor_keystorev4",
-        importpath = "github.com/wealdtech/go-eth2-wallet-encryptor-keystorev4",
+        name = "com_github_wealdtech_go_silaconsensus_wallet_encryptor_keystorev4",
+        importpath = "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4",
         sum = "h1:SxrDVSr+oXuT1x8kZt4uWqNCvv5xXEGV9zd7cuSrZS8=",
         version = "v1.1.3",
     )
     go_repository(
-        name = "com_github_wealdtech_go_eth2_wallet_types_v2",
-        importpath = "github.com/wealdtech/go-eth2-wallet-types/v2",
+        name = "com_github_wealdtech_go_silaconsensus_wallet_types_v2",
+        importpath = "github.com/wealdtech/go-silaconsensus-wallet-types/v2",
         sum = "h1:264/meVYWt1wFw6Mtn+xwkZkXjID42gNra4rycoiDXI=",
         version = "v2.8.2",
     )

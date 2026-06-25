@@ -167,7 +167,7 @@ func GethBPO2Time(genesisTime time.Time, cfg *clparams.BeaconChainConfig) *uint6
 	return nil
 }
 
-// GethTestnetGenesis creates a genesis.json for eth1 clients with a set of defaults suitable for ephemeral testnets,
+// GethTestnetGenesis creates a genesis.json for silaexec clients with a set of defaults suitable for ephemeral testnets,
 // like in an e2e test. The parameters are minimal but the full value is returned unmarshaled so that it can be
 // customized as desired.
 func GethTestnetGenesis(genesis time.Time, cfg *clparams.BeaconChainConfig) *core.Genesis {

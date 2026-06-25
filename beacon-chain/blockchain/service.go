@@ -361,18 +361,18 @@ func (s *Service) initializeHead(ctx context.Context, st state.BeaconState) erro
 
 // initializes the state and genesis block of the beacon chain to persistent storage
 // based on a genesis timestamp value obtained from the ChainStart event emitted
-// by the ETH1.0 Deposit Contract and the POWChain service of the node.
+// by the SILAEXEC.0 Deposit Contract and the POWChain service of the node.
 func (s *Service) initializeBeaconChain(
 	ctx context.Context,
 	genesisTime time.Time,
 	preGenesisState state.BeaconState,
-	eth1data *silapb.Eth1Data) (state.BeaconState, error) {
+	silaExecutionData *silapb.SilaExecutionData) (state.BeaconState, error) {
 	ctx, span := trace.StartSpan(ctx, "beacon-chain.Service.initializeBeaconChain")
 	defer span.End()
 	s.genesisTime = genesisTime.Truncate(time.Second) // Genesis time has a precision of 1 second.
 	unixTime := uint64(genesisTime.Unix())
 
-	genesisState, err := transition.OptimizedGenesisBeaconState(unixTime, preGenesisState, eth1data)
+	genesisState, err := transition.OptimizedGenesisBeaconState(unixTime, preGenesisState, silaExecutionData)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not initialize genesis state")
 	}

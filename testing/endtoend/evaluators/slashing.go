@@ -252,7 +252,7 @@ func generateSignedBeaconBlock(
 		StateRoot:     bytesutil.PadTo([]byte(stateRoot), hashLen),
 		ProposerIndex: proposerIndex,
 		Body: &eth.BeaconBlockBody{
-			Eth1Data: &eth.Eth1Data{
+			SilaExecutionData: &eth.SilaExecutionData{
 				BlockHash:    bytesutil.PadTo([]byte("bad block hash"), hashLen),
 				DepositRoot:  bytesutil.PadTo([]byte("bad deposit root"), hashLen),
 				DepositCount: 1,

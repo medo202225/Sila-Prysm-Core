@@ -71,10 +71,10 @@ func TestShouldFallback(t *testing.T) {
 }
 
 func TestProposer_PendingDeposits_Electra(t *testing.T) {
-	// Electra continues to pack deposits while the state eth1deposit index is less than the eth1depositIndexLimit
+	// Electra continues to pack deposits while the state silaexecdeposit index is less than the silaexecdepositIndexLimit
 	ctx := t.Context()
 
-	height := big.NewInt(int64(params.BeaconConfig().Eth1FollowDistance))
+	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
 	newHeight := big.NewInt(height.Int64() + 11000)
 	p := &mockExecution.Chain{
 		LatestBlockNumber: height,
@@ -84,27 +84,27 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		},
 	}
 
-	var votes []*silapb.Eth1Data
+	var votes []*silapb.SilaExecutionData
 
-	vote := &silapb.Eth1Data{
+	vote := &silapb.SilaExecutionData{
 		BlockHash:    bytesutil.PadTo([]byte("0x1"), 32),
 		DepositRoot:  make([]byte, 32),
 		DepositCount: 7,
 	}
-	period := uint64(params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().EpochsPerEth1VotingPeriod)))
+	period := uint64(params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().EpochsPerSilaExecutionVotingPeriod)))
 	for i := 0; i <= int(period/2); i++ {
 		votes = append(votes, vote)
 	}
 
 	beaconState, err := state_native.InitializeFromProtoElectra(&silapb.BeaconStateElectra{
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			BlockHash:    []byte("0x0"),
 			DepositRoot:  make([]byte, 32),
 			DepositCount: 5,
 		},
-		Eth1DepositIndex:          1,
+		SilaExecutionDepositIndex:          1,
 		DepositRequestsStartIndex: 7,
-		Eth1DataVotes:             votes,
+		SilaExecutionDataVotes:             votes,
 	})
 	require.NoError(t, err)
 	blk := util.NewBeaconBlockElectra()
@@ -120,7 +120,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 	readyDeposits := []*silapb.DepositContainer{
 		{
 			Index:           0,
-			Eth1BlockHeight: 8,
+			SilaExecutionBlockHeight: 8,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("a"), 48),
@@ -130,7 +130,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		},
 		{
 			Index:           1,
-			Eth1BlockHeight: 14,
+			SilaExecutionBlockHeight: 14,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("b"), 48),
@@ -143,7 +143,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 	recentDeposits := []*silapb.DepositContainer{
 		{
 			Index:           2,
-			Eth1BlockHeight: 5000,
+			SilaExecutionBlockHeight: 5000,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("c"), 48),
@@ -153,7 +153,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		},
 		{
 			Index:           3,
-			Eth1BlockHeight: 6000,
+			SilaExecutionBlockHeight: 6000,
 			Deposit: &silapb.Deposit{
 				Data: &silapb.Deposit_Data{
 					PublicKey:             bytesutil.PadTo([]byte("d"), 48),
@@ -175,37 +175,37 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 		assert.NoError(t, depositTrie.Insert(depositHash[:], int(dp.Index)))
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.Eth1BlockHeight, dp.Index, root))
+		assert.NoError(t, depositCache.InsertDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root))
 	}
 	for _, dp := range recentDeposits {
 		root, err := depositTrie.HashTreeRoot()
 		require.NoError(t, err)
-		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.Eth1BlockHeight, dp.Index, root)
+		depositCache.InsertPendingDeposit(ctx, dp.Deposit, dp.SilaExecutionBlockHeight, dp.Index, root)
 	}
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		Eth1InfoFetcher:        p,
-		Eth1BlockFetcher:       p,
+		SilaExecutionInfoFetcher:        p,
+		SilaExecutionBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 	}
 
-	deposits, err := bs.deposits(ctx, beaconState, &silapb.Eth1Data{})
+	deposits, err := bs.deposits(ctx, beaconState, &silapb.SilaExecutionData{})
 	require.NoError(t, err)
 	assert.Equal(t, 0, len(deposits), "Received unexpected list of deposits")
 
 	// It should also return the recent deposits after their follow window.
 	p.LatestBlockNumber = big.NewInt(0).Add(p.LatestBlockNumber, big.NewInt(10000))
 	// we should get our pending deposits once this vote pushes the vote tally to include
-	// the updated eth1 data.
+	// the updated silaexec data.
 	deposits, err = bs.deposits(ctx, beaconState, vote)
 	require.NoError(t, err)
 	assert.Equal(t, len(recentDeposits), len(deposits), "Received unexpected number of pending deposits")
 
-	require.NoError(t, beaconState.SetDepositRequestsStartIndex(0)) // set it to 0 so it's less than Eth1DepositIndex
+	require.NoError(t, beaconState.SetDepositRequestsStartIndex(0)) // set it to 0 so it's less than SilaExecutionDepositIndex
 	deposits, err = bs.deposits(ctx, beaconState, vote)
 	require.NoError(t, err)
 	assert.Equal(t, 0, len(deposits), "Received unexpected number of pending deposits")

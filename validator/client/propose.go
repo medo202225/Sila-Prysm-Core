@@ -38,7 +38,7 @@ const (
 )
 
 // ProposeBlock proposes a new beacon block for a given slot. This method collects the
-// previous beacon block, any pending deposits, and ETH1 data from the beacon
+// previous beacon block, any pending deposits, and SILAEXEC data from the beacon
 // chain node to construct the new block. The new block is then processed with
 // the state root computation, and finally signed by the validator before being
 // sent back to the beacon node for broadcasting.

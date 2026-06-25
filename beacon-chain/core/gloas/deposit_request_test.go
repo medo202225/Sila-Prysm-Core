@@ -256,7 +256,7 @@ func builderWithdrawalCredentials() [32]byte {
 
 func validatorWithdrawalCredentials() [32]byte {
 	var cred [32]byte
-	cred[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+	cred[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 	copy(cred[12:], bytes.Repeat([]byte{0x33}, 20))
 	return cred
 }

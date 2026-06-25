@@ -25,17 +25,17 @@ func (vs *Server) packDepositsAndAttestations(
 	ctx context.Context,
 	head state.BeaconState,
 	blkSlot primitives.Slot,
-	eth1Data *silapb.Eth1Data,
+	silaexecData *silapb.SilaExecutionData,
 ) ([]*silapb.Deposit, []silapb.Att, error) {
 	eg, egctx := errgroup.WithContext(ctx)
 	var deposits []*silapb.Deposit
 	var atts []silapb.Att
 
 	eg.Go(func() error {
-		// Pack ETH1 deposits which have not been included in the beacon chain.
-		localDeposits, err := vs.deposits(egctx, head, eth1Data)
+		// Pack SILAEXEC deposits which have not been included in the beacon chain.
+		localDeposits, err := vs.deposits(egctx, head, silaexecData)
 		if err != nil {
-			return status.Errorf(codes.Internal, "Could not get ETH1 deposits: %v", err)
+			return status.Errorf(codes.Internal, "Could not get SILAEXEC deposits: %v", err)
 		}
 		// if the original context is cancelled, then cancel this routine too
 		select {
@@ -67,10 +67,10 @@ func (vs *Server) packDepositsAndAttestations(
 }
 
 // deposits returns a list of pending deposits that are ready for inclusion in the next beacon
-// block. Determining deposits depends on the current eth1data vote for the block and whether or not
-// this eth1data has enough support to be considered for deposits inclusion. If current vote has
+// block. Determining deposits depends on the current silaExecutionData vote for the block and whether or not
+// this silaExecutionData has enough support to be considered for deposits inclusion. If current vote has
 // enough support, then use that vote for basis of determining deposits, otherwise use current state
-// eth1data.
+// silaExecutionData.
 // In the post-electra phase, this function will usually return an empty list,
 // as the legacy deposit process is deprecated. (EIP-6110)
 // NOTE: During the transition period, the legacy deposit process
@@ -78,45 +78,45 @@ func (vs *Server) packDepositsAndAttestations(
 func (vs *Server) deposits(
 	ctx context.Context,
 	beaconState state.BeaconState,
-	currentVote *silapb.Eth1Data,
+	currentVote *silapb.SilaExecutionData,
 ) ([]*silapb.Deposit, error) {
 	ctx, span := trace.StartSpan(ctx, "ProposerServer.deposits")
 	defer span.End()
 
-	if vs.MockEth1Votes {
+	if vs.MockSilaExecutionVotes {
 		return []*silapb.Deposit{}, nil
 	}
 
-	if !vs.Eth1InfoFetcher.ExecutionClientConnected() {
-		log.Warn("Not connected to eth1 node, skip pending deposit insertion")
+	if !vs.SilaExecutionInfoFetcher.ExecutionClientConnected() {
+		log.Warn("Not connected to silaexec node, skip pending deposit insertion")
 		return []*silapb.Deposit{}, nil
 	}
 
-	// skip legacy deposits if eth1 deposit index is already at the index of deposit requests start
+	// skip legacy deposits if silaexec deposit index is already at the index of deposit requests start
 	if helpers.DepositRequestsStarted(beaconState) {
 		return []*silapb.Deposit{}, nil
 	}
 
-	// Need to fetch if the deposits up to the state's latest eth1 data matches
+	// Need to fetch if the deposits up to the state's latest silaexec data matches
 	// the number of all deposits in this RPC call. If not, then we return nil.
-	canonicalEth1Data, canonicalEth1DataHeight, err := vs.canonicalEth1Data(ctx, beaconState, currentVote)
+	canonicalSilaExecutionData, canonicalSilaExecutionDataHeight, err := vs.canonicalSilaExecutionData(ctx, beaconState, currentVote)
 	if err != nil {
 		return nil, err
 	}
 
-	_, genesisEth1Block := vs.Eth1InfoFetcher.GenesisExecutionChainInfo()
-	if genesisEth1Block.Cmp(canonicalEth1DataHeight) == 0 {
+	_, genesisSilaExecutionBlock := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
+	if genesisSilaExecutionBlock.Cmp(canonicalSilaExecutionDataHeight) == 0 {
 		return []*silapb.Deposit{}, nil
 	}
 
 	// If there are no pending deposits, exit early.
-	allPendingContainers := vs.PendingDepositsFetcher.PendingContainers(ctx, canonicalEth1DataHeight)
+	allPendingContainers := vs.PendingDepositsFetcher.PendingContainers(ctx, canonicalSilaExecutionDataHeight)
 	if len(allPendingContainers) == 0 {
 		log.Debug("No pending deposits for inclusion in block")
 		return []*silapb.Deposit{}, nil
 	}
 
-	depositTrie, err := vs.depositTrie(ctx, canonicalEth1Data, canonicalEth1DataHeight)
+	depositTrie, err := vs.depositTrie(ctx, canonicalSilaExecutionData, canonicalSilaExecutionDataHeight)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not retrieve deposit trie")
 	}
@@ -126,29 +126,29 @@ func (vs *Server) deposits(
 	var pendingDeps []*silapb.DepositContainer
 	for _, dep := range allPendingContainers {
 		if beaconState.Version() < version.Electra {
-			// Add deposits up to min(MAX_DEPOSITS, eth1_data.deposit_count - state.eth1_deposit_index)
-			if uint64(dep.Index) >= beaconState.Eth1DepositIndex() && uint64(dep.Index) < canonicalEth1Data.DepositCount {
+			// Add deposits up to min(MAX_DEPOSITS, sila_execution_data.deposit_count - state.silaexec_deposit_index)
+			if uint64(dep.Index) >= beaconState.SilaExecutionDepositIndex() && uint64(dep.Index) < canonicalSilaExecutionData.DepositCount {
 				pendingDeps = append(pendingDeps, dep)
 			}
 		} else {
 			// Electra change EIP6110
-			// def get_eth1_pending_deposit_count(state: BeaconState) -> uint64:
-			//    eth1_deposit_index_limit = min(state.eth1_data.deposit_count, state.deposit_requests_start_index)
-			//    if state.eth1_deposit_index < eth1_deposit_index_limit:
-			//        return min(MAX_DEPOSITS, eth1_deposit_index_limit - state.eth1_deposit_index)
+			// def get_silaexec_pending_deposit_count(state: BeaconState) -> uint64:
+			//    silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
+			//    if state.silaexec_deposit_index < silaexec_deposit_index_limit:
+			//        return min(MAX_DEPOSITS, silaexec_deposit_index_limit - state.silaexec_deposit_index)
 			//    else:
 			//        return uint64(0)
 			requestsStartIndex, err := beaconState.DepositRequestsStartIndex()
 			if err != nil {
 				return nil, errors.Wrap(err, "could not retrieve requests start index")
 			}
-			eth1DepositIndexLimit := min(canonicalEth1Data.DepositCount, requestsStartIndex)
-			if beaconState.Eth1DepositIndex() < eth1DepositIndexLimit {
-				if uint64(dep.Index) >= beaconState.Eth1DepositIndex() && uint64(dep.Index) < eth1DepositIndexLimit {
+			silaExecutionDepositIndexLimit := min(canonicalSilaExecutionData.DepositCount, requestsStartIndex)
+			if beaconState.SilaExecutionDepositIndex() < silaExecutionDepositIndexLimit {
+				if uint64(dep.Index) >= beaconState.SilaExecutionDepositIndex() && uint64(dep.Index) < silaExecutionDepositIndexLimit {
 					pendingDeps = append(pendingDeps, dep)
 				}
 			}
-			// just don't add any pending deps if it's not state.eth1_deposit_index < eth1_deposit_index_limit
+			// just don't add any pending deps if it's not state.silaexec_deposit_index < silaexec_deposit_index_limit
 		}
 
 		// Don't try to pack more than the max allowed in a block
@@ -171,7 +171,7 @@ func (vs *Server) deposits(
 	return pendingDeposits, nil
 }
 
-func (vs *Server) depositTrie(ctx context.Context, canonicalEth1Data *silapb.Eth1Data, canonicalEth1DataHeight *big.Int) (cache.MerkleTree, error) {
+func (vs *Server) depositTrie(ctx context.Context, canonicalSilaExecutionData *silapb.SilaExecutionData, canonicalSilaExecutionDataHeight *big.Int) (cache.MerkleTree, error) {
 	ctx, span := trace.StartSpan(ctx, "ProposerServer.depositTrie")
 	defer span.End()
 
@@ -182,17 +182,17 @@ func (vs *Server) depositTrie(ctx context.Context, canonicalEth1Data *silapb.Eth
 		return nil, err
 	}
 	depositTrie = finalizedDeposits.Deposits()
-	upToEth1DataDeposits := vs.DepositFetcher.NonFinalizedDeposits(ctx, finalizedDeposits.MerkleTrieIndex(), canonicalEth1DataHeight)
+	upToSilaExecutionDataDeposits := vs.DepositFetcher.NonFinalizedDeposits(ctx, finalizedDeposits.MerkleTrieIndex(), canonicalSilaExecutionDataHeight)
 	insertIndex := finalizedDeposits.MerkleTrieIndex() + 1
 
-	if shouldRebuildTrie(canonicalEth1Data.DepositCount, uint64(len(upToEth1DataDeposits))) {
+	if shouldRebuildTrie(canonicalSilaExecutionData.DepositCount, uint64(len(upToSilaExecutionDataDeposits))) {
 		log.WithFields(logrus.Fields{
-			"unfinalizedDeposits": len(upToEth1DataDeposits),
-			"totalDepositCount":   canonicalEth1Data.DepositCount,
+			"unfinalizedDeposits": len(upToSilaExecutionDataDeposits),
+			"totalDepositCount":   canonicalSilaExecutionData.DepositCount,
 		}).Warn("Too many unfinalized deposits, building a deposit trie from scratch.")
-		return vs.rebuildDepositTrie(ctx, canonicalEth1Data, canonicalEth1DataHeight)
+		return vs.rebuildDepositTrie(ctx, canonicalSilaExecutionData, canonicalSilaExecutionDataHeight)
 	}
-	for _, dep := range upToEth1DataDeposits {
+	for _, dep := range upToSilaExecutionDataDeposits {
 		depHash, err := dep.Data.HashTreeRoot()
 		if err != nil {
 			return nil, errors.Wrap(err, "could not hash deposit data")
@@ -202,23 +202,23 @@ func (vs *Server) depositTrie(ctx context.Context, canonicalEth1Data *silapb.Eth
 		}
 		insertIndex++
 	}
-	valid, err := validateDepositTrie(depositTrie, canonicalEth1Data)
+	valid, err := validateDepositTrie(depositTrie, canonicalSilaExecutionData)
 	// Log a warning here, as the cached trie is invalid.
 	if !valid {
 		log.WithError(err).Warn("Cached deposit trie is invalid, rebuilding it now")
-		return vs.rebuildDepositTrie(ctx, canonicalEth1Data, canonicalEth1DataHeight)
+		return vs.rebuildDepositTrie(ctx, canonicalSilaExecutionData, canonicalSilaExecutionDataHeight)
 	}
 
 	return depositTrie, nil
 }
 
 // rebuilds our deposit trie by recreating it from all processed deposits till
-// specified eth1 block height.
-func (vs *Server) rebuildDepositTrie(ctx context.Context, canonicalEth1Data *silapb.Eth1Data, canonicalEth1DataHeight *big.Int) (cache.MerkleTree, error) {
+// specified silaexec block height.
+func (vs *Server) rebuildDepositTrie(ctx context.Context, canonicalSilaExecutionData *silapb.SilaExecutionData, canonicalSilaExecutionDataHeight *big.Int) (cache.MerkleTree, error) {
 	ctx, span := trace.StartSpan(ctx, "ProposerServer.rebuildDepositTrie")
 	defer span.End()
 
-	deposits := vs.DepositFetcher.AllDeposits(ctx, canonicalEth1DataHeight)
+	deposits := vs.DepositFetcher.AllDeposits(ctx, canonicalSilaExecutionDataHeight)
 	trieItems := make([][]byte, 0, len(deposits))
 	for _, dep := range deposits {
 		depHash, err := dep.Data.HashTreeRoot()
@@ -232,7 +232,7 @@ func (vs *Server) rebuildDepositTrie(ctx context.Context, canonicalEth1Data *sil
 		return nil, err
 	}
 
-	valid, err := validateDepositTrie(depositTrie, canonicalEth1Data)
+	valid, err := validateDepositTrie(depositTrie, canonicalSilaExecutionData)
 	// Log an error here, as even with rebuilding the trie, it is still invalid.
 	if !valid {
 		log.WithError(err).Error("Rebuilt deposit trie is invalid")
@@ -240,20 +240,20 @@ func (vs *Server) rebuildDepositTrie(ctx context.Context, canonicalEth1Data *sil
 	return depositTrie, nil
 }
 
-// validate that the provided deposit trie matches up with the canonical eth1 data provided.
-func validateDepositTrie(trie cache.MerkleTree, canonicalEth1Data *silapb.Eth1Data) (bool, error) {
-	if trie == nil || canonicalEth1Data == nil {
-		return false, errors.New("nil trie or eth1data provided")
+// validate that the provided deposit trie matches up with the canonical silaexec data provided.
+func validateDepositTrie(trie cache.MerkleTree, canonicalSilaExecutionData *silapb.SilaExecutionData) (bool, error) {
+	if trie == nil || canonicalSilaExecutionData == nil {
+		return false, errors.New("nil trie or silaExecutionData provided")
 	}
-	if trie.NumOfItems() != int(canonicalEth1Data.DepositCount) {
-		return false, errors.Errorf("wanted the canonical count of %d but received %d", canonicalEth1Data.DepositCount, trie.NumOfItems())
+	if trie.NumOfItems() != int(canonicalSilaExecutionData.DepositCount) {
+		return false, errors.Errorf("wanted the canonical count of %d but received %d", canonicalSilaExecutionData.DepositCount, trie.NumOfItems())
 	}
 	rt, err := trie.HashTreeRoot()
 	if err != nil {
 		return false, err
 	}
-	if !bytes.Equal(rt[:], canonicalEth1Data.DepositRoot) {
-		return false, errors.Errorf("wanted the canonical deposit root of %#x but received %#x", canonicalEth1Data.DepositRoot, rt)
+	if !bytes.Equal(rt[:], canonicalSilaExecutionData.DepositRoot) {
+		return false, errors.Errorf("wanted the canonical deposit root of %#x but received %#x", canonicalSilaExecutionData.DepositRoot, rt)
 	}
 	return true, nil
 }
@@ -264,7 +264,7 @@ func constructMerkleProof(trie cache.MerkleTree, index int, deposit *silapb.Depo
 		return nil, errors.Wrapf(err, "could not generate merkle proof for deposit at index %d", index)
 	}
 	// For every deposit, we construct a Merkle proof using the powchain service's
-	// in-memory deposits trie, which is updated only once the state's LatestETH1Data
+	// in-memory deposits trie, which is updated only once the state's LatestSilaExecutionData
 	// property changes during a state transition after a voting period.
 	deposit.Proof = proof
 	return deposit, nil

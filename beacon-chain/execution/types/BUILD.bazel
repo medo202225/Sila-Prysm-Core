@@ -2,7 +2,7 @@ load("@sila//tools/go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
-    srcs = ["eth1_types.go"],
+    srcs = ["silaexec_types.go"],
     importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/types",
     visibility = ["//beacon-chain:__subpackages__"],
     deps = [
@@ -14,7 +14,7 @@ go_library(
 
 go_test(
     name = "go_default_test",
-    srcs = ["eth1_types_test.go"],
+    srcs = ["silaexec_types_test.go"],
     embed = [":go_default_library"],
     deps = [
         "//testing/assert:go_default_library",

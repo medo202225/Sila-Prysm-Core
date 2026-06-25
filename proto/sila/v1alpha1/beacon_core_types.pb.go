@@ -152,7 +152,7 @@ func (x *SignedBeaconBlockHeader) GetSignature() []byte {
 	return nil
 }
 
-type Eth1Data struct {
+type SilaExecutionData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DepositRoot   []byte                 `protobuf:"bytes,1,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty" ssz-size:"32"`
 	DepositCount  uint64                 `protobuf:"varint,2,opt,name=deposit_count,json=depositCount,proto3" json:"deposit_count,omitempty"`
@@ -161,20 +161,20 @@ type Eth1Data struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Eth1Data) Reset() {
-	*x = Eth1Data{}
+func (x *SilaExecutionData) Reset() {
+	*x = SilaExecutionData{}
 	mi := &file_proto_sila_v1alpha1_beacon_core_types_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Eth1Data) String() string {
+func (x *SilaExecutionData) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Eth1Data) ProtoMessage() {}
+func (*SilaExecutionData) ProtoMessage() {}
 
-func (x *Eth1Data) ProtoReflect() protoreflect.Message {
+func (x *SilaExecutionData) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_beacon_core_types_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -186,26 +186,26 @@ func (x *Eth1Data) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Eth1Data.ProtoReflect.Descriptor instead.
-func (*Eth1Data) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaExecutionData.ProtoReflect.Descriptor instead.
+func (*SilaExecutionData) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_beacon_core_types_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Eth1Data) GetDepositRoot() []byte {
+func (x *SilaExecutionData) GetDepositRoot() []byte {
 	if x != nil {
 		return x.DepositRoot
 	}
 	return nil
 }
 
-func (x *Eth1Data) GetDepositCount() uint64 {
+func (x *SilaExecutionData) GetDepositCount() uint64 {
 	if x != nil {
 		return x.DepositCount
 	}
 	return 0
 }
 
-func (x *Eth1Data) GetBlockHash() []byte {
+func (x *SilaExecutionData) GetBlockHash() []byte {
 	if x != nil {
 		return x.BlockHash
 	}
@@ -1151,7 +1151,7 @@ var file_proto_sila_v1alpha1_beacon_core_types_proto_msgTypes = make([]protoimpl
 var file_proto_sila_v1alpha1_beacon_core_types_proto_goTypes = []any{
 	(*BeaconBlockHeader)(nil),         // 0: ethereum.eth.v1alpha1.BeaconBlockHeader
 	(*SignedBeaconBlockHeader)(nil),   // 1: ethereum.eth.v1alpha1.SignedBeaconBlockHeader
-	(*Eth1Data)(nil),                  // 2: ethereum.eth.v1alpha1.Eth1Data
+	(*SilaExecutionData)(nil),                  // 2: ethereum.eth.v1alpha1.SilaExecutionData
 	(*ProposerSlashing)(nil),          // 3: ethereum.eth.v1alpha1.ProposerSlashing
 	(*Deposit)(nil),                   // 4: ethereum.eth.v1alpha1.Deposit
 	(*SignedVoluntaryExit)(nil),       // 5: ethereum.eth.v1alpha1.SignedVoluntaryExit

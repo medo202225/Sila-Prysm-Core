@@ -102,12 +102,12 @@ service Node {
     };
   }
 
-  // // Retrieve the status of the ETH1 connections.
-  rpc GetETH1ConnectionStatus(google.protobuf.Empty)
-      returns (ETH1ConnectionStatus) {
+  // // Retrieve the status of the SILAEXEC connections.
+  rpc GetSilaExecutionConnectionStatus(google.protobuf.Empty)
+      returns (SilaExecutionConnectionStatus) {
     option deprecated = true;
     option (google.api.http) = {
-      get : "/sila/v1alpha1/node/eth1/connections"
+      get : "/sila/v1alpha1/node/silaexec/connections"
     };
   }
 }
@@ -220,12 +220,12 @@ enum ConnectionState {
   CONNECTING = 3;
 }
 
-// ETH1ConnectionStatus states the current address and error of the ETH1 API
+// SilaExecutionConnectionStatus states the current address and error of the SILAEXEC API
 // endpoint. It also provides the addresses and errors for any fallback URLs.
-message ETH1ConnectionStatus {
+message SilaExecutionConnectionStatus {
   option deprecated = true;
 
-  // Current ETH1 HTTP endpoint.
+  // Current SILAEXEC HTTP endpoint.
   string current_address = 1;
 
   // Current error (if any) of the current connection.

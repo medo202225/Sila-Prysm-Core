@@ -90,9 +90,9 @@ func (v readOnlyValidator) Slashed() bool {
 	return v.validator.Slashed
 }
 
-// HasETH1WithdrawalCredentials returns true if the validator has an ETH1 withdrawal credentials.
-func (v readOnlyValidator) HasETH1WithdrawalCredentials() bool {
-	return v.validator.WithdrawalCredentials[0] == params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+// HasSilaExecutionWithdrawalCredentials returns true if the validator has an SILAEXEC withdrawal credentials.
+func (v readOnlyValidator) HasSilaExecutionWithdrawalCredentials() bool {
+	return v.validator.WithdrawalCredentials[0] == params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 }
 
 // HasCompoundingWithdrawalCredentials returns true if the validator has a compounding withdrawal credentials.
@@ -102,7 +102,7 @@ func (v readOnlyValidator) HasCompoundingWithdrawalCredentials() bool {
 
 // HasExecutionWithdrawalCredentials returns true if the validator has an execution withdrawal credentials.
 func (v readOnlyValidator) HasExecutionWithdrawalCredentials() bool {
-	return v.HasETH1WithdrawalCredentials() || v.HasCompoundingWithdrawalCredentials()
+	return v.HasSilaExecutionWithdrawalCredentials() || v.HasCompoundingWithdrawalCredentials()
 }
 
 // Copy returns a new validator from the read only validator

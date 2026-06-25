@@ -676,7 +676,7 @@ func buildGloasStateForPaymentWeightTest(
 
 	validator := &silapb.Validator{
 		PublicKey:             bytes.Repeat([]byte{0x01}, 48),
-		WithdrawalCredentials: append([]byte{cfg.ETH1AddressWithdrawalPrefixByte}, bytes.Repeat([]byte{0x02}, 31)...),
+		WithdrawalCredentials: append([]byte{cfg.SilaExecutionAddressWithdrawalPrefixByte}, bytes.Repeat([]byte{0x02}, 31)...),
 		EffectiveBalance:      cfg.MinActivationBalance,
 	}
 

@@ -66,7 +66,7 @@ func ProcessBLSToExecutionChanges(
 //	assert bls.Verify(address_change.from_bls_pubkey, signing_root, signed_address_change.signature)
 //
 //	validator.withdrawal_credentials = (
-//	    ETH1_ADDRESS_WITHDRAWAL_PREFIX
+//	    SilaExecution_ADDRESS_WITHDRAWAL_PREFIX
 //	    + b'\x00' * 11
 //	    + address_change.to_execution_address
 //	)
@@ -79,7 +79,7 @@ func processBLSToExecutionChange(st state.BeaconState, signed *silapb.SignedBLST
 
 	message := signed.Message
 	newCredentials := make([]byte, executionToBLSPadding)
-	newCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+	newCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 	val.WithdrawalCredentials = append(newCredentials, message.ToExecutionAddress...)
 	err = st.UpdateValidatorAtIndex(message.ValidatorIndex, val)
 	return st, err

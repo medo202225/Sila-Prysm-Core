@@ -13,7 +13,7 @@ pragma solidity 0.6.11;
 
 // This interface is designed to be compatible with the Vyper version.
 /// @notice This is the Ethereum 2.0 deposit contract interface.
-/// For historical reference see the external Phase 0 specification under https://github.com/ethereum/eth2.0-specs
+/// For historical reference see the external Phase 0 specification under https://github.com/ethereum/silaconsensus.0-specs
 interface IDepositContract {
     /// @notice A processed deposit event.
     event DepositEvent(
@@ -57,10 +57,10 @@ interface ERC165 {
     function supportsInterface(bytes4 interfaceId) external pure returns (bool);
 }
 
-// This is a rewrite of the Vyper Eth2.0 deposit contract in Solidity.
+// This is a rewrite of the Vyper SilaConsensus.0 deposit contract in Solidity.
 // It tries to stay as close as possible to the original source code.
 /// @notice This is the Ethereum 2.0 deposit contract interface.
-/// For historical reference see the external Phase 0 specification under https://github.com/ethereum/eth2.0-specs
+/// For historical reference see the external Phase 0 specification under https://github.com/ethereum/silaconsensus.0-specs
 contract DepositContract is IDepositContract, ERC165 {
     uint constant DEPOSIT_CONTRACT_TREE_DEPTH = 32;
     // NOTE: this also ensures `deposit_count` will fit into 64-bits

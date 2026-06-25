@@ -13,7 +13,7 @@ func GenerateProtoAltairBeaconBlock() *silapb.BeaconBlockAltair {
 		StateRoot:     FillByteSlice(32, 4),
 		Body: &silapb.BeaconBlockBodyAltair{
 			RandaoReveal: FillByteSlice(96, 5),
-			Eth1Data: &silapb.Eth1Data{
+			SilaExecutionData: &silapb.SilaExecutionData{
 				DepositRoot:  FillByteSlice(32, 6),
 				DepositCount: 7,
 				BlockHash:    FillByteSlice(32, 8),
@@ -227,7 +227,7 @@ func GenerateJsonAltairBeaconBlock() *structs.BeaconBlockAltair {
 		StateRoot:     FillEncodedByteSlice(32, 4),
 		Body: &structs.BeaconBlockBodyAltair{
 			RandaoReveal: FillEncodedByteSlice(96, 5),
-			Eth1Data: &structs.Eth1Data{
+			SilaExecutionData: &structs.SilaExecutionData{
 				DepositRoot:  FillEncodedByteSlice(32, 6),
 				DepositCount: "7",
 				BlockHash:    FillEncodedByteSlice(32, 8),

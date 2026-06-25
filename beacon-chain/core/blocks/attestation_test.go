@@ -347,7 +347,7 @@ func TestVerifyAttestationNoVerifySignature_GloasCommitteeIndexLimit(t *testing.
 		Validators: []*silapb.Validator{
 			{
 				EffectiveBalance:      cfg.MinActivationBalance,
-				WithdrawalCredentials: append([]byte{cfg.ETH1AddressWithdrawalPrefixByte}, bytes.Repeat([]byte{0x01}, 31)...),
+				WithdrawalCredentials: append([]byte{cfg.SilaExecutionAddressWithdrawalPrefixByte}, bytes.Repeat([]byte{0x01}, 31)...),
 			},
 		},
 		Balances:               []uint64{cfg.MinActivationBalance},

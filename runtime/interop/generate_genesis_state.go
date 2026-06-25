@@ -21,9 +21,9 @@ import (
 )
 
 var (
-	// This is the recommended mock eth1 block hash according to the Sila consensus interop guidelines.
-	// https://github.com/ethereum/eth2.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
-	mockEth1BlockHash = []byte{66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66}
+	// This is the recommended mock silaexec block hash according to the Sila consensus interop guidelines.
+	// https://github.com/ethereum/silaconsensus.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
+	mockSilaExecutionBlockHash = []byte{66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66}
 )
 
 // GenerateGenesisState deterministically given a genesis time and number of validators.
@@ -60,10 +60,10 @@ func GenerateGenesisStateFromDepositData(
 	if genesisTime == 0 {
 		genesisTime = uint64(time.Now().Unix())
 	}
-	beaconState, err := coreState.GenesisBeaconState(ctx, deposits, genesisTime, &silapb.Eth1Data{
+	beaconState, err := coreState.GenesisBeaconState(ctx, deposits, genesisTime, &silapb.SilaExecutionData{
 		DepositRoot:  root[:],
 		DepositCount: uint64(len(deposits)),
-		BlockHash:    mockEth1BlockHash,
+		BlockHash:    mockSilaExecutionBlockHash,
 	})
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "could not generate genesis state")
@@ -170,7 +170,7 @@ func createDepositData(privKey bls.SecretKey, pubKey bls.PublicKey, withExecCred
 	}
 	if withExecCreds {
 		newCredentials := make([]byte, 12)
-		newCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+		newCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 		execAddr := bytesutil.ToBytes20(pubKey.Marshal())
 		depositMessage.WithdrawalCredentials = append(newCredentials, execAddr[:]...)
 	}

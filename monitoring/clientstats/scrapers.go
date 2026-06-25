@@ -198,7 +198,7 @@ func populateBeaconNodeStats(pf metricMap) BeaconNodeStats {
 	} else {
 		m = f.Metric[0]
 		if int64(m.Gauge.GetValue()) == bs.SyncBeaconHeadSlot {
-			bs.SyncEth2Synced = true
+			bs.SyncSilaConsensusSynced = true
 		}
 	}
 
@@ -225,14 +225,14 @@ func populateBeaconNodeStats(pf metricMap) BeaconNodeStats {
 		}
 	}
 
-	f, err = pf.getFamily("powchain_sync_eth1_connected")
+	f, err = pf.getFamily("powchain_sync_silaexec_connected")
 	if err != nil {
-		log.WithError(err).Debug("Failed to get powchain_sync_eth1_connected")
+		log.WithError(err).Debug("Failed to get powchain_sync_silaexec_connected")
 	} else {
 		m = f.Metric[0]
-		bs.SyncEth1Connected = false
+		bs.SyncSilaExecutionConnected = false
 		if int64(m.Gauge.GetValue()) == 1 {
-			bs.SyncEth1Connected = true
+			bs.SyncSilaExecutionConnected = true
 		}
 	}
 

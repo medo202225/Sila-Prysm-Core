@@ -554,7 +554,7 @@ func IsFullyWithdrawableValidator(val state.ReadOnlyValidator, balance uint64, e
 		return val.HasExecutionWithdrawalCredentials() && val.WithdrawableEpoch() <= epoch
 	}
 
-	return val.HasETH1WithdrawalCredentials() && val.WithdrawableEpoch() <= epoch
+	return val.HasSilaExecutionWithdrawalCredentials() && val.WithdrawableEpoch() <= epoch
 }
 
 // IsPartiallyWithdrawableValidator returns whether the validator is able to perform a
@@ -611,11 +611,11 @@ func isPartiallyWithdrawableValidatorElectra(val state.ReadOnlyValidator, balanc
 //	    """
 //	    has_max_effective_balance = validator.effective_balance == MAX_EFFECTIVE_BALANCE
 //	    has_excess_balance = balance > MAX_EFFECTIVE_BALANCE
-//	    return has_eth1_withdrawal_credential(validator) and has_max_effective_balance and has_excess_balance
+//	    return has_silaexec_withdrawal_credential(validator) and has_max_effective_balance and has_excess_balance
 func isPartiallyWithdrawableValidatorCapella(val state.ReadOnlyValidator, balance uint64, epoch primitives.Epoch) bool {
 	hasMaxBalance := val.EffectiveBalance() == params.BeaconConfig().MaxEffectiveBalance
 	hasExcessBalance := balance > params.BeaconConfig().MaxEffectiveBalance
-	return val.HasETH1WithdrawalCredentials() && hasExcessBalance && hasMaxBalance
+	return val.HasSilaExecutionWithdrawalCredentials() && hasExcessBalance && hasMaxBalance
 }
 
 // ValidatorMaxEffectiveBalance returns the maximum effective balance for a validator.

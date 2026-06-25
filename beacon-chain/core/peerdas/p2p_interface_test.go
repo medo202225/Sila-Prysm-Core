@@ -115,7 +115,7 @@ func Test_VerifyKZGInclusionProofColumn(t *testing.T) {
 
 	pbBody := &silapb.BeaconBlockBodyDeneb{
 		RandaoReveal: make([]byte, 96),
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},

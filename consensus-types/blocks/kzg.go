@@ -231,9 +231,9 @@ func topLevelRoots(body interfaces.ReadOnlyBeaconBlockBody) ([][]byte, error) {
 	}
 	copy(layer[0], root[:])
 
-	// eth1_data
-	eth1 := body.Eth1Data()
-	root, err = eth1.HashTreeRoot()
+	// sila_execution_data
+	silaexec := body.SilaExecutionData()
+	root, err = silaexec.HashTreeRoot()
 	if err != nil {
 		return nil, err
 	}

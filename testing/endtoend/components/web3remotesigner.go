@@ -90,7 +90,7 @@ func (w *Web3RemoteSigner) Start(ctx context.Context) error {
 		fmt.Sprintf("--http-listen-port=%d", Web3RemoteSignerPort),
 		"--logging=ALL",
 		// Command
-		"eth2",
+		"silaconsensus",
 		// Command flags
 		"--network=" + network,
 		"--slashing-protection-enabled=false", // Otherwise, a postgres DB is required.

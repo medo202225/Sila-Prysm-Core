@@ -206,8 +206,8 @@ func fieldConverters(field types.FieldIndex, elements any, indices []uint64) ([]
 	switch field {
 	case types.BlockRoots, types.StateRoots, types.RandaoMixes:
 		return convertRoots(indices, elements)
-	case types.Eth1DataVotes:
-		return convertEth1DataVotes(indices, elements)
+	case types.SilaExecutionDataVotes:
+		return convertSilaExecutionDataVotes(indices, elements)
 	case types.Validators:
 		return convertValidators(indices, elements)
 	case types.PreviousEpochAttestations, types.CurrentEpochAttestations:
@@ -234,12 +234,12 @@ func convertRoots(indices []uint64, elements any) ([][32]byte, error) {
 	}
 }
 
-func convertEth1DataVotes(indices []uint64, elements any) ([][32]byte, error) {
-	val, ok := elements.([]*silapb.Eth1Data)
+func convertSilaExecutionDataVotes(indices []uint64, elements any) ([][32]byte, error) {
+	val, ok := elements.([]*silapb.SilaExecutionData)
 	if !ok {
-		return nil, errors.Errorf("Wanted type of %T but got %T", []*silapb.Eth1Data{}, elements)
+		return nil, errors.Errorf("Wanted type of %T but got %T", []*silapb.SilaExecutionData{}, elements)
 	}
-	return handleEth1DataSlice(val, indices)
+	return handleSilaExecutionDataSlice(val, indices)
 }
 
 func convertValidators(indices []uint64, elements any) ([][32]byte, error) {
@@ -334,12 +334,12 @@ func handleValidatorMVSlice(mv multi_value_slice.MultiValueSliceComposite[stateu
 	return roots, nil
 }
 
-// handleEth1DataSlice processes a list of eth1data and indices into the appropriate roots.
-func handleEth1DataSlice(val []*silapb.Eth1Data, indices []uint64) ([][32]byte, error) {
+// handleSilaExecutionDataSlice processes a list of silaExecutionData and indices into the appropriate roots.
+func handleSilaExecutionDataSlice(val []*silapb.SilaExecutionData, indices []uint64) ([][32]byte, error) {
 	if len(indices) == 0 {
 		roots := make([][32]byte, 0, len(val))
 		for _, v := range val {
-			root, err := stateutil.Eth1DataRootWithHasher(v)
+			root, err := stateutil.SilaExecutionDataRootWithHasher(v)
 			if err != nil {
 				return nil, err
 			}
@@ -350,9 +350,9 @@ func handleEth1DataSlice(val []*silapb.Eth1Data, indices []uint64) ([][32]byte, 
 	roots := make([][32]byte, 0, len(indices))
 	for _, idx := range indices {
 		if idx >= uint64(len(val)) {
-			return nil, fmt.Errorf("index %d greater than number of items in eth1 data slice %d", idx, len(val))
+			return nil, fmt.Errorf("index %d greater than number of items in silaexec data slice %d", idx, len(val))
 		}
-		root, err := stateutil.Eth1DataRootWithHasher(val[idx])
+		root, err := stateutil.SilaExecutionDataRootWithHasher(val[idx])
 		if err != nil {
 			return nil, err
 		}

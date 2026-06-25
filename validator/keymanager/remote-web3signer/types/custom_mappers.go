@@ -11,7 +11,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// MapForkInfo maps the eth2.ForkInfo proto to the Web3Signer spec.
+// MapForkInfo maps the silaconsensus.ForkInfo proto to the Web3Signer spec.
 func MapForkInfo(slot primitives.Slot, genesisValidatorsRoot []byte) (*ForkInfo, error) {
 	fork, err := params.Fork(slots.ToEpoch(slot))
 	if err != nil {
@@ -28,7 +28,7 @@ func MapForkInfo(slot primitives.Slot, genesisValidatorsRoot []byte) (*ForkInfo,
 	}, nil
 }
 
-// MapAggregateAndProof maps the eth2.AggregateAndProof proto to the Web3Signer spec.
+// MapAggregateAndProof maps the silaconsensus.AggregateAndProof proto to the Web3Signer spec.
 func MapAggregateAndProof(from *silapb.AggregateAttestationAndProof) (*AggregateAndProof, error) {
 	if from == nil {
 		return nil, fmt.Errorf("AggregateAttestationAndProof is nil")
@@ -44,7 +44,7 @@ func MapAggregateAndProof(from *silapb.AggregateAttestationAndProof) (*Aggregate
 	}, nil
 }
 
-// MapAggregateAndProofElectra maps the eth2.AggregateAndProofElectra proto to the Web3Signer spec.
+// MapAggregateAndProofElectra maps the silaconsensus.AggregateAndProofElectra proto to the Web3Signer spec.
 func MapAggregateAndProofElectra(from *silapb.AggregateAttestationAndProofElectra) (*AggregateAndProofElectra, error) {
 	if from == nil {
 		return nil, fmt.Errorf("AggregateAttestationAndProof is nil")
@@ -60,7 +60,7 @@ func MapAggregateAndProofElectra(from *silapb.AggregateAttestationAndProofElectr
 	}, nil
 }
 
-// MapAttestation maps the eth2.Attestation proto to the Web3Signer spec.
+// MapAttestation maps the silaconsensus.Attestation proto to the Web3Signer spec.
 func MapAttestation(attestation *silapb.Attestation) (*Attestation, error) {
 	if attestation == nil {
 		return nil, fmt.Errorf("attestation is nil")
@@ -79,7 +79,7 @@ func MapAttestation(attestation *silapb.Attestation) (*Attestation, error) {
 	}, nil
 }
 
-// MapAttestationElectra maps the eth2.Attestation proto to the Web3Signer spec.
+// MapAttestationElectra maps the silaconsensus.Attestation proto to the Web3Signer spec.
 func MapAttestationElectra(attestation *silapb.AttestationElectra) (*AttestationElectra, error) {
 	if attestation == nil {
 		return nil, fmt.Errorf("attestation is nil")
@@ -102,7 +102,7 @@ func MapAttestationElectra(attestation *silapb.AttestationElectra) (*Attestation
 	}, nil
 }
 
-// MapAttestationData maps the eth2.AttestationData proto to the Web3Signer spec.
+// MapAttestationData maps the silaconsensus.AttestationData proto to the Web3Signer spec.
 func MapAttestationData(data *silapb.AttestationData) (*AttestationData, error) {
 	if data == nil {
 		return nil, fmt.Errorf("attestation data is nil")
@@ -124,7 +124,7 @@ func MapAttestationData(data *silapb.AttestationData) (*AttestationData, error) 
 	}, nil
 }
 
-// MapCheckPoint maps the eth2.Checkpoint proto to the Web3Signer spec.
+// MapCheckPoint maps the silaconsensus.Checkpoint proto to the Web3Signer spec.
 func MapCheckPoint(checkpoint *silapb.Checkpoint) (*Checkpoint, error) {
 	if checkpoint == nil {
 		return nil, fmt.Errorf("checkpoint is nil")
@@ -135,20 +135,20 @@ func MapCheckPoint(checkpoint *silapb.Checkpoint) (*Checkpoint, error) {
 	}, nil
 }
 
-// MapBeaconBlockBody maps the eth2.BeaconBlockBody proto to the Web3Signer spec.
+// MapBeaconBlockBody maps the silaconsensus.BeaconBlockBody proto to the Web3Signer spec.
 func MapBeaconBlockBody(body *silapb.BeaconBlockBody) (*BeaconBlockBody, error) {
 	if body == nil {
 		return nil, fmt.Errorf("beacon block body is nil")
 	}
-	if body.Eth1Data == nil {
-		return nil, fmt.Errorf("eth1 data in Beacon Block Body is nil")
+	if body.SilaExecutionData == nil {
+		return nil, fmt.Errorf("silaexec data in Beacon Block Body is nil")
 	}
 	block := &BeaconBlockBody{
 		RandaoReveal: body.RandaoReveal,
-		Eth1Data: &Eth1Data{
-			DepositRoot:  body.Eth1Data.DepositRoot,
-			DepositCount: fmt.Sprint(body.Eth1Data.DepositCount),
-			BlockHash:    body.Eth1Data.BlockHash,
+		SilaExecutionData: &SilaExecutionData{
+			DepositRoot:  body.SilaExecutionData.DepositRoot,
+			DepositCount: fmt.Sprint(body.SilaExecutionData.DepositCount),
+			BlockHash:    body.SilaExecutionData.BlockHash,
 		},
 		Graffiti:          body.Graffiti,
 		ProposerSlashings: make([]*ProposerSlashing, len(body.ProposerSlashings)),
@@ -195,7 +195,7 @@ func MapBeaconBlockBody(body *silapb.BeaconBlockBody) (*BeaconBlockBody, error) 
 	return block, nil
 }
 
-// MapProposerSlashing maps the eth2.ProposerSlashing proto to the Web3Signer spec.
+// MapProposerSlashing maps the silaconsensus.ProposerSlashing proto to the Web3Signer spec.
 func MapProposerSlashing(slashing *silapb.ProposerSlashing) (*ProposerSlashing, error) {
 	if slashing == nil {
 		return nil, fmt.Errorf("proposer slashing is nil")
@@ -214,7 +214,7 @@ func MapProposerSlashing(slashing *silapb.ProposerSlashing) (*ProposerSlashing, 
 	}, nil
 }
 
-// MapSignedBeaconBlockHeader maps the eth2.AttesterSlashing proto to the Web3Signer spec.
+// MapSignedBeaconBlockHeader maps the silaconsensus.AttesterSlashing proto to the Web3Signer spec.
 func MapSignedBeaconBlockHeader(signedHeader *silapb.SignedBeaconBlockHeader) (*SignedBeaconBlockHeader, error) {
 	if signedHeader == nil {
 		return nil, fmt.Errorf("signed beacon block header is nil")
@@ -234,7 +234,7 @@ func MapSignedBeaconBlockHeader(signedHeader *silapb.SignedBeaconBlockHeader) (*
 	}, nil
 }
 
-// MapAttesterSlashing maps the eth2.AttesterSlashing proto to the Web3Signer spec.
+// MapAttesterSlashing maps the silaconsensus.AttesterSlashing proto to the Web3Signer spec.
 func MapAttesterSlashing(slashing *silapb.AttesterSlashing) (*AttesterSlashing, error) {
 	if slashing == nil {
 		return nil, fmt.Errorf("attester slashing is nil")
@@ -253,7 +253,7 @@ func MapAttesterSlashing(slashing *silapb.AttesterSlashing) (*AttesterSlashing, 
 	}, nil
 }
 
-// MapIndexedAttestation maps the eth2.IndexedAttestation proto to the Web3Signer spec.
+// MapIndexedAttestation maps the silaconsensus.IndexedAttestation proto to the Web3Signer spec.
 func MapIndexedAttestation(attestation *silapb.IndexedAttestation) (*IndexedAttestation, error) {
 	if attestation == nil {
 		return nil, fmt.Errorf("indexed attestation is nil")
@@ -273,7 +273,7 @@ func MapIndexedAttestation(attestation *silapb.IndexedAttestation) (*IndexedAtte
 	}, nil
 }
 
-// MapDeposit maps the eth2.Deposit proto to the Web3Signer spec.
+// MapDeposit maps the silaconsensus.Deposit proto to the Web3Signer spec.
 func MapDeposit(deposit *silapb.Deposit) (*Deposit, error) {
 	if deposit == nil {
 		return nil, fmt.Errorf("deposit is nil")
@@ -293,7 +293,7 @@ func MapDeposit(deposit *silapb.Deposit) (*Deposit, error) {
 	}, nil
 }
 
-// MapSignedVoluntaryExit maps the eth2.SignedVoluntaryExit proto to the Web3Signer spec.
+// MapSignedVoluntaryExit maps the silaconsensus.SignedVoluntaryExit proto to the Web3Signer spec.
 func MapSignedVoluntaryExit(signedVoluntaryExit *silapb.SignedVoluntaryExit) (*SignedVoluntaryExit, error) {
 	if signedVoluntaryExit == nil {
 		return nil, fmt.Errorf("signed voluntary exit is nil")
@@ -310,7 +310,7 @@ func MapSignedVoluntaryExit(signedVoluntaryExit *silapb.SignedVoluntaryExit) (*S
 	}, nil
 }
 
-// MapBeaconBlockAltair maps the eth2.BeaconBlockAltair proto to the Web3Signer spec.
+// MapBeaconBlockAltair maps the silaconsensus.BeaconBlockAltair proto to the Web3Signer spec.
 func MapBeaconBlockAltair(block *silapb.BeaconBlockAltair) (*BeaconBlockAltair, error) {
 	if block == nil {
 		return nil, fmt.Errorf("beacon block altair is nil")
@@ -328,7 +328,7 @@ func MapBeaconBlockAltair(block *silapb.BeaconBlockAltair) (*BeaconBlockAltair, 
 	}, nil
 }
 
-// MapBeaconBlockBodyAltair maps the eth2.BeaconBlockBodyAltair proto to the Web3Signer spec.
+// MapBeaconBlockBodyAltair maps the silaconsensus.BeaconBlockBodyAltair proto to the Web3Signer spec.
 func MapBeaconBlockBodyAltair(body *silapb.BeaconBlockBodyAltair) (*BeaconBlockBodyAltair, error) {
 	if body == nil {
 		return nil, fmt.Errorf("beacon block body altair is nil")
@@ -342,10 +342,10 @@ func MapBeaconBlockBodyAltair(body *silapb.BeaconBlockBodyAltair) (*BeaconBlockB
 
 	block := &BeaconBlockBodyAltair{
 		RandaoReveal: body.RandaoReveal,
-		Eth1Data: &Eth1Data{
-			DepositRoot:  body.Eth1Data.DepositRoot,
-			DepositCount: fmt.Sprint(body.Eth1Data.DepositCount),
-			BlockHash:    body.Eth1Data.BlockHash,
+		SilaExecutionData: &SilaExecutionData{
+			DepositRoot:  body.SilaExecutionData.DepositRoot,
+			DepositCount: fmt.Sprint(body.SilaExecutionData.DepositCount),
+			BlockHash:    body.SilaExecutionData.BlockHash,
 		},
 		Graffiti:          body.Graffiti,
 		ProposerSlashings: make([]*ProposerSlashing, len(body.ProposerSlashings)),
@@ -396,7 +396,7 @@ func MapBeaconBlockBodyAltair(body *silapb.BeaconBlockBodyAltair) (*BeaconBlockB
 	return block, nil
 }
 
-// MapSyncAggregatorSelectionData maps the eth2.SyncAggregatorSelectionData proto to the Web3Signer spec.
+// MapSyncAggregatorSelectionData maps the silaconsensus.SyncAggregatorSelectionData proto to the Web3Signer spec.
 func MapSyncAggregatorSelectionData(data *silapb.SyncAggregatorSelectionData) (*SyncAggregatorSelectionData, error) {
 	if data == nil {
 		return nil, fmt.Errorf("sync aggregator selection data is nil")
@@ -407,7 +407,7 @@ func MapSyncAggregatorSelectionData(data *silapb.SyncAggregatorSelectionData) (*
 	}, nil
 }
 
-// MapContributionAndProof maps the eth2.ContributionAndProof proto to the Web3Signer spec.
+// MapContributionAndProof maps the silaconsensus.ContributionAndProof proto to the Web3Signer spec.
 func MapContributionAndProof(contribution *silapb.ContributionAndProof) (*ContributionAndProof, error) {
 	if contribution == nil {
 		return nil, fmt.Errorf("contribution and proof is nil")

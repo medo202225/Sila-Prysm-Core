@@ -33,8 +33,8 @@ import (
 var depositValCount = e2e.DepositCount
 var numOfExits = 2
 
-// Deposits should be processed in twice the length of the epochs per eth1 voting period.
-var depositsInBlockStart = params.E2ETestConfig().EpochsPerEth1VotingPeriod * 2
+// Deposits should be processed in twice the length of the epochs per silaexec voting period.
+var depositsInBlockStart = params.E2ETestConfig().EpochsPerSilaExecutionVotingPeriod * 2
 
 // deposits included + finalization + MaxSeedLookahead for activation.
 var depositActivationStartEpoch = depositsInBlockStart + 2 + params.E2ETestConfig().MaxSeedLookahead
@@ -179,7 +179,7 @@ var ValidatorsHaveWithdrawnAfterExitAtEpoch = func(exitSubmitEpoch primitives.Ep
 	}
 }
 
-// ValidatorsVoteWithTheMajority verifies whether validator vote for eth1data using the majority algorithm.
+// ValidatorsVoteWithTheMajority verifies whether validator vote for silaExecutionData using the majority algorithm.
 var ValidatorsVoteWithTheMajority = e2etypes.Evaluator{
 	Name:       "validators_vote_with_the_majority_%d",
 	Policy:     policies.AfterNthEpoch(0),
@@ -452,7 +452,7 @@ func proposeVoluntaryExit(ec *e2etypes.EvaluationContext, conns ...*grpc.ClientC
 	}
 	var execIndices []primitives.ValidatorIndex
 	for idx, val := range st.ValidatorsReadOnlySeq() {
-		if val.GetWithdrawalCredentials()[0] == params.BeaconConfig().ETH1AddressWithdrawalPrefixByte {
+		if val.GetWithdrawalCredentials()[0] == params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte {
 			execIndices = append(execIndices, idx)
 		}
 	}
@@ -557,7 +557,7 @@ func validatorsVoteWithTheMajority(ec *e2etypes.EvaluationContext, conns ...*grp
 		return errors.Wrap(err, "failed to get blocks from beacon-chain")
 	}
 
-	slotsPerVotingPeriod := params.E2ETestConfig().SlotsPerEpoch.Mul(uint64(params.E2ETestConfig().EpochsPerEth1VotingPeriod))
+	slotsPerVotingPeriod := params.E2ETestConfig().SlotsPerEpoch.Mul(uint64(params.E2ETestConfig().EpochsPerSilaExecutionVotingPeriod))
 	for _, blk := range blks.BlockContainers {
 		var slot primitives.Slot
 		var vote []byte
@@ -565,51 +565,51 @@ func validatorsVoteWithTheMajority(ec *e2etypes.EvaluationContext, conns ...*grp
 		case *silapb.BeaconBlockContainer_Phase0Block:
 			b := blk.GetPhase0Block().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_AltairBlock:
 			b := blk.GetAltairBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_BellatrixBlock:
 			b := blk.GetBellatrixBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_BlindedBellatrixBlock:
 			b := blk.GetBlindedBellatrixBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_CapellaBlock:
 			b := blk.GetCapellaBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_BlindedCapellaBlock:
 			b := blk.GetBlindedCapellaBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_DenebBlock:
 			b := blk.GetDenebBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_BlindedDenebBlock:
 			b := blk.GetBlindedDenebBlock().Message
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_ElectraBlock:
 			b := blk.GetElectraBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_BlindedElectraBlock:
 			b := blk.GetBlindedElectraBlock().Message
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_FuluBlock:
 			b := blk.GetFuluBlock().Block
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		case *silapb.BeaconBlockContainer_BlindedFuluBlock:
 			b := blk.GetBlindedFuluBlock().Message
 			slot = b.Slot
-			vote = b.Body.Eth1Data.BlockHash
+			vote = b.Body.SilaExecutionData.BlockHash
 		default:
 			return fmt.Errorf("block of type %T is unknown", blk.Block)
 		}
@@ -629,18 +629,18 @@ func validatorsVoteWithTheMajority(ec *e2etypes.EvaluationContext, conns ...*grp
 			isFirstSlotInVotingPeriod = slot%slotsPerVotingPeriod == 0
 		}
 		if isFirstSlotInVotingPeriod {
-			ec.ExpectedEth1DataVote = vote
-			ec.Eth1DataMismatchCount = 0 // Reset for new voting period
+			ec.ExpectedSilaExecutionDataVote = vote
+			ec.SilaExecutionDataMismatchCount = 0 // Reset for new voting period
 			return nil
 		}
 
-		if !bytes.Equal(vote, ec.ExpectedEth1DataVote) {
-			// Allow some tolerance for eth1data vote differences.
-			// Validators may have slightly different views of the eth1 chain
+		if !bytes.Equal(vote, ec.ExpectedSilaExecutionDataVote) {
+			// Allow some tolerance for silaExecutionData vote differences.
+			// Validators may have slightly different views of the silaexec chain
 			// as new blocks arrive during the voting period.
-			ec.Eth1DataMismatchCount++
+			ec.SilaExecutionDataMismatchCount++
 			// Allow up to 2 mismatches per voting period before failing.
-			if ec.Eth1DataMismatchCount > 2 {
+			if ec.SilaExecutionDataMismatchCount > 2 {
 				for i := primitives.Slot(0); i < slot; i++ {
 					v, ok := ec.SeenVotes[i]
 					if ok {
@@ -649,8 +649,8 @@ func validatorsVoteWithTheMajority(ec *e2etypes.EvaluationContext, conns ...*grp
 						fmt.Printf("did not see slot=%d\n", i)
 					}
 				}
-				return fmt.Errorf("incorrect eth1data vote for slot %d; expected: %#x vs voted: %#x (mismatch count: %d)",
-					slot, ec.ExpectedEth1DataVote, vote, ec.Eth1DataMismatchCount)
+				return fmt.Errorf("incorrect silaExecutionData vote for slot %d; expected: %#x vs voted: %#x (mismatch count: %d)",
+					slot, ec.ExpectedSilaExecutionDataVote, vote, ec.SilaExecutionDataMismatchCount)
 			}
 		}
 	}
@@ -710,7 +710,7 @@ func submitWithdrawal(ec *e2etypes.EvaluationContext, conns ...*grpc.ClientConn)
 		if err != nil {
 			return err
 		}
-		if val.WithdrawalCredentials[0] == params.BeaconConfig().ETH1AddressWithdrawalPrefixByte {
+		if val.WithdrawalCredentials[0] == params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte {
 			continue
 		}
 		if !bytes.Equal(val.PublicKey, privKeys[idx].PublicKey().Marshal()) {

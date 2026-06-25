@@ -492,7 +492,7 @@ func Test_executePostFinalizationTasks(t *testing.T) {
 	}))
 	require.NoError(t, headState.SetGenesisValidatorsRoot(params.BeaconConfig().ZeroHash[:]))
 	t.Run("pre deposit request", func(t *testing.T) {
-		require.NoError(t, headState.SetEth1DepositIndex(1))
+		require.NoError(t, headState.SetSilaExecutionDepositIndex(1))
 		s, tr := minimalTestService(t, WithFinalizedStateAtStartUp(headState))
 		ctx, beaconDB, stateGen := tr.ctx, tr.db, tr.sg
 
@@ -532,7 +532,7 @@ func Test_executePostFinalizationTasks(t *testing.T) {
 		require.LogsContain(t, logHook, "Finalized deposit insertion completed at index")
 	})
 	t.Run("deposit requests started", func(t *testing.T) {
-		require.NoError(t, headState.SetEth1DepositIndex(1))
+		require.NoError(t, headState.SetSilaExecutionDepositIndex(1))
 		require.NoError(t, headState.SetDepositRequestsStartIndex(1))
 		s, tr := minimalTestService(t, WithFinalizedStateAtStartUp(headState))
 		ctx, beaconDB, stateGen := tr.ctx, tr.db, tr.sg

@@ -21,16 +21,16 @@ func TestVerifyOperationLengths_Electra(t *testing.T) {
 		require.NoError(t, err)
 		require.NoError(t, electra.VerifyBlockDepositLength(sb.Block().Body(), s))
 	})
-	t.Run("eth1depositIndex less than eth1depositIndexLimit & number of deposits incorrect", func(t *testing.T) {
+	t.Run("silaexecdepositIndex less than silaexecdepositIndexLimit & number of deposits incorrect", func(t *testing.T) {
 		s, _ := util.DeterministicGenesisStateElectra(t, 1)
 		sb, err := consensusblocks.NewSignedBeaconBlock(util.NewBeaconBlockElectra())
 		require.NoError(t, err)
-		require.NoError(t, s.SetEth1DepositIndex(0))
+		require.NoError(t, s.SetSilaExecutionDepositIndex(0))
 		require.NoError(t, s.SetDepositRequestsStartIndex(1))
 		err = electra.VerifyBlockDepositLength(sb.Block().Body(), s)
 		require.ErrorContains(t, "incorrect outstanding deposits in block body", err)
 	})
-	t.Run("eth1depositIndex more than eth1depositIndexLimit & number of deposits is not 0", func(t *testing.T) {
+	t.Run("silaexecdepositIndex more than silaexecdepositIndexLimit & number of deposits is not 0", func(t *testing.T) {
 		s, _ := util.DeterministicGenesisStateElectra(t, 1)
 		sb, err := consensusblocks.NewSignedBeaconBlock(util.NewBeaconBlockElectra())
 		require.NoError(t, err)
@@ -44,7 +44,7 @@ func TestVerifyOperationLengths_Electra(t *testing.T) {
 				},
 			},
 		})
-		require.NoError(t, s.SetEth1DepositIndex(1))
+		require.NoError(t, s.SetSilaExecutionDepositIndex(1))
 		require.NoError(t, s.SetDepositRequestsStartIndex(1))
 		err = electra.VerifyBlockDepositLength(sb.Block().Body(), s)
 		require.ErrorContains(t, "incorrect outstanding deposits in block body", err)

@@ -42,7 +42,7 @@ var (
 type BeaconBlockBody struct {
 	version                   int
 	randaoReveal              [field_params.BLSSignatureLength]byte
-	eth1Data                  *eth.Eth1Data
+	silaexecData                  *eth.SilaExecutionData
 	graffiti                  [field_params.RootLength]byte
 	proposerSlashings         []*eth.ProposerSlashing
 	attesterSlashings         []*eth.AttesterSlashing

@@ -10,7 +10,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/pkg/errors"
-	util "github.com/wealdtech/go-eth2-util"
+	util "github.com/wealdtech/go-silaconsensus-util"
 )
 
 func TestDerivationFromMnemonic(t *testing.T) {

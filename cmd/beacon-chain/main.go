@@ -65,7 +65,7 @@ var appFlags = []cli.Flag{
 	flags.BlobBatchLimitBurstFactor,
 	flags.DataColumnBatchLimit,
 	flags.DataColumnBatchLimitBurstFactor,
-	flags.InteropMockEth1DataVotesFlag,
+	flags.InteropMockSilaExecutionDataVotesFlag,
 	flags.SlotsPerArchivedPoint,
 	flags.DisableDebugRPCEndpoints,
 	flags.SubscribeToAllSubnets,
@@ -75,7 +75,7 @@ var appFlags = []cli.Flag{
 	flags.ChainID,
 	flags.NetworkID,
 	flags.WeakSubjectivityCheckpoint,
-	flags.Eth1HeaderReqLimit,
+	flags.SilaExecutionHeaderReqLimit,
 	flags.MinPeersPerSubnet,
 	flags.MaxConcurrentDials,
 	flags.SuggestedFeeRecipient,
@@ -328,7 +328,7 @@ func main() {
 
 func startNode(ctx *cli.Context, cancel context.CancelFunc) error {
 	// Fix data dir for Windows users.
-	outdatedDataDir := filepath.Join(file.HomeDir(), "AppData", "Roaming", "Eth2")
+	outdatedDataDir := filepath.Join(file.HomeDir(), "AppData", "Roaming", "SilaConsensus")
 	currentDataDir := ctx.String(cmd.DataDirFlag.Name)
 	if err := cmd.FixDefaultDataDir(outdatedDataDir, currentDataDir); err != nil {
 		return err

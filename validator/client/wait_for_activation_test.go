@@ -18,7 +18,7 @@ import (
 	"github.com/pkg/errors"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 	"github.com/tyler-smith/go-bip39"
-	util "github.com/wealdtech/go-eth2-util"
+	util "github.com/wealdtech/go-silaconsensus-util"
 	"go.uber.org/mock/gomock"
 )
 

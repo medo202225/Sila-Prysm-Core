@@ -33,9 +33,9 @@ func TestGetDutiesV2_OK(t *testing.T) {
 	depChainStart := params.BeaconConfig().MinGenesisActiveValidatorCount
 	deposits, _, err := util.DeterministicDepositsAndKeys(depChainStart)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err, "Could not setup genesis bs")
 	genesisRoot, err := genesis.Block.HashTreeRoot()
 	require.NoError(t, err, "Could not get signing root")
@@ -129,9 +129,9 @@ func TestGetDutiesV2_NextEpochProposerSlots(t *testing.T) {
 			} else {
 				deposits, _, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().MinGenesisActiveValidatorCount)
 				require.NoError(t, err)
-				eth1Data, err := util.DeterministicEth1Data(len(deposits))
+				silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 				require.NoError(t, err)
-				bs, err = transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+				bs, err = transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 				require.NoError(t, err)
 			}
 			genesisRoot, err := genesis.Block.HashTreeRoot()
@@ -180,9 +180,9 @@ func TestGetAltairDutiesV2_SyncCommitteeOK(t *testing.T) {
 	genesis := util.NewBeaconBlock()
 	deposits, _, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().SyncCommitteeSize)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err, "Could not setup genesis bs")
 	h := &silapb.BeaconBlockHeader{
 		StateRoot:  bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength),
@@ -218,7 +218,7 @@ func TestGetAltairDutiesV2_SyncCommitteeOK(t *testing.T) {
 		HeadFetcher:       chain,
 		TimeFetcher:       chain,
 		ForkchoiceFetcher: chain,
-		Eth1InfoFetcher:   &mockExecution.Chain{},
+		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
 		SyncChecker:       &mockSync.Sync{IsSyncing: false},
 		PayloadIDCache:    cache.NewPayloadIDCache(),
 		CoreService:       &core.Service{},
@@ -285,9 +285,9 @@ func TestGetBellatrixDutiesV2_SyncCommitteeOK(t *testing.T) {
 	genesis := util.NewBeaconBlock()
 	deposits, _, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().SyncCommitteeSize)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	h := &silapb.BeaconBlockHeader{
 		StateRoot:  bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength),
 		ParentRoot: bytesutil.PadTo([]byte{'b'}, fieldparams.RootLength),
@@ -326,7 +326,7 @@ func TestGetBellatrixDutiesV2_SyncCommitteeOK(t *testing.T) {
 		HeadFetcher:       chain,
 		TimeFetcher:       chain,
 		ForkchoiceFetcher: chain,
-		Eth1InfoFetcher:   &mockExecution.Chain{},
+		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
 		SyncChecker:       &mockSync.Sync{IsSyncing: false},
 		PayloadIDCache:    cache.NewPayloadIDCache(),
 		CoreService:       &core.Service{},
@@ -392,9 +392,9 @@ func TestGetAltairDutiesV2_UnknownPubkey(t *testing.T) {
 	genesis := util.NewBeaconBlock()
 	deposits, _, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().SyncCommitteeSize)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 	h := &silapb.BeaconBlockHeader{
 		StateRoot:  bytesutil.PadTo([]byte{'a'}, fieldparams.RootLength),
@@ -420,7 +420,7 @@ func TestGetAltairDutiesV2_UnknownPubkey(t *testing.T) {
 		HeadFetcher:       chain,
 		ForkchoiceFetcher: chain,
 		TimeFetcher:       chain,
-		Eth1InfoFetcher:   &mockExecution.Chain{},
+		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
 		SyncChecker:       &mockSync.Sync{IsSyncing: false},
 		DepositFetcher:    depositCache,
 		PayloadIDCache:    cache.NewPayloadIDCache(),
@@ -501,9 +501,9 @@ func TestGetDutiesV2_CurrentEpoch_ShouldNotFail(t *testing.T) {
 	depChainStart := params.BeaconConfig().MinGenesisActiveValidatorCount
 	deposits, _, err := util.DeterministicDepositsAndKeys(depChainStart)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bState, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bState, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err, "Could not setup genesis state")
 	// Set state to non-epoch start slot.
 	require.NoError(t, bState.SetSlot(5))
@@ -545,9 +545,9 @@ func TestGetDutiesV2_MultipleKeys_OK(t *testing.T) {
 
 	deposits, _, err := util.DeterministicDepositsAndKeys(depChainStart)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err, "Could not setup genesis bs")
 	genesisRoot, err := genesis.Block.HashTreeRoot()
 	require.NoError(t, err, "Could not get signing root")
@@ -599,9 +599,9 @@ func TestGetDutiesV2_NextSyncCommitteePeriod(t *testing.T) {
 	// Create state at last epoch of current period
 	deposits, _, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().SyncCommitteeSize)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	st, err := util.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	st, err := util.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 
 	syncCommittee, err := altair.NextSyncCommittee(t.Context(), st)
@@ -683,9 +683,9 @@ func TestPTCDuties_PreGloasEpoch(t *testing.T) {
 
 	deposits, _, err := util.DeterministicDepositsAndKeys(8)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	st, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	st, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 
 	duties, rpcErr := (&core.Service{}).PTCDuties(t.Context(), st, 0, []primitives.ValidatorIndex{0, 1, 2})
@@ -701,9 +701,9 @@ func TestPTCDuties_EmptyIndices(t *testing.T) {
 
 	deposits, _, err := util.DeterministicDepositsAndKeys(8)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	st, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	st, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 
 	duties, rpcErr := (&core.Service{}).PTCDuties(t.Context(), st, 0, nil)

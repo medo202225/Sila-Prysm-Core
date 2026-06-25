@@ -151,7 +151,7 @@ func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpo
 		}
 		return errors.Wrap(err, errStr)
 	}
-	s.updateConnectedETH1(true)
+	s.updateConnectedSilaExecution(true)
 	s.runError = nil
 	return nil
 }
@@ -202,7 +202,7 @@ func (s *Service) pollConnectionStatus(ctx context.Context) {
 // Forces to retry an execution client connection.
 func (s *Service) retryExecutionClientConnection(ctx context.Context, err error) {
 	s.runError = errors.Wrap(err, "retryExecutionClientConnection")
-	s.updateConnectedETH1(false)
+	s.updateConnectedSilaExecution(false)
 	// Back off for a while before redialing.
 	time.Sleep(backOffPeriod)
 	currClient := s.rpcClient

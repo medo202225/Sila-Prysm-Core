@@ -28,21 +28,21 @@ type params struct {
 	LighthouseBeaconNodeCount int
 	Ports                     *ports
 	Paths                     *paths
-	Eth1GenesisBlock          *types.Block
+	SilaExecutionGenesisBlock          *types.Block
 	StartTime                 time.Time
 	CLGenesisTime             time.Time
-	Eth1GenesisTime           time.Time
+	SilaExecutionGenesisTime           time.Time
 	NumberOfExecutionCreds    uint64
 }
 
 type ports struct {
 	BootNodePort                    int
 	BootNodeMetricsPort             int
-	Eth1Port                        int
-	Eth1RPCPort                     int
-	Eth1AuthRPCPort                 int
-	Eth1WSPort                      int
-	Eth1ProxyPort                   int
+	SilaExecutionPort                        int
+	SilaExecutionRPCPort                     int
+	SilaExecutionAuthRPCPort                 int
+	SilaExecutionWSPort                      int
+	SilaExecutionProxyPort                   int
 	SilaBeaconNodeRPCPort          int
 	SilaBeaconNodeUDPPort          int
 	SilaBeaconNodeQUICPort         int
@@ -60,23 +60,23 @@ type ports struct {
 
 type paths struct{}
 
-// Eth1StaticFile abstracts the location of the eth1 static file folder in the e2e directory, so that
+// SilaExecutionStaticFile abstracts the location of the silaexec static file folder in the e2e directory, so that
 // a relative path can be used.
 // The relative path is specified as a variadic slice of path parts, in the same way as path.Join.
-func (*paths) Eth1StaticFile(rel ...string) string {
-	parts := append([]string{Eth1StaticFilesPath}, rel...)
+func (*paths) SilaExecutionStaticFile(rel ...string) string {
+	parts := append([]string{SilaExecutionStaticFilesPath}, rel...)
 	return path.Join(parts...)
 }
 
-// Eth1Runfile returns the full path to a file in the eth1 static directory, within bazel's run context.
+// SilaExecutionRunfile returns the full path to a file in the silaexec static directory, within bazel's run context.
 // The relative path is specified as a variadic slice of path parts, in the same style as path.Join.
-func (p *paths) Eth1Runfile(rel ...string) (string, error) {
-	return bazel.Runfile(p.Eth1StaticFile(rel...))
+func (p *paths) SilaExecutionRunfile(rel ...string) (string, error) {
+	return bazel.Runfile(p.SilaExecutionStaticFile(rel...))
 }
 
 // MinerKeyPath returns the full path to the file containing the miner's cryptographic keys.
 func (p *paths) MinerKeyPath() (string, error) {
-	return p.Eth1Runfile(minerKeyFilename)
+	return p.SilaExecutionRunfile(minerKeyFilename)
 }
 
 // TestParams is the globally accessible var for getting config elements.
@@ -88,14 +88,14 @@ func (p *params) Logfile(rel ...string) string {
 	return path.Join(append([]string{p.LogPath}, rel...)...)
 }
 
-// Eth1RPCURL gives the full url to use to connect to the given eth1 client's RPC endpoint.
-// The `index` param corresponds to the `index` field of the `eth1.Node` e2e component.
+// SilaExecutionRPCURL gives the full url to use to connect to the given silaexec client's RPC endpoint.
+// The `index` param corresponds to the `index` field of the `silaexec.Node` e2e component.
 // These are off by one compared to corresponding beacon nodes, because the miner is assigned index 0.
 // eg instance the index of the EL instance associated with beacon node index `0` would typically be `1`.
-func (p *params) Eth1RPCURL(index int) *url.URL {
+func (p *params) SilaExecutionRPCURL(index int) *url.URL {
 	return &url.URL{
 		Scheme: baseELScheme,
-		Host:   net.JoinHostPort(baseELHost, fmt.Sprintf("%d", p.Ports.Eth1RPCPort+index)),
+		Host:   net.JoinHostPort(baseELHost, fmt.Sprintf("%d", p.Ports.SilaExecutionRPCPort+index)),
 	}
 }
 
@@ -133,11 +133,11 @@ const (
 	bootNodePort        = 2150
 	bootNodeMetricsPort = bootNodePort + portSpan
 
-	eth1Port        = 3150
-	eth1RPCPort     = eth1Port + portSpan
-	eth1WSPort      = eth1Port + 2*portSpan
-	eth1AuthRPCPort = eth1Port + 3*portSpan
-	eth1ProxyPort   = eth1Port + 4*portSpan
+	silaexecPort        = 3150
+	silaexecRPCPort     = silaexecPort + portSpan
+	silaexecWSPort      = silaexecPort + 2*portSpan
+	silaexecAuthRPCPort = silaexecPort + 3*portSpan
+	silaexecProxyPort   = silaexecPort + 4*portSpan
 
 	silaBeaconNodeRPCPort     = 4150
 	silaBeaconNodeUDPPort     = silaBeaconNodeRPCPort + portSpan
@@ -214,7 +214,7 @@ func Init(t *testing.T, beaconNodeCount int) error {
 		BeaconNodeCount:        beaconNodeCount,
 		Ports:                  testPorts,
 		CLGenesisTime:          genTime,
-		Eth1GenesisTime:        genTime,
+		SilaExecutionGenesisTime:        genTime,
 		NumberOfExecutionCreds: PregenesisExecCreds,
 	}
 	return nil
@@ -268,7 +268,7 @@ func InitMultiClient(t *testing.T, beaconNodeCount int, lighthouseNodeCount int)
 		LighthouseBeaconNodeCount: lighthouseNodeCount,
 		Ports:                     testPorts,
 		CLGenesisTime:             genTime,
-		Eth1GenesisTime:           genTime,
+		SilaExecutionGenesisTime:           genTime,
 		NumberOfExecutionCreds:    PregenesisExecCreds,
 	}
 	return nil
@@ -300,23 +300,23 @@ func initializeStandardPorts(shardCount, shardIndex int, ports *ports, existingR
 	if err != nil {
 		return err
 	}
-	eth1Port, err := port(eth1Port, shardCount, shardIndex, existingRegistrations)
+	silaexecPort, err := port(silaexecPort, shardCount, shardIndex, existingRegistrations)
 	if err != nil {
 		return err
 	}
-	eth1RPCPort, err := port(eth1RPCPort, shardCount, shardIndex, existingRegistrations)
+	silaexecRPCPort, err := port(silaexecRPCPort, shardCount, shardIndex, existingRegistrations)
 	if err != nil {
 		return err
 	}
-	eth1WSPort, err := port(eth1WSPort, shardCount, shardIndex, existingRegistrations)
+	silaexecWSPort, err := port(silaexecWSPort, shardCount, shardIndex, existingRegistrations)
 	if err != nil {
 		return err
 	}
-	eth1AuthPort, err := port(eth1AuthRPCPort, shardCount, shardIndex, existingRegistrations)
+	silaexecAuthPort, err := port(silaexecAuthRPCPort, shardCount, shardIndex, existingRegistrations)
 	if err != nil {
 		return err
 	}
-	eth1ProxyPort, err := port(eth1ProxyPort, shardCount, shardIndex, existingRegistrations)
+	silaexecProxyPort, err := port(silaexecProxyPort, shardCount, shardIndex, existingRegistrations)
 	if err != nil {
 		return err
 	}
@@ -362,11 +362,11 @@ func initializeStandardPorts(shardCount, shardIndex int, ports *ports, existingR
 	}
 	ports.BootNodePort = bootnodePort
 	ports.BootNodeMetricsPort = bootnodeMetricsPort
-	ports.Eth1Port = eth1Port
-	ports.Eth1RPCPort = eth1RPCPort
-	ports.Eth1AuthRPCPort = eth1AuthPort
-	ports.Eth1WSPort = eth1WSPort
-	ports.Eth1ProxyPort = eth1ProxyPort
+	ports.SilaExecutionPort = silaexecPort
+	ports.SilaExecutionRPCPort = silaexecRPCPort
+	ports.SilaExecutionAuthRPCPort = silaexecAuthPort
+	ports.SilaExecutionWSPort = silaexecWSPort
+	ports.SilaExecutionProxyPort = silaexecProxyPort
 	ports.SilaBeaconNodeRPCPort = beaconNodeRPCPort
 	ports.SilaBeaconNodeUDPPort = beaconNodeUDPPort
 	ports.SilaBeaconNodeQUICPort = beaconNodeQUICPort

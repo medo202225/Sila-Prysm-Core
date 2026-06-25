@@ -31,7 +31,7 @@ func UnmarshalYaml(y []byte, dest any) error {
 }
 
 // TestFolders sets the proper config and returns the result of ReadDir
-// on the passed in eth2-spec-tests directory along with its path.
+// on the passed in silaconsensus-spec-tests directory along with its path.
 func TestFolders(t testing.TB, config, forkOrPhase, folderPath string) ([]os.DirEntry, string) {
 	testsFolderPath := path.Join("tests", config, forkOrPhase, folderPath)
 	filepath, err := bazel.Runfile(testsFolderPath)

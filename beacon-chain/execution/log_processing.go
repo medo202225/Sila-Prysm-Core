@@ -33,9 +33,9 @@ var (
 	depositEventSignature = hash.Keccak256([]byte("DepositEvent(bytes,bytes,bytes,bytes,bytes)"))
 )
 
-const eth1DataSavingInterval = 1000
+const silaexecDataSavingInterval = 1000
 const maxTolerableDifference = 50
-const defaultEth1HeaderReqLimit = uint64(1000)
+const defaultSilaExecutionHeaderReqLimit = uint64(1000)
 const depositLogRequestLimit = 10000
 const additiveFactorMultiplier = 0.10
 const multiplicativeDecreaseDivisor = 2
@@ -58,8 +58,8 @@ func (s *Service) GenesisExecutionChainInfo() (uint64, *big.Int) {
 	return s.chainStartData.GenesisTime, big.NewInt(int64(s.chainStartData.GenesisBlock))
 }
 
-// ProcessETH1Block processes logs from the provided eth1 block.
-func (s *Service) ProcessETH1Block(ctx context.Context, blkNum *big.Int) error {
+// ProcessSilaExecutionBlock processes logs from the provided silaexec block.
+func (s *Service) ProcessSilaExecutionBlock(ctx context.Context, blkNum *big.Int) error {
 	query := ethereum.FilterQuery{
 		Addresses: []common.Address{
 			s.cfg.depositContractAddr,
@@ -89,7 +89,7 @@ func (s *Service) ProcessETH1Block(ctx context.Context, blkNum *big.Int) error {
 }
 
 // ProcessLog is the main method which handles the processing of all
-// logs from the deposit contract on the eth1 chain.
+// logs from the deposit contract on the silaexec chain.
 func (s *Service) ProcessLog(ctx context.Context, depositLog *gethtypes.Log) error {
 	s.processingLock.RLock()
 	defer s.processingLock.RUnlock()
@@ -98,7 +98,7 @@ func (s *Service) ProcessLog(ctx context.Context, depositLog *gethtypes.Log) err
 		if err := s.ProcessDepositLog(ctx, depositLog); err != nil {
 			return errors.Wrap(err, "Could not process deposit log")
 		}
-		if s.lastReceivedMerkleIndex%eth1DataSavingInterval == 0 {
+		if s.lastReceivedMerkleIndex%silaexecDataSavingInterval == 0 {
 			return s.savePowchainData(ctx)
 		}
 		return nil
@@ -108,7 +108,7 @@ func (s *Service) ProcessLog(ctx context.Context, depositLog *gethtypes.Log) err
 }
 
 // ProcessDepositLog processes the log which had been received from
-// the eth1 chain by trying to ascertain which participant deposited
+// the silaexec chain by trying to ascertain which participant deposited
 // in the contract.
 func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.Log) error {
 	pubkey, withdrawalCredentials, amount, signature, merkleTreeIndex, err := contracts.UnpackDepositLogData(depositLog.Data)
@@ -117,7 +117,7 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 	}
 	// If we have already seen this Merkle index, skip processing the log.
 	// This can happen sometimes when we receive the same log twice from the
-	// ETH1.0 network, and prevents us from updating our trie
+	// SILAEXEC.0 network, and prevents us from updating our trie
 	// with the same log twice, causing an inconsistent state root.
 	index := int64(binary.LittleEndian.Uint64(merkleTreeIndex)) // lint:ignore uintcast -- MerkleTreeIndex should not exceed int64 in your lifetime.
 	if index <= s.lastReceivedMerkleIndex {
@@ -178,11 +178,11 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 		if err != nil {
 			return errors.Wrap(err, "unable to determine root of deposit trie")
 		}
-		eth1Data := &silapb.Eth1Data{
+		silaexecData := &silapb.SilaExecutionData{
 			DepositRoot:  root[:],
 			DepositCount: uint64(len(s.chainStartData.ChainstartDeposits)),
 		}
-		if err := s.processDeposit(ctx, eth1Data, deposit); err != nil {
+		if err := s.processDeposit(ctx, silaexecData, deposit); err != nil {
 			log.WithError(err).Error("Invalid deposit processed")
 			validData = false
 		}
@@ -197,7 +197,7 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 		// Log the deposit received periodically
 		if index%depositLoggingInterval == 0 {
 			log.WithFields(logrus.Fields{
-				"eth1Block":       depositLog.BlockNumber,
+				"silaexecBlock":       depositLog.BlockNumber,
 				"publicKey":       fmt.Sprintf("%#x", depositData.PublicKey),
 				"merkleTreeIndex": index,
 			}).Debug("Deposit registered from deposit contract")
@@ -219,8 +219,8 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 		}
 	} else {
 		log.WithFields(logrus.Fields{
-			"eth1Block":       depositLog.BlockHash.Hex(),
-			"eth1Tx":          depositLog.TxHash.Hex(),
+			"silaexecBlock":       depositLog.BlockHash.Hex(),
+			"silaexecTx":          depositLog.TxHash.Hex(),
 			"merkleTreeIndex": index,
 		}).Info("Invalid deposit registered in deposit contract")
 	}
@@ -238,8 +238,8 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 }
 
 // ProcessChainStart processes the log which had been received from
-// the eth1 chain by trying to determine when to start the beacon chain.
-func (s *Service) ProcessChainStart(genesisTime uint64, eth1BlockHash [32]byte, blockNumber *big.Int) {
+// the silaexec chain by trying to determine when to start the beacon chain.
+func (s *Service) ProcessChainStart(genesisTime uint64, silaexecBlockHash [32]byte, blockNumber *big.Int) {
 	s.chainStartData.Chainstarted = true
 	s.chainStartData.GenesisBlock = blockNumber.Uint64()
 
@@ -258,10 +258,10 @@ func (s *Service) ProcessChainStart(genesisTime uint64, eth1BlockHash [32]byte, 
 		log.WithError(err).Error("Unable to determine root of deposit trie, aborting chain start")
 		return
 	}
-	s.chainStartData.Eth1Data = &silapb.Eth1Data{
+	s.chainStartData.SilaExecutionData = &silapb.SilaExecutionData{
 		DepositCount: uint64(len(s.chainStartData.ChainstartDeposits)),
 		DepositRoot:  root[:],
-		BlockHash:    eth1BlockHash[:],
+		BlockHash:    silaexecBlockHash[:],
 	}
 
 	log.WithFields(logrus.Fields{
@@ -280,7 +280,7 @@ func (s *Service) ProcessChainStart(genesisTime uint64, eth1BlockHash [32]byte, 
 	}
 }
 
-// createGenesisTime adds in the genesis delay to the eth1 block time
+// createGenesisTime adds in the genesis delay to the silaexec block time
 // on which it was triggered.
 func createGenesisTime(timeStamp uint64) uint64 {
 	return timeStamp + params.BeaconConfig().GenesisDelay
@@ -289,7 +289,7 @@ func createGenesisTime(timeStamp uint64) uint64 {
 // processPastLogs processes all the past logs from the deposit contract and
 // updates the deposit trie with the data from each individual log.
 func (s *Service) processPastLogs(ctx context.Context) error {
-	currentBlockNum := s.latestEth1Data.LastRequestedBlock
+	currentBlockNum := s.latestSilaExecutionData.LastRequestedBlock
 	deploymentBlock := params.BeaconNetworkConfig().ContractDeploymentBlock
 	// Start from the deployment block if our last requested block
 	// is behind it. This is as the deposit logs can only start from the
@@ -308,11 +308,11 @@ func (s *Service) processPastLogs(ctx context.Context) error {
 		return err
 	}
 
-	batchSize := s.cfg.eth1HeaderReqLimit
+	batchSize := s.cfg.silaexecHeaderReqLimit
 	additiveFactor := uint64(float64(batchSize) * additiveFactorMultiplier)
 
 	log.WithFields(logrus.Fields{
-		"currentEth1Block": latestFollowHeight,
+		"currentSilaExecutionBlock": latestFollowHeight,
 		"currentLogCount":  logCount,
 	}).Debug("Processing historical deposit logs")
 
@@ -323,9 +323,9 @@ func (s *Service) processPastLogs(ctx context.Context) error {
 		}
 	}
 
-	s.latestEth1DataLock.Lock()
-	s.latestEth1Data.LastRequestedBlock = currentBlockNum
-	s.latestEth1DataLock.Unlock()
+	s.latestSilaExecutionDataLock.Lock()
+	s.latestSilaExecutionData.LastRequestedBlock = currentBlockNum
+	s.latestSilaExecutionDataLock.Unlock()
 
 	c, err := s.cfg.beaconDB.FinalizedCheckpoint(ctx)
 	if err != nil {
@@ -352,8 +352,8 @@ func (s *Service) processPastLogs(ctx context.Context) error {
 			return err
 		}
 	}
-	if fState != nil && !fState.IsNil() && fState.Eth1DepositIndex() > 0 {
-		s.cfg.depositCache.PrunePendingDeposits(ctx, int64(fState.Eth1DepositIndex())) // lint:ignore uintcast -- deposit index should not exceed int64 in your lifetime.
+	if fState != nil && !fState.IsNil() && fState.SilaExecutionDepositIndex() > 0 {
+		s.cfg.depositCache.PrunePendingDeposits(ctx, int64(fState.SilaExecutionDepositIndex())) // lint:ignore uintcast -- deposit index should not exceed int64 in your lifetime.
 	}
 	return nil
 }
@@ -416,9 +416,9 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 		}
 	}
 
-	s.latestEth1DataLock.RLock()
-	lastReqBlock := s.latestEth1Data.LastRequestedBlock
-	s.latestEth1DataLock.RUnlock()
+	s.latestSilaExecutionDataLock.RLock()
+	lastReqBlock := s.latestSilaExecutionData.LastRequestedBlock
+	s.latestSilaExecutionDataLock.RUnlock()
 
 	for i, filterLog := range logs {
 		if filterLog.BlockNumber > currentBlockNum {
@@ -426,9 +426,9 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 				return 0, 0, err
 			}
 			// set new block number after checking for chainstart for previous block.
-			s.latestEth1DataLock.Lock()
-			s.latestEth1Data.LastRequestedBlock = currentBlockNum
-			s.latestEth1DataLock.Unlock()
+			s.latestSilaExecutionDataLock.Lock()
+			s.latestSilaExecutionData.LastRequestedBlock = currentBlockNum
+			s.latestSilaExecutionDataLock.Unlock()
 			currentBlockNum = filterLog.BlockNumber
 		}
 		if err := s.ProcessLog(ctx, &logs[i]); err != nil {
@@ -436,9 +436,9 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 			// we reset the last requested block to the previous valid block range. This
 			// prevents the beacon from advancing processing of logs to another range
 			// in the event of an execution client failure.
-			s.latestEth1DataLock.Lock()
-			s.latestEth1Data.LastRequestedBlock = lastReqBlock
-			s.latestEth1DataLock.Unlock()
+			s.latestSilaExecutionDataLock.Lock()
+			s.latestSilaExecutionData.LastRequestedBlock = lastReqBlock
+			s.latestSilaExecutionDataLock.Unlock()
 			return 0, 0, err
 		}
 	}
@@ -447,11 +447,11 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 	}
 	currentBlockNum = end
 
-	if batchSize < s.cfg.eth1HeaderReqLimit {
+	if batchSize < s.cfg.silaexecHeaderReqLimit {
 		// update the batchSize with additive increase
 		batchSize += additiveFactor
-		if batchSize > s.cfg.eth1HeaderReqLimit {
-			batchSize = s.cfg.eth1HeaderReqLimit
+		if batchSize > s.cfg.silaexecHeaderReqLimit {
+			batchSize = s.cfg.silaexecHeaderReqLimit
 		}
 	}
 	return currentBlockNum, batchSize, nil
@@ -461,30 +461,30 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 // logs from the period last polled to now.
 func (s *Service) requestBatchedHeadersAndLogs(ctx context.Context) error {
 	// We request for the nth block behind the current head, in order to have
-	// stabilized logs when we retrieve it from the eth1 chain.
+	// stabilized logs when we retrieve it from the silaexec chain.
 
 	requestedBlock, err := s.followedBlockHeight(ctx)
 	if err != nil {
 		return err
 	}
-	if requestedBlock > s.latestEth1Data.LastRequestedBlock &&
-		requestedBlock-s.latestEth1Data.LastRequestedBlock > maxTolerableDifference {
-		log.Infof("Falling back to historical headers and logs sync. Current difference is %d", requestedBlock-s.latestEth1Data.LastRequestedBlock)
+	if requestedBlock > s.latestSilaExecutionData.LastRequestedBlock &&
+		requestedBlock-s.latestSilaExecutionData.LastRequestedBlock > maxTolerableDifference {
+		log.Infof("Falling back to historical headers and logs sync. Current difference is %d", requestedBlock-s.latestSilaExecutionData.LastRequestedBlock)
 		return s.processPastLogs(ctx)
 	}
-	for i := s.latestEth1Data.LastRequestedBlock + 1; i <= requestedBlock; i++ {
-		// Cache eth1 block header here.
+	for i := s.latestSilaExecutionData.LastRequestedBlock + 1; i <= requestedBlock; i++ {
+		// Cache silaexec block header here.
 		_, err := s.BlockHashByHeight(ctx, new(big.Int).SetUint64(i))
 		if err != nil {
 			return err
 		}
-		err = s.ProcessETH1Block(ctx, new(big.Int).SetUint64(i))
+		err = s.ProcessSilaExecutionBlock(ctx, new(big.Int).SetUint64(i))
 		if err != nil {
 			return err
 		}
-		s.latestEth1DataLock.Lock()
-		s.latestEth1Data.LastRequestedBlock = i
-		s.latestEth1DataLock.Unlock()
+		s.latestSilaExecutionDataLock.Lock()
+		s.latestSilaExecutionData.LastRequestedBlock = i
+		s.latestSilaExecutionDataLock.Unlock()
 	}
 
 	return nil
@@ -493,7 +493,7 @@ func (s *Service) requestBatchedHeadersAndLogs(ctx context.Context) error {
 func (s *Service) retrieveBlockHashAndTime(ctx context.Context, blkNum *big.Int) ([32]byte, uint64, error) {
 	bHash, err := s.BlockHashByHeight(ctx, blkNum)
 	if err != nil {
-		return [32]byte{}, 0, errors.Wrap(err, "could not get eth1 block hash")
+		return [32]byte{}, 0, errors.Wrap(err, "could not get silaexec block hash")
 	}
 	if bHash == [32]byte{} {
 		return [32]byte{}, 0, errors.Wrap(err, "got empty block hash")
@@ -569,8 +569,8 @@ func (s *Service) savePowchainData(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	eth1Data := &silapb.ETH1ChainData{
-		CurrentEth1Data:   s.latestEth1Data,
+	silaexecData := &silapb.SilaExecutionChainData{
+		CurrentSilaExecutionData:   s.latestSilaExecutionData,
 		ChainstartData:    s.chainStartData,
 		BeaconState:       pbState, // I promise not to mutate it!
 		DepositContainers: s.cfg.depositCache.AllDepositContainers(ctx),
@@ -583,9 +583,9 @@ func (s *Service) savePowchainData(ctx context.Context) error {
 	if !ok {
 		return errors.New("deposit tree was not EIP4881 DepositTree")
 	}
-	eth1Data.DepositSnapshot, err = tree.ToProto()
+	silaexecData.DepositSnapshot, err = tree.ToProto()
 	if err != nil {
 		return err
 	}
-	return s.cfg.beaconDB.SaveExecutionChainData(ctx, eth1Data)
+	return s.cfg.beaconDB.SaveExecutionChainData(ctx, silaexecData)
 }

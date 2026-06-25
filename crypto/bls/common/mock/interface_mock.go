@@ -228,18 +228,18 @@ func (mr *MockSignatureMockRecorder) Copy() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Copy", reflect.TypeOf((*MockSignature)(nil).Copy))
 }
 
-// Eth2FastAggregateVerify mocks base method.
-func (m *MockSignature) Eth2FastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte) bool {
+// SilaConsensusFastAggregateVerify mocks base method.
+func (m *MockSignature) SilaConsensusFastAggregateVerify(pubKeys []common.PublicKey, msg [32]byte) bool {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Eth2FastAggregateVerify", pubKeys, msg)
+	ret := m.ctrl.Call(m, "SilaConsensusFastAggregateVerify", pubKeys, msg)
 	ret0, _ := ret[0].(bool)
 	return ret0
 }
 
-// Eth2FastAggregateVerify indicates an expected call of Eth2FastAggregateVerify.
-func (mr *MockSignatureMockRecorder) Eth2FastAggregateVerify(pubKeys, msg any) *gomock.Call {
+// SilaConsensusFastAggregateVerify indicates an expected call of SilaConsensusFastAggregateVerify.
+func (mr *MockSignatureMockRecorder) SilaConsensusFastAggregateVerify(pubKeys, msg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Eth2FastAggregateVerify", reflect.TypeOf((*MockSignature)(nil).Eth2FastAggregateVerify), pubKeys, msg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SilaConsensusFastAggregateVerify", reflect.TypeOf((*MockSignature)(nil).SilaConsensusFastAggregateVerify), pubKeys, msg)
 }
 
 // FastAggregateVerify mocks base method.

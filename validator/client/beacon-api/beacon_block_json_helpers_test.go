@@ -66,20 +66,20 @@ func TestBeaconBlockJsonHelpers_JsonifyBlsToExecutionChanges(t *testing.T) {
 	assert.DeepEqual(t, expectedResult, structs.SignedBLSChangesFromConsensus(input))
 }
 
-func TestBeaconBlockJsonHelpers_JsonifyEth1Data(t *testing.T) {
-	input := &silapb.Eth1Data{
+func TestBeaconBlockJsonHelpers_JsonifySilaExecutionData(t *testing.T) {
+	input := &silapb.SilaExecutionData{
 		DepositRoot:  []byte{1},
 		DepositCount: 2,
 		BlockHash:    []byte{3},
 	}
 
-	expectedResult := &structs.Eth1Data{
+	expectedResult := &structs.SilaExecutionData{
 		DepositRoot:  hexutil.Encode([]byte{1}),
 		DepositCount: "2",
 		BlockHash:    hexutil.Encode([]byte{3}),
 	}
 
-	result := jsonifyEth1Data(input)
+	result := jsonifySilaExecutionData(input)
 	assert.DeepEqual(t, expectedResult, result)
 }
 

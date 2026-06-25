@@ -1,4 +1,4 @@
-// Package testing provides useful mocks for an eth1 powchain
+// Package testing provides useful mocks for an silaexec powchain
 // service as needed by unit tests for the beacon node.
 package testing
 
@@ -30,8 +30,8 @@ type Chain struct {
 	HashesByHeight    map[int][]byte
 	TimesByHeight     map[int]uint64
 	BlockNumberByTime map[uint64]*big.Int
-	Eth1Data          *silapb.Eth1Data
-	GenesisEth1Block  *big.Int
+	SilaExecutionData          *silapb.SilaExecutionData
+	GenesisSilaExecutionBlock  *big.Int
 	GenesisState      state.BeaconState
 	CurrEndpoint      string
 	CurrError         error
@@ -53,7 +53,7 @@ func New() *Chain {
 
 // GenesisExecutionChainInfo --
 func (m *Chain) GenesisExecutionChainInfo() (uint64, *big.Int) {
-	blk := m.GenesisEth1Block
+	blk := m.GenesisSilaExecutionBlock
 	if blk == nil {
 		blk = big.NewInt(GenesisTime)
 	}
@@ -104,9 +104,9 @@ func (m *Chain) BlockByTimestamp(_ context.Context, time uint64) (*types.HeaderI
 	return &types.HeaderInfo{Number: chosenNumber, Time: chosenTime}, nil
 }
 
-// ChainStartEth1Data --
-func (m *Chain) ChainStartEth1Data() *silapb.Eth1Data {
-	return m.Eth1Data
+// ChainStartSilaExecutionData --
+func (m *Chain) ChainStartSilaExecutionData() *silapb.SilaExecutionData {
+	return m.SilaExecutionData
 }
 
 // PreGenesisState --
@@ -131,11 +131,11 @@ func (m *Chain) ExecutionClientConnectionErr() error {
 	return m.CurrError
 }
 
-func (m *Chain) ETH1Endpoints() []string {
+func (m *Chain) SilaExecutionEndpoints() []string {
 	return m.Endpoints
 }
 
-func (m *Chain) ETH1ConnectionErrors() []error {
+func (m *Chain) SilaExecutionConnectionErrors() []error {
 	return m.Errors
 }
 

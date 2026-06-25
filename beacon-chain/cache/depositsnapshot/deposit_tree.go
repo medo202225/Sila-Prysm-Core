@@ -79,14 +79,14 @@ func fromSnapshot(snapshot DepositTreeSnapshot) (*DepositTree, error) {
 }
 
 // Finalize marks a deposit as finalized.
-func (d *DepositTree) Finalize(eth1DepositIndex int64, executionHash common.Hash, executionNumber uint64) error {
+func (d *DepositTree) Finalize(silaExecutionDepositIndex int64, executionHash common.Hash, executionNumber uint64) error {
 	var blockHash [32]byte
 	copy(blockHash[:], executionHash[:])
 	d.finalizedExecutionBlock = executionBlock{
 		Hash:  blockHash,
 		Depth: executionNumber,
 	}
-	depositCount := uint64(eth1DepositIndex + 1)
+	depositCount := uint64(silaExecutionDepositIndex + 1)
 	_, err := d.tree.Finalize(depositCount, DepositContractDepth)
 	if err != nil {
 		return err

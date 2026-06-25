@@ -317,7 +317,7 @@ func TestGetRandao(t *testing.T) {
 		require.NoError(t, earlyEpochState.SetSlot(params.BeaconConfig().SlotsPerEpoch*primitives.Slot(earlyEpoch)))
 
 		// Set up RANDAO mix for epoch 0
-		// In real networks, this would be the ETH1 block hash used for genesis
+		// In real networks, this would be the SILAEXEC block hash used for genesis
 		epoch0Randao := bytesutil.ToBytes32([]byte("epoch0"))
 		require.NoError(t, earlyEpochState.UpdateRandaoMixesAtIndex(0, epoch0Randao))
 
@@ -351,7 +351,7 @@ func TestGetRandao(t *testing.T) {
 		require.NoError(t, earlyEpochState.SetSlot(params.BeaconConfig().SlotsPerEpoch*primitives.Slot(earlyEpoch)))
 
 		// Set up RANDAO mix for epoch 0
-		// In real networks, this would be the ETH1 block hash used for genesis
+		// In real networks, this would be the SILAEXEC block hash used for genesis
 		epoch0Randao := bytesutil.ToBytes32([]byte("epoch0"))
 		require.NoError(t, earlyEpochState.UpdateRandaoMixesAtIndex(0, epoch0Randao))
 

@@ -40,11 +40,11 @@ message BeaconState {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001
@@ -202,11 +202,11 @@ message BeaconStateAltair {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001
@@ -285,11 +285,11 @@ message BeaconStateBellatrix {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001
@@ -358,11 +358,11 @@ message BeaconStateCapella {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001
@@ -440,11 +440,11 @@ message BeaconStateDeneb {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001
@@ -522,11 +522,11 @@ message BeaconStateElectra {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001
@@ -633,11 +633,11 @@ message BeaconStateFulu {
     (ethereum.eth.ext.ssz_max) = "16777216"
   ];
 
-  // Eth1 [3001-4000]
-  Eth1Data eth1_data = 3001;
-  repeated Eth1Data eth1_data_votes = 3002
-      [ (ethereum.eth.ext.ssz_max) = "eth1_data_votes.size" ];
-  uint64 eth1_deposit_index = 3003;
+  // SilaExecution [3001-4000]
+  SilaExecutionData sila_execution_data = 3001;
+  repeated SilaExecutionData sila_execution_data_votes = 3002
+      [ (ethereum.eth.ext.ssz_max) = "sila_execution_data_votes.size" ];
+  uint64 silaexec_deposit_index = 3003;
 
   // Registry [4001-5000]
   repeated Validator validators = 4001

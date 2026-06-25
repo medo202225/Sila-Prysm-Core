@@ -1,4 +1,4 @@
-// Package v1 defines mappings of types as defined by the web3signer official specification for its v1 version i.e. /api/v1/eth2
+// Package v1 defines mappings of types as defined by the web3signer official specification for its v1 version i.e. /api/v1/silaconsensus
 /* Web3Signer Specs are found by searching Consensys' Web3Signer API specification*/
 package types
 
@@ -199,7 +199,7 @@ type BeaconBlock struct {
 // BeaconBlockBody a sub property of BeaconBlock.
 type BeaconBlockBody struct {
 	RandaoReveal      hexutil.Bytes          `json:"randao_reveal"`
-	Eth1Data          *Eth1Data              `json:"eth1_data"`
+	SilaExecutionData          *SilaExecutionData              `json:"sila_execution_data"`
 	Graffiti          hexutil.Bytes          `json:"graffiti"` // 32 bytes
 	ProposerSlashings []*ProposerSlashing    `json:"proposer_slashings"`
 	AttesterSlashings []*AttesterSlashing    `json:"attester_slashings"`
@@ -208,8 +208,8 @@ type BeaconBlockBody struct {
 	VoluntaryExits    []*SignedVoluntaryExit `json:"voluntary_exits"`
 }
 
-// Eth1Data a sub property of BeaconBlockBody.
-type Eth1Data struct {
+// SilaExecutionData a sub property of BeaconBlockBody.
+type SilaExecutionData struct {
 	DepositRoot  hexutil.Bytes `json:"deposit_root"`
 	DepositCount string        `json:"deposit_count"` /* uint64 */
 	BlockHash    hexutil.Bytes `json:"block_hash"`
@@ -297,7 +297,7 @@ type BeaconBlockAltair struct {
 // BeaconBlockBodyAltair a sub property of BeaconBlockAltair.
 type BeaconBlockBodyAltair struct {
 	RandaoReveal      hexutil.Bytes          `json:"randao_reveal"`
-	Eth1Data          *Eth1Data              `json:"eth1_data"`
+	SilaExecutionData          *SilaExecutionData              `json:"sila_execution_data"`
 	Graffiti          hexutil.Bytes          `json:"graffiti"` /* Hash32 */
 	ProposerSlashings []*ProposerSlashing    `json:"proposer_slashings"`
 	AttesterSlashings []*AttesterSlashing    `json:"attester_slashings"`

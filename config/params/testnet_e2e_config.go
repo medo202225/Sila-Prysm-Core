@@ -31,7 +31,7 @@ func E2ETestConfig() *BeaconChainConfig {
 func E2EMainnetTestConfig() *BeaconChainConfig {
 	e2eConfig := MainnetConfig()
 	e2eConfig.DepositContractAddress = "0x4242424242424242424242424242424242424242"
-	e2eConfig.Eth1FollowDistance = 8
+	e2eConfig.SilaExecutionFollowDistance = 8
 
 	// Misc.
 	e2eConfig.MinGenesisActiveValidatorCount = 256
@@ -42,13 +42,13 @@ func E2EMainnetTestConfig() *BeaconChainConfig {
 	e2eConfig.SecondsPerSlot = 6
 	e2eConfig.SlotDurationMilliseconds = 6000
 	e2eConfig.SqrRootSlotsPerEpoch = 5
-	e2eConfig.SecondsPerETH1Block = 2
+	e2eConfig.SecondsPerSilaExecutionBlock = 2
 	e2eConfig.ShardCommitteePeriod = 4
 	e2eConfig.MinValidatorWithdrawabilityDelay = 1
 
 	// PoW parameters.
-	e2eConfig.DepositChainID = 1337   // Chain ID of eth1 dev net.
-	e2eConfig.DepositNetworkID = 1337 // Network ID of eth1 dev net.
+	e2eConfig.DepositChainID = 1337   // Chain ID of silaexec dev net.
+	e2eConfig.DepositNetworkID = 1337 // Network ID of silaexec dev net.
 
 	// Altair Fork Parameters.
 	e2eConfig.AltairForkEpoch = E2ETestConfig().AltairForkEpoch

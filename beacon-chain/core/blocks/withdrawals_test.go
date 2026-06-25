@@ -248,7 +248,7 @@ func TestProcessBLSToExecutionChange(t *testing.T) {
 				WithdrawalCredentials: digest[:],
 			},
 		}
-		registry[0].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+		registry[0].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 
 		st, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
 			Validators: registry,
@@ -645,10 +645,10 @@ func TestProcessBlindWithdrawals(t *testing.T) {
 				validators[idx].WithdrawableEpoch = epochInPast
 			}
 			st.Balances[idx] = withdrawalAmount(idx)
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 		}
 		for _, idx := range arguments.PendingPartialWithdrawalIndices {
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 			st.Balances[idx] = withdrawalAmount(idx)
 		}
 		st.Validators = validators
@@ -1102,10 +1102,10 @@ func TestProcessWithdrawals(t *testing.T) {
 			if err := st.UpdateBalancesAtIndex(idx, withdrawalAmount(idx)); err != nil {
 				return err
 			}
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 		}
 		for _, idx := range arguments.PendingPartialWithdrawalIndices {
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().ETH1AddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
 			if err := st.UpdateBalancesAtIndex(idx, withdrawalAmount(idx)); err != nil {
 				return err
 			}
@@ -1241,7 +1241,7 @@ func TestProcessBLSToExecutionChanges(t *testing.T) {
 	vals := st.Validators()
 	for _, val := range vals {
 		require.DeepEqual(t, executionAddress, val.WithdrawalCredentials[12:])
-		require.Equal(t, params.BeaconConfig().ETH1AddressWithdrawalPrefixByte, val.WithdrawalCredentials[0])
+		require.Equal(t, params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, val.WithdrawalCredentials[0])
 	}
 }
 

@@ -608,7 +608,7 @@ func (x *HostData) GetEnr() string {
 }
 
 // Deprecated: Marked as deprecated in proto/sila/v1alpha1/node.proto.
-type ETH1ConnectionStatus struct {
+type SilaExecutionConnectionStatus struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
 	CurrentAddress         string                 `protobuf:"bytes,1,opt,name=current_address,json=currentAddress,proto3" json:"current_address,omitempty"`
 	CurrentConnectionError string                 `protobuf:"bytes,2,opt,name=current_connection_error,json=currentConnectionError,proto3" json:"current_connection_error,omitempty"`
@@ -618,20 +618,20 @@ type ETH1ConnectionStatus struct {
 	sizeCache              protoimpl.SizeCache
 }
 
-func (x *ETH1ConnectionStatus) Reset() {
-	*x = ETH1ConnectionStatus{}
+func (x *SilaExecutionConnectionStatus) Reset() {
+	*x = SilaExecutionConnectionStatus{}
 	mi := &file_proto_sila_v1alpha1_node_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ETH1ConnectionStatus) String() string {
+func (x *SilaExecutionConnectionStatus) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ETH1ConnectionStatus) ProtoMessage() {}
+func (*SilaExecutionConnectionStatus) ProtoMessage() {}
 
-func (x *ETH1ConnectionStatus) ProtoReflect() protoreflect.Message {
+func (x *SilaExecutionConnectionStatus) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_node_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -643,33 +643,33 @@ func (x *ETH1ConnectionStatus) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ETH1ConnectionStatus.ProtoReflect.Descriptor instead.
-func (*ETH1ConnectionStatus) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaExecutionConnectionStatus.ProtoReflect.Descriptor instead.
+func (*SilaExecutionConnectionStatus) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_node_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ETH1ConnectionStatus) GetCurrentAddress() string {
+func (x *SilaExecutionConnectionStatus) GetCurrentAddress() string {
 	if x != nil {
 		return x.CurrentAddress
 	}
 	return ""
 }
 
-func (x *ETH1ConnectionStatus) GetCurrentConnectionError() string {
+func (x *SilaExecutionConnectionStatus) GetCurrentConnectionError() string {
 	if x != nil {
 		return x.CurrentConnectionError
 	}
 	return ""
 }
 
-func (x *ETH1ConnectionStatus) GetAddresses() []string {
+func (x *SilaExecutionConnectionStatus) GetAddresses() []string {
 	if x != nil {
 		return x.Addresses
 	}
 	return nil
 }
 
-func (x *ETH1ConnectionStatus) GetConnectionErrors() []string {
+func (x *SilaExecutionConnectionStatus) GetConnectionErrors() []string {
 	if x != nil {
 		return x.ConnectionErrors
 	}
@@ -870,7 +870,7 @@ var file_proto_sila_v1alpha1_node_proto_goTypes = []any{
 	(*Peers)(nil),                 // 8: ethereum.eth.v1alpha1.Peers
 	(*Peer)(nil),                  // 9: ethereum.eth.v1alpha1.Peer
 	(*HostData)(nil),              // 10: ethereum.eth.v1alpha1.HostData
-	(*ETH1ConnectionStatus)(nil),  // 11: ethereum.eth.v1alpha1.ETH1ConnectionStatus
+	(*SilaExecutionConnectionStatus)(nil),  // 11: ethereum.eth.v1alpha1.SilaExecutionConnectionStatus
 	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
 	(*emptypb.Empty)(nil),         // 13: google.protobuf.Empty
 }
@@ -887,7 +887,7 @@ var file_proto_sila_v1alpha1_node_proto_depIdxs = []int32{
 	13, // 9: ethereum.eth.v1alpha1.Node.GetHost:input_type -> google.protobuf.Empty
 	7,  // 10: ethereum.eth.v1alpha1.Node.GetPeer:input_type -> ethereum.eth.v1alpha1.PeerRequest
 	13, // 11: ethereum.eth.v1alpha1.Node.ListPeers:input_type -> google.protobuf.Empty
-	13, // 12: ethereum.eth.v1alpha1.Node.GetETH1ConnectionStatus:input_type -> google.protobuf.Empty
+	13, // 12: ethereum.eth.v1alpha1.Node.GetSilaExecutionConnectionStatus:input_type -> google.protobuf.Empty
 	3,  // 13: ethereum.eth.v1alpha1.Node.GetSyncStatus:output_type -> ethereum.eth.v1alpha1.SyncStatus
 	4,  // 14: ethereum.eth.v1alpha1.Node.GetGenesis:output_type -> ethereum.eth.v1alpha1.Genesis
 	5,  // 15: ethereum.eth.v1alpha1.Node.GetVersion:output_type -> ethereum.eth.v1alpha1.Version
@@ -896,7 +896,7 @@ var file_proto_sila_v1alpha1_node_proto_depIdxs = []int32{
 	10, // 18: ethereum.eth.v1alpha1.Node.GetHost:output_type -> ethereum.eth.v1alpha1.HostData
 	9,  // 19: ethereum.eth.v1alpha1.Node.GetPeer:output_type -> ethereum.eth.v1alpha1.Peer
 	8,  // 20: ethereum.eth.v1alpha1.Node.ListPeers:output_type -> ethereum.eth.v1alpha1.Peers
-	11, // 21: ethereum.eth.v1alpha1.Node.GetETH1ConnectionStatus:output_type -> ethereum.eth.v1alpha1.ETH1ConnectionStatus
+	11, // 21: ethereum.eth.v1alpha1.Node.GetSilaExecutionConnectionStatus:output_type -> ethereum.eth.v1alpha1.SilaExecutionConnectionStatus
 	13, // [13:22] is the sub-list for method output_type
 	4,  // [4:13] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
@@ -959,7 +959,7 @@ type NodeClient interface {
 	// Deprecated: Do not use.
 	ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Peers, error)
 	// Deprecated: Do not use.
-	GetETH1ConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ETH1ConnectionStatus, error)
+	GetSilaExecutionConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*SilaExecutionConnectionStatus, error)
 }
 
 type nodeClient struct {
@@ -1051,9 +1051,9 @@ func (c *nodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...g
 }
 
 // Deprecated: Do not use.
-func (c *nodeClient) GetETH1ConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ETH1ConnectionStatus, error) {
-	out := new(ETH1ConnectionStatus)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetETH1ConnectionStatus", in, out, opts...)
+func (c *nodeClient) GetSilaExecutionConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*SilaExecutionConnectionStatus, error) {
+	out := new(SilaExecutionConnectionStatus)
+	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetSilaExecutionConnectionStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1079,7 +1079,7 @@ type NodeServer interface {
 	// Deprecated: Do not use.
 	ListPeers(context.Context, *emptypb.Empty) (*Peers, error)
 	// Deprecated: Do not use.
-	GetETH1ConnectionStatus(context.Context, *emptypb.Empty) (*ETH1ConnectionStatus, error)
+	GetSilaExecutionConnectionStatus(context.Context, *emptypb.Empty) (*SilaExecutionConnectionStatus, error)
 }
 
 // UnimplementedNodeServer can be embedded to have forward compatible implementations.
@@ -1110,8 +1110,8 @@ func (*UnimplementedNodeServer) GetPeer(context.Context, *PeerRequest) (*Peer, e
 func (*UnimplementedNodeServer) ListPeers(context.Context, *emptypb.Empty) (*Peers, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPeers not implemented")
 }
-func (*UnimplementedNodeServer) GetETH1ConnectionStatus(context.Context, *emptypb.Empty) (*ETH1ConnectionStatus, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetETH1ConnectionStatus not implemented")
+func (*UnimplementedNodeServer) GetSilaExecutionConnectionStatus(context.Context, *emptypb.Empty) (*SilaExecutionConnectionStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSilaExecutionConnectionStatus not implemented")
 }
 
 func RegisterNodeServer(s *grpc.Server, srv NodeServer) {
@@ -1262,20 +1262,20 @@ func _Node_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Node_GetETH1ConnectionStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Node_GetSilaExecutionConnectionStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NodeServer).GetETH1ConnectionStatus(ctx, in)
+		return srv.(NodeServer).GetSilaExecutionConnectionStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.Node/GetETH1ConnectionStatus",
+		FullMethod: "/ethereum.eth.v1alpha1.Node/GetSilaExecutionConnectionStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetETH1ConnectionStatus(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).GetSilaExecutionConnectionStatus(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1317,8 +1317,8 @@ var _Node_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Node_ListPeers_Handler,
 		},
 		{
-			MethodName: "GetETH1ConnectionStatus",
-			Handler:    _Node_GetETH1ConnectionStatus_Handler,
+			MethodName: "GetSilaExecutionConnectionStatus",
+			Handler:    _Node_GetSilaExecutionConnectionStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -28,9 +28,9 @@ func TestGetAttesterDuties_OK(t *testing.T) {
 	depChainStart := params.BeaconConfig().MinGenesisActiveValidatorCount
 	deposits, _, err := util.DeterministicDepositsAndKeys(depChainStart)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 	genesisRoot, err := genesis.Block.HashTreeRoot()
 	require.NoError(t, err)
@@ -90,9 +90,9 @@ func TestGetProposerDutiesV2_OK(t *testing.T) {
 	depChainStart := params.BeaconConfig().MinGenesisActiveValidatorCount
 	deposits, _, err := util.DeterministicDepositsAndKeys(depChainStart)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 	genesisRoot, err := genesis.Block.HashTreeRoot()
 	require.NoError(t, err)
@@ -240,9 +240,9 @@ func TestGetSyncCommitteeDuties_OK(t *testing.T) {
 
 	deposits, _, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().SyncCommitteeSize)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
-	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, eth1Data)
+	bs, err := util.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 	require.NoError(t, err)
 
 	h := &silapb.BeaconBlockHeader{

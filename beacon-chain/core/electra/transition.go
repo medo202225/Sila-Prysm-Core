@@ -22,7 +22,7 @@ var (
 	ProcessInactivityScores              = altair.ProcessInactivityScores
 	ProcessRewardsAndPenaltiesPrecompute = altair.ProcessRewardsAndPenaltiesPrecompute
 	ProcessSlashings                     = e.ProcessSlashings
-	ProcessEth1DataReset                 = e.ProcessEth1DataReset
+	ProcessSilaExecutionDataReset                 = e.ProcessSilaExecutionDataReset
 	ProcessSlashingsReset                = e.ProcessSlashingsReset
 	ProcessRandaoMixesReset              = e.ProcessRandaoMixesReset
 	ProcessHistoricalDataUpdate          = e.ProcessHistoricalDataUpdate
@@ -42,7 +42,7 @@ var (
 //	    process_rewards_and_penalties(state)
 //	    process_registry_updates(state)  # [Modified in Electra:EIP7251]
 //	    process_slashings(state)  # [Modified in Electra:EIP7251]
-//	    process_eth1_data_reset(state)
+//	    process_sila_execution_data_reset(state)
 //	    process_pending_deposits(state)  # [New in Electra:EIP7251]
 //	    process_pending_consolidations(state)  # [New in Electra:EIP7251]
 //	    process_effective_balance_updates(state)  # [Modified in Electra:EIP7251]
@@ -84,7 +84,7 @@ func ProcessEpoch(ctx context.Context, state state.BeaconState) error {
 	if err := ProcessSlashings(ctx, state); err != nil {
 		return err
 	}
-	state, err = ProcessEth1DataReset(state)
+	state, err = ProcessSilaExecutionDataReset(state)
 	if err != nil {
 		return err
 	}
@@ -126,21 +126,21 @@ func ProcessEpoch(ctx context.Context, state state.BeaconState) error {
 //
 //	# [Modified in Electra:EIP6110]
 //	  # Disable former deposit mechanism once all prior deposits are processed
-//	  eth1_deposit_index_limit = min(state.eth1_data.deposit_count, state.deposit_requests_start_index)
-//	  if state.eth1_deposit_index < eth1_deposit_index_limit:
-//	      assert len(body.deposits) == min(MAX_DEPOSITS, eth1_deposit_index_limit - state.eth1_deposit_index)
+//	  silaexec_deposit_index_limit = min(state.sila_execution_data.deposit_count, state.deposit_requests_start_index)
+//	  if state.silaexec_deposit_index < silaexec_deposit_index_limit:
+//	      assert len(body.deposits) == min(MAX_DEPOSITS, silaexec_deposit_index_limit - state.silaexec_deposit_index)
 //	  else:
 //	      assert len(body.deposits) == 0
 func VerifyBlockDepositLength(body interfaces.ReadOnlyBeaconBlockBody, state state.BeaconState) error {
-	eth1Data := state.Eth1Data()
+	silaexecData := state.SilaExecutionData()
 	requestsStartIndex, err := state.DepositRequestsStartIndex()
 	if err != nil {
 		return errors.Wrap(err, "failed to get requests start index")
 	}
-	eth1DepositIndexLimit := min(eth1Data.DepositCount, requestsStartIndex)
-	if state.Eth1DepositIndex() < eth1DepositIndexLimit {
-		if uint64(len(body.Deposits())) != min(params.BeaconConfig().MaxDeposits, eth1DepositIndexLimit-state.Eth1DepositIndex()) {
-			return fmt.Errorf("incorrect outstanding deposits in block body, wanted: %d, got: %d", min(params.BeaconConfig().MaxDeposits, eth1DepositIndexLimit-state.Eth1DepositIndex()), len(body.Deposits()))
+	silaExecutionDepositIndexLimit := min(silaexecData.DepositCount, requestsStartIndex)
+	if state.SilaExecutionDepositIndex() < silaExecutionDepositIndexLimit {
+		if uint64(len(body.Deposits())) != min(params.BeaconConfig().MaxDeposits, silaExecutionDepositIndexLimit-state.SilaExecutionDepositIndex()) {
+			return fmt.Errorf("incorrect outstanding deposits in block body, wanted: %d, got: %d", min(params.BeaconConfig().MaxDeposits, silaExecutionDepositIndexLimit-state.SilaExecutionDepositIndex()), len(body.Deposits()))
 		}
 	} else {
 		if len(body.Deposits()) != 0 {

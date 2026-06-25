@@ -65,7 +65,7 @@ func createTestGenesisState(t *testing.T, numValidators uint64, slot primitives.
 	// Create a deterministic genesis state using test utilities
 	deposits, _, err := util.DeterministicDepositsAndKeys(numValidators)
 	require.NoError(t, err)
-	eth1Data, err := util.DeterministicEth1Data(len(deposits))
+	silaexecData, err := util.DeterministicSilaExecutionData(len(deposits))
 	require.NoError(t, err)
 
 	// Create a minimal beacon state directly
@@ -73,7 +73,7 @@ func createTestGenesisState(t *testing.T, numValidators uint64, slot primitives.
 		Slot:                  slot,
 		GenesisTime:           uint64(time.Unix(2000000000, 0).Unix()), // Use a different time than mainnet
 		GenesisValidatorsRoot: []byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32},
-		Eth1Data:              eth1Data,
+		SilaExecutionData:              silaexecData,
 		Validators:            make([]*silapb.Validator, numValidators),
 		Balances:              make([]uint64, numValidators),
 		Fork: &silapb.Fork{

@@ -93,7 +93,7 @@ func TestVerifyDeposit_MerkleBranchFailsVerification(t *testing.T) {
 
 	deposit.Proof = proof
 	beaconState, err := state_native.InitializeFromProtoAltair(&silapb.BeaconStateAltair{
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: []byte{0},
 			BlockHash:   []byte{1},
 		},

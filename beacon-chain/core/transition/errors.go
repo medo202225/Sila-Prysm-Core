@@ -8,7 +8,7 @@ var (
 	ErrBLSToExecutionChangesSignatureInvalid = errors.New("BLS to execution changes signature invalid")
 	ErrProcessWithdrawalsFailed              = errors.New("process withdrawals failed")
 	ErrProcessRandaoFailed                   = errors.New("process randao failed")
-	ErrProcessEth1DataFailed                 = errors.New("process eth1 data failed")
+	ErrProcessSilaExecutionDataFailed                 = errors.New("process silaexec data failed")
 	ErrProcessProposerSlashingsFailed        = errors.New("process proposer slashings failed")
 	ErrProcessAttesterSlashingsFailed        = errors.New("process attester slashings failed")
 	ErrProcessAttestationsFailed             = errors.New("process attestations failed")

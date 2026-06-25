@@ -32,7 +32,7 @@ func HoodiConfig() *BeaconChainConfig {
 		0xa9, 0x20, 0x23, 0xd7, 0xba, 0x99, 0xcb, 0x5f,
 	}
 	cfg.GenesisForkVersion = []byte{0x10, 0x00, 0x09, 0x10}
-	cfg.SecondsPerETH1Block = 12
+	cfg.SecondsPerSilaExecutionBlock = 12
 	cfg.DepositChainID = 560048
 	cfg.DepositNetworkID = 560048
 	cfg.AltairForkEpoch = 0

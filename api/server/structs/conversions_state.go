@@ -31,10 +31,10 @@ func BeaconStateFromConsensus(st beaconState.BeaconState) (*BeaconState, error) 
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -82,9 +82,9 @@ func BeaconStateFromConsensus(st beaconState.BeaconState) (*BeaconState, error) 
 		BlockRoots:                  br,
 		StateRoots:                  sr,
 		HistoricalRoots:             hr,
-		Eth1Data:                    Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:               votes,
-		Eth1DepositIndex:            fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                    SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:               votes,
+		SilaExecutionDepositIndex:            fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                  vals,
 		Balances:                    bals,
 		RandaoMixes:                 rm,
@@ -118,10 +118,10 @@ func BeaconStateAltairFromConsensus(st beaconState.BeaconState) (*BeaconStateAlt
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -185,9 +185,9 @@ func BeaconStateAltairFromConsensus(st beaconState.BeaconState) (*BeaconStateAlt
 		BlockRoots:                  br,
 		StateRoots:                  sr,
 		HistoricalRoots:             hr,
-		Eth1Data:                    Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:               votes,
-		Eth1DepositIndex:            fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                    SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:               votes,
+		SilaExecutionDepositIndex:            fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                  vals,
 		Balances:                    bals,
 		RandaoMixes:                 rm,
@@ -224,10 +224,10 @@ func BeaconStateBellatrixFromConsensus(st beaconState.BeaconState) (*BeaconState
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -303,9 +303,9 @@ func BeaconStateBellatrixFromConsensus(st beaconState.BeaconState) (*BeaconState
 		BlockRoots:                   br,
 		StateRoots:                   sr,
 		HistoricalRoots:              hr,
-		Eth1Data:                     Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:                votes,
-		Eth1DepositIndex:             fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                     SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:                votes,
+		SilaExecutionDepositIndex:             fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                   vals,
 		Balances:                     bals,
 		RandaoMixes:                  rm,
@@ -343,10 +343,10 @@ func BeaconStateCapellaFromConsensus(st beaconState.BeaconState) (*BeaconStateCa
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -438,9 +438,9 @@ func BeaconStateCapellaFromConsensus(st beaconState.BeaconState) (*BeaconStateCa
 		BlockRoots:                   br,
 		StateRoots:                   sr,
 		HistoricalRoots:              hr,
-		Eth1Data:                     Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:                votes,
-		Eth1DepositIndex:             fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                     SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:                votes,
+		SilaExecutionDepositIndex:             fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                   vals,
 		Balances:                     bals,
 		RandaoMixes:                  rm,
@@ -481,10 +481,10 @@ func BeaconStateDenebFromConsensus(st beaconState.BeaconState) (*BeaconStateDene
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -576,9 +576,9 @@ func BeaconStateDenebFromConsensus(st beaconState.BeaconState) (*BeaconStateDene
 		BlockRoots:                   br,
 		StateRoots:                   sr,
 		HistoricalRoots:              hr,
-		Eth1Data:                     Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:                votes,
-		Eth1DepositIndex:             fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                     SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:                votes,
+		SilaExecutionDepositIndex:             fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                   vals,
 		Balances:                     bals,
 		RandaoMixes:                  rm,
@@ -619,10 +619,10 @@ func BeaconStateElectraFromConsensus(st beaconState.BeaconState) (*BeaconStateEl
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -750,9 +750,9 @@ func BeaconStateElectraFromConsensus(st beaconState.BeaconState) (*BeaconStateEl
 		BlockRoots:                    br,
 		StateRoots:                    sr,
 		HistoricalRoots:               hr,
-		Eth1Data:                      Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:                 votes,
-		Eth1DepositIndex:              fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                      SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:                 votes,
+		SilaExecutionDepositIndex:              fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                    vals,
 		Balances:                      bals,
 		RandaoMixes:                   rm,
@@ -802,10 +802,10 @@ func BeaconStateFuluFromConsensus(st beaconState.BeaconState) (*BeaconStateFulu,
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -940,9 +940,9 @@ func BeaconStateFuluFromConsensus(st beaconState.BeaconState) (*BeaconStateFulu,
 		BlockRoots:                    br,
 		StateRoots:                    sr,
 		HistoricalRoots:               hr,
-		Eth1Data:                      Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:                 votes,
-		Eth1DepositIndex:              fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                      SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:                 votes,
+		SilaExecutionDepositIndex:              fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                    vals,
 		Balances:                      bals,
 		RandaoMixes:                   rm,
@@ -993,10 +993,10 @@ func BeaconStateGloasFromConsensus(st beaconState.BeaconState) (*BeaconStateGloa
 	for i, r := range srcHr {
 		hr[i] = hexutil.Encode(r)
 	}
-	srcVotes := st.Eth1DataVotes()
-	votes := make([]*Eth1Data, len(srcVotes))
+	srcVotes := st.SilaExecutionDataVotes()
+	votes := make([]*SilaExecutionData, len(srcVotes))
 	for i, e := range srcVotes {
-		votes[i] = Eth1DataFromConsensus(e)
+		votes[i] = SilaExecutionDataFromConsensus(e)
 	}
 	srcVals := st.Validators()
 	vals := make([]*Validator, len(srcVals))
@@ -1157,9 +1157,9 @@ func BeaconStateGloasFromConsensus(st beaconState.BeaconState) (*BeaconStateGloa
 		BlockRoots:                    br,
 		StateRoots:                    sr,
 		HistoricalRoots:               hr,
-		Eth1Data:                      Eth1DataFromConsensus(st.Eth1Data()),
-		Eth1DataVotes:                 votes,
-		Eth1DepositIndex:              fmt.Sprintf("%d", st.Eth1DepositIndex()),
+		SilaExecutionData:                      SilaExecutionDataFromConsensus(st.SilaExecutionData()),
+		SilaExecutionDataVotes:                 votes,
+		SilaExecutionDepositIndex:              fmt.Sprintf("%d", st.SilaExecutionDepositIndex()),
 		Validators:                    vals,
 		Balances:                      bals,
 		RandaoMixes:                   rm,

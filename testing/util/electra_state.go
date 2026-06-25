@@ -33,11 +33,11 @@ func DeterministicGenesisStateElectra(t testing.TB, numValidators uint64, opts .
 	if err != nil {
 		t.Fatal(errors.Wrapf(err, "failed to get %d deposits", numValidators))
 	}
-	eth1Data, err := DeterministicEth1Data(len(deposits))
+	silaexecData, err := DeterministicSilaExecutionData(len(deposits))
 	if err != nil {
-		t.Fatal(errors.Wrapf(err, "failed to get eth1data for %d deposits", numValidators))
+		t.Fatal(errors.Wrapf(err, "failed to get silaExecutionData for %d deposits", numValidators))
 	}
-	beaconState, err := genesisBeaconStateElectra(t.Context(), deposits, uint64(0), eth1Data, opts...)
+	beaconState, err := genesisBeaconStateElectra(t.Context(), deposits, uint64(0), silaexecData, opts...)
 	if err != nil {
 		t.Fatal(errors.Wrapf(err, "failed to get genesis beacon state of %d validators", numValidators))
 	}
@@ -48,7 +48,7 @@ func DeterministicGenesisStateElectra(t testing.TB, numValidators uint64, opts .
 	return beaconState, privKeys
 }
 
-// setKeysToActive is a function to set the validators to active post electra, electra no longer processes deposits based on eth1data
+// setKeysToActive is a function to set the validators to active post electra, electra no longer processes deposits based on silaExecutionData
 func setKeysToActive(beaconState state.BeaconState) error {
 	vals := make([]*silapb.Validator, len(beaconState.Validators()))
 	for i, val := range beaconState.Validators() {
@@ -60,14 +60,14 @@ func setKeysToActive(beaconState state.BeaconState) error {
 }
 
 // genesisBeaconStateElectra returns the genesis beacon state.
-func genesisBeaconStateElectra(ctx context.Context, deposits []*silapb.Deposit, genesisTime uint64, eth1Data *silapb.Eth1Data, opts ...ElectraStateOption) (state.BeaconState, error) {
+func genesisBeaconStateElectra(ctx context.Context, deposits []*silapb.Deposit, genesisTime uint64, silaexecData *silapb.SilaExecutionData, opts ...ElectraStateOption) (state.BeaconState, error) {
 	st, err := emptyGenesisStateElectra()
 	if err != nil {
 		return nil, err
 	}
 
 	// Process initial deposits.
-	st, err = helpers.UpdateGenesisEth1Data(st, deposits, eth1Data)
+	st, err = helpers.UpdateGenesisSilaExecutionData(st, deposits, silaexecData)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func genesisBeaconStateElectra(ctx context.Context, deposits []*silapb.Deposit, 
 		return nil, errors.Wrap(err, "could not process validator deposits")
 	}
 
-	return buildGenesisBeaconStateElectra(ctx, genesisTime, st, st.Eth1Data(), opts...)
+	return buildGenesisBeaconStateElectra(ctx, genesisTime, st, st.SilaExecutionData(), opts...)
 }
 
 // emptyGenesisStateElectra returns an empty genesis state in Electra format.
@@ -100,10 +100,10 @@ func emptyGenesisStateElectra() (state.BeaconState, error) {
 		CurrentEpochParticipation:  []byte{},
 		PreviousEpochParticipation: []byte{},
 
-		// Eth1 data.
-		Eth1Data:         &silapb.Eth1Data{},
-		Eth1DataVotes:    []*silapb.Eth1Data{},
-		Eth1DepositIndex: 0,
+		// SilaExecution data.
+		SilaExecutionData:         &silapb.SilaExecutionData{},
+		SilaExecutionDataVotes:    []*silapb.SilaExecutionData{},
+		SilaExecutionDepositIndex: 0,
 
 		LatestExecutionPayloadHeader: &enginev1.ExecutionPayloadHeaderDeneb{},
 
@@ -114,15 +114,15 @@ func emptyGenesisStateElectra() (state.BeaconState, error) {
 	return state_native.InitializeFromProtoUnsafeElectra(st)
 }
 
-func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, preState state.BeaconState, eth1Data *silapb.Eth1Data, opts ...ElectraStateOption) (state.BeaconState, error) {
-	if eth1Data == nil {
-		return nil, errors.New("no eth1data provided for genesis state")
+func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, preState state.BeaconState, silaexecData *silapb.SilaExecutionData, opts ...ElectraStateOption) (state.BeaconState, error) {
+	if silaexecData == nil {
+		return nil, errors.New("no silaExecutionData provided for genesis state")
 	}
 
 	randaoMixes := make([][]byte, params.BeaconConfig().EpochsPerHistoricalVector)
 	for i := range randaoMixes {
 		h := make([]byte, 32)
-		copy(h, eth1Data.BlockHash)
+		copy(h, silaexecData.BlockHash)
 		randaoMixes[i] = h
 	}
 
@@ -209,10 +209,10 @@ func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, pre
 		StateRoots:      stateRoots,
 		Slashings:       slashings,
 
-		// Eth1 data.
-		Eth1Data:         eth1Data,
-		Eth1DataVotes:    []*silapb.Eth1Data{},
-		Eth1DepositIndex: preState.Eth1DepositIndex(),
+		// SilaExecution data.
+		SilaExecutionData:         silaexecData,
+		SilaExecutionDataVotes:    []*silapb.SilaExecutionData{},
+		SilaExecutionDepositIndex: preState.SilaExecutionDepositIndex(),
 
 		// Electra Data
 		DepositRequestsStartIndex:     params.BeaconConfig().UnsetDepositRequestsStartIndex,
@@ -232,7 +232,7 @@ func buildGenesisBeaconStateElectra(ctx context.Context, genesisTime uint64, pre
 	var scBits [fieldparams.SyncAggregateSyncCommitteeBytesLength]byte
 	bodyRoot, err := (&silapb.BeaconBlockBodyElectra{
 		RandaoReveal: make([]byte, 96),
-		Eth1Data: &silapb.Eth1Data{
+		SilaExecutionData: &silapb.SilaExecutionData{
 			DepositRoot: make([]byte, 32),
 			BlockHash:   make([]byte, 32),
 		},

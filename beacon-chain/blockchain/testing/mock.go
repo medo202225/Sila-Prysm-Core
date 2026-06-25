@@ -49,7 +49,7 @@ type ChainService struct {
 	Balance                     *precompute.Balance
 	CanonicalRoots              map[[32]byte]bool
 	Fork                        *silapb.Fork
-	ETH1Data                    *silapb.Eth1Data
+	SILAExecutionData                    *silapb.SilaExecutionData
 	InitSyncBlockRoots          map[[32]byte]bool
 	DB                          db.Database
 	State                       state.BeaconState
@@ -452,9 +452,9 @@ func (s *ChainService) HeadValidatorsIndices(ctx context.Context, epoch primitiv
 	return helpers.ActiveValidatorIndices(ctx, s.State, epoch)
 }
 
-// HeadETH1Data provides the current ETH1Data of the head state.
-func (s *ChainService) HeadETH1Data() *silapb.Eth1Data {
-	return s.ETH1Data
+// HeadSilaExecutionData provides the current SILAExecutionData of the head state.
+func (s *ChainService) HeadSilaExecutionData() *silapb.SilaExecutionData {
+	return s.SILAExecutionData
 }
 
 // GenesisTime mocks the same method in the chain service.

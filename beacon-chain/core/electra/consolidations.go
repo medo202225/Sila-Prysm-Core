@@ -118,7 +118,7 @@ func ProcessPendingConsolidations(ctx context.Context, st state.BeaconState) err
 //	    return False
 //
 //	# Verify source withdrawal credentials
-//	if not has_eth1_withdrawal_credential(source_validator):
+//	if not has_silaexec_withdrawal_credential(source_validator):
 //	    return False
 //
 //	# Verify the source is active
@@ -156,7 +156,7 @@ func IsValidSwitchToCompoundingRequest(st state.BeaconState, req *enginev1.Conso
 		return false
 	}
 
-	if !srcV.HasETH1WithdrawalCredentials() {
+	if !srcV.HasSilaExecutionWithdrawalCredentials() {
 		return false
 	}
 

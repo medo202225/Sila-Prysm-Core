@@ -168,7 +168,7 @@ func TestNodeServer_ListPeers(t *testing.T) {
 	assert.Equal(t, int(silapb.PeerDirection_OUTBOUND), int(secondPeer.Direction))
 }
 
-func TestNodeServer_GetETH1ConnectionStatus(t *testing.T) {
+func TestNodeServer_GetSilaExecutionConnectionStatus(t *testing.T) {
 	server := grpc.NewServer()
 	ep := "foo"
 	err := errors.New("error1")
@@ -183,7 +183,7 @@ func TestNodeServer_GetETH1ConnectionStatus(t *testing.T) {
 	silapb.RegisterNodeServer(server, ns)
 	reflection.Register(server)
 
-	res, err := ns.GetETH1ConnectionStatus(t.Context(), &emptypb.Empty{})
+	res, err := ns.GetSilaExecutionConnectionStatus(t.Context(), &emptypb.Empty{})
 	require.NoError(t, err)
 	assert.Equal(t, ep, res.CurrentAddress)
 	assert.Equal(t, errStr, res.CurrentConnectionError)

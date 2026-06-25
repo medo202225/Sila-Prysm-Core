@@ -16,16 +16,16 @@ func TestDepositRequestHaveStarted(t *testing.T) {
 		require.False(t, result)
 	})
 
-	t.Run("Version is Electra or higher, no error, but Eth1DepositIndex != requestsStartIndex returns false", func(t *testing.T) {
+	t.Run("Version is Electra or higher, no error, but SilaExecutionDepositIndex != requestsStartIndex returns false", func(t *testing.T) {
 		st, _ := util.DeterministicGenesisStateElectra(t, 1)
-		require.NoError(t, st.SetEth1DepositIndex(1))
+		require.NoError(t, st.SetSilaExecutionDepositIndex(1))
 		result := helpers.DepositRequestsStarted(st)
 		require.False(t, result)
 	})
 
-	t.Run("Version is Electra or higher, no error, and Eth1DepositIndex == requestsStartIndex returns true", func(t *testing.T) {
+	t.Run("Version is Electra or higher, no error, and SilaExecutionDepositIndex == requestsStartIndex returns true", func(t *testing.T) {
 		st, _ := util.DeterministicGenesisStateElectra(t, 1)
-		require.NoError(t, st.SetEth1DepositIndex(33))
+		require.NoError(t, st.SetSilaExecutionDepositIndex(33))
 		require.NoError(t, st.SetDepositRequestsStartIndex(33))
 		result := helpers.DepositRequestsStarted(st)
 		require.True(t, result)

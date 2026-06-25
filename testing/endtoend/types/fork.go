@@ -55,7 +55,7 @@ func InitForkCfg(start, end int, c *params.BeaconChainConfig) *params.BeaconChai
 		c.AltairForkEpoch = math.MaxUint64
 	}
 	// Time TTD to line up roughly with the bellatrix fork epoch.
-	// E2E sets EL block production rate equal to SecondsPerETH1Block to keep the math simple.
+	// E2E sets EL block production rate equal to SecondsPerSilaExecutionBlock to keep the math simple.
 	// the chain starts post-merge (AKA post bellatrix) so TTD should be 0.
 	ttd := uint64(c.BellatrixForkEpoch) * uint64(c.SlotsPerEpoch) * c.SecondsPerSlot
 	c.TerminalTotalDifficulty = fmt.Sprintf("%d", ttd)
