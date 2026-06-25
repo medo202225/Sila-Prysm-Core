@@ -1,14 +1,14 @@
-# Configuration file for Sila-Prysm beacon-chain
+# Configuration file for Sila beacon-chain
 
 # datadir: Location of blockchain data
-datadir: /var/lib/prysm/beacon
+datadir: /var/lib/sila/beacon
 
 # http-web3provider: ETH1 API endpoint, eg. http://localhost:8545 for a local geth service on the default port
 http-web3provider: http://localhost:8545
 
 
 # Optional tuning parameters
-# For full list, see https://github.com/sila-chain/Sila-Prysm-Core
+# For full list, see https://github.com/sila-chain/Sila-Core
 
 # p2p-max-peers: The max number of p2p peers to maintain. Default: 45
 # block-batch-limit: The amount of blocks the local peer is bounded to request and respond to in a batch. Default: 64

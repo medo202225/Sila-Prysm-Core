@@ -1,6 +1,6 @@
 # SSZ Query Package
 
-The `encoding/ssz/query` package provides a system for analyzing and querying SSZ ([Simple Serialize](https://github.com/ethereum/consensus-specs/blob/master/ssz/simple-serialize.md)) data structures, as well as generating Merkle proofs from them. It enables runtime analysis of SSZ-serialized Go objects with reflection, path-based queries through nested structures, generalized index calculation, and Merkle proof generation.
+The `encoding/ssz/query` package provides a system for analyzing and querying SSZ ([Simple Serialize](https://github.com/sila/consensus-specs/blob/master/ssz/simple-serialize.md)) data structures, as well as generating Merkle proofs from them. It enables runtime analysis of SSZ-serialized Go objects with reflection, path-based queries through nested structures, generalized index calculation, and Merkle proof generation.
 
 This package is designed to be generic. It operates on arbitrary SSZ-serialized Go values at runtime, so the same query/proof machinery applies equally to any SSZ type, including the BeaconState/BeaconBlock.
 
@@ -8,7 +8,7 @@ This package is designed to be generic. It operates on arbitrary SSZ-serialized 
 
 ```go
 // 1. Analyze an SSZ object
-block := &ethpb.BeaconBlock{...}
+block := &silapb.BeaconBlock{...}
 info, err := query.AnalyzeObject(block)
 
 // 2. Parse a path
@@ -52,7 +52,7 @@ func (s *SszInfo) Prove(gindex uint64) (*fastssz.Proof, error)
 
 ### SSZ Types
 
-The package now supports [all standard SSZ types](https://github.com/ethereum/consensus-specs/blob/master/ssz/simple-serialize.md#typing) except `ProgressiveList`, `ProgressiveContainer`, `ProgressiveBitlist`, `Union`, and `CompatibleUnion`.
+The package now supports [all standard SSZ types](https://github.com/sila/consensus-specs/blob/master/ssz/simple-serialize.md#typing) except `ProgressiveList`, `ProgressiveContainer`, `ProgressiveBitlist`, `Union`, and `CompatibleUnion`.
 
 ### Core Data Structures
 
@@ -136,7 +136,7 @@ path, _ := ParsePath(".nested.array_field[5].inner_field")
 
 ### Generalized Index Calculation (`generalized_index.go`)
 
-The generalized index is a tree position identifier. This package follows the [Sila consensus-specs](https://github.com/ethereum/consensus-specs/blob/master/ssz/merkle-proofs.md#generalized-merkle-tree-index) to calculate the generalized index.
+The generalized index is a tree position identifier. This package follows the [Sila consensus-specs](https://github.com/sila/consensus-specs/blob/master/ssz/merkle-proofs.md#generalized-merkle-tree-index) to calculate the generalized index.
 
 ### Merkle Proof Generation (`merkle_proof.go`, `proof_collector.go`)
 

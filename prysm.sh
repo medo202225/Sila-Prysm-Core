@@ -2,17 +2,17 @@
 
 set -eu
 
-# Use this script to download the latest Sila-Prysm release binary.
-# Usage: ./prysm.sh PROCESS [--download-only] FLAGS
+# Use this script to download the latest Sila release binary.
+# Usage: ./sila.sh PROCESS [--download-only] FLAGS
 #   PROCESS can be one of beacon-chain or validator.
 #   FLAGS are the flags or arguments passed to the PROCESS.
 #   If --download-only flag is passed, binaries are checked for updates,
 #   downloaded if necessary, no process is started.
 # Downloaded binaries are saved to ./dist.
-# Use USE_PRYSM_VERSION to specify a specific release version.
-#   Example: USE_PRYSM_VERSION=v0.3.3 ./prysm.sh beacon-chain
-# Use USE_PRYSM_MODERN to specify a non-portable version of BLST
-#   Example: USE_PRYSM_MODERN=true ./prysm.sh beacon-chain
+# Use USE_SILA_VERSION to specify a specific release version.
+#   Example: USE_SILA_VERSION=v0.3.3 ./sila.sh beacon-chain
+# Use USE_SILA_MODERN to specify a non-portable version of BLST
+#   Example: USE_SILA_MODERN=true ./sila.sh beacon-chain
 
 readonly PRYLABS_SIGNING_KEY=0AE0051D647BA3C1A917AF4072E33E4DF1A5036E
 
@@ -67,9 +67,9 @@ function get_realpath() {
 
 # Complain if no arguments were provided.
 if [ "$#" -lt 1 ]; then
-    color "31" "Usage: ./prysm.sh PROCESS FLAGS."
-    color "31" "       ./prysm.sh PROCESS --download-only."
-    color "31" "PROCESS can be beacon-chain, validator, client-stats or prysmctl."
+    color "31" "Usage: ./sila.sh PROCESS FLAGS."
+    color "31" "       ./sila.sh PROCESS --download-only."
+    color "31" "PROCESS can be beacon-chain, validator, client-stats or silactl."
     exit 1
 fi
 
@@ -105,22 +105,22 @@ fi
 
 mkdir -p "$wrapper_dir"
 
-function get_prysm_version() {
-    if [[ -n ${USE_PRYSM_VERSION:-} ]]; then
-        readonly reason="specified in \$USE_PRYSM_VERSION"
-        readonly prysm_version="${USE_PRYSM_VERSION}"
+function get_sila_version() {
+    if [[ -n ${USE_SILA_VERSION:-} ]]; then
+        readonly reason="specified in \$USE_SILA_VERSION"
+        readonly sila_version="${USE_SILA_VERSION}"
     else
-        # Find the latest Sila-Prysm version available for download.
+        # Find the latest Sila version available for download.
         readonly reason="automatically selected latest available version"
-        prysm_version=$(curl -f -s https://prysmaticlabs.com/releases/latest) || (color "31" "Starting Sila-Prysm requires an internet connection. If you are being blocked by your antivirus, you can download the beacon chain and validator executables from our releases page on Github here https://github.com/sila-chain/Sila-Prysm-Core/releases/" && exit 1)
-        readonly prysm_version
+        sila_version=$(curl -f -s https://sila.com/releases/latest) || (color "31" "Starting Sila requires an internet connection. If you are being blocked by your antivirus, you can download the beacon chain and validator executables from our releases page on Github here https://github.com/sila-chain/Sila-Core/releases/" && exit 1)
+        readonly sila_version
     fi
 }
 
 function verify() {
     file=$1
 
-    skip=${PRYSM_ALLOW_UNVERIFIED_BINARIES-0}
+    skip=${SILA_ALLOW_UNVERIFIED_BINARIES-0}
     if [[ $skip == 1 ]]; then
         return 0
     fi
@@ -128,18 +128,18 @@ function verify() {
     hash shasum 2>/dev/null || {
         checkSum="sha256sum"
         hash sha256sum 2>/dev/null || {
-            echo >&2 "SHA checksum utility not available. Either install one (shasum or sha256sum) or run with PRYSM_ALLOW_UNVERIFIED_BINARIES=1."
+            echo >&2 "SHA checksum utility not available. Either install one (shasum or sha256sum) or run with SILA_ALLOW_UNVERIFIED_BINARIES=1."
             exit 1
         }
     }
     hash gpg 2>/dev/null || {
-        echo >&2 "gpg is not available. Either install it or run with PRYSM_ALLOW_UNVERIFIED_BINARIES=1."
+        echo >&2 "gpg is not available. Either install it or run with SILA_ALLOW_UNVERIFIED_BINARIES=1."
         exit 1
     }
 
     color "37" "Verifying binary integrity."
 
-    gpg --list-keys "$PRYLABS_SIGNING_KEY" >/dev/null 2>&1 || curl --silent https://prysmaticlabs.com/releases/pgp_keys.asc | gpg --import
+    gpg --list-keys "$PRYLABS_SIGNING_KEY" >/dev/null 2>&1 || curl --silent https://sila.com/releases/pgp_keys.asc | gpg --import
     (
         cd "$wrapper_dir"
         $checkSum -c "${file}.sha256" || failed_verification
@@ -149,53 +149,53 @@ function verify() {
         gpg -u "$PRYLABS_SIGNING_KEY" --verify "${file}.sig" "$file" || failed_verification
     )
 
-    color "32;1" "Verified ${file} has been signed by Prysmatic Labs."
+    color "32;1" "Verified ${file} has been signed by Sila Labs."
 }
 
 function failed_verification() {
     MSG=$(
         cat <<-END
-Failed to verify Sila-Prysm binary. Please erase downloads in the
+Failed to verify Sila binary. Please erase downloads in the
 dist directory and run this script again. Alternatively, you can use a
-A prior version by specifying environment variable USE_PRYSM_VERSION
-with the specific version, as desired. Example: USE_PRYSM_VERSION=v1.0.0-alpha.5
+A prior version by specifying environment variable USE_SILA_VERSION
+with the specific version, as desired. Example: USE_SILA_VERSION=v1.0.0-alpha.5
 If you must wish to continue running an unverified binary, specific the
-environment variable PRYSM_ALLOW_UNVERIFIED_BINARIES=1
+environment variable SILA_ALLOW_UNVERIFIED_BINARIES=1
 END
     )
     color "31" "$MSG"
     exit 1
 }
 
-get_prysm_version
+get_sila_version
 
-color "37" "Latest Sila-Prysm version is $prysm_version."
+color "37" "Latest Sila version is $sila_version."
 
-if [ "${USE_PRYSM_MODERN:=false}" = "true" ]; then
-    BEACON_CHAIN_REAL="${wrapper_dir}/beacon-chain-${prysm_version}-modern-${system}-${arch}"
+if [ "${USE_SILA_MODERN:=false}" = "true" ]; then
+    BEACON_CHAIN_REAL="${wrapper_dir}/beacon-chain-${sila_version}-modern-${system}-${arch}"
 else
-    BEACON_CHAIN_REAL="${wrapper_dir}/beacon-chain-${prysm_version}-${system}-${arch}"
+    BEACON_CHAIN_REAL="${wrapper_dir}/beacon-chain-${sila_version}-${system}-${arch}"
 fi
-VALIDATOR_REAL="${wrapper_dir}/validator-${prysm_version}-${system}-${arch}"
-CLIENT_STATS_REAL="${wrapper_dir}/client-stats-${prysm_version}-${system}-${arch}"
-PRYSMCTL_REAL="${wrapper_dir}/prysmctl-${prysm_version}-${system}-${arch}"
+VALIDATOR_REAL="${wrapper_dir}/validator-${sila_version}-${system}-${arch}"
+CLIENT_STATS_REAL="${wrapper_dir}/client-stats-${sila_version}-${system}-${arch}"
+SILACTL_REAL="${wrapper_dir}/silactl-${sila_version}-${system}-${arch}"
 
 
 if [[ $1 == beacon-chain ]]; then
     if [[ ! -x $BEACON_CHAIN_REAL ]]; then
-        color "34" "Downloading beacon chain@${prysm_version} to ${BEACON_CHAIN_REAL} (${reason})"
-        if [ "${USE_PRYSM_MODERN}" = "true" ]; then
-            file=beacon-chain-${prysm_version}-modern-${system}-${arch}
+        color "34" "Downloading beacon chain@${sila_version} to ${BEACON_CHAIN_REAL} (${reason})"
+        if [ "${USE_SILA_MODERN}" = "true" ]; then
+            file=beacon-chain-${sila_version}-modern-${system}-${arch}
         else
-            file=beacon-chain-${prysm_version}-${system}-${arch}
+            file=beacon-chain-${sila_version}-${system}-${arch}
         fi
-        res=$(curl -w '%{http_code}\n' -f -L "https://prysmaticlabs.com/releases/${file}"  -o "$BEACON_CHAIN_REAL" | ( grep 404 || true ) )
+        res=$(curl -w '%{http_code}\n' -f -L "https://sila.com/releases/${file}"  -o "$BEACON_CHAIN_REAL" | ( grep 404 || true ) )
         if [[ $res == 404 ]];then
-            echo "No Sila-Prysm beacon chain found for ${prysm_version},(${file}) exit"
+            echo "No Sila beacon chain found for ${sila_version},(${file}) exit"
             exit 1
         fi
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
+        curl --silent -L "https://sila.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
+        curl --silent -L "https://sila.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
         chmod +x "$BEACON_CHAIN_REAL"
     else
         color "37" "Beacon chain is up to date."
@@ -204,16 +204,16 @@ fi
 
 if [[ $1 == validator ]]; then
     if [[ ! -x $VALIDATOR_REAL ]]; then
-        color "34" "Downloading validator@${prysm_version} to ${VALIDATOR_REAL} (${reason})"
+        color "34" "Downloading validator@${sila_version} to ${VALIDATOR_REAL} (${reason})"
 
-        file=validator-${prysm_version}-${system}-${arch}
-        res=$(curl -w '%{http_code}\n' -f -L "https://prysmaticlabs.com/releases/${file}" -o "$VALIDATOR_REAL" | ( grep 404 || true ) )
+        file=validator-${sila_version}-${system}-${arch}
+        res=$(curl -w '%{http_code}\n' -f -L "https://sila.com/releases/${file}" -o "$VALIDATOR_REAL" | ( grep 404 || true ) )
         if [[ $res == 404 ]];then
-            echo "No prysm validator found for ${prysm_version}, (${file}) exit"
+            echo "No sila validator found for ${sila_version}, (${file}) exit"
             exit 1
         fi
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
+        curl --silent -L "https://sila.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
+        curl --silent -L "https://sila.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
         chmod +x "$VALIDATOR_REAL"
     else
         color "37" "Validator is up to date."
@@ -222,16 +222,16 @@ fi
 
 if [[ $1 == client-stats ]]; then
     if [[ ! -x $CLIENT_STATS_REAL ]]; then
-        color "34" "Downloading client-stats@${prysm_version} to ${CLIENT_STATS_REAL} (${reason})"
+        color "34" "Downloading client-stats@${sila_version} to ${CLIENT_STATS_REAL} (${reason})"
 
-        file=client-stats-${prysm_version}-${system}-${arch}
-        res=$(curl -w '%{http_code}\n' -f -L "https://prysmaticlabs.com/releases/${file}" -o "$CLIENT_STATS_REAL" | ( grep 404 || true ) )
+        file=client-stats-${sila_version}-${system}-${arch}
+        res=$(curl -w '%{http_code}\n' -f -L "https://sila.com/releases/${file}" -o "$CLIENT_STATS_REAL" | ( grep 404 || true ) )
         if [[ $res == 404 ]];then
-            echo "No prysm client stats found for ${prysm_version},(${file}) exit"
+            echo "No sila client stats found for ${sila_version},(${file}) exit"
             exit 1
         fi
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
+        curl --silent -L "https://sila.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
+        curl --silent -L "https://sila.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
         chmod +x "$CLIENT_STATS_REAL"
     else
         color "37" "Client-stats is up to date."
@@ -239,26 +239,26 @@ if [[ $1 == client-stats ]]; then
 fi
 
 
-if [[ $1 == prysmctl ]]; then
-    if [[ ! -x $PRYSMCTL_REAL ]]; then
-        color "34" "Downloading prysmctl@${prysm_version} to ${PRYSMCTL_REAL} (${reason})"
+if [[ $1 == silactl ]]; then
+    if [[ ! -x $SILACTL_REAL ]]; then
+        color "34" "Downloading silactl@${sila_version} to ${SILACTL_REAL} (${reason})"
 
-        file=prysmctl-${prysm_version}-${system}-${arch}
-        res=$(curl -w '%{http_code}\n' -f -L "https://prysmaticlabs.com/releases/${file}" -o "$PRYSMCTL_REAL" | ( grep 404 || true ) )
+        file=silactl-${sila_version}-${system}-${arch}
+        res=$(curl -w '%{http_code}\n' -f -L "https://sila.com/releases/${file}" -o "$SILACTL_REAL" | ( grep 404 || true ) )
         if [[ $res == 404 ]];then
-            echo "No prysm prysmctl found for ${prysm_version}, (${file}) exit"
+            echo "No sila silactl found for ${sila_version}, (${file}) exit"
             exit 1
         fi
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
-        curl --silent -L "https://prysmaticlabs.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
-        chmod +x "$PRYSMCTL_REAL"
+        curl --silent -L "https://sila.com/releases/${file}.sha256" -o "${wrapper_dir}/${file}.sha256"
+        curl --silent -L "https://sila.com/releases/${file}.sig" -o "${wrapper_dir}/${file}.sig"
+        chmod +x "$SILACTL_REAL"
     else
-        color "37" "Sila-Prysmctl is up to date."
+        color "37" "Silactl is up to date."
     fi
 fi
 
 if [[ $1 == slasher ]]; then
-    color "41" "The slasher binary is no longer available. Please use the --slasher flag with your beacon node. See: https://github.com/sila-chain/Sila-Prysm-Core"
+    color "41" "The slasher binary is no longer available. Please use the --slasher flag with your beacon node. See: https://github.com/sila-chain/Sila-Core"
     exit 1
 fi
 
@@ -275,15 +275,15 @@ client-stats)
     readonly process=$CLIENT_STATS_REAL
     ;;
 
-prysmctl)
-    readonly process=$PRYSMCTL_REAL
+silactl)
+    readonly process=$SILACTL_REAL
     ;;
 
 *)
     color "31" "Process '$1' is not found!"
-    color "31" "Usage: ./prysm.sh PROCESS FLAGS."
-    color "31" "       ./prysm.sh PROCESS --download-only."
-    color "31" "PROCESS can be beacon-chain, validator, client-stats or prysmctl."
+    color "31" "Usage: ./sila.sh PROCESS FLAGS."
+    color "31" "       ./sila.sh PROCESS --download-only."
+    color "31" "PROCESS can be beacon-chain, validator, client-stats or silactl."
     exit 1
     ;;
 esac
@@ -295,5 +295,5 @@ if [[ "$#" -gt 1 ]] && [[ $2 == --download-only ]]; then
     exit 0
 fi
 
-color "36" "Starting Sila-Prysm $1 ${*:2}"
+color "36" "Starting Sila $1 ${*:2}"
 exec -a "$0" "${process}" "${@:2}"

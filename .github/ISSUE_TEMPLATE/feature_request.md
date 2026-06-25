@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a feature for Sila-Prysm
+about: Suggest a feature for Sila
 ---
 
 # Feature Request

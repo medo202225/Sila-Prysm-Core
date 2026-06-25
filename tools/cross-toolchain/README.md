@@ -16,18 +16,18 @@ This toolchain suite describes cross compile configuration with a Dockerfile wit
 1) Build and push the worker docker image, if necessary.
 
 ```bash
-docker build -t gcr.io/prysmaticlabs/rbe-worker:latest tools/cross-toolchain/.
-docker push gcr.io/prysmaticlabs/rbe-worker:latest 
+docker build -t gcr.io/sila/rbe-worker:latest tools/cross-toolchain/.
+docker push gcr.io/sila/rbe-worker:latest
 ```
 
-Note: You must configured your gcr access credentials to push to gcr.io/prysmaticlabs. Run `gcloud auth configure-docker` or contact SRE team for push access.
+Note: You must configured your gcr access credentials to push to gcr.io/sila. Run `gcloud auth configure-docker` or contact SRE team for push access.
 
 2) Note the docker image sha256 digest from the recently pushed image or use the latest one available.
 
 3) Download and run [rbe_configs_gen](https://github.com/bazelbuild/bazel-toolchains#rbe_configs_gen---cli-tool-to-generate-configs) CLI tool.
 
 ```bash
-# Run from the root of the Sila-Prysm repo.
+# Run from the root of the Sila repo.
 rbe_configs_gen \
   --bazel_version=$(cat .bazelversion) \
   --target_os=linux \
@@ -36,17 +36,17 @@ rbe_configs_gen \
   --generate_cpp_configs=true \
   --generate_java_configs=true \
   --cpp_env_json=tools/cross-toolchain/cpp_env_clang.json \
-  --toolchain_container=gcr.io/prysmaticlabs/rbe-worker@sha256:90d490709a0fb0c817569f37408823a0490e5502cbecc36415caabfc36a0c2e8 # The sha256 digest from step 2.
+  --toolchain_container=gcr.io/sila/rbe-worker@sha256:90d490709a0fb0c817569f37408823a0490e5502cbecc36415caabfc36a0c2e8 # The sha256 digest from step 2.
 ```
 
 4) Test the builds work locally for all supported platforms.
 
 ```bash
-bazel build --config=release --config=linux_amd64 --config=llvm //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/prysmctl
-bazel build --config=release --config=linux_arm64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/prysmctl
-bazel build --config=release --config=osx_amd64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/prysmctl
-bazel build --config=release --config=osx_arm64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/prysmctl 
-bazel build --config=release --config=windows_amd64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/prysmctl
+bazel build --config=release --config=linux_amd64 --config=llvm //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/silactl
+bazel build --config=release --config=linux_arm64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/silactl
+bazel build --config=release --config=osx_amd64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/silactl
+bazel build --config=release --config=osx_arm64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/silactl
+bazel build --config=release --config=windows_amd64_docker //cmd/beacon-chain //cmd/validator //cmd/client-stats //cmd/silactl
 ```
 
 5) Run gazelle.

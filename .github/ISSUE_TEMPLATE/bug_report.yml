@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a bug or problem with running Sila-Prysm
+description: Report a bug or problem with running Sila
 type: "Bug"
 body:
   - type: markdown
@@ -26,7 +26,7 @@ body:
       label: Minimal reproduction
       description: |
         Please describe how to reproduce this issue.
-        Include the exact method used to run Sila-Prysm and any beacon node or validator flags.
+        Include the exact method used to run Sila and any beacon node or validator flags.
         Do not upload confidential files, secrets, or private keys.
       placeholder: |
         Steps to reproduce:
@@ -56,7 +56,7 @@ body:
         - Windows (ARM)
   - type: input
     attributes:
-      label: What version of Sila-Prysm are you running?
+      label: What version of Sila are you running?
       description: Check your beacon node or validator with the `--version` flag.
   - type: textarea
     attributes:

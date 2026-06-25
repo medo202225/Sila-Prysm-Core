@@ -1,6 +1,6 @@
 ---
 name: Feature Flag Tracking
-about: Track a new feature flag in Sila-Prysm.
+about: Track a new feature flag in Sila.
 labels: Tracking
 ---
 

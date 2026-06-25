@@ -1,4 +1,4 @@
-## Pcli (Sila-Prysm CLI)
+## Pcli (Sila CLI)
 
 This is a utility to help users perform Sila consensus specific commands.
 

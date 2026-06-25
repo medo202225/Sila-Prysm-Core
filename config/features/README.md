@@ -1,6 +1,6 @@
-# Sila-Prysm Feature Flags
+# Sila Feature Flags
 
-Part of Sila-Prysm's feature development often involves use of feature flags which serve as a way to
+Part of Sila's feature development often involves use of feature flags which serve as a way to
 toggle new features as they are introduced. Using this methodology, you are assured that your
 feature can be safely tested in production with a fall back option if any regression were to occur.
 This reduces the likelihood of an emergency release or rollback of a given feature due to
@@ -33,7 +33,7 @@ releasing your feature. In general, try to create a single PR for each step of t
 feature config in shared/featureconfig/config.go. It is a good idea to use the `enable` prefix for
 your flag since you're going to invert the flag in a later step. i.e you will use `disable` prefix
 later. For example, `--enable-my-feature`. Additionally, create a feature flag tracking issue
-for your feature using the Sila-Prysm issue templates.
+for your feature using the Sila issue templates.
 2. Use the feature throughout the application to enable your new functionality and be sure to write
 tests carefully and thoughtfully to ensure you have tested all of your new functionality without losing
 coverage on the existing functionality. This is considered an opt-in feature flag. Example usage:

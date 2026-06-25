@@ -1,47 +1,47 @@
 # Contribution Guidelines
 
-Note: The latest and most up-to-date documentation can be found on our [docs portal](https://github.com/sila-chain/Sila-Prysm-Core).
+Note: The latest and most up-to-date documentation can be found on our [docs portal](https://github.com/sila-chain/Sila-Core).
 
-Excited by our work and want to get involved in building out our sharding releases? Or maybe you haven't learned as much about the Sila protocol but are a savvy developer? 
+Excited by our work and want to get involved in building out our sharding releases? Or maybe you haven't learned as much about the Sila protocol but are a savvy developer?
 
-You can explore our [Open Issues](https://github.com/sila-chain/Sila-Prysm-Core/issues) in-the works for our different releases. Feel free to fork our repo and start creating PR’s after assigning yourself to an issue of interest. We are always chatting on [Discord](https://discord.gg/qEZK94mFXP) drop us a line there if you want to get more involved or have any questions on our implementation!
+You can explore our [Open Issues](https://github.com/sila-chain/Sila-Core/issues) in-the works for our different releases. Feel free to fork our repo and start creating PR’s after assigning yourself to an issue of interest. We are always chatting on [Discord](https://discord.gg/qEZK94mFXP) drop us a line there if you want to get more involved or have any questions on our implementation!
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > Please, **do not send pull requests for trivial changes**, such as typos, these will be rejected. These types of pull requests incur a cost to reviewers and do not provide much value to the project. If you are unsure, please open an issue first to discuss the change.
 
 ## Contribution Steps
 
-**1. Set up Sila-Prysm following the instructions in README.md.**
+**1. Set up Sila following the instructions in README.md.**
 
-**2. Fork the Sila-Prysm repo.**
+**2. Fork the Sila repo.**
 
-Sign in to your GitHub account or create a new account if you do not have one already. Then navigate your browser to https://github.com/sila-chain/Sila-Prysm-Core/. In the upper right hand corner of the page, click “fork”. This will create a copy of the Sila-Prysm repo in your account.
+Sign in to your GitHub account or create a new account if you do not have one already. Then navigate your browser to https://github.com/sila-chain/Sila-Core/. In the upper right hand corner of the page, click “fork”. This will create a copy of the Sila repo in your account.
 
-**3. Create a local clone of Sila-Prysm.**
+**3. Create a local clone of Sila.**
 
 ```
 $ mkdir -p $GOPATH/src/github.com/sila-chain
 $ cd $GOPATH/src/github.com/sila-chain
-$ git clone https://github.com/sila-chain/Sila-Prysm-Core.git
-$ cd $GOPATH/src/github.com/sila-chain/Sila-Prysm-Core
+$ git clone https://github.com/sila-chain/Sila-Core.git
+$ cd $GOPATH/src/github.com/sila-chain/Sila-Core
 ```
 
 **4. Link your local clone to the fork on your GitHub repo.**
 
 ```
-$ git remote add my-sila-prysm-repo https://github.com/<your_github_user_name>/Sila-Prysm-Core.git
+$ git remote add my-sila-repo https://github.com/<your_github_user_name>/Sila-Core.git
 ```
 
-**5. Link your local clone to the Sila-Prysm repo so that you can easily fetch future changes to the Sila-Prysm repo.**
+**5. Link your local clone to the Sila repo so that you can easily fetch future changes to the Sila repo.**
 
 ```
-$ git remote add sila-prysm https://github.com/sila-chain/Sila-Prysm-Core.git
-$ git remote -v (you should see my-sila-prysm-repo and sila-prysm in the list of remotes)
+$ git remote add sila https://github.com/sila-chain/Sila-Core.git
+$ git remote -v (you should see my-sila-repo and sila in the list of remotes)
 ```
 
 **6. Find an issue to work on.**
 
-Check out open issues at https://github.com/sila-chain/Sila-Prysm-Core/issues and pick one. Leave a comment to let the development team know that you would like to work on it. Or examine the code for areas that can be improved and leave a comment to the development team to ask if they would like you to work on it.
+Check out open issues at https://github.com/sila-chain/Sila-Core/issues and pick one. Leave a comment to let the development team know that you would like to work on it. Or examine the code for areas that can be improved and leave a comment to the development team to ask if they would like you to work on it.
 
 **7. Create a local branch with a name that clearly identifies what you will be working on.**
 
@@ -51,7 +51,7 @@ $ git checkout -b feature-in-progress-branch
 
 **8. Make improvements to the code.**
 
-Each time you work on the code be sure that you are working on the branch that you have created as opposed to your local copy of the Sila-Prysm repo. Keeping your changes segregated in this branch will make it easier to merge your changes into the repo later.
+Each time you work on the code be sure that you are working on the branch that you have created as opposed to your local copy of the Sila repo. Keeping your changes segregated in this branch will make it easier to merge your changes into the repo later.
 
 ```
 $ git checkout feature-in-progress-branch
@@ -81,13 +81,13 @@ $ git commit  -m “Message to explain what the commit covers”
 
 You can use the –amend flag to include previous commits that have not yet been pushed to an upstream repo to the current commit.
 
-**12. Fetch any changes that have occurred in the Sila-Prysm repo since you started work.**
+**12. Fetch any changes that have occurred in the Sila repo since you started work.**
 
 ```
-$ git fetch sila-prysm
+$ git fetch sila
 ```
 
-**13. Pull latest version of Sila-Prysm.**
+**13. Pull latest version of Sila.**
 
 ```
 $ git pull origin master
@@ -109,9 +109,9 @@ Your version of the conflicting code
 '>>>>> Your Commit
 ```
 
-The code from the Sila-Prysm repo is inserted between <<< and === while the change you have made is inserted between === and >>>>. Remove everything between <<<< and >>> and replace it with code that resolves the conflict. Repeat the process for all files listed by git status that have conflicts.
+The code from the Sila repo is inserted between <<< and === while the change you have made is inserted between === and >>>>. Remove everything between <<<< and >>> and replace it with code that resolves the conflict. Repeat the process for all files listed by git status that have conflicts.
 
-**14. Push your changes to your fork of the Sila-Prysm repo.**
+**14. Push your changes to your fork of the Sila repo.**
 
 Use git push to move your changes to your fork of the repo.
 
@@ -119,7 +119,7 @@ Use git push to move your changes to your fork of the repo.
 $ git push myrepo feature-in-progress-branch
 ```
 
-**15. Check to be sure your fork of the Sila-Prysm repo contains your feature branch with the latest edits.**
+**15. Check to be sure your fork of the Sila repo contains your feature branch with the latest edits.**
 
 Navigate to your fork of the repo on GitHub. On the upper left where the current branch is listed, change the branch to your feature-in-progress-branch. Open the files that you have worked on and check to make sure they include your changes.
 
@@ -129,7 +129,7 @@ All PRs must must include a changelog fragment file in the `changelog` directory
 
 **17. Create a pull request.**
 
-Navigate your browser to https://github.com/sila-chain/Sila-Prysm-Core and click on the new pull request button. In the “base” box on the left, leave the default selection “base main”, the branch that you want your changes to be applied to. In the “compare” box on the right, select feature-in-progress-branch, the branch containing the changes you want to apply. You will then be asked to answer a few questions about your pull request. After you complete the questionnaire, the pull request will appear in the list of pull requests at https://github.com/sila-chain/Sila-Prysm-Core/pulls. Ensure that you have added an entry to CHANGELOG.md if your PR is a user-facing change. See the [Maintaining CHANGELOG.md](#maintaining-changelogmd) section for more information.
+Navigate your browser to https://github.com/sila-chain/Sila-Core and click on the new pull request button. In the “base” box on the left, leave the default selection “base main”, the branch that you want your changes to be applied to. In the “compare” box on the right, select feature-in-progress-branch, the branch containing the changes you want to apply. You will then be asked to answer a few questions about your pull request. After you complete the questionnaire, the pull request will appear in the list of pull requests at https://github.com/sila-chain/Sila-Core/pulls. Ensure that you have added an entry to CHANGELOG.md if your PR is a user-facing change. See the [Maintaining CHANGELOG.md](#maintaining-changelogmd) section for more information.
 
 **18. Respond to comments by Core Contributors.**
 
@@ -140,7 +140,7 @@ Core Contributors may ask questions and request that you make edits. If you set 
  You can do this with an interactive rebase. Start by running the following command to determine the commit that is the base of your branch...
 
 ```
-$ git merge-base feature-in-progress-branch sila-prysm/main
+$ git merge-base feature-in-progress-branch sila/main
 ```
 
 **20. The previous command will return a commit-hash that you should use in the following command.**
@@ -179,7 +179,7 @@ $ git push myrepo feature-in-progress-branch -f
 
 This project follows the changelog guidelines from [keepachangelog.com](https://keepachangelog.com/en/1.1.0/). In order to minimize conflicts and workflow headaches, we chose to implement a changelog management
 strategy that uses changelog "fragment" files, managed by our changelog management tool called `unclog`. Each PR must include a new changelog fragment file in the `changelog` directory, as specified by unclog's
-[README.md](https://github.com/OffchainLabs/unclog?tab=readme-ov-file#what-is-a-changelog-fragment). As the `unclog` README suggests in the [Best Practices](https://github.com/OffchainLabs/unclog?tab=readme-ov-file#best-practices) section, 
+[README.md](https://github.com/SilaLabs/unclog?tab=readme-ov-file#what-is-a-changelog-fragment). As the `unclog` README suggests in the [Best Practices](https://github.com/SilaLabs/unclog?tab=readme-ov-file#best-practices) section,
 the standard naming convention for your PR's fragment file, to avoid conflicting with another fragment file, is `changelog/<github user name>_<PR branch name>.md`.
 
 ### Releasing
@@ -205,14 +205,14 @@ Anyone can become a part-time contributor and help out on implementing Sila cons
 
 ### Core Contributors
 
-Core contributors are remote contractors of Sila-Prysm, LLC. and are considered critical team members of our organization. Core devs have all the responsibilities of part-time contributors plus the majority of the following:
+Core contributors are remote contractors of Sila, LLC. and are considered critical team members of our organization. Core devs have all the responsibilities of part-time contributors plus the majority of the following:
 
 -   Stay up to date on the latest beacon chain specification
 -   Monitor GitHub issues and PR’s to make sure owner, labels, descriptions are correct
 -   Formulate independent ideas, suggest new work to do, point out improvements to existing approaches
 -   Participate in code review, ensure code quality is excellent, and ensure high code coverage
 -   Help with social media presence, write bi-weekly development update
--   Represent Sila-Prysm at events to help spread the word on scalability research and solutions
+-   Represent Sila at events to help spread the word on scalability research and solutions
 
 We love working with people that are autonomous, bring independent thoughts to the team, and are excited for their work! We believe in a merit-based approach to becoming a core contributor, and any part-time contributor that puts in the time, work, and drive can become a core member of our team.
 

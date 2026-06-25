@@ -1,15 +1,15 @@
 # Third Party Package Patching
 
-This directory includes local patches to third party dependencies we use in Sila-Prysm. Sometimes,
-we need to make a small change to some dependency for ease of use in Sila-Prysm without wanting
+This directory includes local patches to third party dependencies we use in Sila. Sometimes,
+we need to make a small change to some dependency for ease of use in Sila without wanting
 to maintain our own fork of the dependency ourselves. Our build tool, [Bazel](https://bazel.build)
 allows us to include patches in a seamless manner based on simple diff rules.
 
-This README outlines how patching works in Sila-Prysm and an explanation of previously
+This README outlines how patching works in Sila and an explanation of previously
 created patches.
 
 **Given maintaining a patch can be difficult and tedious,
-patches are NOT the recommended way of modifying dependencies in Sila-Prysm
+patches are NOT the recommended way of modifying dependencies in Sila
 unless really needed**
 
 ## Table of Contents
@@ -36,24 +36,24 @@ git clone https://github.com/someteam/somerepo b && cd b
 Then, make all your changes in `b` and finally create the diff of all your changes as follows:
 ```
 cd ..
-diff -ur --exclude=".git" a b > $GOPATH/src/github.com/sila-chain/Sila-Prysm-Core/third_party/YOURPATCH.patch
+diff -ur --exclude=".git" a b > $GOPATH/src/github.com/sila-chain/Sila-Core/third_party/YOURPATCH.patch
 ```
 
-Next, we need to tell the Bazel [WORKSPACE](https://github.com/sila-chain/Sila-Prysm-Core/blob/main/WORKSPACE) to patch the specific dependency.
-Here's an example for a patch we use today for the [Ethereum APIs](https://github.com/prysmaticlabs/ethereumapis)
+Next, we need to tell the Bazel [WORKSPACE](https://github.com/sila-chain/Sila-Core/blob/main/WORKSPACE) to patch the specific dependency.
+Here's an example for a patch we use today for the [Sila APIs](https://github.com/sila-chain/Sila-Execution-APIs)
 dependency:
 
 ```
 go_repository(
-    name = "com_github_prysmaticlabs_ethereumapis",
+    name = "com_github_sila_execution_apis",
     commit = "367ca574419a062ae26818f60bdeb5751a6f538",
     patch_args = ["-p1"],
     patches = [
-        "//third_party:com_github_prysmaticlabs_ethereumapis-tags.patch",
+        "//third_party:com_github_sila_execution_apis-tags.patch",
     ],
-    importpath = "github.com/prysmaticlabs/ethereumapis",
+    importpath = "github.com/sila-chain/Sila-Execution-APIs",
 )
 ```
 
-Now, when used in Sila-Prysm, the dependency you patched will have the patched modifications
+Now, when used in Sila, the dependency you patched will have the patched modifications
 when you run your code.

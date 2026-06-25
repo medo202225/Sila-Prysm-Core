@@ -1,5 +1,5 @@
 language: go
-go_import_path: github.com/sila-chain/Sila-Prysm-Core
+go_import_path: github.com/sila-chain/Sila-Core
 sudo: false
 matrix:
   include:

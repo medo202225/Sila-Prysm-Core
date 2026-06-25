@@ -2,7 +2,7 @@
 
 # -----------------------------------------------------------------------------
 # This script builds and uploads the docker images to the registries.
-# 
+#
 # This script is intended to be a workaround until the rules_oci project supports
 # targets with multiple repositories like rules_docker does. See: https://github.com/bazel-contrib/rules_oci/issues/248
 # -----------------------------------------------------------------------------
@@ -19,7 +19,7 @@ TAG=$1
 bazel build --config=release \
   //cmd/beacon-chain:push_oci_image \
   //cmd/validator:push_oci_image \
-  //cmd/prysmctl:push_oci_image
+  //cmd/silactl:push_oci_image
 
 # Push the images to the registry.
 ### Beacon chain
@@ -34,6 +34,6 @@ bazel run --config=release --define=blst_modern=false \
 bazel run --config=release \
   //cmd/validator:push_oci_image -- --tag=$TAG
 
-### Prysmctl
+### Silactl
 bazel run --config=release \
-  //cmd/prysmctl:push_oci_image -- --tag=$TAG
+  //cmd/silactl:push_oci_image -- --tag=$TAG

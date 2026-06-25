@@ -2,4 +2,4 @@
 
 set -e
 
-chown prysm-validator:prysm-validator /etc/prysm/validator.yaml
+chown sila-validator:sila-validator /etc/sila/validator.yaml

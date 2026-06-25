@@ -1,37 +1,37 @@
-# Sila-Prysm Client Interoperability Guide
+# Sila Client Interoperability Guide
 
-This README details how to setup Sila-Prysm for interop testing for usage with other Sila consensus clients.
+This README details how to setup Sila for interop testing for usage with other Sila consensus clients.
 
-> [!IMPORTANT]  
-> This guide is likely to be outdated. The Sila-Prysm maintainers do not have capacity to troubleshoot
+> [!IMPORTANT]
+> This guide is likely to be outdated. The Sila maintainers do not have capacity to troubleshoot
 > outdated interop guides or instructions. If you experience issues with this guide, please file an
 > issue for visibility and propose fixes, if possible.
 
 ## Installation & Setup
 
 1. Install [Bazel](https://bazel.build/install) **(Recommended)**
-2. `git clone https://github.com/sila-chain/Sila-Prysm-Core && cd Sila-Prysm-Core`
+2. `git clone https://github.com/sila-chain/Sila-Core && cd Sila-Core`
 3. `bazel build //cmd/...`
 
 ## Starting from Genesis
 
-Sila-Prysm can be started from a built-in mainnet genesis state, or started with a provided genesis state by
+Sila can be started from a built-in mainnet genesis state, or started with a provided genesis state by
 using the `--genesis-state` flag and providing a path to the genesis.ssz file.
 
 ## Generating a Genesis State
 
-To setup the necessary files for these quick starts, Sila-Prysm provides a tool to generate a `genesis.ssz` from
-a deterministically generated set of validator private keys following the official interop YAML format 
-[here](https://github.com/Sila/eth2.0-pm/blob/master/interop/mocked_start).
+To setup the necessary files for these quick starts, Sila provides a tool to generate a `genesis.ssz` from
+a deterministically generated set of validator private keys following the official interop YAML format
+[here](https://github.com/Sila/sila2.0-pm/blob/master/interop/mocked_start).
 
-You can use `prysmctl` to create a deterministic genesis state for interop.
+You can use `silactl` to create a deterministic genesis state for interop.
 
 ```sh
 # Download (or create) a chain config file.
 curl https://raw.githubusercontent.com/Sila/consensus-specs/refs/heads/dev/configs/minimal.yaml -o /tmp/minimal.yaml
 
-# Run prysmctl to generate genesis with a 2 minute genesis delay and 256 validators. 
-bazel run //cmd/prysmctl --config=minimal -- \
+# Run silactl to generate genesis with a 2 minute genesis delay and 256 validators.
+bazel run //cmd/silactl --config=minimal -- \
   testnet generate-genesis \
   --genesis-time-delay=120 \
   --num-validators=256 \
@@ -40,12 +40,12 @@ bazel run //cmd/prysmctl --config=minimal -- \
 ```
 
 The flags are explained below:
-- `bazel run //cmd/prysmctl` is the bazel command to compile and run prysmctl.
-- `--config=minimal` is a bazel build time configuration flag to compile Sila-Prysm with minimal state constants.
-- `--` is an argument divider to tell bazel that everything after this divider should be passed as arguments to prysmctl. Without this divider, it isn't clear to bazel if the arguments are meant to be build time arguments or runtime arguments so the operation complains and fails to build without this divider.
-- `testnet` is the primary command argument for prysmctl.
-- `generate-genesis` is the subcommand to `testnet` in prysmctl.
-- `--genesis-time-delay` uint: The number of seconds in the future to define genesis. Example: a value of 60 will set the genesis time to 1 minute in the future. This should be sufficiently large enough to allow for you to start the beacon node before the genesis time. 
+- `bazel run //cmd/silactl` is the bazel command to compile and run silactl.
+- `--config=minimal` is a bazel build time configuration flag to compile Sila with minimal state constants.
+- `--` is an argument divider to tell bazel that everything after this divider should be passed as arguments to silactl. Without this divider, it isn't clear to bazel if the arguments are meant to be build time arguments or runtime arguments so the operation complains and fails to build without this divider.
+- `testnet` is the primary command argument for silactl.
+- `generate-genesis` is the subcommand to `testnet` in silactl.
+- `--genesis-time-delay` uint: The number of seconds in the future to define genesis. Example: a value of 60 will set the genesis time to 1 minute in the future. This should be sufficiently large enough to allow for you to start the beacon node before the genesis time.
 - `--num-validators` int: Number of validators to deterministically include in the generated genesis state
 - `--output-ssz` string: Output filename of the SSZ marshaling of the generated genesis state
 - `--chain-config-file` string: Filepath to a chain config yaml file.
@@ -79,11 +79,11 @@ This will start the system with 256 validators. The flags used can be explained 
 - `--bootstrap-node=` disables the default bootstrap nodes. This prevents the client from attempting to peer with mainnet nodes.
 - `--datadir=/tmp/beacon-chain-minimal-devnet` sets the data directory in a temporary location. Change this to your preferred destination.
 - `--force-clear-db` will delete the beaconchain.db file without confirming with the user. This is helpful for iteratively running local devnets without changing the datadir, but less helpful for one off runs where there was no database in the data directory.
-- `--min-sync-peers=0` allows the beacon node to skip initial sync without peers. This is essential because Sila-Prysm expects at least a few peers to start the blockchain.
+- `--min-sync-peers=0` allows the beacon node to skip initial sync without peers. This is essential because Sila expects at least a few peers to start the blockchain.
 - `--genesis-state=/tmp/genesis.ssz` defines the path to the generated genesis ssz file. The beacon node will use this as the initial genesis state.
 - `--chain-config-file=/tmp/minimal.yaml` defines the path to the yaml file with the chain configuration.
 
-As soon as the beacon node has started, start the validator in the other terminal window. 
+As soon as the beacon node has started, start the validator in the other terminal window.
 
 ```
 bazel run //cmd/validator --config=minimal -- --datadir=/tmp/validator --interop-num-validators=256 --minimal-config --suggested-fee-recipient=0x8A04d14125D0FDCDc742F4A05C051De07232EDa4

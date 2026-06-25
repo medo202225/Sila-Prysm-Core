@@ -1,6 +1,6 @@
 # Specs checker tool
 
-This simple tool helps downloading and parsing [Ethereum specs](https://github.com/ethereum/consensus-specs/tree/dev/specs), 
+This simple tool helps downloading and parsing [Sila specs](https://github.com/sila/consensus-specs/tree/dev/specs),
 to be later used for making sure that our reference comments match specs definitions precisely.
 
 ### Updating the reference specs
@@ -24,7 +24,7 @@ To download/update specs:
 bazel run //tools/specs-checker download -- --dir=$PWD/tools/specs-checker/data
 ```
 
-This will pull the files defined in `specDirs`, parse them (extract Python code snippets, discarding any other text), 
+This will pull the files defined in `specDirs`, parse them (extract Python code snippets, discarding any other text),
 and save them to the folder from which `bazel run //tools/specs-checker check` will be able to embed.
 
 ### Checking against the reference specs
