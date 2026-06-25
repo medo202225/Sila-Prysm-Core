@@ -3,8 +3,8 @@ package blockchain
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
 // SendNewBlobEvent sends a message to the BlobNotifier channel that the blob

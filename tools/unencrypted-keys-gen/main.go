@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/tools/unencrypted-keys-gen/keygen"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/tools/unencrypted-keys-gen/keygen"
 )
 
 var (

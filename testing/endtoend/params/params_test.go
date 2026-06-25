@@ -3,8 +3,8 @@ package params
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func Test_port(t *testing.T) {
@@ -31,8 +31,8 @@ func TestStandardPorts(t *testing.T) {
 	testPorts := &ports{}
 	assert.NoError(t, initializeStandardPorts(2, 0, testPorts, &existingRegistrations))
 	assert.Equal(t, 17, len(existingRegistrations))
-	assert.NotEqual(t, 0, testPorts.PrysmBeaconNodeHTTPPort)
-	assert.NotEqual(t, 0, testPorts.PrysmBeaconNodeTCPPort)
+	assert.NotEqual(t, 0, testPorts.SilaBeaconNodeHTTPPort)
+	assert.NotEqual(t, 0, testPorts.SilaBeaconNodeTCPPort)
 	assert.NotEqual(t, 0, testPorts.JaegerTracingPort)
 }
 

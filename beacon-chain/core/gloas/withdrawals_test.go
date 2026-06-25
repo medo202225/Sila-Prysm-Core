@@ -4,11 +4,11 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestProcessWithdrawals(t *testing.T) {

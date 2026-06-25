@@ -4,11 +4,11 @@ import (
 	"context"
 	"io"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila/p2p/enode"
 	errors "github.com/pkg/errors"
 )

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/pkg/errors"
 )
 

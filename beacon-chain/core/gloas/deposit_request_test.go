@@ -4,15 +4,15 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
-	stateTesting "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
+	stateTesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestProcessDepositRequests_EmptyAndNil(t *testing.T) {

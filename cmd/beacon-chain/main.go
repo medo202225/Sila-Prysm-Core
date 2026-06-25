@@ -10,31 +10,31 @@ import (
 	runtimeDebug "runtime/debug"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/builder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/node"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	blockchaincmd "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/blockchain"
-	das "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/das"
-	dasFlags "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/das/flags"
-	dbcommands "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/execution"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/genesis"
-	jwtcommands "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/jwt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/storage"
-	backfill "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/backfill"
-	bflags "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/backfill/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/checkpoint"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/logs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/journald"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/debug"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/fdlimits"
-	prefixed "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/logging/logrus-prefixed-formatter"
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/builder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/node"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	blockchaincmd "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/blockchain"
+	das "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/das"
+	dasFlags "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/das/flags"
+	dbcommands "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/execution"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/genesis"
+	jwtcommands "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/jwt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/storage"
+	backfill "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/sync/backfill"
+	bflags "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/sync/backfill/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/sync/checkpoint"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/logs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/journald"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/debug"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/fdlimits"
+	prefixed "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/logging/logrus-prefixed-formatter"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/maxprocs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/tos"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	gethlog "github.com/sila-chain/Sila/log"
 	golog "github.com/ipfs/go-log/v2"
 	joonix "github.com/joonix/log"
@@ -261,10 +261,10 @@ func before(ctx *cli.Context) error {
 		}
 	}
 
-	// Log Sila-Prysm version on startup. After initializing log-file and ephemeral log-file.
+	// Log Sila version on startup. After initializing log-file and ephemeral log-file.
 	log.WithFields(logrus.Fields{
 		"version": version.Version(),
-	}).Info("Sila-Prysm Beacon Chain started")
+	}).Info("Sila Beacon Chain started")
 
 	if err := cmd.ExpandSingleEndpointIfFile(ctx, flags.ExecutionEngineEndpoint); err != nil {
 		return errors.Wrap(err, "failed to expand single endpoint")

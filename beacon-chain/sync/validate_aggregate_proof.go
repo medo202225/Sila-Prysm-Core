@@ -5,23 +5,23 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
@@ -30,7 +30,7 @@ import (
 // validateAggregateAndProof verifies the aggregated signature and the selection proof is valid before forwarding to the
 // network and downstream services.
 func (s *Service) validateAggregateAndProof(ctx context.Context, pid peer.ID, msg *pubsub.Message) (pubsub.ValidationResult, error) {
-	receivedTime := prysmTime.Now()
+	receivedTime := silaTime.Now()
 	if pid == s.cfg.p2p.PeerID() {
 		return pubsub.ValidationAccept, nil
 	}
@@ -143,7 +143,7 @@ func (s *Service) validateAggregateAndProof(ctx context.Context, pid peer.ID, ms
 
 	msg.ValidatorData = m
 
-	aggregateAttestationVerificationGossipSummary.Observe(float64(prysmTime.Since(receivedTime).Milliseconds()))
+	aggregateAttestationVerificationGossipSummary.Observe(float64(silaTime.Since(receivedTime).Milliseconds()))
 
 	return pubsub.ValidationAccept, nil
 }

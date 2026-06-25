@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	v2 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	v2 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	bolt "go.etcd.io/bbolt"
 	"google.golang.org/protobuf/proto"
 )

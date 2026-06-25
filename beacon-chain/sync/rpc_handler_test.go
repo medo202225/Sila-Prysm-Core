@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	p2ptest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/protocol"
 )

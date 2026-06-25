@@ -3,9 +3,9 @@ package attestations
 import (
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
 // pruneExpired prunes attestations pool on every slot interval.

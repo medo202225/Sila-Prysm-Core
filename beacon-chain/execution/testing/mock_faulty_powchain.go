@@ -4,11 +4,11 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila/common"
 	"github.com/pkg/errors"
 )

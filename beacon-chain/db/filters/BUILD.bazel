@@ -6,7 +6,7 @@ go_library(
         "errors.go",
         "filter.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filters",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filters",
     visibility = [
         "//beacon-chain:__subpackages__",
         "//tools:__subpackages__",

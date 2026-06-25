@@ -4,9 +4,9 @@ import (
 	"flag"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/urfave/cli/v2"
 )
 

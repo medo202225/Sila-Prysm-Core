@@ -6,9 +6,9 @@ import (
 	"slices"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
 const (
@@ -76,7 +76,7 @@ func (smm *stateMachineManager) addStateMachine(startSlot primitives.Slot) *stat
 		start:   startSlot,
 		state:   stateNew,
 		fetched: fetchRequestResponse{},
-		updated: prysmTime.Now(),
+		updated: silaTime.Now(),
 	}
 	smm.recalculateMachineAttribs()
 	return smm.machines[startSlot]
@@ -153,7 +153,7 @@ func (m *stateMachine) setState(name stateID) {
 		return
 	}
 	m.state = name
-	m.updated = prysmTime.Now()
+	m.updated = silaTime.Now()
 }
 
 // trigger invokes the event handler on a given state machine.

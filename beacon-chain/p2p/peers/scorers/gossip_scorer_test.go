@@ -3,10 +3,10 @@ package scorers_test
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/scorers"
-	pbrpc "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/scorers"
+	pbrpc "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 )
 
 func TestScorers_Gossip_Score(t *testing.T) {

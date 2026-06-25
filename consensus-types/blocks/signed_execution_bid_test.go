@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func validExecutionPayloadBid() *ethpb.ExecutionPayloadBid {

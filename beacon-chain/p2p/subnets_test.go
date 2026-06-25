@@ -8,18 +8,18 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/scorers"
-	testp2p "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/scorers"
+	testp2p "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/sila-chain/Sila/p2p/enr"
 	"github.com/libp2p/go-libp2p/core/crypto"
@@ -122,7 +122,7 @@ func TestStartDiscV5_FindAndDialPeersWithSubnet(t *testing.T) {
 		// Start the service.
 		service.Start()
 
-		// Set the ENR `attnets`, used by Prysm to filter peers by subnet.
+		// Set the ENR `attnets`, used by Sila to filter peers by subnet.
 		bitV := bitfield.NewBitvector64()
 		bitV.SetBitAt(i, true)
 		entry := enr.WithEntry(attSubnetEnrKey, &bitV)
@@ -309,7 +309,7 @@ func Test_AttSubnets(t *testing.T) {
 			priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 			require.NoError(t, err)
 
-			convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+			convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 			require.NoError(t, err)
 
 			localNode := enode.NewLocalNode(db, convertedKey)
@@ -349,7 +349,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				localNode = initializeSyncCommSubnets(localNode)
@@ -365,7 +365,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				entry := enr.WithEntry(syncCommsSubnetEnrKey, []byte{})
@@ -383,7 +383,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				entry := enr.WithEntry(syncCommsSubnetEnrKey, make([]byte, byteCount(int(syncCommsSubnetCount))+1))
@@ -401,7 +401,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				entry := enr.WithEntry(syncCommsSubnetEnrKey, make([]byte, byteCount(int(syncCommsSubnetCount))+100))
@@ -419,7 +419,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				bitV := bitfield.Bitvector4{byte(0x00)}
@@ -438,7 +438,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				bitV := bitfield.Bitvector4{byte(0x00)}
@@ -464,7 +464,7 @@ func Test_SyncSubnets(t *testing.T) {
 				assert.NoError(t, err)
 				priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 				assert.NoError(t, err)
-				convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+				convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 				assert.NoError(t, err)
 				localNode := enode.NewLocalNode(db, convertedKey)
 				bitV := bitfield.Bitvector4{byte(0x00)}
@@ -527,7 +527,7 @@ func TestSubnetComputation(t *testing.T) {
 	priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 	require.NoError(t, err)
 
-	convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+	convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 	require.NoError(t, err)
 
 	localNode := enode.NewLocalNode(db, convertedKey)
@@ -565,7 +565,7 @@ func TestInitializePersistentSubnets(t *testing.T) {
 	defer db.Close()
 	priv, _, err := crypto.GenerateSecp256k1Key(rand.Reader)
 	assert.NoError(t, err)
-	convertedKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+	convertedKey, err := ecdsasila.ConvertFromInterfacePrivKey(priv)
 	assert.NoError(t, err)
 	localNode := enode.NewLocalNode(db, convertedKey)
 

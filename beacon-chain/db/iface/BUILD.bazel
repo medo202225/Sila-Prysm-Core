@@ -6,8 +6,8 @@ go_library(
         "errors.go",
         "interface.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/iface",
-    # Other packages must use github.com/sila-chain/prysm/beacon-chain/db.Database alias.
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/iface",
+    # Other packages must use github.com/sila-chain/sila/beacon-chain/db.Database alias.
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/db/filters:go_default_library",
@@ -18,7 +18,7 @@ go_library(
         "//consensus-types/primitives:go_default_library",
         "//monitoring/backup:go_default_library",
         "//proto/dbval:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "@com_github_sila_chain_sila//common:go_default_library",
     ],
 )

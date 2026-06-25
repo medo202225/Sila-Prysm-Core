@@ -11,17 +11,17 @@ import (
 	"strings"
 	"syscall"
 
-	cmdshared "github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
-	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
+	cmdshared "github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
@@ -54,15 +54,15 @@ func NewValidatorNodeSet(config *e2etypes.E2EConfig) *ValidatorNodeSet {
 func (s *ValidatorNodeSet) Start(ctx context.Context) error {
 	// Always using genesis count since using anything else would be difficult to test for.
 	validatorNum := int(params.BeaconConfig().MinGenesisActiveValidatorCount)
-	prysmBeaconNodeNum := e2e.TestParams.BeaconNodeCount
-	beaconNodeNum := prysmBeaconNodeNum + e2e.TestParams.LighthouseBeaconNodeCount
+	silaBeaconNodeNum := e2e.TestParams.BeaconNodeCount
+	beaconNodeNum := silaBeaconNodeNum + e2e.TestParams.LighthouseBeaconNodeCount
 	if validatorNum%beaconNodeNum != 0 {
 		return errors.New("validator count is not easily divisible by beacon node count")
 	}
 	validatorsPerNode := validatorNum / beaconNodeNum
 	// Create validator nodes.
-	nodes := make([]e2etypes.ComponentRunner, prysmBeaconNodeNum)
-	for i := range prysmBeaconNodeNum {
+	nodes := make([]e2etypes.ComponentRunner, silaBeaconNodeNum)
+	for i := range silaBeaconNodeNum {
 		nodes[i] = NewValidatorNode(s.config, validatorsPerNode, i, validatorsPerNode*i)
 	}
 	s.nodes = nodes
@@ -179,7 +179,7 @@ func (node *ValidatorNode) saveConfig() (string, error) {
 func (v *ValidatorNode) Start(ctx context.Context) error {
 	validatorHexPubKeys := make([]string, 0)
 	var pkg, target string
-	if v.config.UsePrysmShValidator {
+	if v.config.UseSilaShValidator {
 		pkg = ""
 		target = "sila_sh"
 	} else {
@@ -192,10 +192,10 @@ func (v *ValidatorNode) Start(ctx context.Context) error {
 	}
 
 	config, validatorNum, index, offset := v.config, v.validatorNum, v.index, v.offset
-	beaconRPCPort := e2e.TestParams.Ports.PrysmBeaconNodeRPCPort + index
-	if beaconRPCPort >= e2e.TestParams.Ports.PrysmBeaconNodeRPCPort+e2e.TestParams.BeaconNodeCount {
+	beaconRPCPort := e2e.TestParams.Ports.SilaBeaconNodeRPCPort + index
+	if beaconRPCPort >= e2e.TestParams.Ports.SilaBeaconNodeRPCPort+e2e.TestParams.BeaconNodeCount {
 		// Point any extra validator clients to a node we know is running.
-		beaconRPCPort = e2e.TestParams.Ports.PrysmBeaconNodeRPCPort
+		beaconRPCPort = e2e.TestParams.Ports.SilaBeaconNodeRPCPort
 	}
 
 	logFile, err := helpers.DeleteAndCreateFile(e2e.TestParams.LogPath, fmt.Sprintf(e2e.ValidatorLogFileName, index))
@@ -239,10 +239,10 @@ func (v *ValidatorNode) Start(ctx context.Context) error {
 	}
 
 	if v.config.UseBeaconRestApi {
-		beaconRestApiPort := e2e.TestParams.Ports.PrysmBeaconNodeHTTPPort + index
-		if beaconRestApiPort >= e2e.TestParams.Ports.PrysmBeaconNodeHTTPPort+e2e.TestParams.BeaconNodeCount {
+		beaconRestApiPort := e2e.TestParams.Ports.SilaBeaconNodeHTTPPort + index
+		if beaconRestApiPort >= e2e.TestParams.Ports.SilaBeaconNodeHTTPPort+e2e.TestParams.BeaconNodeCount {
 			// Point any extra validator clients to a node we know is running.
-			beaconRestApiPort = e2e.TestParams.Ports.PrysmBeaconNodeHTTPPort
+			beaconRestApiPort = e2e.TestParams.Ports.SilaBeaconNodeHTTPPort
 		}
 
 		args = append(args,
@@ -251,7 +251,7 @@ func (v *ValidatorNode) Start(ctx context.Context) error {
 	}
 
 	// Only apply e2e flags to the current branch. New flags may not exist in previous release.
-	if !v.config.UsePrysmShValidator {
+	if !v.config.UseSilaShValidator {
 		args = append(args, features.E2EValidatorFlags...)
 	}
 	if v.config.UseWeb3RemoteSigner {
@@ -281,7 +281,7 @@ func (v *ValidatorNode) Start(ctx context.Context) error {
 	}
 	args = append(args, config.ValidatorFlags...)
 
-	if v.config.UsePrysmShValidator {
+	if v.config.UseSilaShValidator {
 		args = append([]string{"validator"}, args...)
 		log.Warning("Using latest release validator via sila.sh")
 	}

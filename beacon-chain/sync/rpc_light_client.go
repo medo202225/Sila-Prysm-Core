@@ -4,14 +4,14 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/types"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	libp2pcore "github.com/libp2p/go-libp2p/core"
 )
 

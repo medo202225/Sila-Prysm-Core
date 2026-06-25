@@ -3,7 +3,7 @@ package p2p
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/peer"
 	ma "github.com/multiformats/go-multiaddr"

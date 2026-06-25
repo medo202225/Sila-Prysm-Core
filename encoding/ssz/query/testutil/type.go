@@ -1,6 +1,6 @@
 package testutil
 
-import "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/query"
+import "github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz/query"
 
 type PathTest struct {
 	Path     string

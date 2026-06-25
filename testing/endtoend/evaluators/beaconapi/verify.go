@@ -10,20 +10,20 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	params2 "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/policies"
-	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	params2 "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
+	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 )
 
 // MultiClientVerifyIntegrity tests Beacon API endpoints.
-// It compares responses from Prysm and other beacon nodes such as Lighthouse.
+// It compares responses from Sila and other beacon nodes such as Lighthouse.
 // The evaluator is executed on every odd-numbered epoch.
 var MultiClientVerifyIntegrity = e2etypes.Evaluator{
 	Name:       "beacon_api_multi-client_verify_integrity_epoch_%d",
@@ -67,18 +67,18 @@ func run(nodeIdx int) error {
 		if m.sanityCheckOnlyEnabled() {
 			resp := m.getPResp()
 			if err = doJSONGETRequest(m.getBasePath(), apiPath, nodeIdx, resp); err != nil {
-				return errors.Wrapf(err, "issue during Prysm JSON GET request for path %s", apiPath)
+				return errors.Wrapf(err, "issue during Sila JSON GET request for path %s", apiPath)
 			}
 			if resp == nil {
-				return fmt.Errorf("nil response from Prysm JSON GET request for path %s", apiPath)
+				return fmt.Errorf("nil response from Sila JSON GET request for path %s", apiPath)
 			}
 			if m.sszEnabled() {
 				sszResp, err := doSSZGETRequest(m.getBasePath(), apiPath, nodeIdx)
 				if err != nil {
-					return errors.Wrapf(err, "issue during Prysm SSZ GET request for path %s", apiPath)
+					return errors.Wrapf(err, "issue during Sila SSZ GET request for path %s", apiPath)
 				}
 				if sszResp == nil {
-					return fmt.Errorf("nil response from Prysm SSZ GET request for path %s", apiPath)
+					return fmt.Errorf("nil response from Sila SSZ GET request for path %s", apiPath)
 				}
 			}
 		} else {
@@ -105,18 +105,18 @@ func run(nodeIdx int) error {
 		if m.sanityCheckOnlyEnabled() {
 			resp := m.getPResp()
 			if err = doJSONPOSTRequest(m.getBasePath(), apiPath, nodeIdx, m.getPOSTObj(), resp); err != nil {
-				return errors.Wrapf(err, "issue during Prysm JSON POST request for path %s", apiPath)
+				return errors.Wrapf(err, "issue during Sila JSON POST request for path %s", apiPath)
 			}
 			if resp == nil {
-				return fmt.Errorf("nil response from Prysm JSON POST request for path %s", apiPath)
+				return fmt.Errorf("nil response from Sila JSON POST request for path %s", apiPath)
 			}
 			if m.sszEnabled() {
 				sszResp, err := doSSZPOSTRequest(m.getBasePath(), apiPath, nodeIdx, m.getPOSTObj())
 				if err != nil {
-					return errors.Wrapf(err, "issue during Prysm SSZ POST request for path %s", apiPath)
+					return errors.Wrapf(err, "issue during Sila SSZ POST request for path %s", apiPath)
 				}
 				if sszResp == nil {
-					return fmt.Errorf("nil response from Prysm SSZ POST request for path %s", apiPath)
+					return fmt.Errorf("nil response from Sila SSZ POST request for path %s", apiPath)
 				}
 			}
 		} else {
@@ -214,7 +214,7 @@ func postEvaluation(nodeIdx int, requests map[string]endpoint, epoch primitives.
 	}
 
 	// perform a health check
-	basePath := fmt.Sprintf(v1PathTemplate, params2.TestParams.Ports.PrysmBeaconNodeHTTPPort+nodeIdx)
+	basePath := fmt.Sprintf(v1PathTemplate, params2.TestParams.Ports.SilaBeaconNodeHTTPPort+nodeIdx)
 	resp, err := http.Get(basePath + "/node/health")
 	if err != nil {
 		return errors.Wrap(err, "could not perform a health check")
@@ -247,13 +247,13 @@ func postEvaluation(nodeIdx int, requests map[string]endpoint, epoch primitives.
 
 func compareGETJSON(nodeIdx int, base, path string, pResp, lhResp any, customEval func(any, any) error) error {
 	if err := doJSONGETRequest(base, path, nodeIdx, pResp); err != nil {
-		return errors.Wrapf(err, "issue during Prysm JSON GET request for path %s", path)
+		return errors.Wrapf(err, "issue during Sila JSON GET request for path %s", path)
 	}
 	if err := doJSONGETRequest(base, path, nodeIdx, lhResp, "Lighthouse"); err != nil {
 		return errors.Wrapf(err, "issue during Lighthouse JSON GET request for path %s", path)
 	}
 	if pResp == nil {
-		return errEmptyPrysmData
+		return errEmptySilaData
 	}
 	if lhResp == nil {
 		return errEmptyLighthouseData
@@ -267,13 +267,13 @@ func compareGETJSON(nodeIdx int, base, path string, pResp, lhResp any, customEva
 
 func comparePOSTJSON(nodeIdx int, base, path string, postObj, pResp, lhResp any, customEval func(any, any) error) error {
 	if err := doJSONPOSTRequest(base, path, nodeIdx, postObj, pResp); err != nil {
-		return errors.Wrapf(err, "issue during Prysm JSON POST request for path %s", path)
+		return errors.Wrapf(err, "issue during Sila JSON POST request for path %s", path)
 	}
 	if err := doJSONPOSTRequest(base, path, nodeIdx, postObj, lhResp, "Lighthouse"); err != nil {
 		return errors.Wrapf(err, "issue during Lighthouse JSON POST request for path %s", path)
 	}
 	if pResp == nil {
-		return errEmptyPrysmData
+		return errEmptySilaData
 	}
 	if lhResp == nil {
 		return errEmptyLighthouseData
@@ -288,14 +288,14 @@ func comparePOSTJSON(nodeIdx int, base, path string, postObj, pResp, lhResp any,
 func compareGETSSZ(nodeIdx int, base, path string) ([]byte, error) {
 	pResp, err := doSSZGETRequest(base, path, nodeIdx)
 	if err != nil {
-		return nil, errors.Wrapf(err, "issue during Prysm SSZ GET request for path %s", path)
+		return nil, errors.Wrapf(err, "issue during Sila SSZ GET request for path %s", path)
 	}
 	lhResp, err := doSSZGETRequest(base, path, nodeIdx, "Lighthouse")
 	if err != nil {
 		return nil, errors.Wrapf(err, "issue during Lighthouse SSZ GET request for path %s", path)
 	}
 	if !bytes.Equal(pResp, lhResp) {
-		return nil, errors.New("Prysm SSZ response does not match Lighthouse SSZ response")
+		return nil, errors.New("Sila SSZ response does not match Lighthouse SSZ response")
 	}
 	return pResp, nil
 }
@@ -303,14 +303,14 @@ func compareGETSSZ(nodeIdx int, base, path string) ([]byte, error) {
 func comparePOSTSSZ(nodeIdx int, base, path string, postObj any) ([]byte, error) {
 	pResp, err := doSSZPOSTRequest(base, path, nodeIdx, postObj)
 	if err != nil {
-		return nil, errors.Wrapf(err, "issue during Prysm SSZ POST request for path %s", path)
+		return nil, errors.Wrapf(err, "issue during Sila SSZ POST request for path %s", path)
 	}
 	lhResp, err := doSSZPOSTRequest(base, path, nodeIdx, postObj, "Lighthouse")
 	if err != nil {
 		return nil, errors.Wrapf(err, "issue during Lighthouse SSZ POST request for path %s", path)
 	}
 	if !bytes.Equal(pResp, lhResp) {
-		return nil, errors.New("Prysm SSZ response does not match Lighthouse SSZ response")
+		return nil, errors.New("Sila SSZ response does not match Lighthouse SSZ response")
 	}
 	return pResp, nil
 }
@@ -319,13 +319,13 @@ func compareJSON(pResp, lhResp any) error {
 	if !reflect.DeepEqual(pResp, lhResp) {
 		p, err := json.Marshal(pResp)
 		if err != nil {
-			return errors.Wrap(err, "failed to marshal Prysm response to JSON")
+			return errors.Wrap(err, "failed to marshal Sila response to JSON")
 		}
 		lh, err := json.Marshal(lhResp)
 		if err != nil {
 			return errors.Wrap(err, "failed to marshal Lighthouse response to JSON")
 		}
-		return fmt.Errorf("Prysm response %s does not match Lighthouse response %s", string(p), string(lh))
+		return fmt.Errorf("Sila response %s does not match Lighthouse response %s", string(p), string(lh))
 	}
 	return nil
 }

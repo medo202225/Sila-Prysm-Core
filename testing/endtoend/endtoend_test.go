@@ -1,4 +1,4 @@
-// Package endtoend performs full a end-to-end test for Prysm,
+// Package endtoend performs full a end-to-end test for Sila,
 // including spinning up an ETH1 dev chain, sending deposits to the deposit
 // contract, and making sure the beacon node and validators are running and
 // performing properly for a few epochs.
@@ -17,24 +17,24 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/beacon"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/genesis"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/components"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/components/eth1"
-	ev "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/evaluators"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
-	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client/beacon"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/eth1"
+	ev "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/evaluators"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
@@ -216,7 +216,7 @@ func (r *testRunner) runEvaluators(ec *e2etypes.EvaluationContext, conns []*grpc
 func (r *testRunner) testDepositsAndTx(ctx context.Context, g *errgroup.Group,
 	keystorePath string, requiredNodes []e2etypes.ComponentRunner) {
 	minGenesisActiveCount := int(params.BeaconConfig().MinGenesisActiveValidatorCount)
-	// prysm web3signer doesn't support deposits
+	// sila web3signer doesn't support deposits
 	r.config.UseWeb3RemoteSigner = false
 	depositCheckValidator := components.NewValidatorNode(r.config, int(e2e.DepositCount), e2e.TestParams.BeaconNodeCount, minGenesisActiveCount)
 	g.Go(func() error {
@@ -341,7 +341,7 @@ func (r *testRunner) testCheckpointSync(ctx context.Context, g *errgroup.Group, 
 	if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{cpsyncer}); err != nil {
 		return fmt.Errorf("checkpoint sync beacon node not ready: %w", err)
 	}
-	c, err := grpc.Dial(fmt.Sprintf("127.0.0.1:%d", e2e.TestParams.Ports.PrysmBeaconNodeRPCPort+i), grpc.WithInsecure())
+	c, err := grpc.Dial(fmt.Sprintf("127.0.0.1:%d", e2e.TestParams.Ports.SilaBeaconNodeRPCPort+i), grpc.WithInsecure())
 	require.NoError(r.t, err, "Failed to dial")
 
 	// this is so that the syncEvaluators checks can run on the checkpoint sync'd node
@@ -386,7 +386,7 @@ func (r *testRunner) testBeaconChainSync(ctx context.Context, g *errgroup.Group,
 	if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{syncBeaconNode}); err != nil {
 		return fmt.Errorf("sync beacon node not ready: %w", err)
 	}
-	syncConn, err := grpc.Dial(fmt.Sprintf("127.0.0.1:%d", e2e.TestParams.Ports.PrysmBeaconNodeRPCPort+index), grpc.WithInsecure())
+	syncConn, err := grpc.Dial(fmt.Sprintf("127.0.0.1:%d", e2e.TestParams.Ports.SilaBeaconNodeRPCPort+index), grpc.WithInsecure())
 	require.NoError(t, err, "Failed to dial")
 	conns = append(conns, syncConn)
 
@@ -424,7 +424,7 @@ func (r *testRunner) testBeaconChainSync(ctx context.Context, g *errgroup.Group,
 
 func (r *testRunner) testDoppelGangerProtection(ctx context.Context) error {
 	// Exit if we are running from the previous release.
-	if r.config.UsePrysmShValidator {
+	if r.config.UseSilaShValidator {
 		return nil
 	}
 	g, ctx := errgroup.WithContext(ctx)
@@ -654,7 +654,7 @@ func (r *testRunner) executeProvidedEvaluators(ec *e2etypes.EvaluationContext, c
 }
 
 // This interceptor will define the multi scenario run for our minimal tests.
-// 1) In the first scenario we will be taking a single prysm node and its validator offline.
+// 1) In the first scenario we will be taking a single sila node and its validator offline.
 // Along with that we will also take a single lighthouse node and its validator offline.
 // After 1 epoch we will then attempt to bring it online again.
 //
@@ -693,7 +693,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		require.NoError(r.t, r.comHandler.validatorNodes.ResumeAtIndex(0))
 		return true
 	case optimisticStartEpoch:
-		// Set it for prysm beacon node.
+		// Set it for sila beacon node.
 		component, err := r.comHandler.eth1Proxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
 		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {

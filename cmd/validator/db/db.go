@@ -1,21 +1,21 @@
 package db
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
-	validatordb "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/tos"
+	validatordb "github.com/sila-chain/Sila-Consensus-Core/v7/validator/db"
 	"github.com/urfave/cli/v2"
 )
 
 var (
-	// SourceDataDirFlag defines a path on disk where source Sila-Prysm databases are stored. Used for conversion.
+	// SourceDataDirFlag defines a path on disk where source Sila databases are stored. Used for conversion.
 	SourceDataDirFlag = &cli.StringFlag{
 		Name:     "source-data-dir",
 		Usage:    "Source data directory",
 		Required: true,
 	}
 
-	// SourceDataDirFlag defines a path on disk where source Sila-Prysm databases are stored. Used for conversion.
+	// SourceDataDirFlag defines a path on disk where source Sila databases are stored. Used for conversion.
 	TargetDataDirFlag = &cli.StringFlag{
 		Name:     "target-data-dir",
 		Usage:    "Target data directory",
@@ -23,11 +23,11 @@ var (
 	}
 )
 
-// Commands for interacting with the Sila-Prysm validator database.
+// Commands for interacting with the Sila validator database.
 var Commands = &cli.Command{
 	Name:     "db",
 	Category: "db",
-	Usage:    "Defines commands for interacting with the Sila-Prysm validator database.",
+	Usage:    "Defines commands for interacting with the Sila validator database.",
 	Subcommands: []*cli.Command{
 		{
 			Name:        "restore",

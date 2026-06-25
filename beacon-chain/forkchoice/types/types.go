@@ -1,10 +1,10 @@
 package types
 
 import (
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	consensus_blocks "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	consensus_blocks "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // Checkpoint is an array version of ethpb.Checkpoint. It is used internally in

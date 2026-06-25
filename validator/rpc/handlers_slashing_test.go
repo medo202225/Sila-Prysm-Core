@@ -8,15 +8,15 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
-	mocks "github.com/sila-chain/Sila-Prysm-Core/v7/validator/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
+	mocks "github.com/sila-chain/Sila-Consensus-Core/v7/validator/testing"
 )
 
 func TestImportSlashingProtection_Preconditions(t *testing.T) {

@@ -1245,7 +1245,7 @@
 
 - name: compute_new_state_root#phase0
   sources:
-    - file: beacon-chain/rpc/prysm/v1alpha1/validator/proposer.go
+    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer.go
       search: func (vs *Server) computePostBlockStateAndRoot(
   spec: |
     <spec fn="compute_new_state_root" fork="phase0" hash="ad3c03b7">
@@ -1258,7 +1258,7 @@
 
 - name: compute_on_chain_aggregate#electra
   sources:
-    - file: beacon-chain/rpc/prysm/v1alpha1/validator/proposer_attestations_electra.go
+    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer_attestations_electra.go
       search: func computeOnChainAggregate(
   spec: |
     <spec fn="compute_on_chain_aggregate" fork="electra" hash="3aa56e8f">
@@ -2682,7 +2682,7 @@
 
 - name: get_attesting_indices#phase0
   sources:
-    - file: proto/prysm/v1alpha1/attestation/attestation_utils.go
+    - file: proto/sila/v1alpha1/attestation/attestation_utils.go
       search: func AttestingIndices(
   spec: |
     <spec fn="get_attesting_indices" fork="phase0" hash="c012d980">
@@ -2696,7 +2696,7 @@
 
 - name: get_attesting_indices#electra
   sources:
-    - file: proto/prysm/v1alpha1/attestation/attestation_utils.go
+    - file: proto/sila/v1alpha1/attestation/attestation_utils.go
       search: func AttestingIndices(
   spec: |
     <spec fn="get_attesting_indices" fork="electra" hash="392a5a7e">
@@ -2907,7 +2907,7 @@
 
 - name: get_blob_sidecars#deneb
   sources:
-    - file: beacon-chain/rpc/prysm/v1alpha1/validator/proposer_deneb.go
+    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer_deneb.go
       search: func BuildBlobSidecars(
   spec: |
     <spec fn="get_blob_sidecars" fork="deneb" hash="0206e9a5">
@@ -3713,7 +3713,7 @@
 
 - name: get_eth1_pending_deposit_count#electra
   sources:
-    - file: beacon-chain/rpc/prysm/v1alpha1/validator/proposer_deposits.go
+    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer_deposits.go
       search: func (vs *Server) deposits(
   spec: |
     <spec fn="get_eth1_pending_deposit_count" fork="electra" hash="5dc54930">
@@ -4538,7 +4538,7 @@
 
 - name: get_indexed_attestation#phase0
   sources:
-    - file: proto/prysm/v1alpha1/attestation/attestation_utils.go
+    - file: proto/sila/v1alpha1/attestation/attestation_utils.go
       search: func ConvertToIndexed(
   spec: |
     <spec fn="get_indexed_attestation" fork="phase0" hash="424c7a96">
@@ -5614,7 +5614,7 @@
 
 - name: get_terminal_pow_block#bellatrix
   sources:
-    - file: beacon-chain/rpc/prysm/v1alpha1/validator/proposer_execution_payload.go
+    - file: beacon-chain/rpc/sila/v1alpha1/validator/proposer_execution_payload.go
       search: func (vs *Server) getTerminalBlockHashIfExists(
   spec: |
     <spec fn="get_terminal_pow_block" fork="bellatrix" hash="8ead2ad2">

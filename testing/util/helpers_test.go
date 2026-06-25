@@ -5,15 +5,15 @@ import (
 	"encoding/binary"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
 func TestBlockSignature(t *testing.T) {

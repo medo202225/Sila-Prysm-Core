@@ -3,11 +3,11 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 

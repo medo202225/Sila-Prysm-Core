@@ -6,11 +6,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

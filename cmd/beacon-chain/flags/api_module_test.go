@@ -3,17 +3,17 @@ package flags
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 )
 
-func TestEnableHTTPPrysmAPI(t *testing.T) {
-	assert.Equal(t, true, EnableHTTPPrysmAPI("prysm"))
-	assert.Equal(t, true, EnableHTTPPrysmAPI("prysm,foo"))
-	assert.Equal(t, true, EnableHTTPPrysmAPI("foo,prysm"))
-	assert.Equal(t, true, EnableHTTPPrysmAPI("prysm,prysm"))
-	assert.Equal(t, true, EnableHTTPPrysmAPI("PrYsM"))
-	assert.Equal(t, false, EnableHTTPPrysmAPI("foo"))
-	assert.Equal(t, false, EnableHTTPPrysmAPI(""))
+func TestEnableHTTPSilaAPI(t *testing.T) {
+	assert.Equal(t, true, EnableHTTPSilaAPI("sila"))
+	assert.Equal(t, true, EnableHTTPSilaAPI("sila,foo"))
+	assert.Equal(t, true, EnableHTTPSilaAPI("foo,sila"))
+	assert.Equal(t, true, EnableHTTPSilaAPI("sila,sila"))
+	assert.Equal(t, true, EnableHTTPSilaAPI("PrYsM"))
+	assert.Equal(t, false, EnableHTTPSilaAPI("foo"))
+	assert.Equal(t, false, EnableHTTPSilaAPI(""))
 }
 
 func TestEnableHTTPEthAPI(t *testing.T) {

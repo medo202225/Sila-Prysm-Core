@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )
@@ -36,12 +36,12 @@ func FlagOptions(c *cli.Context) ([]execution.Option, error) {
 }
 
 // Parses a JWT secret from a file path. This secret is required when connecting to execution nodes
-// over HTTP, and must be the same one used in Sila-Prysm and the execution node server Sila-Prysm is connecting to.
+// over HTTP, and must be the same one used in Sila and the execution node server Sila is connecting to.
 // The engine API specification here https://github.com/ethereum/execution-apis/blob/main/src/engine/authentication.md
 // Explains how we should validate this secret and the format of the file a user can specify.
 //
 // The secret must be stored as a hex-encoded string within a file in the filesystem.
-// If the --jwt-secret flag is provided to Sila-Prysm, but the file cannot be read, or does not contain a hex-encoded
+// If the --jwt-secret flag is provided to Sila, but the file cannot be read, or does not contain a hex-encoded
 // key of 256 bits, the client should treat this as an error and abort the startup.
 func parseJWTSecretFromFile(c *cli.Context) ([]byte, error) {
 	jwtSecretFile := c.String(flags.ExecutionJWTSecretFlag.Name)
@@ -71,7 +71,7 @@ func parseExecutionChainEndpoint(c *cli.Context) (string, error) {
 	if c.String(flags.ExecutionEngineEndpoint.Name) == "" {
 		return "", fmt.Errorf(
 			"you need to specify %s to provide a connection endpoint to an execution client "+
-				"for your Sila-Prysm beacon node. This is a requirement for running a node. You can read more about "+
+				"for your Sila beacon node. This is a requirement for running a node. You can read more about "+
 				"how to configure this execution client connection in our docs here "+
 				"https://docs.prylabs.network/docs/install/install-with-script",
 			flags.ExecutionEngineEndpoint.Name,

@@ -6,8 +6,8 @@ import (
 	"slices"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"

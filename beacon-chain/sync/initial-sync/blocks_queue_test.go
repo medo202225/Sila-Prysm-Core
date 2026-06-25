@@ -6,25 +6,25 @@ import (
 	"testing"
 	"time"
 
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	dbtest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	p2pt "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	beaconsync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	leakybucket "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/container/slice"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	p2pt "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	beaconsync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/container/slice"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p/core/peer"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
@@ -772,7 +772,7 @@ func TestBlocksQueue_onProcessSkippedEvent(t *testing.T) {
 
 		queue.smm.addStateMachine(256)
 		// Machine is not skipped for too long. Do not mark as new just yet.
-		queue.smm.machines[256].updated = prysmTime.Now().Add(-1 * (skippedMachineTimeout / 2))
+		queue.smm.machines[256].updated = silaTime.Now().Add(-1 * (skippedMachineTimeout / 2))
 		queue.smm.machines[256].state = stateSkipped
 		queue.smm.addStateMachine(320)
 		queue.smm.machines[320].state = stateScheduled
@@ -791,7 +791,7 @@ func TestBlocksQueue_onProcessSkippedEvent(t *testing.T) {
 
 		queue.smm.addStateMachine(256)
 		// Machine is skipped for too long. Reset.
-		queue.smm.machines[256].updated = prysmTime.Now().Add(-1 * skippedMachineTimeout)
+		queue.smm.machines[256].updated = silaTime.Now().Add(-1 * skippedMachineTimeout)
 		queue.smm.machines[256].state = stateSkipped
 		queue.smm.addStateMachine(320)
 		queue.smm.machines[320].state = stateScheduled
@@ -1005,7 +1005,7 @@ func TestBlocksQueue_onCheckStaleEvent(t *testing.T) {
 		handlerFn := onCheckStaleEvent(ctx)
 		updatedState, err := handlerFn(&stateMachine{
 			state:   stateSent,
-			updated: prysmTime.Now().Add(-staleEpochTimeout / 2),
+			updated: silaTime.Now().Add(-staleEpochTimeout / 2),
 		}, nil)
 		// State should not change, as machine is not yet stale.
 		assert.NoError(t, err)
@@ -1016,7 +1016,7 @@ func TestBlocksQueue_onCheckStaleEvent(t *testing.T) {
 		handlerFn := onCheckStaleEvent(ctx)
 		updatedState, err := handlerFn(&stateMachine{
 			state:   stateSent,
-			updated: prysmTime.Now().Add(-staleEpochTimeout),
+			updated: silaTime.Now().Add(-staleEpochTimeout),
 		}, nil)
 		// State should change, as machine is stale.
 		assert.NoError(t, err)

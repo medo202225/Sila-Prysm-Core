@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/internal"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/internal"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/stretchr/testify/assert"
 )

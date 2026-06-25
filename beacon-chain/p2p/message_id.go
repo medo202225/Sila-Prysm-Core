@@ -1,12 +1,12 @@
 package p2p
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/encoder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	pubsubpb "github.com/libp2p/go-libp2p-pubsub/pb"
 )
 

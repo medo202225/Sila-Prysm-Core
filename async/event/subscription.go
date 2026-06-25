@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/mclock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/mclock"
 )
 
 // waitQuotient is divided against the max backoff time, in order to have N requests based on the full

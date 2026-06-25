@@ -5,10 +5,10 @@ import (
 	"path"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/prompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/prompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/kv"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )
@@ -16,7 +16,7 @@ import (
 const dbExistsYesNoPrompt = "A database file already exists in the target directory. " +
 	"Are you sure that you want to overwrite it? [y/n]"
 
-// Restore a Sila-Prysm validator database.
+// Restore a Sila validator database.
 func Restore(cliCtx *cli.Context) error {
 	sourceFile := cliCtx.String(cmd.RestoreSourceFileFlag.Name)
 	targetDir := cliCtx.String(cmd.RestoreTargetDirFlag.Name)

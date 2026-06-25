@@ -3,14 +3,14 @@ load("@sila//tools/go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["types.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/slasher/types",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/slasher/types",
     visibility = [
         "//beacon-chain:__subpackages__",
-        "//cmd/prysmctl:__subpackages__",
+        "//cmd/silactl:__subpackages__",
         "//testing/slasher/simulator:__subpackages__",
     ],
     deps = [
         "//consensus-types/primitives:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
     ],
 )

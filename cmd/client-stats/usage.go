@@ -5,8 +5,8 @@ import (
 	"io"
 	"sort"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/client-stats/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/client-stats/flags"
 	"github.com/urfave/cli/v2"
 )
 

@@ -10,14 +10,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/genesis"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/policies"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -91,7 +91,7 @@ func metricsTest(_ *types.EvaluationContext, conns ...*grpc.ClientConn) error {
 	currentEpoch := slots.ToEpoch(currentSlot)
 	forkDigest := params.ForkDigest(currentEpoch)
 	for i := range conns {
-		response, err := http.Get(fmt.Sprintf("http://localhost:%d/metrics", e2e.TestParams.Ports.PrysmBeaconNodeMetricsPort+i))
+		response, err := http.Get(fmt.Sprintf("http://localhost:%d/metrics", e2e.TestParams.Ports.SilaBeaconNodeMetricsPort+i))
 		if err != nil {
 			// Continue if the connection fails, regular flake.
 			continue

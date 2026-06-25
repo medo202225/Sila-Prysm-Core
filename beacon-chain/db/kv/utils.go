@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/pkg/errors"
 	bolt "go.etcd.io/bbolt"
 )

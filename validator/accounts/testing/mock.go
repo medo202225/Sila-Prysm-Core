@@ -9,8 +9,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 )
 
 // Wallet contains an in-memory, simulated wallet implementation.

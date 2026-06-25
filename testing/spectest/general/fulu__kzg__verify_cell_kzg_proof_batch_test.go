@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"testing"
 
-	kzgPrysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	kzgSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/ghodss/yaml"
 )
@@ -25,7 +25,7 @@ func TestVerifyCellKZGProofBatch(t *testing.T) {
 		Input  input `json:"input"`
 		Output bool  `json:"output"`
 	}
-	require.NoError(t, kzgPrysm.Start())
+	require.NoError(t, kzgSila.Start())
 	testFolders, testFolderPath := utils.TestFolders(t, "general", "fulu", "kzg/verify_cell_kzg_proof_batch/kzg-mainnet")
 	if len(testFolders) == 0 {
 		t.Fatalf("No test folders found for %s/%s/%s", "general", "fulu", "kzg/verify_cell_kzg_proof_batch/kzg-mainnet")
@@ -38,7 +38,7 @@ func TestVerifyCellKZGProofBatch(t *testing.T) {
 			require.NoError(t, yaml.Unmarshal(file, test))
 
 			commitmentsRaw := test.Input.Commitments
-			commitments := make([]kzgPrysm.Bytes48, 0, len(commitmentsRaw))
+			commitments := make([]kzgSila.Bytes48, 0, len(commitmentsRaw))
 			for _, commitmentRaw := range commitmentsRaw {
 				commitment, err := hexutil.Decode(commitmentRaw)
 				require.NoError(t, err)
@@ -46,7 +46,7 @@ func TestVerifyCellKZGProofBatch(t *testing.T) {
 					require.Equal(t, false, test.Output)
 					return
 				}
-				commitments = append(commitments, kzgPrysm.Bytes48(commitment))
+				commitments = append(commitments, kzgSila.Bytes48(commitment))
 			}
 			cellIndicesRaw := test.Input.CellIndices
 			cellIndices := make([]uint64, 0, len(cellIndicesRaw))
@@ -56,18 +56,18 @@ func TestVerifyCellKZGProofBatch(t *testing.T) {
 				cellIndices = append(cellIndices, i)
 			}
 			cellsRaw := test.Input.Cells
-			cells := make([]kzgPrysm.Cell, 0, len(cellsRaw))
+			cells := make([]kzgSila.Cell, 0, len(cellsRaw))
 			for _, cellRaw := range cellsRaw {
 				cell, err := hexutil.Decode(cellRaw)
 				require.NoError(t, err)
-				if len(cell) != kzgPrysm.BytesPerCell {
+				if len(cell) != kzgSila.BytesPerCell {
 					require.Equal(t, false, test.Output)
 					return
 				}
-				cells = append(cells, kzgPrysm.Cell(cell))
+				cells = append(cells, kzgSila.Cell(cell))
 			}
 			proofsRaw := test.Input.Proofs
-			proofs := make([]kzgPrysm.Bytes48, 0, len(proofsRaw))
+			proofs := make([]kzgSila.Bytes48, 0, len(proofsRaw))
 			for _, proofRaw := range proofsRaw {
 				proof, err := hexutil.Decode(proofRaw)
 				require.NoError(t, err)
@@ -75,9 +75,9 @@ func TestVerifyCellKZGProofBatch(t *testing.T) {
 					require.Equal(t, false, test.Output)
 					return
 				}
-				proofs = append(proofs, kzgPrysm.Bytes48(proof))
+				proofs = append(proofs, kzgSila.Bytes48(proof))
 			}
-			ok, err := kzgPrysm.VerifyCellKZGProofBatch(commitments, cellIndices, cells, proofs)
+			ok, err := kzgSila.VerifyCellKZGProofBatch(commitments, cellIndices, cells, proofs)
 			if test.Output {
 				require.Equal(t, true, ok)
 				require.NoError(t, err)

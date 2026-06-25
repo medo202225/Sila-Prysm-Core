@@ -3,7 +3,7 @@ load("@sila//tools/go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["types.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types",
     visibility = ["//visibility:public"],
     deps = [
         "//consensus-types:go_default_library",

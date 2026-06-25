@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sirupsen/logrus"
 )
 

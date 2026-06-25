@@ -3,8 +3,8 @@ package minimal
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/light_client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/common/light_client"
 )
 
 func TestMainnet_Bellatrix_LightClient_UpdateRanking(t *testing.T) {

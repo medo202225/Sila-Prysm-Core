@@ -4,10 +4,10 @@ import (
 	"path"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/electra"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/electra"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils"
 )
 
 // RunRandaoMixesResetTests executes "epoch_processing/randao_mixes_reset" tests.

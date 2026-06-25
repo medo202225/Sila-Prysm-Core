@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"testing"
 
-	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	common "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/ssz_static"
+	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	common "github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/common/ssz_static"
 	"github.com/pkg/errors"
 	fssz "github.com/sila-chain/fastssz"
 )
@@ -24,7 +24,7 @@ func ExampleRunSSZStaticTests() {
 		case "BeaconState":
 			obj = &ethpb.BeaconState{}
 		case "Eth1Block":
-			// Some types may not apply to prysm, but exist in the spec test folders. It is OK to
+			// Some types may not apply to sila, but exist in the spec test folders. It is OK to
 			// skip these tests with a valid justification. Otherwise, the test should fail with an
 			// unsupported type.
 			t.Skip("Unused type")

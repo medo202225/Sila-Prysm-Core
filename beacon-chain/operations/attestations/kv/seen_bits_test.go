@@ -4,10 +4,10 @@ import (
 	"testing"
 
 	"github.com/sila-chain/go-bitfield"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
 func TestAttCaches_hasSeenBit(t *testing.T) {
@@ -51,7 +51,7 @@ func TestAttCaches_insertSeenBitDuplicates(t *testing.T) {
 	// Make sure that duplicates are not inserted, but expiration time gets updated.
 	require.NoError(t, c.insertSeenBit(att1))
 	require.Equal(t, 1, c.seenAtt.ItemCount())
-	_, expirationprysmTime, ok := c.seenAtt.GetWithExpiration(id.String())
+	_, expirationSilaTime, ok := c.seenAtt.GetWithExpiration(id.String())
 	require.Equal(t, true, ok)
-	require.Equal(t, true, expirationprysmTime.After(expirationTime1), "Expiration time is not updated")
+	require.Equal(t, true, expirationSilaTime.After(expirationTime1), "Expiration time is not updated")
 }

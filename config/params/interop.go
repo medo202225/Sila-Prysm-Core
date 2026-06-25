@@ -4,7 +4,7 @@ package params
 func InteropConfig() *BeaconChainConfig {
 	c := MainnetConfig()
 
-	// Prysm constants.
+	// Sila constants.
 	c.ConfigName = InteropName
 	c.GenesisForkVersion = []byte{0, 0, 0, 235}
 	c.AltairForkVersion = []byte{1, 0, 0, 235}

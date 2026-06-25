@@ -4,9 +4,9 @@
 package debug
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/lookup"
 )
 
 // Server defines a server implementation of the gRPC Beacon Chain service,

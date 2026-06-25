@@ -6,18 +6,18 @@ import (
 	"io"
 	"strings"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
 
 // ImportStandardProtectionJSON takes in EIP-3076 compliant JSON file used for slashing protection
-// by Sila validators and imports its data into Sila-Prysm's internal minimal representation of slashing
+// by Sila validators and imports its data into Sila's internal minimal representation of slashing
 // protection in the validator client's database.
 func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error {
 	// Read the JSON file

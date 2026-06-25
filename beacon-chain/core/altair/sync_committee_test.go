@@ -4,18 +4,18 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/altair"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 )
 
 func TestSyncCommitteeIndices_CanGet(t *testing.T) {
@@ -309,14 +309,14 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot == current_slot",
 			args: args{
 				syncMessageSlot: 15,
-				genesisTime:     prysmTime.Now().Add(-15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
+				genesisTime:     silaTime.Now().Add(-15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
 			},
 		},
 		{
 			name: "sync_message.slot == current_slot, received in middle of slot",
 			args: args{
 				syncMessageSlot: 15,
-				genesisTime: prysmTime.Now().Add(
+				genesisTime: silaTime.Now().Add(
 					-15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second,
 				).Add(-(time.Duration(params.BeaconConfig().SecondsPerSlot/2) * time.Second)),
 			},
@@ -325,7 +325,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot == current_slot, received 200ms early",
 			args: args{
 				syncMessageSlot: 16,
-				genesisTime: prysmTime.Now().Add(
+				genesisTime: silaTime.Now().Add(
 					-16 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second,
 				).Add(-200 * time.Millisecond),
 			},
@@ -334,7 +334,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot > current_slot",
 			args: args{
 				syncMessageSlot: 16,
-				genesisTime:     prysmTime.Now().Add(-(15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second)),
+				genesisTime:     silaTime.Now().Add(-(15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second)),
 			},
 			wantedErr: "(message slot 16) not within allowable range of",
 		},
@@ -342,7 +342,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot == current_slot+CLOCK_DISPARITY",
 			args: args{
 				syncMessageSlot: 100,
-				genesisTime:     prysmTime.Now().Add(-(100*time.Duration(params.BeaconConfig().SecondsPerSlot)*time.Second - params.BeaconConfig().MaximumGossipClockDisparityDuration())),
+				genesisTime:     silaTime.Now().Add(-(100*time.Duration(params.BeaconConfig().SecondsPerSlot)*time.Second - params.BeaconConfig().MaximumGossipClockDisparityDuration())),
 			},
 			wantedErr: "",
 		},
@@ -350,7 +350,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot == current_slot+CLOCK_DISPARITY-1000ms",
 			args: args{
 				syncMessageSlot: 100,
-				genesisTime:     prysmTime.Now().Add(-(100 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second) + params.BeaconConfig().MaximumGossipClockDisparityDuration() + 1000*time.Millisecond),
+				genesisTime:     silaTime.Now().Add(-(100 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second) + params.BeaconConfig().MaximumGossipClockDisparityDuration() + 1000*time.Millisecond),
 			},
 			wantedErr: "(message slot 100) not within allowable range of",
 		},
@@ -358,7 +358,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot == current_slot-CLOCK_DISPARITY",
 			args: args{
 				syncMessageSlot: 100,
-				genesisTime:     prysmTime.Now().Add(-(100*time.Duration(params.BeaconConfig().SecondsPerSlot)*time.Second + params.BeaconConfig().MaximumGossipClockDisparityDuration())),
+				genesisTime:     silaTime.Now().Add(-(100*time.Duration(params.BeaconConfig().SecondsPerSlot)*time.Second + params.BeaconConfig().MaximumGossipClockDisparityDuration())),
 			},
 			wantedErr: "",
 		},
@@ -366,7 +366,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot > current_slot+CLOCK_DISPARITY",
 			args: args{
 				syncMessageSlot: 101,
-				genesisTime:     prysmTime.Now().Add(-(100*time.Duration(params.BeaconConfig().SecondsPerSlot)*time.Second + params.BeaconConfig().MaximumGossipClockDisparityDuration())),
+				genesisTime:     silaTime.Now().Add(-(100*time.Duration(params.BeaconConfig().SecondsPerSlot)*time.Second + params.BeaconConfig().MaximumGossipClockDisparityDuration())),
 			},
 			wantedErr: "(message slot 101) not within allowable range of",
 		},
@@ -374,7 +374,7 @@ func Test_ValidateSyncMessageTime(t *testing.T) {
 			name: "sync_message.slot is well beyond current slot",
 			args: args{
 				syncMessageSlot: 1 << 32,
-				genesisTime:     prysmTime.Now().Add(-15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
+				genesisTime:     silaTime.Now().Add(-15 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
 			},
 			wantedErr: "which exceeds max allowed value relative to the local clock",
 		},

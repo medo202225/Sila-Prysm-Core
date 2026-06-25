@@ -1,4 +1,4 @@
-// Package hashutil includes all hash-function related helpers for Prysm.
+// Package hashutil includes all hash-function related helpers for Sila.
 package hash
 
 import (
@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/minio/highwayhash"
 	"github.com/minio/sha256-simd"
 	fastssz "github.com/sila-chain/fastssz"

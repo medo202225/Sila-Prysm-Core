@@ -1,14 +1,14 @@
 package execution
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	statefeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/authorization"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	statefeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/authorization"
 	"github.com/sila-chain/Sila/common"
 )
 

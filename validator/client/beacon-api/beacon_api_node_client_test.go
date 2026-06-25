@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-api/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -249,11 +249,11 @@ func TestGetVersion(t *testing.T) {
 			name: "returns proper version response",
 			restEndpointResponse: structs.GetVersionResponse{
 				Data: &structs.Version{
-					Version: "prysm/local",
+					Version: "sila/local",
 				},
 			},
 			expectedResponse: &ethpb.Version{
-				Version: "prysm/local",
+				Version: "sila/local",
 			},
 		},
 	}

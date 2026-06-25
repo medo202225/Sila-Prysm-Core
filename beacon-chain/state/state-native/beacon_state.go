@@ -5,14 +5,14 @@ import (
 	"sync"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/fieldtrie"
-	customtypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/custom-types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/fieldtrie"
+	customtypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/custom-types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stateutil"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // BeaconState defines a struct containing utilities for the Sila Beacon Chain state, defining
@@ -20,7 +20,7 @@ import (
 //
 // Note: genesisTime is time.Time.Unix(). i.e. the number of seconds elapsed since January 1, 1970 UTC.
 // This is preferred over time.Time in the state to avoid unnecessary conversions and precision issues
-// that may break spec compliance. Other areas of Sila-Prysm should use time.Time, except when complying
+// that may break spec compliance. Other areas of Sila should use time.Time, except when complying
 // with spec.
 type BeaconState struct {
 	version                             int

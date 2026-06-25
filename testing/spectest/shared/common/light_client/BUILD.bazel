@@ -7,7 +7,7 @@ go_library(
         "single_merkle_proof.go",
         "update_ranking.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/common/light_client",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/common/light_client",
     visibility = ["//testing/spectest:__subpackages__"],
     deps = [
         "//beacon-chain/core/helpers:go_default_library",
@@ -18,7 +18,7 @@ go_library(
         "//consensus-types/interfaces:go_default_library",
         "//consensus-types/light-client:go_default_library",
         "//container/trie:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//runtime/version:go_default_library",
         "//testing/require:go_default_library",
         "//testing/spectest/utils:go_default_library",

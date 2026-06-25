@@ -3,8 +3,8 @@ package embedded_test
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/genesis/internal/embedded"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis/internal/embedded"
 )
 
 func TestGenesisState(t *testing.T) {

@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/gloas/rewards"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/gloas/rewards"
 )
 
 func TestMainnet_Gloas_Rewards(t *testing.T) {

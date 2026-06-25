@@ -1,13 +1,13 @@
 package synccommittee
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 var _ = Pool(&Store{})
 
-// Pool defines the necessary methods for Sila-Prysm sync pool to serve
+// Pool defines the necessary methods for Sila sync pool to serve
 // validators. In the current design, aggregated attestations
 // are used by proposers and sync committee messages are used by
 // sync aggregators.

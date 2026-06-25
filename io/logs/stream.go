@@ -3,9 +3,9 @@ package logs
 import (
 	"io"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	lruwrpr "github.com/sila-chain/Sila-Consensus-Core/v7/cache/lru"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	lru "github.com/hashicorp/golang-lru"
 )
 

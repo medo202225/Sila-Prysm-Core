@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/middleware"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/middleware"
 )
 
 // Option is a http rest server functional parameter type.

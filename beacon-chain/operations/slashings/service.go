@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
 // WithElectraTimer includes functional options for the blockchain service related to CLI flags.

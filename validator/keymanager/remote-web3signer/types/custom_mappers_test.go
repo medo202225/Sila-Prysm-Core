@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	"github.com/sila-chain/go-bitfield"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types/mock"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/types/mock"
 )
 
 func TestMapAggregateAndProof(t *testing.T) {

@@ -12,10 +12,10 @@ go_library(
         "beacon_validator_server_mock.go",
         "node_service_mock.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/mock",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/mock",
     visibility = ["//visibility:public"],
     deps = [
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//metadata:go_default_library",
         "@org_golang_google_protobuf//types/known/emptypb:go_default_library",

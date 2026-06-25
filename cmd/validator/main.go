@@ -11,23 +11,23 @@ import (
 	runtimeDebug "runtime/debug"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	accountcommands "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/accounts"
-	dbcommands "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	slashingprotectioncommands "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/slashing-protection"
-	walletcommands "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/wallet"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/web"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/logs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/journald"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/debug"
-	prefixed "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/logging/logrus-prefixed-formatter"
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/node"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	accountcommands "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/accounts"
+	dbcommands "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	slashingprotectioncommands "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/slashing-protection"
+	walletcommands "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/wallet"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/web"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/logs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/journald"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/debug"
+	prefixed "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/logging/logrus-prefixed-formatter"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/maxprocs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/tos"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/node"
 	joonix "github.com/joonix/log"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -239,10 +239,10 @@ func main() {
 				}
 			}
 
-			// Log Sila-Prysm version on startup. After initializing log-file and ephemeral log-file.
+			// Log Sila version on startup. After initializing log-file and ephemeral log-file.
 			log.WithFields(logrus.Fields{
 				"version": version.Version(),
-			}).Info("Sila-Prysm Validator started")
+			}).Info("Sila Validator started")
 
 			// Fix data dir for Windows users.
 			outdatedDataDir := filepath.Join(file.HomeDir(), "AppData", "Roaming", "Eth2Validators")

@@ -11,38 +11,38 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	blockchainmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	prysmtime "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/blstoexec"
-	blstoexecmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/blstoexec/mock"
-	payloadattestationmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/payloadattestation/mock"
-	slashingsmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/slashings/mock"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/synccommittee"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/voluntaryexits/mock"
-	p2pMock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
-	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
-	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	ethpbv1alpha1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	blockchainmock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	silatime "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/blstoexec"
+	blstoexecmock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/blstoexec/mock"
+	payloadattestationmock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/payloadattestation/mock"
+	slashingsmock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/slashings/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/synccommittee"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/voluntaryexits/mock"
+	p2pMock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/core"
+	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
+	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	ethpbv1alpha1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
@@ -1465,7 +1465,7 @@ func TestSubmitSignedBLSToExecutionChanges_Ok(t *testing.T) {
 
 	signedChanges := make([]*structs.SignedBLSToExecutionChange, numValidators)
 	for i, message := range blsChanges {
-		signature, err := signing.ComputeDomainAndSign(st, prysmtime.CurrentEpoch(st), message, params.BeaconConfig().DomainBLSToExecutionChange, privKeys[i])
+		signature, err := signing.ComputeDomainAndSign(st, silatime.CurrentEpoch(st), message, params.BeaconConfig().DomainBLSToExecutionChange, privKeys[i])
 		require.NoError(t, err)
 		signed := &structs.SignedBLSToExecutionChange{
 			Message:   structs.BLSChangeFromConsensus(message),
@@ -1577,7 +1577,7 @@ func TestSubmitSignedBLSToExecutionChanges_Bellatrix(t *testing.T) {
 
 	signedChanges := make([]*structs.SignedBLSToExecutionChange, numValidators)
 	for i, message := range blsChanges {
-		signature, err := signing.ComputeDomainAndSign(stc, prysmtime.CurrentEpoch(stc), message, params.BeaconConfig().DomainBLSToExecutionChange, privKeys[i])
+		signature, err := signing.ComputeDomainAndSign(stc, silatime.CurrentEpoch(stc), message, params.BeaconConfig().DomainBLSToExecutionChange, privKeys[i])
 		require.NoError(t, err)
 
 		signedChanges[i] = &structs.SignedBLSToExecutionChange{
@@ -1677,7 +1677,7 @@ func TestSubmitSignedBLSToExecutionChanges_Failures(t *testing.T) {
 
 	signedChanges := make([]*structs.SignedBLSToExecutionChange, numValidators)
 	for i, message := range blsChanges {
-		signature, err := signing.ComputeDomainAndSign(st, prysmtime.CurrentEpoch(st), message, params.BeaconConfig().DomainBLSToExecutionChange, privKeys[i])
+		signature, err := signing.ComputeDomainAndSign(st, silatime.CurrentEpoch(st), message, params.BeaconConfig().DomainBLSToExecutionChange, privKeys[i])
 		require.NoError(t, err)
 		if i == 1 {
 			signature[0] = 0x00

@@ -2,7 +2,7 @@
 package enginev1
 
 import (
-	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	ssz "github.com/sila-chain/fastssz"
 )
 
@@ -2047,7 +2047,7 @@ func (e *ExecutionPayloadGloas) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (18) 'SlotNumber'
-	e.SlotNumber = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot](buf[532:540])
+	e.SlotNumber = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot](buf[532:540])
 
 	// Field (10) 'ExtraData'
 	{
@@ -3572,7 +3572,7 @@ func (w *Withdrawal) UnmarshalSSZ(buf []byte) error {
 	w.Index = ssz.UnmarshallUint[uint64](buf[0:8])
 
 	// Field (1) 'ValidatorIndex'
-	w.ValidatorIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
+	w.ValidatorIndex = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex](buf[8:16])
 
 	// Field (2) 'Address'
 	if cap(w.Address) == 0 {

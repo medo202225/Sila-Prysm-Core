@@ -3,17 +3,17 @@ package util
 import (
 	"testing"
 
-	coreBlock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition/stateutils"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	ethpbv1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/v1"
-	ethpbalpha "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	coreBlock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition/stateutils"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	ethpbv1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/eth/v1"
+	ethpbalpha "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestGenerateFullBlock_PassesStateTransition(t *testing.T) {

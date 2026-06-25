@@ -3,17 +3,17 @@ package testing
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/builder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	v1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client/builder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 )
 

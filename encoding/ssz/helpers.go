@@ -6,7 +6,7 @@ import (
 	"encoding/binary"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/minio/sha256-simd"
 	"github.com/pkg/errors"
 )

@@ -18,31 +18,31 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	eventClient "github.com/sila-chain/Sila-Prysm-Core/v7/api/client/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
-	accountsiface "github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db"
-	dbCommon "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/graffiti"
-	validatorHelpers "github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
-	remoteweb3signer "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	eventClient "github.com/sila-chain/Sila-Consensus-Core/v7/api/client/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
+	accountsiface "github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db"
+	dbCommon "github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/graffiti"
+	validatorHelpers "github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
+	remoteweb3signer "github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer"
 	"github.com/dgraph-io/ristretto/v2"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
@@ -107,7 +107,7 @@ type validator struct {
 	validatorClient              iface.ValidatorClient
 	chainClient                  iface.ChainClient
 	nodeClient                   iface.NodeClient
-	prysmChainClient             iface.PrysmChainClient
+	silaChainClient             iface.SilaChainClient
 	db                           db.Database
 	conn                         validatorHelpers.NodeConnection
 	accountChangedSub            event.Subscription
@@ -321,7 +321,7 @@ func (v *validator) WaitForChainStart(ctx context.Context) error {
 		log.Errorf(`The genesis validators root received from the beacon node does not match what is in
 			your validator database. This could indicate that this is a database meant for another network. If
 			you were previously running this validator database on another network, please run --%s to
-			clear the database. If not, please file an issue at https://github.com/sila-chain/prysm/issues`,
+			clear the database. If not, please file an issue at https://github.com/sila-chain/sila/issues`,
 			cmd.ClearDB.Name,
 		)
 		return fmt.Errorf(

@@ -14,14 +14,14 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/wrapper"
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/metadata"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/wrapper"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/metadata"
 	"github.com/btcsuite/btcd/btcec/v2"
 	gCrypto "github.com/sila-chain/Sila/crypto"
 	"github.com/sila-chain/Sila/p2p/enode"
@@ -84,7 +84,7 @@ func privKey(cfg *Config) (*ecdsa.PrivateKey, error) {
 	// If the StaticPeerID flag is not set or the Fulu epoch is not set, return the private key.
 	// Starting at Fulu, we don't want to generate a new key every time, to avoid custody columns changes.
 	if !(cfg.StaticPeerID || params.FuluEnabled()) {
-		return ecdsaprysm.ConvertFromInterfacePrivKey(priv)
+		return ecdsasila.ConvertFromInterfacePrivKey(priv)
 	}
 
 	// Save the generated key as the default key, so that it will be used by
@@ -122,7 +122,7 @@ func privKeyFromFile(path string) (*ecdsa.PrivateKey, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ecdsaprysm.ConvertFromInterfacePrivKey(unmarshalledKey)
+	return ecdsasila.ConvertFromInterfacePrivKey(unmarshalledKey)
 }
 
 // Retrieves metadata sequence number from DB and returns a Metadata(V0) object

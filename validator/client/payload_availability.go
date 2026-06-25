@@ -3,7 +3,7 @@ package client
 import (
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
 // payloadAvailability releases per-slot waiters when an execution_payload_available

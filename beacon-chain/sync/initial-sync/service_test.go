@@ -7,32 +7,32 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/abool"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/das"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
-	dbtest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	p2ptest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	testp2p "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	prysmSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/abool"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/das"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/kv"
+	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	testp2p "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	silaSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/libp2p/go-libp2p/core/network"
@@ -889,7 +889,7 @@ func TestFetchOriginColumns(t *testing.T) {
 		// Create a block with blob commitments and sidecars
 		roBlock, _, verifiedRoSidecars := util.GenerateTestFuluBlockWithSidecars(t, blobCount)
 
-		ctxMap, err := prysmSync.ContextByteVersionsForValRoot(params.BeaconConfig().GenesisValidatorsRoot)
+		ctxMap, err := silaSync.ContextByteVersionsForValRoot(params.BeaconConfig().GenesisValidatorsRoot)
 		require.NoError(t, err)
 
 		service := &Service{
@@ -912,7 +912,7 @@ func TestFetchOriginColumns(t *testing.T) {
 			assert.DeepEqual(t, expectedRequests[attempt], actualRequest)
 
 			for _, column := range toRespondByAttempt[attempt] {
-				err = prysmSync.WriteDataColumnSidecarChunk(stream, clock, other.Encoding(), verifiedRoSidecars[column].RODataColumn)
+				err = silaSync.WriteDataColumnSidecarChunk(stream, clock, other.Encoding(), verifiedRoSidecars[column].RODataColumn)
 				assert.NoError(t, err)
 			}
 

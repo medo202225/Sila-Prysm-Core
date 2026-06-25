@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/electra/merkle_proof"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/electra/merkle_proof"
 )
 
 func TestMinimal_Electra_MerkleProof(t *testing.T) {

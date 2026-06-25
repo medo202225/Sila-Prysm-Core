@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/rpc"
 	"github.com/sirupsen/logrus"

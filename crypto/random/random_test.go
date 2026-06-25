@@ -3,8 +3,8 @@ package random
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	GoKZG "github.com/crate-crypto/go-kzg-4844"
 )
 

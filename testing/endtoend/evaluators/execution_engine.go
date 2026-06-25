@@ -6,14 +6,14 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/policies"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 )
@@ -27,7 +27,7 @@ var OptimisticSyncEnabled = types.Evaluator{
 
 func optimisticSyncEnabled(_ *types.EvaluationContext, conns ...*grpc.ClientConn) error {
 	for nodeIndex := range conns {
-		path := fmt.Sprintf("http://localhost:%d/sila/v1/beacon/blinded_blocks/head", params.TestParams.Ports.PrysmBeaconNodeHTTPPort+nodeIndex)
+		path := fmt.Sprintf("http://localhost:%d/sila/v1/beacon/blinded_blocks/head", params.TestParams.Ports.SilaBeaconNodeHTTPPort+nodeIndex)
 		resp := structs.GetBlockV2Response{}
 		httpResp, err := http.Get(path) // #nosec G107 -- path can't be constant because it depends on port param and node index
 		if err != nil {
@@ -54,7 +54,7 @@ func optimisticSyncEnabled(_ *types.EvaluationContext, conns ...*grpc.ClientConn
 			return err
 		}
 		for i := startSlot; i <= primitives.Slot(headSlot); i++ {
-			path = fmt.Sprintf("http://localhost:%d/sila/v1/beacon/blinded_blocks/%d", params.TestParams.Ports.PrysmBeaconNodeHTTPPort+nodeIndex, i)
+			path = fmt.Sprintf("http://localhost:%d/sila/v1/beacon/blinded_blocks/%d", params.TestParams.Ports.SilaBeaconNodeHTTPPort+nodeIndex, i)
 			resp = structs.GetBlockV2Response{}
 			httpResp, err = http.Get(path) // #nosec G107 -- path can't be constant because it depends on port param and node index
 			if err != nil {

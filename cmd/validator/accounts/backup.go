@@ -3,12 +3,12 @@ package accounts
 import (
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/prompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/userprompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/prompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/userprompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )

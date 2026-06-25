@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
 	"github.com/sila-chain/Sila/common/hexutil"
 )
 

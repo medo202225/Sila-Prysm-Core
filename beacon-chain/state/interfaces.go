@@ -1,5 +1,5 @@
 // Package state defines the actual beacon state interface used
-// by a Sila-Prysm beacon node, also containing useful, scoped interfaces such as
+// by a Sila beacon node, also containing useful, scoped interfaces such as
 // a ReadOnlyState and WriteOnlyBeaconState.
 package state
 
@@ -10,14 +10,14 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	customtypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/custom-types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	customtypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/custom-types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // BeaconState has read and write access to beacon state methods.

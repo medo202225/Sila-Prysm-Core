@@ -9,22 +9,22 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/shared"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/derived"
-	slashingprotection "github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/shared"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/derived"
+	slashingprotection "github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
@@ -77,7 +77,7 @@ func (s *Server) ListKeystores(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, response)
 }
 
-// ImportKeystores allows for importing keystores into Sila-Prysm with their slashing protection history.
+// ImportKeystores allows for importing keystores into Sila with their slashing protection history.
 func (s *Server) ImportKeystores(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.ImportKeystores")
 	defer span.End()
@@ -173,7 +173,7 @@ func (s *Server) ImportKeystores(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, &ImportKeystoresResponse{Data: statuses})
 }
 
-// DeleteKeystores allows for deleting specified public keys from Sila-Prysm.
+// DeleteKeystores allows for deleting specified public keys from Sila.
 func (s *Server) DeleteKeystores(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.DeleteKeystores")
 	defer span.End()

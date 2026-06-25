@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ev "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/evaluators"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/evaluators/beaconapi"
-	e2eParams "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ev "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/evaluators"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/evaluators/beaconapi"
+	e2eParams "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func e2eMinimal(t *testing.T, cfg *params.BeaconChainConfig, cfgo ...types.E2EConfigOpt) *testRunner {
@@ -83,7 +83,7 @@ func e2eMinimal(t *testing.T, cfg *params.BeaconChainConfig, cfgo ...types.E2ECo
 		TestSync:            true,
 		TestFeature:         true,
 		TestDeposits:        true,
-		UsePrysmShValidator: false,
+		UseSilaShValidator: false,
 		UsePprof:            true,
 		TracingSinkEndpoint: tracingEndpoint,
 		Evaluators:          evals,
@@ -112,7 +112,7 @@ func e2eMinimal(t *testing.T, cfg *params.BeaconChainConfig, cfgo ...types.E2ECo
 	return newTestRunner(t, testConfig)
 }
 
-func e2eMainnet(t *testing.T, usePrysmSh, useMultiClient bool, cfg *params.BeaconChainConfig, cfgo ...types.E2EConfigOpt) *testRunner {
+func e2eMainnet(t *testing.T, useSilaSh, useMultiClient bool, cfg *params.BeaconChainConfig, cfgo ...types.E2EConfigOpt) *testRunner {
 	params.SetupTestConfigCleanup(t)
 	require.NoError(t, params.SetActive(cfg))
 	if useMultiClient {
@@ -177,7 +177,7 @@ func e2eMainnet(t *testing.T, usePrysmSh, useMultiClient bool, cfg *params.Beaco
 		TestFeature:         true,
 		TestDeposits:        true,
 		UseFixedPeerIDs:     true,
-		UsePrysmShValidator: usePrysmSh,
+		UseSilaShValidator: useSilaSh,
 		UsePprof:            true,
 		TracingSinkEndpoint: tracingEndpoint,
 		Evaluators:          evals,

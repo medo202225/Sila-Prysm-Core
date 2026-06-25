@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/capella/sanity"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/capella/sanity"
 )
 
 func TestMinimal_Capella_Random(t *testing.T) {

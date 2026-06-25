@@ -68,7 +68,7 @@ go_proto_library(
     compilers = [
         "@com_github_sila_protoc_gen_go_cast//:go_cast_grpc",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/sila/v1",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1",
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -92,7 +92,7 @@ go_library(
     embed = [
         ":go_proto",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/sila/v1",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1",
     visibility = ["//visibility:public"],
     deps = SSZ_DEPS + [
         "@org_golang_google_protobuf//types/descriptorpb",

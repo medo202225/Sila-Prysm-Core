@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	structs "github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
+	structs "github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	gomock "go.uber.org/mock/gomock"
 )
 

@@ -8,7 +8,7 @@ go_library(
         "service.go",
         "simple_server.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/prometheus",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/prometheus",
     visibility = ["//visibility:public"],
     deps = [
         "//runtime:go_default_library",

@@ -3,13 +3,13 @@ package altair
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	state_native "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
 )
 
 // ConvertToAltair converts a Phase 0 beacon state to an Altair beacon state.

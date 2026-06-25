@@ -3,7 +3,7 @@ package primitives
 import (
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	fssz "github.com/sila-chain/fastssz"
 )
 

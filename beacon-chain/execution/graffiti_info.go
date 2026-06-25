@@ -4,13 +4,13 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 const (
-	// PrysmClientCode is kept as Prysm's registered two-letter client code for compatibility.
-	PrysmClientCode = "PM"
-	PrysmClientName = "Sila-Prysm"
+	// SilaClientCode is kept as Sila's registered two-letter client code for compatibility.
+	SilaClientCode = "PM"
+	SilaClientName = "Sila"
 )
 
 // GraffitiInfo holds version information for generating block graffiti.
@@ -89,19 +89,19 @@ func (g *GraffitiInfo) GenerateGraffiti(userGraffiti []byte) [32]byte {
 	switch {
 	case available >= 12:
 		// Full: user+EL(2)+commit(4)+CL(2)+commit(4)
-		graffiti = userStr + space(12) + g.elCode + elCommit4 + PrysmClientCode + clCommit4
+		graffiti = userStr + space(12) + g.elCode + elCommit4 + SilaClientCode + clCommit4
 	case available >= 8:
 		// Reduced commits: user+EL(2)+commit(2)+CL(2)+commit(2)
-		graffiti = userStr + space(8) + g.elCode + elCommit2 + PrysmClientCode + clCommit2
+		graffiti = userStr + space(8) + g.elCode + elCommit2 + SilaClientCode + clCommit2
 	case available >= 4:
 		// Codes only: user+EL(2)+CL(2)
-		graffiti = userStr + space(4) + g.elCode + PrysmClientCode
+		graffiti = userStr + space(4) + g.elCode + SilaClientCode
 	case available >= 2:
 		// Single code: user+code(2)
 		if g.elCode != "" {
 			graffiti = userStr + space(2) + g.elCode
 		} else {
-			graffiti = userStr + space(2) + PrysmClientCode
+			graffiti = userStr + space(2) + SilaClientCode
 		}
 	default:
 		// User graffiti only
@@ -122,7 +122,7 @@ func logGraffitiInfo(graffiti string, available int) {
 		log.WithField("graffiti", graffiti).Info("Graffiti includes client version info appended after user graffiti")
 		return
 	}
-	log.WithField("graffiti", graffiti).Info("Sila-Prysm adds consensus and execution debugging information to the end of the graffiti field when possible. To prevent deletion of debugging info, please consider using a shorter graffiti")
+	log.WithField("graffiti", graffiti).Info("Sila adds consensus and execution debugging information to the end of the graffiti field when possible. To prevent deletion of debugging info, please consider using a shorter graffiti")
 }
 
 // truncateCommit returns the first n characters of the commit string.

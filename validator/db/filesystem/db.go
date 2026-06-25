@@ -10,10 +10,10 @@ import (
 	"sync"
 	"time"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -128,7 +128,7 @@ func (s *Store) Backup(_ context.Context, outputDir string, permissionOverride b
 	}
 
 	// Get the path of this specific backup directory.
-	backupPath := path.Join(backupsDir, fmt.Sprintf("prysm_validatordb_%d.backup", time.Now().Unix()), DatabaseDirName)
+	backupPath := path.Join(backupsDir, fmt.Sprintf("sila_validatordb_%d.backup", time.Now().Unix()), DatabaseDirName)
 	log.WithField("backup", backupPath).Info("Writing backup database")
 
 	// Create this specific backup directory.

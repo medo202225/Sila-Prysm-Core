@@ -24,16 +24,16 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/logs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/logs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/maxprocs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	gcrypto "github.com/sila-chain/Sila/crypto"
 	gethlog "github.com/sila-chain/Sila/log"
 	"github.com/sila-chain/Sila/p2p/discover"
@@ -254,7 +254,7 @@ func extractPrivateKey() *ecdsa.PrivateKey {
 			panic(err)
 		}
 
-		privKey, err = ecdsaprysm.ConvertFromInterfacePrivKey(unmarshalledKey)
+		privKey, err = ecdsasila.ConvertFromInterfacePrivKey(unmarshalledKey)
 		if err != nil {
 			panic(err)
 		}
@@ -263,7 +263,7 @@ func extractPrivateKey() *ecdsa.PrivateKey {
 		if err != nil {
 			panic(err)
 		}
-		privKey, err = ecdsaprysm.ConvertFromInterfacePrivKey(privInterfaceKey)
+		privKey, err = ecdsasila.ConvertFromInterfacePrivKey(privInterfaceKey)
 		if err != nil {
 			panic(err)
 		}

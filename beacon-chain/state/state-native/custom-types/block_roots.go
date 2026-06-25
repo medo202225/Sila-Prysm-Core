@@ -3,7 +3,7 @@ package customtypes
 import (
 	"fmt"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	fssz "github.com/sila-chain/fastssz"
 )
 

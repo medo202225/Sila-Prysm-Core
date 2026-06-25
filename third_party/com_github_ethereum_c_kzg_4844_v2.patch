@@ -2,7 +2,7 @@ diff --git a/bindings/go/BUILD.bazel b/bindings/go/BUILD.bazel
 index 7e49df7..1d476f7 100644
 --- a/bindings/go/BUILD.bazel
 +++ b/bindings/go/BUILD.bazel
-@@ -4,10 +4,14 @@ load("@prysm//tools/go:def.bzl", "go_library")
+@@ -4,10 +4,14 @@ load("@sila//tools/go:def.bzl", "go_library")
  go_library(
      name = "go",
      srcs = ["main.go"],

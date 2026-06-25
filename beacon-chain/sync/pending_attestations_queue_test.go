@@ -9,30 +9,30 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/abool"
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	dbtest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	p2ptest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
-	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/attestation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/abool"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
+	lruwrpr "github.com/sila-chain/Sila-Consensus-Core/v7/cache/lru"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila/p2p/enr"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	pubsubpb "github.com/libp2p/go-libp2p-pubsub/pb"
@@ -66,7 +66,7 @@ func TestProcessPendingAtts_NoBlockRequestBlock(t *testing.T) {
 
 	// Setup chain service with only block 'A' in forkchoice
 	chain := &mock.ChainService{
-		Genesis:             prysmTime.Now(),
+		Genesis:             silaTime.Now(),
 		FinalizedCheckPoint: &ethpb.Checkpoint{},
 		ForkchoiceRoots:     map[[32]byte]bool{rootA: true},
 	}
@@ -452,7 +452,7 @@ func TestProcessPendingAtts_NoBroadcastWithBadSignature(t *testing.T) {
 
 	chain := &mock.ChainService{
 		State:   st,
-		Genesis: prysmTime.Now(),
+		Genesis: silaTime.Now(),
 		DB:      db,
 		FinalizedCheckPoint: &ethpb.Checkpoint{
 			Root:  r32[:],

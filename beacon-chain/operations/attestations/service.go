@@ -8,10 +8,10 @@ import (
 	"errors"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	lruwrpr "github.com/sila-chain/Sila-Prysm-Core/v7/cache/lru"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	lruwrpr "github.com/sila-chain/Sila-Consensus-Core/v7/cache/lru"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	lru "github.com/hashicorp/golang-lru"
 )
 

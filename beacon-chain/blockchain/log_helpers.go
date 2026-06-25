@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/logs"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/logs"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -107,7 +107,7 @@ func logBlockSyncStatus(block interfaces.ReadOnlyBeaconBlock, blockRoot [32]byte
 	parentRoot := block.ParentRoot()
 	blkRoot := fmt.Sprintf("0x%s...", hex.EncodeToString(blockRoot[:])[:8])
 	finalizedRoot := fmt.Sprintf("0x%s...", hex.EncodeToString(finalized.Root)[:8])
-	sinceSlotStartTime := prysmTime.Now().Sub(startTime)
+	sinceSlotStartTime := silaTime.Now().Sub(startTime)
 
 	lessFields := logrus.Fields{
 		"slot":               block.Slot(),
@@ -129,7 +129,7 @@ func logBlockSyncStatus(block interfaces.ReadOnlyBeaconBlock, blockRoot [32]byte
 		"parentRoot":                fmt.Sprintf("0x%s...", hex.EncodeToString(parentRoot[:])[:8]),
 		"version":                   version.String(block.Version()),
 		"sinceSlotStartTime":        sinceSlotStartTime,
-		"chainServiceProcessedTime": prysmTime.Now().Sub(receivedTime) - daWaitedTime,
+		"chainServiceProcessedTime": silaTime.Now().Sub(receivedTime) - daWaitedTime,
 	}
 	if block.Version() < version.Gloas {
 		moreFields["dataAvailabilityWaitedTime"] = daWaitedTime

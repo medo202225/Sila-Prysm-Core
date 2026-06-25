@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 )
 
 // A basic tool to extract genesis.ssz from existing beaconchain.db.

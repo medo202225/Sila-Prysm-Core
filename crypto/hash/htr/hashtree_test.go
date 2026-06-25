@@ -4,8 +4,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func Test_VectorizedSha256(t *testing.T) {

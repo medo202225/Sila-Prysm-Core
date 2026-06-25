@@ -3,9 +3,9 @@ package jwt
 import (
 	"path/filepath"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/urfave/cli/v2"
 )
 

@@ -8,16 +8,16 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/prompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
-	accountsprompt "github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/userprompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/derived"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
-	remoteweb3signer "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/prompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/iface"
+	accountsprompt "github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/userprompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/derived"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
+	remoteweb3signer "github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -33,7 +33,7 @@ const (
 	// ConfirmPasswordPromptText for confirming a wallet password.
 	ConfirmPasswordPromptText = "Confirm password"
 	// DefaultWalletPasswordFile used to store a wallet password with appropriate permissions
-	// if a user signs up via the Prysm web UI via RPC.
+	// if a user signs up via the Sila web UI via RPC.
 	DefaultWalletPasswordFile = "walletpassword.txt"
 	// CheckExistsErrMsg for when there is an error while checking for a wallet
 	CheckExistsErrMsg = "could not check if wallet exists"
@@ -72,7 +72,7 @@ type Config struct {
 	WalletPassword string
 }
 
-// Wallet is a primitive in Sila-Prysm's account management which
+// Wallet is a primitive in Sila's account management which
 // has the capability of creating new accounts, reading existing accounts,
 // and providing secure access to Sila proof of stake secrets depending on an
 // associated keymanager (either imported, derived, or remote signing enabled).

@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	octrace "go.opentelemetry.io/otel/trace"
 )

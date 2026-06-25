@@ -1,20 +1,20 @@
 package validator
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/builder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/payloadattestation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/synccommittee"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/rewards"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/builder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/payloadattestation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/synccommittee"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/core"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/rewards"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/lookup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // Server defines a server implementation of the gRPC Validator service,

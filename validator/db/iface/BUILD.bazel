@@ -3,7 +3,7 @@ load("@sila//tools/go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["interface.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface",
     visibility = [
         "//cmd/validator/slashing-protection:__subpackages__",
         "//config:__subpackages__",
@@ -15,7 +15,7 @@ go_library(
         "//consensus-types/interfaces:go_default_library",
         "//consensus-types/primitives:go_default_library",
         "//monitoring/backup:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//validator/db/common:go_default_library",
         "@com_github_prometheus_client_golang//prometheus:go_default_library",
     ],

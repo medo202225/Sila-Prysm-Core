@@ -5,13 +5,13 @@ load("@io_bazel_rules_go//go:def.bzl", "nogo")
 load("@bazel_skylib//rules:common_settings.bzl", "string_setting")
 load("@sila//tools/nogo_config:def.bzl", "nogo_config_exclude")
 
-prefix = "github.com/sila-chain/Sila-Prysm-Core"
+prefix = "github.com/sila-chain/Sila-Consensus-Core"
 
 exports_files([
     "LICENSE.md",
 ])
 
-# gazelle:prefix github.com/sila-chain/Sila-Prysm-Core/v7
+# gazelle:prefix github.com/sila-chain/Sila-Consensus-Core/v7
 # gazelle:map_kind go_library go_library @sila//tools/go:def.bzl
 # gazelle:map_kind go_test go_test @sila//tools/go:def.bzl
 # gazelle:map_kind go_repository go_repository @sila//tools/go:def.bzl

@@ -3,7 +3,7 @@ package sync
 import (
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
 

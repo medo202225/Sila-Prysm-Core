@@ -4,11 +4,11 @@ import (
 	"path"
 	"testing"
 
-	kzgPrysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	kzgSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/ghodss/yaml"
 )
@@ -22,7 +22,7 @@ func TestComputeCellsAndKzgProofs(t *testing.T) {
 		Input  input      `json:"input"`
 		Output [][]string `json:"output"`
 	}
-	require.NoError(t, kzgPrysm.Start())
+	require.NoError(t, kzgSila.Start())
 	testFolders, testFolderPath := utils.TestFolders(t, "general", "fulu", "kzg/compute_cells_and_kzg_proofs/kzg-mainnet")
 	if len(testFolders) == 0 {
 		t.Fatalf("No test folders found for %s/%s/%s", "general", "fulu", "kzg/compute_cells_and_kzg_proofs/kzg-mainnet")
@@ -40,9 +40,9 @@ func TestComputeCellsAndKzgProofs(t *testing.T) {
 				require.IsNil(t, test.Output)
 				return
 			}
-			b := kzgPrysm.Blob(blob)
+			b := kzgSila.Blob(blob)
 
-			cells, proofs, err := kzgPrysm.ComputeCellsAndKZGProofs(&b)
+			cells, proofs, err := kzgSila.ComputeCellsAndKZGProofs(&b)
 			if test.Output != nil {
 				require.NoError(t, err)
 				var combined [][]string

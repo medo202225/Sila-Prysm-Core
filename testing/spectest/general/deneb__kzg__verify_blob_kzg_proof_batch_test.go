@@ -5,12 +5,12 @@ import (
 	"path"
 	"testing"
 
-	kzgPrysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	kzgSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/ghodss/yaml"
 )
 
@@ -26,7 +26,7 @@ type KZGTestData struct {
 }
 
 func TestVerifyBlobKZGProofBatch(t *testing.T) {
-	require.NoError(t, kzgPrysm.Start())
+	require.NoError(t, kzgSila.Start())
 	testFolders, testFolderPath := utils.TestFolders(t, "general", "deneb", "kzg/verify_blob_kzg_proof_batch/kzg-mainnet")
 	if len(testFolders) == 0 {
 		t.Fatalf("No test folders found for %s/%s/%s", "general", "deneb", "kzg/verify_blob_kzg_proof_batch/kzg-mainnet")
@@ -68,9 +68,9 @@ func TestVerifyBlobKZGProofBatch(t *testing.T) {
 				sidecars = append(sidecars, sc)
 			}
 			if test.Output {
-				require.NoError(t, kzgPrysm.Verify(sidecars...))
+				require.NoError(t, kzgSila.Verify(sidecars...))
 			} else {
-				require.NotNil(t, kzgPrysm.Verify(sidecars...))
+				require.NotNil(t, kzgSila.Verify(sidecars...))
 			}
 		})
 	}

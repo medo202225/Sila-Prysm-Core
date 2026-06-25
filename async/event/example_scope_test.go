@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
 )
 
 // This example demonstrates how SubscriptionScope can be used to control the lifetime of

@@ -16,7 +16,7 @@ go_library(
         "voluntary_exit.go",
         "withdrawals.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/deneb/operations",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/deneb/operations",
     visibility = ["//testing/spectest:__subpackages__"],
     deps = [
         "//beacon-chain/core/altair:go_default_library",
@@ -25,7 +25,7 @@ go_library(
         "//consensus-types/blocks:go_default_library",
         "//consensus-types/interfaces:go_default_library",
         "//proto/engine/v1:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//runtime/version:go_default_library",
         "//testing/spectest/shared/common/operations:go_default_library",
         "//testing/util:go_default_library",

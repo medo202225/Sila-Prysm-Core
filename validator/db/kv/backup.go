@@ -6,16 +6,16 @@ import (
 	"path"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	bolt "go.etcd.io/bbolt"
 )
 
 const backupsDirectoryName = "backups"
 
 // Backup the database to the datadir backup directory.
-// Example for backup: $DATADIR/backups/prysm_validatordb_1029019.backup
+// Example for backup: $DATADIR/backups/sila_validatordb_1029019.backup
 func (s *Store) Backup(ctx context.Context, outputDir string, permissionOverride bool) error {
 	_, span := trace.StartSpan(ctx, "ValidatorDB.Backup")
 	defer span.End()
@@ -34,7 +34,7 @@ func (s *Store) Backup(ctx context.Context, outputDir string, permissionOverride
 	if err := file.HandleBackupDir(backupsDir, permissionOverride); err != nil {
 		return err
 	}
-	backupPath := path.Join(backupsDir, fmt.Sprintf("prysm_validatordb_%d.backup", time.Now().Unix()))
+	backupPath := path.Join(backupsDir, fmt.Sprintf("sila_validatordb_%d.backup", time.Now().Unix()))
 	log.WithField("backup", backupPath).Info("Writing backup database")
 
 	copyDB, err := bolt.Open(

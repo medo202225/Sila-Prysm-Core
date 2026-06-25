@@ -7,14 +7,14 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 )
 
 var (
-	errEmptyPrysmData      = errors.New("Prysm data is empty")
+	errEmptySilaData      = errors.New("Sila data is empty")
 	errEmptyLighthouseData = errors.New("Lighthouse data is empty")
 )
 
@@ -27,13 +27,13 @@ const (
 
 func doJSONGETRequest(template, requestPath string, beaconNodeIdx int, resp any, bnType ...string) error {
 	if len(bnType) == 0 {
-		bnType = []string{"Prysm"}
+		bnType = []string{"Sila"}
 	}
 
 	var port int
 	switch bnType[0] {
-	case "Prysm":
-		port = params.TestParams.Ports.PrysmBeaconNodeHTTPPort
+	case "Sila":
+		port = params.TestParams.Ports.SilaBeaconNodeHTTPPort
 	case "Lighthouse":
 		port = params.TestParams.Ports.LighthouseBeaconNodeHTTPPort
 	default:
@@ -70,13 +70,13 @@ func doJSONGETRequest(template, requestPath string, beaconNodeIdx int, resp any,
 
 func doSSZGETRequest(template, requestPath string, beaconNodeIdx int, bnType ...string) ([]byte, error) {
 	if len(bnType) == 0 {
-		bnType = []string{"Prysm"}
+		bnType = []string{"Sila"}
 	}
 
 	var port int
 	switch bnType[0] {
-	case "Prysm":
-		port = params.TestParams.Ports.PrysmBeaconNodeHTTPPort
+	case "Sila":
+		port = params.TestParams.Ports.SilaBeaconNodeHTTPPort
 	case "Lighthouse":
 		port = params.TestParams.Ports.LighthouseBeaconNodeHTTPPort
 	default:
@@ -112,13 +112,13 @@ func doSSZGETRequest(template, requestPath string, beaconNodeIdx int, bnType ...
 
 func doJSONPOSTRequest(template, requestPath string, beaconNodeIdx int, postObj, resp any, bnType ...string) error {
 	if len(bnType) == 0 {
-		bnType = []string{"Prysm"}
+		bnType = []string{"Sila"}
 	}
 
 	var port int
 	switch bnType[0] {
-	case "Prysm":
-		port = params.TestParams.Ports.PrysmBeaconNodeHTTPPort
+	case "Sila":
+		port = params.TestParams.Ports.SilaBeaconNodeHTTPPort
 	case "Lighthouse":
 		port = params.TestParams.Ports.LighthouseBeaconNodeHTTPPort
 	default:
@@ -163,13 +163,13 @@ func doJSONPOSTRequest(template, requestPath string, beaconNodeIdx int, postObj,
 
 func doSSZPOSTRequest(template, requestPath string, beaconNodeIdx int, postObj any, bnType ...string) ([]byte, error) {
 	if len(bnType) == 0 {
-		bnType = []string{"Prysm"}
+		bnType = []string{"Sila"}
 	}
 
 	var port int
 	switch bnType[0] {
-	case "Prysm":
-		port = params.TestParams.Ports.PrysmBeaconNodeHTTPPort
+	case "Sila":
+		port = params.TestParams.Ports.SilaBeaconNodeHTTPPort
 	case "Lighthouse":
 		port = params.TestParams.Ports.LighthouseBeaconNodeHTTPPort
 	default:

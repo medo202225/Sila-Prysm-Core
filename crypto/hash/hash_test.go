@@ -4,13 +4,13 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	fuzz "github.com/google/gofuzz"
 )
 

@@ -6,12 +6,12 @@ import (
 	"sort"
 	"strings"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/progress"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/progress"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
 	"github.com/pkg/errors"
 )
 
@@ -141,12 +141,12 @@ func signedAttestationsByPubKey(ctx context.Context, validatorDB db.Database, pu
 	signedAttestations := make([]*format.SignedAttestation, 0)
 	for i := range history {
 		att := history[i]
-		// Special edge case due to a bug in Prysm's old slashing protection schema. The bug
+		// Special edge case due to a bug in Sila's old slashing protection schema. The bug
 		// manifests itself as the first entry in attester slashing protection history
 		// having a target epoch greater than the next entry in the list. If this manifests,
 		// we skip it to protect users. This check is the best trade-off we can make at
 		// the moment without creating any false positive slashable attestation exports.
-		// More information on the bug can found in https://github.com/sila-chain/prysm/issues/8893.
+		// More information on the bug can found in https://github.com/sila-chain/sila/issues/8893.
 		if i == 0 && len(history) > 1 {
 			nextEntryTargetEpoch := history[1].Target
 			if att.Target > nextEntryTargetEpoch && att.Source == 0 {

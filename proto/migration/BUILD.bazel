@@ -6,11 +6,11 @@ go_library(
         "enums.go",
         "v1alpha1_to_v1.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/migration",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/migration",
     visibility = ["//visibility:public"],
     deps = [
         "//proto/eth/v1:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
@@ -25,7 +25,7 @@ go_test(
     deps = [
         "//consensus-types/primitives:go_default_library",
         "//proto/eth/v1:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
     ],

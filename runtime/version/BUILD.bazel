@@ -7,7 +7,7 @@ go_library(
         "metrics.go",
         "version.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version",
     visibility = ["//visibility:public"],
     x_defs = {
         "gitCommit": "{STABLE_GIT_COMMIT}",

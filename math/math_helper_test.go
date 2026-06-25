@@ -5,8 +5,8 @@ import (
 	stdmath "math"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestIntegerSquareRoot(t *testing.T) {

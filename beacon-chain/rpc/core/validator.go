@@ -8,28 +8,28 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/altair"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch/precompute"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed"
-	opfeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	coreTime "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
-	forkchoicetypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/types"
-	beaconState "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/epoch/precompute"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
+	opfeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/operation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	coreTime "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
+	forkchoicetypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/types"
+	beaconState "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -725,7 +725,7 @@ func registerSyncSubnetInternal(
 	currPeriod := slots.SyncCommitteePeriod(currEpoch)
 	endEpoch := startEpoch + params.BeaconConfig().EpochsPerSyncCommitteePeriod
 	_, _, ok, expTime := cache.SyncSubnetIDs.GetSyncCommitteeSubnets(pubkey, startEpoch)
-	if ok && expTime.After(prysmTime.Now()) {
+	if ok && expTime.After(silaTime.Now()) {
 		return
 	}
 	firstValidEpoch, err := startEpoch.SafeSub(params.BeaconConfig().SyncCommitteeSubnetCount)
@@ -972,7 +972,7 @@ func (s *Service) PayloadAttestationData(
 		// Before the deadline only the final result is safe to return: the payload
 		// arrived timely and the data is available. Otherwise both flags may still
 		// flip, so wait for the deadline.
-		if prysmTime.Now().Before(deadline) && !(data.PayloadPresent && data.BlobDataAvailable) {
+		if silaTime.Now().Before(deadline) && !(data.PayloadPresent && data.BlobDataAvailable) {
 			return &RpcError{Reason: Unavailable, Err: fmt.Errorf("payload attestation data not yet final for slot %d", slot)}, nil
 		}
 		s.payloadAttestationData.Store(data)

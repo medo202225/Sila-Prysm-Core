@@ -14,21 +14,21 @@ import (
 	"sync"
 	"time"
 
-	builderAPI "github.com/sila-chain/Sila-Prysm-Core/v7/api/client/builder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/signing"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/authorization"
-	v1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	builderAPI "github.com/sila-chain/Sila-Consensus-Core/v7/api/client/builder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/authorization"
+	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila/beacon/engine"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
@@ -989,7 +989,7 @@ func executableDataToBlock(params engine.ExecutableData, prevBeaconRoot []byte, 
 		GasUsed:         params.GasUsed,
 		Time:            params.Timestamp,
 		BaseFee:         params.BaseFeePerGas,
-		Extra:           []byte("prysm-builder"), // add in extra data
+		Extra:           []byte("sila-builder"), // add in extra data
 		MixDigest:       params.Random,
 		WithdrawalsHash: withdrawalsRoot,
 		BlobGasUsed:     params.BlobGasUsed,

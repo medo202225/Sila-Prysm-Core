@@ -3,25 +3,25 @@ package rpc
 import (
 	"net/http"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/middleware"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/beacon"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/blob"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/config"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/debug"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/events"
-	lightclient "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/light-client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/node"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/rewards"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/validator"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
-	beaconprysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/prysm/beacon"
-	nodeprysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/prysm/node"
-	validatorv1alpha1 "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/prysm/v1alpha1/validator"
-	validatorprysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/prysm/validator"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/middleware"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/core"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/beacon"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/blob"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/config"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/debug"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/events"
+	lightclient "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/light-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/node"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/rewards"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/validator"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/lookup"
+	beaconsila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/beacon"
+	nodesila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/node"
+	validatorv1alpha1 "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/v1alpha1/validator"
+	validatorsila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/validator"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -95,9 +95,9 @@ func (s *Service) endpoints(
 	endpoints = append(endpoints, s.beaconEndpoints(ch, stater, blocker, validatorServer, coreService)...)
 	endpoints = append(endpoints, s.configEndpoints()...)
 	endpoints = append(endpoints, s.eventsEndpoints()...)
-	endpoints = append(endpoints, s.prysmBeaconEndpoints(ch, stater, blocker, coreService)...)
-	endpoints = append(endpoints, s.prysmNodeEndpoints()...)
-	endpoints = append(endpoints, s.prysmValidatorEndpoints(stater, coreService)...)
+	endpoints = append(endpoints, s.silaBeaconEndpoints(ch, stater, blocker, coreService)...)
+	endpoints = append(endpoints, s.silaNodeEndpoints()...)
+	endpoints = append(endpoints, s.silaValidatorEndpoints(stater, coreService)...)
 
 	if features.Get().EnableLightClient {
 		endpoints = append(endpoints, s.lightClientEndpoints()...)
@@ -1193,14 +1193,14 @@ func (s *Service) eventsEndpoints() []endpoint {
 	}
 }
 
-// Prysm custom endpoints
-func (s *Service) prysmBeaconEndpoints(
+// Sila custom endpoints
+func (s *Service) silaBeaconEndpoints(
 	ch *stategen.CanonicalHistory,
 	stater lookup.Stater,
 	blocker lookup.Blocker,
 	coreService *core.Service,
 ) []endpoint {
-	server := &beaconprysm.Server{
+	server := &beaconsila.Server{
 		SyncChecker:           s.cfg.SyncService,
 		HeadFetcher:           s.cfg.HeadFetcher,
 		TimeFetcher:           s.cfg.GenesisTimeFetcher,
@@ -1216,10 +1216,10 @@ func (s *Service) prysmBeaconEndpoints(
 		BlobReceiver:          s.cfg.BlobReceiver,
 	}
 
-	const namespace = "prysm.beacon"
+	const namespace = "sila.beacon"
 	return []endpoint{
 		{
-			template: "/prysm/v1/beacon/weak_subjectivity",
+			template: "/sila/v1/beacon/weak_subjectivity",
 			name:     namespace + ".GetWeakSubjectivity",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1239,7 +1239,7 @@ func (s *Service) prysmBeaconEndpoints(
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/prysm/v1/beacon/states/{state_id}/validator_count",
+			template: "/sila/v1/beacon/states/{state_id}/validator_count",
 			name:     namespace + ".GetValidatorCount",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1249,7 +1249,7 @@ func (s *Service) prysmBeaconEndpoints(
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/prysm/v1/beacon/individual_votes",
+			template: "/sila/v1/beacon/individual_votes",
 			name:     namespace + ".GetIndividualVotes",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1260,7 +1260,7 @@ func (s *Service) prysmBeaconEndpoints(
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/v1/beacon/chain_head",
+			template: "/sila/v1/beacon/chain_head",
 			name:     namespace + ".GetChainHead",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1271,7 +1271,7 @@ func (s *Service) prysmBeaconEndpoints(
 		},
 		{
 			// Warning: no longer supported post Fulu fork
-			template: "/prysm/v1/beacon/blobs",
+			template: "/sila/v1/beacon/blobs",
 			name:     namespace + ".PublishBlobs",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1282,7 +1282,7 @@ func (s *Service) prysmBeaconEndpoints(
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/v1/beacon/states/{state_id}/query",
+			template: "/sila/v1/beacon/states/{state_id}/query",
 			name:     namespace + ".QueryBeaconState",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1293,7 +1293,7 @@ func (s *Service) prysmBeaconEndpoints(
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/v1/beacon/blocks/{block_id}/query",
+			template: "/sila/v1/beacon/blocks/{block_id}/query",
 			name:     namespace + ".QueryBeaconBlock",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1306,8 +1306,8 @@ func (s *Service) prysmBeaconEndpoints(
 	}
 }
 
-func (s *Service) prysmNodeEndpoints() []endpoint {
-	server := &nodeprysm.Server{
+func (s *Service) silaNodeEndpoints() []endpoint {
+	server := &nodesila.Server{
 		BeaconDB:                  s.cfg.BeaconDB,
 		SyncChecker:               s.cfg.SyncService,
 		OptimisticModeFetcher:     s.cfg.OptimisticModeFetcher,
@@ -1319,10 +1319,10 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 		ExecutionChainInfoFetcher: s.cfg.ExecutionChainInfoFetcher,
 	}
 
-	const namespace = "prysm.node"
+	const namespace = "sila.node"
 	return []endpoint{
 		{
-			template: "/prysm/node/trusted_peers",
+			template: "/sila/node/trusted_peers",
 			name:     namespace + ".ListTrustedPeer",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1332,7 +1332,7 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/prysm/v1/node/trusted_peers",
+			template: "/sila/v1/node/trusted_peers",
 			name:     namespace + ".ListTrustedPeer",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1342,7 +1342,7 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/prysm/node/trusted_peers",
+			template: "/sila/node/trusted_peers",
 			name:     namespace + ".AddTrustedPeer",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1353,7 +1353,7 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/v1/node/trusted_peers",
+			template: "/sila/v1/node/trusted_peers",
 			name:     namespace + ".AddTrustedPeer",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1364,7 +1364,7 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/node/trusted_peers/{peer_id}",
+			template: "/sila/node/trusted_peers/{peer_id}",
 			name:     namespace + ".RemoveTrustedPeer",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1374,7 +1374,7 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 			methods: []string{http.MethodDelete},
 		},
 		{
-			template: "/prysm/v1/node/trusted_peers/{peer_id}",
+			template: "/sila/v1/node/trusted_peers/{peer_id}",
 			name:     namespace + ".RemoveTrustedPeer",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1386,17 +1386,17 @@ func (s *Service) prysmNodeEndpoints() []endpoint {
 	}
 }
 
-func (s *Service) prysmValidatorEndpoints(stater lookup.Stater, coreService *core.Service) []endpoint {
-	server := &validatorprysm.Server{
+func (s *Service) silaValidatorEndpoints(stater lookup.Stater, coreService *core.Service) []endpoint {
+	server := &validatorsila.Server{
 		ChainInfoFetcher: s.cfg.ChainInfoFetcher,
 		Stater:           stater,
 		CoreService:      coreService,
 	}
 
-	const namespace = "prysm.validator"
+	const namespace = "sila.validator"
 	return []endpoint{
 		{
-			template: "/prysm/validators/performance",
+			template: "/sila/validators/performance",
 			name:     namespace + ".GetPerformance",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1407,7 +1407,7 @@ func (s *Service) prysmValidatorEndpoints(stater lookup.Stater, coreService *cor
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/v1/validators/performance",
+			template: "/sila/v1/validators/performance",
 			name:     namespace + ".GetPerformance",
 			middleware: []middleware.Middleware{
 				middleware.ContentTypeHandler([]string{api.JsonMediaType}),
@@ -1418,7 +1418,7 @@ func (s *Service) prysmValidatorEndpoints(stater lookup.Stater, coreService *cor
 			methods: []string{http.MethodPost},
 		},
 		{
-			template: "/prysm/v1/validators/{state_id}/participation",
+			template: "/sila/v1/validators/{state_id}/participation",
 			name:     namespace + ".GetParticipation",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),
@@ -1428,7 +1428,7 @@ func (s *Service) prysmValidatorEndpoints(stater lookup.Stater, coreService *cor
 			methods: []string{http.MethodGet},
 		},
 		{
-			template: "/prysm/v1/validators/{state_id}/active_set_changes",
+			template: "/sila/v1/validators/{state_id}/active_set_changes",
 			name:     namespace + ".GetActiveSetChanges",
 			middleware: []middleware.Middleware{
 				middleware.AcceptHeaderHandler([]string{api.JsonMediaType}),

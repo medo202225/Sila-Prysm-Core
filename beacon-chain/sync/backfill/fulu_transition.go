@@ -3,9 +3,9 @@ package backfill
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/das"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/das"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/pkg/errors"
 )
 

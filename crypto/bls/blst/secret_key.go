@@ -6,9 +6,9 @@ import (
 	"crypto/subtle"
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	blst "github.com/supranational/blst/bindings/go"
 )
 

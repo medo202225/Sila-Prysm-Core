@@ -6,16 +6,16 @@ import (
 	"errors"
 	"time"
 
-	api "github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/event"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	api "github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client/event"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -134,9 +134,9 @@ func (fv *FakeValidator) SlasherReady(_ context.Context) error {
 func (fv *FakeValidator) SlotDeadline(_ primitives.Slot) time.Time {
 	fv.SlotDeadlineCalled = true
 	if fv.IsRegularDeadline {
-		return prysmTime.Now().Add(time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second)
+		return silaTime.Now().Add(time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second)
 	}
-	return prysmTime.Now()
+	return silaTime.Now()
 }
 
 // NextSlot for mocking.

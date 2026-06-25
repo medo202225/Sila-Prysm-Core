@@ -4,13 +4,13 @@ import (
 	"context"
 	"time"
 
-	forkchoicetypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	consensus_blocks "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	forkchoice2 "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/forkchoice"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	forkchoicetypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	consensus_blocks "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	forkchoice2 "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/forkchoice"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
 // BalancesByRooter is a handler to obtain the effective balances of the state

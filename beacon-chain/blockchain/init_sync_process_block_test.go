@@ -3,10 +3,10 @@ package blockchain
 import (
 	"testing"
 
-	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
 func TestService_getBlock(t *testing.T) {

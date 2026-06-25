@@ -3,10 +3,10 @@ package altair
 import (
 	"context"
 
-	e "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch/precompute"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	e "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/epoch"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/epoch/precompute"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/pkg/errors"
 )
 

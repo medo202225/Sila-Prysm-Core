@@ -9,20 +9,20 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
-	prysmP2P "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	p2ptypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	leakybucket "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
+	silaP2P "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	p2ptypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	goPeer "github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -35,7 +35,7 @@ var ErrSidecarHeaderMismatch = errors.New("data column sidecar signed block head
 type DataColumnSidecarsParams struct {
 	Ctx                     context.Context                     // Context
 	Tor                     blockchain.TemporalOracle           // Temporal oracle, useful to get the current slot
-	P2P                     prysmP2P.P2P                        // P2P network interface
+	P2P                     silaP2P.P2P                        // P2P network interface
 	RateLimiter             *leakybucket.Collector              // Rate limiter for outgoing requests
 	CtxMap                  ContextByteVersions                 // Context map, useful to know if a message is mapped to the correct fork
 	Storage                 filesystem.DataColumnStorageReader  // Data columns storage
@@ -963,7 +963,7 @@ func buildByRootRequest(indicesByRoot map[[fieldparams.RootLength]byte]map[uint6
 // If at least one sidecar from a peer is invalid, the peer is downscored and
 // all its sidecars are rejected. (Sidecars from other peers are still accepted.)
 func verifyDataColumnSidecarsByPeer(
-	p2p prysmP2P.P2P,
+	p2p silaP2P.P2P,
 	newVerifier verification.NewDataColumnsVerifier,
 	blockByRoot map[[fieldparams.RootLength]byte]blocks.ROBlock,
 	roDataColumnsByPeer map[goPeer.ID][]blocks.RODataColumn,
@@ -1065,7 +1065,7 @@ func setBidCommitments(commitmentsByRoot map[[fieldparams.RootLength]byte][][]by
 // root and indices given in `indicesByBlockRoot`. It also only selects peers
 // for a given root only if its head state is higher than the block slot.
 func computeIndicesByRootByPeer(
-	p2p prysmP2P.P2P,
+	p2p silaP2P.P2P,
 	slotByBlockRoot map[[fieldparams.RootLength]byte]primitives.Slot,
 	indicesByBlockRoot map[[fieldparams.RootLength]byte]map[uint64]bool,
 	peers map[goPeer.ID]bool,
@@ -1079,7 +1079,7 @@ func computeIndicesByRootByPeer(
 		log := log.WithField("peerID", peer)
 
 		// Computes the custody columns for each peer
-		nodeID, err := prysmP2P.ConvertPeerIDToNodeID(peer)
+		nodeID, err := silaP2P.ConvertPeerIDToNodeID(peer)
 		if err != nil {
 			log.WithError(err).Debug("Failed to convert peer ID to node ID")
 			continue

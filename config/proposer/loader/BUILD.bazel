@@ -30,7 +30,7 @@ go_library(
         "loader.go",
         "log.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer/loader",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer/loader",
     visibility = ["//visibility:public"],
     deps = [
         "//cmd/validator/flags:go_default_library",
@@ -38,7 +38,7 @@ go_library(
         "//config/params:go_default_library",
         "//config/proposer:go_default_library",
         "//consensus-types/validator:go_default_library",
-        "//proto/prysm/v1alpha1/validator-client:go_default_library",
+        "//proto/sila/v1alpha1/validator-client:go_default_library",
         "//validator/db/iface:go_default_library",
         "@com_github_sila_chain_sila//common:go_default_library",
         "@com_github_pkg_errors//:go_default_library",

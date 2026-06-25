@@ -5,15 +5,15 @@ import (
 	"io"
 	"sort"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	das "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/das/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/genesis"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/storage"
-	backfill "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/backfill/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/checkpoint"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/debug"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	das "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/das/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/genesis"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/storage"
+	backfill "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/sync/backfill/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/sync/checkpoint"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/debug"
 	"github.com/urfave/cli/v2"
 )
 
@@ -194,7 +194,7 @@ var appHelpFlagGroups = []flagGroup{
 		},
 	},
 	{
-		// Flags in the "log" section control how Sila-Prysm handles logging.
+		// Flags in the "log" section control how Sila handles logging.
 		Name: "log",
 		Flags: []cli.Flag{
 			cmd.DisableLogColor,
@@ -222,7 +222,7 @@ var appHelpFlagGroups = []flagGroup{
 		Name:  "deprecated",
 		Flags: []cli.Flag{},
 	},
-	{ // Flags used in debugging Sila-Prysm. These are flags not usually run by end users.
+	{ // Flags used in debugging Sila. These are flags not usually run by end users.
 		Name: "debug",
 		Flags: []cli.Flag{
 			cmd.MaxGoroutines,

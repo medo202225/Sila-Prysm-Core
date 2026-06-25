@@ -8,10 +8,10 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/apiutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/rest"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/apiutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/rest"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/pkg/errors"
 )
 

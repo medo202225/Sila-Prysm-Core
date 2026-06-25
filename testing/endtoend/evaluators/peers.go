@@ -3,9 +3,9 @@ package evaluators
 import (
 	"context"
 
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/policies"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"

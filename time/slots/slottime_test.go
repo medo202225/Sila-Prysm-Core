@@ -7,12 +7,12 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 )
 
 func TestAbsoluteValueSlotDifference(t *testing.T) {
@@ -304,14 +304,14 @@ func TestVerifySlotTime(t *testing.T) {
 		{
 			name: "Past slot",
 			args: args{
-				genesisTime: prysmTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
+				genesisTime: silaTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
 				slot:        3,
 			},
 		},
 		{
 			name: "within tolerance",
 			args: args{
-				genesisTime:   prysmTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second).Add(20 * time.Millisecond),
+				genesisTime:   silaTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second).Add(20 * time.Millisecond),
 				slot:          5,
 				timeTolerance: 20 * time.Millisecond,
 			},
@@ -319,7 +319,7 @@ func TestVerifySlotTime(t *testing.T) {
 		{
 			name: "future slot",
 			args: args{
-				genesisTime: prysmTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
+				genesisTime: silaTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
 				slot:        6,
 			},
 			wantedErr: "could not process slot from the future",
@@ -327,7 +327,7 @@ func TestVerifySlotTime(t *testing.T) {
 		{
 			name: "future slot but ok given 2s tolerance",
 			args: args{
-				genesisTime:   prysmTime.Now().Add(-1*time.Duration(params.BeaconConfig().SecondsPerSlot) - 10*time.Second),
+				genesisTime:   silaTime.Now().Add(-1*time.Duration(params.BeaconConfig().SecondsPerSlot) - 10*time.Second),
 				slot:          1,
 				timeTolerance: 2 * time.Second,
 			},
@@ -335,7 +335,7 @@ func TestVerifySlotTime(t *testing.T) {
 		{
 			name: "max future slot",
 			args: args{
-				genesisTime: prysmTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
+				genesisTime: silaTime.Now().Add(-1 * 5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
 				slot:        primitives.Slot(MaxSlotBuffer + 6),
 			},
 			wantedErr: "exceeds max allowed value relative to the local clock",
@@ -343,7 +343,7 @@ func TestVerifySlotTime(t *testing.T) {
 		{
 			name: "evil future slot",
 			args: args{
-				genesisTime: prysmTime.Now().Add(-1 * 24 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second), // 24 slots in the past
+				genesisTime: silaTime.Now().Add(-1 * 24 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second), // 24 slots in the past
 				// Gets multiplied with slot duration, and results in an overflow. Wraps around to a valid time.
 				// Lower than max signed int. And chosen specifically to wrap to a valid slot 24
 				slot: primitives.Slot((^uint64(0))/params.BeaconConfig().SecondsPerSlot) + 24,
@@ -364,7 +364,7 @@ func TestVerifySlotTime(t *testing.T) {
 }
 
 func TestValidateSlotClock_HandlesBadSlot(t *testing.T) {
-	genTime := prysmTime.Now().Add(-1 * time.Duration(MaxSlotBuffer) * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second)
+	genTime := silaTime.Now().Add(-1 * time.Duration(MaxSlotBuffer) * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second)
 
 	assert.NoError(t, ValidateClock(primitives.Slot(MaxSlotBuffer), genTime), "unexpected error validating slot")
 	assert.NoError(t, ValidateClock(primitives.Slot(2*MaxSlotBuffer), genTime), "unexpected error validating slot")
@@ -578,14 +578,14 @@ func TestCurrentSlot(t *testing.T) {
 		{
 			name: "pre-genesis",
 			args: args{
-				genesis: prysmTime.Now().Add(1 * time.Hour), // 1 hour in the future
+				genesis: silaTime.Now().Add(1 * time.Hour), // 1 hour in the future
 			},
 			want: 0,
 		},
 		{
 			name: "post-genesis",
 			args: args{
-				genesis: prysmTime.Now().Add(-5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
+				genesis: silaTime.Now().Add(-5 * time.Duration(params.BeaconConfig().SecondsPerSlot) * time.Second),
 			},
 			want: 5,
 		},

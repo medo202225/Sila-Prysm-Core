@@ -1,5 +1,5 @@
 // Package kv defines a bolt-db, key-value store implementation
-// of the Database interface defined by a Sila-Prysm beacon node.
+// of the Database interface defined by a Sila beacon node.
 package kv
 
 import (
@@ -10,14 +10,14 @@ import (
 	"slices"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/dgraph-io/ristretto/v2"
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
@@ -101,7 +101,7 @@ var BlockCacheSize = int64(1 << 21)
 
 // blockedBuckets represents the buckets that we want to restrict
 // from our metrics fetching for performance reasons. For a detailed
-// summary, it can be read in https://github.com/sila-chain/prysm/issues/8274.
+// summary, it can be read in https://github.com/sila-chain/sila/issues/8274.
 var blockedBuckets = [][]byte{
 	blocksBucket,
 	stateSummaryBucket,
@@ -110,7 +110,7 @@ var blockedBuckets = [][]byte{
 	finalizedBlockRootsIndexBucket,
 }
 
-// Store defines an implementation of the Sila-Prysm Database interface
+// Store defines an implementation of the Sila Database interface
 // using BoltDB as the underlying persistent kv-store for Sila Beacon Nodes.
 type Store struct {
 	db                  *bolt.DB
@@ -396,7 +396,7 @@ func (s *Store) setupBlockStorageType(ctx context.Context) error {
 		return fmt.Errorf(
 			"cannot use the %s flag with this existing database, as it has already been initialized to only store "+
 				"execution payload headers (aka blinded beacon blocks). If you want to use this flag, you must re-sync your node with a fresh "+
-				"database. We recommend using checkpoint sync https://github.com/sila-chain/Sila-Prysm-Core",
+				"database. We recommend using checkpoint sync https://github.com/sila-chain/Sila-Consensus-Core",
 			features.SaveFullExecutionPayloads.Name,
 		)
 	}

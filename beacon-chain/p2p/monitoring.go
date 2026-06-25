@@ -3,7 +3,7 @@ package p2p
 import (
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/libp2p/go-libp2p/core/peerstore"
 	"github.com/prometheus/client_golang/prometheus"
@@ -18,7 +18,7 @@ var (
 		"lighthouse",
 		"lodestar",
 		"nimbus",
-		"prysm",
+		"sila",
 		"teku",
 		"rust-libp2p",
 	}

@@ -4,8 +4,8 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestParseNodeVersion(t *testing.T) {
@@ -21,8 +21,8 @@ func TestParseNodeVersion(t *testing.T) {
 			err:  client.ErrInvalidNodeVersion,
 		},
 		{
-			name: "Prysm as the version string",
-			v:    "Prysm",
+			name: "Sila as the version string",
+			v:    "Sila",
 			err:  client.ErrInvalidNodeVersion,
 		},
 		{
@@ -32,9 +32,9 @@ func TestParseNodeVersion(t *testing.T) {
 		},
 		{
 			name: "complete version",
-			v:    "Prysm/v2.0.6 (linux amd64)",
+			v:    "Sila/v2.0.6 (linux amd64)",
 			nv: &NodeVersion{
-				implementation: "Prysm",
+				implementation: "Sila",
 				semver:         "v2.0.6",
 				systemInfo:     "(linux amd64)",
 			},

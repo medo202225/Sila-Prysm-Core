@@ -3,14 +3,14 @@ package simulator
 import (
 	"testing"
 
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	dbtest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	mockstategen "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen/mock"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	mockstategen "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
 func setupService(t *testing.T, params *Parameters) *Simulator {

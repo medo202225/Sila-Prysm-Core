@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
-	dbIface "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/detect"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/genesis"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
+	dbIface "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz/detect"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/pkg/errors"
 )
 

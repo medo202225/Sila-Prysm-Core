@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"sync"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	"github.com/pkg/errors"
 	blst "github.com/supranational/blst/bindings/go"
 )

@@ -13,7 +13,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/pkg/errors"
 )
 
@@ -67,9 +67,9 @@ func HandleBackupDir(dirPath string, permissionOverride bool) error {
 }
 
 // MkdirAll takes in a path, expands it if necessary, and creates the directory accordingly
-// with standardized, Prysm project permissions. If a directory already exists as this path,
+// with standardized, Sila project permissions. If a directory already exists as this path,
 // then the method returns without making any changes. This is the static-analysis enforced
-// method for creating a directory programmatically in Prysm.
+// method for creating a directory programmatically in Sila.
 func MkdirAll(dirPath string) error {
 	expanded, err := ExpandPath(dirPath)
 	if err != nil {
@@ -86,7 +86,7 @@ func MkdirAll(dirPath string) error {
 }
 
 // WriteFile is the static-analysis enforced method for writing binary data to a file
-// in Prysm, enforcing a single entrypoint with standardized permissions.
+// in Sila, enforcing a single entrypoint with standardized permissions.
 func WriteFile(file string, data []byte) error {
 	expanded, err := ExpandPath(file)
 	if err != nil {

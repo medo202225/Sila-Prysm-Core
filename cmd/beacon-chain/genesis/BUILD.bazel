@@ -6,7 +6,7 @@ go_library(
         "log.go",
         "options.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/genesis",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/genesis",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/node:go_default_library",

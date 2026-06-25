@@ -1,8 +1,8 @@
 package migration
 
 import (
-	ethpbv1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/v1"
-	ethpbalpha "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	ethpbv1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/eth/v1"
+	ethpbalpha "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // V1ValidatorToV1Alpha1 converts a v1 validator to v1alpha1.

@@ -6,7 +6,7 @@ go_library(
         "blob.go",
         "data_column.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/logging",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/logging",
     visibility = ["//visibility:public"],
     deps = [
         "//consensus-types/blocks:go_default_library",

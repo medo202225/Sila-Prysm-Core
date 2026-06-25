@@ -1,7 +1,7 @@
 package slasher
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	ssz "github.com/sila-chain/fastssz"
 )
 

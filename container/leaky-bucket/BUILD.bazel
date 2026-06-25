@@ -7,7 +7,7 @@ go_library(
         "heap.go",
         "leakybucket.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket",
     visibility = ["//visibility:public"],
 )
 

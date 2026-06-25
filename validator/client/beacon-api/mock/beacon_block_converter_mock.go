@@ -12,8 +12,8 @@ package mock
 import (
 	reflect "reflect"
 
-	structs "github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	structs "github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 )
 

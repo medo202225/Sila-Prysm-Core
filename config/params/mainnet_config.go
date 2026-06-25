@@ -4,9 +4,9 @@ import (
 	"math"
 	"time"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 )
 
 // MainnetConfig returns the configuration to be used in the main network.
@@ -196,8 +196,8 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	// order to vote on the correct eth1 blocks.
 	//
 	// Additional context: https://github.com/sila-chain/Sila-Consensus-Specs/issues/2132
-	// Bug prompting this change: https://github.com/sila-chain/prysm/issues/7856
-	// Future optimization: https://github.com/sila-chain/prysm/issues/7739
+	// Bug prompting this change: https://github.com/sila-chain/sila/issues/7856
+	// Future optimization: https://github.com/sila-chain/sila/issues/7739
 	SecondsPerETH1Block: 14,
 
 	// State list length constants.
@@ -245,7 +245,7 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 	DomainPTCAttester:                 bytesutil.Uint32ToBytes4(0x0C000000),
 	DomainProposerPreferences:         bytesutil.Uint32ToBytes4(0x0D000000),
 
-	// Prysm constants.
+	// Sila constants.
 	GenesisValidatorsRoot:          [32]byte{75, 54, 61, 185, 78, 40, 97, 32, 215, 110, 185, 5, 52, 15, 221, 78, 84, 191, 233, 240, 107, 243, 63, 246, 207, 90, 210, 127, 81, 27, 254, 149},
 	GweiPerEth:                     1000000000,
 	BLSSecretKeyLength:             32,

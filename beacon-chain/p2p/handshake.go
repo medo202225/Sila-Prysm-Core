@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/peerdata"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/peerdata"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/peer"
@@ -161,7 +161,7 @@ func (s *Service) AddConnectionHandler(reqFunc, goodByeFunc func(ctx context.Con
 				// The connection is inbound.
 				_, err = s.peers.ChainState(remotePeer)
 				peerExists := err == nil
-				currentTime := prysmTime.Now()
+				currentTime := silaTime.Now()
 
 				// Wait for peer to initiate handshake
 				time.Sleep(timeForStatus)

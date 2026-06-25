@@ -8,15 +8,15 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/urfave/cli/v2"
 )
 
 const (
 	// WalletDefaultDirName for accounts.
-	WalletDefaultDirName = "prysm-wallet-v2"
+	WalletDefaultDirName = "sila-wallet-v2"
 	// DefaultHTTPServerHost for the validator client.
 	DefaultHTTPServerHost = "127.0.0.1"
 
@@ -152,10 +152,10 @@ var (
 		Value:   filepath.Join(filepath.Join(DefaultValidatorDir(), WalletDefaultDirName), api.AuthTokenFileName),
 		Aliases: []string{"validator-api-bearer-file"},
 	}
-	// WalletDirFlag defines the path to a wallet directory for Sila-Prysm accounts.
+	// WalletDirFlag defines the path to a wallet directory for Sila accounts.
 	WalletDirFlag = &cli.StringFlag{
 		Name:  "wallet-dir",
-		Usage: "Path to a wallet directory on-disk for Sila-Prysm validator accounts.",
+		Usage: "Path to a wallet directory on-disk for Sila validator accounts.",
 		Value: filepath.Join(DefaultValidatorDir(), WalletDefaultDirName),
 	}
 	// AccountPasswordFileFlag is path to a file containing a password for a validator account.
@@ -299,7 +299,7 @@ var (
 	// web3signer documentation can be found in Consensys' web3signer project docs
 	Web3SignerURLFlag = &cli.StringFlag{
 		Name:    "validators-external-signer-url",
-		Usage:   "URL for consensys' web3signer software to use with the Sila-Prysm validator client.",
+		Usage:   "URL for consensys' web3signer software to use with the Sila validator client.",
 		Value:   "",
 		Aliases: []string{"remote-signer-url"},
 	}
@@ -391,10 +391,10 @@ var (
 		Usage: "Sets the maximum size for one batch of validator registrations. Use a non-positive value to disable batching.",
 		Value: 200,
 	}
-	// EnableDistributed enables the usage of Sila-Prysm validator client in a Distributed Validator Cluster.
+	// EnableDistributed enables the usage of Sila validator client in a Distributed Validator Cluster.
 	EnableDistributed = &cli.BoolFlag{
 		Name:  "distributed",
-		Usage: "To enable the use of Sila-Prysm validator client in Distributed Validator Cluster",
+		Usage: "To enable the use of Sila validator client in Distributed Validator Cluster",
 		Value: false,
 	}
 	// EnableStatelessFlag enables the stateless block production path for Gloas: the validator requests the

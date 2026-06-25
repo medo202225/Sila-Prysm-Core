@@ -6,9 +6,9 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sirupsen/logrus"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
@@ -30,7 +30,7 @@ func TestCountdownToGenesis(t *testing.T) {
 			genesisReached := "Chain genesis time reached"
 			CountdownToGenesis(
 				t.Context(),
-				prysmTime.Now().Add(2*time.Second),
+				silaTime.Now().Add(2*time.Second),
 				params.BeaconConfig().MinGenesisActiveValidatorCount,
 				[32]byte{},
 			)
@@ -47,7 +47,7 @@ func TestCountdownToGenesis(t *testing.T) {
 			time.AfterFunc(2500*time.Millisecond, cancel)
 			CountdownToGenesis(
 				ctx,
-				prysmTime.Now().Add(5*time.Second),
+				silaTime.Now().Add(5*time.Second),
 				params.BeaconConfig().MinGenesisActiveValidatorCount,
 				[32]byte{},
 			)

@@ -17,7 +17,7 @@ func init() {
 	// already be established. This panic is a strict fail fast feedback to alert 32 bit users
 	// that they are not supported.
 	if stdmath.MaxUint < stdmath.MaxUint64 {
-		panic("Sila-Prysm is only supported on 64 bit OS")
+		panic("Sila is only supported on 64 bit OS")
 	}
 }
 

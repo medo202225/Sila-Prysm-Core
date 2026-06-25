@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila/common"
 	bolt "go.etcd.io/bbolt"
 )

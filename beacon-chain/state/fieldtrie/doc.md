@@ -159,8 +159,8 @@ import (
 	"fmt"
 	"runtime"
 
-	fieldtrie "github.com/sila-chain/prysm/v5/beacon-chain/state/fieldtrie"
-	"github.com/sila-chain/prysm/v5/beacon-chain/state/state-native/types"
+	fieldtrie "github.com/sila-chain/sila/v5/beacon-chain/state/fieldtrie"
+	"github.com/sila-chain/sila/v5/beacon-chain/state/state-native/types"
 )
 
 func main() {

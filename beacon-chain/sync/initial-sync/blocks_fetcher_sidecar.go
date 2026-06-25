@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
-	prysmsync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/verify"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	p2ppb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
+	silasync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/verify"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	p2ppb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -96,7 +96,7 @@ func (f *blocksFetcher) fetchSidecars(ctx context.Context, r *fetchRequestRespon
 	}
 
 	// Some blocks need data column sidecars, fetch them.
-	params := prysmsync.DataColumnSidecarsParams{
+	params := silasync.DataColumnSidecarsParams{
 		Ctx:         ctx,
 		Tor:         f.clock,
 		P2P:         f.p2p,
@@ -106,7 +106,7 @@ func (f *blocksFetcher) fetchSidecars(ctx context.Context, r *fetchRequestRespon
 		NewVerifier: f.cv,
 	}
 
-	verifiedRoDataColumnsByRoot, missingIndicesByRoot, err := prysmsync.FetchDataColumnSidecars(params, roBlocks, info.CustodyColumns)
+	verifiedRoDataColumnsByRoot, missingIndicesByRoot, err := silasync.FetchDataColumnSidecars(params, roBlocks, info.CustodyColumns)
 	if err != nil {
 		r.blobsFrom = ""
 		r.err = errors.Wrap(err, "fetch data column sidecars")
@@ -312,7 +312,7 @@ func (f *blocksFetcher) fetchBlobsFromPeer(ctx context.Context, bwb []blocks.Blo
 	if slots.ToEpoch(f.clock.CurrentSlot()) < params.BeaconConfig().DenebForkEpoch {
 		return "", nil
 	}
-	blobWindowStart, err := prysmsync.BlobRPCMinValidSlot(f.clock.CurrentSlot())
+	blobWindowStart, err := silasync.BlobRPCMinValidSlot(f.clock.CurrentSlot())
 	if err != nil {
 		return "", err
 	}
@@ -371,5 +371,5 @@ func (f *blocksFetcher) requestBlobs(ctx context.Context, req *p2ppb.BlobSidecar
 	f.rateLimiter.Add(pid.String(), int64(req.Count))
 	l.Unlock()
 
-	return prysmsync.SendBlobsByRangeRequest(ctx, f.clock, f.p2p, pid, f.ctxMap, req)
+	return silasync.SendBlobsByRangeRequest(ctx, f.clock, f.p2p, pid, f.ctxMap, req)
 }

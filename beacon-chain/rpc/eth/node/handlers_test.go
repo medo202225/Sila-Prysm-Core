@@ -10,22 +10,22 @@ import (
 	"testing"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	mockengine "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	mockp2p "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/testutil"
-	syncmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/wrapper"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	mockengine "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	mockp2p "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/testutil"
+	syncmock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/wrapper"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/sila-chain/Sila/p2p/enr"
 	"github.com/libp2p/go-libp2p/core/peer"
@@ -123,7 +123,7 @@ func TestGetVersionV2(t *testing.T) {
 		require.Equal(t, "v1.0.0", resp.Data.ExecutionClient.Version)
 		require.Equal(t, "abcdef12", resp.Data.ExecutionClient.Commit)
 		require.Equal(t, "PM", resp.Data.BeaconNode.Code)
-		require.Equal(t, "Sila-Prysm", resp.Data.BeaconNode.Name)
+		require.Equal(t, "Sila", resp.Data.BeaconNode.Name)
 		require.Equal(t, version.SemanticVersion(), resp.Data.BeaconNode.Version)
 		require.Equal(t, true, len(resp.Data.BeaconNode.Commit) <= 8)
 	})

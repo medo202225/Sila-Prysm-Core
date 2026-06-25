@@ -3,8 +3,8 @@ package fdlimits_test
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/fdlimits"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/fdlimits"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	gethLimit "github.com/sila-chain/Sila/common/fdlimit"
 )
 

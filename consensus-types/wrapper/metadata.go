@@ -2,9 +2,9 @@ package wrapper
 
 import (
 	"github.com/sila-chain/go-bitfield"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/metadata"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/metadata"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"google.golang.org/protobuf/proto"
 )
 

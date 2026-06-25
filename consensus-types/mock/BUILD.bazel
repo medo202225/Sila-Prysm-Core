@@ -3,7 +3,7 @@ load("@sila//tools/go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["block.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/mock",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/mock",
     visibility = ["//visibility:public"],
     deps = [
         "//config/fieldparams:go_default_library",
@@ -11,8 +11,8 @@ go_library(
         "//consensus-types/primitives:go_default_library",
         "//proto/engine/v1:go_default_library",
         "//proto/eth/v1:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
-        "//proto/prysm/v1alpha1/validator-client:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1/validator-client:go_default_library",
         "@com_github_sila_fastssz//:go_default_library",
         "@org_golang_google_protobuf//proto:go_default_library",
     ],

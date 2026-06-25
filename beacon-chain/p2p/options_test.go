@@ -8,12 +8,12 @@ import (
 	"path"
 	"testing"
 
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	gethCrypto "github.com/sila-chain/Sila/crypto"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/sila-chain/Sila/p2p/enr"
@@ -44,7 +44,7 @@ func TestPrivateKeyLoading(t *testing.T) {
 	}
 	pKey, err := privKey(cfg)
 	require.NoError(t, err, "Could not apply option")
-	newPkey, err := ecdsaprysm.ConvertToInterfacePrivkey(pKey)
+	newPkey, err := ecdsasila.ConvertToInterfacePrivkey(pKey)
 	require.NoError(t, err)
 	rawBytes, err := key.Raw()
 	require.NoError(t, err)
@@ -64,12 +64,12 @@ func TestPrivateKeyLoading_StaticPrivateKey(t *testing.T) {
 	pKey, err := privKey(cfg)
 	require.NoError(t, err, "Could not apply option")
 
-	newPkey, err := ecdsaprysm.ConvertToInterfacePrivkey(pKey)
+	newPkey, err := ecdsasila.ConvertToInterfacePrivkey(pKey)
 	require.NoError(t, err)
 
 	retrievedKey, err := privKeyFromFile(path.Join(tempDir, keyPath))
 	require.NoError(t, err)
-	retrievedPKey, err := ecdsaprysm.ConvertToInterfacePrivkey(retrievedKey)
+	retrievedPKey, err := ecdsasila.ConvertToInterfacePrivkey(retrievedKey)
 	require.NoError(t, err)
 
 	rawBytes, err := retrievedPKey.Raw()

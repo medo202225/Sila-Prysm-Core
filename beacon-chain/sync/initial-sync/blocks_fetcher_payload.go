@@ -5,13 +5,13 @@ import (
 	"context"
 	"fmt"
 
-	prysmsync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	p2ppb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	silasync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	p2ppb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -53,14 +53,14 @@ func (f *blocksFetcher) validatePayloadBlockConsistency(r *fetchRequestResponse)
 	if len(r.envelopes) == 0 {
 		// Only downscore with bad payload if the same peer provided available blocks
 		if err := checkAllBlocksBuildOnEmpty(r.bwb); err != nil && r.blocksFrom == r.payloadsFrom {
-			f.downscorePeer(r.blocksFrom, errors.Wrap(prysmsync.ErrInvalidFetchedData, err.Error()))
+			f.downscorePeer(r.blocksFrom, errors.Wrap(silasync.ErrInvalidFetchedData, err.Error()))
 		}
 		return
 	}
 
 	full, err := blocks.BlockBuiltOnEnvelope(r.envelopes[0], r.bwb[0].Block)
 	if err != nil {
-		r.err = errors.Wrap(prysmsync.ErrInvalidFetchedData, err.Error())
+		r.err = errors.Wrap(silasync.ErrInvalidFetchedData, err.Error())
 		return
 	}
 	pidx := 0
@@ -69,7 +69,7 @@ func (f *blocksFetcher) validatePayloadBlockConsistency(r *fetchRequestResponse)
 	}
 	bh, err := r.bwb[0].Block.ParentHash()
 	if err != nil {
-		r.err = errors.Wrap(prysmsync.ErrInvalidFetchedData, err.Error())
+		r.err = errors.Wrap(silasync.ErrInvalidFetchedData, err.Error())
 		f.downscorePeer(r.blocksFrom, r.err)
 		return
 	}
@@ -77,7 +77,7 @@ func (f *blocksFetcher) validatePayloadBlockConsistency(r *fetchRequestResponse)
 	for i, b := range r.bwb[1:] {
 		nh, err := b.Block.ParentHash()
 		if err != nil {
-			r.err = errors.Wrap(prysmsync.ErrInvalidFetchedData, err.Error())
+			r.err = errors.Wrap(silasync.ErrInvalidFetchedData, err.Error())
 			f.downscorePeer(r.blocksFrom, r.err)
 			return
 		}
@@ -99,7 +99,7 @@ func (f *blocksFetcher) validatePayloadBlockConsistency(r *fetchRequestResponse)
 		full, err := blocks.BlockBuiltOnEnvelope(env, b.Block)
 		if err != nil || !full {
 			if r.blocksFrom == r.payloadsFrom {
-				r.err = errors.Wrap(prysmsync.ErrInvalidFetchedData, "envelope does not match block")
+				r.err = errors.Wrap(silasync.ErrInvalidFetchedData, "envelope does not match block")
 			} else {
 				r.err = errors.New("envelope does not match block")
 			}
@@ -189,14 +189,14 @@ func (f *blocksFetcher) fetchPayloadEnvelopesFromPeer(
 	peers = append(bestPeers, peers...)
 	peers = dedupPeers(peers)
 	for _, p := range peers {
-		envelopes, err := prysmsync.SendExecutionPayloadEnvelopesByRangeRequest(ctx, f.clock, f.p2p, p, f.ctxMap, req)
+		envelopes, err := silasync.SendExecutionPayloadEnvelopesByRangeRequest(ctx, f.clock, f.p2p, p, f.ctxMap, req)
 		if err != nil {
 			log.WithFields(logrus.Fields{
 				"peer":      p,
 				"startSlot": req.StartSlot,
 				"count":     req.Count,
 			}).WithError(err).Debug("Could not request payload envelopes by range from peer")
-			if errors.Is(err, prysmsync.ErrInvalidFetchedData) {
+			if errors.Is(err, silasync.ErrInvalidFetchedData) {
 				f.downscorePeer(p, err)
 			}
 			continue

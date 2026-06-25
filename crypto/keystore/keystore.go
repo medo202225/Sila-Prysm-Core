@@ -32,7 +32,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/minio/sha256-simd"
 	"github.com/pborman/uuid"
 	"golang.org/x/crypto/pbkdf2"

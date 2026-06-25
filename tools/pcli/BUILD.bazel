@@ -1,11 +1,11 @@
 load("@sila//tools/go:def.bzl", "go_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
-load("//tools:prysm_image.bzl", "prysm_image_upload")
+load("//tools:sila_image.bzl", "sila_image_upload")
 
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/tools/pcli",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/tools/pcli",
     visibility = ["//visibility:private"],
     deps = [
         "//beacon-chain/core/epoch/precompute:go_default_library",
@@ -16,7 +16,7 @@ go_library(
         "//consensus-types/interfaces:go_default_library",
         "//encoding/ssz/detect:go_default_library",
         "//encoding/ssz/equality:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//runtime/logging/logrus-prefixed-formatter:go_default_library",
         "//runtime/version:go_default_library",
         "@com_github_kr_pretty//:go_default_library",
@@ -34,11 +34,11 @@ go_binary(
     visibility = ["//visibility:public"],
 )
 
-prysm_image_upload(
+sila_image_upload(
     name = "push_images",
     binary = ":pcli",
     entrypoint = ["/pcli"],
-    repository = "gcr.io/offchainlabs/prysm/pcli",
+    repository = "gcr.io/offchainlabs/sila/pcli",
     symlinks = {
         # Backwards compatibility for images that depended on the old filepath.
         "/app/tools/pcli/pcli": "/pcli",

@@ -3,7 +3,7 @@ load("@sila//tools/go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go_default_library",
     srcs = ["math_helper.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/math",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/math",
     visibility = ["//visibility:public"],
     deps = ["@com_github_thomaso_mirodin_intmath//u64:go_default_library"],
 )

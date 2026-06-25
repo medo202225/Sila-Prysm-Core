@@ -3,12 +3,12 @@ package attestations
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations/kv"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
-// Pool defines the necessary methods for Sila-Prysm attestations pool to serve
+// Pool defines the necessary methods for Sila attestations pool to serve
 // fork choice and validators. In the current design, aggregated attestations
 // are used by proposer actor. Unaggregated attestations are used by
 // aggregator actor.

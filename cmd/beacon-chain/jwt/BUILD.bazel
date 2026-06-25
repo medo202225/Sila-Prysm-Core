@@ -6,7 +6,7 @@ go_library(
         "jwt.go",
         "log.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/jwt",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/jwt",
     visibility = ["//visibility:public"],
     deps = [
         "//api:go_default_library",

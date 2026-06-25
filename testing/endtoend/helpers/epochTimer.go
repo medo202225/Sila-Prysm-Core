@@ -3,7 +3,7 @@ package helpers
 import (
 	"time"
 
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 )
 
 // EpochTicker is a special ticker for timing epoch changes.
@@ -36,7 +36,7 @@ func NewEpochTicker(genesisTime time.Time, secondsPerEpoch uint64) *EpochTicker 
 		c:    make(chan uint64),
 		done: make(chan struct{}),
 	}
-	ticker.start(genesisTime, secondsPerEpoch, prysmTime.Since, prysmTime.Until, time.After)
+	ticker.start(genesisTime, secondsPerEpoch, silaTime.Since, silaTime.Until, time.After)
 	return ticker
 }
 

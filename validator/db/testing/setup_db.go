@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/kv"
 )
 
 // SetupDB instantiates and returns a DB instance for the validator client.

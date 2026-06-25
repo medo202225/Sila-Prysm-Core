@@ -3,8 +3,8 @@ package ssz
 import (
 	"encoding/binary"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash/htr"
 	"github.com/pkg/errors"
 )
 

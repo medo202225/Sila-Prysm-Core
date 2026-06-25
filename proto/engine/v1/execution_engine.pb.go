@@ -10,8 +10,8 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/ext"
+	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/eth/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -577,7 +577,7 @@ type ExecutionPayloadGloas struct {
 	BlobGasUsed     uint64                                                           `protobuf:"varint,16,opt,name=blob_gas_used,json=blobGasUsed,proto3" json:"blob_gas_used,omitempty"`
 	ExcessBlobGas   uint64                                                           `protobuf:"varint,17,opt,name=excess_blob_gas,json=excessBlobGas,proto3" json:"excess_blob_gas,omitempty"`
 	BlockAccessList []byte                                                           `protobuf:"bytes,18,opt,name=block_access_list,json=blockAccessList,proto3" json:"block_access_list,omitempty" ssz-max:"1073741824"`
-	SlotNumber      github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,19,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"`
+	SlotNumber      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,19,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -738,11 +738,11 @@ func (x *ExecutionPayloadGloas) GetBlockAccessList() []byte {
 	return nil
 }
 
-func (x *ExecutionPayloadGloas) GetSlotNumber() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot {
+func (x *ExecutionPayloadGloas) GetSlotNumber() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot {
 	if x != nil {
 		return x.SlotNumber
 	}
-	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.Slot(0)
+	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot(0)
 }
 
 type ExecutionPayloadCapellaWithValue struct {
@@ -1864,7 +1864,7 @@ func (x *ForkchoiceState) GetFinalizedBlockHash() []byte {
 type Withdrawal struct {
 	state          protoimpl.MessageState                                                     `protogen:"open.v1"`
 	Index          uint64                                                                     `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
-	ValidatorIndex github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.ValidatorIndex"`
+	ValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	Address        []byte                                                                     `protobuf:"bytes,3,opt,name=address,proto3" json:"address,omitempty" ssz-size:"20"`
 	Amount         uint64                                                                     `protobuf:"varint,4,opt,name=amount,proto3" json:"amount,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -1908,11 +1908,11 @@ func (x *Withdrawal) GetIndex() uint64 {
 	return 0
 }
 
-func (x *Withdrawal) GetValidatorIndex() github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex {
+func (x *Withdrawal) GetValidatorIndex() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex {
 	if x != nil {
 		return x.ValidatorIndex
 	}
-	return github_com_sila_chain_Sila_Prysm_Core_v7_consensus_types_primitives.ValidatorIndex(0)
+	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex(0)
 }
 
 func (x *Withdrawal) GetAddress() []byte {

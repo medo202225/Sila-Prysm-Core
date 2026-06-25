@@ -8,16 +8,16 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/petnames"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/petnames"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/google/uuid"
 	"github.com/logrusorgru/aurora"
 	"github.com/pkg/errors"
@@ -68,7 +68,7 @@ func (a *accountStore) Copy() *accountStore {
 	return storeCopy
 }
 
-// AccountsKeystoreRepresentation defines an internal Sila-Prysm representation
+// AccountsKeystoreRepresentation defines an internal Sila representation
 // of validator accounts, encrypted according to the EIP-2334 standard.
 type AccountsKeystoreRepresentation struct {
 	Crypto  map[string]any `json:"crypto"`
@@ -335,7 +335,7 @@ func CreateAccountsKeystoreRepresentation(
 	}, nil
 }
 
-// CreateEmptyKeyStoreRepresentationForNewWallet creates a placeholder accounts keystore for a new Sila-Prysm Local Wallet.
+// CreateEmptyKeyStoreRepresentationForNewWallet creates a placeholder accounts keystore for a new Sila Local Wallet.
 func CreateEmptyKeyStoreRepresentationForNewWallet(ctx context.Context, walletPassword string) (*AccountsKeystoreRepresentation, error) {
 	// make sure everything is clean when creating this.
 	ResetCaches()

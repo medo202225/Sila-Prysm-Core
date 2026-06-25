@@ -5,8 +5,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
-var prysmInfo = promauto.NewGauge(prometheus.GaugeOpts{
-	Name: "prysm_version",
+var silaInfo = promauto.NewGauge(prometheus.GaugeOpts{
+	Name: "sila_version",
 	ConstLabels: prometheus.Labels{
 		"version":   gitTag,
 		"commit":    gitCommit,
@@ -14,5 +14,5 @@ var prysmInfo = promauto.NewGauge(prometheus.GaugeOpts{
 })
 
 func init() {
-	prysmInfo.Set(float64(1))
+	silaInfo.Set(float64(1))
 }

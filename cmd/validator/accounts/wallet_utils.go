@@ -3,11 +3,11 @@ package accounts
 import (
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	remote_web3signer "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	remote_web3signer "github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )

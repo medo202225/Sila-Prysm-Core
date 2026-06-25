@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila/common"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"

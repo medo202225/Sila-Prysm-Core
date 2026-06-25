@@ -1,9 +1,9 @@
 package state_native
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 // SetCurrentSyncCommittee for the beacon state.

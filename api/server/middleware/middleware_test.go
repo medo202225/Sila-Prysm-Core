@@ -8,14 +8,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 // frozenHeaderRecorder allows asserting that response headers were not modified
 // after the call to WriteHeader.
 //
-// Its purpose is to have a regression test for https://github.com/sila-chain/Sila-Prysm-Core/pull/15499.
+// Its purpose is to have a regression test for https://github.com/sila-chain/Sila-Consensus-Core/pull/15499.
 type frozenHeaderRecorder struct {
 	*httptest.ResponseRecorder
 	frozenHeader http.Header

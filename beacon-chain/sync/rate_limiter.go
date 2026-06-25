@@ -11,10 +11,10 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/trailofbits/go-mutexasserts"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	p2ptypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	leakybucket "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	p2ptypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
 )
 
 const defaultBurstLimit = 5

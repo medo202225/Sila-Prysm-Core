@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/kv"
 )
 
 func TestClearDB(t *testing.T) {

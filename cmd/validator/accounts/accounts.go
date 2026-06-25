@@ -3,14 +3,14 @@ package accounts
 import (
 	"os"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/tos"
 	"github.com/urfave/cli/v2"
 )
 
-// Commands for managing Sila-Prysm validator accounts.
+// Commands for managing Sila validator accounts.
 var Commands = &cli.Command{
 	Name:     "accounts",
 	Category: "accounts",
@@ -183,7 +183,7 @@ var Commands = &cli.Command{
 				return features.ConfigureValidator(cliCtx)
 			},
 			Action: func(cliCtx *cli.Context) error {
-				log.Info("This command will be deprecated in the future in favor of `prysmctl validator exit`")
+				log.Info("This command will be deprecated in the future in favor of `silactl validator exit`")
 				if err := Exit(cliCtx, os.Stdin); err != nil {
 					log.WithError(err).Fatal("Could not perform voluntary exit")
 				}

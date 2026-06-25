@@ -10,7 +10,7 @@ go_library(
         "optimistic_update.go",
         "update.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/light-client",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/light-client",
     visibility = ["//visibility:public"],
     deps = [
         "//config/fieldparams:go_default_library",
@@ -20,7 +20,7 @@ go_library(
         "//consensus-types/interfaces:go_default_library",
         "//consensus-types/primitives:go_default_library",
         "//encoding/bytesutil:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//runtime/version:go_default_library",
         "//time/slots:go_default_library",
         "@org_golang_google_protobuf//proto:go_default_library",

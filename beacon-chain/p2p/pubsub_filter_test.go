@@ -7,13 +7,13 @@ import (
 	"testing"
 	"time"
 
-	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/encoder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	pubsubpb "github.com/libp2p/go-libp2p-pubsub/pb"
 	"github.com/libp2p/go-libp2p/core/peer"
 )
@@ -352,7 +352,7 @@ func TestService_MonitorsStateForkUpdates(t *testing.T) {
 	go s.awaitStateInitialized()
 
 	vr := bytesutil.ToBytes32(bytesutil.PadTo([]byte("genesis"), 32))
-	require.NoError(t, cs.SetClock(startup.NewClock(prysmTime.Now(), vr)))
+	require.NoError(t, cs.SetClock(startup.NewClock(silaTime.Now(), vr)))
 
 	time.Sleep(50 * time.Millisecond)
 

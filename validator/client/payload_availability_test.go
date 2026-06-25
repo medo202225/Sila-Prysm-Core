@@ -6,11 +6,11 @@ import (
 	"testing"
 	"time"
 
-	eventClient "github.com/sila-chain/Sila-Prysm-Core/v7/api/client/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	eventClient "github.com/sila-chain/Sila-Consensus-Core/v7/api/client/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func isClosed(ch <-chan struct{}) bool {

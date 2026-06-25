@@ -1,9 +1,9 @@
 package backfill
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/node"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/backfill"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/sync/backfill/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/node"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/backfill"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/sync/backfill/flags"
 	"github.com/urfave/cli/v2"
 )
 

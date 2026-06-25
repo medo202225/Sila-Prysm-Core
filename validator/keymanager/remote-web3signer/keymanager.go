@@ -13,18 +13,18 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/petnames"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/internal"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/petnames"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/internal"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/types"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-playground/validator/v10"
@@ -449,7 +449,7 @@ func getSignRequestJson(ctx context.Context, validator *validator.Validate, requ
 	*/
 
 	case *validatorpb.SignRequest_Epoch:
-		// tech debt that prysm uses signing type epoch
+		// tech debt that sila uses signing type epoch
 		return handleRandaoReveal(ctx, validator, request, genesisValidatorsRoot)
 	case *validatorpb.SignRequest_Exit:
 		return handleVoluntaryExit(ctx, validator, request, genesisValidatorsRoot)

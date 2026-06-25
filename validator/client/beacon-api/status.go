@@ -4,10 +4,10 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )
@@ -83,7 +83,7 @@ func (c *beaconApiValidatorClient) validatorsStatusResponse(ctx context.Context,
 	}
 
 	// TODO: we should remove this API call
-	validatorsCountResponse, err := c.prysmChainClient.ValidatorCount(ctx, "head", nil)
+	validatorsCountResponse, err := c.silaChainClient.ValidatorCount(ctx, "head", nil)
 	if err != nil && !errors.Is(err, iface.ErrNotSupported) {
 		return nil, nil, nil, errors.Wrap(err, "failed to get total validator count")
 	}

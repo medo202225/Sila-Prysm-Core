@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 )

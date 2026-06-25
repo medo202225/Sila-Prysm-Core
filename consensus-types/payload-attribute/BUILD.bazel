@@ -7,7 +7,7 @@ go_library(
         "interface.go",
         "types.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/payload-attribute",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/payload-attribute",
     visibility = ["//visibility:public"],
     deps = [
         "//config/fieldparams:go_default_library",

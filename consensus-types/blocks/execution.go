@@ -3,12 +3,12 @@ package blocks
 import (
 	"bytes"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
 	"github.com/pkg/errors"
 	fastssz "github.com/sila-chain/fastssz"
 	"google.golang.org/protobuf/proto"
@@ -16,7 +16,7 @@ import (
 
 // executionPayload is a convenience wrapper around a beacon block body's execution payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayload struct {
 	p *enginev1.ExecutionPayload
 }
@@ -215,7 +215,7 @@ func (e executionPayload) ExcessBlobGas() (uint64, error) {
 
 // executionPayloadHeader is a convenience wrapper around a blinded beacon block body's execution header data structure
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayloadHeader struct {
 	p *enginev1.ExecutionPayloadHeader
 }
@@ -406,7 +406,7 @@ func PayloadToHeader(payload interfaces.ExecutionData) (*enginev1.ExecutionPaylo
 
 // executionPayloadCapella is a convenience wrapper around a beacon block body's execution payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayloadCapella struct {
 	p *enginev1.ExecutionPayloadCapella
 }
@@ -569,7 +569,7 @@ func (e executionPayloadCapella) ExcessBlobGas() (uint64, error) {
 
 // executionPayloadHeaderCapella is a convenience wrapper around a blinded beacon block body's execution header data structure
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayloadHeaderCapella struct {
 	p *enginev1.ExecutionPayloadHeaderCapella
 }
@@ -883,7 +883,7 @@ func IsEmptyExecutionData(data interfaces.ExecutionData) (bool, error) {
 
 // executionPayloadHeaderDeneb is a convenience wrapper around a blinded beacon block body's execution header data structure.
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayloadHeaderDeneb struct {
 	p *enginev1.ExecutionPayloadHeaderDeneb
 }
@@ -1046,7 +1046,7 @@ func (e executionPayloadHeaderDeneb) IsBlinded() bool {
 
 // executionPayloadDeneb is a convenience wrapper around a beacon block body's execution payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayloadDeneb struct {
 	p *enginev1.ExecutionPayloadDeneb
 }
@@ -1207,7 +1207,7 @@ func (e executionPayloadDeneb) IsBlinded() bool {
 
 // executionPayloadGloas is a convenience wrapper around a beacon block body's execution payload data structure
 // This wrapper allows us to conform to a common interface so that beacon
-// blocks for future forks can also be applied across Prysm without issues.
+// blocks for future forks can also be applied across Sila without issues.
 type executionPayloadGloas struct {
 	p *enginev1.ExecutionPayloadGloas
 }

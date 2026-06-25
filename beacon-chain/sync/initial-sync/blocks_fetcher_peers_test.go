@@ -8,13 +8,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/scorers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	leakybucket "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/scorers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/libp2p/go-libp2p/core/peer"
 )
 
@@ -324,29 +324,29 @@ func TestBlocksFetcher_removeStalePeerLocks(t *testing.T) {
 			peersIn: []peerData{
 				{
 					peerID:   "a",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 				{
 					peerID:   "b",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 				{
 					peerID:   "c",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 			},
 			peersOut: []peerData{
 				{
 					peerID:   "a",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 				{
 					peerID:   "b",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 				{
 					peerID:   "c",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 			},
 		},
@@ -356,25 +356,25 @@ func TestBlocksFetcher_removeStalePeerLocks(t *testing.T) {
 			peersIn: []peerData{
 				{
 					peerID:   "a",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 				{
 					peerID:   "b",
-					accessed: prysmTime.Now().Add(-peerLockMaxAge),
+					accessed: silaTime.Now().Add(-peerLockMaxAge),
 				},
 				{
 					peerID:   "c",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 			},
 			peersOut: []peerData{
 				{
 					peerID:   "a",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 				{
 					peerID:   "c",
-					accessed: prysmTime.Now(),
+					accessed: silaTime.Now(),
 				},
 			},
 		},
@@ -384,15 +384,15 @@ func TestBlocksFetcher_removeStalePeerLocks(t *testing.T) {
 			peersIn: []peerData{
 				{
 					peerID:   "a",
-					accessed: prysmTime.Now().Add(-peerLockMaxAge),
+					accessed: silaTime.Now().Add(-peerLockMaxAge),
 				},
 				{
 					peerID:   "b",
-					accessed: prysmTime.Now().Add(-peerLockMaxAge),
+					accessed: silaTime.Now().Add(-peerLockMaxAge),
 				},
 				{
 					peerID:   "c",
-					accessed: prysmTime.Now().Add(-peerLockMaxAge),
+					accessed: silaTime.Now().Add(-peerLockMaxAge),
 				},
 			},
 			peersOut: []peerData{},

@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/authorization"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/authorization"
 	gethRPC "github.com/sila-chain/Sila/rpc"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )

@@ -8,27 +8,27 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/altair"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/capella"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/deneb"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/electra"
-	e "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/epoch/precompute"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/execution"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/fulu"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/gloas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	prysmTrace "github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/capella"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/deneb"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/electra"
+	e "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/epoch"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/epoch/precompute"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/execution"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/fulu"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/gloas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	silaTrace "github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel/trace"
@@ -67,7 +67,7 @@ func ExecuteStateTransition(
 		return nil, err
 	}
 
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.ExecuteStateTransition")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.ExecuteStateTransition")
 	defer span.End()
 	var err error
 
@@ -107,9 +107,9 @@ func ExecuteStateTransition(
 //	  previous_block_root = hash_tree_root(state.latest_block_header)
 //	  state.block_roots[state.slot % SLOTS_PER_HISTORICAL_ROOT] = previous_block_root
 func ProcessSlot(ctx context.Context, state state.BeaconState) (state.BeaconState, error) {
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.ProcessSlot")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.ProcessSlot")
 	defer span.End()
-	span.SetAttributes(prysmTrace.Int64Attribute("slot", int64(state.Slot()))) // lint:ignore uintcast -- This is OK for tracing.
+	span.SetAttributes(silaTrace.Int64Attribute("slot", int64(state.Slot()))) // lint:ignore uintcast -- This is OK for tracing.
 
 	prevStateRoot, err := state.HashTreeRoot(ctx)
 	if err != nil {
@@ -179,7 +179,7 @@ func ProcessSlotsUsingNextSlotCache(
 	parentState state.BeaconState,
 	parentRoot []byte,
 	slot primitives.Slot) (state.BeaconState, error) {
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.ProcessSlotsUsingNextSlotCache")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.ProcessSlotsUsingNextSlotCache")
 	defer span.End()
 
 	nextSlotState := NextSlotState(parentRoot, slot)
@@ -209,12 +209,12 @@ func ProcessSlotsIfPossible(ctx context.Context, state state.BeaconState, target
 
 // ProcessSlots includes core slot processing as well as a cache
 func ProcessSlots(ctx context.Context, state state.BeaconState, slot primitives.Slot) (state.BeaconState, error) {
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.ProcessSlots")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.ProcessSlots")
 	defer span.End()
 	if state == nil || state.IsNil() {
 		return nil, errors.New("nil state")
 	}
-	span.SetAttributes(prysmTrace.Int64Attribute("slots", int64(slot)-int64(state.Slot()))) // lint:ignore uintcast -- This is OK for tracing.
+	span.SetAttributes(silaTrace.Int64Attribute("slots", int64(slot)-int64(state.Slot()))) // lint:ignore uintcast -- This is OK for tracing.
 
 	// The block must have a higher slot than parent state.
 	if state.Slot() >= slot {
@@ -329,7 +329,7 @@ func ProcessSlotsCore(ctx context.Context, span trace.Span, state state.BeaconSt
 
 // ProcessEpoch is a wrapper on fork specific epoch processing
 func ProcessEpoch(ctx context.Context, state state.BeaconState) (state.BeaconState, error) {
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.ProcessEpoch")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.ProcessEpoch")
 	defer span.End()
 
 	var err error
@@ -362,7 +362,7 @@ func ProcessEpoch(ctx context.Context, state state.BeaconState) (state.BeaconSta
 
 // UpgradeState upgrades the state to the next version if possible.
 func UpgradeState(ctx context.Context, state state.BeaconState) (state.BeaconState, error) {
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.UpgradeState")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.UpgradeState")
 	defer span.End()
 
 	var err error
@@ -517,9 +517,9 @@ func VerifyOperationLengths(_ context.Context, state state.BeaconState, b interf
 // ProcessEpochPrecompute describes the per epoch operations that are performed on the beacon state.
 // It's optimized by pre computing validator attested info and epoch total/attested balances upfront.
 func ProcessEpochPrecompute(ctx context.Context, state state.BeaconState) (state.BeaconState, error) {
-	ctx, span := prysmTrace.StartSpan(ctx, "core.state.ProcessEpochPrecompute")
+	ctx, span := silaTrace.StartSpan(ctx, "core.state.ProcessEpochPrecompute")
 	defer span.End()
-	span.SetAttributes(prysmTrace.Int64Attribute("epoch", int64(time.CurrentEpoch(state)))) // lint:ignore uintcast -- This is OK for tracing.
+	span.SetAttributes(silaTrace.Int64Attribute("epoch", int64(time.CurrentEpoch(state)))) // lint:ignore uintcast -- This is OK for tracing.
 
 	if state == nil || state.IsNil() {
 		return nil, errors.New("nil state")

@@ -1,7 +1,7 @@
 package beaconapi
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
 type endpoint interface {
@@ -10,13 +10,13 @@ type endpoint interface {
 	enableSanityCheckOnly()
 	sszEnabled() bool
 	enableSsz()
-	getSszResp() []byte     // retrieves the Prysm SSZ response
-	setSszResp(resp []byte) // sets the Prysm SSZ response
+	getSszResp() []byte     // retrieves the Sila SSZ response
+	setSszResp(resp []byte) // sets the Sila SSZ response
 	getStart() primitives.Epoch
 	setStart(start primitives.Epoch)
 	getPOSTObj() any
 	setPOSTObj(obj any)
-	getPResp() any  // retrieves the Prysm JSON response
+	getPResp() any  // retrieves the Sila JSON response
 	getLHResp() any // retrieves the Lighthouse JSON response
 	getParams(currentEpoch primitives.Epoch) []string
 	setParams(f func(currentEpoch primitives.Epoch) []string)
@@ -32,9 +32,9 @@ type apiEndpoint[Resp any] struct {
 	ssz         bool
 	start       primitives.Epoch
 	postObj     any
-	pResp       *Resp  // Prysm JSON response
+	pResp       *Resp  // Sila JSON response
 	lhResp      *Resp  // Lighthouse JSON response
-	sszResp     []byte // Prysm SSZ response
+	sszResp     []byte // Sila SSZ response
 	params      func(currentEpoch primitives.Epoch) []string
 	queryParams func(currentEpoch primitives.Epoch) []string
 	customEval  func(any, any) error

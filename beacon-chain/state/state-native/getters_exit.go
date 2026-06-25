@@ -1,8 +1,8 @@
 package state_native
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 // ExitBalanceToConsume is used for returning the ExitBalanceToConsume as part of eip 7251

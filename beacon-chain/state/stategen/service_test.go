@@ -3,13 +3,13 @@ package stategen
 import (
 	"testing"
 
-	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	doublylinkedtree "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
 func TestResume(t *testing.T) {

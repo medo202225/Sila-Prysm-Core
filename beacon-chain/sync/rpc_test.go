@@ -7,14 +7,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
-	prysmP2P "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
-	p2ptest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
+	silaP2P "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/encoder"
+	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	libp2pcore "github.com/libp2p/go-libp2p/core"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/protocol"
@@ -69,10 +69,10 @@ func TestRegisterRPC_ReceivesValidMessage(t *testing.T) {
 
 		return nil
 	}
-	prysmP2P.RPCTopicMappings[topic] = new(ethpb.Fork)
+	silaP2P.RPCTopicMappings[topic] = new(ethpb.Fork)
 	// Cleanup Topic mappings
 	defer func() {
-		delete(prysmP2P.RPCTopicMappings, topic)
+		delete(silaP2P.RPCTopicMappings, topic)
 	}()
 	r.registerRPC(topic, handler)
 
@@ -105,10 +105,10 @@ func TestRPC_ReceivesInvalidMessage(t *testing.T) {
 		}
 		return nil
 	}
-	prysmP2P.RPCTopicMappings[topic] = new(ethpb.Fork)
+	silaP2P.RPCTopicMappings[topic] = new(ethpb.Fork)
 	// Cleanup Topic mappings
 	defer func() {
-		delete(prysmP2P.RPCTopicMappings, topic)
+		delete(silaP2P.RPCTopicMappings, topic)
 	}()
 	r.registerRPC(topic, handler)
 

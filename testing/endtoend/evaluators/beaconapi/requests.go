@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/pkg/errors"
 )
 
@@ -205,10 +205,10 @@ var getRequests = map[string]endpoint{
 				return fmt.Errorf(msgWrongJSON, &structs.GetVersionResponse{}, p)
 			}
 			if pResp.Data == nil {
-				return errEmptyPrysmData
+				return errEmptySilaData
 			}
-			if !strings.Contains(pResp.Data.Version, "Sila-Prysm") {
-				return errors.New("version response does not contain Sila-Prysm client name")
+			if !strings.Contains(pResp.Data.Version, "Sila") {
+				return errors.New("version response does not contain Sila client name")
 			}
 			return nil
 		})),
@@ -228,13 +228,13 @@ var getRequests = map[string]endpoint{
 				return fmt.Errorf(msgWrongJSON, &structs.GetProposerDutiesResponse{}, lh)
 			}
 			if pResp.Data == nil {
-				return errEmptyPrysmData
+				return errEmptySilaData
 			}
 			if lhResp.Data == nil {
 				return errEmptyLighthouseData
 			}
 			if lhResp.Data[0].Slot == "0" {
-				// Lighthouse returns a proposer for slot 0 and Prysm doesn't
+				// Lighthouse returns a proposer for slot 0 and Sila doesn't
 				lhResp.Data = lhResp.Data[1:]
 			}
 			return compareJSON(pResp, lhResp)

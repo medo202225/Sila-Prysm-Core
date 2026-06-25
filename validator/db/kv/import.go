@@ -7,20 +7,20 @@ import (
 	"fmt"
 	"io"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/slashings"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/slashings"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
 	"github.com/pkg/errors"
 )
 
 // ImportStandardProtection takes in EIP-3076 compliant JSON file used for slashing protection
-// by Sila validators and imports its data into Sila-Prysm's internal complete representation of slashing
+// by Sila validators and imports its data into Sila's internal complete representation of slashing
 // protection in the validator client's database.
 func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) error {
 	encodedJSON, err := io.ReadAll(r)
@@ -62,7 +62,7 @@ func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) e
 
 	for pubKey, signedBlocks := range signedBlocksByPubKey {
 		// Transform the processed signed blocks data from the JSON.
-		// file into the internal Sila-Prysm representation of proposal history.
+		// file into the internal Sila representation of proposal history.
 		if err := bar.Add(1); err != nil {
 			log.WithError(err).Debug("Could not increase progress bar")
 		}
@@ -78,7 +78,7 @@ func (s *Store) ImportStandardProtectionJSON(ctx context.Context, r io.Reader) e
 	bar = common.InitializeProgressBar(len(signedAttsByPubKey), "Transform signed attestations:")
 	for pubKey, signedAtts := range signedAttsByPubKey {
 		// Transform the processed signed attestation data from the JSON.
-		// file into the internal Sila-Prysm representation of attesting history.
+		// file into the internal Sila representation of attesting history.
 		if err := bar.Add(1); err != nil {
 			log.WithError(err).Debug("Could not increase progress bar")
 		}

@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-api/mock"
-	testhelpers "github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-api/test-helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
+	testhelpers "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/test-helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	"github.com/pkg/errors"
 	"go.uber.org/mock/gomock"
 )

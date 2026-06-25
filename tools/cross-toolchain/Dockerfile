@@ -1,4 +1,4 @@
-# Prysmatic Labs Remote Build Execution Image with Cross Compile Support.
+# Sila Labs Remote Build Execution Image with Cross Compile Support.
 #
 # See README.md for update instructions.
 

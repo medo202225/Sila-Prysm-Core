@@ -3,7 +3,7 @@ package blockchain
 import (
 	stderrors "errors"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
 	"github.com/pkg/errors"
 )
 

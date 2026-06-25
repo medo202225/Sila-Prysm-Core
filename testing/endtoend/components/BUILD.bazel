@@ -18,7 +18,7 @@ go_library(
         "//testing/endtoend/static-files/eth1:eth1data",
         "@lighthouse//:lighthouse_bin",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/components",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components",
     visibility = ["//testing/endtoend:__subpackages__"],
     deps = [
         "//beacon-chain/state:go_default_library",
@@ -31,7 +31,7 @@ go_library(
         "//config/params:go_default_library",
         "//crypto/bls:go_default_library",
         "//io/file:go_default_library",
-        "//proto/prysm/v1alpha1/validator-client:go_default_library",
+        "//proto/sila/v1alpha1/validator-client:go_default_library",
         "//runtime/interop:go_default_library",
         "//testing/endtoend/helpers:go_default_library",
         "//testing/endtoend/params:go_default_library",

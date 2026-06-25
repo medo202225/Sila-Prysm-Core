@@ -8,11 +8,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/components"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/components/eth1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
-	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/eth1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
 )
@@ -261,8 +261,8 @@ func (c *componentHandler) printPIDs(logger func(string, ...any)) {
 
 	msg += "This test PID: " + strconv.Itoa(os.Getpid()) + " (parent=" + strconv.Itoa(os.Getppid()) + ")\n"
 
-	msg += fmt.Sprintf("Prysm beacon chain nodes: %v\n", PIDsFromMultiComponentRunner(c.beaconNodes))
-	msg += fmt.Sprintf("Prysm validators: %v\n", PIDsFromMultiComponentRunner(c.validatorNodes))
+	msg += fmt.Sprintf("Sila beacon chain nodes: %v\n", PIDsFromMultiComponentRunner(c.beaconNodes))
+	msg += fmt.Sprintf("Sila validators: %v\n", PIDsFromMultiComponentRunner(c.validatorNodes))
 	if c.lighthouseBeaconNodes != nil {
 		msg += fmt.Sprintf("Lighthouse beacon chain nodes: %v\n", PIDsFromMultiComponentRunner(c.lighthouseBeaconNodes))
 	}

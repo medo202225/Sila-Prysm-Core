@@ -3,7 +3,7 @@ load("@sila//tools/go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["analyzer.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/tools/analyzers/modernize/mapsloop",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/tools/analyzers/modernize/mapsloop",
     visibility = ["//visibility:public"],
     deps = ["@org_golang_x_tools//go/analysis/passes/modernize:go_default_library"],
 )

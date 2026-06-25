@@ -3,9 +3,9 @@ package state_native
 import (
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 // Ensure type BeaconState below implements BeaconState interface.

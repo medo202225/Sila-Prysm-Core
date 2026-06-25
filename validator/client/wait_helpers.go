@@ -4,12 +4,12 @@ import (
 	"context"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
 // slotComponentDeadline returns the absolute time corresponding to the provided slot component.
@@ -31,7 +31,7 @@ func (v *validator) waitUntilSlotComponent(ctx context.Context, slot primitives.
 		log.WithError(err).WithField("slot", slot).Error("Slot overflows, unable to wait for slot component deadline")
 		return
 	}
-	wait := prysmTime.Until(finalTime)
+	wait := silaTime.Until(finalTime)
 	if wait <= 0 {
 		return
 	}
@@ -59,7 +59,7 @@ func (v *validator) waitForPayloadAvailableOrDeadline(ctx context.Context, slot 
 		return
 	}
 	available := v.payloadAvailability.waiter(slot)
-	wait := prysmTime.Until(deadline)
+	wait := silaTime.Until(deadline)
 	if wait <= 0 {
 		return
 	}

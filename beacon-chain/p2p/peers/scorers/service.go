@@ -5,8 +5,8 @@ import (
 	"math"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/peerdata"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/peerdata"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 )

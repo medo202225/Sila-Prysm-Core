@@ -1,6 +1,6 @@
 - name: AggregateAndProof#phase0
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message AggregateAttestationAndProof {
   spec: |
     <spec ssz_object="AggregateAndProof" fork="phase0" hash="a218764f">
@@ -12,7 +12,7 @@
 
 - name: AggregateAndProof#electra
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message AggregateAttestationAndProofElectra {
   spec: |
     <spec ssz_object="AggregateAndProof" fork="electra" hash="a7f482d7">
@@ -25,7 +25,7 @@
 
 - name: Attestation#phase0
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message Attestation {
   spec: |
     <spec ssz_object="Attestation" fork="phase0" hash="5fc71dce">
@@ -37,7 +37,7 @@
 
 - name: Attestation#electra
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message AttestationElectra {
   spec: |
     <spec ssz_object="Attestation" fork="electra" hash="a27cddfb">
@@ -77,7 +77,7 @@
 
 - name: AttesterSlashing#electra
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message AttesterSlashingElectra {
   spec: |
     <spec ssz_object="AttesterSlashing" fork="electra" hash="2b9f773d">
@@ -90,7 +90,7 @@
 
 - name: BLSToExecutionChange#capella
   sources:
-    - file: proto/prysm/v1alpha1/withdrawals.proto
+    - file: proto/sila/v1alpha1/withdrawals.proto
       search: message BLSToExecutionChange {
   spec: |
     <spec ssz_object="BLSToExecutionChange" fork="capella" hash="9271c356">
@@ -133,7 +133,7 @@
 
 - name: BeaconBlockBody#altair
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message BeaconBlockBodyAltair {
   spec: |
     <spec ssz_object="BeaconBlockBody" fork="altair" hash="4afb2e64">
@@ -152,7 +152,7 @@
 
 - name: BeaconBlockBody#bellatrix
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message BeaconBlockBodyBellatrix {
   spec: |
     <spec ssz_object="BeaconBlockBody" fork="bellatrix" hash="2ba73fc8">
@@ -172,7 +172,7 @@
 
 - name: BeaconBlockBody#capella
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message BeaconBlockBodyCapella {
   spec: |
     <spec ssz_object="BeaconBlockBody" fork="capella" hash="3136f99b">
@@ -193,7 +193,7 @@
 
 - name: BeaconBlockBody#deneb
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message BeaconBlockBodyDeneb {
   spec: |
     <spec ssz_object="BeaconBlockBody" fork="deneb" hash="cf0c1053">
@@ -216,7 +216,7 @@
 
 - name: BeaconBlockBody#electra
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message BeaconBlockBodyElectra {
   spec: |
     <spec ssz_object="BeaconBlockBody" fork="electra" hash="cd172b8c">
@@ -284,7 +284,7 @@
 
 - name: BeaconState#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconState {
   spec: |
     <spec ssz_object="BeaconState" fork="phase0" hash="05beaa1c">
@@ -314,7 +314,7 @@
 
 - name: BeaconState#altair
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconStateAltair {
   spec: |
     <spec ssz_object="BeaconState" fork="altair" hash="8de7d5fb">
@@ -352,7 +352,7 @@
 
 - name: BeaconState#bellatrix
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconStateBellatrix {
   spec: |
     <spec ssz_object="BeaconState" fork="bellatrix" hash="e5633a51">
@@ -387,7 +387,7 @@
 
 - name: BeaconState#capella
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconStateCapella {
   spec: |
     <spec ssz_object="BeaconState" fork="capella" hash="245ba83b">
@@ -428,7 +428,7 @@
 
 - name: BeaconState#deneb
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconStateDeneb {
   spec: |
     <spec ssz_object="BeaconState" fork="deneb" hash="32fd9dc4">
@@ -466,7 +466,7 @@
 
 - name: BeaconState#electra
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconStateElectra {
   spec: |
     <spec ssz_object="BeaconState" fork="electra" hash="55e40daf">
@@ -521,7 +521,7 @@
 
 - name: BeaconState#fulu
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message BeaconStateFulu {
   spec: |
     <spec ssz_object="BeaconState" fork="fulu" hash="0923b253">
@@ -741,7 +741,7 @@
 
 - name: BlobIdentifier#deneb
   sources:
-    - file: proto/prysm/v1alpha1/blobs.proto
+    - file: proto/sila/v1alpha1/blobs.proto
       search: message BlobIdentifier {
   spec: |
     <spec ssz_object="BlobIdentifier" fork="deneb" hash="14d845de">
@@ -752,7 +752,7 @@
 
 - name: BlobSidecar#deneb
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message BlobSidecar {
   spec: |
     <spec ssz_object="BlobSidecar" fork="deneb" hash="b4f28e34">
@@ -822,7 +822,7 @@
 
 - name: ContributionAndProof#altair
   sources:
-    - file: proto/prysm/v1alpha1/sync_committee.proto
+    - file: proto/sila/v1alpha1/sync_committee.proto
       search: message ContributionAndProof {
   spec: |
     <spec ssz_object="ContributionAndProof" fork="altair" hash="f7a5150c">
@@ -834,7 +834,7 @@
 
 - name: DataColumnSidecar#fulu
   sources:
-    - file: proto/prysm/v1alpha1/data_columns.proto
+    - file: proto/sila/v1alpha1/data_columns.proto
       search: message DataColumnSidecar {
   spec: |
     <spec ssz_object="DataColumnSidecar" fork="fulu" hash="03586114">
@@ -869,7 +869,7 @@
 
 - name: DataColumnsByRootIdentifier#fulu
   sources:
-    - file: proto/prysm/v1alpha1/data_columns.proto
+    - file: proto/sila/v1alpha1/data_columns.proto
       search: message DataColumnsByRootIdentifier {
   spec: |
     <spec ssz_object="DataColumnsByRootIdentifier" fork="fulu" hash="f0478456">
@@ -891,7 +891,7 @@
 
 - name: DepositData#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message Data {
   spec: |
     <spec ssz_object="DepositData" fork="phase0" hash="44ba3a61">
@@ -904,7 +904,7 @@
 
 - name: DepositMessage#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message DepositMessage {
   spec: |
     <spec ssz_object="DepositMessage" fork="phase0" hash="d6f4c2ef">
@@ -940,7 +940,7 @@
 
 - name: Eth1Data#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message Eth1Data {
   spec: |
     <spec ssz_object="Eth1Data" fork="phase0" hash="1d7be228">
@@ -1199,7 +1199,7 @@
 
 - name: Fork#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message Fork {
   spec: |
     <spec ssz_object="Fork" fork="phase0" hash="d210b04e">
@@ -1211,7 +1211,7 @@
 
 - name: ForkData#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message ForkData {
   spec: |
     <spec ssz_object="ForkData" fork="phase0" hash="8ed39352">
@@ -1222,7 +1222,7 @@
 
 - name: HistoricalBatch#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message HistoricalBatch {
   spec: |
     <spec ssz_object="HistoricalBatch" fork="phase0" hash="3b677eb3">
@@ -1233,7 +1233,7 @@
 
 - name: HistoricalSummary#capella
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message HistoricalSummary {
   spec: |
     <spec ssz_object="HistoricalSummary" fork="capella" hash="bfff1483">
@@ -1255,7 +1255,7 @@
 
 - name: IndexedAttestation#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message IndexedAttestation {
   spec: |
     <spec ssz_object="IndexedAttestation" fork="phase0" hash="b321d4c3">
@@ -1267,7 +1267,7 @@
 
 - name: IndexedAttestation#electra
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message IndexedAttestationElectra {
   spec: |
     <spec ssz_object="IndexedAttestation" fork="electra" hash="2f924640">
@@ -1290,7 +1290,7 @@
 
 - name: LightClientBootstrap#altair
   sources:
-    - file: proto/prysm/v1alpha1/light_client.proto
+    - file: proto/sila/v1alpha1/light_client.proto
       search: message LightClientBootstrapAltair {
   spec: |
     <spec ssz_object="LightClientBootstrap" fork="altair" hash="e0d2fa88">
@@ -1315,7 +1315,7 @@
 
 - name: LightClientFinalityUpdate#altair
   sources:
-    - file: proto/prysm/v1alpha1/light_client.proto
+    - file: proto/sila/v1alpha1/light_client.proto
       search: message LightClientFinalityUpdateAltair {
   spec: |
     <spec ssz_object="LightClientFinalityUpdate" fork="altair" hash="d392e9f3">
@@ -1347,7 +1347,7 @@
 
 - name: LightClientHeader#altair
   sources:
-    - file: proto/prysm/v1alpha1/light_client.proto
+    - file: proto/sila/v1alpha1/light_client.proto
       search: message LightClientHeaderAltair {
   spec: |
     <spec ssz_object="LightClientHeader" fork="altair" hash="53de7cd2">
@@ -1357,7 +1357,7 @@
 
 - name: LightClientHeader#capella
   sources:
-    - file: proto/prysm/v1alpha1/light_client.proto
+    - file: proto/sila/v1alpha1/light_client.proto
       search: message LightClientHeaderCapella {
   spec: |
     <spec ssz_object="LightClientHeader" fork="capella" hash="b625e61e">
@@ -1385,7 +1385,7 @@
 
 - name: LightClientOptimisticUpdate#altair
   sources:
-    - file: proto/prysm/v1alpha1/light_client.proto
+    - file: proto/sila/v1alpha1/light_client.proto
       search: message LightClientOptimisticUpdateAltair {
   spec: |
     <spec ssz_object="LightClientOptimisticUpdate" fork="altair" hash="0818d65f">
@@ -1411,7 +1411,7 @@
 
 - name: LightClientUpdate#altair
   sources:
-    - file: proto/prysm/v1alpha1/light_client.proto
+    - file: proto/sila/v1alpha1/light_client.proto
       search: message LightClientUpdateAltair {
   spec: |
     <spec ssz_object="LightClientUpdate" fork="altair" hash="abbfc36b">
@@ -1550,7 +1550,7 @@
 
 - name: PendingAttestation#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message PendingAttestation {
   spec: |
     <spec ssz_object="PendingAttestation" fork="phase0" hash="e0a37cea">
@@ -1563,7 +1563,7 @@
 
 - name: PendingConsolidation#electra
   sources:
-    - file: proto/prysm/v1alpha1/eip_7251.proto
+    - file: proto/sila/v1alpha1/eip_7251.proto
       search: message PendingConsolidation {
   spec: |
     <spec ssz_object="PendingConsolidation" fork="electra" hash="6ded98cf">
@@ -1574,7 +1574,7 @@
 
 - name: PendingDeposit#electra
   sources:
-    - file: proto/prysm/v1alpha1/eip_7251.proto
+    - file: proto/sila/v1alpha1/eip_7251.proto
       search: message PendingDeposit {
   spec: |
     <spec ssz_object="PendingDeposit" fork="electra" hash="62923226">
@@ -1588,7 +1588,7 @@
 
 - name: PendingPartialWithdrawal#electra
   sources:
-    - file: proto/prysm/v1alpha1/eip_7251.proto
+    - file: proto/sila/v1alpha1/eip_7251.proto
       search: message PendingPartialWithdrawal {
   spec: |
     <spec ssz_object="PendingPartialWithdrawal" fork="electra" hash="44f687d1">
@@ -1600,7 +1600,7 @@
 
 - name: PowBlock#bellatrix
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message PowBlock {
   spec: |
     <spec ssz_object="PowBlock" fork="bellatrix" hash="c6c8739a">
@@ -1635,7 +1635,7 @@
 
 - name: SignedAggregateAndProof#phase0
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message SignedAggregateAttestationAndProof {
   spec: |
     <spec ssz_object="SignedAggregateAndProof" fork="phase0" hash="52046edd">
@@ -1646,7 +1646,7 @@
 
 - name: SignedAggregateAndProof#electra
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message SignedAggregateAttestationAndProofElectra {
   spec: |
     <spec ssz_object="SignedAggregateAndProof" fork="electra" hash="7e784e12">
@@ -1658,7 +1658,7 @@
 
 - name: SignedBLSToExecutionChange#capella
   sources:
-    - file: proto/prysm/v1alpha1/withdrawals.proto
+    - file: proto/sila/v1alpha1/withdrawals.proto
       search: message SignedBLSToExecutionChange {
   spec: |
     <spec ssz_object="SignedBLSToExecutionChange" fork="capella" hash="09a5e4b9">
@@ -1669,7 +1669,7 @@
 
 - name: SignedBeaconBlock#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_block.proto
+    - file: proto/sila/v1alpha1/beacon_block.proto
       search: message SignedBeaconBlock {
   spec: |
     <spec ssz_object="SignedBeaconBlock" fork="phase0" hash="627b8629">
@@ -1680,7 +1680,7 @@
 
 - name: SignedBeaconBlockHeader#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message SignedBeaconBlockHeader {
   spec: |
     <spec ssz_object="SignedBeaconBlockHeader" fork="phase0" hash="5784d47c">
@@ -1691,7 +1691,7 @@
 
 - name: SignedContributionAndProof#altair
   sources:
-    - file: proto/prysm/v1alpha1/sync_committee.proto
+    - file: proto/sila/v1alpha1/sync_committee.proto
       search: message SignedContributionAndProof {
   spec: |
     <spec ssz_object="SignedContributionAndProof" fork="altair" hash="56c7a91a">
@@ -1748,7 +1748,7 @@
 
 - name: SignedVoluntaryExit#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message SignedVoluntaryExit {
   spec: |
     <spec ssz_object="SignedVoluntaryExit" fork="phase0" hash="89ba48b3">
@@ -1759,7 +1759,7 @@
 
 - name: SigningData#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message SigningData {
   spec: |
     <spec ssz_object="SigningData" fork="phase0" hash="c9a66f76">
@@ -1770,7 +1770,7 @@
 
 - name: SingleAttestation#electra
   sources:
-    - file: proto/prysm/v1alpha1/attestation.proto
+    - file: proto/sila/v1alpha1/attestation.proto
       search: message SingleAttestation {
   spec: |
     <spec ssz_object="SingleAttestation" fork="electra" hash="f67f746a">
@@ -1783,7 +1783,7 @@
 
 - name: SyncAggregate#altair
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message SyncAggregate {
   spec: |
     <spec ssz_object="SyncAggregate" fork="altair" hash="51e247e5">
@@ -1794,7 +1794,7 @@
 
 - name: SyncAggregatorSelectionData#altair
   sources:
-    - file: proto/prysm/v1alpha1/beacon_state.proto
+    - file: proto/sila/v1alpha1/beacon_state.proto
       search: message SyncAggregatorSelectionData {
   spec: |
     <spec ssz_object="SyncAggregatorSelectionData" fork="altair" hash="990a8a7f">
@@ -1805,7 +1805,7 @@
 
 - name: SyncCommittee#altair
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message SyncCommittee {
   spec: |
     <spec ssz_object="SyncCommittee" fork="altair" hash="b1d52376">
@@ -1816,7 +1816,7 @@
 
 - name: SyncCommitteeContribution#altair
   sources:
-    - file: proto/prysm/v1alpha1/sync_committee.proto
+    - file: proto/sila/v1alpha1/sync_committee.proto
       search: message SyncCommitteeContribution {
   spec: |
     <spec ssz_object="SyncCommitteeContribution" fork="altair" hash="9f9b0125">
@@ -1830,7 +1830,7 @@
 
 - name: SyncCommitteeMessage#altair
   sources:
-    - file: proto/prysm/v1alpha1/sync_committee.proto
+    - file: proto/sila/v1alpha1/sync_committee.proto
       search: message SyncCommitteeMessage {
   spec: |
     <spec ssz_object="SyncCommitteeMessage" fork="altair" hash="0764ce67">
@@ -1843,7 +1843,7 @@
 
 - name: Validator#phase0
   sources:
-    - file: proto/prysm/v1alpha1/beacon_core_types.proto
+    - file: proto/sila/v1alpha1/beacon_core_types.proto
       search: message Validator {
   spec: |
     <spec ssz_object="Validator" fork="phase0" hash="54f88c17">

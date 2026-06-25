@@ -1,7 +1,7 @@
 package state_native
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
 	"github.com/pkg/errors"
 )
 

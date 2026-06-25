@@ -1,10 +1,10 @@
 package state_native
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/time"
-	customtypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/state-native/custom-types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stateutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
+	customtypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/custom-types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stateutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 // CurrentEpochParticipation corresponding to participation bits on the beacon chain.

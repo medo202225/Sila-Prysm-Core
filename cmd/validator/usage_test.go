@@ -4,7 +4,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
 	"github.com/urfave/cli/v2"
 )
 

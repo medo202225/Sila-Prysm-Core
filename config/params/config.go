@@ -1,4 +1,4 @@
-// Package params defines important constants that are essential to Prysm services.
+// Package params defines important constants that are essential to Sila services.
 package params
 
 import (
@@ -10,12 +10,12 @@ import (
 	"sync"
 	"time"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila/common"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -99,7 +99,7 @@ type BeaconChainConfig struct {
 	PayloadAttestationDueBPS        primitives.BP    `yaml:"PAYLOAD_ATTESTATION_DUE_BPS" spec:"true"`         // PayloadAttestationDueBPS defines the payload attestation due time in basis points of the slot.
 	PayloadDueBPS                   primitives.BP    `yaml:"PAYLOAD_DUE_BPS" spec:"true"`                     // PayloadDueBPS defines the cutoff for an execution payload to be considered timely, in basis points of the slot.
 
-	// Prysm-internal (non-spec) parameters.
+	// Sila-internal (non-spec) parameters.
 	EquivocationEarlyDueBPS primitives.BP `yaml:"-"` // Cutoff for an "early" proposer equivocation, in basis points of the slot.
 
 	// Sila execution-layer PoW compatibility parameters.
@@ -156,12 +156,12 @@ type BeaconChainConfig struct {
 	DomainPTCAttester                 [4]byte `yaml:"DOMAIN_PTC_ATTESTER" spec:"true"`                   // DomainPTCAttester defines the BLS signature domain for payload transaction committee attester.
 	DomainProposerPreferences         [4]byte `yaml:"DOMAIN_PROPOSER_PREFERENCES" spec:"true"`           // DomainProposerPreferences defines the BLS signature domain for proposer preferences.
 
-	// Prysm constants.
+	// Sila constants.
 	GenesisValidatorsRoot          [32]byte        // GenesisValidatorsRoot is the root hash of the genesis validators.
 	GweiPerEth                     uint64          // GweiPerEth is the amount of gwei corresponding to 1 eth.
 	BLSSecretKeyLength             int             // BLSSecretKeyLength defines the expected length of BLS secret keys in bytes.
 	BLSPubkeyLength                int             // BLSPubkeyLength defines the expected length of BLS public keys in bytes.
-	DefaultBufferSize              int             // DefaultBufferSize for channels across the Prysm repository.
+	DefaultBufferSize              int             // DefaultBufferSize for channels across the Sila repository.
 	ValidatorPrivkeyFileName       string          // ValidatorPrivKeyFileName specifies the string name of a validator private key file.
 	WithdrawalPrivkeyFileName      string          // WithdrawalPrivKeyFileName specifies the string name of a withdrawal private key file.
 	RPCSyncCheck                   time.Duration   // Number of seconds to query the sync service, to find out if the node is synced or not.

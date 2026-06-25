@@ -3,7 +3,7 @@
 package db
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/kv"
 )
 
 // NewFileName uses the KVStoreDatafilePath so that if this layer of

@@ -3,8 +3,8 @@ package bls
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestDisallowZeroSecretKeys(t *testing.T) {

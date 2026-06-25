@@ -4,7 +4,7 @@ import (
 	"github.com/sila-chain/Sila/common/fdlimit"
 )
 
-// SetMaxFdLimits is a wrapper around a few go-ethereum methods to allow prysm to
+// SetMaxFdLimits is a wrapper around a few go-ethereum methods to allow sila to
 // set its file descriptor limits at the maximum possible value.
 func SetMaxFdLimits() error {
 	curr, err := fdlimit.Current()

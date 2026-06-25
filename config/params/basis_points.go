@@ -1,6 +1,6 @@
 package params
 
-import "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+import "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 
 const BasisPoints = primitives.BP(10000)
 

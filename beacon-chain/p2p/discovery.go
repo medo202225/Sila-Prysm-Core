@@ -10,14 +10,14 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/peerdas"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/p2p/discover"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/sila-chain/Sila/p2p/enr"
@@ -879,7 +879,7 @@ func retrieveMultiAddrsFromNode(node *enode.Node) ([]ma.Multiaddr, error) {
 
 	// Retrieve the node public key.
 	pubkey := node.Pubkey()
-	assertedKey, err := ecdsaprysm.ConvertToInterfacePubkey(pubkey)
+	assertedKey, err := ecdsasila.ConvertToInterfacePubkey(pubkey)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not get pubkey")
 	}
@@ -963,7 +963,7 @@ func getPort(node *enode.Node, protocol internetProtocol) (uint, bool, error) {
 
 func convertToUdpMultiAddr(node *enode.Node) ([]ma.Multiaddr, error) {
 	pubkey := node.Pubkey()
-	assertedKey, err := ecdsaprysm.ConvertToInterfacePubkey(pubkey)
+	assertedKey, err := ecdsasila.ConvertToInterfacePubkey(pubkey)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not get pubkey")
 	}

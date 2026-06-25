@@ -7,7 +7,7 @@ go_library(
         "config.go",
         "utils.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils",
     visibility = ["//testing/spectest:__subpackages__"],
     deps = [
         "//config/params:go_default_library",

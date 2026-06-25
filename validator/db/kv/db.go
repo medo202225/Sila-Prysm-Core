@@ -8,13 +8,13 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/abool"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/abool"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 	prombolt "github.com/sila-chain/prombbolt"
@@ -42,7 +42,7 @@ var (
 
 // blockedBuckets represents the buckets that we want to restrict
 // from our metrics fetching for performance reasons. For a detailed
-// summary, it can be read in https://github.com/sila-chain/prysm/issues/8274.
+// summary, it can be read in https://github.com/sila-chain/sila/issues/8274.
 var blockedBuckets = [][]byte{
 	deprecatedAttestationHistoryBucket,
 	lowestSignedSourceBucket,
@@ -60,7 +60,7 @@ type Config struct {
 	PubKeys [][fieldparams.BLSPubkeyLength]byte
 }
 
-// Store defines an implementation of the Sila-Prysm Database interface
+// Store defines an implementation of the Sila Database interface
 // using BoltDB as the underlying persistent kv-store for Sila consensus nodes.
 type Store struct {
 	db                                 *bolt.DB

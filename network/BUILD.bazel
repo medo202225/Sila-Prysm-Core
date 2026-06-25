@@ -8,7 +8,7 @@ go_library(
         "external_ip.go",
         "log.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/network",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/network",
     visibility = ["//visibility:public"],
     deps = [
         "//network/authorization:go_default_library",

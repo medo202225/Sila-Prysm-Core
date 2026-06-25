@@ -7,13 +7,13 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/derived"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/derived"
 	"github.com/urfave/cli/v2"
 )
 

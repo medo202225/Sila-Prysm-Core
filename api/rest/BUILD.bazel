@@ -8,7 +8,7 @@ go_library(
         "rest_connection_provider.go",
         "rest_handler.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/api/rest",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/api/rest",
     visibility = ["//visibility:public"],
     deps = [
         "//api:go_default_library",

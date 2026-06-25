@@ -1,5 +1,5 @@
 // Package prometheus defines a service which is used for metrics collection
-// and health of a node in Prysm.
+// and health of a node in Sila.
 package prometheus
 
 import (
@@ -12,7 +12,7 @@ import (
 	"runtime/pprof"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"

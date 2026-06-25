@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
 	"github.com/sila-chain/Sila/accounts/abi"
 	"github.com/sila-chain/Sila/accounts/abi/bind"
 	"github.com/sila-chain/Sila/common"

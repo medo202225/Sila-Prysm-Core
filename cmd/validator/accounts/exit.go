@@ -4,16 +4,16 @@ import (
 	"io"
 	"strings"
 
-	grpcutil "github.com/sila-chain/Sila-Prysm-Core/v7/api/grpc"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/node"
+	grpcutil "github.com/sila-chain/Sila-Consensus-Core/v7/api/grpc"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/node"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
@@ -33,7 +33,7 @@ func Exit(c *cli.Context, r io.Reader) error {
 	grpcHeaders := strings.Split(c.String(flags.GRPCHeadersFlag.Name), ",")
 	beaconRPCProvider := c.String(flags.BeaconRPCProviderFlag.Name)
 	if !c.IsSet(flags.Web3SignerURLFlag.Name) && !c.IsSet(flags.WalletDirFlag.Name) && !c.IsSet(flags.InteropNumValidators.Name) {
-		return errors.Errorf("No validators found, please provide a prysm wallet directory via flag --%s "+
+		return errors.Errorf("No validators found, please provide a sila wallet directory via flag --%s "+
 			"or a remote signer location with corresponding public keys via flags --%s and --%s ",
 			flags.WalletDirFlag.Name,
 			flags.Web3SignerURLFlag.Name,

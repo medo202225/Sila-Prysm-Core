@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
 )
 
-// IKeymanager defines a general keymanager interface for Sila-Prysm wallets.
+// IKeymanager defines a general keymanager interface for Sila wallets.
 type IKeymanager interface {
 	PublicKeysFetcher
 	Signer
@@ -110,7 +110,7 @@ type Keystore struct {
 }
 
 // Kind defines an enum for either local, derived, or remote-signing
-// keystores for Sila-Prysm wallets.
+// keystores for Sila wallets.
 type Kind int
 
 const (

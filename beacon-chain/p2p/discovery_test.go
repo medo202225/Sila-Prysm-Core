@@ -17,23 +17,23 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	mock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	testDB "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/peerdata"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/scorers"
-	testp2p "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/wrapper"
-	leakybucket "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket"
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	prysmNetwork "github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/peerdata"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/scorers"
+	testp2p "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/wrapper"
+	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	silaNetwork "github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila/p2p/discover"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/sila-chain/Sila/p2p/enr"
@@ -48,7 +48,7 @@ import (
 var discoveryWaitTime = 1 * time.Second
 
 func createAddrAndPrivKey(t *testing.T) (net.IP, *ecdsa.PrivateKey) {
-	ip, err := prysmNetwork.ExternalIPv4()
+	ip, err := silaNetwork.ExternalIPv4()
 	require.NoError(t, err, "Could not get ip")
 	ipAddr := net.ParseIP(ip)
 	temp := t.TempDir()
@@ -76,7 +76,7 @@ func createTestNodeWithID(t *testing.T, id string) *enode.LocalNode {
 	require.NoError(t, err)
 
 	// Convert to ECDSA private key for enode usage
-	ecdsaPrivKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(privKey)
+	ecdsaPrivKey, err := ecdsasila.ConvertFromInterfacePrivKey(privKey)
 	require.NoError(t, err)
 
 	db, err := enode.OpenDB("")
@@ -932,7 +932,7 @@ func TestRefreshPersistentSubnets(t *testing.T) {
 			unmarshalledPrivateKey, err := crypto.UnmarshalSecp256k1PrivateKey(privateKeyBytes)
 			require.NoError(t, err)
 
-			privateKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(unmarshalledPrivateKey)
+			privateKey, err := ecdsasila.ConvertFromInterfacePrivKey(unmarshalledPrivateKey)
 			require.NoError(t, err)
 
 			// Create a p2p service.

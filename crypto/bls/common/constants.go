@@ -1,6 +1,6 @@
 package common
 
-import fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
+import fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 
 // ZeroSecretKey represents a zero secret key.
 var ZeroSecretKey = [32]byte{}

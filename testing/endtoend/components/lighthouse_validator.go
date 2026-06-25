@@ -11,13 +11,13 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/helpers"
-	e2e "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
+	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -50,8 +50,8 @@ func (s *LighthouseValidatorNodeSet) Start(ctx context.Context) error {
 	// Always using genesis count since using anything else would be difficult to test for.
 	validatorNum := int(params.BeaconConfig().MinGenesisActiveValidatorCount)
 	lighthouseBeaconNum := e2e.TestParams.LighthouseBeaconNodeCount
-	prysmBeaconNum := e2e.TestParams.BeaconNodeCount
-	beaconNodeNum := lighthouseBeaconNum + prysmBeaconNum
+	silaBeaconNum := e2e.TestParams.BeaconNodeCount
+	beaconNodeNum := lighthouseBeaconNum + silaBeaconNum
 	if validatorNum%beaconNodeNum != 0 {
 		return errors.New("validator count is not easily divisible by beacon node count")
 	}
@@ -60,7 +60,7 @@ func (s *LighthouseValidatorNodeSet) Start(ctx context.Context) error {
 	// Create validator nodes.
 	nodes := make([]types.ComponentRunner, lighthouseBeaconNum)
 	for i := range lighthouseBeaconNum {
-		offsetIdx := i + prysmBeaconNum
+		offsetIdx := i + silaBeaconNum
 		nodes[i] = NewLighthouseValidatorNode(s.config, validatorsPerNode, i, validatorsPerNode*offsetIdx)
 	}
 	s.nodes = nodes
@@ -176,9 +176,9 @@ func (v *LighthouseValidatorNode) Start(ctx context.Context) error {
 	httpPort := e2e.TestParams.Ports.LighthouseBeaconNodeHTTPPort
 	// In the event we want to run a LH validator with a non LH
 	// beacon node, we split half the validators to run with
-	// lighthouse and the other half with prysm.
+	// lighthouse and the other half with sila.
 	if v.config.UseValidatorCrossClient && index%2 == 0 {
-		httpPort = e2e.TestParams.Ports.PrysmBeaconNodeHTTPPort
+		httpPort = e2e.TestParams.Ports.SilaBeaconNodeHTTPPort
 	}
 	args := []string{
 		"validator_client",
@@ -257,15 +257,15 @@ func NewKeystoreGenerator() *KeystoreGenerator {
 func (k *KeystoreGenerator) Start(_ context.Context) error {
 	validatorNum := int(params.BeaconConfig().MinGenesisActiveValidatorCount)
 	lighthouseBeaconNum := e2e.TestParams.LighthouseBeaconNodeCount
-	prysmBeaconNum := e2e.TestParams.BeaconNodeCount
-	beaconNodeNum := lighthouseBeaconNum + prysmBeaconNum
+	silaBeaconNum := e2e.TestParams.BeaconNodeCount
+	beaconNodeNum := lighthouseBeaconNum + silaBeaconNum
 	if validatorNum%beaconNodeNum != 0 {
 		return errors.New("validator count is not easily divisible by beacon node count")
 	}
 	validatorsPerNode := validatorNum / beaconNodeNum
 
 	for i := range lighthouseBeaconNum {
-		offsetIdx := i + prysmBeaconNum
+		offsetIdx := i + silaBeaconNum
 		_, err := setupKeystores(i, validatorsPerNode*offsetIdx, validatorsPerNode)
 		if err != nil {
 			return err

@@ -71,7 +71,7 @@ type BlockV2BlindedSignRequest struct {
 	BeaconBlock *BeaconBlockV2Blinded `json:"beacon_block" validate:"required"`
 }
 
-// DepositSignRequest Not currently supported by Prysm.
+// DepositSignRequest Not currently supported by Sila.
 // DepositSignRequest is a request object for web3signer sign api.
 
 // RandaoRevealSignRequest is a request object for web3signer sign api.
@@ -175,7 +175,7 @@ type AttestationElectra struct {
 // AttestationData a sub property of Attestation.
 type AttestationData struct {
 	Slot            string        `json:"slot"`  /* uint64 */
-	Index           string        `json:"index"` /* uint64 */ // Prysm uses CommitteeIndex but web3signer uses index.
+	Index           string        `json:"index"` /* uint64 */ // Sila uses CommitteeIndex but web3signer uses index.
 	BeaconBlockRoot hexutil.Bytes `json:"beacon_block_root"`
 	Source          *Checkpoint   `json:"source"`
 	Target          *Checkpoint   `json:"target"`
@@ -217,9 +217,9 @@ type Eth1Data struct {
 
 // ProposerSlashing a sub property of BeaconBlockBody.
 type ProposerSlashing struct {
-	// Prysm uses Header_1 but web3signer uses signed_header_1.
+	// Sila uses Header_1 but web3signer uses signed_header_1.
 	Signedheader1 *SignedBeaconBlockHeader `json:"signed_header_1"`
-	// Prysm uses Header_2 but web3signer uses signed_header_2.
+	// Sila uses Header_2 but web3signer uses signed_header_2.
 	Signedheader2 *SignedBeaconBlockHeader `json:"signed_header_2"`
 }
 
@@ -258,7 +258,7 @@ type Deposit struct {
 }
 
 // DepositData a sub property of Deposit.
-// DepositData Prysm uses Deposit_data instead of DepositData which is inconsistent naming
+// DepositData Sila uses Deposit_data instead of DepositData which is inconsistent naming
 type DepositData struct {
 	PublicKey             hexutil.Bytes `json:"pubkey"`
 	WithdrawalCredentials hexutil.Bytes `json:"withdrawal_credentials"`
@@ -268,7 +268,7 @@ type DepositData struct {
 
 // SignedVoluntaryExit is a sub property of BeaconBlockBody.
 type SignedVoluntaryExit struct {
-	// Prysm uses Exit instead of Message
+	// Sila uses Exit instead of Message
 	Message   *VoluntaryExit `json:"message"`
 	Signature hexutil.Bytes  `json:"signature"`
 }
@@ -335,7 +335,7 @@ type RandaoReveal struct {
 type SyncCommitteeMessage struct {
 	BeaconBlockRoot hexutil.Bytes `json:"beacon_block_root"` /* Hash32 */
 	Slot            string        `json:"slot"`              /* uint64 */
-	// Prysm uses BlockRoot instead of BeaconBlockRoot and has the following extra properties : ValidatorIndex, Signature
+	// Sila uses BlockRoot instead of BeaconBlockRoot and has the following extra properties : ValidatorIndex, Signature
 }
 
 // SyncAggregatorSelectionData a sub property of SyncAggregatorSelectionSignRequest.
@@ -354,7 +354,7 @@ type ContributionAndProof struct {
 // SyncCommitteeContribution a sub property of AggregatorSelectionSignRequest.
 type SyncCommitteeContribution struct {
 	Slot              string        `json:"slot"`               /* uint64 */
-	BeaconBlockRoot   hexutil.Bytes `json:"beacon_block_root"`  /* Hash32 */ // Prysm uses BlockRoot instead of BeaconBlockRoot
+	BeaconBlockRoot   hexutil.Bytes `json:"beacon_block_root"`  /* Hash32 */ // Sila uses BlockRoot instead of BeaconBlockRoot
 	SubcommitteeIndex string        `json:"subcommittee_index"` /* uint64 */
 	AggregationBits   hexutil.Bytes `json:"aggregation_bits"`   /* SSZ hexadecimal string */
 	Signature         hexutil.Bytes `json:"signature"`          /* 96 byte hexadecimal string */

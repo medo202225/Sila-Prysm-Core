@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	bolt "go.etcd.io/bbolt"
 )
 
 const backupsDirectoryName = "backups"
 
 // Backup the database to the datadir backup directory.
-// Example for backup at slot 345: $DATADIR/backups/prysm_beacondb_at_slot_0000345.backup
+// Example for backup at slot 345: $DATADIR/backups/sila_beacondb_at_slot_0000345.backup
 func (s *Store) Backup(ctx context.Context, outputDir string, permissionOverride bool) error {
 	ctx, span := trace.StartSpan(ctx, "BeaconDB.Backup")
 	defer span.End()
@@ -41,7 +41,7 @@ func (s *Store) Backup(ctx context.Context, outputDir string, permissionOverride
 	if err := file.HandleBackupDir(backupsDir, permissionOverride); err != nil {
 		return err
 	}
-	backupPath := path.Join(backupsDir, fmt.Sprintf("prysm_beacondb_at_slot_%07d.backup", head.Block().Slot()))
+	backupPath := path.Join(backupsDir, fmt.Sprintf("sila_beacondb_at_slot_%07d.backup", head.Block().Slot()))
 	log.WithField("backup", backupPath).Info("Writing backup database.")
 
 	copyDB, err := bolt.Open(

@@ -5,10 +5,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition/interop"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition/interop"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
 var (

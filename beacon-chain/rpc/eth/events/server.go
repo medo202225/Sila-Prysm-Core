@@ -6,11 +6,11 @@ package events
 import (
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	opfeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/operation"
-	statefeed "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/feed/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	opfeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/operation"
+	statefeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen"
 )
 
 // Server defines a server implementation of the http events service,

@@ -6,11 +6,11 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-api/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"go.uber.org/mock/gomock"
 )

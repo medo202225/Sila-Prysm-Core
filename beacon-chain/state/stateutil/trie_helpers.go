@@ -3,10 +3,10 @@ package stateutil
 import (
 	"bytes"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash/htr"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	"github.com/pkg/errors"
 )
 

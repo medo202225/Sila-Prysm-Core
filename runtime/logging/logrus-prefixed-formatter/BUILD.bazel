@@ -6,7 +6,7 @@ go_library(
         "formatter.go",
         "prefix-replacements.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/logging/logrus-prefixed-formatter",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/logging/logrus-prefixed-formatter",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_mgutz_ansi//:go_default_library",

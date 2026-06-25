@@ -6,15 +6,15 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/eth/shared"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/v1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/eth/shared"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/eth/v1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
 )
 
@@ -109,7 +109,7 @@ func (*Server) GetVersion(w http.ResponseWriter, r *http.Request) {
 	_, span := trace.StartSpan(r.Context(), "node.GetVersion")
 	defer span.End()
 
-	v := fmt.Sprintf("Sila-Prysm/%s-%s (%s %s)", version.SemanticVersion(), version.GitCommit()[:7], runtime.GOOS, runtime.GOARCH)
+	v := fmt.Sprintf("Sila/%s-%s (%s %s)", version.SemanticVersion(), version.GitCommit()[:7], runtime.GOOS, runtime.GOARCH)
 	resp := &structs.GetVersionResponse{
 		Data: &structs.Version{
 			Version: v,
@@ -140,7 +140,7 @@ func (s *Server) GetVersionV2(w http.ResponseWriter, r *http.Request) {
 		Data: &structs.VersionV2{
 			BeaconNode: &structs.ClientVersionV1{
 				Code:    "PM",
-				Name:    "Sila-Prysm",
+				Name:    "Sila",
 				Version: version.SemanticVersion(),
 				Commit:  commit,
 			},

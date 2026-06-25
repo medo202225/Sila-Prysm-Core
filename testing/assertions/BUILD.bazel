@@ -3,7 +3,7 @@ load("@sila//tools/go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go_default_library",
     srcs = ["assertions.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/assertions",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/assertions",
     visibility = ["//visibility:public"],
     deps = [
         "//encoding/ssz/equality:go_default_library",
@@ -20,7 +20,7 @@ go_test(
     srcs = ["assertions_test.go"],
     deps = [
         ":go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//proto/testing:go_default_library",
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",

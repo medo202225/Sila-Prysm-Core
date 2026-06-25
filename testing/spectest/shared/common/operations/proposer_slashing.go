@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/blocks"
-	v "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/validators"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
+	v "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/validators"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 )
 
 func RunProposerSlashingTest(t *testing.T, config string, fork string, block blockWithSSZObject, sszToState SSZToState) {

@@ -18,7 +18,7 @@ package ethereum.engine.v1;
 import "proto/eth/ext/options.proto";
 
 option csharp_namespace = "Ethereum.Engine.V1";
-option go_package = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1;enginev1";
+option go_package = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1;enginev1";
 option java_multiple_files = true;
 option java_outer_classname = "ExecutionEngineProto";
 option java_package = "org.ethereum.engine.v1";
@@ -121,7 +121,7 @@ message ExecutionPayloadGloas {
   // [New in Gloas:EIP7843]
   uint64 slot_number = 19 [
     (ethereum.eth.ext.cast_type) =
-        "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives.Slot"
+        "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"
   ];
 }
 
@@ -267,7 +267,7 @@ message Withdrawal {
   // Validator index for the withdrawal
   uint64 validator_index = 2
       [ (ethereum.eth.ext.cast_type) =
-            "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/"
+            "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/"
             "primitives.ValidatorIndex" ];
 
   // The execution address receiving the funds

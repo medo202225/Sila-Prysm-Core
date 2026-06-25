@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/fallback"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/rest"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/fallback"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/rest"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/pkg/errors"
@@ -28,7 +28,7 @@ type beaconApiValidatorClient struct {
 	handler                 rest.Handler
 	nodeClient              *beaconApiNodeClient
 	beaconBlockConverter    BeaconBlockConverter
-	prysmChainClient        iface.PrysmChainClient
+	silaChainClient        iface.SilaChainClient
 	isEventStreamRunning    bool
 	stateless               bool
 	envelopeCache           *executionPayloadEnvelopeCache
@@ -57,7 +57,7 @@ func NewBeaconApiValidatorClient(provider rest.RestConnectionProvider, opts ...V
 		handler:                 handler,
 		nodeClient:              nc,
 		beaconBlockConverter:    beaconApiBeaconBlockConverter{},
-		prysmChainClient: prysmChainClient{
+		silaChainClient: silaChainClient{
 			nodeClient: nc,
 			handler:    handler,
 		},

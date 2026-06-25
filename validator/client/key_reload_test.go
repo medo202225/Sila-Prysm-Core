@@ -4,12 +4,12 @@ import (
 	"testing"
 	"time"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	validatormock "github.com/sila-chain/Sila-Prysm-Core/v7/testing/validator-mock"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/testutil"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	validatormock "github.com/sila-chain/Sila-Consensus-Core/v7/testing/validator-mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/testutil"
 	"github.com/pkg/errors"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 	"go.uber.org/mock/gomock"
@@ -27,13 +27,13 @@ func TestValidator_HandleKeyReload(t *testing.T) {
 
 		client := validatormock.NewMockValidatorClient(ctrl)
 		chainClient := validatormock.NewMockChainClient(ctrl)
-		prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+		silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 		v := validator{
 			validatorClient:  client,
 			km:               newMockKeymanager(t, inactive),
 			genesisTime:      time.Unix(1, 0),
 			chainClient:      chainClient,
-			prysmChainClient: prysmChainClient,
+			silaChainClient: silaChainClient,
 			pubkeyToStatus:   make(map[[fieldparams.BLSPubkeyLength]byte]*validatorStatus),
 		}
 
@@ -59,14 +59,14 @@ func TestValidator_HandleKeyReload(t *testing.T) {
 
 		client := validatormock.NewMockValidatorClient(ctrl)
 		chainClient := validatormock.NewMockChainClient(ctrl)
-		prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+		silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 		kp := randKeypair(t)
 		v := validator{
 			validatorClient:  client,
 			km:               newMockKeymanager(t, kp),
 			genesisTime:      time.Unix(1, 0),
 			chainClient:      chainClient,
-			prysmChainClient: prysmChainClient,
+			silaChainClient: silaChainClient,
 			pubkeyToStatus:   make(map[[fieldparams.BLSPubkeyLength]byte]*validatorStatus),
 		}
 

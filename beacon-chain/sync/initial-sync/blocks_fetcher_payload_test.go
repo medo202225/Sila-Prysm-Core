@@ -3,16 +3,16 @@ package initialsync
 import (
 	"testing"
 
-	prysmsync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	enginev1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	silasync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	enginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/pkg/errors"
 )
 
@@ -263,7 +263,7 @@ func TestValidatePayloadBlockConsistency(t *testing.T) {
 		}
 		f.validatePayloadBlockConsistency(r)
 		require.ErrorContains(t, "envelope does not match block", r.err)
-		require.Equal(t, false, errors.Is(r.err, prysmsync.ErrInvalidFetchedData))
+		require.Equal(t, false, errors.Is(r.err, silasync.ErrInvalidFetchedData))
 	})
 
 }

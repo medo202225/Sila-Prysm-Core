@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
 	"github.com/pkg/errors"
 )
 

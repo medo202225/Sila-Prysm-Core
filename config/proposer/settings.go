@@ -3,11 +3,11 @@ package proposer
 import (
 	"fmt"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/validator"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
@@ -101,7 +101,7 @@ func BuilderConfigFromConsensus(from *validatorpb.BuilderConfig) *BuilderConfig 
 	return c
 }
 
-// Settings is a Prysm internal representation of the fee recipient config on the validator client.
+// Settings is a Sila internal representation of the fee recipient config on the validator client.
 // validatorpb.ProposerSettingsPayload maps to Settings on import through the CLI.
 type Settings struct {
 	ProposeConfig map[[fieldparams.BLSPubkeyLength]byte]*Option
@@ -135,17 +135,17 @@ func (ps *Settings) ToConsensus() *validatorpb.ProposerSettingsPayload {
 	return payload
 }
 
-// FeeRecipientConfig is a prysm internal representation to see if the fee recipient was set.
+// FeeRecipientConfig is a sila internal representation to see if the fee recipient was set.
 type FeeRecipientConfig struct {
 	FeeRecipient common.Address
 }
 
-// GraffitiConfig is a prysm internal representation to see if the graffiti was set.
+// GraffitiConfig is a sila internal representation to see if the graffiti was set.
 type GraffitiConfig struct {
 	Graffiti string
 }
 
-// Option is a Prysm internal representation of the ProposerOptionPayload on the validator client in bytes format instead of hex.
+// Option is a Sila internal representation of the ProposerOptionPayload on the validator client in bytes format instead of hex.
 type Option struct {
 	FeeRecipientConfig *FeeRecipientConfig
 	BuilderConfig      *BuilderConfig

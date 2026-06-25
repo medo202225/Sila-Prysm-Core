@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/prompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/prompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/pkg/errors"
 )
 
@@ -58,7 +58,7 @@ func (acm *CLIManager) Delete(ctx context.Context) error {
 	log.WithField("pubkeys", allAccountStr).Warn(
 		"Attempted to delete accounts. IMPORTANT: please run `validator accounts list` to ensure " +
 			"the public keys are indeed deleted. If they are still there, please file an issue at " +
-			"https://github.com/sila-chain/prysm/issues/new")
+			"https://github.com/sila-chain/sila/issues/new")
 	return nil
 }
 

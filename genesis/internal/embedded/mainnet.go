@@ -5,7 +5,7 @@ package embedded
 import (
 	_ "embed"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 )
 
 var (

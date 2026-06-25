@@ -3,7 +3,7 @@ package minimal
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/fulu/rewards"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/fulu/rewards"
 )
 
 func TestMinimal_Fulu_Rewards(t *testing.T) {

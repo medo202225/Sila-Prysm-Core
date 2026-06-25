@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/maxprocs"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/ethclient"
 	"github.com/sila-chain/Sila/params"

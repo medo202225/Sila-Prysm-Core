@@ -4,7 +4,7 @@ go_library(
     name = "go_default_library",
     testonly = True,
     srcs = ["finality.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/altair/finality",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/altair/finality",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/helpers:go_default_library",
@@ -12,7 +12,7 @@ go_library(
         "//beacon-chain/state:go_default_library",
         "//beacon-chain/state/state-native:go_default_library",
         "//consensus-types/blocks:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//testing/require:go_default_library",
         "//testing/spectest/utils:go_default_library",
         "//testing/util:go_default_library",

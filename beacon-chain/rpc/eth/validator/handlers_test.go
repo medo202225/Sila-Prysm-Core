@@ -12,40 +12,40 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	mockChain "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/testing"
-	builderTest "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/builder/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/cache"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/helpers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/core/transition"
-	dbutil "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/testing"
-	doublylinkedtree "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/attestations"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/operations/synccommittee"
-	p2pmock "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/core"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/lookup"
-	validatorv1alpha1 "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/prysm/v1alpha1/validator"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/rpc/testutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state/stategen"
-	mockSync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync/initial-sync/testing"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	ethpbalpha "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	mock2 "github.com/sila-chain/Sila-Prysm-Core/v7/testing/mock"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	mockChain "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
+	builderTest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/builder/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
+	dbutil "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
+	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/synccommittee"
+	p2pmock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/core"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/lookup"
+	validatorv1alpha1 "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/v1alpha1/validator"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/testutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen"
+	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	ethpbalpha "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	mock2 "github.com/sila-chain/Sila-Consensus-Core/v7/testing/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -1569,7 +1569,7 @@ func TestGetAttestationData(t *testing.T) {
 		// Last justified slot = epoch start of 1500
 		// HistoricalRootsLimit = 8192
 		//
-		// More background: https://github.com/sila-chain/prysm/issues/2153
+		// More background: https://github.com/sila-chain/sila/issues/2153
 		// This test breaks if it doesn't use mainnet config
 
 		// Ensure HistoricalRootsLimit matches scenario
@@ -1663,7 +1663,7 @@ func TestGetAttestationData(t *testing.T) {
 		// Last justified slot = epoch start of 1500
 		// HistoricalRootsLimit = 8192
 		//
-		// More background: https://github.com/sila-chain/prysm/issues/2153
+		// More background: https://github.com/sila-chain/sila/issues/2153
 		// This test breaks if it doesn't use mainnet config
 
 		// Ensure HistoricalRootsLimit matches scenario

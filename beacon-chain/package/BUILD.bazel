@@ -13,12 +13,12 @@ pkg_tar(
     name = "beacon-chain-config",
     srcs = glob(["beacon-chain.yaml"]),
     mode = "0640",
-    package_dir = "/etc/prysm",
+    package_dir = "/etc/sila",
 )
 
 pkg_tar(
     name = "beacon-chain-service",
-    srcs = glob(["prysm-beacon-chain.service"]),
+    srcs = glob(["sila-beacon-chain.service"]),
     mode = "0640",
     package_dir = "/usr/lib/systemd/system",
 )
@@ -37,13 +37,13 @@ pkg_deb(
     name = "deb",
     architecture = "amd64",
     conffiles = [
-        "etc/prysm/beacon-chain.yaml",
+        "etc/sila/beacon-chain.yaml",
     ],
     data = ":debian-data",
-    description = "Sila-Prysm Beacon Chain - consensus network communications",
-    homepage = "https://github.com/sila-chain/Sila-Prysm-Core",
-    maintainer = "Sila-Prysm <security@silachain.com>",
-    package = "prysm-beacon-chain",
+    description = "Sila Beacon Chain - consensus network communications",
+    homepage = "https://github.com/sila-chain/Sila-Consensus-Core",
+    maintainer = "Sila <security@silachain.com>",
+    package = "sila-beacon-chain",
     postinst = "postinst.sh",
     preinst = "preinst.sh",
     tags = ["no-remote"],

@@ -31,17 +31,17 @@ import (
 	"time"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/peerdata"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/scorers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
-	pmath "github.com/sila-chain/Sila-Prysm-Core/v7/math"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/metadata"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/peerdata"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/scorers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
+	pmath "github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/metadata"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/p2p/enr"
 	"github.com/libp2p/go-libp2p/core/network"
 	"github.com/libp2p/go-libp2p/core/peer"
@@ -345,7 +345,7 @@ func (p *Status) ChainStateLastUpdated(pid peer.ID) (time.Time, error) {
 	if peerData, ok := p.store.PeerData(pid); ok {
 		return peerData.ChainStateLastUpdated, nil
 	}
-	return prysmTime.Now(), peerdata.ErrPeerUnknown
+	return silaTime.Now(), peerdata.ErrPeerUnknown
 }
 
 // IsBad states if the peer is to be considered bad (by *any* of the registered scorers).
@@ -385,7 +385,7 @@ func (p *Status) NextValidTime(pid peer.ID) (time.Time, error) {
 	if peerData, ok := p.store.PeerData(pid); ok {
 		return peerData.NextValidTime, nil
 	}
-	return prysmTime.Now(), peerdata.ErrPeerUnknown
+	return silaTime.Now(), peerdata.ErrPeerUnknown
 }
 
 // SetNextValidTime sets the earliest possible time we are

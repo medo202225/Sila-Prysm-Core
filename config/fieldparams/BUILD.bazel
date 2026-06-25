@@ -7,7 +7,7 @@ go_library(
         "//config:mainnet": ["mainnet.go"],
         "//config:minimal": ["minimal.go"],
     }),
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams",
     visibility = ["//visibility:public"],
 )
 

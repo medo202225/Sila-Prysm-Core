@@ -1,8 +1,8 @@
 package testing
 
 import (
-	grpcutil "github.com/sila-chain/Sila-Prysm-Core/v7/api/grpc"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers"
+	grpcutil "github.com/sila-chain/Sila-Consensus-Core/v7/api/grpc"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers"
 )
 
 // MockNodeConnection creates a minimal NodeConnection for testing.

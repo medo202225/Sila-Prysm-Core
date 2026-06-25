@@ -17,29 +17,29 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/middleware"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/proposer/loader"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/prometheus"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/prereqs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/wallet"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
-	g "github.com/sila-chain/Sila-Prysm-Core/v7/validator/graffiti"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/local"
-	remoteweb3signer "github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/rpc"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/middleware"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer/loader"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/prometheus"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/prereqs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/wallet"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/kv"
+	g "github.com/sila-chain/Sila-Consensus-Core/v7/validator/graffiti"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
+	remoteweb3signer "github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/rpc"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -60,7 +60,7 @@ type ValidatorClient struct {
 	once                  sync.Once
 }
 
-// NewValidatorClient creates a new instance of the Sila-Prysm validator client.
+// NewValidatorClient creates a new instance of the Sila validator client.
 func NewValidatorClient(cliCtx *cli.Context) (*ValidatorClient, error) {
 	// TODO(#9883) - Maybe we can pass in a new validator client config instead of the cliCTX to abstract away the use of flags here .
 	if err := tracing.Setup(
@@ -155,7 +155,7 @@ func (c *ValidatorClient) Close() {
 		defer c.lock.Unlock()
 
 		c.services.StopAll()
-		log.Info("Stopping Sila-Prysm validator")
+		log.Info("Stopping Sila validator")
 		c.cancel()
 		close(c.stop)
 	})
@@ -181,7 +181,7 @@ func (c *ValidatorClient) getLegacyDatabaseLocation(
 	}
 
 	// We look in the previous, legacy directories.
-	// See https://github.com/sila-chain/prysm/issues/13391
+	// See https://github.com/sila-chain/sila/issues/13391
 	legacyDataDir := c.wallet.AccountsDir()
 	if isWeb3SignerURLFlagSet {
 		legacyDataDir = walletDir
@@ -258,7 +258,7 @@ func (c *ValidatorClient) initializeDB(cliCtx *cli.Context) error {
 	clearFlag := cliCtx.Bool(cmd.ClearDB.Name)
 	forceClearFlag := cliCtx.Bool(cmd.ForceClearDB.Name)
 
-	// Workaround for https://github.com/sila-chain/prysm/issues/13391
+	// Workaround for https://github.com/sila-chain/sila/issues/13391
 	kvDataDir, _, err := c.getLegacyDatabaseLocation(
 		isInteropNumValidatorsSet,
 		isWeb3SignerURLFlagSet,
@@ -517,7 +517,7 @@ func (c *ValidatorClient) registerRPCService(cliCtx *cli.Context) error {
 
 	if serveWebUI {
 		if cliCtx.IsSet(flags.Web3SignerURLFlag.Name) || cliCtx.IsSet(flags.Web3SignerPublicValidatorKeysFlag.Name) {
-			log.Warn("Remote Keymanager API enabled. Sila-Prysm web does not properly support web3signer at this time")
+			log.Warn("Remote Keymanager API enabled. Sila web does not properly support web3signer at this time")
 		}
 	}
 

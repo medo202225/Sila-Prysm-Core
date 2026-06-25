@@ -1,15 +1,15 @@
 // Package testing allows for spinning up a real bolt-db
-// instance for unit tests throughout the Sila-Prysm repo.
+// instance for unit tests throughout the Sila repo.
 package testing
 
 import (
 	"context"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/kv"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/slasherkv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/kv"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/slasherkv"
 )
 
 // SetupDB instantiates and returns database backed by key value store.

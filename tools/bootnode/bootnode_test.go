@@ -9,11 +9,11 @@ import (
 	"testing"
 	"time"
 
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/maxprocs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila/p2p/discover"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/libp2p/go-libp2p/core/crypto"
@@ -72,7 +72,7 @@ func TestPrivateKey_ParsesCorrectly(t *testing.T) {
 
 	extractedKey := extractPrivateKey()
 
-	rawKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(privKey)
+	rawKey, err := ecdsasila.ConvertFromInterfacePrivKey(privKey)
 	require.NoError(t, err)
 
 	r, s, err := ecdsa.Sign(rand.Reader, extractedKey, []byte{'t', 'e', 's', 't'})

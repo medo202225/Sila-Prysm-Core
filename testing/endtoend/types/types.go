@@ -6,10 +6,10 @@ import (
 	"context"
 	"os"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 )
@@ -98,7 +98,7 @@ type E2EConfig struct {
 	TestCheckpointSync      bool
 	TestSync                bool
 	TestFeature             bool
-	UsePrysmShValidator     bool
+	UseSilaShValidator     bool
 	UsePprof                bool
 	UseWeb3RemoteSigner     bool
 	UsePersistentKeyFile    bool

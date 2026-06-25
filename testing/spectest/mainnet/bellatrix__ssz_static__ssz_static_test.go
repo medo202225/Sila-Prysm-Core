@@ -3,7 +3,7 @@ package mainnet
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/bellatrix/ssz_static"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/bellatrix/ssz_static"
 )
 
 func TestMainnet_Bellatrix_SSZStatic(t *testing.T) {

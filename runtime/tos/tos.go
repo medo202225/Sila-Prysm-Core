@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/prompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/prompt"
 	"github.com/logrusorgru/aurora"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
@@ -15,18 +15,18 @@ import (
 const (
 	acceptTosFilename   = "tosaccepted"
 	acceptTosPromptText = `
-Prysm Terms of Use
+Sila Terms of Use
 
-By downloading, accessing or using the Prysm implementation (“Prysm”), you (referenced herein
+By downloading, accessing or using the Sila implementation (“Sila”), you (referenced herein
 as “you” or the “user”) certify that you have read and agreed to the terms and conditions below.
 
-TERMS AND CONDITIONS: https://github.com/sila-chain/prysm/blob/develop/TERMS_OF_SERVICE.md
+TERMS AND CONDITIONS: https://github.com/sila-chain/sila/blob/develop/TERMS_OF_SERVICE.md
 
 
 Type "accept" to accept this terms and conditions [accept/decline]:`
 	acceptTosPromptErrText = `could not scan text input, if you are trying to run in non-interactive environment, you
 can use the --accept-terms-of-use flag after reading the terms and conditions here:
-https://github.com/sila-chain/prysm/blob/develop/TERMS_OF_SERVICE.md`
+https://github.com/sila-chain/sila/blob/develop/TERMS_OF_SERVICE.md`
 )
 
 var (

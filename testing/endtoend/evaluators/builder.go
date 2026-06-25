@@ -3,14 +3,14 @@ package evaluators
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/policies"
-	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
+	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -86,12 +86,12 @@ func builderActive(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) err
 		if err != nil {
 			return err
 		}
-		if [32]byte(txRoot) == emptyRt && string(execPayload.ExtraData()) != "prysm-builder" {
+		if [32]byte(txRoot) == emptyRt && string(execPayload.ExtraData()) != "sila-builder" {
 			// If a local payload is built with 0 transactions, builder cannot build a payload with more transactions
 			// since they both utilize the same EL.
 			continue
 		}
-		if string(execPayload.ExtraData()) != "prysm-builder" {
+		if string(execPayload.ExtraData()) != "sila-builder" {
 			nonBuilderBlocks++
 			continue
 		}
@@ -134,12 +134,12 @@ func builderActive(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) err
 		if err != nil {
 			return err
 		}
-		if [32]byte(txRoot) == emptyRt && string(execPayload.ExtraData()) != "prysm-builder" {
+		if [32]byte(txRoot) == emptyRt && string(execPayload.ExtraData()) != "sila-builder" {
 			// If a local payload is built with 0 transactions, builder cannot build a payload with more transactions
 			// since they both utilize the same EL.
 			continue
 		}
-		if string(execPayload.ExtraData()) != "prysm-builder" {
+		if string(execPayload.ExtraData()) != "sila-builder" {
 			nonBuilderBlocks++
 			continue
 		}

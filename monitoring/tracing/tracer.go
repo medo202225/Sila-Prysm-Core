@@ -1,5 +1,5 @@
 // Package tracing sets up jaeger as an opentracing tool
-// for services in Prysm.
+// for services in Sila.
 package tracing
 
 import (
@@ -7,8 +7,8 @@ import (
 	"errors"
 	"time"
 
-	prysmTrace "github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	silaTrace "github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -28,7 +28,7 @@ func Setup(ctx context.Context, serviceName, processName, endpoint string, sampl
 		otel.SetTracerProvider(noop.NewTracerProvider())
 		return nil
 	}
-	prysmTrace.TracingEnabled = true
+	silaTrace.TracingEnabled = true
 
 	if serviceName == "" {
 		return errors.New("tracing service name cannot be empty")

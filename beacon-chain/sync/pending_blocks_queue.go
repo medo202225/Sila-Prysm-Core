@@ -7,21 +7,21 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/async"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain"
-	p2ptypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/equality"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing"
-	prysmTrace "github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/async"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
+	p2ptypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/types"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz/equality"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
+	silaTrace "github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p/core"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -56,7 +56,7 @@ func (s *Service) processPendingBlocksQueue() {
 
 // processPendingBlocks validates, processes, and broadcasts pending blocks.
 func (s *Service) processPendingBlocks(ctx context.Context) error {
-	ctx, span := prysmTrace.StartSpan(ctx, "processPendingBlocks")
+	ctx, span := silaTrace.StartSpan(ctx, "processPendingBlocks")
 	defer span.End()
 
 	// Remove old blocks from our expiration cache.
@@ -71,7 +71,7 @@ func (s *Service) processPendingBlocks(ctx context.Context) error {
 	// Sort slots for ordered processing.
 	sortedSlots := s.sortedPendingSlots()
 
-	span.SetAttributes(prysmTrace.Int64Attribute("numSlots", int64(len(sortedSlots))), prysmTrace.Int64Attribute("numPeers", int64(len(s.cfg.p2p.Peers().Connected()))))
+	span.SetAttributes(silaTrace.Int64Attribute("numSlots", int64(len(sortedSlots))), silaTrace.Int64Attribute("numPeers", int64(len(s.cfg.p2p.Peers().Connected()))))
 
 	randGen := rand.NewGenerator()
 	var parentRoots [][32]byte
@@ -195,8 +195,8 @@ func (s *Service) processPendingBlocks(ctx context.Context) error {
 
 // startInnerSpan starts a new tracing span for an inner loop and returns the new context and span.
 func startInnerSpan(ctx context.Context, slot primitives.Slot) (context.Context, trace.Span) {
-	ctx, span := prysmTrace.StartSpan(ctx, "processPendingBlocks.InnerLoop")
-	span.SetAttributes(prysmTrace.Int64Attribute("slot", int64(slot))) // lint:ignore uintcast -- This conversion is OK for tracing.
+	ctx, span := silaTrace.StartSpan(ctx, "processPendingBlocks.InnerLoop")
+	span.SetAttributes(silaTrace.Int64Attribute("slot", int64(slot))) // lint:ignore uintcast -- This conversion is OK for tracing.
 	return ctx, span
 }
 
@@ -364,7 +364,7 @@ func (s *Service) checkIfBlockIsBad(
 }
 
 func (s *Service) sendBatchRootRequest(ctx context.Context, roots [][32]byte, randGen *rand.Rand) error {
-	ctx, span := prysmTrace.StartSpan(ctx, "sendBatchRootRequest")
+	ctx, span := silaTrace.StartSpan(ctx, "sendBatchRootRequest")
 	defer span.End()
 
 	// Exit early if there are no roots to request.

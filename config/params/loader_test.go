@@ -12,16 +12,16 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 	"gopkg.in/yaml.v2"
 )
 
 // Variables defined in the placeholderFields will not be tested in `TestLoadConfigFile`.
-// These are variables that we don't use in Prysm. (i.e. future hardfork, light client... etc)
+// These are variables that we don't use in Sila. (i.e. future hardfork, light client... etc)
 // IMPORTANT: Use one field per line and sort these alphabetically to reduce conflicts.
 var placeholderFields = []string{
 	"ATTESTATION_DEADLINE",

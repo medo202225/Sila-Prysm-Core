@@ -3,7 +3,7 @@ package detect
 import (
 	"encoding/binary"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/pkg/errors"
 )
 

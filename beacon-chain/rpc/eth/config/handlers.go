@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
 	"github.com/sila-chain/Sila/common/hexutil"
 	log "github.com/sirupsen/logrus"
 )

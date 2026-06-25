@@ -11,7 +11,7 @@ go_library(
         "storage.go",
         "testing.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/genesis",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/genesis",
     visibility = ["//visibility:public"],
     deps = [
         "//api/client:go_default_library",
@@ -41,7 +41,7 @@ go_test(
         "//config/params:go_default_library",
         "//consensus-types/primitives:go_default_library",
         "//genesis/internal/embedded:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",
         "@com_github_sila_chain_sila//common/hexutil:go_default_library",

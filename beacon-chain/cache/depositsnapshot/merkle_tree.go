@@ -1,10 +1,10 @@
 package depositsnapshot
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/container/slice"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/container/slice"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	"github.com/pkg/errors"
 )
 

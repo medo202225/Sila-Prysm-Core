@@ -3,8 +3,8 @@ package stateutil
 import (
 	"encoding/binary"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
 	"github.com/pkg/errors"
 )
 

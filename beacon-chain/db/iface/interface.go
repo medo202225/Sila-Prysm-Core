@@ -1,5 +1,5 @@
 // Package iface defines the actual database interface used
-// by a Sila-Prysm beacon node, also containing useful, scoped interfaces such as
+// by a Sila beacon node, also containing useful, scoped interfaces such as
 // a ReadOnlyDatabase.
 package iface
 
@@ -7,15 +7,15 @@ import (
 	"context"
 	"io"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filters"
-	slashertypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/slasher/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/backup"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/proto/dbval"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filters"
+	slashertypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/slasher/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/backup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/dbval"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila/common"
 )
 

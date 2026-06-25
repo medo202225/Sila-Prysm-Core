@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params"
-	e2etypes "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
+	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/sila-chain/Sila/accounts/keystore"
 	"github.com/sila-chain/Sila/core/types"
 	"github.com/sila-chain/Sila/ethclient"

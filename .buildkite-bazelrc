@@ -1,6 +1,6 @@
 # The following flags enable the remote cache so action results can be shared
 # across machines, developers, and workspaces.
-# 
+#
 # This config is loaded from https://github.com/bazelbuild/bazel-toolchains/blob/master/bazelrc/latest.bazelrc
 #build:remote-cache --remote_timeout=3600
 #build:remote-cache --spawn_strategy=standalone
@@ -8,7 +8,7 @@
 #build:remote-cache --strategy=Closure=standalone
 #build:remote-cache --strategy=Genrule=standalone
 
-# Sila-Prysm specific remote-cache properties.
+# Sila specific remote-cache properties.
 build:remote-cache --remote_download_minimal
 build:remote-cache --remote_build_event_upload=minimal
 build:remote-cache --remote_cache=grpc://bazel-remote-cache:9092
@@ -50,7 +50,7 @@ build:nostamp --nostamp
 
 # Build metadata
 build --build_metadata=ROLE=CI
-build --build_metadata=REPO_URL=https://github.com/sila-chain/Sila-Prysm-Core.git
+build --build_metadata=REPO_URL=https://github.com/sila-chain/Sila-Consensus-Core.git
 build --workspace_status_command=./hack/workspace_status_ci.sh
 
 # Buildbuddy

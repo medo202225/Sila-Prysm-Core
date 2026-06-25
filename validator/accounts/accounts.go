@@ -1,7 +1,7 @@
 package accounts
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 )
 
 var (

@@ -7,24 +7,24 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	p2pTypes "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/types"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	prysmsync "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/sync"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/verification"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/interfaces"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	leakybucket "github.com/sila-chain/Sila-Prysm-Core/v7/container/leaky-bucket"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/rand"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	p2ppb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	p2pTypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	silasync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	p2ppb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -67,7 +67,7 @@ var blockLimiterPeriod = 30 * time.Second
 // blocksFetcherConfig is a config to setup the block fetcher.
 type blocksFetcherConfig struct {
 	clock                    *startup.Clock
-	ctxMap                   prysmsync.ContextByteVersions
+	ctxMap                   silasync.ContextByteVersions
 	chain                    blockchainService
 	p2p                      p2p.P2P
 	db                       db.ReadOnlyDatabase
@@ -88,7 +88,7 @@ type blocksFetcher struct {
 	rand            *rand.Rand
 	chain           blockchainService
 	clock           *startup.Clock
-	ctxMap          prysmsync.ContextByteVersions
+	ctxMap          silasync.ContextByteVersions
 	p2p             p2p.P2P
 	db              db.ReadOnlyDatabase
 	bs              filesystem.BlobStorageSummarizer
@@ -376,7 +376,7 @@ func (f *blocksFetcher) fetchBlocksFromPeer(
 				"count":     req.Count,
 				"step":      req.Step,
 			}).WithError(err).Debug("Could not request blocks by range from peer")
-			if errors.Is(err, prysmsync.ErrInvalidFetchedData) {
+			if errors.Is(err, silasync.ErrInvalidFetchedData) {
 				f.downscorePeer(p, err)
 			}
 			continue
@@ -391,7 +391,7 @@ func (f *blocksFetcher) fetchBlocksFromPeer(
 		if len(features.Get().BlacklistedRoots) > 0 {
 			for _, b := range robs {
 				if features.BlacklistedBlock(b.Block.Root()) {
-					r.err = prysmsync.ErrInvalidFetchedData
+					r.err = silasync.ErrInvalidFetchedData
 					return
 				}
 			}
@@ -445,7 +445,7 @@ func (f *blocksFetcher) requestBlocks(
 	}
 	f.rateLimiter.Add(pid.String(), int64(req.Count))
 	l.Unlock()
-	return prysmsync.SendBeaconBlocksByRangeRequest(ctx, f.chain, f.p2p, pid, req, nil)
+	return silasync.SendBeaconBlocksByRangeRequest(ctx, f.chain, f.p2p, pid, req, nil)
 }
 
 // requestBlocksByRoot is a wrapper for handling BeaconBlockByRootsReq requests/streams.
@@ -474,7 +474,7 @@ func (f *blocksFetcher) requestBlocksByRoot(
 	f.rateLimiter.Add(pid.String(), int64(len(*req)))
 	l.Unlock()
 
-	return prysmsync.SendBeaconBlocksByRootRequest(ctx, f.chain, f.p2p, pid, req, nil)
+	return silasync.SendBeaconBlocksByRootRequest(ctx, f.chain, f.p2p, pid, req, nil)
 }
 
 // waitForBandwidth blocks up until peer's bandwidth is restored.

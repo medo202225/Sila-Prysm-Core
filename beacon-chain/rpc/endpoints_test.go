@@ -6,8 +6,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 )
 
 func Test_endpoints(t *testing.T) {
@@ -52,7 +52,7 @@ func Test_endpoints(t *testing.T) {
 		"/sila/v1/beacon/pool/voluntary_exits":                          {http.MethodGet, http.MethodPost},
 		"/sila/v1/beacon/pool/bls_to_execution_changes":                 {http.MethodGet, http.MethodPost},
 		"/sila/v1/beacon/pool/payload_attestations":                     {http.MethodGet, http.MethodPost},
-		"/prysm/v1/beacon/individual_votes":                             {http.MethodPost},
+		"/sila/v1/beacon/individual_votes":                             {http.MethodPost},
 	}
 
 	lightClientRoutes := map[string][]string{
@@ -121,28 +121,28 @@ func Test_endpoints(t *testing.T) {
 		"/sila/v1/validator/payload_attestation_data/{slot}":                        {http.MethodGet},
 	}
 
-	prysmBeaconRoutes := map[string][]string{
-		"/prysm/v1/beacon/weak_subjectivity":                 {http.MethodGet},
+	silaBeaconRoutes := map[string][]string{
+		"/sila/v1/beacon/weak_subjectivity":                 {http.MethodGet},
 		"/sila/v1/beacon/states/{state_id}/validator_count":  {http.MethodGet},
-		"/prysm/v1/beacon/states/{state_id}/validator_count": {http.MethodGet},
-		"/prysm/v1/beacon/chain_head":                        {http.MethodGet},
-		"/prysm/v1/beacon/blobs":                             {http.MethodPost},
-		"/prysm/v1/beacon/states/{state_id}/query":           {http.MethodPost},
-		"/prysm/v1/beacon/blocks/{block_id}/query":           {http.MethodPost},
+		"/sila/v1/beacon/states/{state_id}/validator_count": {http.MethodGet},
+		"/sila/v1/beacon/chain_head":                        {http.MethodGet},
+		"/sila/v1/beacon/blobs":                             {http.MethodPost},
+		"/sila/v1/beacon/states/{state_id}/query":           {http.MethodPost},
+		"/sila/v1/beacon/blocks/{block_id}/query":           {http.MethodPost},
 	}
 
-	prysmNodeRoutes := map[string][]string{
-		"/prysm/node/trusted_peers":              {http.MethodGet, http.MethodPost},
-		"/prysm/v1/node/trusted_peers":           {http.MethodGet, http.MethodPost},
-		"/prysm/node/trusted_peers/{peer_id}":    {http.MethodDelete},
-		"/prysm/v1/node/trusted_peers/{peer_id}": {http.MethodDelete},
+	silaNodeRoutes := map[string][]string{
+		"/sila/node/trusted_peers":              {http.MethodGet, http.MethodPost},
+		"/sila/v1/node/trusted_peers":           {http.MethodGet, http.MethodPost},
+		"/sila/node/trusted_peers/{peer_id}":    {http.MethodDelete},
+		"/sila/v1/node/trusted_peers/{peer_id}": {http.MethodDelete},
 	}
 
-	prysmValidatorRoutes := map[string][]string{
-		"/prysm/validators/performance":                      {http.MethodPost},
-		"/prysm/v1/validators/performance":                   {http.MethodPost},
-		"/prysm/v1/validators/{state_id}/participation":      {http.MethodGet},
-		"/prysm/v1/validators/{state_id}/active_set_changes": {http.MethodGet},
+	silaValidatorRoutes := map[string][]string{
+		"/sila/validators/performance":                      {http.MethodPost},
+		"/sila/v1/validators/performance":                   {http.MethodPost},
+		"/sila/v1/validators/{state_id}/participation":      {http.MethodGet},
+		"/sila/v1/validators/{state_id}/active_set_changes": {http.MethodGet},
 	}
 
 	testCases := []struct {
@@ -184,7 +184,7 @@ func Test_endpoints(t *testing.T) {
 			for _, m := range []map[string][]string{
 				beaconRoutes, configRoutes, debugRoutes, eventsRoutes,
 				nodeRoutes, validatorRoutes, rewardsRoutes, blobRoutes,
-				prysmValidatorRoutes, prysmNodeRoutes, prysmBeaconRoutes,
+				silaValidatorRoutes, silaNodeRoutes, silaBeaconRoutes,
 			} {
 				maps.Copy(expectedRoutes, m)
 			}

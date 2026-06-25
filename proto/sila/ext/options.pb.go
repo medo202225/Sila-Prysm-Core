@@ -91,7 +91,7 @@ const file_proto_sila_ext_options_proto_rawDesc = "" +
 	"\bssz_size\x12\x1d.google.protobuf.FieldOptions\x18ц\x03 \x01(\tR\asszSize:8\n" +
 	"\assz_max\x12\x1d.google.protobuf.FieldOptions\x18҆\x03 \x01(\tR\x06sszMax:<\n" +
 	"\tspec_name\x12\x1d.google.protobuf.FieldOptions\x18ӆ\x03 \x01(\tR\bspecNameBq\n" +
-	"\x10org.Sila.Eth.extB\fOptionsProtoP\x01Z/github.com/sila-chain/Sila-Prysm-Core/v7/proto/sila/ext\xaa\x02\fSila.Eth.ext\xca\x02\fSila\\Eth\\extb\x06proto3"
+	"\x10org.Sila.Eth.extB\fOptionsProtoP\x01Z/github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/ext\xaa\x02\fSila.Eth.ext\xca\x02\fSila\\Eth\\extb\x06proto3"
 
 var file_proto_sila_ext_options_proto_goTypes = []any{
 	(*descriptorpb.FieldOptions)(nil), // 0: google.protobuf.FieldOptions

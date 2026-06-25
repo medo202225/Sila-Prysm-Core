@@ -3,10 +3,10 @@ package migration
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpbv1 "github.com/sila-chain/Sila-Prysm-Core/v7/proto/eth/v1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpbv1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/eth/v1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func Test_V1ValidatorToV1Alpha1(t *testing.T) {

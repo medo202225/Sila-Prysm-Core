@@ -6,12 +6,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/peers/scorers"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/scorers"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/sirupsen/logrus"
 )
@@ -21,12 +21,12 @@ func (f *blocksFetcher) peerLock(pid peer.ID) *peerLock {
 	f.Lock()
 	defer f.Unlock()
 	if lock, ok := f.peerLocks[pid]; ok && lock != nil {
-		lock.accessed = prysmTime.Now()
+		lock.accessed = silaTime.Now()
 		return lock
 	}
 	f.peerLocks[pid] = &peerLock{
 		Mutex:    sync.Mutex{},
-		accessed: prysmTime.Now(),
+		accessed: silaTime.Now(),
 	}
 	return f.peerLocks[pid]
 }

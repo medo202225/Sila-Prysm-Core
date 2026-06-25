@@ -1,4 +1,4 @@
-module github.com/sila-chain/Sila-Prysm-Core/v7
+module github.com/sila-chain/Sila-Consensus-Core/v7
 
 go 1.26.4
 

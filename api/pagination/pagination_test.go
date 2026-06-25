@@ -3,9 +3,9 @@ package pagination_test
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/pagination"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/pagination"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestStartAndEndPage(t *testing.T) {

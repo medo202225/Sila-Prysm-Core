@@ -16,7 +16,7 @@ go_library(
         ":use_cgosymbolizer": ["cgo_symbolizer.go"],
         "//conditions:default": [],
     }),
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/debug",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/debug",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_prometheus_client_golang//prometheus:go_default_library",

@@ -6,7 +6,7 @@ go_library(
         "builder.go",
         "options.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/middleware/builder",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/middleware/builder",
     visibility = ["//visibility:public"],
     deps = [
         "//api/client/builder:go_default_library",
@@ -22,7 +22,7 @@ go_library(
         "//network:go_default_library",
         "//network/authorization:go_default_library",
         "//proto/engine/v1:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//runtime/version:go_default_library",
         "@com_github_sila_chain_sila//beacon/engine:go_default_library",
         "@com_github_sila_chain_sila//common:go_default_library",

@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/startup"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/encoder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
 

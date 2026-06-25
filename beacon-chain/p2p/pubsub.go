@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/p2p/encoder"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	pbrpc "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/encoder"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	pbrpc "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	pubsubpb "github.com/libp2p/go-libp2p-pubsub/pb"
 	"github.com/libp2p/go-libp2p/core/peer"
@@ -221,7 +221,7 @@ func setPubSubParameters() {
 	pubsub.TimeCacheDuration = seenTtl
 }
 
-// convert from libp2p's internal schema to a compatible prysm protobuf format.
+// convert from libp2p's internal schema to a compatible sila protobuf format.
 func convertTopicScores(topicMap map[string]*pubsub.TopicScoreSnapshot) map[string]*pbrpc.TopicScoreSnapshot {
 	newMap := make(map[string]*pbrpc.TopicScoreSnapshot, len(topicMap))
 	for t, s := range topicMap {

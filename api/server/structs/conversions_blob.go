@@ -3,9 +3,9 @@ package structs
 import (
 	"strconv"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 func (sc *Sidecar) ToConsensus() (*eth.BlobSidecar, error) {

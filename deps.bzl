@@ -2,7 +2,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")  # gazelle:keep
 load("@sila//tools/go:def.bzl", "go_repository", "maybe")  # gazelle:keep
 
-# Prysm's third party / external dependencies.
+# Sila's third party / external dependencies.
 #
 ##################################################################
 #

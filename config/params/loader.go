@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 )
@@ -175,7 +175,7 @@ func ReplaceHexStringWithYAMLFormat(line string) []string {
 }
 
 // ConfigToYaml takes a provided config and outputs its contents
-// in yaml. This allows prysm's custom configs to be read by other clients.
+// in yaml. This allows sila's custom configs to be read by other clients.
 func ConfigToYaml(cfg *BeaconChainConfig) []byte {
 	lines := []string{
 		fmt.Sprintf("PRESET_BASE: '%s'", cfg.PresetBase),

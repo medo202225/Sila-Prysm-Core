@@ -1,7 +1,7 @@
 package das
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 )
 
 // Bisector describes a type that takes a set of RODataColumns via the Bisect method

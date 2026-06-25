@@ -8,7 +8,7 @@ go_library(
         "main.go",
         "usage.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/client-stats",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/client-stats",
     visibility = ["//visibility:private"],
     deps = [
         "//cmd:go_default_library",

@@ -3,11 +3,11 @@ package params
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 const (
-	EnvNameOverrideAccept = "PRYSM_API_OVERRIDE_ACCEPT"
+	EnvNameOverrideAccept = "SILA_API_OVERRIDE_ACCEPT"
 )
 
 func SetGenesisFork(t *testing.T, cfg *BeaconChainConfig, fork int) {

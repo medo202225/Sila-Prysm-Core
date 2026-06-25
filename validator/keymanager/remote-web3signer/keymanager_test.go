@@ -14,14 +14,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	validatorpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1/validator-client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/internal"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/remote-web3signer/types/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/internal"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/types/mock"
 	"github.com/sila-chain/Sila/common/hexutil"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
@@ -64,7 +64,7 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "happy path public key url",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				PublicKeysURL:         srv.URL + "/public_keys",
 			},
@@ -73,7 +73,7 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "bad public key url",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				PublicKeysURL:         "0x270d43e74ce340de4bca2b1936beca0f4f5408d9e78aec4850920baf659d5b69",
 			},
@@ -82,7 +82,7 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "happy path provided public keys",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				ProvidedPublicKeys:    []string{"0xa2b5aaad9c6efefe7bb9b1243a043404f3362937cfb6b31833929833173f476630ea2cfeb0d9ddf15f97ca8685948820"},
 			},
@@ -91,16 +91,16 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "path provided public keys, some bad key",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
-				ProvidedPublicKeys:    []string{"0xa2b5aaad9c6efefe7bb9b1243a043404f3362937cfb6b31833929833173f476630ea2cfeb0d9ddf15f97ca8685948820", "http://prysm.xyz/"},
+				ProvidedPublicKeys:    []string{"0xa2b5aaad9c6efefe7bb9b1243a043404f3362937cfb6b31833929833173f476630ea2cfeb0d9ddf15f97ca8685948820", "http://sila.xyz/"},
 			},
 			wantErr: "could not decode public key",
 		},
 		{
 			name: "path provided public keys, some bad hex for key",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				ProvidedPublicKeys:    []string{"0xa2b5aaad9c6efefe7bb9b1243a043404f3362937"},
 			},
@@ -109,7 +109,7 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "happy path key file",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				KeyFilePath:           filepath.Join(t.TempDir(), "good_keyfile.txt"),
 			},
@@ -119,7 +119,7 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "happy path public key url with good keyfile",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				PublicKeysURL:         srv.URL + "/public_keys",
 				KeyFilePath:           filepath.Join(t.TempDir(), "good_keyfile.txt"),
@@ -130,7 +130,7 @@ func TestNewKeymanager(t *testing.T) {
 		{
 			name: "happy path provided public keys with good keyfile",
 			args: &SetupConfig{
-				BaseEndpoint:          "http://prysm.xyz/",
+				BaseEndpoint:          "http://sila.xyz/",
 				GenesisValidatorsRoot: root,
 				ProvidedPublicKeys:    []string{"0xa2b5aaad9c6efefe7bb9b1243a043404f3362937cfb6b31833929833173f476630ea2cfeb0d9ddf15f97ca8685948820"},
 			},

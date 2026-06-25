@@ -19,7 +19,7 @@ go_library(
         "tag_parser.go",
         "vector.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/query",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz/query",
     visibility = ["//visibility:public"],
     deps = [
         "//container/trie:go_default_library",
@@ -49,7 +49,7 @@ go_test(
         "//consensus-types/primitives:go_default_library",
         "//encoding/ssz:go_default_library",
         "//encoding/ssz/query/testutil:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//proto/ssz_query/testing:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",

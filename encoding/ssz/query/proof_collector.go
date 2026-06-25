@@ -11,11 +11,11 @@ import (
 	"sync"
 
 	"github.com/sila-chain/go-bitfield"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/container/trie"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/hash/htr"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	ssz "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash/htr"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	ssz "github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	fastssz "github.com/sila-chain/fastssz"
 )
 

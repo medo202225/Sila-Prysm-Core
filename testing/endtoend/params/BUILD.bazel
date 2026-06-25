@@ -7,7 +7,7 @@ go_library(
         "const.go",
         "params.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/params",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params",
     visibility = ["//visibility:public"],
     deps = [
         "//io/file:go_default_library",

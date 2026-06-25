@@ -7,7 +7,7 @@ import (
 	"path"
 )
 
-const prefix = "prysm-web-ui"
+const prefix = "sila-web-ui"
 
 // Handler serves web requests from the bundled site data.
 var Handler = func(res http.ResponseWriter, req *http.Request) {

@@ -7,7 +7,7 @@ go_library(
         "transition.go",
         "upgrade_to_bellatrix.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/shared/bellatrix/fork",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/shared/bellatrix/fork",
     visibility = ["//visibility:public"],
     deps = [
         "//beacon-chain/core/execution:go_default_library",
@@ -17,7 +17,7 @@ go_library(
         "//config/params:go_default_library",
         "//consensus-types/blocks:go_default_library",
         "//consensus-types/primitives:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//testing/require:go_default_library",
         "//testing/spectest/utils:go_default_library",
         "//testing/util:go_default_library",

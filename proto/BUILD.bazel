@@ -16,13 +16,13 @@ string_flag(
 config_setting(
     name = "ssz_mainnet",
     flag_values = {
-        "@prysm//proto:network": "mainnet",
+        "@sila//proto:network": "mainnet",
     },
 )
 
 config_setting(
     name = "ssz_minimal",
     flag_values = {
-        "@prysm//proto:network": "minimal",
+        "@sila//proto:network": "minimal",
     },
 )

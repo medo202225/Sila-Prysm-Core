@@ -3,7 +3,7 @@ package bazel_test
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/build/bazel"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/build/bazel"
 )
 
 func TestBuildWithBazel(t *testing.T) {

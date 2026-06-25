@@ -9,7 +9,7 @@ go_library(
         "flags.go",
         "log.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/config/features",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/config/features",
     visibility = ["//visibility:public"],
     deps = [
         "//cmd:go_default_library",

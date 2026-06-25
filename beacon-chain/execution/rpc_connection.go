@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	contracts "github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/logs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/authorization"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	contracts "github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/logs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/authorization"
 	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
@@ -243,7 +243,7 @@ func (s *Service) newRPCClientWithAuth(ctx context.Context, endpoint network.End
 }
 
 // Checks the chain ID of the execution client to ensure
-// it matches local parameters of what Sila-Prysm expects.
+// it matches local parameters of what Sila expects.
 func ensureCorrectExecutionChain(ctx context.Context, client *ethclient.Client) error {
 	var chainIDHex string
 	if err := client.Client().CallContext(ctx, &chainIDHex, "sila_chainId"); err != nil {

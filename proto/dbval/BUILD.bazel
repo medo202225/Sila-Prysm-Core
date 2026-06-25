@@ -10,7 +10,7 @@ proto_library(
 
 go_proto_library(
     name = "dbval_go_proto",
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/dbval",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/dbval",
     proto = ":dbval_proto",
     visibility = ["//visibility:public"],
 )
@@ -18,6 +18,6 @@ go_proto_library(
 go_library(
     name = "go_default_library",
     embed = [":dbval_go_proto"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/proto/dbval",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/dbval",
     visibility = ["//visibility:public"],
 )

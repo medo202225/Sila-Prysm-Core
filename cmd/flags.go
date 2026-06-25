@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/urfave/cli/v2"
 	"github.com/urfave/cli/v2/altsrc"
 )
@@ -41,7 +41,7 @@ var (
 		Name:  "log.vmodule",
 		Usage: "Per-package log verbosity. packagePath=level entries separated by commas.",
 	}
-	// DataDirFlag defines a path on disk where Sila-Prysm databases are stored.
+	// DataDirFlag defines a path on disk where Sila databases are stored.
 	DataDirFlag = &cli.StringFlag{
 		Name:  "datadir",
 		Usage: "Data directory for the databases.",

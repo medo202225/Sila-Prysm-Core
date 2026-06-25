@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/rpc"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/rpc"
 	"github.com/pkg/errors"
 )
 
@@ -77,7 +77,7 @@ func (c *Client) GetLocalValidatorKeys(ctx context.Context) (*rpc.ListKeystoresR
 func (c *Client) GetRemoteValidatorKeys(ctx context.Context) (*rpc.ListRemoteKeysResponse, error) {
 	remoteBytes, err := c.Get(ctx, remoteKeysPath, client.WithAuthorizationToken(c.Token()))
 	if err != nil {
-		if !strings.Contains(err.Error(), "Sila Wallet is not of type Web3Signer") && !strings.Contains(err.Error(), "Prysm Wallet is not of type Web3Signer") {
+		if !strings.Contains(err.Error(), "Sila Wallet is not of type Web3Signer") && !strings.Contains(err.Error(), "Sila Wallet is not of type Web3Signer") {
 			return nil, err
 		}
 	}

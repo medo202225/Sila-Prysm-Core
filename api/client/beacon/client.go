@@ -11,12 +11,12 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -32,7 +32,7 @@ const (
 	changeBLStoExecutionPath = "/sila/v1/beacon/pool/bls_to_execution_changes"
 
 	GetNodeVersionPath      = "/sila/v1/node/version"
-	GetWeakSubjectivityPath = "/prysm/v1/beacon/weak_subjectivity"
+	GetWeakSubjectivityPath = "/sila/v1/beacon/weak_subjectivity"
 )
 
 // StateOrBlockId represents the block_id / state_id parameters that several of the Eth Beacon API methods accept.
@@ -227,7 +227,7 @@ func (wsd *WeakSubjectivityData) CheckpointString() string {
 	return fmt.Sprintf("%#x:%d", wsd.BlockRoot, wsd.Epoch)
 }
 
-// GetWeakSubjectivity calls a proposed API endpoint that is unique to prysm
+// GetWeakSubjectivity calls a proposed API endpoint that is unique to sila
 // This api method does the following:
 // - computes weak subjectivity epoch
 // - finds the highest non-skipped block preceding the epoch

@@ -6,9 +6,9 @@ go_library(
         "flags.go",
         "interop.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags",
     visibility = [
-        "//cmd/prysmctl:__subpackages__",
+        "//cmd/silactl:__subpackages__",
         "//cmd/validator:__subpackages__",
         "//config:__subpackages__",
         "//testing/endtoend:__subpackages__",

@@ -9,11 +9,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/logs/mock"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	validatormock "github.com/sila-chain/Sila-Prysm-Core/v7/testing/validator-mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/logs/mock"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	validatormock "github.com/sila-chain/Sila-Consensus-Core/v7/testing/validator-mock"
 	"github.com/golang/protobuf/ptypes/empty"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/grpc"
@@ -187,5 +187,5 @@ func TestServer_GetVersion(t *testing.T) {
 	body, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	require.NotNil(t, body)
-	require.StringContains(t, `{"beacon":"4.10.1","validator":"Sila-Prysm/Unknown/Local build. Built at: Moments ago"}`, string(body))
+	require.StringContains(t, `{"beacon":"4.10.1","validator":"Sila/Unknown/Local build. Built at: Moments ago"}`, string(body))
 }

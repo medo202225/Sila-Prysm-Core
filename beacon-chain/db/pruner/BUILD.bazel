@@ -6,7 +6,7 @@ go_library(
         "log.go",
         "pruner.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/pruner",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/pruner",
     visibility = [
         "//beacon-chain:__subpackages__",
     ],
@@ -30,7 +30,7 @@ go_test(
         "//config/params:go_default_library",
         "//consensus-types/blocks:go_default_library",
         "//consensus-types/primitives:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//testing/util:go_default_library",

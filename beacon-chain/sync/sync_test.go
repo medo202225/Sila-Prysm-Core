@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/flags"
 	"github.com/sirupsen/logrus"
 )
 

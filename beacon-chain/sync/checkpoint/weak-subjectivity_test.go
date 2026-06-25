@@ -8,19 +8,19 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client/beacon"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks"
-	blocktest "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/blocks/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/ssz/detect"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client/beacon"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
+	blocktest "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz/detect"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/pkg/errors"
 )
 
@@ -41,11 +41,11 @@ func TestMarshalToEnvelope(t *testing.T) {
 	d := struct {
 		Version string `json:"version"`
 	}{
-		Version: "Prysm/v2.0.5 (linux amd64)",
+		Version: "Sila/v2.0.5 (linux amd64)",
 	}
 	encoded, err := marshalToEnvelope(d)
 	require.NoError(t, err)
-	expected := `{"data":{"version":"Prysm/v2.0.5 (linux amd64)"}}`
+	expected := `{"data":{"version":"Sila/v2.0.5 (linux amd64)"}}`
 	require.Equal(t, expected, string(encoded))
 }
 

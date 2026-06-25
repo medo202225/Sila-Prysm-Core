@@ -2,7 +2,7 @@ diff --color -urN a/BUILD.bazel b/BUILD.bazel
 --- a/BUILD.bazel	1969-12-31 18:00:00.000000000 -0600
 +++ b/BUILD.bazel	2025-09-17 10:29:51.159884226 -0500
 @@ -0,0 +1,128 @@
-+load("@prysm//tools/go:def.bzl", "go_library")
++load("@sila//tools/go:def.bzl", "go_library")
 +load("@io_bazel_rules_go//go:def.bzl", "go_test")
 +
 +config_setting(

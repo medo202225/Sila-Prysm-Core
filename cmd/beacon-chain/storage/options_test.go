@@ -10,13 +10,13 @@ import (
 	"syscall"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	das "github.com/sila-chain/Sila-Prysm-Core/v7/cmd/beacon-chain/das/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	das "github.com/sila-chain/Sila-Consensus-Core/v7/cmd/beacon-chain/das/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/urfave/cli/v2"
 )
 

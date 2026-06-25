@@ -1,6 +1,6 @@
 package enginev1
 
-import "github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
+import "github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 
 type copier[T any] interface {
 	Copy() T

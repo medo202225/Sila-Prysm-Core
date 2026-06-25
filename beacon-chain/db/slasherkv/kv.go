@@ -1,5 +1,5 @@
 // Package slasherkv defines a bolt-db, key-value store implementation
-// of the slasher database interface for Sila-Prysm.
+// of the slasher database interface for Sila.
 package slasherkv
 
 import (
@@ -9,9 +9,9 @@ import (
 	"path"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/pkg/errors"
 	bolt "go.etcd.io/bbolt"
 )
@@ -26,7 +26,7 @@ const (
 	mmapSize = 536870912
 )
 
-// Store defines an implementation of the Sila-Prysm Database interface
+// Store defines an implementation of the Sila Database interface
 // using BoltDB as the underlying persistent kv-store for Sila consensus.
 type Store struct {
 	db           *bolt.DB

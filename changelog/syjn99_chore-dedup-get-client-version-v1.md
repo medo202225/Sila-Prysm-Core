@@ -1,6 +1,6 @@
 ### Changed
 
-- Change Prysm client code into `"PM"` as per [identification document](https://github.com/Sila/execution-apis/blob/main/src/engine/identification.md#clientcode).
+- Change Sila client code into `"PM"` as per [identification document](https://github.com/Sila/execution-apis/blob/main/src/engine/identification.md#clientcode).
 
 ### Ignored
 

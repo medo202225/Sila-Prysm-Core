@@ -3,8 +3,8 @@ package state_native
 import (
 	"slices"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
 // ProposerLookahead is a non-mutating call to the beacon state which returns a slice of

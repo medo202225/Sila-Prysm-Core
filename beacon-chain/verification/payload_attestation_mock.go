@@ -3,9 +3,9 @@ package verification
 import (
 	"context"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/state"
-	payloadattestation "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/payload-attestation"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
+	payloadattestation "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/payload-attestation"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 )
 
 type MockPayloadAttestation struct {

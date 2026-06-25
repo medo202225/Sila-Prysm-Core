@@ -4,7 +4,7 @@ load("@sila//tools/go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/tools/gocovmerge",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/tools/gocovmerge",
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_sirupsen_logrus//:go_default_library",

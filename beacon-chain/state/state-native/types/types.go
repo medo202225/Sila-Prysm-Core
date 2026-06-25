@@ -3,7 +3,7 @@ package types
 import (
 	"fmt"
 
-	consensus_types "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types"
+	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
 	"github.com/pkg/errors"
 )
 

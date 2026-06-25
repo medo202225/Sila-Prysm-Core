@@ -1,6 +1,6 @@
 package mock
 
-import "github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+import "github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
 
 type MockStreamer struct {
 	logs [][]byte

@@ -1,0 +1,32 @@
+load("@sila//tools/go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "contribution.go",
+        "naive.go",
+    ],
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation/aggregation/sync_contribution",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto/bls:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1/attestation/aggregation:go_default_library",
+        "@com_github_pkg_errors//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["naive_test.go"],
+    embed = [":go_default_library"],
+    deps = [
+        "//crypto/bls:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1/attestation/aggregation:go_default_library",
+        "//proto/sila/v1alpha1/attestation/aggregation/testing:go_default_library",
+        "//testing/assert:go_default_library",
+        "//testing/require:go_default_library",
+        "@com_github_sila_go_bitfield//:go_default_library",
+    ],
+)

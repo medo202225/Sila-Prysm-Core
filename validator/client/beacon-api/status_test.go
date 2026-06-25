@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/server/structs"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/beacon-api/mock"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"go.uber.org/mock/gomock"
 )
@@ -53,7 +53,7 @@ func TestValidatorStatus_Nominal(t *testing.T) {
 	handler := mock.NewMockJsonRestHandler(ctrl)
 	validatorClient := beaconApiValidatorClient{
 		stateValidatorsProvider: stateValidatorsProvider,
-		prysmChainClient: prysmChainClient{
+		silaChainClient: silaChainClient{
 			nodeClient: &beaconApiNodeClient{
 				handler: handler,
 			},
@@ -179,7 +179,7 @@ func TestMultipleValidatorStatus_Nominal(t *testing.T) {
 
 	validatorClient := beaconApiValidatorClient{
 		stateValidatorsProvider: stateValidatorsProvider,
-		prysmChainClient: prysmChainClient{
+		silaChainClient: silaChainClient{
 			nodeClient: &beaconApiNodeClient{
 				handler: handler,
 			},
@@ -329,7 +329,7 @@ func TestGetValidatorsStatusResponse_Nominal_SomeActiveValidators(t *testing.T) 
 		nil,
 	).SetArg(
 		2,
-		structs.GetVersionResponse{Data: &structs.Version{Version: "prysm/v0.0.1"}},
+		structs.GetVersionResponse{Data: &structs.Version{Version: "sila/v0.0.1"}},
 	).Times(1)
 
 	var validatorCountResponse structs.GetValidatorCountResponse
@@ -418,7 +418,7 @@ func TestGetValidatorsStatusResponse_Nominal_SomeActiveValidators(t *testing.T) 
 
 	validatorClient := beaconApiValidatorClient{
 		stateValidatorsProvider: stateValidatorsProvider,
-		prysmChainClient: prysmChainClient{
+		silaChainClient: silaChainClient{
 			nodeClient: &beaconApiNodeClient{
 				handler: handler,
 			},
@@ -488,7 +488,7 @@ func TestGetValidatorsStatusResponse_Nominal_NoActiveValidators(t *testing.T) {
 
 	validatorClient := beaconApiValidatorClient{
 		stateValidatorsProvider: stateValidatorsProvider,
-		prysmChainClient: prysmChainClient{
+		silaChainClient: silaChainClient{
 			nodeClient: &beaconApiNodeClient{
 				handler: handler,
 			},
@@ -718,7 +718,7 @@ func TestValidatorStatusResponse_InvalidData(t *testing.T) {
 
 				validatorClient := beaconApiValidatorClient{
 					stateValidatorsProvider: stateValidatorsProvider,
-					prysmChainClient: prysmChainClient{
+					silaChainClient: silaChainClient{
 						nodeClient: &beaconApiNodeClient{
 							handler: handler,
 						},

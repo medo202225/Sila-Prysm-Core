@@ -1,6 +1,6 @@
 package operation
 
-import "github.com/sila-chain/Sila-Prysm-Core/v7/async/event"
+import "github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
 
 // Notifier interface defines the methods of the service that provides beacon block operation updates to consumers.
 type Notifier interface {

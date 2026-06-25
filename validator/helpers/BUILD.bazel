@@ -7,7 +7,7 @@ go_library(
         "metadata.go",
         "node_connection.go",
     ],
-    importpath = "github.com/sila-chain/Sila-Prysm-Core/v7/validator/helpers",
+    importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers",
     visibility = ["//visibility:public"],
     deps = [
         "//api/grpc:go_default_library",
@@ -36,7 +36,7 @@ go_test(
         "//config/proposer:go_default_library",
         "//consensus-types/interfaces:go_default_library",
         "//consensus-types/primitives:go_default_library",
-        "//proto/prysm/v1alpha1:go_default_library",
+        "//proto/sila/v1alpha1:go_default_library",
         "//testing/assert:go_default_library",
         "//testing/require:go_default_library",
         "//validator/db/common:go_default_library",

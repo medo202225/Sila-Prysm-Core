@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"testing"
 
-	kzgPrysm "github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/blockchain/kzg"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/spectest/utils"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/util"
+	kzgSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/ghodss/yaml"
 )
@@ -23,7 +23,7 @@ func TestRecoverCellsAndKzgProofs(t *testing.T) {
 		Input  input      `json:"input"`
 		Output [][]string `json:"output"`
 	}
-	require.NoError(t, kzgPrysm.Start())
+	require.NoError(t, kzgSila.Start())
 	testFolders, testFolderPath := utils.TestFolders(t, "general", "fulu", "kzg/recover_cells_and_kzg_proofs/kzg-mainnet")
 	if len(testFolders) == 0 {
 		t.Fatalf("No test folders found for %s/%s/%s", "general", "fulu", "kzg/recover_cells_and_kzg_proofs/kzg-mainnet")
@@ -57,19 +57,19 @@ func TestRecoverCellsAndKzgProofs(t *testing.T) {
 				return
 			}
 			cellsRaw := test.Input.Cells
-			cells := make([]kzgPrysm.Cell, 0, len(cellsRaw))
+			cells := make([]kzgSila.Cell, 0, len(cellsRaw))
 			for _, cellRaw := range cellsRaw {
 				cell, err := hexutil.Decode(cellRaw)
 				require.NoError(t, err)
-				if len(cell) != kzgPrysm.BytesPerCell {
+				if len(cell) != kzgSila.BytesPerCell {
 					require.IsNil(t, test.Output)
 					return
 				}
-				cells = append(cells, kzgPrysm.Cell(cell))
+				cells = append(cells, kzgSila.Cell(cell))
 			}
 
 			// Recover the cells and proofs for the corresponding blob
-			recoveredCells, recoveredProofs, err := kzgPrysm.RecoverCellsAndKZGProofs(cellIndices, cells)
+			recoveredCells, recoveredProofs, err := kzgSila.RecoverCellsAndKZGProofs(cellIndices, cells)
 			if test.Output != nil {
 				require.NoError(t, err)
 				var combined [][]string

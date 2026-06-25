@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/userprompt"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/filesystem"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/iface"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/kv"
-	slashingprotection "github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/userprompt"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/filesystem"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/kv"
+	slashingprotection "github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )
@@ -42,7 +42,7 @@ func exportSlashingProtectionJSON(cliCtx *cli.Context) error {
 
 	log.Info(
 		"This command exports your validator's attestation and proposal history into " +
-			"a file that can then be imported into any other Sila-Prysm setup across computers",
+			"a file that can then be imported into any other Sila setup across computers",
 	)
 
 	// Check if a minimal database is requested
@@ -111,8 +111,8 @@ func exportSlashingProtectionJSON(cliCtx *cli.Context) error {
 	if eipJSON == nil || len(eipJSON.Data) == 0 {
 		log.Fatal(
 			"No slashing protection data was found in your database. This is likely because an older version of " +
-				"Sila-Prysm would place your validator database in your wallet directory as a validator.db file. Now, " +
-				"Sila-Prysm keeps its validator database inside the direct/ or derived/ folder in your wallet directory. " +
+				"Sila would place your validator database in your wallet directory as a validator.db file. Now, " +
+				"Sila keeps its validator database inside the direct/ or derived/ folder in your wallet directory. " +
 				"Try running this command again, but add direct/ or derived/ to the path where your wallet " +
 				"directory is in and you should obtain your slashing protection history",
 		)
@@ -168,7 +168,7 @@ func writeToOutput(cliCtx *cli.Context, eipJSON *format.EIPSlashingProtectionFor
 	}
 
 	log.Infof(
-		"Successfully wrote %s. You can import this file using Sila-Prysm's "+
+		"Successfully wrote %s. You can import this file using Sila's "+
 			"validator slashing-protection-history import command in another machine",
 		outputFilePath,
 	)

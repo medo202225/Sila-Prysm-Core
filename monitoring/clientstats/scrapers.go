@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"time"
 
-	eth "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/prom2json"
 	log "github.com/sirupsen/logrus"
@@ -152,9 +152,9 @@ func populateCommonStats(pf metricMap) CommonStats {
 		cs.MemoryProcessBytes = int64(m.Gauge.GetValue())
 	}
 
-	f, err = pf.getFamily("prysm_version")
+	f, err = pf.getFamily("sila_version")
 	if err != nil {
-		log.WithError(err).Debug("Failed to get prysm_version")
+		log.WithError(err).Debug("Failed to get sila_version")
 	} else {
 		m = f.Metric[0]
 		for _, l := range m.GetLabel() {
@@ -164,7 +164,7 @@ func populateCommonStats(pf metricMap) CommonStats {
 			case "buildDate":
 				buildDate, err := strconv.Atoi(l.GetValue())
 				if err != nil {
-					log.WithError(err).Debug("Failed to retrieve buildDate label from the prysm_version metric")
+					log.WithError(err).Debug("Failed to retrieve buildDate label from the sila_version metric")
 					continue
 				}
 				cs.ClientBuild = int64(buildDate)

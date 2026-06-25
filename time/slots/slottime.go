@@ -5,11 +5,11 @@ import (
 	"math"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	mathutil "github.com/sila-chain/Sila-Prysm-Core/v7/math"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	mathutil "github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -169,7 +169,7 @@ func VerifyTime(genesis time.Time, slot primitives.Slot, timeTolerance time.Dura
 		return err
 	}
 
-	currentTime := prysmTime.Now()
+	currentTime := silaTime.Now()
 	diff := slotTime.Sub(currentTime)
 
 	if diff > timeTolerance {

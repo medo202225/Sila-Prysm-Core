@@ -9,9 +9,9 @@ import (
 	"flag"
 	"net"
 
-	ecdsaprysm "github.com/sila-chain/Sila-Prysm-Core/v7/crypto/ecdsa"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/io/file"
-	_ "github.com/sila-chain/Sila-Prysm-Core/v7/runtime/maxprocs"
+	ecdsasila "github.com/sila-chain/Sila-Consensus-Core/v7/crypto/ecdsa"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/maxprocs"
 	"github.com/sila-chain/Sila/p2p/enode"
 	"github.com/sila-chain/Sila/p2p/enr"
 	"github.com/libp2p/go-libp2p/core/crypto"
@@ -40,7 +40,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	ecdsaPrivKey, err := ecdsaprysm.ConvertFromInterfacePrivKey(unmarshalledKey)
+	ecdsaPrivKey, err := ecdsasila.ConvertFromInterfacePrivKey(unmarshalledKey)
 	if err != nil {
 		panic(err)
 	}

@@ -3,9 +3,9 @@ package endtoend
 import (
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/endtoend/types"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 )
 
 func TestEndToEnd_MultiScenarioRun(t *testing.T) {
@@ -39,7 +39,7 @@ func TestEndToEnd_MinimalConfig_ValidatorRESTApi(t *testing.T) {
 }
 
 func TestEndToEnd_ScenarioRun_EEOffline(t *testing.T) {
-	t.Skip("TODO(#10242) Prysm is current unable to handle an offline e2e")
+	t.Skip("TODO(#10242) Sila is current unable to handle an offline e2e")
 	cfg := types.InitForkCfg(version.Bellatrix, version.Deneb, params.E2ETestConfig())
 	runner := e2eMinimal(t, cfg)
 	// override for scenario tests

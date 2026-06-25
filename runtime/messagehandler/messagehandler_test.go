@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/messagehandler"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/messagehandler"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )

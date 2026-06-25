@@ -25,8 +25,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 )
 
 func aesCTRXOR(key, inText, iv []byte) ([]byte, error) {
@@ -52,7 +52,7 @@ func ensureInt(x any) int {
 // keyFileName implements the naming convention for keyfiles:
 // UTC--<created_at UTC ISO8601>-<first 8 character of address hex>
 func keyFileName(pubkey bls.PublicKey) string {
-	ts := prysmTime.Now().UTC()
+	ts := silaTime.Now().UTC()
 	return fmt.Sprintf("UTC--%s--%s", toISO8601(ts), hex.EncodeToString(pubkey.Marshal())[:8])
 }
 

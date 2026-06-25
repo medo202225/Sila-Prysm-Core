@@ -1,14 +1,14 @@
 package wallet
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/cmd/validator/flags"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/features"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/tos"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/tos"
 	"github.com/urfave/cli/v2"
 )
 
-// Commands for wallets for Sila-Prysm validators.
+// Commands for wallets for Sila validators.
 var Commands = &cli.Command{
 	Name:     "wallet",
 	Category: "wallet",

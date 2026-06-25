@@ -4,11 +4,11 @@ import (
 	"encoding/binary"
 	"testing"
 
-	depositcontract "github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/contracts/deposit/mock"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/interop"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
+	depositcontract "github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit/mock"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila/common"
 )

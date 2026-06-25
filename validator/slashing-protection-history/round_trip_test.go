@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/common"
-	dbtest "github.com/sila-chain/Sila-Prysm-Core/v7/validator/db/testing"
-	history "github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/slashing-protection-history/format"
-	slashtest "github.com/sila-chain/Sila-Prysm-Core/v7/validator/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/common"
+	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/validator/db/testing"
+	history "github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
+	slashtest "github.com/sila-chain/Sila-Consensus-Core/v7/validator/testing"
 )
 
 // TestImportExport_RoundTrip tests that we can import and export slashing protection data

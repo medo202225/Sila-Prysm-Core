@@ -3,7 +3,7 @@
 package blst
 
 import (
-	"github.com/sila-chain/Sila-Prysm-Core/v7/crypto/bls/common"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
 )
 
 // This stub file exists until build issues can be resolved for libfuzz.

@@ -5,16 +5,16 @@ import (
 	"testing"
 	"time"
 
-	fieldparams "github.com/sila-chain/Sila-Prysm-Core/v7/config/fieldparams"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	ethpb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/prysm/v1alpha1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/require"
-	validatormock "github.com/sila-chain/Sila-Prysm-Core/v7/testing/validator-mock"
-	walletMock "github.com/sila-chain/Sila-Prysm-Core/v7/validator/accounts/testing"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/testutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/keymanager/derived"
-	constant "github.com/sila-chain/Sila-Prysm-Core/v7/validator/testing"
+	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	ethpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	validatormock "github.com/sila-chain/Sila-Consensus-Core/v7/testing/validator-mock"
+	walletMock "github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/testing"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/testutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/derived"
+	constant "github.com/sila-chain/Sila-Consensus-Core/v7/validator/testing"
 	"github.com/pkg/errors"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 	"github.com/tyler-smith/go-bip39"
@@ -27,13 +27,13 @@ func TestWaitActivation_Exiting_OK(t *testing.T) {
 	defer ctrl.Finish()
 	validatorClient := validatormock.NewMockValidatorClient(ctrl)
 	chainClient := validatormock.NewMockChainClient(ctrl)
-	prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+	silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 	kp := randKeypair(t)
 	v := validator{
 		validatorClient:        validatorClient,
 		km:                     newMockKeymanager(t, kp),
 		chainClient:            chainClient,
-		prysmChainClient:       prysmChainClient,
+		silaChainClient:       silaChainClient,
 		accountsChangedChannel: make(chan [][fieldparams.BLSPubkeyLength]byte, 1),
 	}
 	ctx := t.Context()
@@ -61,7 +61,7 @@ func TestWaitForActivation_RefetchKeys(t *testing.T) {
 	defer ctrl.Finish()
 	validatorClient := validatormock.NewMockValidatorClient(ctrl)
 	chainClient := validatormock.NewMockChainClient(ctrl)
-	prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+	silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 
 	kp := randKeypair(t)
 	km := newMockKeymanager(t)
@@ -70,7 +70,7 @@ func TestWaitForActivation_RefetchKeys(t *testing.T) {
 		validatorClient:  validatorClient,
 		km:               km,
 		chainClient:      chainClient,
-		prysmChainClient: prysmChainClient,
+		silaChainClient: silaChainClient,
 		pubkeyToStatus:   make(map[[48]byte]*validatorStatus),
 	}
 	resp := testutil.GenerateMultipleValidatorStatusResponse([][]byte{kp.pub[:]})
@@ -112,13 +112,13 @@ func TestWaitForActivation_AccountsChanged(t *testing.T) {
 		km := newMockKeymanager(t, inactive)
 		validatorClient := validatormock.NewMockValidatorClient(ctrl)
 		chainClient := validatormock.NewMockChainClient(ctrl)
-		prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+		silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 		ch := make(chan [][fieldparams.BLSPubkeyLength]byte, 1)
 		v := validator{
 			validatorClient:        validatorClient,
 			km:                     km,
 			chainClient:            chainClient,
-			prysmChainClient:       prysmChainClient,
+			silaChainClient:       silaChainClient,
 			pubkeyToStatus:         make(map[[48]byte]*validatorStatus),
 			accountsChangedChannel: ch,
 			accountChangedSub:      km.SubscribeAccountChanges(ch),
@@ -190,13 +190,13 @@ func TestWaitForActivation_AccountsChanged(t *testing.T) {
 		require.NoError(t, err)
 		validatorClient := validatormock.NewMockValidatorClient(ctrl)
 		chainClient := validatormock.NewMockChainClient(ctrl)
-		prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+		silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 		v := validator{
 			validatorClient:  validatorClient,
 			km:               km,
 			genesisTime:      time.Unix(1, 0),
 			chainClient:      chainClient,
-			prysmChainClient: prysmChainClient,
+			silaChainClient: silaChainClient,
 			pubkeyToStatus:   make(map[[48]byte]*validatorStatus),
 		}
 
@@ -253,13 +253,13 @@ func TestWaitForActivation_AttemptsReconnectionOnFailure(t *testing.T) {
 	defer ctrl.Finish()
 	validatorClient := validatormock.NewMockValidatorClient(ctrl)
 	chainClient := validatormock.NewMockChainClient(ctrl)
-	prysmChainClient := validatormock.NewMockPrysmChainClient(ctrl)
+	silaChainClient := validatormock.NewMockSilaChainClient(ctrl)
 	kp := randKeypair(t)
 	v := validator{
 		validatorClient:        validatorClient,
 		km:                     newMockKeymanager(t, kp),
 		chainClient:            chainClient,
-		prysmChainClient:       prysmChainClient,
+		silaChainClient:       silaChainClient,
 		pubkeyToStatus:         make(map[[48]byte]*validatorStatus),
 		accountsChangedChannel: make(chan [][fieldparams.BLSPubkeyLength]byte, 1),
 	}

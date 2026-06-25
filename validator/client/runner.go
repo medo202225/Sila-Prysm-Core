@@ -6,13 +6,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/client"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/encoding/bytesutil"
-	prysmTrace "github.com/sila-chain/Sila-Prysm-Core/v7/monitoring/tracing/trace"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/time/slots"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/validator/client/iface"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	silaTrace "github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc/codes"
@@ -100,8 +100,8 @@ func (r *runner) run(ctx context.Context) {
 			slotCtx, cancel := context.WithDeadline(ctx, deadline) //nolint:govet
 
 			var span trace.Span
-			slotCtx, span = prysmTrace.StartSpan(slotCtx, "validator.processSlot")
-			span.SetAttributes(prysmTrace.Int64Attribute("slot", int64(slot))) // lint:ignore uintcast -- This conversion is OK for tracing.
+			slotCtx, span = silaTrace.StartSpan(slotCtx, "validator.processSlot")
+			span.SetAttributes(silaTrace.Int64Attribute("slot", int64(slot))) // lint:ignore uintcast -- This conversion is OK for tracing.
 
 			log := log.WithField("slot", slot)
 			log.WithField("deadline", deadline).Debug("Set deadline for proposals and attestations")
@@ -155,7 +155,7 @@ func (r *runner) run(ctx context.Context) {
 }
 
 func onAccountsChanged(ctx context.Context, v iface.Validator, current [][48]byte) {
-	ctx, span := prysmTrace.StartSpan(ctx, "validator.accountsChanged")
+	ctx, span := silaTrace.StartSpan(ctx, "validator.accountsChanged")
 	defer span.End()
 
 	anyActive, err := v.HandleKeyReload(ctx, current)
@@ -175,7 +175,7 @@ func onAccountsChanged(ctx context.Context, v iface.Validator, current [][48]byt
 }
 
 func initialize(ctx context.Context, v iface.Validator) error {
-	ctx, span := prysmTrace.StartSpan(ctx, "validator.initialize")
+	ctx, span := silaTrace.StartSpan(ctx, "validator.initialize")
 	defer span.End()
 
 	ticker := time.NewTicker(backOffPeriod)
@@ -268,7 +268,7 @@ func performRoles(slotCtx context.Context, allRoles map[[48]byte][]iface.Validat
 			if err := recover(); err != nil { // catch any panic in logging
 				log.WithField("error", err).
 					Error("Panic occurred when logging validator report. This" +
-						" should never happen! Please file a report at github.com/sila-chain/prysm/issues/new")
+						" should never happen! Please file a report at github.com/sila-chain/sila/issues/new")
 			}
 		}()
 		// Log performance in the previous slot

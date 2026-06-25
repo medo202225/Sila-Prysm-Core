@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	prysmTime "github.com/sila-chain/Sila-Prysm-Core/v7/time"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sirupsen/logrus"
 )
 
@@ -27,7 +27,7 @@ func CountdownToGenesis(ctx context.Context, genesisTime time.Time, genesisValid
 	}
 	secondTimerActivated := false
 	for {
-		currentTime := prysmTime.Now()
+		currentTime := silaTime.Now()
 		if currentTime.After(genesisTime) {
 			log.WithFields(logFields).Info("Chain genesis time reached")
 			return

@@ -1,6 +1,6 @@
 package precompute
 
-import "github.com/sila-chain/Sila-Prysm-Core/v7/consensus-types/primitives"
+import "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 
 // Validator stores the pre computation of individual validator's attesting records these records
 // consist of attestation votes, block inclusion record. Pre computing and storing such record

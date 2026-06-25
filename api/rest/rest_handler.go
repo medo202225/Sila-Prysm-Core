@@ -10,11 +10,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/api/apiutil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/config/params"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/network/httputil"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/runtime/version"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/api/apiutil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -58,7 +58,7 @@ func NewHandler(client http.Client, host string) Handler {
 }
 
 // appendAcceptOverride enables the Accept header to be customized at runtime via an environment variable.
-// This is specified as an env var because it is a niche option that Sila-Prysm may use for performance testing or debugging
+// This is specified as an env var because it is a niche option that Sila may use for performance testing or debugging
 // bug which users are unlikely to need. Using an env var keeps the set of user-facing flags cleaner.
 func (c *handler) appendAcceptOverride() {
 	if accept := os.Getenv(params.EnvNameOverrideAccept); accept != "" {

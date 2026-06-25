@@ -8,9 +8,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/sila-chain/Sila-Prysm-Core/v7/beacon-chain/execution"
-	pb "github.com/sila-chain/Sila-Prysm-Core/v7/proto/engine/v1"
-	"github.com/sila-chain/Sila-Prysm-Core/v7/testing/assert"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
+	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/engine/v1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila/beacon/engine"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/core/types"
@@ -34,19 +34,19 @@ func FuzzForkChoiceResponse(f *testing.F) {
 	f.Add(output)
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
 		gethResp := &engine.ForkChoiceResponse{}
-		prysmResp := &execution.ForkchoiceUpdatedResponse{}
+		silaResp := &execution.ForkchoiceUpdatedResponse{}
 		gethErr := json.Unmarshal(jsonBlob, gethResp)
-		prysmErr := json.Unmarshal(jsonBlob, prysmResp)
-		assert.Equal(t, gethErr != nil, prysmErr != nil, fmt.Sprintf("geth and prysm unmarshaller return inconsistent errors. %v and %v", gethErr, prysmErr))
+		silaErr := json.Unmarshal(jsonBlob, silaResp)
+		assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
 		// Nothing to marshal if we have an error.
 		if gethErr != nil {
 			return
 		}
 		gethBlob, gethErr := json.Marshal(gethResp)
-		prysmBlob, prysmErr := json.Marshal(prysmResp)
-		assert.Equal(t, gethErr != nil, prysmErr != nil, "geth and prysm unmarshaller return inconsistent errors")
+		silaBlob, silaErr := json.Marshal(silaResp)
+		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
 		newGethResp := &engine.ForkChoiceResponse{}
-		newGethErr := json.Unmarshal(prysmBlob, newGethResp)
+		newGethErr := json.Unmarshal(silaBlob, newGethResp)
 		assert.NoError(t, newGethErr)
 		if newGethResp.PayloadStatus.Status == "UNKNOWN" {
 			return
@@ -95,19 +95,19 @@ func FuzzExecutionPayload(f *testing.F) {
 	f.Add(output)
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
 		gethResp := &engine.ExecutionPayloadEnvelope{}
-		prysmResp := &pb.ExecutionPayloadCapellaWithValue{}
+		silaResp := &pb.ExecutionPayloadCapellaWithValue{}
 		gethErr := json.Unmarshal(jsonBlob, gethResp)
-		prysmErr := json.Unmarshal(jsonBlob, prysmResp)
-		assert.Equal(t, gethErr != nil, prysmErr != nil, fmt.Sprintf("geth and prysm unmarshaller return inconsistent errors. %v and %v", gethErr, prysmErr))
+		silaErr := json.Unmarshal(jsonBlob, silaResp)
+		assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
 		// Nothing to marshal if we have an error.
 		if gethErr != nil {
 			return
 		}
 		gethBlob, gethErr := json.Marshal(gethResp)
-		prysmBlob, prysmErr := json.Marshal(prysmResp)
-		assert.Equal(t, gethErr != nil, prysmErr != nil, "geth and prysm unmarshaller return inconsistent errors")
+		silaBlob, silaErr := json.Marshal(silaResp)
+		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
 		newGethResp := &engine.ExecutionPayloadEnvelope{}
-		newGethErr := json.Unmarshal(prysmBlob, newGethResp)
+		newGethErr := json.Unmarshal(silaBlob, newGethResp)
 		assert.NoError(t, newGethErr)
 		newGethResp2 := &engine.ExecutionPayloadEnvelope{}
 		newGethErr = json.Unmarshal(gethBlob, newGethResp2)
@@ -162,30 +162,30 @@ func FuzzExecutionBlock(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
 		gethResp := make(map[string]any)
-		prysmResp := &pb.ExecutionBlock{}
+		silaResp := &pb.ExecutionBlock{}
 		gethErr := json.Unmarshal(jsonBlob, &gethResp)
-		prysmErr := json.Unmarshal(jsonBlob, prysmResp)
+		silaErr := json.Unmarshal(jsonBlob, silaResp)
 		// Nothing to marshal if we have an error.
-		if gethErr != nil || prysmErr != nil {
+		if gethErr != nil || silaErr != nil {
 			return
 		}
 		// Exit early if fuzzer is inserting bogus hashes in.
-		if isBogusTransactionHash(prysmResp, gethResp) {
+		if isBogusTransactionHash(silaResp, gethResp) {
 			return
 		}
 		// Exit early if fuzzer provides bogus fields.
-		valid, err := jsonFieldsAreValid(prysmResp, gethResp)
+		valid, err := jsonFieldsAreValid(silaResp, gethResp)
 		assert.NoError(t, err)
 		if !valid {
 			return
 		}
-		assert.NoError(t, validateBlockConsistency(prysmResp, gethResp))
+		assert.NoError(t, validateBlockConsistency(silaResp, gethResp))
 
 		gethBlob, gethErr := json.Marshal(gethResp)
-		prysmBlob, prysmErr := json.Marshal(prysmResp)
-		assert.Equal(t, gethErr != nil, prysmErr != nil, "geth and prysm unmarshaller return inconsistent errors")
+		silaBlob, silaErr := json.Marshal(silaResp)
+		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
 		newGethResp := make(map[string]any)
-		newGethErr := json.Unmarshal(prysmBlob, &newGethResp)
+		newGethErr := json.Unmarshal(silaBlob, &newGethResp)
 		assert.NoError(t, newGethErr)
 		newGethResp2 := make(map[string]any)
 		newGethErr = json.Unmarshal(gethBlob, &newGethResp2)
@@ -219,20 +219,20 @@ func isBogusTransactionHash(blk *pb.ExecutionBlock, jsonMap map[string]any) bool
 
 func compareHeaders(t *testing.T, jsonBlob []byte) {
 	gethResp := &types.Header{}
-	prysmResp := &pb.ExecutionBlock{}
+	silaResp := &pb.ExecutionBlock{}
 	gethErr := json.Unmarshal(jsonBlob, gethResp)
-	prysmErr := json.Unmarshal(jsonBlob, prysmResp)
-	assert.Equal(t, gethErr != nil, prysmErr != nil, fmt.Sprintf("geth and prysm unmarshaller return inconsistent errors. %v and %v", gethErr, prysmErr))
+	silaErr := json.Unmarshal(jsonBlob, silaResp)
+	assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
 	// Nothing to marshal if we have an error.
 	if gethErr != nil {
 		return
 	}
 
 	gethBlob, gethErr := json.Marshal(gethResp)
-	prysmBlob, prysmErr := json.Marshal(prysmResp.Header)
-	assert.Equal(t, gethErr != nil, prysmErr != nil, "geth and prysm unmarshaller return inconsistent errors")
+	silaBlob, silaErr := json.Marshal(silaResp.Header)
+	assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
 	newGethResp := &types.Header{}
-	newGethErr := json.Unmarshal(prysmBlob, newGethResp)
+	newGethErr := json.Unmarshal(silaBlob, newGethResp)
 	assert.NoError(t, newGethErr)
 	newGethResp2 := &types.Header{}
 	newGethErr = json.Unmarshal(gethBlob, newGethResp2)

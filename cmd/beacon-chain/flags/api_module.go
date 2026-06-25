@@ -2,11 +2,11 @@ package flags
 
 import "strings"
 
-const PrysmAPIModule string = "prysm"
+const SilaAPIModule string = "sila"
 const EthAPIModule string = "eth"
 
-func EnableHTTPPrysmAPI(httpModules string) bool {
-	return enableAPI(httpModules, PrysmAPIModule)
+func EnableHTTPSilaAPI(httpModules string) bool {
+	return enableAPI(httpModules, SilaAPIModule)
 }
 
 func EnableHTTPEthAPI(httpModules string) bool {
