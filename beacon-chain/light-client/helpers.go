@@ -41,9 +41,9 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 		currentSyncCommitteeBranch[i] = make([]byte, fieldparams.RootLength)
 	}
 
-	executionBranch := make([][]byte, fieldparams.ExecutionBranchDepth)
-	for i := range fieldparams.ExecutionBranchDepth {
-		executionBranch[i] = make([]byte, 32)
+	silaPayloadBranch := make([][]byte, fieldparams.SilaPayloadBranchDepth)
+	for i := range fieldparams.SilaPayloadBranchDepth {
+		silaPayloadBranch[i] = make([]byte, 32)
 	}
 
 	var m proto.Message
@@ -60,7 +60,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 			Header: &pb.LightClientHeaderCapella{
 				Beacon:          &pb.BeaconBlockHeader{},
 				Execution:       &silaenginev1.SilaPayloadHeaderCapella{},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -70,7 +70,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 			Header: &pb.LightClientHeaderDeneb{
 				Beacon:          &pb.BeaconBlockHeader{},
 				Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -80,7 +80,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 			Header: &pb.LightClientHeaderDeneb{
 				Beacon:          &pb.BeaconBlockHeader{},
 				Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -234,7 +234,7 @@ func makeBeaconBlockHeader(blk interfaces.ReadOnlySignedBeaconBlock) (*pb.Beacon
 }
 
 func emptyPayloadProof() [][]byte {
-	branch := interfaces.LightClientExecutionBranch{}
+	branch := interfaces.LightClientSilaPayloadBranch{}
 	proof := make([][]byte, len(branch))
 	for i, b := range branch {
 		proof[i] = b[:]

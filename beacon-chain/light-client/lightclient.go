@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -14,11 +15,10 @@ import (
 	light_client "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/light-client"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -261,9 +261,9 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 		nextSyncCommitteeBranch[i] = make([]byte, fieldparams.RootLength)
 	}
 
-	executionBranch := make([][]byte, fieldparams.ExecutionBranchDepth)
-	for i := range fieldparams.ExecutionBranchDepth {
-		executionBranch[i] = make([]byte, 32)
+	silaPayloadBranch := make([][]byte, fieldparams.SilaPayloadBranchDepth)
+	for i := range fieldparams.SilaPayloadBranchDepth {
+		silaPayloadBranch[i] = make([]byte, 32)
 	}
 
 	var finalityBranch [][]byte
@@ -325,7 +325,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					TransactionsRoot: make([]byte, fieldparams.RootLength),
 					WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -349,7 +349,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					TransactionsRoot: make([]byte, fieldparams.RootLength),
 					WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			SyncAggregate: &pb.SyncAggregate{
 				SyncCommitteeBits:      make([]byte, 64),
@@ -380,7 +380,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -406,7 +406,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			SyncAggregate: &pb.SyncAggregate{
 				SyncCommitteeBits:      make([]byte, 64),
@@ -437,7 +437,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -463,7 +463,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			SyncAggregate: &pb.SyncAggregate{
 				SyncCommitteeBits:      make([]byte, 64),

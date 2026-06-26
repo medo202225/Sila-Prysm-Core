@@ -25,8 +25,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	light_client "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/light-client"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -930,11 +930,11 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 		sampleRoot[i] = byte(i)
 	}
 
-	sampleExecutionBranch := make([][]byte, fieldparams.ExecutionBranchDepth)
+	sampleSilaPayloadBranch := make([][]byte, fieldparams.SilaPayloadBranchDepth)
 	for i := range 4 {
-		sampleExecutionBranch[i] = make([]byte, 32)
+		sampleSilaPayloadBranch[i] = make([]byte, 32)
 		for j := range 32 {
-			sampleExecutionBranch[i][j] = byte(i + j)
+			sampleSilaPayloadBranch[i][j] = byte(i + j)
 		}
 	}
 
@@ -990,7 +990,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockCapella())
@@ -1018,7 +1018,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockDeneb())
@@ -1046,7 +1046,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockElectra())
@@ -1074,7 +1074,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockFulu())

@@ -74,14 +74,14 @@ func (h *headerAltair) SilaData() (interfaces.SilaData, error) {
 	return nil, consensustypes.ErrNotSupported("Execution", h.Version())
 }
 
-func (h *headerAltair) ExecutionBranch() (interfaces.LightClientExecutionBranch, error) {
-	return interfaces.LightClientExecutionBranch{}, consensustypes.ErrNotSupported("ExecutionBranch", h.Version())
+func (h *headerAltair) SilaPayloadBranch() (interfaces.LightClientSilaPayloadBranch, error) {
+	return interfaces.LightClientSilaPayloadBranch{}, consensustypes.ErrNotSupported("SilaPayloadBranch", h.Version())
 }
 
 type headerCapella struct {
-	p               *pb.LightClientHeaderCapella
-	execution       interfaces.SilaData
-	executionBranch interfaces.LightClientExecutionBranch
+	p                 *pb.LightClientHeaderCapella
+	execution         interfaces.SilaData
+	silaPayloadBranch interfaces.LightClientSilaPayloadBranch
 }
 
 var _ interfaces.LightClientHeader = &headerCapella{}
@@ -95,19 +95,19 @@ func NewWrappedHeaderCapella(p *pb.LightClientHeaderCapella) (interfaces.LightCl
 		return nil, err
 	}
 
-	branch, err := createBranch[interfaces.LightClientExecutionBranch](
+	branch, err := createBranch[interfaces.LightClientSilaPayloadBranch](
 		"execution",
 		p.ExecutionBranch,
-		fieldparams.ExecutionBranchDepth,
+		fieldparams.SilaPayloadBranchDepth,
 	)
 	if err != nil {
 		return nil, err
 	}
 
 	return &headerCapella{
-		p:               p,
-		execution:       execution,
-		executionBranch: branch,
+		p:                 p,
+		execution:         execution,
+		silaPayloadBranch: branch,
 	}, nil
 }
 
@@ -139,14 +139,14 @@ func (h *headerCapella) SilaData() (interfaces.SilaData, error) {
 	return h.execution, nil
 }
 
-func (h *headerCapella) ExecutionBranch() (interfaces.LightClientExecutionBranch, error) {
-	return h.executionBranch, nil
+func (h *headerCapella) SilaPayloadBranch() (interfaces.LightClientSilaPayloadBranch, error) {
+	return h.silaPayloadBranch, nil
 }
 
 type headerDeneb struct {
-	p               *pb.LightClientHeaderDeneb
-	execution       interfaces.SilaData
-	executionBranch interfaces.LightClientExecutionBranch
+	p                 *pb.LightClientHeaderDeneb
+	execution         interfaces.SilaData
+	silaPayloadBranch interfaces.LightClientSilaPayloadBranch
 }
 
 var _ interfaces.LightClientHeader = &headerDeneb{}
@@ -160,19 +160,19 @@ func NewWrappedHeaderDeneb(p *pb.LightClientHeaderDeneb) (interfaces.LightClient
 		return nil, err
 	}
 
-	branch, err := createBranch[interfaces.LightClientExecutionBranch](
+	branch, err := createBranch[interfaces.LightClientSilaPayloadBranch](
 		"execution",
 		p.ExecutionBranch,
-		fieldparams.ExecutionBranchDepth,
+		fieldparams.SilaPayloadBranchDepth,
 	)
 	if err != nil {
 		return nil, err
 	}
 
 	return &headerDeneb{
-		p:               p,
-		execution:       execution,
-		executionBranch: branch,
+		p:                 p,
+		execution:         execution,
+		silaPayloadBranch: branch,
 	}, nil
 }
 
@@ -204,14 +204,14 @@ func (h *headerDeneb) SilaData() (interfaces.SilaData, error) {
 	return h.execution, nil
 }
 
-func (h *headerDeneb) ExecutionBranch() (interfaces.LightClientExecutionBranch, error) {
-	return h.executionBranch, nil
+func (h *headerDeneb) SilaPayloadBranch() (interfaces.LightClientSilaPayloadBranch, error) {
+	return h.silaPayloadBranch, nil
 }
 
 type headerElectra struct {
-	p               *pb.LightClientHeaderDeneb
-	execution       interfaces.SilaData
-	executionBranch interfaces.LightClientExecutionBranch
+	p                 *pb.LightClientHeaderDeneb
+	execution         interfaces.SilaData
+	silaPayloadBranch interfaces.LightClientSilaPayloadBranch
 }
 
 var _ interfaces.LightClientHeader = &headerElectra{}
@@ -225,19 +225,19 @@ func NewWrappedHeaderElectra(p *pb.LightClientHeaderDeneb) (interfaces.LightClie
 		return nil, err
 	}
 
-	branch, err := createBranch[interfaces.LightClientExecutionBranch](
+	branch, err := createBranch[interfaces.LightClientSilaPayloadBranch](
 		"execution",
 		p.ExecutionBranch,
-		fieldparams.ExecutionBranchDepth,
+		fieldparams.SilaPayloadBranchDepth,
 	)
 	if err != nil {
 		return nil, err
 	}
 
 	return &headerElectra{
-		p:               p,
-		execution:       execution,
-		executionBranch: branch,
+		p:                 p,
+		execution:         execution,
+		silaPayloadBranch: branch,
 	}, nil
 }
 
@@ -269,6 +269,6 @@ func (h *headerElectra) SilaData() (interfaces.SilaData, error) {
 	return h.execution, nil
 }
 
-func (h *headerElectra) ExecutionBranch() (interfaces.LightClientExecutionBranch, error) {
-	return h.executionBranch, nil
+func (h *headerElectra) SilaPayloadBranch() (interfaces.LightClientSilaPayloadBranch, error) {
+	return h.silaPayloadBranch, nil
 }

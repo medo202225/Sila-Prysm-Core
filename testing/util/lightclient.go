@@ -1195,9 +1195,9 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 
 		silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
 		require.NoError(l.T, err)
-		updateAttestedHeaderExecutionBranch, err := header.ExecutionBranch()
+		updateAttestedHeaderSilaPayloadBranch, err := header.SilaPayloadBranch()
 		require.NoError(l.T, err)
-		for i, leaf := range updateAttestedHeaderExecutionBranch {
+		for i, leaf := range updateAttestedHeaderSilaPayloadBranch {
 			require.DeepSSZEqual(l.T, silaPayloadProof[i], leaf[:], "Leaf is not equal")
 		}
 	}
@@ -1249,9 +1249,9 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 
 		silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
 		require.NoError(l.T, err)
-		updateAttestedHeaderExecutionBranch, err := header.ExecutionBranch()
+		updateAttestedHeaderSilaPayloadBranch, err := header.SilaPayloadBranch()
 		require.NoError(l.T, err)
-		for i, leaf := range updateAttestedHeaderExecutionBranch {
+		for i, leaf := range updateAttestedHeaderSilaPayloadBranch {
 			require.DeepSSZEqual(l.T, silaPayloadProof[i], leaf[:], "Leaf is not equal")
 		}
 	}

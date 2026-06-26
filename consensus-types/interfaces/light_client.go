@@ -8,7 +8,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-type LightClientExecutionBranch = [fieldparams.ExecutionBranchDepth][fieldparams.RootLength]byte
+type LightClientSilaPayloadBranch = [fieldparams.SilaPayloadBranchDepth][fieldparams.RootLength]byte
 type LightClientSyncCommitteeBranch = [fieldparams.SyncCommitteeBranchDepth][fieldparams.RootLength]byte
 type LightClientSyncCommitteeBranchElectra = [fieldparams.SyncCommitteeBranchDepthElectra][fieldparams.RootLength]byte
 type LightClientFinalityBranch = [fieldparams.FinalityBranchDepth][fieldparams.RootLength]byte
@@ -20,7 +20,7 @@ type LightClientHeader interface {
 	Version() int
 	Beacon() *pb.BeaconBlockHeader
 	SilaData() (SilaData, error)
-	ExecutionBranch() (LightClientExecutionBranch, error)
+	SilaPayloadBranch() (LightClientSilaPayloadBranch, error)
 }
 
 type LightClientBootstrap interface {

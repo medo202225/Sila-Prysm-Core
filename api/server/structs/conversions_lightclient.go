@@ -140,14 +140,14 @@ func lightClientHeaderToJSON(header interfaces.LightClientHeader) (json.RawMessa
 		if err != nil {
 			return nil, err
 		}
-		executionBranch, err := header.ExecutionBranch()
+		silaPayloadBranch, err := header.SilaPayloadBranch()
 		if err != nil {
 			return nil, err
 		}
 		result = &LightClientHeaderCapella{
 			Beacon:          BeaconBlockHeaderFromConsensus(header.Beacon()),
 			Execution:       execution,
-			ExecutionBranch: branchToJSON(executionBranch[:]),
+			ExecutionBranch: branchToJSON(silaPayloadBranch[:]),
 		}
 	case version.Deneb:
 		exInterface, err := header.SilaData()
@@ -162,14 +162,14 @@ func lightClientHeaderToJSON(header interfaces.LightClientHeader) (json.RawMessa
 		if err != nil {
 			return nil, err
 		}
-		executionBranch, err := header.ExecutionBranch()
+		silaPayloadBranch, err := header.SilaPayloadBranch()
 		if err != nil {
 			return nil, err
 		}
 		result = &LightClientHeaderDeneb{
 			Beacon:          BeaconBlockHeaderFromConsensus(header.Beacon()),
 			Execution:       execution,
-			ExecutionBranch: branchToJSON(executionBranch[:]),
+			ExecutionBranch: branchToJSON(silaPayloadBranch[:]),
 		}
 	case version.Electra:
 		exInterface, err := header.SilaData()
@@ -184,14 +184,14 @@ func lightClientHeaderToJSON(header interfaces.LightClientHeader) (json.RawMessa
 		if err != nil {
 			return nil, err
 		}
-		executionBranch, err := header.ExecutionBranch()
+		silaPayloadBranch, err := header.SilaPayloadBranch()
 		if err != nil {
 			return nil, err
 		}
 		result = &LightClientHeaderDeneb{
 			Beacon:          BeaconBlockHeaderFromConsensus(header.Beacon()),
 			Execution:       execution,
-			ExecutionBranch: branchToJSON(executionBranch[:]),
+			ExecutionBranch: branchToJSON(silaPayloadBranch[:]),
 		}
 	default:
 		return nil, fmt.Errorf("unsupported header version %s", version.String(v))

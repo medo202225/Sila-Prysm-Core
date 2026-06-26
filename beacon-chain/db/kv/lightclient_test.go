@@ -11,8 +11,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	light_client "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/light-client"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -33,11 +33,11 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 		sampleRoot[i] = byte(i)
 	}
 
-	sampleExecutionBranch := make([][]byte, fieldparams.ExecutionBranchDepth)
+	sampleSilaPayloadBranch := make([][]byte, fieldparams.SilaPayloadBranchDepth)
 	for i := range 4 {
-		sampleExecutionBranch[i] = make([]byte, 32)
+		sampleSilaPayloadBranch[i] = make([]byte, 32)
 		for j := range 32 {
-			sampleExecutionBranch[i][j] = byte(i + j)
+			sampleSilaPayloadBranch[i][j] = byte(i + j)
 		}
 	}
 
@@ -93,7 +93,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		st, err = util.NewBeaconStateCapella()
@@ -121,7 +121,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		st, err = util.NewBeaconStateDeneb()
@@ -149,7 +149,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		st, err = util.NewBeaconStateElectra()
@@ -177,7 +177,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleExecutionBranch,
+			ExecutionBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		st, err = util.NewBeaconStateFulu()
@@ -482,9 +482,9 @@ func createDefaultLightClientUpdate(currentSlot primitives.Slot, attestedState s
 		nextSyncCommitteeBranch[i] = make([]byte, fieldparams.RootLength)
 	}
 
-	executionBranch := make([][]byte, fieldparams.ExecutionBranchDepth)
-	for i := range fieldparams.ExecutionBranchDepth {
-		executionBranch[i] = make([]byte, 32)
+	silaPayloadBranch := make([][]byte, fieldparams.SilaPayloadBranchDepth)
+	for i := range fieldparams.SilaPayloadBranchDepth {
+		silaPayloadBranch[i] = make([]byte, 32)
 	}
 
 	var finalityBranch [][]byte
@@ -510,7 +510,7 @@ func createDefaultLightClientUpdate(currentSlot primitives.Slot, attestedState s
 			AttestedHeader: &pb.LightClientHeaderCapella{
 				Beacon:          &pb.BeaconBlockHeader{},
 				Execution:       &silaenginev1.SilaPayloadHeaderCapella{},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -521,7 +521,7 @@ func createDefaultLightClientUpdate(currentSlot primitives.Slot, attestedState s
 			AttestedHeader: &pb.LightClientHeaderDeneb{
 				Beacon:          &pb.BeaconBlockHeader{},
 				Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -533,7 +533,7 @@ func createDefaultLightClientUpdate(currentSlot primitives.Slot, attestedState s
 				AttestedHeader: &pb.LightClientHeaderDeneb{
 					Beacon:          &pb.BeaconBlockHeader{},
 					Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-					ExecutionBranch: executionBranch,
+					ExecutionBranch: silaPayloadBranch,
 				},
 				NextSyncCommittee:       nextSyncCommittee,
 				NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -544,7 +544,7 @@ func createDefaultLightClientUpdate(currentSlot primitives.Slot, attestedState s
 				AttestedHeader: &pb.LightClientHeaderDeneb{
 					Beacon:          &pb.BeaconBlockHeader{},
 					Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-					ExecutionBranch: executionBranch,
+					ExecutionBranch: silaPayloadBranch,
 				},
 				NextSyncCommittee:       nextSyncCommittee,
 				NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -757,9 +757,9 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 		currentSyncCommitteeBranch[i] = make([]byte, fieldparams.RootLength)
 	}
 
-	executionBranch := make([][]byte, fieldparams.ExecutionBranchDepth)
-	for i := range fieldparams.ExecutionBranchDepth {
-		executionBranch[i] = make([]byte, 32)
+	silaPayloadBranch := make([][]byte, fieldparams.SilaPayloadBranchDepth)
+	for i := range fieldparams.SilaPayloadBranchDepth {
+		silaPayloadBranch[i] = make([]byte, 32)
 	}
 
 	// TODO: can this be based on the current epoch?
@@ -799,7 +799,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 					TransactionsRoot: make([]byte, fieldparams.RootLength),
 					WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -828,7 +828,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -857,7 +857,7 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: executionBranch,
+				ExecutionBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,

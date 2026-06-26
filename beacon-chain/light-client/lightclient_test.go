@@ -762,11 +762,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -823,11 +823,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -894,11 +894,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -963,11 +963,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -1030,11 +1030,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -1095,11 +1095,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -1162,11 +1162,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -1227,11 +1227,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 	})
 
@@ -1333,11 +1333,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 
 		t.Run("Blinded Beacon Block", func(t *testing.T) {
@@ -1393,11 +1393,11 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Sila payload headers are not equal")
 
-			headerExecutionBranch, err := header.ExecutionBranch()
+			headerSilaPayloadBranch, err := header.SilaPayloadBranch()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerExecutionBranch), "Sila payload proofs are not equal")
+			require.DeepSSZEqual(t, silaPayloadProof, convertArrayToSlice(headerSilaPayloadBranch), "Sila payload proofs are not equal")
 		})
 	})
 }
