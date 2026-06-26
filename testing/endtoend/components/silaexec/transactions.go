@@ -24,7 +24,7 @@ import (
 	"github.com/sila-chain/Sila/core/types"
 	"github.com/sila-chain/Sila/crypto/kzg4844"
 	"github.com/sila-chain/Sila/ethclient"
-	"github.com/sila-chain/Sila/ethclient/gethclient"
+	silaAccessListClient "github.com/sila-chain/Sila/ethclient/gethclient"
 	"github.com/sila-chain/Sila/rpc"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
@@ -151,7 +151,7 @@ func SendTransaction(client *rpc.Client, key *ecdsa.PrivateKey, gasPrice *big.In
 	clock := startup.NewClock(e2e.TestParams.CLGenesisTime, [32]byte{})
 	isPostFulu := clock.CurrentEpoch() >= cfg.FuluForkEpoch
 	// Skip pre-Fulu V0 sends only when Fulu is scheduled: V0 sidecars left in
-	// the pool at the Osaka boundary become invalid under geth >= v1.17 and
+	// the pool at the Osaka boundary become invalid under Sila execution client >= v1.17 and
 	// occupy maxTxsPerAccount=16, blocking later V1 cell-proof txs. When Fulu
 	// is never scheduled (Deneb/Electra-only tests), V0 is the only path.
 	fuluScheduled := cfg.FuluForkEpoch != cfg.FarFutureEpoch
@@ -360,9 +360,9 @@ func RandomBlobCellTx(rpc *rpc.Client, sender common.Address, nonce uint64, gasP
 			Data:       tx.Data(),
 			AccessList: nil,
 		}
-		geth := gethclient.New(rpc)
+		accessListClient := silaAccessListClient.New(rpc)
 
-		al, _, _, err := geth.CreateAccessList(context.Background(), msg)
+		al, _, _, err := accessListClient.CreateAccessList(context.Background(), msg)
 		if err != nil {
 			return nil, errors.Wrap(err, "CreateAccessList")
 		}
@@ -454,9 +454,9 @@ func RandomBlobTx(rpc *rpc.Client, sender common.Address, nonce uint64, gasPrice
 			Data:       tx.Data(),
 			AccessList: nil,
 		}
-		geth := gethclient.New(rpc)
+		accessListClient := silaAccessListClient.New(rpc)
 
-		al, _, _, err := geth.CreateAccessList(context.Background(), msg)
+		al, _, _, err := accessListClient.CreateAccessList(context.Background(), msg)
 		if err != nil {
 			return nil, errors.Wrap(err, "CreateAccessList")
 		}
