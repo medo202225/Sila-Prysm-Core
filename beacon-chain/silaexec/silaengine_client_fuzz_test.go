@@ -33,37 +33,37 @@ func FuzzForkChoiceResponse(f *testing.F) {
 	assert.NoError(f, err)
 	f.Add(output)
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
-		gethResp := &engine.ForkChoiceResponse{}
+		upstreamResp := &engine.ForkChoiceResponse{}
 		silaResp := &silaexec.ForkchoiceUpdatedResponse{}
-		gethErr := json.Unmarshal(jsonBlob, gethResp)
+		upstreamErr := json.Unmarshal(jsonBlob, upstreamResp)
 		silaErr := json.Unmarshal(jsonBlob, silaResp)
-		assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
+		assert.Equal(t, upstreamErr != nil, silaErr != nil, fmt.Sprintf("upstream and Sila unmarshaller return inconsistent errors. %v and %v", upstreamErr, silaErr))
 		// Nothing to marshal if we have an error.
-		if gethErr != nil {
+		if upstreamErr != nil {
 			return
 		}
-		gethBlob, gethErr := json.Marshal(gethResp)
+		upstreamBlob, upstreamErr := json.Marshal(upstreamResp)
 		silaBlob, silaErr := json.Marshal(silaResp)
-		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
-		newGethResp := &engine.ForkChoiceResponse{}
-		newGethErr := json.Unmarshal(silaBlob, newGethResp)
-		assert.NoError(t, newGethErr)
-		if newGethResp.PayloadStatus.Status == "UNKNOWN" {
+		assert.Equal(t, upstreamErr != nil, silaErr != nil, "upstream and Sila unmarshaller return inconsistent errors")
+		newUpstreamResp := &engine.ForkChoiceResponse{}
+		newUpstreamErr := json.Unmarshal(silaBlob, newUpstreamResp)
+		assert.NoError(t, newUpstreamErr)
+		if newUpstreamResp.PayloadStatus.Status == "UNKNOWN" {
 			return
 		}
 
-		newGethResp2 := &engine.ForkChoiceResponse{}
-		newGethErr = json.Unmarshal(gethBlob, newGethResp2)
-		assert.NoError(t, newGethErr)
+		newUpstreamResp2 := &engine.ForkChoiceResponse{}
+		newUpstreamErr = json.Unmarshal(upstreamBlob, newUpstreamResp2)
+		assert.NoError(t, newUpstreamErr)
 
-		assert.DeepEqual(t, newGethResp.PayloadID, newGethResp2.PayloadID)
-		assert.DeepEqual(t, newGethResp.PayloadStatus.Status, newGethResp2.PayloadStatus.Status)
-		assert.DeepEqual(t, newGethResp.PayloadStatus.LatestValidHash, newGethResp2.PayloadStatus.LatestValidHash)
-		isNilOrEmpty := newGethResp.PayloadStatus.ValidationError == nil || (*newGethResp.PayloadStatus.ValidationError == "")
-		isNilOrEmpty2 := newGethResp2.PayloadStatus.ValidationError == nil || (*newGethResp2.PayloadStatus.ValidationError == "")
+		assert.DeepEqual(t, newUpstreamResp.PayloadID, newUpstreamResp2.PayloadID)
+		assert.DeepEqual(t, newUpstreamResp.PayloadStatus.Status, newUpstreamResp2.PayloadStatus.Status)
+		assert.DeepEqual(t, newUpstreamResp.PayloadStatus.LatestValidHash, newUpstreamResp2.PayloadStatus.LatestValidHash)
+		isNilOrEmpty := newUpstreamResp.PayloadStatus.ValidationError == nil || (*newUpstreamResp.PayloadStatus.ValidationError == "")
+		isNilOrEmpty2 := newUpstreamResp2.PayloadStatus.ValidationError == nil || (*newUpstreamResp2.PayloadStatus.ValidationError == "")
 		assert.DeepEqual(t, isNilOrEmpty, isNilOrEmpty2)
 		if !isNilOrEmpty {
-			assert.DeepEqual(t, *newGethResp.PayloadStatus.ValidationError, *newGethResp2.PayloadStatus.ValidationError)
+			assert.DeepEqual(t, *newUpstreamResp.PayloadStatus.ValidationError, *newUpstreamResp2.PayloadStatus.ValidationError)
 		}
 	})
 }
@@ -94,26 +94,26 @@ func FuzzSilaPayload(f *testing.F) {
 	assert.NoError(f, err)
 	f.Add(output)
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
-		gethResp := &engine.SilaPayloadEnvelope{}
+		upstreamResp := &engine.SilaPayloadEnvelope{}
 		silaResp := &pb.SilaPayloadCapellaWithValue{}
-		gethErr := json.Unmarshal(jsonBlob, gethResp)
+		upstreamErr := json.Unmarshal(jsonBlob, upstreamResp)
 		silaErr := json.Unmarshal(jsonBlob, silaResp)
-		assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
+		assert.Equal(t, upstreamErr != nil, silaErr != nil, fmt.Sprintf("upstream and Sila unmarshaller return inconsistent errors. %v and %v", upstreamErr, silaErr))
 		// Nothing to marshal if we have an error.
-		if gethErr != nil {
+		if upstreamErr != nil {
 			return
 		}
-		gethBlob, gethErr := json.Marshal(gethResp)
+		upstreamBlob, upstreamErr := json.Marshal(upstreamResp)
 		silaBlob, silaErr := json.Marshal(silaResp)
-		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
-		newGethResp := &engine.SilaPayloadEnvelope{}
-		newGethErr := json.Unmarshal(silaBlob, newGethResp)
-		assert.NoError(t, newGethErr)
-		newGethResp2 := &engine.SilaPayloadEnvelope{}
-		newGethErr = json.Unmarshal(gethBlob, newGethResp2)
-		assert.NoError(t, newGethErr)
+		assert.Equal(t, upstreamErr != nil, silaErr != nil, "upstream and Sila unmarshaller return inconsistent errors")
+		newUpstreamResp := &engine.SilaPayloadEnvelope{}
+		newUpstreamErr := json.Unmarshal(silaBlob, newUpstreamResp)
+		assert.NoError(t, newUpstreamErr)
+		newUpstreamResp2 := &engine.SilaPayloadEnvelope{}
+		newUpstreamErr = json.Unmarshal(upstreamBlob, newUpstreamResp2)
+		assert.NoError(t, newUpstreamErr)
 
-		assert.DeepEqual(t, newGethResp, newGethResp2)
+		assert.DeepEqual(t, newUpstreamResp, newUpstreamResp2)
 	})
 }
 
@@ -161,37 +161,37 @@ func FuzzSilaBlock(f *testing.F) {
 	f.Add(output)
 
 	f.Fuzz(func(t *testing.T, jsonBlob []byte) {
-		gethResp := make(map[string]any)
+		upstreamResp := make(map[string]any)
 		silaResp := &pb.SilaBlock{}
-		gethErr := json.Unmarshal(jsonBlob, &gethResp)
+		upstreamErr := json.Unmarshal(jsonBlob, &upstreamResp)
 		silaErr := json.Unmarshal(jsonBlob, silaResp)
 		// Nothing to marshal if we have an error.
-		if gethErr != nil || silaErr != nil {
+		if upstreamErr != nil || silaErr != nil {
 			return
 		}
 		// Exit early if fuzzer is inserting bogus hashes in.
-		if isBogusTransactionHash(silaResp, gethResp) {
+		if isBogusTransactionHash(silaResp, upstreamResp) {
 			return
 		}
 		// Exit early if fuzzer provides bogus fields.
-		valid, err := jsonFieldsAreValid(silaResp, gethResp)
+		valid, err := jsonFieldsAreValid(silaResp, upstreamResp)
 		assert.NoError(t, err)
 		if !valid {
 			return
 		}
-		assert.NoError(t, validateBlockConsistency(silaResp, gethResp))
+		assert.NoError(t, validateBlockConsistency(silaResp, upstreamResp))
 
-		gethBlob, gethErr := json.Marshal(gethResp)
+		upstreamBlob, upstreamErr := json.Marshal(upstreamResp)
 		silaBlob, silaErr := json.Marshal(silaResp)
-		assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
-		newGethResp := make(map[string]any)
-		newGethErr := json.Unmarshal(silaBlob, &newGethResp)
-		assert.NoError(t, newGethErr)
-		newGethResp2 := make(map[string]any)
-		newGethErr = json.Unmarshal(gethBlob, &newGethResp2)
-		assert.NoError(t, newGethErr)
+		assert.Equal(t, upstreamErr != nil, silaErr != nil, "upstream and Sila unmarshaller return inconsistent errors")
+		newUpstreamResp := make(map[string]any)
+		newUpstreamErr := json.Unmarshal(silaBlob, &newUpstreamResp)
+		assert.NoError(t, newUpstreamErr)
+		newUpstreamResp2 := make(map[string]any)
+		newUpstreamErr = json.Unmarshal(upstreamBlob, &newUpstreamResp2)
+		assert.NoError(t, newUpstreamErr)
 
-		assert.DeepEqual(t, newGethResp, newGethResp2)
+		assert.DeepEqual(t, newUpstreamResp, newUpstreamResp2)
 		compareHeaders(t, jsonBlob)
 	})
 }
@@ -218,27 +218,27 @@ func isBogusTransactionHash(blk *pb.SilaBlock, jsonMap map[string]any) bool {
 }
 
 func compareHeaders(t *testing.T, jsonBlob []byte) {
-	gethResp := &types.Header{}
+	upstreamResp := &types.Header{}
 	silaResp := &pb.SilaBlock{}
-	gethErr := json.Unmarshal(jsonBlob, gethResp)
+	upstreamErr := json.Unmarshal(jsonBlob, upstreamResp)
 	silaErr := json.Unmarshal(jsonBlob, silaResp)
-	assert.Equal(t, gethErr != nil, silaErr != nil, fmt.Sprintf("geth and sila unmarshaller return inconsistent errors. %v and %v", gethErr, silaErr))
+	assert.Equal(t, upstreamErr != nil, silaErr != nil, fmt.Sprintf("upstream and Sila unmarshaller return inconsistent errors. %v and %v", upstreamErr, silaErr))
 	// Nothing to marshal if we have an error.
-	if gethErr != nil {
+	if upstreamErr != nil {
 		return
 	}
 
-	gethBlob, gethErr := json.Marshal(gethResp)
+	upstreamBlob, upstreamErr := json.Marshal(upstreamResp)
 	silaBlob, silaErr := json.Marshal(silaResp.Header)
-	assert.Equal(t, gethErr != nil, silaErr != nil, "geth and sila unmarshaller return inconsistent errors")
-	newGethResp := &types.Header{}
-	newGethErr := json.Unmarshal(silaBlob, newGethResp)
-	assert.NoError(t, newGethErr)
-	newGethResp2 := &types.Header{}
-	newGethErr = json.Unmarshal(gethBlob, newGethResp2)
-	assert.NoError(t, newGethErr)
+	assert.Equal(t, upstreamErr != nil, silaErr != nil, "upstream and Sila unmarshaller return inconsistent errors")
+	newUpstreamResp := &types.Header{}
+	newUpstreamErr := json.Unmarshal(silaBlob, newUpstreamResp)
+	assert.NoError(t, newUpstreamErr)
+	newUpstreamResp2 := &types.Header{}
+	newUpstreamErr = json.Unmarshal(upstreamBlob, newUpstreamResp2)
+	assert.NoError(t, newUpstreamErr)
 
-	assert.DeepEqual(t, newGethResp, newGethResp2)
+	assert.DeepEqual(t, newUpstreamResp, newUpstreamResp2)
 }
 
 func validateBlockConsistency(execBlock *pb.SilaBlock, jsonMap map[string]any) error {
