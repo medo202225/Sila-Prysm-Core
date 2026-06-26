@@ -302,7 +302,7 @@ func Test_NotifyForkchoiceUpdate_NIlLVH(t *testing.T) {
 	require.NoError(t, err)
 	require.NoError(t, fcs.InsertNode(ctx, state, blkRoot))
 
-	// Prepare Engine Mock to return invalid LVH =  nil
+	// Prepare Sila engine mock to return invalid LVH =  nil
 	service.cfg.SilaEngineCaller = &mockSila.SilaEngineClient{ErrForkchoiceUpdated: silaexec.ErrInvalidPayloadStatus, OverrideValidHash: [32]byte{'C'}}
 	st, _ := util.DeterministicGenesisState(t, 1)
 	service.head = &head{
@@ -441,7 +441,7 @@ func Test_NotifyForkchoiceUpdateRecursive_DoublyLinkedTree(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, brg, headRoot)
 
-	// Prepare Engine Mock to return invalid unless head is D, LVH =  E
+	// Prepare Sila engine mock to return invalid unless head is D, LVH =  E
 	service.cfg.SilaEngineCaller = &mockSila.SilaEngineClient{ErrForkchoiceUpdated: silaexec.ErrInvalidPayloadStatus, ForkChoiceUpdatedResp: pe[:], OverrideValidHash: [32]byte{'D'}}
 	st, _ := util.DeterministicGenesisState(t, 1)
 	service.head = &head{

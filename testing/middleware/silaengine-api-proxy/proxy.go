@@ -15,8 +15,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
 	"github.com/pkg/errors"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
 	"github.com/sirupsen/logrus"
 )
 
@@ -93,7 +93,7 @@ func (p *Proxy) Start(ctx context.Context) error {
 	}
 	p.cfg.logger.WithFields(logrus.Fields{
 		"forwardingAddress": p.cfg.destinationUrl.String(),
-	}).Infof("Engine proxy now listening on address %s", p.address)
+	}).Infof("Sila engine proxy now listening on address %s", p.address)
 	go func() {
 		if err := p.srv.ListenAndServe(); err != nil {
 			p.cfg.logger.Error(err)

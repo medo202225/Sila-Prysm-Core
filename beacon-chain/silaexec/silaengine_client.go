@@ -151,7 +151,7 @@ type Reconstructor interface {
 	ReconstructSilaPayloadEnvelope(ctx context.Context, envelope *silapb.SignedBlindedSilaPayloadEnvelope) (*silapb.SignedSilaPayloadEnvelope, error)
 }
 
-// EngineCaller defines a client that can interact with a Sila
+// SilaEngineCaller defines a client that can interact with Sila execution
 // Sila node's engine service via JSON-RPC.
 type EngineCaller interface {
 	NewPayload(ctx context.Context, payload interfaces.SilaData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, silaRequests *pb.SilaRequests) ([]byte, error)

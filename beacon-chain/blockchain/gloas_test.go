@@ -405,7 +405,7 @@ func TestFcuFromReorgData_CachesPayloadID(t *testing.T) {
 }
 
 func TestFcuFromReorgData_NilPayloadID_NoCache(t *testing.T) {
-	// Engine returns no payload ID (nil), so nothing should be cached.
+	// Sila engine returns no payload ID (nil), so nothing should be cached.
 	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 
 	headRoot := bytesutil.ToBytes32([]byte("headroot"))

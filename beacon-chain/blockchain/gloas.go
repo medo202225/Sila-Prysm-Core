@@ -4,6 +4,7 @@ import (
 	"context"
 	"math"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
 	coregloas "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/gloas"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
@@ -16,7 +17,6 @@ import (
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 )
 
 func (s *Service) waitUntilEpoch(target primitives.Epoch, secondsPerSlot uint64) error {
@@ -212,7 +212,7 @@ func (s *Service) fcuFromReorgData(hr [32]byte, hash [32]byte, attr payloadattri
 	}
 	if pid == nil {
 		if !attr.IsEmpty() {
-			log.Warn("Engine did not return a payload ID for the fork choice update with attributes")
+			log.Warn("Sila engine did not return a payload ID for the fork choice update with attributes")
 		}
 		return
 	}

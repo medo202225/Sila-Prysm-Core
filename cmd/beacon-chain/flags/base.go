@@ -249,7 +249,7 @@ var (
 		Name:  "network-id",
 		Usage: "Sets the network id of the beacon chain.",
 	}
-	// EngineEndpointTimeoutSeconds defines the seconds to wait before timing out engine endpoints with sila payload execution semantics (newPayload, forkchoiceUpdated).
+	// SilaEngineEndpointTimeoutSeconds defines the seconds to wait before timing out Sila engine endpoints with sila payload execution semantics (newPayload, forkchoiceUpdated).
 	// If this flag is not used then default will be used as defined here:
 	// https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/specification.md#core
 	EngineEndpointTimeoutSeconds = &cli.Uint64Flag{

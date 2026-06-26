@@ -137,11 +137,11 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 	t.Run("only intercepts if trigger function returns true", func(t *testing.T) {
 		ctx := t.Context()
 
-		type engineResponse struct {
+		type silaEngineResponse struct {
 			BlockHash common.Hash `json:"blockHash"`
 		}
 
-		destinationResponse := &engineResponse{BlockHash: common.BytesToHash([]byte("foo"))}
+		destinationResponse := &silaEngineResponse{BlockHash: common.BytesToHash([]byte("foo"))}
 		srv := destinationServerSetup(t, destinationResponse)
 		defer srv.Close()
 
@@ -163,7 +163,7 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 
 		// RPC method to intercept.
 		wantInterceptedResponse := func() any {
-			return &engineResponse{BlockHash: common.BytesToHash([]byte("bar"))}
+			return &silaEngineResponse{BlockHash: common.BytesToHash([]byte("bar"))}
 		}
 		conditional := false
 		proxy.AddRequestInterceptor(
@@ -178,7 +178,7 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 		rpcClient, err := rpc.DialHTTP("http://" + proxy.Address())
 		require.NoError(t, err)
 
-		proxyResult := &engineResponse{}
+		proxyResult := &silaEngineResponse{}
 		err = rpcClient.CallContext(ctx, proxyResult, method)
 		require.NoError(t, err)
 
@@ -196,7 +196,7 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 
 		// The interception should work and we should not be getting the destination
 		// response but rather a custom response from the interceptor config now that the trigger is true.
-		proxyResult = &engineResponse{}
+		proxyResult = &silaEngineResponse{}
 		err = rpcClient.CallContext(ctx, proxyResult, method)
 		require.NoError(t, err)
 		require.DeepEqual(t, wantInterceptedResponse(), proxyResult)
@@ -204,11 +204,11 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 	t.Run("triggers interceptor response correctly", func(t *testing.T) {
 		ctx := t.Context()
 
-		type engineResponse struct {
+		type silaEngineResponse struct {
 			BlockHash common.Hash `json:"blockHash"`
 		}
 
-		destinationResponse := &engineResponse{BlockHash: common.BytesToHash([]byte("foo"))}
+		destinationResponse := &silaEngineResponse{BlockHash: common.BytesToHash([]byte("foo"))}
 		srv := destinationServerSetup(t, destinationResponse)
 		defer srv.Close()
 
@@ -230,7 +230,7 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 
 		// RPC method to intercept.
 		wantInterceptedResponse := func() any {
-			return &engineResponse{BlockHash: common.BytesToHash([]byte("bar"))}
+			return &silaEngineResponse{BlockHash: common.BytesToHash([]byte("bar"))}
 		}
 		proxy.AddRequestInterceptor(
 			method,
@@ -244,7 +244,7 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 		rpcClient, err := rpc.DialHTTP("http://" + proxy.Address())
 		require.NoError(t, err)
 
-		proxyResult := &engineResponse{}
+		proxyResult := &silaEngineResponse{}
 		err = rpcClient.CallContext(ctx, proxyResult, method)
 		require.NoError(t, err)
 

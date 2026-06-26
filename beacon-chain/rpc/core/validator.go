@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
@@ -31,7 +32,6 @@ import (
 	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 )
@@ -601,7 +601,7 @@ func attestationDataIndex(req *silapb.AttestationDataRequest, isPayloadFull bool
 		return req.CommitteeIndex
 	}
 	if epoch < params.BeaconConfig().GloasForkEpoch {
-		// eip-7549 moves index outside
+		// SIP-7549 compatibility moves index outside
 		return 0
 	}
 	if isPayloadFull {
@@ -832,8 +832,8 @@ func (s *Service) ValidatorParticipation(
 		Participation: &silapb.ValidatorParticipation{
 			// TODO(7130): Remove these three deprecated fields.
 			GlobalParticipationRate:          float32(b.PrevEpochTargetAttested) / float32(b.ActivePrevEpoch),
-			VotedSila:                       b.PrevEpochTargetAttested,
-			EligibleSila:                    b.ActivePrevEpoch,
+			VotedSila:                        b.PrevEpochTargetAttested,
+			EligibleSila:                     b.ActivePrevEpoch,
 			CurrentEpochActiveGwei:           b.ActiveCurrentEpoch,
 			CurrentEpochAttestingGwei:        b.CurrentEpochAttested,
 			CurrentEpochTargetAttestingGwei:  b.CurrentEpochTargetAttested,
