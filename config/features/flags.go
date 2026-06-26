@@ -11,7 +11,7 @@ var (
 	// SepoliaTestnet flag for the multiclient Sila consensus testnet.
 	SepoliaTestnet = &cli.BoolFlag{
 		Name:  "sepolia",
-		Usage: "Runs Sila configured for the Sepolia test network.",
+		Usage: "Runs Sila configured for this compatibility test network profile.",
 	}
 	// SilaMainnet flag for the Sila main network.
 	SilaMainnet = &cli.BoolFlag{
@@ -21,14 +21,14 @@ var (
 	// HoleskyTestnet flag for the multiclient Sila consensus testnet.
 	HoleskyTestnet = &cli.BoolFlag{
 		Name:  "holesky",
-		Usage: "Runs Sila configured for the Holesky test network.",
+		Usage: "Runs Sila configured for this validator-scale compatibility test network profile.",
 	}
 	// HoodiTestnet flag for Sila testnet.
 	HoodiTestnet = &cli.BoolFlag{
 		Name:  "hoodi",
 		Usage: "Runs Sila configured for the Hoodi test network.",
 	}
-	// Mainnet flag for easier tooling, no-op
+	// Sila main-network flag for easier tooling, no-op
 	Mainnet = &cli.BoolFlag{
 		Value: true,
 		Name:  "mainnet",

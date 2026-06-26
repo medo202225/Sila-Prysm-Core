@@ -144,7 +144,7 @@ func TestLoadGenesisFromFile_mismatchedForkVersion(t *testing.T) {
 
 func TestEnsureEmbeddedGenesis(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
-	// Embedded Genesis works with Mainnet config
+	// Embedded genesis works with the Sila main-network config
 	cfg := params.MainnetConfig()
 	cfg.SlotDurationMilliseconds = 1000
 	undo, err := params.SetActiveWithUndo(cfg)

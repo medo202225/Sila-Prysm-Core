@@ -1,6 +1,6 @@
 package params
 
-// UseHoleskyNetworkConfig uses the Holesky beacon chain specific network config.
+// UseHoleskyNetworkConfig uses the Sila compatibility beacon-chain network config for this profile.
 func UseHoleskyNetworkConfig() {
 	cfg := BeaconNetworkConfig().Copy()
 	cfg.ContractDeploymentBlock = 0
@@ -18,7 +18,7 @@ func UseHoleskyNetworkConfig() {
 	OverrideBeaconNetworkConfig(cfg)
 }
 
-// HoleskyConfig defines the config for the Holesky beacon chain testnet.
+// HoleskyConfig defines the config for this Sila compatibility beacon-chain testnet profile.
 func HoleskyConfig() *BeaconChainConfig {
 	cfg := MainnetConfig()
 	cfg.MinGenesisTime = 1695902100

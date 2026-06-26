@@ -4,7 +4,7 @@ import (
 	silaexecParams "github.com/sila-chain/Sila/params"
 )
 
-// UseSepoliaNetworkConfig uses the Sepolia beacon chain specific network config.
+// UseSepoliaNetworkConfig uses the Sila compatibility beacon-chain network config for this profile.
 func UseSepoliaNetworkConfig() {
 	cfg := BeaconNetworkConfig().Copy()
 	cfg.ContractDeploymentBlock = 1273020
@@ -22,7 +22,7 @@ func UseSepoliaNetworkConfig() {
 	OverrideBeaconNetworkConfig(cfg)
 }
 
-// SepoliaConfig defines the config for the Sepolia beacon chain testnet.
+// SepoliaConfig defines the config for this Sila compatibility beacon-chain testnet profile.
 func SepoliaConfig() *BeaconChainConfig {
 	cfg := MainnetConfig()
 	cfg.MinGenesisTime = 1655647200

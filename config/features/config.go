@@ -136,20 +136,20 @@ func InitWithReset(c *Flags) func() {
 // configureTestnet sets the config according to specified testnet flag
 func configureTestnet(ctx *cli.Context) error {
 	if ctx.Bool(SilaMainnet.Name) {
-		log.Info("Running on the Sila Beacon Chain Mainnet")
+		log.Info("Running on the Sila Beacon Chain main network")
 		if err := params.SetActive(params.SilaMainnetConfig().Copy()); err != nil {
 			return err
 		}
 		params.UseCustomNetworkConfig()
 	} else if ctx.Bool(SepoliaTestnet.Name) {
-		log.Info("Running on the Sepolia Beacon Chain Testnet")
+		log.Info("Running on a Sila compatibility beacon test network")
 		if err := params.SetActive(params.SepoliaConfig().Copy()); err != nil {
 			return err
 		}
 		applySepoliaFeatureFlags(ctx)
 		params.UseSepoliaNetworkConfig()
 	} else if ctx.Bool(HoleskyTestnet.Name) {
-		log.Info("Running on the Holesky Beacon Chain Testnet")
+		log.Info("Running on a Sila validator-scale compatibility beacon test network")
 		if err := params.SetActive(params.HoleskyConfig().Copy()); err != nil {
 			return err
 		}
@@ -166,7 +166,7 @@ func configureTestnet(ctx *cli.Context) error {
 			log.Warning("Running on custom network specified in a chain configuration YAML file")
 			params.UseCustomNetworkConfig()
 		} else {
-			log.Info("Running on Mainnet")
+			log.Info("Running on the Sila main network")
 		}
 		if err := params.SetActive(params.MainnetConfig()); err != nil {
 			return err
@@ -175,11 +175,11 @@ func configureTestnet(ctx *cli.Context) error {
 	return nil
 }
 
-// Insert feature flags within the function to be enabled for Sepolia testnet.
+// Insert feature flags within the function to be enabled for this Sila compatibility testnet profile.
 func applySepoliaFeatureFlags(_ *cli.Context) {
 }
 
-// Insert feature flags within the function to be enabled for Holesky testnet.
+// Insert feature flags within the function to be enabled for this Sila validator-scale compatibility testnet profile.
 func applyHoleskyFeatureFlags(_ *cli.Context) {
 }
 

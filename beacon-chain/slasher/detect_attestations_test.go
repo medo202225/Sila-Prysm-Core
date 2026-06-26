@@ -1584,7 +1584,7 @@ func runAttestationsBenchmark(b *testing.B, s *Service, numAtts, numValidators u
 
 func Benchmark_checkSurroundVotes(b *testing.B) {
 	const (
-		// Approximately the number of Holesky active validators on 2024-02-16
+		// Approximately the number of upstream-compatible active validators for this test case on 2024-02-16
 		// This number is both a multiple of 32 (the number of slots per epoch) and 256 (the number of validators per chunk)
 		validatorsCount = 1_638_400
 		slotsPerEpoch   = 32

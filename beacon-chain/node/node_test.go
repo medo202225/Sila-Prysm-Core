@@ -181,13 +181,13 @@ func Test_hasNetworkFlag(t *testing.T) {
 		want         bool
 	}{
 		{
-			name:         "Holesky testnet",
+			name:         "Sila compatibility testnet",
 			networkName:  features.HoleskyTestnet.Name,
 			networkValue: "holesky",
 			want:         true,
 		},
 		{
-			name:         "Mainnet",
+			name:         "Sila main network",
 			networkName:  features.Mainnet.Name,
 			networkValue: "mainnet",
 			want:         true,

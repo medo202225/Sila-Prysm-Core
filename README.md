@@ -29,7 +29,7 @@ A detailed set of installation and usage instructions as well as breakdowns of e
 
 ---
 
-## Staking on Mainnet
+## Staking on the Sila main network
 
 
 Explore validator rewards/penalties:

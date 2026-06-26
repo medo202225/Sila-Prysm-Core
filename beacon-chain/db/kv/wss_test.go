@@ -13,7 +13,7 @@ import (
 
 func TestSaveOrigin(t *testing.T) {
 	params.SetupTestConfigCleanup(t)
-	// Embedded Genesis works with Mainnet config
+	// Embedded genesis works with the Sila main-network config
 	params.OverrideBeaconConfig(params.MainnetConfig())
 
 	ctx := t.Context()
