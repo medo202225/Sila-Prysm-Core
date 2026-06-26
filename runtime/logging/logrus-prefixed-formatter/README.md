@@ -70,7 +70,7 @@ func main() {
 * `DisableUppercase bool` — set to true to turn off the conversion of the log level names to uppercase.
 * `ForceFormatting bool` — force formatted layout, even for non-TTY output.
 * `DisableTimestamp bool` — disable timestamp logging. Useful when output is redirected to logging system that already adds timestamps.
-* `FullTimestamp bool` — enable logging the full timestamp when a TTY is attached instead of just the time passed since beginning of execution.
+* `FullTimestamp bool` — enable logging the full timestamp when a TTY is attached instead of just the time passed since beginning of processing.
 * `TimestampFormat string` — timestamp format to use for display when a full timestamp is printed.
 * `DisableSorting bool` — the fields are sorted by default for a consistent output. For applications that log extremely frequently and don't use the JSON formatter this may not be desired.
 * `QuoteEmptyFields bool` — wrap empty fields in quotes if true.

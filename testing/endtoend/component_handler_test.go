@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/silaexec"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
-	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -27,11 +27,11 @@ type componentHandler struct {
 	tracingSink              e2etypes.ComponentRunner
 	web3Signer               e2etypes.ComponentRunner
 	bootnode                 e2etypes.ComponentRunner
-	silaexecMiner                e2etypes.ComponentRunner
+	silaexecMiner            e2etypes.ComponentRunner
 	txGen                    e2etypes.ComponentRunner
 	builders                 e2etypes.MultipleComponentRunners
-	silaexecProxy                e2etypes.MultipleComponentRunners
-	silaexecNodes                e2etypes.MultipleComponentRunners
+	silaexecProxy            e2etypes.MultipleComponentRunners
+	silaexecNodes            e2etypes.MultipleComponentRunners
 	beaconNodes              e2etypes.MultipleComponentRunners
 	validatorNodes           e2etypes.MultipleComponentRunners
 	lighthouseBeaconNodes    e2etypes.MultipleComponentRunners
@@ -43,11 +43,11 @@ func NewComponentHandler(cfg *e2etypes.E2EConfig, t *testing.T) *componentHandle
 	g, ctx := errgroup.WithContext(ctx)
 
 	return &componentHandler{
-		ctx:       ctx,
-		done:      done,
-		group:     g,
-		cfg:       cfg,
-		t:         t,
+		ctx:           ctx,
+		done:          done,
+		group:         g,
+		cfg:           cfg,
+		t:             t,
 		silaexecMiner: silaexec.NewMiner(),
 	}
 }
@@ -196,7 +196,7 @@ func (c *componentHandler) setup() {
 				wantedComponents = append(wantedComponents, proxies)
 			}
 			if err := helpers.ComponentsStarted(ctx, wantedComponents); err != nil {
-				return errors.Wrap(err, "lighthouse beacon nodes require proxies, execution, beacon and boot node to run")
+				return errors.Wrap(err, "lighthouse beacon nodes require proxies, silaexec, beacon and boot node to run")
 			}
 			lighthouseNodes.SetENR(bootNode.ENR())
 			if err := lighthouseNodes.Start(ctx); err != nil {

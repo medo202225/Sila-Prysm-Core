@@ -394,7 +394,7 @@ func setExecution(blk interfaces.SignedBeaconBlock, execution interfaces.SilaDat
 	}
 
 	// Set the sila data for the block
-	errMessage := "failed to set local execution"
+	errMessage := "failed to set local SilaData"
 	if isBlinded {
 		errMessage = "failed to set builder execution"
 	}

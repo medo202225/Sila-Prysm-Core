@@ -6,6 +6,8 @@ import (
 	"math"
 	"sync"
 
+	lru "github.com/hashicorp/golang-lru"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -14,8 +16,6 @@ import (
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
-	lru "github.com/hashicorp/golang-lru"
-	"github.com/pkg/errors"
 	"golang.org/x/sync/singleflight"
 )
 
@@ -324,7 +324,7 @@ func (p *distributedSelector) ClaimAggregateSlot(_ primitives.Slot, _ primitives
 
 // SyncCommitteeAggregators returns all pubkeys immediately so that RolesAt does
 // not block on DV middleware calls. The actual aggregated selection proof exchange
-// happens later when SyncCommitteeSelectionProofs is called during duty execution.
+// happens later when SyncCommitteeSelectionProofs is called during duty processing.
 // See https://github.com/sila-chain/Sila-Consensus-Core/issues/16362.
 func (p *distributedSelector) SyncCommitteeAggregators(_ context.Context, _ primitives.Slot, pubkeys [][fieldparams.BLSPubkeyLength]byte) ([][fieldparams.BLSPubkeyLength]byte, error) {
 	return pubkeys, nil

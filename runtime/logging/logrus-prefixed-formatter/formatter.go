@@ -93,7 +93,7 @@ type TextFormatter struct {
 	DisableUppercase bool
 
 	// Enable logging the full timestamp when a TTY is attached instead of just
-	// the time passed since beginning of execution.
+	// the time passed since beginning of processing.
 	FullTimestamp bool
 
 	// The fields are sorted by default for a consistent output. For applications

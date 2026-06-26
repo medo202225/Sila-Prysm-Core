@@ -1191,7 +1191,7 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 
 		updateAttestedHeaderExecution, err := header.SilaData()
 		require.NoError(l.T, err)
-		require.DeepSSZEqual(l.T, execution, updateAttestedHeaderExecution.Proto(), "Attested Block Execution is not equal")
+		require.DeepSSZEqual(l.T, execution, updateAttestedHeaderExecution.Proto(), "Attested Block SilaData is not equal")
 
 		silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
 		require.NoError(l.T, err)
@@ -1245,7 +1245,7 @@ func (l *TestLightClient) CheckAttestedHeader(header interfaces.LightClientHeade
 
 		updateAttestedHeaderExecution, err := header.SilaData()
 		require.NoError(l.T, err)
-		require.DeepSSZEqual(l.T, execution, updateAttestedHeaderExecution.Proto(), "Attested Block Execution is not equal")
+		require.DeepSSZEqual(l.T, execution, updateAttestedHeaderExecution.Proto(), "Attested Block SilaData is not equal")
 
 		silaPayloadProof, err := blocks.PayloadProof(l.Ctx, l.AttestedBlock.Block())
 		require.NoError(l.T, err)

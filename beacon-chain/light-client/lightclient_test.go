@@ -170,7 +170,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 
 		t.Run("FinalizedBlock In Previous Fork", func(t *testing.T) {
@@ -278,7 +278,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 
 		t.Run("FinalizedBlock In Previous Fork", func(t *testing.T) {
@@ -353,7 +353,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 	})
 
@@ -430,7 +430,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 
 		t.Run("FinalizedBlock In Previous Fork", func(t *testing.T) {
@@ -504,7 +504,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 	})
 
@@ -581,7 +581,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 
 		t.Run("FinalizedBlock In Previous Fork", func(t *testing.T) {
@@ -655,7 +655,7 @@ func TestLightClient_NewLightClientFinalityUpdateFromBeaconState(t *testing.T) {
 			}
 			updateExecution, err := update.FinalizedHeader().SilaData()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block Execution is not equal")
+			require.DeepSSZEqual(t, execution, updateExecution.Proto(), "Finalized Block SilaData is not equal")
 		})
 	})
 }
