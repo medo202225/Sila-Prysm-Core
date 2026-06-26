@@ -1,4 +1,4 @@
-// This code was adapted from https://github.com/sila-chain/Sila/blob/master/cmd/geth/usage.go
+// This code was adapted from the Sila command usage implementation.
 package main
 
 import (

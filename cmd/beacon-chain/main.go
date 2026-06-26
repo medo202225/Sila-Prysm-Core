@@ -355,7 +355,7 @@ func startNode(ctx *cli.Context, cancel context.CancelFunc) error {
 	if level == logrus.TraceLevel {
 		// libp2p specific logging.
 		golog.SetAllLoggers(golog.LevelDebug)
-		// Geth specific logging.
+		// Sila execution logging.
 		silaLog.SetDefault(silaLog.NewLogger(silaLog.NewTerminalHandlerWithLevel(os.Stderr, silaLog.LvlTrace, true)))
 	}
 

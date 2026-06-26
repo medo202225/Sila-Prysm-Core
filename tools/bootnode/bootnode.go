@@ -81,7 +81,7 @@ func main() {
 	if *debug {
 		logrus.SetLevel(logrus.DebugLevel)
 
-		// Geth specific logging.
+		// Sila execution logging.
 		silaLog.SetDefault(silaLog.NewLogger(silaLog.NewTerminalHandlerWithLevel(os.Stderr, silaLog.LvlTrace, true)))
 
 		log.Debug("Debug logging enabled.")

@@ -608,7 +608,7 @@ func TestJsonMarshalUnmarshal(t *testing.T) {
 		require.Equal(t, 0, len(payloadPb.Transactions))
 	})
 	t.Run("execution bundle electra with deneb payload, blob data, and sila requests", func(t *testing.T) {
-		// TODO #14351: update this test when geth updates
+		// TODO #14351: update this test when the Sila execution client updates
 	})
 
 	t.Run("SilaPayloadDenebAndBlobsBundleV2 SSZ marshaling", func(t *testing.T) {

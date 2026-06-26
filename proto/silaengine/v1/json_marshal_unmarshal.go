@@ -190,7 +190,7 @@ func (e *SilaBlock) UnmarshalJSON(enc []byte) error {
 		}
 	}
 	// If the block contains a list of transactions, we JSON unmarshal
-	// them into a list of geth transaction objects.
+	// them into a list of Sila transaction objects.
 	txJson := &transactionsJson{}
 	if err := json.Unmarshal(enc, txJson); err != nil {
 		return err

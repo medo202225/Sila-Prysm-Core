@@ -11,12 +11,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/holiman/uint256"
+	"github.com/pkg/errors"
+	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
-	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila/accounts/keystore"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/core/types"
@@ -24,8 +26,6 @@ import (
 	"github.com/sila-chain/Sila/ethclient"
 	"github.com/sila-chain/Sila/ethclient/gethclient"
 	"github.com/sila-chain/Sila/rpc"
-	"github.com/holiman/uint256"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 )
@@ -203,7 +203,7 @@ func SendTransaction(client *rpc.Client, key *ecdsa.PrivateKey, gasPrice *big.In
 	if err := g.Wait(); err != nil {
 		return err
 	}
-	// Stop on first failure: any nonce gap trips geth's gapped-queue
+	// Stop on first failure: any nonce gap trips Sila client's gapped-queue
 	// allowance=log10(nonce+1), which rejects every subsequent nonce.
 	for i, tx := range txs {
 		if tx == nil {

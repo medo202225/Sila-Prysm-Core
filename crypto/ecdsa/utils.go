@@ -5,9 +5,9 @@ import (
 	"math/big"
 
 	"github.com/btcsuite/btcd/btcec/v2"
-	gcrypto "github.com/sila-chain/Sila/crypto"
 	"github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/pkg/errors"
+	gcrypto "github.com/sila-chain/Sila/crypto"
 )
 
 func ConvertFromInterfacePrivKey(privkey crypto.PrivKey) (*ecdsa.PrivateKey, error) {
@@ -22,7 +22,7 @@ func ConvertFromInterfacePrivKey(privkey crypto.PrivKey) (*ecdsa.PrivateKey, err
 	privKey := new(ecdsa.PrivateKey)
 	k := new(big.Int).SetBytes(rawKey)
 	privKey.D = k
-	privKey.Curve = gcrypto.S256() // Temporary hack, so libp2p Secp256k1 is recognized as geth Secp256k1 in disc v5.1.
+	privKey.Curve = gcrypto.S256() // Temporary hack, so libp2p Secp256k1 is recognized as Sila Secp256k1 in disc v5.1.
 	privKey.X, privKey.Y = gcrypto.S256().ScalarBaseMult(rawKey)
 	return privKey, nil
 }

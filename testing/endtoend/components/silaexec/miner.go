@@ -10,6 +10,8 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/bazelbuild/rules_go/go/tools/bazel"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	contracts "github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
@@ -17,12 +19,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
-	"github.com/bazelbuild/rules_go/go/tools/bazel"
 	"github.com/sila-chain/Sila/accounts/abi/bind"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/ethclient"
 	"github.com/sila-chain/Sila/rpc"
-	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -81,7 +81,7 @@ func (m *Miner) initAttempt(ctx context.Context, attempt int) (*os.File, error) 
 		return nil, err
 	}
 
-	// find geth so we can run it.
+	// find the Sila execution binary so we can run it.
 	binaryPath, found := bazel.FindBinary("cmd/geth", "geth")
 	if !found {
 		return nil, errors.New("Sila binary not found")
@@ -113,7 +113,7 @@ func (m *Miner) initAttempt(ctx context.Context, attempt int) (*os.File, error) 
 	}
 	initCmd.Stderr = initFile
 
-	// run init command and wait until it exits. this will initialize the geth node (required before starting).
+	// run init command and wait until it exits. this will initialize the Sila execution node (required before starting).
 	if err = initCmd.Start(); err != nil {
 		return nil, err
 	}
@@ -210,7 +210,7 @@ func (m *Miner) Start(ctx context.Context) error {
 	m.enr = enode
 	log.Infof("Communicated enode. Enode is %s", enode)
 
-	// Connect to the started geth dev chain.
+	// Connect to the started Sila dev chain.
 	client, err := rpc.DialHTTP(e2e.TestParams.SilaExecutionRPCURL(e2e.MinerComponentOffset).String())
 	if err != nil {
 		return fmt.Errorf("failed to connect to ipc: %w", err)

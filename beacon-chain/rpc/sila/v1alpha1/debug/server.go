@@ -55,7 +55,7 @@ func (_ *Server) SetLoggingLevel(_ context.Context, req *pbrpc.LoggingLevelReque
 	if level == logrus.TraceLevel {
 		// Libp2p specific logging.
 		golog.SetAllLoggers(golog.LevelDebug)
-		// Geth specific logging.
+		// Sila execution logging.
 		silaLog.SetDefault(silaLog.NewLogger(silaLog.NewTerminalHandlerWithLevel(os.Stderr, silaLog.LvlTrace, true)))
 	}
 	return &empty.Empty{}, nil
