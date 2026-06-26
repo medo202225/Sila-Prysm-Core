@@ -16,7 +16,7 @@ import (
 
 type abstractSignedBlockResponseJson struct {
 	Version             string          `json:"version" enum:"true"`
-	ExecutionOptimistic bool            `json:"execution_optimistic"`
+	SilaOptimistic bool            `json:"sila_optimistic"`
 	Finalized           bool            `json:"finalized"`
 	Data                json.RawMessage `json:"data"`
 }
@@ -32,7 +32,7 @@ type streamBlocksAltairClient struct {
 
 type headSignedBeaconBlockResult struct {
 	streamBlocksResponse *silapb.StreamBlocksResponse
-	executionOptimistic  bool
+	silaOptimistic  bool
 	slot                 primitives.Slot
 }
 
@@ -52,7 +52,7 @@ func (c *streamBlocksAltairClient) Recv() (*silapb.StreamBlocksResponse, error) 
 	}
 
 	// We keep querying the beacon chain for the latest block until we receive a new slot
-	for (c.streamBlocksRequest.VerifiedOnly && result.executionOptimistic) || c.prevBlockSlot == result.slot {
+	for (c.streamBlocksRequest.VerifiedOnly && result.silaOptimistic) || c.prevBlockSlot == result.slot {
 		select {
 		case <-time.After(c.pingDelay):
 			result, err = c.beaconApiClient.headSignedBeaconBlock(c.ctx)
@@ -208,7 +208,7 @@ func (c *beaconApiValidatorClient) headSignedBeaconBlock(ctx context.Context) (*
 
 	return &headSignedBeaconBlockResult{
 		streamBlocksResponse: response,
-		executionOptimistic:  signedBlockResponseJson.ExecutionOptimistic,
+		silaOptimistic:  signedBlockResponseJson.SilaOptimistic,
 		slot:                 slot,
 	}, nil
 }

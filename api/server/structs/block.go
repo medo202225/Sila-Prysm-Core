@@ -518,7 +518,7 @@ type SilaPayloadBid struct {
 	BuilderIndex          string   `json:"builder_index"`
 	Slot                  string   `json:"slot"`
 	Value                 string   `json:"value"`
-	ExecutionPayment      string   `json:"execution_payment"`
+	SilaPayment      string   `json:"sila_payment"`
 	BlobKzgCommitments    []string `json:"blob_kzg_commitments"`
 	SilaRequestsRoot string   `json:"sila_requests_root"`
 }

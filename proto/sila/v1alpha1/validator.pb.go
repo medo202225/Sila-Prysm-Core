@@ -2698,7 +2698,7 @@ func (x *AttesterDutiesRequest) GetValidatorIndices() []github_com_sila_chain_Si
 type AttesterDutiesResponse struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	DependentRoot       []byte                 `protobuf:"bytes,1,opt,name=dependent_root,json=dependentRoot,proto3" json:"dependent_root,omitempty" ssz-size:"32"`
-	ExecutionOptimistic bool                   `protobuf:"varint,2,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                   `protobuf:"varint,2,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	Duties              []*AttesterDuty        `protobuf:"bytes,3,rep,name=duties,proto3" json:"duties,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -2741,9 +2741,9 @@ func (x *AttesterDutiesResponse) GetDependentRoot() []byte {
 	return nil
 }
 
-func (x *AttesterDutiesResponse) GetExecutionOptimistic() bool {
+func (x *AttesterDutiesResponse) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }
@@ -2894,7 +2894,7 @@ func (x *ProposerDutiesRequest) GetEpoch() github_com_sila_chain_Sila_Sila_Core_
 type ProposerDutiesResponse struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	DependentRoot       []byte                 `protobuf:"bytes,1,opt,name=dependent_root,json=dependentRoot,proto3" json:"dependent_root,omitempty" ssz-size:"32"`
-	ExecutionOptimistic bool                   `protobuf:"varint,2,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                   `protobuf:"varint,2,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	Duties              []*ProposerDutyV2      `protobuf:"bytes,3,rep,name=duties,proto3" json:"duties,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -2937,9 +2937,9 @@ func (x *ProposerDutiesResponse) GetDependentRoot() []byte {
 	return nil
 }
 
-func (x *ProposerDutiesResponse) GetExecutionOptimistic() bool {
+func (x *ProposerDutiesResponse) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }
@@ -3065,7 +3065,7 @@ func (x *SyncCommitteeDutiesRequest) GetValidatorIndices() []github_com_sila_cha
 
 type SyncCommitteeDutiesResponse struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	ExecutionOptimistic bool                   `protobuf:"varint,1,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                   `protobuf:"varint,1,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	Duties              []*SyncCommitteeDuty   `protobuf:"bytes,2,rep,name=duties,proto3" json:"duties,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -3101,9 +3101,9 @@ func (*SyncCommitteeDutiesResponse) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_validator_proto_rawDescGZIP(), []int{52}
 }
 
-func (x *SyncCommitteeDutiesResponse) GetExecutionOptimistic() bool {
+func (x *SyncCommitteeDutiesResponse) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }
@@ -3230,7 +3230,7 @@ func (x *PTCDutiesRequest) GetValidatorIndices() []github_com_sila_chain_Sila_Si
 type PTCDutiesResponse struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	DependentRoot       []byte                 `protobuf:"bytes,1,opt,name=dependent_root,json=dependentRoot,proto3" json:"dependent_root,omitempty" ssz-size:"32"`
-	ExecutionOptimistic bool                   `protobuf:"varint,2,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                   `protobuf:"varint,2,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	Duties              []*PTCDuty             `protobuf:"bytes,3,rep,name=duties,proto3" json:"duties,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -3273,9 +3273,9 @@ func (x *PTCDutiesResponse) GetDependentRoot() []byte {
 	return nil
 }
 
-func (x *PTCDutiesResponse) GetExecutionOptimistic() bool {
+func (x *PTCDutiesResponse) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }

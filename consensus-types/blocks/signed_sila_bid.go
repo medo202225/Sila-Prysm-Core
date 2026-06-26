@@ -132,9 +132,9 @@ func (h silaPayloadBidGloas) Value() primitives.Gwei {
 	return primitives.Gwei(h.payload.Value)
 }
 
-// ExecutionPayment returns the execution payment offered by the builder.
-func (h silaPayloadBidGloas) ExecutionPayment() primitives.Gwei {
-	return primitives.Gwei(h.payload.ExecutionPayment)
+// SilaPayment returns the sila payment offered by the builder.
+func (h silaPayloadBidGloas) SilaPayment() primitives.Gwei {
+	return primitives.Gwei(h.payload.SilaPayment)
 }
 
 // BlobKzgCommitments returns the KZG commitments for blobs.
@@ -147,7 +147,7 @@ func (h silaPayloadBidGloas) BlobKzgCommitmentCount() uint64 {
 	return uint64(len(h.payload.BlobKzgCommitments))
 }
 
-// FeeRecipient returns the execution address that will receive the builder payment.
+// FeeRecipient returns the sila address that will receive the builder payment.
 func (h silaPayloadBidGloas) FeeRecipient() [20]byte {
 	return [20]byte(h.payload.FeeRecipient)
 }

@@ -744,9 +744,9 @@ func TestAppendBuildersSweepWithdrawals(t *testing.T) {
 			slot:                       slots.UnsafeEpochStart(epoch),
 			nextWithdrawalBuilderIndex: 2,
 			builders: []*silapb.Builder{
-				{ExecutionAddress: []byte{0x01}, Balance: 0, WithdrawableEpoch: epoch},
-				{ExecutionAddress: []byte{0x02}, Balance: 10, WithdrawableEpoch: epoch + 1},
-				{ExecutionAddress: []byte{0x03}, Balance: 20, WithdrawableEpoch: epoch},
+				{SilaAddress: []byte{0x01}, Balance: 0, WithdrawableEpoch: epoch},
+				{SilaAddress: []byte{0x02}, Balance: 10, WithdrawableEpoch: epoch + 1},
+				{SilaAddress: []byte{0x03}, Balance: 20, WithdrawableEpoch: epoch},
 			},
 		}
 		withdrawals := []*silaenginev1.Withdrawal{}
@@ -771,7 +771,7 @@ func TestAppendBuildersSweepWithdrawals(t *testing.T) {
 		builders := make([]*silapb.Builder, max+2)
 		for i := range builders {
 			builders[i] = &silapb.Builder{
-				ExecutionAddress:  []byte{byte(i + 1)},
+				SilaAddress:  []byte{byte(i + 1)},
 				Balance:           1,
 				WithdrawableEpoch: epoch,
 			}
@@ -802,8 +802,8 @@ func TestAppendBuildersSweepWithdrawals(t *testing.T) {
 		}
 		epoch := primitives.Epoch(2)
 		builders := []*silapb.Builder{
-			{ExecutionAddress: []byte{0x0A}, Balance: 3, WithdrawableEpoch: epoch},
-			{ExecutionAddress: []byte{0x0B}, Balance: 4, WithdrawableEpoch: epoch},
+			{SilaAddress: []byte{0x0A}, Balance: 3, WithdrawableEpoch: epoch},
+			{SilaAddress: []byte{0x0B}, Balance: 4, WithdrawableEpoch: epoch},
 		}
 		st := &BeaconState{
 			slot:                       slots.UnsafeEpochStart(epoch),

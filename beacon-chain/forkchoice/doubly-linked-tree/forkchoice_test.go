@@ -35,7 +35,7 @@ func prepareForkchoiceState(
 		ParentRoot: parentRoot[:],
 	}
 
-	executionHeader := &silaenginev1.SilaPayloadHeader{
+	silaHeader := &silaenginev1.SilaPayloadHeader{
 		BlockHash: payloadHash[:],
 	}
 
@@ -52,7 +52,7 @@ func prepareForkchoiceState(
 		RandaoMixes:                  make([][]byte, params.BeaconConfig().EpochsPerHistoricalVector),
 		CurrentJustifiedCheckpoint:   justifiedCheckpoint,
 		FinalizedCheckpoint:          finalizedCheckpoint,
-		LatestSilaPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: silaHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 
@@ -1001,13 +1001,13 @@ func prepareBellatrixForkchoiceStateWithGasLimit(
 	gasLimit uint64,
 ) (state.BeaconState, blocks.ROBlock, error) {
 	blockHeader := &silapb.BeaconBlockHeader{ParentRoot: parentRoot[:]}
-	executionHeader := &silaenginev1.SilaPayloadHeader{BlockHash: payloadHash[:], GasLimit: gasLimit}
+	silaHeader := &silaenginev1.SilaPayloadHeader{BlockHash: payloadHash[:], GasLimit: gasLimit}
 	base := &silapb.BeaconStateBellatrix{
 		Slot:                         slot,
 		RandaoMixes:                  make([][]byte, params.BeaconConfig().EpochsPerHistoricalVector),
 		CurrentJustifiedCheckpoint:   &silapb.Checkpoint{},
 		FinalizedCheckpoint:          &silapb.Checkpoint{},
-		LatestSilaPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: silaHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 	st, err := state_native.InitializeFromProtoBellatrix(base)

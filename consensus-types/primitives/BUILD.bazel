@@ -10,7 +10,7 @@ go_library(
         "committee_index.go",
         "domain.go",
         "epoch.go",
-        "execution_address.go",
+        "sila_address.go",
         "kzg.go",
         "payload_id.go",
         "slot.go",

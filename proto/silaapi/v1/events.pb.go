@@ -32,7 +32,7 @@ type EventHead struct {
 	EpochTransition           bool                                                             `protobuf:"varint,4,opt,name=epoch_transition,json=epochTransition,proto3" json:"epoch_transition,omitempty"`
 	PreviousDutyDependentRoot []byte                                                           `protobuf:"bytes,5,opt,name=previous_duty_dependent_root,json=previousDutyDependentRoot,proto3" json:"previous_duty_dependent_root,omitempty" ssz-size:"32"`
 	CurrentDutyDependentRoot  []byte                                                           `protobuf:"bytes,6,opt,name=current_duty_dependent_root,json=currentDutyDependentRoot,proto3" json:"current_duty_dependent_root,omitempty" ssz-size:"32"`
-	ExecutionOptimistic       bool                                                             `protobuf:"varint,7,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic       bool                                                             `protobuf:"varint,7,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
@@ -109,9 +109,9 @@ func (x *EventHead) GetCurrentDutyDependentRoot() []byte {
 	return nil
 }
 
-func (x *EventHead) GetExecutionOptimistic() bool {
+func (x *EventHead) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }
@@ -120,7 +120,7 @@ type EventBlock struct {
 	state               protoimpl.MessageState                                           `protogen:"open.v1"`
 	Slot                github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	Block               []byte                                                           `protobuf:"bytes,2,opt,name=block,proto3" json:"block,omitempty" ssz-size:"32"`
-	ExecutionOptimistic bool                                                             `protobuf:"varint,3,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                                                             `protobuf:"varint,3,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -169,9 +169,9 @@ func (x *EventBlock) GetBlock() []byte {
 	return nil
 }
 
-func (x *EventBlock) GetExecutionOptimistic() bool {
+func (x *EventBlock) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }
@@ -185,7 +185,7 @@ type EventChainReorg struct {
 	OldHeadState        []byte                                                            `protobuf:"bytes,5,opt,name=old_head_state,json=oldHeadState,proto3" json:"old_head_state,omitempty" ssz-size:"32"`
 	NewHeadState        []byte                                                            `protobuf:"bytes,6,opt,name=new_head_state,json=newHeadState,proto3" json:"new_head_state,omitempty" ssz-size:"32"`
 	Epoch               github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,7,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	ExecutionOptimistic bool                                                              `protobuf:"varint,8,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                                                              `protobuf:"varint,8,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -269,9 +269,9 @@ func (x *EventChainReorg) GetEpoch() github_com_sila_chain_Sila_Sila_Core_v7_con
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
-func (x *EventChainReorg) GetExecutionOptimistic() bool {
+func (x *EventChainReorg) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }
@@ -281,7 +281,7 @@ type EventFinalizedCheckpoint struct {
 	Block               []byte                                                            `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty" ssz-size:"32"`
 	State               []byte                                                            `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty" ssz-size:"32"`
 	Epoch               github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	ExecutionOptimistic bool                                                              `protobuf:"varint,4,opt,name=execution_optimistic,json=executionOptimistic,proto3" json:"execution_optimistic,omitempty"`
+	SilaOptimistic bool                                                              `protobuf:"varint,4,opt,name=sila_optimistic,json=silaOptimistic,proto3" json:"sila_optimistic,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -337,9 +337,9 @@ func (x *EventFinalizedCheckpoint) GetEpoch() github_com_sila_chain_Sila_Sila_Co
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch(0)
 }
 
-func (x *EventFinalizedCheckpoint) GetExecutionOptimistic() bool {
+func (x *EventFinalizedCheckpoint) GetSilaOptimistic() bool {
 	if x != nil {
-		return x.ExecutionOptimistic
+		return x.SilaOptimistic
 	}
 	return false
 }

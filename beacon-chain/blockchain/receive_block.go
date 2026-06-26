@@ -646,7 +646,7 @@ func (s *Service) sendNewFinalizedEvent(ctx context.Context, postState state.Bea
 			Epoch:               postState.FinalizedCheckpoint().Epoch,
 			Block:               postState.FinalizedCheckpoint().Root,
 			State:               stateRoot[:],
-			ExecutionOptimistic: isValidPayload,
+			SilaOptimistic: isValidPayload,
 		},
 	})
 }

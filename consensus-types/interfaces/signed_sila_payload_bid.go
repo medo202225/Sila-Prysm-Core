@@ -21,7 +21,7 @@ type ROSilaPayloadBid interface {
 	BuilderIndex() primitives.BuilderIndex
 	Slot() primitives.Slot
 	Value() primitives.Gwei
-	ExecutionPayment() primitives.Gwei
+	SilaPayment() primitives.Gwei
 	BlobKzgCommitments() [][]byte
 	BlobKzgCommitmentCount() uint64
 	FeeRecipient() [20]byte

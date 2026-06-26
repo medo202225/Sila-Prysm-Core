@@ -88,7 +88,7 @@ func (s *Server) GetValidators(w http.ResponseWriter, r *http.Request) {
 	if len(rawIds) > 0 && len(ids) == 0 {
 		resp := &structs.GetValidatorsResponse{
 			Data:                []*structs.ValidatorContainer{},
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 		}
 		httputil.WriteJson(w, resp)
@@ -116,7 +116,7 @@ func (s *Server) GetValidators(w http.ResponseWriter, r *http.Request) {
 		}
 		resp := &structs.GetValidatorsResponse{
 			Data:                containers,
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 		}
 		httputil.WriteJson(w, resp)
@@ -156,7 +156,7 @@ func (s *Server) GetValidators(w http.ResponseWriter, r *http.Request) {
 
 	resp := &structs.GetValidatorsResponse{
 		Data:                valContainers,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)
@@ -223,7 +223,7 @@ func (s *Server) GetValidator(w http.ResponseWriter, r *http.Request) {
 
 	resp := &structs.GetValidatorResponse{
 		Data:                container,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)
@@ -276,7 +276,7 @@ func (s *Server) GetValidatorBalances(w http.ResponseWriter, r *http.Request) {
 	if len(rawIds) > 0 && len(ids) == 0 {
 		resp := &structs.GetValidatorBalancesResponse{
 			Data:                []*structs.ValidatorBalance{},
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 		}
 		httputil.WriteJson(w, resp)
@@ -305,7 +305,7 @@ func (s *Server) GetValidatorBalances(w http.ResponseWriter, r *http.Request) {
 
 	resp := &structs.GetValidatorBalancesResponse{
 		Data:                valBalances,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)
@@ -418,7 +418,7 @@ func (s *Server) getValidatorIdentitiesJSON(
 	if len(rawIds) > 0 && len(ids) == 0 {
 		resp := &structs.GetValidatorIdentitiesResponse{
 			Data:                []*structs.ValidatorIdentity{},
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 		}
 		httputil.WriteJson(w, resp)
@@ -455,7 +455,7 @@ func (s *Server) getValidatorIdentitiesJSON(
 
 	resp := &structs.GetValidatorIdentitiesResponse{
 		Data:                identities,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)

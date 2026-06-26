@@ -40,7 +40,7 @@ func ROSilaPayloadBidFromConsensus(b interfaces.ROSilaPayloadBid) *SilaPayloadBi
 		BuilderIndex:          fmt.Sprintf("%d", b.BuilderIndex()),
 		Slot:                  fmt.Sprintf("%d", b.Slot()),
 		Value:                 fmt.Sprintf("%d", b.Value()),
-		ExecutionPayment:      fmt.Sprintf("%d", b.ExecutionPayment()),
+		SilaPayment:      fmt.Sprintf("%d", b.SilaPayment()),
 		BlobKzgCommitments:    blobKzgCommitments,
 		SilaRequestsRoot: hexutil.Encode(erRoot[:]),
 	}
@@ -58,7 +58,7 @@ func BuilderFromConsensus(b *silapb.Builder) *Builder {
 	return &Builder{
 		Pubkey:            hexutil.Encode(b.Pubkey),
 		Version:           hexutil.Encode(b.Version),
-		ExecutionAddress:  hexutil.Encode(b.ExecutionAddress),
+		SilaAddress:  hexutil.Encode(b.SilaAddress),
 		Balance:           fmt.Sprintf("%d", b.Balance),
 		DepositEpoch:      fmt.Sprintf("%d", b.DepositEpoch),
 		WithdrawableEpoch: fmt.Sprintf("%d", b.WithdrawableEpoch),

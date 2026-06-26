@@ -261,7 +261,7 @@ func TestGetBeaconStateV2(t *testing.T) {
 		assert.Equal(t, "123", st.Slot)
 		assert.Equal(t, int(params.BeaconConfig().MinSeedLookahead+1)*int(params.BeaconConfig().SlotsPerEpoch), len(st.ProposerLookahead))
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		parentRoot := [32]byte{'a'}
 		blk := util.NewBeaconBlock()
 		blk.Block.ParentRoot = parentRoot[:]
@@ -292,7 +292,7 @@ func TestGetBeaconStateV2(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetBeaconStateV2Response{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		parentRoot := [32]byte{'a'}
@@ -564,7 +564,7 @@ func TestGetForkChoiceHeadsV2(t *testing.T) {
 				found = true
 				assert.Equal(t, sr.Root, h.Root)
 			}
-			assert.Equal(t, false, h.ExecutionOptimistic)
+			assert.Equal(t, false, h.SilaOptimistic)
 		}
 		assert.Equal(t, true, found, "Expected head not found")
 	}
@@ -600,7 +600,7 @@ func TestGetForkChoiceHeadsV2(t *testing.T) {
 					found = true
 					assert.Equal(t, sr.Root, h.Root)
 				}
-				assert.Equal(t, true, h.ExecutionOptimistic)
+				assert.Equal(t, true, h.SilaOptimistic)
 			}
 			assert.Equal(t, true, found, "Expected head not found")
 		}

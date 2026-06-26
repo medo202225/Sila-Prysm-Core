@@ -79,7 +79,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *silaenginev1.SilaPay
 		BuilderIndex:          builderIdx,
 		Slot:                  slot,
 		Value:                 0,
-		ExecutionPayment:      0,
+		SilaPayment:      0,
 		FeeRecipient:          bytes.Repeat([]byte{0xEE}, 20),
 		SilaRequestsRoot: emptyRequestsRoot[:],
 	}
@@ -118,7 +118,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *silaenginev1.SilaPay
 	}
 
 	withdrawalCreds := make([]byte, 32)
-	withdrawalCreds[0] = cfg.SilaExecutionAddressWithdrawalPrefixByte
+	withdrawalCreds[0] = cfg.SilaAddressWithdrawalPrefixByte
 
 	silaexecData := &silapb.SilaData{
 		DepositRoot:  bytes.Repeat([]byte{0x66}, 32),
@@ -150,7 +150,7 @@ func buildPayloadFixture(t *testing.T, mutate func(payload *silaenginev1.SilaPay
 	builders[builderIdx] = &silapb.Builder{
 		Pubkey:            pk,
 		Version:           []byte{0},
-		ExecutionAddress:  bytes.Repeat([]byte{0x09}, 20),
+		SilaAddress:  bytes.Repeat([]byte{0x09}, 20),
 		Balance:           0,
 		DepositEpoch:      0,
 		WithdrawableEpoch: 0,

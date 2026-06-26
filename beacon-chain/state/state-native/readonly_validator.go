@@ -92,7 +92,7 @@ func (v readOnlyValidator) Slashed() bool {
 
 // HasSilaExecutionWithdrawalCredentials returns true if the validator has an SILAEXEC withdrawal credentials.
 func (v readOnlyValidator) HasSilaExecutionWithdrawalCredentials() bool {
-	return v.validator.WithdrawalCredentials[0] == params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	return v.validator.WithdrawalCredentials[0] == params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 }
 
 // HasCompoundingWithdrawalCredentials returns true if the validator has a compounding withdrawal credentials.

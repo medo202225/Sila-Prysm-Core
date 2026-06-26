@@ -35,7 +35,7 @@ var (
 
 const silaexecDataSavingInterval = 1000
 const maxTolerableDifference = 50
-const defaultSilaExecutionHeaderReqLimit = uint64(1000)
+const defaultSilaHeaderReqLimit = uint64(1000)
 const depositLogRequestLimit = 10000
 const additiveFactorMultiplier = 0.10
 const multiplicativeDecreaseDivisor = 2

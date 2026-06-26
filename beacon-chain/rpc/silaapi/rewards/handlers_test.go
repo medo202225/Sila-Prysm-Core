@@ -313,7 +313,7 @@ func TestBlockRewards(t *testing.T) {
 		assert.Equal(t, "48", resp.Data.SyncAggregate)
 		assert.Equal(t, "62500000", resp.Data.AttesterSlashings)
 		assert.Equal(t, "62500000", resp.Data.ProposerSlashings)
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, false, resp.Finalized)
 	})
 	t.Run("bellatrix", func(t *testing.T) {
@@ -350,7 +350,7 @@ func TestBlockRewards(t *testing.T) {
 		assert.Equal(t, "48", resp.Data.SyncAggregate)
 		assert.Equal(t, "62500000", resp.Data.AttesterSlashings)
 		assert.Equal(t, "62500000", resp.Data.ProposerSlashings)
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, false, resp.Finalized)
 	})
 	t.Run("capella", func(t *testing.T) {
@@ -387,7 +387,7 @@ func TestBlockRewards(t *testing.T) {
 		assert.Equal(t, "48", resp.Data.SyncAggregate)
 		assert.Equal(t, "62500000", resp.Data.AttesterSlashings)
 		assert.Equal(t, "62500000", resp.Data.ProposerSlashings)
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, false, resp.Finalized)
 	})
 	t.Run("deneb", func(t *testing.T) {
@@ -424,7 +424,7 @@ func TestBlockRewards(t *testing.T) {
 		assert.Equal(t, "48", resp.Data.SyncAggregate)
 		assert.Equal(t, "62500000", resp.Data.AttesterSlashings)
 		assert.Equal(t, "62500000", resp.Data.ProposerSlashings)
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, false, resp.Finalized)
 	})
 	t.Run("electra", func(t *testing.T) {
@@ -461,7 +461,7 @@ func TestBlockRewards(t *testing.T) {
 		assert.Equal(t, "48", resp.Data.SyncAggregate)
 		assert.Equal(t, "7812500", resp.Data.AttesterSlashings)
 		assert.Equal(t, "7812500", resp.Data.ProposerSlashings)
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, false, resp.Finalized)
 	})
 }
@@ -892,7 +892,7 @@ func TestSyncCommiteeRewards(t *testing.T) {
 			sum += r
 		}
 		assert.Equal(t, uint64(1396), sum)
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, false, resp.Finalized)
 	})
 	t.Run("ok - all vals", func(t *testing.T) {

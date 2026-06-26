@@ -90,7 +90,7 @@ func TestGetSpec(t *testing.T) {
 	config.MinBuilderWithdrawabilityDelay = 111
 	config.MaxBuildersPerWithdrawalsSweep = 112
 	config.BLSWithdrawalPrefixByte = byte('b')
-	config.SilaExecutionAddressWithdrawalPrefixByte = byte('c')
+	config.SilaAddressWithdrawalPrefixByte = byte('c')
 	config.BuilderWithdrawalPrefixByte = byte('e')
 	config.GenesisDelay = 24
 	config.SecondsPerSlot = 25

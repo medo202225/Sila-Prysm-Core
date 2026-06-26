@@ -1277,7 +1277,7 @@ message AttesterDutiesResponse {
   bytes dependent_root = 1 [ (sila.eth.ext.ssz_size) = "32" ];
 
   // Whether the response was computed optimistically.
-  bool execution_optimistic = 2;
+  bool sila_optimistic = 2;
 
   // The attester duties for the requested validators.
   repeated AttesterDuty duties = 3;
@@ -1336,7 +1336,7 @@ message ProposerDutiesResponse {
   bytes dependent_root = 1 [ (sila.eth.ext.ssz_size) = "32" ];
 
   // Whether the response was computed optimistically.
-  bool execution_optimistic = 2;
+  bool sila_optimistic = 2;
 
   // The proposer duties for the epoch.
   repeated ProposerDutyV2 duties = 3;
@@ -1383,7 +1383,7 @@ message SyncCommitteeDutiesRequest {
 // SyncCommitteeDutiesResponse is the response for GetSyncCommitteeDuties.
 message SyncCommitteeDutiesResponse {
   // Whether the response was computed optimistically.
-  bool execution_optimistic = 1;
+  bool sila_optimistic = 1;
 
   // The sync committee duties for the requested validators.
   repeated SyncCommitteeDuty duties = 2;
@@ -1430,7 +1430,7 @@ message PTCDutiesResponse {
   bytes dependent_root = 1 [ (sila.eth.ext.ssz_size) = "32" ];
 
   // Whether the response was computed optimistically.
-  bool execution_optimistic = 2;
+  bool sila_optimistic = 2;
 
   // The PTC duties for the requested validators.
   repeated PTCDuty duties = 3;

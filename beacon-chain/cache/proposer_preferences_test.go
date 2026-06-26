@@ -11,9 +11,9 @@ var (
 	rootA = [32]byte{0xaa}
 	rootB = [32]byte{0xbb}
 
-	feeA = primitives.ExecutionAddress{0x01}
-	feeB = primitives.ExecutionAddress{0x02}
-	feeC = primitives.ExecutionAddress{0x03}
+	feeA = primitives.SilaAddress{0x01}
+	feeB = primitives.SilaAddress{0x02}
+	feeC = primitives.SilaAddress{0x03}
 )
 
 func TestProposerPreferencesCache_AddGetHas(t *testing.T) {
@@ -22,7 +22,7 @@ func TestProposerPreferencesCache_AddGetHas(t *testing.T) {
 	pref := ProposerPreference{
 		DependentRoot:  rootA,
 		ValidatorIndex: 7,
-		FeeRecipient:   primitives.ExecutionAddress{1, 2, 3, 4},
+		FeeRecipient:   primitives.SilaAddress{1, 2, 3, 4},
 		TargetGasLimit: 42,
 	}
 

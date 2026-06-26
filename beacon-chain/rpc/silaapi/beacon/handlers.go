@@ -283,7 +283,7 @@ func (s *Server) getBlockResponseBodyJson(ctx context.Context, blk interfaces.Re
 	}
 	return &structs.GetBlockV2Response{
 		Finalized:           finalized,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Version:             version.String(blk.Version()),
 		Data: &structs.SignedBlock{
 			Message:   jb,
@@ -334,7 +334,7 @@ func (s *Server) GetBlockAttestationsV2(w http.ResponseWriter, r *http.Request) 
 	}
 	resp := &structs.GetBlockAttestationsV2Response{
 		Version:             version.String(v),
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, root),
 		Data:                attBytes,
 	}
@@ -1083,7 +1083,7 @@ func (s *Server) GetBlockRoot(w http.ResponseWriter, r *http.Request) {
 		Data: &structs.BlockRoot{
 			Root: hexutil.Encode(root[:]),
 		},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, root),
 	}
 	httputil.WriteJson(w, response)
@@ -1122,7 +1122,7 @@ func (s *Server) GetStateFork(w http.ResponseWriter, r *http.Request) {
 			CurrentVersion:  hexutil.Encode(fork.CurrentVersion),
 			Epoch:           fmt.Sprintf("%d", fork.Epoch),
 		},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, response)
@@ -1228,7 +1228,7 @@ func (s *Server) GetCommittees(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
-	httputil.WriteJson(w, &structs.GetCommitteesResponse{Data: committees, ExecutionOptimistic: isOptimistic, Finalized: isFinalized})
+	httputil.WriteJson(w, &structs.GetCommitteesResponse{Data: committees, SilaOptimistic: isOptimistic, Finalized: isFinalized})
 }
 
 // GetBlockHeaders retrieves block headers matching given query. By default it will fetch current head slot blocks.
@@ -1317,7 +1317,7 @@ func (s *Server) GetBlockHeaders(w http.ResponseWriter, r *http.Request) {
 
 	response := &structs.GetBlockHeadersResponse{
 		Data:                blkHdrs,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, response)
@@ -1373,7 +1373,7 @@ func (s *Server) GetBlockHeader(w http.ResponseWriter, r *http.Request) {
 				Signature: hexutil.Encode(blockHeader.Signature),
 			},
 		},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
 	}
 	httputil.WriteJson(w, resp)
@@ -1426,7 +1426,7 @@ func (s *Server) GetFinalityCheckpoints(w http.ResponseWriter, r *http.Request) 
 				Root:  hexutil.Encode(f.Root),
 			},
 		},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)
@@ -1543,7 +1543,7 @@ func (s *Server) GetPendingConsolidations(w http.ResponseWriter, r *http.Request
 		isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 		resp := structs.GetPendingConsolidationsResponse{
 			Version:             version.String(st.Version()),
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 			Data:                structs.PendingConsolidationsFromConsensus(pd),
 		}
@@ -1599,7 +1599,7 @@ func (s *Server) GetPendingDeposits(w http.ResponseWriter, r *http.Request) {
 		isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 		resp := structs.GetPendingDepositsResponse{
 			Version:             version.String(st.Version()),
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 			Data:                structs.PendingDepositsFromConsensus(pd),
 		}
@@ -1655,7 +1655,7 @@ func (s *Server) GetPendingPartialWithdrawals(w http.ResponseWriter, r *http.Req
 		isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 		resp := structs.GetPendingPartialWithdrawalsResponse{
 			Version:             version.String(st.Version()),
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 			Data:                structs.PendingPartialWithdrawalsFromConsensus(ppw),
 		}
@@ -1712,7 +1712,7 @@ func (s *Server) GetProposerLookahead(w http.ResponseWriter, r *http.Request) {
 		}
 		resp := structs.GetProposerLookaheadResponse{
 			Version:             version.String(st.Version()),
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 			Finalized:           isFinalized,
 			Data:                vi,
 		}

@@ -44,7 +44,7 @@ func prepareForkchoiceState(
 		ParentRoot: parentRoot[:],
 	}
 
-	executionHeader := &silaenginev1.SilaPayloadHeader{
+	silaHeader := &silaenginev1.SilaPayloadHeader{
 		BlockHash: payloadHash[:],
 	}
 
@@ -54,7 +54,7 @@ func prepareForkchoiceState(
 		BlockRoots:                   make([][]byte, 1),
 		CurrentJustifiedCheckpoint:   justified,
 		FinalizedCheckpoint:          finalized,
-		LatestSilaPayloadHeader: executionHeader,
+		LatestSilaPayloadHeader: silaHeader,
 		LatestBlockHeader:            blockHeader,
 	}
 

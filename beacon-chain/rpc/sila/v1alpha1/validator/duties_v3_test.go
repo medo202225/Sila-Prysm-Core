@@ -57,7 +57,7 @@ func TestGetAttesterDuties_OK(t *testing.T) {
 	res, err := vs.GetAttesterDuties(t.Context(), req)
 	require.NoError(t, err)
 	assert.Equal(t, 2, len(res.Duties))
-	assert.Equal(t, false, res.ExecutionOptimistic)
+	assert.Equal(t, false, res.SilaOptimistic)
 	assert.NotNil(t, res.DependentRoot)
 	for _, d := range res.Duties {
 		assert.NotNil(t, d.Pubkey)
@@ -116,7 +116,7 @@ func TestGetProposerDutiesV2_OK(t *testing.T) {
 	res, err := vs.GetProposerDutiesV2(t.Context(), req)
 	require.NoError(t, err)
 	assert.Equal(t, true, len(res.Duties) > 0)
-	assert.Equal(t, false, res.ExecutionOptimistic)
+	assert.Equal(t, false, res.SilaOptimistic)
 	assert.NotNil(t, res.DependentRoot)
 	for _, d := range res.Duties {
 		assert.NotNil(t, d.Pubkey)
@@ -278,7 +278,7 @@ func TestGetSyncCommitteeDuties_OK(t *testing.T) {
 	res, err := vs.GetSyncCommitteeDuties(t.Context(), req)
 	require.NoError(t, err)
 	assert.Equal(t, 2, len(res.Duties))
-	assert.Equal(t, false, res.ExecutionOptimistic)
+	assert.Equal(t, false, res.SilaOptimistic)
 	for _, d := range res.Duties {
 		assert.NotNil(t, d.Pubkey)
 		assert.Equal(t, true, len(d.ValidatorSyncCommitteeIndices) > 0)
@@ -345,7 +345,7 @@ func TestGetPTCDuties_OK(t *testing.T) {
 	}
 	res, err := vs.GetPTCDuties(t.Context(), req)
 	require.NoError(t, err)
-	assert.Equal(t, false, res.ExecutionOptimistic)
+	assert.Equal(t, false, res.SilaOptimistic)
 	assert.NotNil(t, res.DependentRoot)
 	for _, d := range res.Duties {
 		assert.NotNil(t, d.Pubkey)

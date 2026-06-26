@@ -733,7 +733,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := lightClient.ComputeWithdrawalsRoot(payload)
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderCapella{
+			silaHeader := &v11.SilaPayloadHeaderCapella{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -762,7 +762,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -794,7 +794,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := payload.WithdrawalsRoot()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderCapella{
+			silaHeader := &v11.SilaPayloadHeaderCapella{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -823,7 +823,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -863,7 +863,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -894,7 +894,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -932,7 +932,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -963,7 +963,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -999,7 +999,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1030,7 +1030,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -1064,7 +1064,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1095,7 +1095,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -1131,7 +1131,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1162,7 +1162,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -1196,7 +1196,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			excessBlobGas, err := payload.ExcessBlobGas()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1227,7 +1227,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -1304,7 +1304,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := lightClient.ComputeWithdrawalsRoot(payload)
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1333,7 +1333,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)
@@ -1364,7 +1364,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 			withdrawalsRoot, err := payload.WithdrawalsRoot()
 			require.NoError(t, err)
 
-			executionHeader := &v11.SilaPayloadHeaderDeneb{
+			silaHeader := &v11.SilaPayloadHeaderDeneb{
 				ParentHash:       payload.ParentHash(),
 				FeeRecipient:     payload.FeeRecipient(),
 				StateRoot:        payload.StateRoot(),
@@ -1393,7 +1393,7 @@ func TestLightClient_BlockToLightClientHeader(t *testing.T) {
 
 			headerExecution, err := header.Execution()
 			require.NoError(t, err)
-			require.DeepSSZEqual(t, executionHeader, headerExecution.Proto(), "Execution headers are not equal")
+			require.DeepSSZEqual(t, silaHeader, headerExecution.Proto(), "Execution headers are not equal")
 
 			headerExecutionBranch, err := header.ExecutionBranch()
 			require.NoError(t, err)

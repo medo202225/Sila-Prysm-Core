@@ -35,7 +35,7 @@ func TestGetValidatorCount(t *testing.T) {
 				Data: &structs.Version{Version: nodeVersion},
 			},
 			validatorCountResponse: structs.GetValidatorCountResponse{
-				ExecutionOptimistic: "false",
+				SilaOptimistic: "false",
 				Finalized:           "true",
 				Data: []*structs.ValidatorCount{
 					{
@@ -79,7 +79,7 @@ func TestGetValidatorCount(t *testing.T) {
 				Data: &structs.Version{Version: nodeVersion},
 			},
 			validatorCountResponse: structs.GetValidatorCountResponse{
-				ExecutionOptimistic: "false",
+				SilaOptimistic: "false",
 				Finalized:           "true",
 				Data:                nil,
 			},
@@ -92,7 +92,7 @@ func TestGetValidatorCount(t *testing.T) {
 				Data: &structs.Version{Version: nodeVersion},
 			},
 			validatorCountResponse: structs.GetValidatorCountResponse{
-				ExecutionOptimistic: "false",
+				SilaOptimistic: "false",
 				Finalized:           "true",
 				Data: []*structs.ValidatorCount{
 					{

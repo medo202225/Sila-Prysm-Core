@@ -256,8 +256,8 @@ var (
 		Name:  "engine-endpoint-timeout-seconds",
 		Usage: "Sets the SilaEngine timeout (seconds) for sila payload semantics (forkchoiceUpdated, newPayload)",
 	}
-	// SilaExecutionHeaderReqLimit defines a flag to set the maximum number of headers that a deposit log query can fetch. If none is set, 1000 will be the limit.
-	SilaExecutionHeaderReqLimit = &cli.Uint64Flag{
+	// SilaHeaderReqLimit defines a flag to set the maximum number of headers that a deposit log query can fetch. If none is set, 1000 will be the limit.
+	SilaHeaderReqLimit = &cli.Uint64Flag{
 		Name:  "silaexec-header-req-limit",
 		Usage: "Sets the maximum number of headers that a deposit log query can fetch.",
 		Value: uint64(1000),

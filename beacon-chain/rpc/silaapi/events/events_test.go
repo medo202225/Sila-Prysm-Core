@@ -504,7 +504,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					EpochTransition:           true,
 					PreviousDutyDependentRoot: make([]byte, 32),
 					CurrentDutyDependentRoot:  make([]byte, 32),
-					ExecutionOptimistic:       false,
+					SilaOptimistic:       false,
 				},
 			},
 			{
@@ -517,7 +517,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					OldHeadState:        make([]byte, 32),
 					NewHeadState:        make([]byte, 32),
 					Epoch:               0,
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 				},
 			},
 			{
@@ -526,7 +526,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					Block:               make([]byte, 32),
 					State:               make([]byte, 32),
 					Epoch:               0,
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 				},
 			},
 			{
@@ -618,7 +618,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					c.Set(cache.TrackedValidator{
 						Active:       true,
 						Index:        0,
-						FeeRecipient: primitives.ExecutionAddress(common.HexToAddress("0xd2DBd02e4efe087d7d195de828b9Dd25f19A89C9").Bytes()),
+						FeeRecipient: primitives.SilaAddress(common.HexToAddress("0xd2DBd02e4efe087d7d195de828b9Dd25f19A89C9").Bytes()),
 					})
 				},
 			},

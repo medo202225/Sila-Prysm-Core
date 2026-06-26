@@ -117,7 +117,7 @@ func TestValidateSignedProposerPreferencesGossip_AlreadySeen(t *testing.T) {
 	require.Equal(t, true, s.proposerPreferencesCache.Add(cache.ProposerPreference{
 		DependentRoot:  dependentRoot,
 		ValidatorIndex: signedPreferences.Message.ValidatorIndex,
-		FeeRecipient:   primitives.ExecutionAddress{0x01},
+		FeeRecipient:   primitives.SilaAddress{0x01},
 		TargetGasLimit: 10,
 	}, signedPreferences.Message.ProposalSlot))
 	result, err := s.validateSignedProposerPreferencesGossip(ctx, "", msg)

@@ -84,7 +84,7 @@ func TestQueueEntireBalanceAndResetValidator(t *testing.T) {
 func TestSwitchToCompoundingValidator_Ok(t *testing.T) {
 	st, _ := util.DeterministicGenesisStateElectra(t, params.BeaconConfig().MaxValidatorsPerCommittee)
 	vals := st.Validators()
-	vals[0].WithdrawalCredentials = []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte}
+	vals[0].WithdrawalCredentials = []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte}
 	require.NoError(t, st.SetValidators(vals))
 	bals := st.Balances()
 	bals[0] = params.BeaconConfig().MinActivationBalance + 1010

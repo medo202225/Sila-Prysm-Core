@@ -139,7 +139,7 @@ func TestGloasBuilderReplacement(t *testing.T) {
 		builders[idx] = &silapb.Builder{
 			Pubkey:            make([]byte, 48),
 			Version:           []byte{0x04},
-			ExecutionAddress:  make([]byte, 20),
+			SilaAddress:  make([]byte, 20),
 			Balance:           64_000_000_000,
 			DepositEpoch:      10,
 			WithdrawableEpoch: 1<<64 - 1,
@@ -362,7 +362,7 @@ func TestGloasSilaRequestsRoot(t *testing.T) {
 		BuilderIndex:          srcBid.BuilderIndex(),
 		Slot:                  srcBid.Slot(),
 		Value:                 srcBid.Value(),
-		ExecutionPayment:      srcBid.ExecutionPayment(),
+		SilaPayment:      srcBid.SilaPayment(),
 		BlobKzgCommitments:    srcBid.BlobKzgCommitments(),
 		FeeRecipient:          feeRecipient[:],
 		SilaRequestsRoot: newRequestsRoot[:],

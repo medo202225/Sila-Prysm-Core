@@ -33,7 +33,7 @@ func TestProcessPendingDepositsMultiplesSameDeposits(t *testing.T) {
 	require.NoError(t, err)
 
 	withdrawalCredentialsBytes := make([]byte, 32)
-	withdrawalCredentialsBytes[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	withdrawalCredentialsBytes[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	withdrawalCredentials := bytesutil.ToBytes32(withdrawalCredentialsBytes)
 
 	validators := state.Validators()
@@ -175,7 +175,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 				sk, err := bls.RandKey()
 				require.NoError(t, err)
 				wc := make([]byte, 32)
-				wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+				wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 				wc[31] = byte(0)
 				dep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 				require.NoError(t, st.SetPendingDeposits([]*eth.PendingDeposit{dep}))
@@ -210,7 +210,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 				sk, err := bls.RandKey()
 				require.NoError(t, err)
 				wc := make([]byte, 32)
-				wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+				wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 				wc[31] = byte(0)
 				validators[0].PublicKey = sk.PublicKey().Marshal()
 				validators[0].WithdrawalCredentials = wc
@@ -321,7 +321,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 		sk, err := bls.RandKey()
 		require.NoError(t, err)
 		wc := make([]byte, 32)
-		wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(0)
 		validDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 		invalidDep := &eth.PendingDeposit{PublicKey: make([]byte, 48)}
@@ -338,7 +338,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 		sk, err := bls.RandKey()
 		require.NoError(t, err)
 		wc := make([]byte, 32)
-		wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(0)
 		validDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 		deps := []*eth.PendingDeposit{validDep, validDep}
@@ -355,7 +355,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 		sk, err := bls.RandKey()
 		require.NoError(t, err)
 		wc := make([]byte, 32)
-		wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(0)
 		validDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 		invalidSigDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
@@ -463,7 +463,7 @@ func TestApplyDeposit_TopUps_WithBadSignature(t *testing.T) {
 	}
 	vals := st.Validators()
 	vals[0].PublicKey = sk.PublicKey().Marshal()
-	vals[0].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	vals[0].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	require.NoError(t, st.SetValidators(vals))
 	adSt, err := electra.ApplyDeposit(st, depositData, false)
 	require.NoError(t, err)
@@ -483,7 +483,7 @@ func stateWithActiveBalanceETH(t *testing.T, balETH uint64) state.BeaconState {
 	bals := make([]uint64, numVals)
 	for i := range numVals {
 		wc := make([]byte, 32)
-		wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(i)
 		vals[i] = &eth.Validator{
 			ActivationEpoch:       0,
@@ -520,7 +520,7 @@ func stateWithPendingDeposits(t *testing.T, balETH uint64, numDeposits, amount u
 		sk, err := bls.RandKey()
 		require.NoError(t, err)
 		wc := make([]byte, 32)
-		wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(i)
 		validators[i].PublicKey = sk.PublicKey().Marshal()
 		validators[i].WithdrawalCredentials = wc
@@ -538,7 +538,7 @@ func TestApplyPendingDeposit_TopUp(t *testing.T) {
 	sk, err := bls.RandKey()
 	require.NoError(t, err)
 	wc := make([]byte, 32)
-	wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	wc[31] = byte(0)
 	validators[0].PublicKey = sk.PublicKey().Marshal()
 	validators[0].WithdrawalCredentials = wc
@@ -557,7 +557,7 @@ func TestApplyPendingDeposit_UnknownKey(t *testing.T) {
 	sk, err := bls.RandKey()
 	require.NoError(t, err)
 	wc := make([]byte, 32)
-	wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	wc[31] = byte(0)
 	dep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 	require.Equal(t, 0, len(st.Validators()))
@@ -575,7 +575,7 @@ func TestApplyPendingDeposit_InvalidSignature(t *testing.T) {
 	sk, err := bls.RandKey()
 	require.NoError(t, err)
 	wc := make([]byte, 32)
-	wc[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	wc[31] = byte(0)
 	dep := &eth.PendingDeposit{
 		PublicKey:             sk.PublicKey().Marshal(),

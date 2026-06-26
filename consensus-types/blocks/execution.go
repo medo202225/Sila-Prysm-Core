@@ -213,7 +213,7 @@ func (e silaPayload) ExcessBlobGas() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
-// silaPayloadHeader is a convenience wrapper around a blinded beacon block body's execution header data structure
+// silaPayloadHeader is a convenience wrapper around a blinded beacon block body's sila header data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
 type silaPayloadHeader struct {
@@ -222,7 +222,7 @@ type silaPayloadHeader struct {
 
 var _ interfaces.SilaData = &silaPayloadHeader{}
 
-// WrappedSilaPayloadHeader is a constructor which wraps a protobuf execution header into an interface.
+// WrappedSilaPayloadHeader is a constructor which wraps a protobuf sila header into an interface.
 func WrappedSilaPayloadHeader(p *silaenginev1.SilaPayloadHeader) (interfaces.SilaData, error) {
 	w := silaPayloadHeader{p: p}
 	if w.IsNil() {
@@ -567,7 +567,7 @@ func (e silaPayloadCapella) ExcessBlobGas() (uint64, error) {
 	return 0, consensus_types.ErrUnsupportedField
 }
 
-// silaPayloadHeaderCapella is a convenience wrapper around a blinded beacon block body's execution header data structure
+// silaPayloadHeaderCapella is a convenience wrapper around a blinded beacon block body's sila header data structure
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
 type silaPayloadHeaderCapella struct {
@@ -576,7 +576,7 @@ type silaPayloadHeaderCapella struct {
 
 var _ interfaces.SilaData = &silaPayloadHeaderCapella{}
 
-// WrappedSilaPayloadHeaderCapella is a constructor which wraps a protobuf execution header into an interface.
+// WrappedSilaPayloadHeaderCapella is a constructor which wraps a protobuf sila header into an interface.
 func WrappedSilaPayloadHeaderCapella(p *silaenginev1.SilaPayloadHeaderCapella) (interfaces.SilaData, error) {
 	w := silaPayloadHeaderCapella{p: p}
 	if w.IsNil() {
@@ -821,7 +821,7 @@ var (
 	PayloadToHeaderFulu    = PayloadToHeaderDeneb
 )
 
-// IsEmptySilaData checks if an sila data is empty underneath. If a single field has
+// IsEmptySilaData checks if a Sila data is empty underneath. If a single field has
 // a non-zero value, this function will return false.
 func IsEmptySilaData(data interfaces.SilaData) (bool, error) {
 	if data == nil {
@@ -881,7 +881,7 @@ func IsEmptySilaData(data interfaces.SilaData) (bool, error) {
 	return true, nil
 }
 
-// silaPayloadHeaderDeneb is a convenience wrapper around a blinded beacon block body's execution header data structure.
+// silaPayloadHeaderDeneb is a convenience wrapper around a blinded beacon block body's sila header data structure.
 // This wrapper allows us to conform to a common interface so that beacon
 // blocks for future forks can also be applied across Sila without issues.
 type silaPayloadHeaderDeneb struct {
@@ -890,7 +890,7 @@ type silaPayloadHeaderDeneb struct {
 
 var _ interfaces.SilaData = &silaPayloadHeaderDeneb{}
 
-// WrappedSilaPayloadHeaderDeneb is a constructor which wraps a protobuf execution header into an interface.
+// WrappedSilaPayloadHeaderDeneb is a constructor which wraps a protobuf sila header into an interface.
 func WrappedSilaPayloadHeaderDeneb(p *silaenginev1.SilaPayloadHeaderDeneb) (interfaces.SilaData, error) {
 	w := silaPayloadHeaderDeneb{p: p}
 	if w.IsNil() {

@@ -19,7 +19,7 @@ option go_package = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1a
 // Reference:
 // https://github.com/sila-chain/Sila-Consensus-Specs/blob/master/specs/gloas/beacon-chain.md
 
-// SilaPayloadBid represents an sila payload bid in the Gloas fork.
+// SilaPayloadBid represents a Sila payload bid in the Gloas fork.
 //
 // Spec:
 // class SilaPayloadBid(Container):
@@ -27,12 +27,12 @@ option go_package = "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1a
 //     parent_block_root: Root
 //     block_hash: Hash32
 //     prev_randao: Bytes32
-//     fee_recipient: ExecutionAddress
+//     fee_recipient: SilaAddress
 //     gas_limit: uint64
 //     builder_index: BuilderIndex
 //     slot: Slot
 //     value: Gwei
-//     execution_payment: Gwei
+//     sila_payment: Gwei
 //     blob_kzg_commitments: List[KZGCommitment, MAX_BLOB_COMMITMENTS_PER_BLOCK]
 //     sila_requests_root: Root
 message SilaPayloadBid {
@@ -53,7 +53,7 @@ message SilaPayloadBid {
     (sila.eth.ext.cast_type) =
         "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"
   ];
-  uint64 execution_payment = 10 [
+  uint64 sila_payment = 10 [
     (sila.eth.ext.cast_type) =
         "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"
   ];
@@ -64,7 +64,7 @@ message SilaPayloadBid {
   bytes sila_requests_root = 12 [ (sila.eth.ext.ssz_size) = "32" ];
 }
 
-// SignedSilaPayloadBid wraps an sila payload bid with a signature.
+// SignedSilaPayloadBid wraps a Sila payload bid with a signature.
 //
 // Spec:
 // class SignedSilaPayloadBid(Container):
@@ -83,7 +83,7 @@ message SignedSilaPayloadBid {
 //     dependent_root: Root
 //     proposal_slot: Slot
 //     validator_index: ValidatorIndex
-//     fee_recipient: ExecutionAddress
+//     fee_recipient: SilaAddress
 //     target_gas_limit: uint64
 message ProposerPreferences {
   bytes dependent_root = 1 [ (sila.eth.ext.ssz_size) = "32" ];
@@ -242,7 +242,7 @@ message SignedBeaconBlockGloas {
 // Spec:
 // class BeaconState(Container):
 //     [All previous fields from earlier forks]
-//     # Replaced existing latest execution header position
+//     # Replaced existing latest sila header position
 //     latest_block_hash: Hash32
 //     builders: List[Builder, BUILDER_REGISTRY_LIMIT]
 //     # [New in Gloas:SIP7732]
@@ -453,7 +453,7 @@ message BuilderPendingPayment {
 //
 // Spec:
 // class BuilderPendingWithdrawal(Container):
-//     fee_recipient: ExecutionAddress
+//     fee_recipient: SilaAddress
 //     amount: Gwei
 //     builder_index: BuilderIndex
 message BuilderPendingWithdrawal {
@@ -496,7 +496,7 @@ message DataColumnSidecarGloas {
   bytes beacon_block_root = 6 [ (sila.eth.ext.ssz_size) = "32" ];
 }
 
-// SilaPayloadEnvelope wraps an sila payload with builder index.
+// SilaPayloadEnvelope wraps a Sila payload with builder index.
 // This is used in the Gloas fork to associate sila payloads with their
 // builders and provide additional context needed for payload processing.
 //
@@ -517,7 +517,7 @@ message SilaPayloadEnvelope {
   bytes parent_beacon_block_root = 5 [ (sila.eth.ext.ssz_size) = "32" ];
 }
 
-// SignedSilaPayloadEnvelope wraps an sila payload envelope with a
+// SignedSilaPayloadEnvelope wraps a Sila payload envelope with a
 // signature. The signature is provided by the builder who created the execution
 // payload.
 //
@@ -579,14 +579,14 @@ message SignedWireBlindedSilaPayloadEnvelope {
 // class Builder(Container):
 //     pubkey: BLSPubkey
 //     version: uint8
-//     execution_address: ExecutionAddress
+//     sila_address: SilaAddress
 //     balance: Gwei
 //     deposit_epoch: Epoch
 //     withdrawable_epoch: Epoch
 message Builder {
   bytes pubkey = 1 [ (sila.eth.ext.ssz_size) = "48" ];
   bytes version = 2 [ (sila.eth.ext.ssz_size) = "1" ];
-  bytes execution_address = 3 [ (sila.eth.ext.ssz_size) = "20" ];
+  bytes sila_address = 3 [ (sila.eth.ext.ssz_size) = "20" ];
   uint64 balance = 4 [
     (sila.eth.ext.cast_type) =
         "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"

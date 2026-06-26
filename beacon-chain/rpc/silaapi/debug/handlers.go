@@ -141,7 +141,7 @@ func (s *Server) getBeaconStateV2(ctx context.Context, w http.ResponseWriter, id
 	// the encoder marshals the state directly in a single pass, halving memory usage.
 	httputil.WriteJson(w, struct {
 		Version             string `json:"version"`
-		ExecutionOptimistic bool   `json:"execution_optimistic"`
+		SilaOptimistic bool   `json:"sila_optimistic"`
 		Finalized           bool   `json:"finalized"`
 		Data                any    `json:"data"`
 	}{ver, isOptimistic, isFinalized, respSt})
@@ -181,7 +181,7 @@ func (s *Server) GetForkChoiceHeadsV2(w http.ResponseWriter, r *http.Request) {
 		resp.Data[i] = &structs.ForkChoiceHead{
 			Root:                hexutil.Encode(headRoots[i][:]),
 			Slot:                fmt.Sprintf("%d", headSlots[i]),
-			ExecutionOptimistic: isOptimistic,
+			SilaOptimistic: isOptimistic,
 		}
 	}
 
@@ -214,7 +214,7 @@ func (s *Server) GetForkChoice(w http.ResponseWriter, r *http.Request) {
 				UnrealizedJustifiedEpoch: fmt.Sprintf("%d", n.UnrealizedJustifiedEpoch),
 				UnrealizedFinalizedEpoch: fmt.Sprintf("%d", n.UnrealizedFinalizedEpoch),
 				Balance:                  fmt.Sprintf("%d", n.Balance),
-				ExecutionOptimistic:      n.ExecutionOptimistic,
+				SilaOptimistic:      n.SilaOptimistic,
 				TimeStamp:                n.Timestamp.String(),
 				Target:                   fmt.Sprintf("%#x", n.Target),
 			},
@@ -250,7 +250,7 @@ func (s *Server) GetForkChoiceV2(w http.ResponseWriter, r *http.Request) {
 	for i, n := range dump.ForkChoiceNodes {
 		extra := &structs.ForkChoiceNodeV2ExtraData{
 			Balance:             fmt.Sprintf("%d", n.Balance),
-			ExecutionOptimistic: n.ExecutionOptimistic,
+			SilaOptimistic: n.SilaOptimistic,
 			TimeStamp:           n.Timestamp.String(),
 		}
 		switch n.PayloadStatus {
@@ -384,7 +384,7 @@ func (s *Server) DataColumnSidecars(w http.ResponseWriter, r *http.Request) {
 	resp := &structs.GetDebugDataColumnSidecarsResponse{
 		Version:             version.String(blk.Version()),
 		Data:                data,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
 	}
 	w.Header().Set(api.VersionHeader, version.String(blk.Version()))

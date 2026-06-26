@@ -141,7 +141,7 @@ func (s *Service) saveHead(ctx context.Context, newHeadRoot [32]byte, headBlock 
 				OldHeadState:        oldStateRoot[:],
 				NewHeadState:        newStateRoot[:],
 				Epoch:               slots.ToEpoch(newHeadSlot),
-				ExecutionOptimistic: isOptimistic,
+				SilaOptimistic: isOptimistic,
 			},
 		})
 
@@ -371,7 +371,7 @@ func (s *Service) notifyNewHeadEvent(
 			EpochTransition:           epochTransition,
 			PreviousDutyDependentRoot: previousDutyDependentRoot[:],
 			CurrentDutyDependentRoot:  currentDutyDependentRoot[:],
-			ExecutionOptimistic:       isOptimistic,
+			SilaOptimistic:       isOptimistic,
 		},
 	})
 	return nil

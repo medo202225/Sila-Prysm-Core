@@ -86,8 +86,8 @@ func WithStateGen(gen *stategen.State) Option {
 	}
 }
 
-// WithSilaExecutionHeaderRequestLimit to set the upper limit of silaexec header requests.
-func WithSilaExecutionHeaderRequestLimit(limit uint64) Option {
+// WithSilaHeaderRequestLimit to set the upper limit of silaexec header requests.
+func WithSilaHeaderRequestLimit(limit uint64) Option {
 	return func(s *Service) error {
 		s.cfg.silaexecHeaderReqLimit = limit
 		return nil

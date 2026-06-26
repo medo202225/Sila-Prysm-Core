@@ -49,7 +49,7 @@ func TestProcessDepositRequest_BuilderDepositAddsBuilder(t *testing.T) {
 	require.NotNil(t, builder)
 	require.DeepEqual(t, req.Pubkey, builder.Pubkey)
 	require.DeepEqual(t, []byte{cred[0]}, builder.Version)
-	require.DeepEqual(t, cred[12:], builder.ExecutionAddress)
+	require.DeepEqual(t, cred[12:], builder.SilaAddress)
 	require.Equal(t, uint64(1234), uint64(builder.Balance))
 	require.Equal(t, params.BeaconConfig().FarFutureEpoch, builder.WithdrawableEpoch)
 
@@ -67,7 +67,7 @@ func TestProcessDepositRequest_ExistingBuilderIncreasesBalance(t *testing.T) {
 		{
 			Pubkey:            pubkey,
 			Version:           []byte{0},
-			ExecutionAddress:  bytes.Repeat([]byte{0x11}, 20),
+			SilaAddress:  bytes.Repeat([]byte{0x11}, 20),
 			Balance:           5,
 			WithdrawableEpoch: params.BeaconConfig().FarFutureEpoch,
 		},
@@ -256,7 +256,7 @@ func builderWithdrawalCredentials() [32]byte {
 
 func validatorWithdrawalCredentials() [32]byte {
 	var cred [32]byte
-	cred[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	cred[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	copy(cred[12:], bytes.Repeat([]byte{0x33}, 20))
 	return cred
 }

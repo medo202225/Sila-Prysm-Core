@@ -44,7 +44,7 @@ func CopyBuilder(builder *Builder) *Builder {
 	return &Builder{
 		Pubkey:            bytesutil.SafeCopyBytes(builder.Pubkey),
 		Version:           bytesutil.SafeCopyBytes(builder.Version),
-		ExecutionAddress:  bytesutil.SafeCopyBytes(builder.ExecutionAddress),
+		SilaAddress:  bytesutil.SafeCopyBytes(builder.SilaAddress),
 		Balance:           builder.Balance,
 		DepositEpoch:      builder.DepositEpoch,
 		WithdrawableEpoch: builder.WithdrawableEpoch,
@@ -154,7 +154,7 @@ func copySignedSilaPayloadBid(header *SignedSilaPayloadBid) *SignedSilaPayloadBi
 			BuilderIndex:          header.Message.BuilderIndex,
 			Slot:                  header.Message.Slot,
 			Value:                 header.Message.Value,
-			ExecutionPayment:      header.Message.ExecutionPayment,
+			SilaPayment:      header.Message.SilaPayment,
 			BlobKzgCommitments:    bytesutil.SafeCopy2dBytes(header.Message.BlobKzgCommitments),
 			SilaRequestsRoot: bytesutil.SafeCopyBytes(header.Message.SilaRequestsRoot),
 		}

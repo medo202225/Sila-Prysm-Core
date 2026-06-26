@@ -125,7 +125,7 @@ func TestUpgradeToGloas_OnboardsBuilderDeposit(t *testing.T) {
 
 	builder := pbState.Builders[0]
 	require.DeepSSZEqual(t, sk.PublicKey().Marshal(), builder.Pubkey)
-	require.DeepSSZEqual(t, builderCreds[12:], builder.ExecutionAddress)
+	require.DeepSSZEqual(t, builderCreds[12:], builder.SilaAddress)
 	require.Equal(t, primitives.Gwei(amount), builder.Balance)
 	require.Equal(t, slots.ToEpoch(depSlot), builder.DepositEpoch)
 }

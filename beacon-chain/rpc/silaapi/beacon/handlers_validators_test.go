@@ -231,7 +231,7 @@ func TestGetValidators(t *testing.T) {
 		require.Equal(t, 1, len(resp.Data))
 		assert.Equal(t, "1", resp.Data[0].Index)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		chainService := &chainMock.ChainService{Optimistic: true}
 		s := Server{
 			Stater: &testutil.MockStater{
@@ -251,7 +251,7 @@ func TestGetValidators(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetValidatorsResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		headerRoot, err := st.LatestBlockHeader().HashTreeRoot()
@@ -783,7 +783,7 @@ func TestGetValidator(t *testing.T) {
 		assert.Equal(t, http.StatusNotFound, e.Code)
 		assert.StringContains(t, "Unknown validator", e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		chainService := &chainMock.ChainService{Optimistic: true}
 		s := Server{
 			Stater: &testutil.MockStater{
@@ -804,7 +804,7 @@ func TestGetValidator(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetValidatorResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		headerRoot, err := st.LatestBlockHeader().HashTreeRoot()
@@ -1033,7 +1033,7 @@ func TestGetValidatorBalances(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, e.Code)
 		assert.StringContains(t, "state_id is required in URL params", e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		chainService := &chainMock.ChainService{Optimistic: true}
 		s := Server{
 			Stater: &testutil.MockStater{
@@ -1057,7 +1057,7 @@ func TestGetValidatorBalances(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetValidatorBalancesResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		headerRoot, err := st.LatestBlockHeader().HashTreeRoot()
@@ -1401,7 +1401,7 @@ func TestGetValidatorIdentities(t *testing.T) {
 			require.Equal(t, 1, len(resp.Data))
 			assert.Equal(t, "1", resp.Data[0].Index)
 		})
-		t.Run("execution optimistic", func(t *testing.T) {
+		t.Run("sila optimistic", func(t *testing.T) {
 			chainService := &chainMock.ChainService{Optimistic: true}
 			s := Server{
 				Stater: &testutil.MockStater{
@@ -1424,7 +1424,7 @@ func TestGetValidatorIdentities(t *testing.T) {
 			assert.Equal(t, http.StatusOK, writer.Code)
 			resp := &structs.GetValidatorIdentitiesResponse{}
 			require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-			assert.Equal(t, true, resp.ExecutionOptimistic)
+			assert.Equal(t, true, resp.SilaOptimistic)
 		})
 		t.Run("finalized", func(t *testing.T) {
 			headerRoot, err := genesisState.LatestBlockHeader().HashTreeRoot()

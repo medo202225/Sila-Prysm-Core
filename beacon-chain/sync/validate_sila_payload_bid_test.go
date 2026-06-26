@@ -62,7 +62,7 @@ func TestValidateSilaPayloadBidGossip_DedupShortCircuitsAllLaterChecks(t *testin
 	s.newSilaPayloadBidVerifier = testNewSilaPayloadBidVerifier(mockSilaPayloadBidVerifier{
 		errCurrentOrNextSlot:    errors.New("slot"),
 		errBuilderActive:        errors.New("builder"),
-		errExecutionPayment:     errors.New("payment"),
+		errSilaPayment:     errors.New("payment"),
 		errFeeRecipientMismatch: errors.New("fee"),
 		errSignature:            errors.New("sig"),
 	})
@@ -113,8 +113,8 @@ func TestValidateSilaPayloadBidGossip_ErrorPathsWithMock(t *testing.T) {
 			wantError: true,
 		},
 		{
-			name:      "non-zero execution payment",
-			verifier:  mockSilaPayloadBidVerifier{errExecutionPayment: errors.New("non-zero payment")},
+			name:      "non-zero sila payment",
+			verifier:  mockSilaPayloadBidVerifier{errSilaPayment: errors.New("non-zero payment")},
 			result:    pubsub.ValidationReject,
 			wantError: true,
 		},
@@ -310,7 +310,7 @@ func TestSilaPayloadBidSubscriber_NilMessage(t *testing.T) {
 type mockSilaPayloadBidVerifier struct {
 	errCurrentOrNextSlot    error
 	errBuilderActive        error
-	errExecutionPayment     error
+	errSilaPayment     error
 	errFeeRecipientMismatch error
 	errGasLimitIncompatible error
 	errParentBlockRootSeen  error
@@ -330,8 +330,8 @@ func (m *mockSilaPayloadBidVerifier) VerifyBuilderActive(state.ReadOnlyBeaconSta
 	return m.errBuilderActive
 }
 
-func (m *mockSilaPayloadBidVerifier) VerifyExecutionPaymentZero() error {
-	return m.errExecutionPayment
+func (m *mockSilaPayloadBidVerifier) VerifySilaPaymentZero() error {
+	return m.errSilaPayment
 }
 
 func (m *mockSilaPayloadBidVerifier) VerifyFeeRecipientMatches([]byte) error {

@@ -79,14 +79,14 @@ func (b *BLSToSilaChange) ToConsensus() (*eth.BLSToSilaChange, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "FromBLSPubkey")
 	}
-	executionAddress, err := bytesutil.DecodeHexWithLength(b.ToSilaAddress, common.AddressLength)
+	silaAddress, err := bytesutil.DecodeHexWithLength(b.ToSilaAddress, common.AddressLength)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "ToSilaAddress")
 	}
 	return &eth.BLSToSilaChange{
 		ValidatorIndex:     primitives.ValidatorIndex(index),
 		FromBlsPubkey:      pubkey,
-		ToSilaAddress: executionAddress,
+		ToSilaAddress: silaAddress,
 	}, nil
 }
 
@@ -890,7 +890,7 @@ func WithdrawalFromConsensus(w *silaenginev1.Withdrawal) *Withdrawal {
 	return &Withdrawal{
 		WithdrawalIndex:  fmt.Sprintf("%d", w.Index),
 		ValidatorIndex:   fmt.Sprintf("%d", w.ValidatorIndex),
-		ExecutionAddress: hexutil.Encode(w.Address),
+		SilaAddress: hexutil.Encode(w.Address),
 		Amount:           fmt.Sprintf("%d", w.Amount),
 	}
 }
@@ -1535,7 +1535,7 @@ func HeadEventFromV1(event *ethv1.EventHead) *HeadEvent {
 		Block:                     hexutil.Encode(event.Block),
 		State:                     hexutil.Encode(event.State),
 		EpochTransition:           event.EpochTransition,
-		ExecutionOptimistic:       event.ExecutionOptimistic,
+		SilaOptimistic:       event.SilaOptimistic,
 		PreviousDutyDependentRoot: hexutil.Encode(event.PreviousDutyDependentRoot),
 		CurrentDutyDependentRoot:  hexutil.Encode(event.CurrentDutyDependentRoot),
 	}
@@ -1546,7 +1546,7 @@ func FinalizedCheckpointEventFromV1(event *ethv1.EventFinalizedCheckpoint) *Fina
 		Block:               hexutil.Encode(event.Block),
 		State:               hexutil.Encode(event.State),
 		Epoch:               fmt.Sprintf("%d", event.Epoch),
-		ExecutionOptimistic: event.ExecutionOptimistic,
+		SilaOptimistic: event.SilaOptimistic,
 	}
 }
 
@@ -1559,7 +1559,7 @@ func EventChainReorgFromV1(event *ethv1.EventChainReorg) *ChainReorgEvent {
 		OldHeadState:        hexutil.Encode(event.OldHeadState),
 		NewHeadState:        hexutil.Encode(event.NewHeadState),
 		Epoch:               fmt.Sprintf("%d", event.Epoch),
-		ExecutionOptimistic: event.ExecutionOptimistic,
+		SilaOptimistic: event.SilaOptimistic,
 	}
 }
 

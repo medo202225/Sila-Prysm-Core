@@ -6,7 +6,7 @@ import (
 
 type BlockRootResponse struct {
 	Data                *BlockRoot `json:"data"`
-	ExecutionOptimistic bool       `json:"execution_optimistic"`
+	SilaOptimistic bool       `json:"sila_optimistic"`
 	Finalized           bool       `json:"finalized"`
 }
 
@@ -16,7 +16,7 @@ type BlockRoot struct {
 
 type GetCommitteesResponse struct {
 	Data                []*Committee `json:"data"`
-	ExecutionOptimistic bool         `json:"execution_optimistic"`
+	SilaOptimistic bool         `json:"sila_optimistic"`
 	Finalized           bool         `json:"finalized"`
 }
 
@@ -39,12 +39,12 @@ type SubmitSyncCommitteeSignaturesRequest struct {
 
 type GetStateForkResponse struct {
 	Data                *Fork `json:"data"`
-	ExecutionOptimistic bool  `json:"execution_optimistic"`
+	SilaOptimistic bool  `json:"sila_optimistic"`
 	Finalized           bool  `json:"finalized"`
 }
 
 type GetFinalityCheckpointsResponse struct {
-	ExecutionOptimistic bool                 `json:"execution_optimistic"`
+	SilaOptimistic bool                 `json:"sila_optimistic"`
 	Finalized           bool                 `json:"finalized"`
 	Data                *FinalityCheckpoints `json:"data"`
 }
@@ -67,12 +67,12 @@ type Genesis struct {
 
 type GetBlockHeadersResponse struct {
 	Data                []*SignedBeaconBlockHeaderContainer `json:"data"`
-	ExecutionOptimistic bool                                `json:"execution_optimistic"`
+	SilaOptimistic bool                                `json:"sila_optimistic"`
 	Finalized           bool                                `json:"finalized"`
 }
 
 type GetBlockHeaderResponse struct {
-	ExecutionOptimistic bool                              `json:"execution_optimistic"`
+	SilaOptimistic bool                              `json:"sila_optimistic"`
 	Finalized           bool                              `json:"finalized"`
 	Data                *SignedBeaconBlockHeaderContainer `json:"data"`
 }
@@ -83,25 +83,25 @@ type GetValidatorsRequest struct {
 }
 
 type GetValidatorsResponse struct {
-	ExecutionOptimistic bool                  `json:"execution_optimistic"`
+	SilaOptimistic bool                  `json:"sila_optimistic"`
 	Finalized           bool                  `json:"finalized"`
 	Data                []*ValidatorContainer `json:"data"`
 }
 
 type GetValidatorResponse struct {
-	ExecutionOptimistic bool                `json:"execution_optimistic"`
+	SilaOptimistic bool                `json:"sila_optimistic"`
 	Finalized           bool                `json:"finalized"`
 	Data                *ValidatorContainer `json:"data"`
 }
 
 type GetValidatorBalancesResponse struct {
-	ExecutionOptimistic bool                `json:"execution_optimistic"`
+	SilaOptimistic bool                `json:"sila_optimistic"`
 	Finalized           bool                `json:"finalized"`
 	Data                []*ValidatorBalance `json:"data"`
 }
 
 type GetValidatorIdentitiesResponse struct {
-	ExecutionOptimistic bool                 `json:"execution_optimistic"`
+	SilaOptimistic bool                 `json:"sila_optimistic"`
 	Finalized           bool                 `json:"finalized"`
 	Data                []*ValidatorIdentity `json:"data"`
 }
@@ -130,7 +130,7 @@ type GetBlockResponse struct {
 
 type GetBlockV2Response struct {
 	Version             string       `json:"version"`
-	ExecutionOptimistic bool         `json:"execution_optimistic"`
+	SilaOptimistic bool         `json:"sila_optimistic"`
 	Finalized           bool         `json:"finalized"`
 	Data                *SignedBlock `json:"data"`
 }
@@ -141,20 +141,20 @@ type SignedBlock struct {
 }
 
 type GetBlockAttestationsResponse struct {
-	ExecutionOptimistic bool           `json:"execution_optimistic"`
+	SilaOptimistic bool           `json:"sila_optimistic"`
 	Finalized           bool           `json:"finalized"`
 	Data                []*Attestation `json:"data"`
 }
 
 type GetBlockAttestationsV2Response struct {
 	Version             string          `json:"version"`
-	ExecutionOptimistic bool            `json:"execution_optimistic"`
+	SilaOptimistic bool            `json:"sila_optimistic"`
 	Finalized           bool            `json:"finalized"`
 	Data                json.RawMessage `json:"data"` // Accepts both `Attestation` and `AttestationElectra` types
 }
 
 type GetStateRootResponse struct {
-	ExecutionOptimistic bool       `json:"execution_optimistic"`
+	SilaOptimistic bool       `json:"sila_optimistic"`
 	Finalized           bool       `json:"finalized"`
 	Data                *StateRoot `json:"data"`
 }
@@ -164,7 +164,7 @@ type StateRoot struct {
 }
 
 type GetRandaoResponse struct {
-	ExecutionOptimistic bool    `json:"execution_optimistic"`
+	SilaOptimistic bool    `json:"sila_optimistic"`
 	Finalized           bool    `json:"finalized"`
 	Data                *Randao `json:"data"`
 }
@@ -174,7 +174,7 @@ type Randao struct {
 }
 
 type GetSyncCommitteeResponse struct {
-	ExecutionOptimistic bool                     `json:"execution_optimistic"`
+	SilaOptimistic bool                     `json:"sila_optimistic"`
 	Finalized           bool                     `json:"finalized"`
 	Data                *SyncCommitteeValidators `json:"data"`
 }
@@ -258,41 +258,41 @@ type ChainHead struct {
 
 type GetPendingConsolidationsResponse struct {
 	Version             string                  `json:"version"`
-	ExecutionOptimistic bool                    `json:"execution_optimistic"`
+	SilaOptimistic bool                    `json:"sila_optimistic"`
 	Finalized           bool                    `json:"finalized"`
 	Data                []*PendingConsolidation `json:"data"`
 }
 
 type GetPendingDepositsResponse struct {
 	Version             string            `json:"version"`
-	ExecutionOptimistic bool              `json:"execution_optimistic"`
+	SilaOptimistic bool              `json:"sila_optimistic"`
 	Finalized           bool              `json:"finalized"`
 	Data                []*PendingDeposit `json:"data"`
 }
 
 type GetPendingPartialWithdrawalsResponse struct {
 	Version             string                      `json:"version"`
-	ExecutionOptimistic bool                        `json:"execution_optimistic"`
+	SilaOptimistic bool                        `json:"sila_optimistic"`
 	Finalized           bool                        `json:"finalized"`
 	Data                []*PendingPartialWithdrawal `json:"data"`
 }
 
 type GetProposerLookaheadResponse struct {
 	Version             string   `json:"version"`
-	ExecutionOptimistic bool     `json:"execution_optimistic"`
+	SilaOptimistic bool     `json:"sila_optimistic"`
 	Finalized           bool     `json:"finalized"`
 	Data                []string `json:"data"` // validator indexes
 }
 
 type GetBlobsResponse struct {
-	ExecutionOptimistic bool     `json:"execution_optimistic"`
+	SilaOptimistic bool     `json:"sila_optimistic"`
 	Finalized           bool     `json:"finalized"`
 	Data                []string `json:"data"` //blobs
 }
 
 type GetSilaPayloadEnvelopeResponse struct {
 	Version             string                          `json:"version"`
-	ExecutionOptimistic bool                            `json:"execution_optimistic"`
+	SilaOptimistic bool                            `json:"sila_optimistic"`
 	Finalized           bool                            `json:"finalized"`
 	Data                *SignedSilaPayloadEnvelope `json:"data"`
 }

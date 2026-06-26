@@ -15,7 +15,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const SilaExecutionAddressOffset = 12
+const SilaAddressOffset = 12
 
 // NextWithdrawalIndex returns the index that will be assigned to the next withdrawal.
 func (b *BeaconState) NextWithdrawalIndex() (uint64, error) {
@@ -70,7 +70,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 //				withdrawals.append(Withdrawal(
 //					index=withdrawal_index,
 //					validator_index=withdrawal.index,
-//					address=ExecutionAddress(validator.withdrawal_credentials[12:]),
+//					address=SilaAddress(validator.withdrawal_credentials[12:]),
 //					amount=withdrawable_balance,
 //				))
 //				withdrawal_index += WithdrawalIndex(1)
@@ -88,7 +88,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 //				withdrawals.append(Withdrawal(
 //					index=withdrawal_index,
 //					validator_index=validator_index,
-//					address=ExecutionAddress(validator.withdrawal_credentials[12:]),
+//					address=SilaAddress(validator.withdrawal_credentials[12:]),
 //					amount=balance,
 //				))
 //				withdrawal_index += WithdrawalIndex(1)
@@ -96,7 +96,7 @@ func (b *BeaconState) NextWithdrawalValidatorIndex() (primitives.ValidatorIndex,
 //				withdrawals.append(Withdrawal(
 //					index=withdrawal_index,
 //					validator_index=validator_index,
-//					address=ExecutionAddress(validator.withdrawal_credentials[12:]),
+//					address=SilaAddress(validator.withdrawal_credentials[12:]),
 //					amount=balance - get_max_effective_balance(validator),  # [Modified in Electra:SIP7251]
 //				))
 //				withdrawal_index += WithdrawalIndex(1)
@@ -215,7 +215,7 @@ func (b *BeaconState) appendValidatorsSweepWithdrawals(withdrawalIndex uint64, w
 			ws = append(ws, &silaenginev1.Withdrawal{
 				Index:          withdrawalIndex,
 				ValidatorIndex: validatorIndex,
-				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[SilaExecutionAddressOffset:]),
+				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[SilaAddressOffset:]),
 				Amount:         balance,
 			})
 			withdrawalIndex++
@@ -223,7 +223,7 @@ func (b *BeaconState) appendValidatorsSweepWithdrawals(withdrawalIndex uint64, w
 			ws = append(ws, &silaenginev1.Withdrawal{
 				Index:          withdrawalIndex,
 				ValidatorIndex: validatorIndex,
-				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[SilaExecutionAddressOffset:]),
+				Address:        bytesutil.SafeCopyBytes(val.GetWithdrawalCredentials()[SilaAddressOffset:]),
 				Amount:         balance - helpers.ValidatorMaxEffectiveBalance(val),
 			})
 			withdrawalIndex++

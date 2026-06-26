@@ -324,7 +324,7 @@ func TestServer_getSilaPayload_UnexpectedFeeRecipient(t *testing.T) {
 	}
 	val := cache.TrackedValidator{
 		Active:       true,
-		FeeRecipient: primitives.ExecutionAddress(feeRecipient),
+		FeeRecipient: primitives.SilaAddress(feeRecipient),
 		Index:        0,
 	}
 	vs.TrackedValidatorsCache.Set(val)

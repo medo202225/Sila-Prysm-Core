@@ -170,7 +170,7 @@ func createDepositData(privKey bls.SecretKey, pubKey bls.PublicKey, withExecCred
 	}
 	if withExecCreds {
 		newCredentials := make([]byte, 12)
-		newCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		newCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		execAddr := bytesutil.ToBytes20(pubKey.Marshal())
 		depositMessage.WithdrawalCredentials = append(newCredentials, execAddr[:]...)
 	}

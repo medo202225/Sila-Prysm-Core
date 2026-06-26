@@ -85,8 +85,8 @@ func (s *Service) validateSilaPayloadBidGossip(ctx context.Context, pid peer.ID,
 	if err := v.VerifyBuilderActive(st); err != nil {
 		return pubsub.ValidationReject, err
 	}
-	// [REJECT] bid.execution_payment is zero.
-	if err := v.VerifyExecutionPaymentZero(); err != nil {
+	// [REJECT] bid.sila_payment is zero.
+	if err := v.VerifySilaPaymentZero(); err != nil {
 		return pubsub.ValidationReject, err
 	}
 	// [REJECT] bid.fee_recipient matches the fee_recipient from the proposer's SignedProposerPreferences associated with bid.slot.

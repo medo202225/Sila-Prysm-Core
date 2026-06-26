@@ -81,19 +81,19 @@ func TestBidVerifier_VerifyBuilderActive(t *testing.T) {
 	require.ErrorIs(t, verifier.VerifyBuilderActive(inactiveState), ErrBidBuilderNotActive)
 }
 
-func TestBidVerifier_VerifyExecutionPaymentZero(t *testing.T) {
+func TestBidVerifier_VerifySilaPaymentZero(t *testing.T) {
 	signed := testSignedSilaPayloadBid(t, 1)
 	wrapped, err := blocks.WrappedROSignedSilaPayloadBid(signed)
 	require.NoError(t, err)
 
-	verifier := &BidVerifier{results: newResults(RequireBidExecutionPaymentZero), b: wrapped}
-	require.NoError(t, verifier.VerifyExecutionPaymentZero())
+	verifier := &BidVerifier{results: newResults(RequireBidSilaPaymentZero), b: wrapped}
+	require.NoError(t, verifier.VerifySilaPaymentZero())
 
-	signed.Message.ExecutionPayment = 100
+	signed.Message.SilaPayment = 100
 	wrapped, err = blocks.WrappedROSignedSilaPayloadBid(signed)
 	require.NoError(t, err)
-	verifier = &BidVerifier{results: newResults(RequireBidExecutionPaymentZero), b: wrapped}
-	require.ErrorIs(t, verifier.VerifyExecutionPaymentZero(), ErrBidExecutionPaymentNonZero)
+	verifier = &BidVerifier{results: newResults(RequireBidSilaPaymentZero), b: wrapped}
+	require.ErrorIs(t, verifier.VerifySilaPaymentZero(), ErrBidSilaPaymentNonZero)
 }
 
 func TestBidVerifier_VerifyFeeRecipientMatches(t *testing.T) {
@@ -246,7 +246,7 @@ func testSignedSilaPayloadBid(t *testing.T, slot primitives.Slot) *silapb.Signed
 			FeeRecipient:          bytes.Repeat([]byte{0x05}, 20),
 			GasLimit:              30_000_000,
 			Value:                 100,
-			ExecutionPayment:      0,
+			SilaPayment:      0,
 			SilaRequestsRoot: make([]byte, 32),
 		},
 		Signature: bytes.Repeat([]byte{0x06}, 96),

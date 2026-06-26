@@ -32,13 +32,13 @@ func getProposerSettings(c *cli.Context, r io.Reader) error {
 	if c.IsSet(ProposerSettingsOutputFlag.Name) {
 		if c.IsSet(DefaultFeeRecipientFlag.Name) {
 			recipient := c.String(DefaultFeeRecipientFlag.Name)
-			if err := validateIsExecutionAddress(recipient); err != nil {
+			if err := validateIsSilaAddress(recipient); err != nil {
 				return err
 			}
 			defaultFeeRecipient = recipient
 		} else {
 			promptText := "Please enter a default fee recipient address (a Sila address in hex format)"
-			resp, err := prompt.ValidatePrompt(r, promptText, validateIsExecutionAddress)
+			resp, err := prompt.ValidatePrompt(r, promptText, validateIsSilaAddress)
 			if err != nil {
 				return err
 			}
@@ -103,7 +103,7 @@ func getProposerSettings(c *cli.Context, r io.Reader) error {
 	return nil
 }
 
-func validateIsExecutionAddress(input string) error {
+func validateIsSilaAddress(input string) error {
 	if !bytesutil.IsHex([]byte(input)) || !(len(input) == common.AddressLength*2+2) {
 		return errors.New("no default address entered")
 	}

@@ -139,7 +139,7 @@ func (c beaconApiChainClient) ChainHead(ctx context.Context, _ *empty.Empty) (*s
 		PreviousJustifiedSlot:      previousJustifiedSlot,
 		PreviousJustifiedEpoch:     primitives.Epoch(previousJustifiedEpoch),
 		PreviousJustifiedBlockRoot: previousJustifiedRoot,
-		OptimisticStatus:           blockHeader.ExecutionOptimistic,
+		OptimisticStatus:           blockHeader.SilaOptimistic,
 	}, nil
 }
 

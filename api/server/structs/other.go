@@ -240,7 +240,7 @@ type SyncAggregate struct {
 type Withdrawal struct {
 	WithdrawalIndex  string `json:"index"`
 	ValidatorIndex   string `json:"validator_index"`
-	ExecutionAddress string `json:"address"`
+	SilaAddress string `json:"address"`
 	Amount           string `json:"amount"`
 }
 
@@ -266,7 +266,7 @@ type PendingConsolidation struct {
 type Builder struct {
 	Pubkey            string `json:"pubkey"`
 	Version           string `json:"version"`
-	ExecutionAddress  string `json:"execution_address"`
+	SilaAddress  string `json:"sila_address"`
 	Balance           string `json:"balance"`
 	DepositEpoch      string `json:"deposit_epoch"`
 	WithdrawableEpoch string `json:"withdrawable_epoch"`

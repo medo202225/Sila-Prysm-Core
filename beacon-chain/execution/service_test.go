@@ -522,7 +522,7 @@ func TestNewService_EarliestVotingBlock(t *testing.T) {
 
 }
 
-func TestNewService_SilaExecutionHeaderRequLimit(t *testing.T) {
+func TestNewService_SilaHeaderRequLimit(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
@@ -538,12 +538,12 @@ func TestNewService_SilaExecutionHeaderRequLimit(t *testing.T) {
 		WithDatabase(beaconDB),
 	)
 	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
-	assert.Equal(t, defaultSilaExecutionHeaderReqLimit, s1.cfg.silaexecHeaderReqLimit, "default silaexec header request limit not set")
+	assert.Equal(t, defaultSilaHeaderReqLimit, s1.cfg.silaexecHeaderReqLimit, "default silaexec header request limit not set")
 	s2, err := NewService(t.Context(),
 		WithHttpEndpoint(endpoint),
 		WithSilaDepositAddress(testAcc.ContractAddr),
 		WithDatabase(beaconDB),
-		WithSilaExecutionHeaderRequestLimit(uint64(150)),
+		WithSilaHeaderRequestLimit(uint64(150)),
 	)
 	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	assert.Equal(t, uint64(150), s2.cfg.silaexecHeaderReqLimit, "unable to set silaexecHeaderRequestLimit")

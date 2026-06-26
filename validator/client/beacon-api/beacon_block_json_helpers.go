@@ -156,7 +156,7 @@ func jsonifyWithdrawals(withdrawals []*silaenginev1.Withdrawal) []*structs.Withd
 		jsonWithdrawals[index] = &structs.Withdrawal{
 			WithdrawalIndex:  strconv.FormatUint(withdrawal.Index, 10),
 			ValidatorIndex:   strconv.FormatUint(uint64(withdrawal.ValidatorIndex), 10),
-			ExecutionAddress: hexutil.Encode(withdrawal.Address),
+			SilaAddress: hexutil.Encode(withdrawal.Address),
 			Amount:           strconv.FormatUint(withdrawal.Amount, 10),
 		}
 	}

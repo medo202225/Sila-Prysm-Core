@@ -70,7 +70,7 @@ func (s *Server) GetStateRoot(w http.ResponseWriter, r *http.Request) {
 		Data: &structs.StateRoot{
 			Root: hexutil.Encode(stateRoot),
 		},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)
@@ -138,7 +138,7 @@ func (s *Server) GetRandao(w http.ResponseWriter, r *http.Request) {
 
 	resp := &structs.GetRandaoResponse{
 		Data:                &structs.Randao{Randao: hexutil.Encode(randao)},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)
@@ -243,7 +243,7 @@ func (s *Server) GetSyncCommittees(w http.ResponseWriter, r *http.Request) {
 			Validators:          committeeIndices,
 			ValidatorAggregates: subcommittees,
 		},
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           isFinalized,
 	}
 	httputil.WriteJson(w, resp)

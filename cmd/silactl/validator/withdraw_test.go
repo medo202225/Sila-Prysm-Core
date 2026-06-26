@@ -44,7 +44,7 @@ func getHappyPathTestServer(file string, t *testing.T) *httptest.Server {
 						CurrentVersion:  hexutil.Encode(params.BeaconConfig().CapellaForkVersion),
 						Epoch:           "1350",
 					},
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Finalized:           true,
 				})
 				require.NoError(t, err)
@@ -235,7 +235,7 @@ func TestCallWithdrawalEndpoint_Errors(t *testing.T) {
 						CurrentVersion:  hexutil.Encode(params.BeaconConfig().CapellaForkVersion),
 						Epoch:           fmt.Sprintf("%d", params.BeaconConfig().CapellaForkEpoch),
 					},
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Finalized:           true,
 				})
 				require.NoError(t, err)
@@ -293,7 +293,7 @@ func TestCallWithdrawalEndpoint_ForkBeforeCapella(t *testing.T) {
 					CurrentVersion:  hexutil.Encode(params.BeaconConfig().BellatrixForkVersion),
 					Epoch:           "1000",
 				},
-				ExecutionOptimistic: false,
+				SilaOptimistic: false,
 				Finalized:           true,
 			})
 			require.NoError(t, err)

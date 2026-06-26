@@ -163,7 +163,7 @@ func (p *Builder) Start(ctx context.Context) error {
 		return ctx
 	}
 	p.cfg.logger.WithFields(logrus.Fields{
-		"executionAddress": p.cfg.destinationUrl.String(),
+		"silaAddress": p.cfg.destinationUrl.String(),
 	}).Infof("Builder now listening on address %s", p.address)
 	go func() {
 		if err := p.srv.ListenAndServe(); err != nil {

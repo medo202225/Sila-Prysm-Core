@@ -42,7 +42,7 @@ const (
 	// Execution payload bid specific.
 	RequireBidCurrentOrNextSlot
 	RequireBidBuilderActive
-	RequireBidExecutionPaymentZero
+	RequireBidSilaPaymentZero
 	RequireBidFeeRecipientMatches
 	RequireBidGasLimitCompatible
 	RequireBidParentBlockRootSeen

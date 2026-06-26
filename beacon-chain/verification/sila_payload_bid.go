@@ -15,7 +15,7 @@ import (
 var SilaPayloadBidGossipRequirements = []Requirement{
 	RequireBidCurrentOrNextSlot,
 	RequireBidBuilderActive,
-	RequireBidExecutionPaymentZero,
+	RequireBidSilaPaymentZero,
 	RequireBidFeeRecipientMatches,
 	RequireBidParentBlockRootSeen,
 	RequireBidSlotHigherThanParent,
@@ -31,7 +31,7 @@ var GossipSilaPayloadBidRequirements = requirementList(SilaPayloadBidGossipRequi
 var (
 	ErrBidSlotNotCurrentOrNext    = errors.New("bid slot is not current or next")
 	ErrBidBuilderNotActive        = errors.New("builder is not active")
-	ErrBidExecutionPaymentNonZero = errors.New("execution payment is non-zero")
+	ErrBidSilaPaymentNonZero = errors.New("sila payment is non-zero")
 	ErrBidFeeRecipientMismatch    = errors.New("fee recipient does not match proposer preferences")
 	ErrBidGasLimitIncompatible    = errors.New("bid gas limit is incompatible with parent and target")
 	ErrBidParentBlockRootNotSeen  = errors.New("parent block root not seen")
@@ -82,18 +82,18 @@ func (v *BidVerifier) VerifyBuilderActive(st state.ReadOnlyBeaconState) (err err
 	return nil
 }
 
-// VerifyExecutionPaymentZero verifies the bid execution payment is zero.
-// Bids with non-zero execution_payment indicate trusted EL payments and
+// VerifySilaPaymentZero verifies the bid sila payment is zero.
+// Bids with non-zero sila_payment indicate trusted EL payments and
 // MUST NOT be broadcast on the gossip network.
-func (v *BidVerifier) VerifyExecutionPaymentZero() (err error) {
-	defer v.record(RequireBidExecutionPaymentZero, &err)
+func (v *BidVerifier) VerifySilaPaymentZero() (err error) {
+	defer v.record(RequireBidSilaPaymentZero, &err)
 
 	bid, err := v.b.Bid()
 	if err != nil {
 		return errors.Wrap(err, "failed to get bid")
 	}
-	if bid.ExecutionPayment() != 0 {
-		return fmt.Errorf("%w: builder=%d slot=%d payment=%d", ErrBidExecutionPaymentNonZero, bid.BuilderIndex(), bid.Slot(), bid.ExecutionPayment())
+	if bid.SilaPayment() != 0 {
+		return fmt.Errorf("%w: builder=%d slot=%d payment=%d", ErrBidSilaPaymentNonZero, bid.BuilderIndex(), bid.Slot(), bid.SilaPayment())
 	}
 	return nil
 }

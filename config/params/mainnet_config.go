@@ -140,7 +140,7 @@ var mainnetBeaconConfig = &BeaconChainConfig{
 
 	// Initial value constants.
 	BLSWithdrawalPrefixByte:         byte(0),
-	SilaExecutionAddressWithdrawalPrefixByte: byte(1),
+	SilaAddressWithdrawalPrefixByte: byte(1),
 	CompoundingWithdrawalPrefixByte: byte(2),
 	BuilderWithdrawalPrefixByte:     byte(3),
 	BuilderIndexSelfBuild:           primitives.BuilderIndex(math.MaxUint64),

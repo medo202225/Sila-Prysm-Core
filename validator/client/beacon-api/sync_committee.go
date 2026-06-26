@@ -43,7 +43,7 @@ func (c *beaconApiValidatorClient) syncMessageBlockRoot(ctx context.Context) (*s
 
 	// An optimistic validator MUST NOT participate in sync committees
 	// (i.e., sign across the DOMAIN_SYNC_COMMITTEE, DOMAIN_SYNC_COMMITTEE_SELECTION_PROOF or DOMAIN_CONTRIBUTION_AND_PROOF domains).
-	if resp.ExecutionOptimistic {
+	if resp.SilaOptimistic {
 		return nil, errors.New("the node is currently optimistic and cannot serve validators")
 	}
 

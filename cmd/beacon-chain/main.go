@@ -75,7 +75,7 @@ var appFlags = []cli.Flag{
 	flags.ChainID,
 	flags.NetworkID,
 	flags.WeakSubjectivityCheckpoint,
-	flags.SilaExecutionHeaderReqLimit,
+	flags.SilaHeaderReqLimit,
 	flags.MinPeersPerSubnet,
 	flags.MaxConcurrentDials,
 	flags.SuggestedFeeRecipient,

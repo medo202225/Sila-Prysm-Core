@@ -387,7 +387,7 @@ func TestGetBlockV2(t *testing.T) {
 			assert.Equal(t, true, att.Data.BlobDataAvailable)
 		}
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		b := util.NewBeaconBlockBellatrix()
 		sb, err := blocks.NewSignedBeaconBlock(b)
 		require.NoError(t, err)
@@ -413,7 +413,7 @@ func TestGetBlockV2(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetBlockV2Response{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		b := util.NewBeaconBlock()
@@ -843,7 +843,7 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetBlockAttestationsV2Response{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 		assert.Equal(t, "bellatrix", resp.Version)
 	})
 	t.Run("finalized", func(t *testing.T) {
@@ -887,7 +887,7 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 			require.Equal(t, http.StatusOK, writer.Code)
 			resp := &structs.GetBlockAttestationsV2Response{}
 			require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-			assert.Equal(t, false, resp.ExecutionOptimistic)
+			assert.Equal(t, false, resp.SilaOptimistic)
 			assert.Equal(t, "phase0", resp.Version)
 		})
 	})
@@ -1164,7 +1164,7 @@ func TestGetBlindedBlock(t *testing.T) {
 		require.NoError(t, err)
 		assert.DeepEqual(t, blk, b)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		b := util.NewBlindedBeaconBlockBellatrix()
 		sb, err := blocks.NewSignedBeaconBlock(b)
 		require.NoError(t, err)
@@ -1189,7 +1189,7 @@ func TestGetBlindedBlock(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetBlockV2Response{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		b := util.NewBeaconBlock()
@@ -2698,7 +2698,7 @@ func TestServer_GetBlockRoot(t *testing.T) {
 			})
 		}
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 
@@ -2735,7 +2735,7 @@ func TestServer_GetBlockRoot(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.BlockRootResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		require.DeepEqual(t, resp.ExecutionOptimistic, true)
+		require.DeepEqual(t, resp.SilaOptimistic, true)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
@@ -2831,7 +2831,7 @@ func TestGetStateFork(t *testing.T) {
 	assert.Equal(t, fmt.Sprint(expectedFork.Epoch), stateForkReponse.Data.Epoch)
 	assert.DeepEqual(t, hexutil.Encode(expectedFork.CurrentVersion), stateForkReponse.Data.CurrentVersion)
 	assert.DeepEqual(t, hexutil.Encode(expectedFork.PreviousVersion), stateForkReponse.Data.PreviousVersion)
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		request = httptest.NewRequest(http.MethodGet, "http://foo.example/sila/v1/beacon/states/{state_id}/fork", nil)
 		request.SetPathValue("state_id", "head")
 		request.Header.Set("Accept", "application/octet-stream")
@@ -2859,7 +2859,7 @@ func TestGetStateFork(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		err = json.Unmarshal(writer.Body.Bytes(), &stateForkReponse)
 		require.NoError(t, err)
-		assert.DeepEqual(t, true, stateForkReponse.ExecutionOptimistic)
+		assert.DeepEqual(t, true, stateForkReponse.SilaOptimistic)
 	})
 
 	t.Run("finalized", func(t *testing.T) {
@@ -3063,7 +3063,7 @@ func TestGetCommittees(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetCommitteesResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("Finalized", func(t *testing.T) {
 		parentRoot := [32]byte{'a'}
@@ -3261,7 +3261,7 @@ func TestGetBlockHeaders(t *testing.T) {
 		}
 	})
 
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 		mockChainFetcher := &chainMock.ChainService{
@@ -3292,7 +3292,7 @@ func TestGetBlockHeaders(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetBlockHeadersResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized", func(t *testing.T) {
@@ -3435,7 +3435,7 @@ func TestServer_GetBlockHeader(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, e.Code)
 		assert.StringContains(t, "block_id is required in URL params", e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		r, err := sb.Block().HashTreeRoot()
 		require.NoError(t, err)
 		mockChainService := &chainMock.ChainService{
@@ -3458,7 +3458,7 @@ func TestServer_GetBlockHeader(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetBlockHeaderResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		r, err := sb.Block().HashTreeRoot()
@@ -3587,7 +3587,7 @@ func TestGetFinalityCheckpoints(t *testing.T) {
 		assert.Equal(t, http.StatusNotFound, e.Code)
 		assert.StringContains(t, "State not found", e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		chainService := &chainMock.ChainService{Optimistic: true}
 		s := &Server{
 			Stater: &testutil.MockStater{
@@ -3607,7 +3607,7 @@ func TestGetFinalityCheckpoints(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetFinalityCheckpointsResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		headerRoot, err := fakeState.LatestBlockHeader().HashTreeRoot()
@@ -4049,7 +4049,7 @@ func TestGetPendingConsolidations(t *testing.T) {
 		expectedVersion := version.String(st.Version())
 		require.Equal(t, expectedVersion, resp.Version)
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 
 		expectedConsolidations := structs.PendingConsolidationsFromConsensus(cs)
@@ -4163,7 +4163,7 @@ func TestGetPendingConsolidations(t *testing.T) {
 
 		var resp structs.GetPendingConsolidationsResponse
 		require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &resp))
-		require.Equal(t, true, resp.ExecutionOptimistic)
+		require.Equal(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized node", func(t *testing.T) {
@@ -4242,7 +4242,7 @@ func TestGetPendingDeposits(t *testing.T) {
 		expectedVersion := version.String(st.Version())
 		require.Equal(t, expectedVersion, resp.Version)
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 
 		expectedDeposits := structs.PendingDepositsFromConsensus(deps)
@@ -4356,7 +4356,7 @@ func TestGetPendingDeposits(t *testing.T) {
 
 		var resp structs.GetPendingDepositsResponse
 		require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &resp))
-		require.Equal(t, true, resp.ExecutionOptimistic)
+		require.Equal(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized node", func(t *testing.T) {
@@ -4429,7 +4429,7 @@ func TestGetPendingPartialWithdrawals(t *testing.T) {
 		expectedVersion := version.String(st.Version())
 		require.Equal(t, expectedVersion, resp.Version)
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 
 		expectedWithdrawals := structs.PendingPartialWithdrawalsFromConsensus(withdrawals)
@@ -4546,7 +4546,7 @@ func TestGetPendingPartialWithdrawals(t *testing.T) {
 
 		var resp structs.GetPendingPartialWithdrawalsResponse
 		require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &resp))
-		require.Equal(t, true, resp.ExecutionOptimistic)
+		require.Equal(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized node", func(t *testing.T) {
@@ -4616,7 +4616,7 @@ func TestGetProposerLookahead(t *testing.T) {
 
 		expectedVersion := version.String(st.Version())
 		require.Equal(t, expectedVersion, resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 
 		// Verify the data
@@ -4733,7 +4733,7 @@ func TestGetProposerLookahead(t *testing.T) {
 
 		var resp structs.GetProposerLookaheadResponse
 		require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &resp))
-		require.Equal(t, true, resp.ExecutionOptimistic)
+		require.Equal(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized node", func(t *testing.T) {

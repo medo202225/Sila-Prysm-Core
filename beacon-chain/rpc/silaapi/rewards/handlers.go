@@ -61,7 +61,7 @@ func (s *Server) BlockRewards(w http.ResponseWriter, r *http.Request) {
 	}
 	response := &structs.BlockRewardsResponse{
 		Data:                blockRewards,
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
 	}
 	httputil.WriteJson(w, response)
@@ -103,7 +103,7 @@ func (s *Server) AttestationRewards(w http.ResponseWriter, r *http.Request) {
 			IdealRewards: idealRewards,
 			TotalRewards: totalRewards,
 		},
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(r.Context(), blkRoot),
 	}
 	httputil.WriteJson(w, resp)
@@ -189,7 +189,7 @@ func (s *Server) SyncCommitteeRewards(w http.ResponseWriter, r *http.Request) {
 	}
 	response := &structs.SyncCommitteeRewardsResponse{
 		Data:                scRewards,
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(r.Context(), blkRoot),
 	}
 	httputil.WriteJson(w, response)

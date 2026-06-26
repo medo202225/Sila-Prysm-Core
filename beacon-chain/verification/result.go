@@ -73,8 +73,8 @@ func (r Requirement) String() string {
 		return "RequireBidCurrentOrNextSlot"
 	case RequireBidBuilderActive:
 		return "RequireBidBuilderActive"
-	case RequireBidExecutionPaymentZero:
-		return "RequireBidExecutionPaymentZero"
+	case RequireBidSilaPaymentZero:
+		return "RequireBidSilaPaymentZero"
 	case RequireBidFeeRecipientMatches:
 		return "RequireBidFeeRecipientMatches"
 	case RequireBidGasLimitCompatible:

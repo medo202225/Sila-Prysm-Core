@@ -3,7 +3,7 @@ package structs
 type SidecarsResponse struct {
 	Version             string     `json:"version"`
 	Data                []*Sidecar `json:"data"`
-	ExecutionOptimistic bool       `json:"execution_optimistic"`
+	SilaOptimistic bool       `json:"sila_optimistic"`
 	Finalized           bool       `json:"finalized"`
 }
 

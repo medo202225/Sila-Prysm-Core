@@ -303,7 +303,7 @@ var testExampleHeaderResponseDenebTooManyBlobs = `{
   }
 }`
 
-func TestExecutionHeaderResponseUnmarshal(t *testing.T) {
+func TestSilaHeaderResponseUnmarshal(t *testing.T) {
 	hr := &ExecHeaderResponse{}
 	require.NoError(t, json.Unmarshal([]byte(testExampleHeaderResponse), hr))
 	cases := []struct {
@@ -402,7 +402,7 @@ func TestExecutionHeaderResponseUnmarshal(t *testing.T) {
 	}
 }
 
-func TestExecutionHeaderResponseCapellaUnmarshal(t *testing.T) {
+func TestSilaHeaderResponseCapellaUnmarshal(t *testing.T) {
 	hr := &ExecHeaderResponseCapella{}
 	require.NoError(t, json.Unmarshal([]byte(testExampleHeaderResponseCapella), hr))
 	cases := []struct {
@@ -506,7 +506,7 @@ func TestExecutionHeaderResponseCapellaUnmarshal(t *testing.T) {
 	}
 }
 
-func TestExecutionHeaderResponseToProto(t *testing.T) {
+func TestSilaHeaderResponseToProto(t *testing.T) {
 	bfpg, err := stringToUint256("452312848583266388373324160190187140051835877600158453279131187530910662656")
 	require.NoError(t, err)
 	v, err := stringToUint256("652312848583266388373324160190187140051835877600158453279131187530910662656")
@@ -564,7 +564,7 @@ func TestExecutionHeaderResponseToProto(t *testing.T) {
 	require.DeepEqual(t, expected, p)
 }
 
-func TestExecutionHeaderResponseCapellaToProto(t *testing.T) {
+func TestSilaHeaderResponseCapellaToProto(t *testing.T) {
 	bfpg, err := stringToUint256("452312848583266388373324160190187140051835877600158453279131187530910662656")
 	require.NoError(t, err)
 	v, err := stringToUint256("652312848583266388373324160190187140051835877600158453279131187530910662656")
@@ -952,7 +952,7 @@ func TestSilaPayloadResponseCapellaUnmarshal(t *testing.T) {
 	w := epr.Data.Withdrawals[0]
 	assert.Equal(t, "1", w.WithdrawalIndex)
 	assert.Equal(t, "1", w.ValidatorIndex)
-	assert.DeepEqual(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943", w.ExecutionAddress)
+	assert.DeepEqual(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943", w.SilaAddress)
 	assert.Equal(t, "1", w.Amount)
 }
 
@@ -1051,7 +1051,7 @@ func TestSilaPayloadResponseDenebUnmarshal(t *testing.T) {
 	w := epr.Data.SilaPayload.Withdrawals[0]
 	assert.Equal(t, "1", w.WithdrawalIndex)
 	assert.Equal(t, "1", w.ValidatorIndex)
-	assert.DeepEqual(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943", w.ExecutionAddress)
+	assert.DeepEqual(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943", w.SilaAddress)
 	assert.Equal(t, "1", w.Amount)
 	assert.Equal(t, "2", epr.Data.SilaPayload.BlobGasUsed)
 	assert.Equal(t, "3", epr.Data.SilaPayload.ExcessBlobGas)

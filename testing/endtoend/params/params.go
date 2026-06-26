@@ -123,7 +123,7 @@ var DepositCount = uint64(64)
 // PostElectraDepositCount is the number of deposits the E2E runner should make to evaluate post-electra deposit processing.
 var PostElectraDepositCount = uint64(32)
 
-// PregenesisExecCreds is the number of withdrawal credentials of genesis validators which use an execution address.
+// PregenesisExecCreds is the number of withdrawal credentials of genesis validators which use a Sila address.
 var PregenesisExecCreds = uint64(8)
 
 // Base port values.

@@ -248,7 +248,7 @@ func TestProcessBLSToSilaChange(t *testing.T) {
 				WithdrawalCredentials: digest[:],
 			},
 		}
-		registry[0].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+		registry[0].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 
 		st, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
 			Validators: registry,
@@ -303,7 +303,7 @@ func TestProcessBlindWithdrawals(t *testing.T) {
 		Args    args
 		Control control
 	}
-	executionAddress := func(i primitives.ValidatorIndex) []byte {
+	silaAddress := func(i primitives.ValidatorIndex) []byte {
 		wc := make([]byte, 20)
 		wc[19] = byte(i)
 		return wc
@@ -315,7 +315,7 @@ func TestProcessBlindWithdrawals(t *testing.T) {
 		return &silaenginev1.Withdrawal{
 			Index:          idx,
 			ValidatorIndex: i,
-			Address:        executionAddress(i),
+			Address:        silaAddress(i),
 			Amount:         withdrawalAmount(i),
 		}
 	}
@@ -323,7 +323,7 @@ func TestProcessBlindWithdrawals(t *testing.T) {
 		return &silaenginev1.Withdrawal{
 			Index:          idx,
 			ValidatorIndex: i,
-			Address:        executionAddress(i),
+			Address:        silaAddress(i),
 			Amount:         withdrawalAmount(i) - maxEffectiveBalance,
 		}
 	}
@@ -645,10 +645,10 @@ func TestProcessBlindWithdrawals(t *testing.T) {
 				validators[idx].WithdrawableEpoch = epochInPast
 			}
 			st.Balances[idx] = withdrawalAmount(idx)
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		}
 		for _, idx := range arguments.PendingPartialWithdrawalIndices {
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 			st.Balances[idx] = withdrawalAmount(idx)
 		}
 		st.Validators = validators
@@ -724,7 +724,7 @@ func TestProcessWithdrawals(t *testing.T) {
 		Args    args
 		Control control
 	}
-	executionAddress := func(i primitives.ValidatorIndex) []byte {
+	silaAddress := func(i primitives.ValidatorIndex) []byte {
 		wc := make([]byte, 20)
 		wc[19] = byte(i)
 		return wc
@@ -736,7 +736,7 @@ func TestProcessWithdrawals(t *testing.T) {
 		return &silaenginev1.Withdrawal{
 			Index:          idx,
 			ValidatorIndex: i,
-			Address:        executionAddress(i),
+			Address:        silaAddress(i),
 			Amount:         withdrawalAmount(i),
 		}
 	}
@@ -744,7 +744,7 @@ func TestProcessWithdrawals(t *testing.T) {
 		return &silaenginev1.Withdrawal{
 			Index:          idx,
 			ValidatorIndex: i,
-			Address:        executionAddress(i),
+			Address:        silaAddress(i),
 			Amount:         withdrawalAmount(i) - maxEffectiveBalance,
 		}
 	}
@@ -1102,10 +1102,10 @@ func TestProcessWithdrawals(t *testing.T) {
 			if err := st.UpdateBalancesAtIndex(idx, withdrawalAmount(idx)); err != nil {
 				return err
 			}
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		}
 		for _, idx := range arguments.PendingPartialWithdrawalIndices {
-			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+			validators[idx].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 			if err := st.UpdateBalancesAtIndex(idx, withdrawalAmount(idx)); err != nil {
 				return err
 			}
@@ -1187,7 +1187,7 @@ func TestProcessBLSToSilaChanges(t *testing.T) {
 	spb.Balances = make([]uint64, numValidators)
 	privKeys := make([]common.SecretKey, numValidators)
 	maxEffectiveBalance := params.BeaconConfig().MaxEffectiveBalance
-	executionAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
+	silaAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
 
 	for i := range validators {
 		v := &silapb.Validator{}
@@ -1200,7 +1200,7 @@ func TestProcessBLSToSilaChanges(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapb.BLSToSilaChange{
-			ToSilaAddress: executionAddress,
+			ToSilaAddress: silaAddress,
 			ValidatorIndex:     primitives.ValidatorIndex(i),
 			FromBlsPubkey:      pubkey,
 		}
@@ -1240,8 +1240,8 @@ func TestProcessBLSToSilaChanges(t *testing.T) {
 	require.NoError(t, err)
 	vals := st.Validators()
 	for _, val := range vals {
-		require.DeepEqual(t, executionAddress, val.WithdrawalCredentials[12:])
-		require.Equal(t, params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, val.WithdrawalCredentials[0])
+		require.DeepEqual(t, silaAddress, val.WithdrawalCredentials[12:])
+		require.Equal(t, params.BeaconConfig().SilaAddressWithdrawalPrefixByte, val.WithdrawalCredentials[0])
 	}
 }
 
@@ -1258,7 +1258,7 @@ func TestBLSChangesSignatureBatch(t *testing.T) {
 	spb.Balances = make([]uint64, numValidators)
 	privKeys := make([]common.SecretKey, numValidators)
 	maxEffectiveBalance := params.BeaconConfig().MaxEffectiveBalance
-	executionAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
+	silaAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
 
 	for i := range validators {
 		v := &silapb.Validator{}
@@ -1271,7 +1271,7 @@ func TestBLSChangesSignatureBatch(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapb.BLSToSilaChange{
-			ToSilaAddress: executionAddress,
+			ToSilaAddress: silaAddress,
 			ValidatorIndex:     primitives.ValidatorIndex(i),
 			FromBlsPubkey:      pubkey,
 		}
@@ -1322,7 +1322,7 @@ func TestBLSChangesSignatureBatchWrongFork(t *testing.T) {
 	spb.Balances = make([]uint64, numValidators)
 	privKeys := make([]common.SecretKey, numValidators)
 	maxEffectiveBalance := params.BeaconConfig().MaxEffectiveBalance
-	executionAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
+	silaAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
 
 	for i := range validators {
 		v := &silapb.Validator{}
@@ -1335,7 +1335,7 @@ func TestBLSChangesSignatureBatchWrongFork(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapb.BLSToSilaChange{
-			ToSilaAddress: executionAddress,
+			ToSilaAddress: silaAddress,
 			ValidatorIndex:     primitives.ValidatorIndex(i),
 			FromBlsPubkey:      pubkey,
 		}
@@ -1395,7 +1395,7 @@ func TestBLSChangesSignatureBatchFromBellatrix(t *testing.T) {
 
 	privKeys := make([]common.SecretKey, numValidators)
 	maxEffectiveBalance := params.BeaconConfig().MaxEffectiveBalance
-	executionAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
+	silaAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
 
 	for i := range validators {
 		v := &silapb.Validator{}
@@ -1408,7 +1408,7 @@ func TestBLSChangesSignatureBatchFromBellatrix(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapb.BLSToSilaChange{
-			ToSilaAddress: executionAddress,
+			ToSilaAddress: silaAddress,
 			ValidatorIndex:     primitives.ValidatorIndex(i),
 			FromBlsPubkey:      pubkey,
 		}

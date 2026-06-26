@@ -126,7 +126,7 @@ func TestSubmitSignedProposerPreferences_DuplicateSlot(t *testing.T) {
 	c.Add(cache.ProposerPreference{
 		DependentRoot:  [32]byte{0xcc},
 		ValidatorIndex: 2,
-		FeeRecipient:   primitives.ExecutionAddress{},
+		FeeRecipient:   primitives.SilaAddress{},
 		TargetGasLimit: 30_000_000,
 	}, proposalSlot)
 	vs := &Server{

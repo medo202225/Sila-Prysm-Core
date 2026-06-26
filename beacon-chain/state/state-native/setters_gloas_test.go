@@ -29,7 +29,7 @@ type testSilaPayloadBid struct {
 	builderIndex       primitives.BuilderIndex
 	slot               primitives.Slot
 	value              primitives.Gwei
-	executionPayment   primitives.Gwei
+	silaPayment   primitives.Gwei
 }
 
 func (t testSilaPayloadBid) ParentBlockHash() [32]byte { return t.parentBlockHash }
@@ -42,8 +42,8 @@ func (t testSilaPayloadBid) BuilderIndex() primitives.BuilderIndex {
 }
 func (t testSilaPayloadBid) Slot() primitives.Slot  { return t.slot }
 func (t testSilaPayloadBid) Value() primitives.Gwei { return t.value }
-func (t testSilaPayloadBid) ExecutionPayment() primitives.Gwei {
-	return t.executionPayment
+func (t testSilaPayloadBid) SilaPayment() primitives.Gwei {
+	return t.silaPayment
 }
 func (t testSilaPayloadBid) BlobKzgCommitments() [][]byte { return t.blobKzgCommitments }
 func (t testSilaPayloadBid) BlobKzgCommitmentCount() uint64 {
@@ -85,7 +85,7 @@ func TestSetSilaPayloadBid(t *testing.T) {
 			builderIndex:       7,
 			slot:               9,
 			value:              11,
-			executionPayment:   22,
+			silaPayment:   22,
 		}
 
 		require.NoError(t, st.SetSilaPayloadBid(bid))
@@ -101,7 +101,7 @@ func TestSetSilaPayloadBid(t *testing.T) {
 		require.Equal(t, primitives.BuilderIndex(7), st.latestSilaPayloadBid.BuilderIndex)
 		require.Equal(t, primitives.Slot(9), st.latestSilaPayloadBid.Slot)
 		require.Equal(t, primitives.Gwei(11), st.latestSilaPayloadBid.Value)
-		require.Equal(t, primitives.Gwei(22), st.latestSilaPayloadBid.ExecutionPayment)
+		require.Equal(t, primitives.Gwei(22), st.latestSilaPayloadBid.SilaPayment)
 		require.Equal(t, true, st.dirtyFields[types.LatestSilaPayloadBid])
 	})
 }
@@ -676,7 +676,7 @@ func buildGloasStateForPaymentWeightTest(
 
 	validator := &silapb.Validator{
 		PublicKey:             bytes.Repeat([]byte{0x01}, 48),
-		WithdrawalCredentials: append([]byte{cfg.SilaExecutionAddressWithdrawalPrefixByte}, bytes.Repeat([]byte{0x02}, 31)...),
+		WithdrawalCredentials: append([]byte{cfg.SilaAddressWithdrawalPrefixByte}, bytes.Repeat([]byte{0x02}, 31)...),
 		EffectiveBalance:      cfg.MinActivationBalance,
 	}
 
@@ -906,7 +906,7 @@ func TestAddBuilderFromDeposit(t *testing.T) {
 		require.NotNil(t, got)
 		require.DeepEqual(t, pubkey[:], got.Pubkey)
 		require.DeepEqual(t, []byte{0x42}, got.Version)
-		require.DeepEqual(t, wc[12:], got.ExecutionAddress)
+		require.DeepEqual(t, wc[12:], got.SilaAddress)
 		require.Equal(t, primitives.Gwei(123), got.Balance)
 		require.Equal(t, primitives.Epoch(0), got.DepositEpoch)
 		require.Equal(t, params.BeaconConfig().FarFutureEpoch, got.WithdrawableEpoch)
@@ -1015,7 +1015,7 @@ func TestOnboardBuildersFromPendingDeposits(t *testing.T) {
 
 		builder := st.builders[0]
 		require.DeepEqual(t, sk.PublicKey().Marshal(), builder.Pubkey)
-		require.DeepEqual(t, builderCreds[12:], builder.ExecutionAddress)
+		require.DeepEqual(t, builderCreds[12:], builder.SilaAddress)
 		require.Equal(t, primitives.Gwei(amount), builder.Balance)
 		require.Equal(t, slots.ToEpoch(depSlot), builder.DepositEpoch)
 	})

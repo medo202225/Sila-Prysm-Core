@@ -112,7 +112,7 @@ func (b *BeaconState) SetSilaPayloadBid(h interfaces.ROSilaPayloadBid) error {
 		BuilderIndex:          h.BuilderIndex(),
 		Slot:                  h.Slot(),
 		Value:                 h.Value(),
-		ExecutionPayment:      h.ExecutionPayment(),
+		SilaPayment:      h.SilaPayment(),
 		BlobKzgCommitments:    blobKzgCommitments,
 		FeeRecipient:          feeRecipient[:],
 		SilaRequestsRoot: silaRequestsRoot[:],
@@ -376,7 +376,7 @@ func (b *BeaconState) addBuilderFromDepositAtEpoch(pubkey [fieldparams.BLSPubkey
 	builder := &silapb.Builder{
 		Pubkey:            bytesutil.SafeCopyBytes(pubkey[:]),
 		Version:           []byte{withdrawalCredentials[0]},
-		ExecutionAddress:  bytesutil.SafeCopyBytes(withdrawalCredentials[12:]),
+		SilaAddress:  bytesutil.SafeCopyBytes(withdrawalCredentials[12:]),
 		Balance:           primitives.Gwei(amount),
 		DepositEpoch:      depositEpoch,
 		WithdrawableEpoch: params.BeaconConfig().FarFutureEpoch,

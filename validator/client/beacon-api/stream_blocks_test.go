@@ -222,7 +222,7 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "phase0",
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Data:                marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
@@ -259,7 +259,7 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "phase0",
-					ExecutionOptimistic: true,
+					SilaOptimistic: true,
 					Data:                marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
@@ -286,7 +286,7 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 					2,
 					abstractSignedBlockResponseJson{
 						Version:             "phase0",
-						ExecutionOptimistic: false,
+						SilaOptimistic: false,
 						Data:                marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
@@ -383,7 +383,7 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "altair",
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Data:                marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
@@ -420,7 +420,7 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "altair",
-					ExecutionOptimistic: true,
+					SilaOptimistic: true,
 					Data:                marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
@@ -447,7 +447,7 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 					2,
 					abstractSignedBlockResponseJson{
 						Version:             "altair",
-						ExecutionOptimistic: false,
+						SilaOptimistic: false,
 						Data:                marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
@@ -544,7 +544,7 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "bellatrix",
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Data:                marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
@@ -581,7 +581,7 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "bellatrix",
-					ExecutionOptimistic: true,
+					SilaOptimistic: true,
 					Data:                marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
@@ -608,7 +608,7 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 					2,
 					abstractSignedBlockResponseJson{
 						Version:             "bellatrix",
-						ExecutionOptimistic: false,
+						SilaOptimistic: false,
 						Data:                marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
@@ -705,7 +705,7 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "capella",
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Data:                marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
@@ -742,7 +742,7 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "capella",
-					ExecutionOptimistic: true,
+					SilaOptimistic: true,
 					Data:                marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
@@ -769,7 +769,7 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 					2,
 					abstractSignedBlockResponseJson{
 						Version:             "capella",
-						ExecutionOptimistic: false,
+						SilaOptimistic: false,
 						Data:                marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
@@ -866,7 +866,7 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "deneb",
-					ExecutionOptimistic: false,
+					SilaOptimistic: false,
 					Data:                marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
@@ -895,7 +895,7 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 				2,
 				abstractSignedBlockResponseJson{
 					Version:             "deneb",
-					ExecutionOptimistic: true,
+					SilaOptimistic: true,
 					Data:                marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
@@ -912,7 +912,7 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 					2,
 					abstractSignedBlockResponseJson{
 						Version:             "deneb",
-						ExecutionOptimistic: false,
+						SilaOptimistic: false,
 						Data:                marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)

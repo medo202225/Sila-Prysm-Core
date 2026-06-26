@@ -6,7 +6,7 @@ import (
 
 type GetBeaconStateV2Response struct {
 	Version             string          `json:"version"`
-	ExecutionOptimistic bool            `json:"execution_optimistic"`
+	SilaOptimistic bool            `json:"sila_optimistic"`
 	Finalized           bool            `json:"finalized"`
 	Data                json.RawMessage `json:"data"` // represents the state values based on the version
 }
@@ -18,7 +18,7 @@ type GetForkChoiceHeadsV2Response struct {
 type ForkChoiceHead struct {
 	Root                string `json:"root"`
 	Slot                string `json:"slot"`
-	ExecutionOptimistic bool   `json:"execution_optimistic"`
+	SilaOptimistic bool   `json:"sila_optimistic"`
 }
 
 type GetForkChoiceDumpResponse struct {
@@ -52,7 +52,7 @@ type ForkChoiceNodeExtraData struct {
 	UnrealizedJustifiedEpoch string `json:"unrealized_justified_epoch"`
 	UnrealizedFinalizedEpoch string `json:"unrealized_finalized_epoch"`
 	Balance                  string `json:"balance"`
-	ExecutionOptimistic      bool   `json:"execution_optimistic"`
+	SilaOptimistic      bool   `json:"sila_optimistic"`
 	TimeStamp                string `json:"timestamp"`
 	Target                   string `json:"target"`
 }
@@ -77,7 +77,7 @@ type ForkChoiceNodeV2 struct {
 
 type ForkChoiceNodeV2ExtraData struct {
 	Balance             string `json:"balance"`
-	ExecutionOptimistic bool   `json:"execution_optimistic"`
+	SilaOptimistic bool   `json:"sila_optimistic"`
 	TimeStamp           string `json:"timestamp"`
 
 	Target                          string `json:"target,omitempty"`
@@ -94,7 +94,7 @@ type ForkChoiceNodeV2ExtraData struct {
 
 type GetDebugDataColumnSidecarsResponse struct {
 	Version             string          `json:"version"`
-	ExecutionOptimistic bool            `json:"execution_optimistic"`
+	SilaOptimistic bool            `json:"sila_optimistic"`
 	Finalized           bool            `json:"finalized"`
 	Data                json.RawMessage `json:"data"` // []*DataColumnSidecar pre-Gloas, []*DataColumnSidecarGloas post-Gloas
 }

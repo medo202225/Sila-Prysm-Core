@@ -122,7 +122,7 @@ func TestBlobs(t *testing.T) {
 		assert.Equal(t, hexutil.Encode(blobs[3].KzgProof), sidecar.KzgProof)
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("finalized", func(t *testing.T) {
@@ -147,7 +147,7 @@ func TestBlobs(t *testing.T) {
 		require.Equal(t, 4, len(resp.Data))
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("root", func(t *testing.T) {
@@ -172,7 +172,7 @@ func TestBlobs(t *testing.T) {
 		require.Equal(t, 4, len(resp.Data))
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("slot", func(t *testing.T) {
@@ -197,7 +197,7 @@ func TestBlobs(t *testing.T) {
 		require.Equal(t, 4, len(resp.Data))
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("slot not found", func(t *testing.T) {
@@ -247,7 +247,7 @@ func TestBlobs(t *testing.T) {
 		assert.Equal(t, hexutil.Encode(blobs[2].KzgProof), sidecar.KzgProof)
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("no blobs returns an empty array", func(t *testing.T) {
@@ -272,7 +272,7 @@ func TestBlobs(t *testing.T) {
 		require.Equal(t, len(resp.Data), 0)
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("blob index over max", func(t *testing.T) {
@@ -313,7 +313,7 @@ func TestBlobs(t *testing.T) {
 		require.Equal(t, 4, len(resp.Data))
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("block without commitments returns 200 w/empty list ", func(t *testing.T) {
@@ -345,7 +345,7 @@ func TestBlobs(t *testing.T) {
 		require.Equal(t, 0, len(resp.Data))
 
 		require.Equal(t, "deneb", resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("slot before Deneb fork", func(t *testing.T) {
@@ -496,7 +496,7 @@ func TestBlobs_Electra(t *testing.T) {
 		assert.Equal(t, hexutil.Encode(blobs[0].KzgProof), sidecar.KzgProof)
 
 		require.Equal(t, version.String(version.Electra), resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("requested blob index at max", func(t *testing.T) {
@@ -529,7 +529,7 @@ func TestBlobs_Electra(t *testing.T) {
 		assert.Equal(t, hexutil.Encode(blobs[limit].KzgProof), sidecar.KzgProof)
 
 		require.Equal(t, version.String(version.Electra), resp.Version)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("blob index over max", func(t *testing.T) {
@@ -679,7 +679,7 @@ func TestGetBlobs(t *testing.T) {
 		blob = resp.Data[3]
 		require.NotNil(t, blob)
 		assert.Equal(t, hexutil.Encode(blobs[3].Blob), blob)
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("finalized", func(t *testing.T) {
@@ -703,7 +703,7 @@ func TestGetBlobs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, 4, len(resp.Data))
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("root", func(t *testing.T) {
@@ -727,7 +727,7 @@ func TestGetBlobs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, 4, len(resp.Data))
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("slot", func(t *testing.T) {
@@ -751,7 +751,7 @@ func TestGetBlobs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, 4, len(resp.Data))
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("slot not found", func(t *testing.T) {
@@ -793,7 +793,7 @@ func TestGetBlobs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, len(resp.Data), 0)
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("outside retention period still returns 200 what we have in db ", func(t *testing.T) {
@@ -817,7 +817,7 @@ func TestGetBlobs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, 4, len(resp.Data))
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("block without commitments returns 200 w/empty list ", func(t *testing.T) {
@@ -848,7 +848,7 @@ func TestGetBlobs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, 0, len(resp.Data))
 
-		require.Equal(t, false, resp.ExecutionOptimistic)
+		require.Equal(t, false, resp.SilaOptimistic)
 		require.Equal(t, false, resp.Finalized)
 	})
 	t.Run("slot before Deneb fork", func(t *testing.T) {

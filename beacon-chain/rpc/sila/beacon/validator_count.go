@@ -35,7 +35,7 @@ import (
 // The above request will return a JSON response like:
 //
 //	{
-//		"execution_optimistic": "false",
+//		"sila_optimistic": "false",
 //		"finalized": "true",
 //		"data": [
 //			{
@@ -112,7 +112,7 @@ func (s *Server) GetValidatorCount(w http.ResponseWriter, r *http.Request) {
 	}
 
 	valCountResponse := &structs.GetValidatorCountResponse{
-		ExecutionOptimistic: strconv.FormatBool(isOptimistic),
+		SilaOptimistic: strconv.FormatBool(isOptimistic),
 		Finalized:           strconv.FormatBool(isFinalized),
 		Data:                valCount,
 	}

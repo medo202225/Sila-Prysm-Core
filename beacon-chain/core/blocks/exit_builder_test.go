@@ -43,7 +43,7 @@ func newGloasStateWithBuilder(t *testing.T, builderIndex primitives.BuilderIndex
 		WithdrawableEpoch: cfg.FarFutureEpoch,
 		DepositEpoch:      0,
 		Balance:           32_000_000_000,
-		ExecutionAddress:  make([]byte, 20),
+		SilaAddress:  make([]byte, 20),
 	}
 
 	builders := make([]*silapb.Builder, int(builderIndex)+1)
@@ -55,7 +55,7 @@ func newGloasStateWithBuilder(t *testing.T, builderIndex primitives.BuilderIndex
 				Pubkey:            make([]byte, 48),
 				WithdrawableEpoch: cfg.FarFutureEpoch,
 				DepositEpoch:      0,
-				ExecutionAddress:  make([]byte, 20),
+				SilaAddress:  make([]byte, 20),
 			}
 		}
 	}

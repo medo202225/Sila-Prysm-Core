@@ -74,7 +74,7 @@ func TestSetSelfBuildSilaPayloadBid(t *testing.T) {
 	require.Equal(t, params.BeaconConfig().BuilderIndexSelfBuild, bid.BuilderIndex)
 	require.DeepEqual(t, parentRoot[:], bid.ParentBlockRoot)
 	require.Equal(t, primitives.Gwei(0), bid.Value)
-	require.Equal(t, primitives.Gwei(0), bid.ExecutionPayment)
+	require.Equal(t, primitives.Gwei(0), bid.SilaPayment)
 }
 
 func TestSetSelfBuildSilaPayloadBid_BlobCommitments(t *testing.T) {
@@ -198,7 +198,7 @@ func TestSetSilaPayloadBid_PrefersP2PBid(t *testing.T) {
 			BlockHash:             make([]byte, 32),
 			BuilderIndex:          5,
 			Value:                 1000,
-			ExecutionPayment:      500,
+			SilaPayment:      500,
 			FeeRecipient:          make([]byte, 20),
 			GasLimit:              30_000_000,
 			PrevRandao:            make([]byte, 32),
@@ -224,7 +224,7 @@ func TestSetSilaPayloadBid_PrefersP2PBid(t *testing.T) {
 	// Should use the P2P bid, not the self-build bid.
 	require.Equal(t, primitives.BuilderIndex(5), signedBid.Message.BuilderIndex)
 	require.Equal(t, primitives.Gwei(1000), signedBid.Message.Value)
-	require.Equal(t, primitives.Gwei(500), signedBid.Message.ExecutionPayment)
+	require.Equal(t, primitives.Gwei(500), signedBid.Message.SilaPayment)
 }
 
 func TestSetSilaPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
@@ -272,7 +272,7 @@ func TestSetSilaPayloadBid_PrefersLocalWhenHigherValue(t *testing.T) {
 			BlockHash:             make([]byte, 32),
 			BuilderIndex:          5,
 			Value:                 1000,
-			ExecutionPayment:      500,
+			SilaPayment:      500,
 			FeeRecipient:          make([]byte, 20),
 			GasLimit:              30_000_000,
 			PrevRandao:            make([]byte, 32),
@@ -345,7 +345,7 @@ func TestSetSilaPayloadBid_SelfBuildOnlyIgnoresCache(t *testing.T) {
 			BlockHash:             make([]byte, 32),
 			BuilderIndex:          5,
 			Value:                 1000,
-			ExecutionPayment:      500,
+			SilaPayment:      500,
 			FeeRecipient:          make([]byte, 20),
 			GasLimit:              30_000_000,
 			PrevRandao:            make([]byte, 32),

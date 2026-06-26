@@ -310,7 +310,7 @@
 - name: SilaExecution_ADDRESS_WITHDRAWAL_PREFIX#phase0
   sources:
     - file: config/params/config.go
-      search: SilaExecutionAddressWithdrawalPrefixByte\s+.*yaml:"SilaExecution_ADDRESS_WITHDRAWAL_PREFIX"
+      search: SilaAddressWithdrawalPrefixByte\s+.*yaml:"SilaExecution_ADDRESS_WITHDRAWAL_PREFIX"
       regex: true
   spec: |
     <spec constant_var="SilaExecution_ADDRESS_WITHDRAWAL_PREFIX" fork="phase0" hash="faffaf83">

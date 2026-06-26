@@ -570,10 +570,10 @@ func (vs *Server) PrepareBeaconProposer(
 			return nil, status.Errorf(codes.InvalidArgument, "Invalid fee recipient address: %v", recipient)
 		}
 		// Use default address if the burn address is return
-		feeRecipient := primitives.ExecutionAddress(r.FeeRecipient)
-		if feeRecipient == primitives.ExecutionAddress([20]byte{}) {
-			feeRecipient = primitives.ExecutionAddress(params.BeaconConfig().DefaultFeeRecipient)
-			if feeRecipient == primitives.ExecutionAddress([20]byte{}) {
+		feeRecipient := primitives.SilaAddress(r.FeeRecipient)
+		if feeRecipient == primitives.SilaAddress([20]byte{}) {
+			feeRecipient = primitives.SilaAddress(params.BeaconConfig().DefaultFeeRecipient)
+			if feeRecipient == primitives.SilaAddress([20]byte{}) {
 				log.WithField("validatorIndex", r.ValidatorIndex).Warn("Fee recipient is the burn address")
 			}
 		}

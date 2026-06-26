@@ -32,7 +32,7 @@ func TestSilaPayloadBid_Copy(t *testing.T) {
 				BuilderIndex:       primitives.BuilderIndex(42),
 				Slot:               primitives.Slot(12345),
 				Value:              1000000000000000000,
-				ExecutionPayment:   5645654,
+				SilaPayment:   5645654,
 				BlobKzgCommitments: [][]byte{[]byte("blob_kzg_commitments_48_bytes_longer_than_needed")},
 			},
 		},
@@ -185,7 +185,7 @@ func TestCopyBuilder(t *testing.T) {
 			builder: &Builder{
 				Pubkey:            []byte("pubkey_48_bytes_long_pubkey_48_bytes_long_pubkey_48!"),
 				Version:           []byte{'a'},
-				ExecutionAddress:  []byte("execution_address_20"),
+				SilaAddress:  []byte("sila_address_20"),
 				Balance:           primitives.Gwei(12345),
 				DepositEpoch:      primitives.Epoch(10),
 				WithdrawableEpoch: primitives.Epoch(20),
@@ -214,10 +214,10 @@ func TestCopyBuilder(t *testing.T) {
 				}
 			}
 
-			if len(tt.builder.ExecutionAddress) > 0 {
-				tt.builder.ExecutionAddress[0] = 0xFF
-				if copied.ExecutionAddress[0] == 0xFF {
-					t.Error("CopyBuilder() did not create deep copy of ExecutionAddress")
+			if len(tt.builder.SilaAddress) > 0 {
+				tt.builder.SilaAddress[0] = 0xFF
+				if copied.SilaAddress[0] == 0xFF {
+					t.Error("CopyBuilder() did not create deep copy of SilaAddress")
 				}
 			}
 		})

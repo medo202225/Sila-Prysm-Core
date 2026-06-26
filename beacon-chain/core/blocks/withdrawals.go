@@ -79,7 +79,7 @@ func processBLSToSilaChange(st state.BeaconState, signed *silapb.SignedBLSToSila
 
 	message := signed.Message
 	newCredentials := make([]byte, executionToBLSPadding)
-	newCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+	newCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	val.WithdrawalCredentials = append(newCredentials, message.ToSilaAddress...)
 	err = st.UpdateValidatorAtIndex(message.ValidatorIndex, val)
 	return st, err

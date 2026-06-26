@@ -454,7 +454,7 @@ func Test_sendNewFinalizedEvent(t *testing.T) {
 	assert.Equal(t, primitives.Epoch(123), fc.Epoch)
 	assert.DeepEqual(t, sbbRoot[:], fc.Block)
 	assert.DeepEqual(t, finalizedStRoot[:], fc.State)
-	assert.Equal(t, false, fc.ExecutionOptimistic)
+	assert.Equal(t, false, fc.SilaOptimistic)
 }
 
 func Test_executePostFinalizationTasks(t *testing.T) {
@@ -521,7 +521,7 @@ func Test_executePostFinalizationTasks(t *testing.T) {
 		assert.Equal(t, primitives.Epoch(123), fc.Epoch)
 		assert.DeepEqual(t, headRoot[:], fc.Block)
 		assert.DeepEqual(t, finalizedStRoot[:], fc.State)
-		assert.Equal(t, false, fc.ExecutionOptimistic)
+		assert.Equal(t, false, fc.SilaOptimistic)
 
 		// check the cache
 		index, ok := headState.ValidatorIndexByPubkey(bytesutil.ToBytes48(key))
@@ -562,7 +562,7 @@ func Test_executePostFinalizationTasks(t *testing.T) {
 		assert.Equal(t, primitives.Epoch(123), fc.Epoch)
 		assert.DeepEqual(t, headRoot[:], fc.Block)
 		assert.DeepEqual(t, finalizedStRoot[:], fc.State)
-		assert.Equal(t, false, fc.ExecutionOptimistic)
+		assert.Equal(t, false, fc.SilaOptimistic)
 
 		// check the cache
 		index, ok := headState.ValidatorIndexByPubkey(bytesutil.ToBytes48(key))

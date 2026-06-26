@@ -24,7 +24,7 @@ func FlagOptions(c *cli.Context) ([]execution.Option, error) {
 	}
 	headers := strings.Split(c.String(flags.ExecutionEngineHeaders.Name), ",")
 	opts := []execution.Option{
-		execution.WithSilaExecutionHeaderRequestLimit(c.Uint64(flags.SilaExecutionHeaderReqLimit.Name)),
+		execution.WithSilaHeaderRequestLimit(c.Uint64(flags.SilaHeaderReqLimit.Name)),
 		execution.WithHeaders(headers),
 	}
 	if len(jwtSecret) > 0 {

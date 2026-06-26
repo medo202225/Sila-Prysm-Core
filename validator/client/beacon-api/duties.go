@@ -279,7 +279,7 @@ func (c *beaconApiValidatorClient) attesterDuties(ctx context.Context, epoch pri
 	}
 	return &silapb.AttesterDutiesResponse{
 		DependentRoot:       dependentRoot,
-		ExecutionOptimistic: resp.ExecutionOptimistic,
+		SilaOptimistic: resp.SilaOptimistic,
 		Duties:              duties,
 	}, nil
 }
@@ -315,7 +315,7 @@ func (c *beaconApiValidatorClient) proposerDuties(ctx context.Context, epoch pri
 	}
 	return &silapb.ProposerDutiesResponse{
 		DependentRoot:       dependentRoot,
-		ExecutionOptimistic: resp.ExecutionOptimistic,
+		SilaOptimistic: resp.SilaOptimistic,
 		Duties:              duties,
 	}, nil
 }
@@ -566,7 +566,7 @@ func (c *beaconApiValidatorClient) ptcDuties(ctx context.Context, epoch primitiv
 	}
 	return &silapb.PTCDutiesResponse{
 		DependentRoot:       dependentRoot,
-		ExecutionOptimistic: resp.ExecutionOptimistic,
+		SilaOptimistic: resp.SilaOptimistic,
 		Duties:              duties,
 	}, nil
 }

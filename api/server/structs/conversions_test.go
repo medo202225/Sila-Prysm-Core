@@ -373,7 +373,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			BuilderIndex:          7,
 			Slot:                  9,
 			Value:                 11,
-			ExecutionPayment:      22,
+			SilaPayment:      22,
 			BlobKzgCommitments:    [][]byte{},
 			SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 		}
@@ -391,7 +391,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			BuilderIndex:          "7",
 			Slot:                  "9",
 			Value:                 "11",
-			ExecutionPayment:      "22",
+			SilaPayment:      "22",
 			BlobKzgCommitments:    []string{},
 			SilaRequestsRoot: hexutil.Encode(bid.SilaRequestsRoot),
 		}
@@ -409,7 +409,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			BuilderIndex:          7,
 			Slot:                  9,
 			Value:                 11,
-			ExecutionPayment:      22,
+			SilaPayment:      22,
 			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x06}, 48)},
 			SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
 		}
@@ -432,7 +432,7 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 			BuilderIndex:          "7",
 			Slot:                  "9",
 			Value:                 "11",
-			ExecutionPayment:      "22",
+			SilaPayment:      "22",
 			BlobKzgCommitments:    bkcs,
 			SilaRequestsRoot: hexutil.Encode(bid.SilaRequestsRoot),
 		}
@@ -444,7 +444,7 @@ func TestBuilderConversionsFromConsensus(t *testing.T) {
 	builder := &eth.Builder{
 		Pubkey:            bytes.Repeat([]byte{0xAA}, 48),
 		Version:           bytes.Repeat([]byte{0x01}, 4),
-		ExecutionAddress:  bytes.Repeat([]byte{0xBB}, 20),
+		SilaAddress:  bytes.Repeat([]byte{0xBB}, 20),
 		Balance:           42,
 		DepositEpoch:      3,
 		WithdrawableEpoch: 4,
@@ -452,7 +452,7 @@ func TestBuilderConversionsFromConsensus(t *testing.T) {
 	wantBuilder := &Builder{
 		Pubkey:            hexutil.Encode(builder.Pubkey),
 		Version:           hexutil.Encode(builder.Version),
-		ExecutionAddress:  hexutil.Encode(builder.ExecutionAddress),
+		SilaAddress:  hexutil.Encode(builder.SilaAddress),
 		Balance:           "42",
 		DepositEpoch:      "3",
 		WithdrawableEpoch: "4",
@@ -504,7 +504,7 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 			BuilderIndex:          3,
 			Slot:                  5,
 			Value:                 99,
-			ExecutionPayment:      7,
+			SilaPayment:      7,
 			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x16}, 48)},
 			SilaRequestsRoot: make([]byte, 32),
 		}
@@ -512,7 +512,7 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 			{
 				Pubkey:            bytes.Repeat([]byte{0x20}, 48),
 				Version:           bytes.Repeat([]byte{0x21}, 4),
-				ExecutionAddress:  bytes.Repeat([]byte{0x22}, 20),
+				SilaAddress:  bytes.Repeat([]byte{0x22}, 20),
 				Balance:           88,
 				DepositEpoch:      1,
 				WithdrawableEpoch: 2,
@@ -573,6 +573,6 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 
 	require.Equal(t, "1", got.PayloadExpectedWithdrawals[0].WithdrawalIndex)
 	require.Equal(t, "2", got.PayloadExpectedWithdrawals[0].ValidatorIndex)
-	require.Equal(t, hexutil.Encode(bytes.Repeat([]byte{0x26}, 20)), got.PayloadExpectedWithdrawals[0].ExecutionAddress)
+	require.Equal(t, hexutil.Encode(bytes.Repeat([]byte{0x26}, 20)), got.PayloadExpectedWithdrawals[0].SilaAddress)
 	require.Equal(t, "10", got.PayloadExpectedWithdrawals[0].Amount)
 }

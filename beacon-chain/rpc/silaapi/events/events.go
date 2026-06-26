@@ -74,14 +74,14 @@ const (
 	LightClientOptimisticUpdateTopic = "light_client_optimistic_update"
 	// DataColumnTopic represents a data column sidecar event topic
 	DataColumnTopic = "data_column_sidecar"
-	// SilaPayloadAvailableTopic represents the event topic fired when an sila payload envelope
+	// SilaPayloadAvailableTopic represents the event topic fired when a Sila payload envelope
 	// and its custody data are available (for PTC voting). It does not require EL validity.
 	// TODO: Decouple emitting this event from EL validation.
 	SilaPayloadAvailableTopic = "sila_payload_available"
-	// SilaPayloadTopic represents the event topic fired after an sila payload envelope is
+	// SilaPayloadTopic represents the event topic fired after a Sila payload envelope is
 	// successfully imported into fork choice (post EL execution).
 	SilaPayloadTopic = "sila_payload"
-	// SilaPayloadGossipTopic represents an sila payload envelope received from gossip or API
+	// SilaPayloadGossipTopic represents a Sila payload envelope received from gossip or API
 	// that passes validation rules.
 	SilaPayloadGossipTopic = "sila_payload_gossip"
 	// SilaPayloadBidTopic represents a new sila payload bid event topic.
@@ -670,7 +670,7 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 			blk := &structs.BlockEvent{
 				Slot:                fmt.Sprintf("%d", v.Slot),
 				Block:               hexutil.Encode(blockRoot[:]),
-				ExecutionOptimistic: v.Optimistic,
+				SilaOptimistic: v.Optimistic,
 			}
 			return jsonMarshalReader(eventName, blk)
 		}, nil
@@ -700,7 +700,7 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 				BuilderIndex:        fmt.Sprintf("%d", v.BuilderIndex),
 				BlockHash:           hexutil.Encode(v.BlockHash[:]),
 				BlockRoot:           hexutil.Encode(v.BlockRoot[:]),
-				ExecutionOptimistic: v.Optimistic,
+				SilaOptimistic: v.Optimistic,
 			})
 		}, nil
 	case *operation.SilaPayloadGossipReceivedData:

@@ -893,10 +893,10 @@ func (s *Server) PrepareBeaconProposer(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// Use default address if the burn address is return
-		feeRecipient := primitives.ExecutionAddress(feeRecipientBytes)
-		if feeRecipient == primitives.ExecutionAddress([20]byte{}) {
-			feeRecipient = primitives.ExecutionAddress(params.BeaconConfig().DefaultFeeRecipient)
-			if feeRecipient == primitives.ExecutionAddress([20]byte{}) {
+		feeRecipient := primitives.SilaAddress(feeRecipientBytes)
+		if feeRecipient == primitives.SilaAddress([20]byte{}) {
+			feeRecipient = primitives.SilaAddress(params.BeaconConfig().DefaultFeeRecipient)
+			if feeRecipient == primitives.SilaAddress([20]byte{}) {
 				log.WithField("validatorIndex", validatorIndex).Warn("Fee recipient is the burn address")
 			}
 		}
@@ -1026,7 +1026,7 @@ func (s *Server) GetAttesterDuties(w http.ResponseWriter, r *http.Request) {
 	response := &structs.GetAttesterDutiesResponse{
 		DependentRoot:       hexutil.Encode(dependentRoot),
 		Data:                duties,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 	}
 	httputil.WriteJson(w, response)
 }
@@ -1114,7 +1114,7 @@ func (s *Server) GetProposerDuties(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, &structs.GetProposerDutiesResponse{
 		DependentRoot:       hexutil.Encode(dependentRoot),
 		Data:                duties,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 	})
 }
 
@@ -1203,7 +1203,7 @@ func (s *Server) GetProposerDutiesV2(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, &structs.GetProposerDutiesResponse{
 		DependentRoot:       hexutil.Encode(dependentRoot),
 		Data:                duties,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 	})
 }
 
@@ -1319,7 +1319,7 @@ func (s *Server) GetSyncCommitteeDuties(w http.ResponseWriter, r *http.Request) 
 
 	resp := &structs.GetSyncCommitteeDutiesResponse{
 		Data:                duties,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 	}
 	httputil.WriteJson(w, resp)
 }
@@ -1512,7 +1512,7 @@ func (s *Server) GetPTCDuties(w http.ResponseWriter, r *http.Request) {
 
 	resp := &structs.GetPTCDutiesResponse{
 		DependentRoot:       hexutil.Encode(dependentRoot),
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Data:                duties,
 	}
 	httputil.WriteJson(w, resp)

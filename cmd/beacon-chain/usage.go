@@ -164,7 +164,7 @@ var appHelpFlagGroups = []flagGroup{
 			flags.ContractDeploymentBlock,
 			flags.SilaDepositFlag,
 			flags.EngineEndpointTimeoutSeconds,
-			flags.SilaExecutionHeaderReqLimit,
+			flags.SilaHeaderReqLimit,
 			flags.ExecutionEngineEndpoint,
 			flags.ExecutionEngineHeaders,
 			flags.ExecutionJWTSecretFlag,

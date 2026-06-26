@@ -287,7 +287,7 @@ func TestProposerSettingsLoader(t *testing.T) {
 				}
 			},
 			wantErr: "",
-			wantLog: "is not a checksum execution address",
+			wantLog: "is not a checksum sila address",
 		},
 		{
 			name: "Happy Path Config file File multiple fee recipients",

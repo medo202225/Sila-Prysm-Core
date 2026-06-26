@@ -2255,7 +2255,7 @@ func TestGetAttesterDuties(t *testing.T) {
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 		require.Equal(t, 0, len(resp.Data))
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		ctx := t.Context()
 
 		parentRoot := [32]byte{'a'}
@@ -2292,7 +2292,7 @@ func TestGetAttesterDuties(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetAttesterDutiesResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("sync not ready", func(t *testing.T) {
 		st, err := util.NewBeaconState()
@@ -2519,7 +2519,7 @@ func TestGetProposerDuties(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, e.Code)
 		assert.StringContains(t, fmt.Sprintf("Request epoch %d can not be greater than next epoch %d", currentEpoch+2, currentEpoch+1), e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		bs, err := transition.GenesisBeaconState(t.Context(), deposits, 0, silaexecData)
 		require.NoError(t, err, "Could not set up genesis state")
 		// Set state to non-epoch start slot.
@@ -2555,7 +2555,7 @@ func TestGetProposerDuties(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetProposerDutiesResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("sync not ready", func(t *testing.T) {
 		st, err := util.NewBeaconState()
@@ -3171,7 +3171,7 @@ func TestGetSyncCommitteeDuties(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, e.Code)
 		assert.StringContains(t, "Epoch is too far in the future", e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		ctx := t.Context()
 		db := dbutil.SetupDB(t)
 		require.NoError(t, db.SaveStateSummary(ctx, &silapbalpha.StateSummary{Slot: 0, Root: []byte("root")}))
@@ -3224,7 +3224,7 @@ func TestGetSyncCommitteeDuties(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetSyncCommitteeDutiesResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 	t.Run("sync not ready", func(t *testing.T) {
 		st, err := util.NewBeaconState()
@@ -3715,7 +3715,7 @@ func TestPrepareBeaconProposer(t *testing.T) {
 				require.NoError(t, err)
 				val, tracked := server.TrackedValidatorsCache.Validator(primitives.ValidatorIndex(index))
 				require.Equal(t, true, tracked)
-				require.Equal(t, primitives.ExecutionAddress(feebytes), val.FeeRecipient)
+				require.Equal(t, primitives.SilaAddress(feebytes), val.FeeRecipient)
 			}
 		})
 	}

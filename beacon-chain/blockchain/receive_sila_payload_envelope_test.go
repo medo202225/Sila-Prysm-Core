@@ -43,7 +43,7 @@ func gloasEnvelopeFixture(t *testing.T, blockRoot [32]byte) (*silapb.BeaconState
 	base.Builders = []*silapb.Builder{{
 		Pubkey:           pk,
 		Version:          []byte{0},
-		ExecutionAddress: make([]byte, 20),
+		SilaAddress: make([]byte, 20),
 	}}
 
 	emptyRequestsRoot, err := silaenginev1.EmptySilaRequestsHashTreeRoot()

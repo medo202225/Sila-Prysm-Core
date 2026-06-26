@@ -3254,7 +3254,7 @@ func TestProposer_PrepareBeaconProposer(t *testing.T) {
 			require.NoError(t, err)
 			val, tracked := proposerServer.TrackedValidatorsCache.Validator(1)
 			require.Equal(t, true, tracked)
-			require.Equal(t, primitives.ExecutionAddress(tt.args.request.Recipients[0].FeeRecipient), val.FeeRecipient)
+			require.Equal(t, primitives.SilaAddress(tt.args.request.Recipients[0].FeeRecipient), val.FeeRecipient)
 
 		})
 	}

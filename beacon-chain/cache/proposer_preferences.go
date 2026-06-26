@@ -11,7 +11,7 @@ import (
 type ProposerPreference struct {
 	DependentRoot  [32]byte
 	ValidatorIndex primitives.ValidatorIndex
-	FeeRecipient   primitives.ExecutionAddress
+	FeeRecipient   primitives.SilaAddress
 	TargetGasLimit uint64
 }
 

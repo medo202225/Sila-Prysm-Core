@@ -55,7 +55,7 @@ func TestBLSToExecChangesForInclusion(t *testing.T) {
 	spb.Balances = make([]uint64, numValidators)
 	privKeys := make([]common.SecretKey, numValidators)
 	maxEffectiveBalance := params.BeaconConfig().MaxEffectiveBalance
-	executionAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
+	silaAddress := []byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13}
 
 	for i := range validators {
 		v := &eth.Validator{}
@@ -68,7 +68,7 @@ func TestBLSToExecChangesForInclusion(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &eth.BLSToSilaChange{
-			ToSilaAddress: executionAddress,
+			ToSilaAddress: silaAddress,
 			ValidatorIndex:     primitives.ValidatorIndex(i),
 			FromBlsPubkey:      pubkey,
 		}

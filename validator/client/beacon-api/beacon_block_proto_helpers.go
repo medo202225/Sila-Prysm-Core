@@ -415,9 +415,9 @@ func convertWithdrawalsToProto(jsonWithdrawals []*structs.Withdrawal) ([]*silaen
 			return nil, errors.Wrapf(err, "failed to parse validator index `%s`", jsonWithdrawal.ValidatorIndex)
 		}
 
-		executionAddress, err := hexutil.Decode(jsonWithdrawal.ExecutionAddress)
+		silaAddress, err := hexutil.Decode(jsonWithdrawal.SilaAddress)
 		if err != nil {
-			return nil, errors.Wrapf(err, "failed to decode execution address `%s`", jsonWithdrawal.ExecutionAddress)
+			return nil, errors.Wrapf(err, "failed to decode sila address `%s`", jsonWithdrawal.SilaAddress)
 		}
 
 		amount, err := strconv.ParseUint(jsonWithdrawal.Amount, 10, 64)
@@ -428,7 +428,7 @@ func convertWithdrawalsToProto(jsonWithdrawals []*structs.Withdrawal) ([]*silaen
 		withdrawals[index] = &silaenginev1.Withdrawal{
 			Index:          withdrawalIndex,
 			ValidatorIndex: primitives.ValidatorIndex(validatorIndex),
-			Address:        executionAddress,
+			Address:        silaAddress,
 			Amount:         amount,
 		}
 	}
@@ -460,7 +460,7 @@ func convertBlsToSilaChangesToProto(jsonSignedBlsToSilaChanges []*structs.Signed
 
 		toSilaAddress, err := hexutil.Decode(jsonBlsToSilaChange.Message.ToSilaAddress)
 		if err != nil {
-			return nil, errors.Wrapf(err, "failed to decode execution address `%s`", jsonBlsToSilaChange.Message.ToSilaAddress)
+			return nil, errors.Wrapf(err, "failed to decode sila address `%s`", jsonBlsToSilaChange.Message.ToSilaAddress)
 		}
 
 		signature, err := hexutil.Decode(jsonBlsToSilaChange.Signature)

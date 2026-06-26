@@ -28,7 +28,7 @@ option php_namespace = "Sila\\Engine\\v1";
 // WithdrawalRequest is the message from the Sila layer to trigger the
 // withdrawal of a validator's balance to its withdrawal address new in Electra
 message WithdrawalRequest {
-  // The execution address receiving the funds
+  // The sila address receiving the funds
   bytes source_address = 1 [ (sila.eth.ext.ssz_size) = "20" ];
 
   // 48 byte BLS public key of the validator.

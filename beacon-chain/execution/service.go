@@ -183,7 +183,7 @@ func NewService(ctx context.Context, opts ...Option) (*Service, error) {
 		rpcClient: RPCClientEmpty{},
 		cfg: &config{
 			beaconNodeStatsUpdater: &NopBeaconNodeStatsUpdater{},
-			silaexecHeaderReqLimit:     defaultSilaExecutionHeaderReqLimit,
+			silaexecHeaderReqLimit:     defaultSilaHeaderReqLimit,
 		},
 		latestSilaData: &silapb.LatestSilaData{
 			BlockHeight:        0,

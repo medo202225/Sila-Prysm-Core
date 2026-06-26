@@ -2,7 +2,7 @@ package structs
 
 type BlockRewardsResponse struct {
 	Data                *BlockRewards `json:"data"`
-	ExecutionOptimistic bool          `json:"execution_optimistic"`
+	SilaOptimistic bool          `json:"sila_optimistic"`
 	Finalized           bool          `json:"finalized"`
 }
 
@@ -17,7 +17,7 @@ type BlockRewards struct {
 
 type AttestationRewardsResponse struct {
 	Data                AttestationRewards `json:"data"`
-	ExecutionOptimistic bool               `json:"execution_optimistic"`
+	SilaOptimistic bool               `json:"sila_optimistic"`
 	Finalized           bool               `json:"finalized"`
 }
 
@@ -44,7 +44,7 @@ type TotalAttestationReward struct {
 
 type SyncCommitteeRewardsResponse struct {
 	Data                []SyncCommitteeReward `json:"data"`
-	ExecutionOptimistic bool                  `json:"execution_optimistic"`
+	SilaOptimistic bool                  `json:"sila_optimistic"`
 	Finalized           bool                  `json:"finalized"`
 }
 

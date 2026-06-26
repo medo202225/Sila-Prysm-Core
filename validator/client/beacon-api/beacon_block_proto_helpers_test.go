@@ -950,11 +950,11 @@ func TestBeaconBlockProtoHelpers_ConvertWithdrawalsToProto(t *testing.T) {
 			},
 		},
 		{
-			name:                 "bad execution address",
-			expectedErrorMessage: "failed to decode execution address `foo`",
+			name:                 "bad sila address",
+			expectedErrorMessage: "failed to decode sila address `foo`",
 			generateInput: func() []*structs.Withdrawal {
 				input := generateWithdrawals()
-				input[0].ExecutionAddress = "foo"
+				input[0].SilaAddress = "foo"
 				return input
 			},
 		},
@@ -1045,8 +1045,8 @@ func TestBeaconBlockProtoHelpers_ConvertBlsToSilaChangesToProto(t *testing.T) {
 			},
 		},
 		{
-			name:                 "bad to execution address",
-			expectedErrorMessage: "failed to decode execution address `foo`",
+			name:                 "bad to sila address",
+			expectedErrorMessage: "failed to decode sila address `foo`",
 			generateInput: func() []*structs.SignedBLSToSilaChange {
 				input := generateBlsToSilaChanges()
 				input[0].Message.ToSilaAddress = "foo"
@@ -1352,13 +1352,13 @@ func generateWithdrawals() []*structs.Withdrawal {
 		{
 			WithdrawalIndex:  "1",
 			ValidatorIndex:   "2",
-			ExecutionAddress: hexutil.Encode([]byte{3}),
+			SilaAddress: hexutil.Encode([]byte{3}),
 			Amount:           "4",
 		},
 		{
 			WithdrawalIndex:  "5",
 			ValidatorIndex:   "6",
-			ExecutionAddress: hexutil.Encode([]byte{7}),
+			SilaAddress: hexutil.Encode([]byte{7}),
 			Amount:           "8",
 		},
 	}

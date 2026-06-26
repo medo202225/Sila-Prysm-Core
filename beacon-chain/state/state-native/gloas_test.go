@@ -15,7 +15,7 @@ func TestBuildersVal(t *testing.T) {
 	require.Nil(t, st.buildersVal())
 
 	st.builders = []*silapb.Builder{
-		{Pubkey: []byte{0x01}, ExecutionAddress: []byte{0x02}, Balance: 3},
+		{Pubkey: []byte{0x01}, SilaAddress: []byte{0x02}, Balance: 3},
 		nil,
 	}
 

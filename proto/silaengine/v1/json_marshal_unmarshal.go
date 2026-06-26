@@ -256,7 +256,7 @@ func (w *Withdrawal) UnmarshalJSON(enc []byte) error {
 		return errors.New("missing withdrawal amount")
 	}
 	if dec.Address == nil {
-		return errors.New("missing execution address")
+		return errors.New("missing sila address")
 	}
 	*w = Withdrawal{}
 	w.Index = uint64(*dec.Index)

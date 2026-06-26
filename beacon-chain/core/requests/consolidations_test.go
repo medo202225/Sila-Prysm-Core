@@ -267,7 +267,7 @@ func TestProcessConsolidationRequests(t *testing.T) {
 					PendingConsolidations: make([]*eth.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit),
 				}
 				// To allow compounding consolidation requests.
-				st.Validators[3].WithdrawalCredentials[0] = params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte
+				st.Validators[3].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 				s, err := state_native.InitializeFromProtoElectra(st)
 				require.NoError(t, err)
 				return s

@@ -1550,7 +1550,7 @@ func HydrateSignedSilaPayloadBid(b *silapb.SignedSilaPayloadBid) *silapb.SignedS
 	return b
 }
 
-// HydrateSilaPayloadBid hydrates an sila payload bid with correct field length sizes
+// HydrateSilaPayloadBid hydrates a Sila payload bid with correct field length sizes
 // to comply with fssz marshalling and unmarshalling rules.
 func HydrateSilaPayloadBid(b *silapb.SilaPayloadBid) *silapb.SilaPayloadBid {
 	if b == nil {
@@ -1656,7 +1656,7 @@ func GenerateTestSignedSilaPayloadBid(slot primitives.Slot) *silapb.SignedSilaPa
 			PrevRandao:            prevRandao,
 			FeeRecipient:          feeRecipient,
 			Value:                 1000000,
-			ExecutionPayment:      2000000,
+			SilaPayment:      2000000,
 			BlobKzgCommitments:    [][]byte{blobKzgCommitment},
 			SilaRequestsRoot: make([]byte, fieldparams.RootLength),
 		},

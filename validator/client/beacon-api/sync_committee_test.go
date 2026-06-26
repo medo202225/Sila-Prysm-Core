@@ -114,9 +114,9 @@ func TestGetSyncMessageBlockRoot(t *testing.T) {
 			endpointError:        errors.New("internal server error"),
 		},
 		{
-			name: "execution optimistic",
+			name: "sila optimistic",
 			expectedResponse: structs.BlockRootResponse{
-				ExecutionOptimistic: true,
+				SilaOptimistic: true,
 			},
 			expectedErrorMessage: "the node is currently optimistic and cannot serve validators",
 		},

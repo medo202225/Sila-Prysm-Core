@@ -145,7 +145,7 @@ func checkIfWithdrawsAreInPool(ctx context.Context, client *beacon.Client, reque
 		for key, address := range requestMap {
 			log.WithFields(logrus.Fields{
 				"validatorIndex":    key,
-				"executionAddress:": address,
+				"silaAddress:": address,
 			}).Warn("Set withdrawal address message not found in the node's operations pool.")
 		}
 		log.Warn("Please check before resubmitting. Set withdrawal address messages that were not found in the pool may have been already included into a block.")

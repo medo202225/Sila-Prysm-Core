@@ -75,7 +75,7 @@ func optimisticSyncEnabled(_ *types.EvaluationContext, conns ...*grpc.ClientConn
 			if err = json.NewDecoder(httpResp.Body).Decode(&resp); err != nil {
 				return err
 			}
-			if !resp.ExecutionOptimistic {
+			if !resp.SilaOptimistic {
 				return errors.New("expected block to be optimistic, but it is not")
 			}
 		}

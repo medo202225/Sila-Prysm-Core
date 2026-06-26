@@ -201,7 +201,7 @@ func (vs *Server) getPayloadHeaderFromBuilder(
 
 	h, err := b.Block().Body().Execution()
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to get execution header")
+		return nil, errors.Wrap(err, "failed to get sila header")
 	}
 	pk, err := vs.HeadFetcher.HeadValidatorIndexToPublicKey(ctx, idx)
 	if err != nil {

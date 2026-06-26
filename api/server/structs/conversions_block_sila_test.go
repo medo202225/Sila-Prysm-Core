@@ -199,7 +199,7 @@ func TestSilaPayloadCapella_ToConsensus_HappyPath(t *testing.T) {
 			{
 				WithdrawalIndex:  "1",
 				ValidatorIndex:   "2",
-				ExecutionAddress: hexutil.Encode(fillByteSlice(20, 0xaa)),
+				SilaAddress: hexutil.Encode(fillByteSlice(20, 0xaa)),
 				Amount:           "100",
 			},
 		},
@@ -277,7 +277,7 @@ func TestSilaPayloadDeneb_ToConsensus_HappyPath(t *testing.T) {
 			{
 				WithdrawalIndex:  "1",
 				ValidatorIndex:   "2",
-				ExecutionAddress: hexutil.Encode(fillByteSlice(20, 0xaa)),
+				SilaAddress: hexutil.Encode(fillByteSlice(20, 0xaa)),
 				Amount:           "100",
 			},
 		},

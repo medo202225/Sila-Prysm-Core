@@ -547,7 +547,7 @@ func (b *BeaconState) appendBuilderWithdrawals(withdrawalIndex uint64, withdrawa
 //	                Withdrawal(
 //	                    index=withdrawal_index,
 //	                    validator_index=convert_builder_index_to_validator_index(builder_index),
-//	                    address=builder.execution_address,
+//	                    address=builder.sila_address,
 //	                    amount=builder.balance,
 //	                )
 //	            )
@@ -591,7 +591,7 @@ func (b *BeaconState) appendBuildersSweepWithdrawals(withdrawalIndex uint64, wit
 			ws = append(ws, &silaenginev1.Withdrawal{
 				Index:          withdrawalIndex,
 				ValidatorIndex: builderIndex.ToValidatorIndex(),
-				Address:        builder.ExecutionAddress,
+				Address:        builder.SilaAddress,
 				Amount:         uint64(builder.Balance),
 			})
 			withdrawalIndex++

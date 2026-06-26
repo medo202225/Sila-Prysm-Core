@@ -88,7 +88,7 @@ func (s *Server) GetSilaPayloadEnvelope(w http.ResponseWriter, r *http.Request) 
 	}
 	httputil.WriteJson(w, &structs.GetSilaPayloadEnvelopeResponse{
 		Version:             version.String(version.Gloas),
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           finalized,
 		Data:                jsonEnvelope,
 	})

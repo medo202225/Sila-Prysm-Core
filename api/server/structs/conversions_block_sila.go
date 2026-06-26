@@ -359,9 +359,9 @@ func (e *SilaPayloadCapella) ToConsensus() (*silaenginev1.SilaPayloadCapella, er
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ValidatorIndex", i))
 		}
-		address, err := bytesutil.DecodeHexWithLength(w.ExecutionAddress, common.AddressLength)
+		address, err := bytesutil.DecodeHexWithLength(w.SilaAddress, common.AddressLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ExecutionAddress", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].SilaAddress", i))
 		}
 		amount, err := strconv.ParseUint(w.Amount, 10, 64)
 		if err != nil {
@@ -624,9 +624,9 @@ func (e *SilaPayloadDeneb) ToConsensus() (*silaenginev1.SilaPayloadDeneb, error)
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ValidatorIndex", i))
 		}
-		address, err := bytesutil.DecodeHexWithLength(w.ExecutionAddress, common.AddressLength)
+		address, err := bytesutil.DecodeHexWithLength(w.SilaAddress, common.AddressLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].ExecutionAddress", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("SilaPayload.Withdrawals[%d].SilaAddress", i))
 		}
 		amount, err := strconv.ParseUint(w.Amount, 10, 64)
 		if err != nil {
@@ -1103,9 +1103,9 @@ func (e *SilaPayloadGloas) ToConsensus() (*silaenginev1.SilaPayloadGloas, error)
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Withdrawals[%d].ValidatorIndex", i))
 		}
-		address, err := bytesutil.DecodeHexWithLength(w.ExecutionAddress, common.AddressLength)
+		address, err := bytesutil.DecodeHexWithLength(w.SilaAddress, common.AddressLength)
 		if err != nil {
-			return nil, server.NewDecodeError(err, fmt.Sprintf("Withdrawals[%d].ExecutionAddress", i))
+			return nil, server.NewDecodeError(err, fmt.Sprintf("Withdrawals[%d].SilaAddress", i))
 		}
 		amount, err := strconv.ParseUint(w.Amount, 10, 64)
 		if err != nil {

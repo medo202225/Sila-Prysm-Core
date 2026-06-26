@@ -19,7 +19,7 @@ const (
 type (
 	TrackedValidator struct {
 		Active       bool
-		FeeRecipient primitives.ExecutionAddress
+		FeeRecipient primitives.SilaAddress
 		Index        primitives.ValidatorIndex
 		GasLimit     uint64
 	}

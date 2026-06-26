@@ -36,7 +36,7 @@ type SilaPayloadBid struct {
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,7,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
 	Slot                  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot         `protobuf:"varint,8,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	Value                 github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,9,opt,name=value,proto3" json:"value,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
-	ExecutionPayment      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,10,opt,name=execution_payment,json=executionPayment,proto3" json:"execution_payment,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
+	SilaPayment      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,10,opt,name=sila_payment,json=silaPayment,proto3" json:"sila_payment,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	BlobKzgCommitments    [][]byte                                                                 `protobuf:"bytes,11,rep,name=blob_kzg_commitments,json=blobKzgCommitments,proto3" json:"blob_kzg_commitments,omitempty" ssz-max:"4096" ssz-size:"?,48"`
 	SilaRequestsRoot []byte                                                                   `protobuf:"bytes,12,opt,name=sila_requests_root,json=silaRequestsRoot,proto3" json:"sila_requests_root,omitempty" ssz-size:"32"`
 	unknownFields         protoimpl.UnknownFields
@@ -136,9 +136,9 @@ func (x *SilaPayloadBid) GetValue() github_com_sila_chain_Sila_Sila_Core_v7_cons
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei(0)
 }
 
-func (x *SilaPayloadBid) GetExecutionPayment() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei {
+func (x *SilaPayloadBid) GetSilaPayment() github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei {
 	if x != nil {
-		return x.ExecutionPayment
+		return x.SilaPayment
 	}
 	return github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei(0)
 }
@@ -2005,7 +2005,7 @@ type Builder struct {
 	state             protoimpl.MessageState                                            `protogen:"open.v1"`
 	Pubkey            []byte                                                            `protobuf:"bytes,1,opt,name=pubkey,proto3" json:"pubkey,omitempty" ssz-size:"48"`
 	Version           []byte                                                            `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty" ssz-size:"1"`
-	ExecutionAddress  []byte                                                            `protobuf:"bytes,3,opt,name=execution_address,json=executionAddress,proto3" json:"execution_address,omitempty" ssz-size:"20"`
+	SilaAddress  []byte                                                            `protobuf:"bytes,3,opt,name=sila_address,json=silaAddress,proto3" json:"sila_address,omitempty" ssz-size:"20"`
 	Balance           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei  `protobuf:"varint,4,opt,name=balance,proto3" json:"balance,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	DepositEpoch      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,5,opt,name=deposit_epoch,json=depositEpoch,proto3" json:"deposit_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	WithdrawableEpoch github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,6,opt,name=withdrawable_epoch,json=withdrawableEpoch,proto3" json:"withdrawable_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
@@ -2057,9 +2057,9 @@ func (x *Builder) GetVersion() []byte {
 	return nil
 }
 
-func (x *Builder) GetExecutionAddress() []byte {
+func (x *Builder) GetSilaAddress() []byte {
 	if x != nil {
-		return x.ExecutionAddress
+		return x.SilaAddress
 	}
 	return nil
 }

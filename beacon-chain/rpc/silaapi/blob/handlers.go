@@ -86,7 +86,7 @@ func (s *Server) Blobs(w http.ResponseWriter, r *http.Request) {
 	resp := &structs.SidecarsResponse{
 		Version:             version.String(blk.Version()),
 		Data:                data,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
 	}
 	w.Header().Set(api.VersionHeader, version.String(blk.Version()))
@@ -196,7 +196,7 @@ func (s *Server) GetBlobs(w http.ResponseWriter, r *http.Request) {
 	}
 	resp := &structs.GetBlobsResponse{
 		Data:                data,
-		ExecutionOptimistic: isOptimistic,
+		SilaOptimistic: isOptimistic,
 		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
 	}
 	w.Header().Set(api.VersionHeader, version.String(blk.Version()))

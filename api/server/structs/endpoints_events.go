@@ -9,7 +9,7 @@ type HeadEvent struct {
 	Block                     string `json:"block"`
 	State                     string `json:"state"`
 	EpochTransition           bool   `json:"epoch_transition"`
-	ExecutionOptimistic       bool   `json:"execution_optimistic"`
+	SilaOptimistic       bool   `json:"sila_optimistic"`
 	PreviousDutyDependentRoot string `json:"previous_duty_dependent_root"`
 	CurrentDutyDependentRoot  string `json:"current_duty_dependent_root"`
 }
@@ -17,7 +17,7 @@ type HeadEvent struct {
 type BlockEvent struct {
 	Slot                string `json:"slot"`
 	Block               string `json:"block"`
-	ExecutionOptimistic bool   `json:"execution_optimistic"`
+	SilaOptimistic bool   `json:"sila_optimistic"`
 }
 
 type BlockGossipEvent struct {
@@ -46,7 +46,7 @@ type FinalizedCheckpointEvent struct {
 	Block               string `json:"block"`
 	State               string `json:"state"`
 	Epoch               string `json:"epoch"`
-	ExecutionOptimistic bool   `json:"execution_optimistic"`
+	SilaOptimistic bool   `json:"sila_optimistic"`
 }
 
 type ChainReorgEvent struct {
@@ -57,7 +57,7 @@ type ChainReorgEvent struct {
 	OldHeadState        string `json:"old_head_state"`
 	NewHeadState        string `json:"new_head_state"`
 	Epoch               string `json:"epoch"`
-	ExecutionOptimistic bool   `json:"execution_optimistic"`
+	SilaOptimistic bool   `json:"sila_optimistic"`
 }
 
 type PayloadAttributesEvent struct {
@@ -128,7 +128,7 @@ type SilaPayloadEvent struct {
 	BuilderIndex        string `json:"builder_index"`
 	BlockHash           string `json:"block_hash"`
 	BlockRoot           string `json:"block_root"`
-	ExecutionOptimistic bool   `json:"execution_optimistic"`
+	SilaOptimistic bool   `json:"sila_optimistic"`
 }
 
 type SilaPayloadGossipEvent struct {

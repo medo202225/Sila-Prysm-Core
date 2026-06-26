@@ -57,7 +57,7 @@ type BeaconChainConfig struct {
 
 	// Initial value constants.
 	BLSWithdrawalPrefixByte         byte                    `yaml:"BLS_WITHDRAWAL_PREFIX" spec:"true"`          // BLSWithdrawalPrefixByte is used for BLS withdrawal and it's the first byte.
-	SilaExecutionAddressWithdrawalPrefixByte byte                    `yaml:"SilaExecution_ADDRESS_WITHDRAWAL_PREFIX" spec:"true"` // SilaExecutionAddressWithdrawalPrefixByte is used for withdrawals and it's the first byte.
+	SilaAddressWithdrawalPrefixByte byte                    `yaml:"SilaExecution_ADDRESS_WITHDRAWAL_PREFIX" spec:"true"` // SilaAddressWithdrawalPrefixByte is used for withdrawals and it's the first byte.
 	CompoundingWithdrawalPrefixByte byte                    `yaml:"COMPOUNDING_WITHDRAWAL_PREFIX" spec:"true"`  // CompoundingWithdrawalPrefixByteByte is used for compounding withdrawals and it's the first byte.
 	BuilderWithdrawalPrefixByte     byte                    `yaml:"BUILDER_WITHDRAWAL_PREFIX" spec:"true"`      // BuilderWithdrawalPrefixByte is used for builder withdrawals and it's the first byte.
 	BuilderIndexSelfBuild           primitives.BuilderIndex `yaml:"BUILDER_INDEX_SELF_BUILD" spec:"true"`       // BuilderIndexSelfBuild indicates proposer self-built payloads.

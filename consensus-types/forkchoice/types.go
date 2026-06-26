@@ -79,7 +79,7 @@ type NodeV2 struct {
 	GasLimit                        uint64
 	PayloadStatus                   PayloadStatus
 	Validity                        NodeValidity
-	ExecutionOptimistic             bool
+	SilaOptimistic             bool
 }
 
 type Dump struct {
@@ -95,7 +95,7 @@ type Dump struct {
 
 type Node struct {
 	Validity                 NodeValidity
-	ExecutionOptimistic      bool
+	SilaOptimistic      bool
 	Slot                     primitives.Slot
 	JustifiedEpoch           primitives.Epoch
 	FinalizedEpoch           primitives.Epoch

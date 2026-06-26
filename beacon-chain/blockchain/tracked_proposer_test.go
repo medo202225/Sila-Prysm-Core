@@ -23,10 +23,10 @@ func TestTrackedProposer_Tracked(t *testing.T) {
 	service, _ := minimalTestService(t, WithPayloadIDCache(cache.NewPayloadIDCache()))
 	st, _ := util.DeterministicGenesisStateBellatrix(t, 1)
 	addr := common.HexToAddress("0x1234")
-	service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.ExecutionAddress(addr), Index: 0})
+	service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.SilaAddress(addr), Index: 0})
 	val, ok := service.trackedProposer(st, 0)
 	require.Equal(t, true, ok)
-	require.Equal(t, primitives.ExecutionAddress(addr), val.FeeRecipient)
+	require.Equal(t, primitives.SilaAddress(addr), val.FeeRecipient)
 }
 
 func TestTrackedProposer_PrepareAllPayloads_Default(t *testing.T) {

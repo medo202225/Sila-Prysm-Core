@@ -112,7 +112,7 @@ func assertEqualConfigs(t *testing.T, name string, fields []string, expected, ac
 	assert.DeepEqual(t, expected.GenesisForkVersion, actual.GenesisForkVersion, "%s: GenesisForkVersion", name)
 	assert.DeepEqual(t, expected.BLSWithdrawalPrefixByte, actual.BLSWithdrawalPrefixByte, "%s: BLSWithdrawalPrefixByte", name)
 	assert.DeepEqual(t, expected.BuilderWithdrawalPrefixByte, actual.BuilderWithdrawalPrefixByte, "%s: BuilderWithdrawalPrefixByte", name)
-	assert.DeepEqual(t, expected.SilaExecutionAddressWithdrawalPrefixByte, actual.SilaExecutionAddressWithdrawalPrefixByte, "%s: SilaExecutionAddressWithdrawalPrefixByte", name)
+	assert.DeepEqual(t, expected.SilaAddressWithdrawalPrefixByte, actual.SilaAddressWithdrawalPrefixByte, "%s: SilaAddressWithdrawalPrefixByte", name)
 
 	// Time parameters.
 	assert.Equal(t, expected.GenesisDelay, actual.GenesisDelay, "%s: GenesisDelay", name)

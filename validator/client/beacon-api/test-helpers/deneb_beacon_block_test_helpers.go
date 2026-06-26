@@ -764,13 +764,13 @@ func GenerateJsonDenebBeaconBlockContents() *structs.BeaconBlockContentsDeneb {
 						{
 							WithdrawalIndex:  "127",
 							ValidatorIndex:   "128",
-							ExecutionAddress: FillEncodedByteSlice(20, 129),
+							SilaAddress: FillEncodedByteSlice(20, 129),
 							Amount:           "130",
 						},
 						{
 							WithdrawalIndex:  "131",
 							ValidatorIndex:   "132",
-							ExecutionAddress: FillEncodedByteSlice(20, 133),
+							SilaAddress: FillEncodedByteSlice(20, 133),
 							Amount:           "134",
 						},
 					},

@@ -65,7 +65,7 @@ func TestGetStateRoot(t *testing.T) {
 	require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
 	assert.Equal(t, hexutil.Encode(stateRoot[:]), resp.Data.Root)
 
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		chainService := &chainMock.ChainService{Optimistic: true}
 		s := &Server{
 			Stater: &testutil.MockStater{
@@ -87,7 +87,7 @@ func TestGetStateRoot(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetStateRootResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.DeepEqual(t, true, resp.ExecutionOptimistic)
+		assert.DeepEqual(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized", func(t *testing.T) {
@@ -241,7 +241,7 @@ func TestGetRandao(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, e.Code)
 		require.StringContains(t, "Epoch is out of range for the randao mixes of the state", e.Message)
 	})
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		parentRoot := [32]byte{'a'}
 		blk := util.NewBeaconBlock()
 		blk.Block.ParentRoot = parentRoot[:]
@@ -270,7 +270,7 @@ func TestGetRandao(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetRandaoResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.DeepEqual(t, true, resp.ExecutionOptimistic)
+		assert.DeepEqual(t, true, resp.SilaOptimistic)
 	})
 	t.Run("finalized", func(t *testing.T) {
 		parentRoot := [32]byte{'a'}
@@ -547,7 +547,7 @@ func TestGetSyncCommittees(t *testing.T) {
 		}
 	}
 
-	t.Run("execution optimistic", func(t *testing.T) {
+	t.Run("sila optimistic", func(t *testing.T) {
 		parentRoot := [32]byte{'a'}
 		blk := util.NewBeaconBlock()
 		blk.Block.ParentRoot = parentRoot[:]
@@ -581,7 +581,7 @@ func TestGetSyncCommittees(t *testing.T) {
 		require.Equal(t, http.StatusOK, writer.Code)
 		resp := &structs.GetSyncCommitteeResponse{}
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), resp))
-		assert.Equal(t, true, resp.ExecutionOptimistic)
+		assert.Equal(t, true, resp.SilaOptimistic)
 	})
 
 	t.Run("finalized", func(t *testing.T) {

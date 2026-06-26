@@ -42,7 +42,7 @@ type ProduceSyncCommitteeContributionResponse struct {
 
 type GetAttesterDutiesResponse struct {
 	DependentRoot       string          `json:"dependent_root"`
-	ExecutionOptimistic bool            `json:"execution_optimistic"`
+	SilaOptimistic bool            `json:"sila_optimistic"`
 	Data                []*AttesterDuty `json:"data"`
 }
 
@@ -58,7 +58,7 @@ type AttesterDuty struct {
 
 type GetProposerDutiesResponse struct {
 	DependentRoot       string          `json:"dependent_root"`
-	ExecutionOptimistic bool            `json:"execution_optimistic"`
+	SilaOptimistic bool            `json:"sila_optimistic"`
 	Data                []*ProposerDuty `json:"data"`
 }
 
@@ -69,7 +69,7 @@ type ProposerDuty struct {
 }
 
 type GetSyncCommitteeDutiesResponse struct {
-	ExecutionOptimistic bool                 `json:"execution_optimistic"`
+	SilaOptimistic bool                 `json:"sila_optimistic"`
 	Data                []*SyncCommitteeDuty `json:"data"`
 }
 
@@ -81,7 +81,7 @@ type SyncCommitteeDuty struct {
 
 type GetPTCDutiesResponse struct {
 	DependentRoot       string     `json:"dependent_root"`
-	ExecutionOptimistic bool       `json:"execution_optimistic"`
+	SilaOptimistic bool       `json:"sila_optimistic"`
 	Data                []*PTCDuty `json:"data"`
 }
 
@@ -118,7 +118,7 @@ type Liveness struct {
 }
 
 type GetValidatorCountResponse struct {
-	ExecutionOptimistic string            `json:"execution_optimistic"`
+	SilaOptimistic string            `json:"sila_optimistic"`
 	Finalized           string            `json:"finalized"`
 	Data                []*ValidatorCount `json:"data"`
 }

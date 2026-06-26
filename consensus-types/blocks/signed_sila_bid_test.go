@@ -23,7 +23,7 @@ func validSilaPayloadBid() *silapb.SilaPayloadBid {
 		BuilderIndex:          5,
 		Slot:                  6,
 		Value:                 7,
-		ExecutionPayment:      8,
+		SilaPayment:      8,
 		BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x05}, 48)},
 		FeeRecipient:          bytes.Repeat([]byte{0x06}, 20),
 		SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
@@ -81,7 +81,7 @@ func TestWrappedROSilaPayloadBid(t *testing.T) {
 		require.Equal(t, primitives.BuilderIndex(5), wrapped.BuilderIndex())
 		require.Equal(t, primitives.Slot(6), wrapped.Slot())
 		require.Equal(t, primitives.Gwei(7), wrapped.Value())
-		require.Equal(t, primitives.Gwei(8), wrapped.ExecutionPayment())
+		require.Equal(t, primitives.Gwei(8), wrapped.SilaPayment())
 		assert.DeepEqual(t, [32]byte(bytes.Repeat([]byte{0x01}, 32)), wrapped.ParentBlockHash())
 		assert.DeepEqual(t, [32]byte(bytes.Repeat([]byte{0x02}, 32)), wrapped.ParentBlockRoot())
 		assert.DeepEqual(t, [32]byte(bytes.Repeat([]byte{0x03}, 32)), wrapped.BlockHash())
@@ -114,7 +114,7 @@ func TestWrappedROSignedSilaPayloadBid(t *testing.T) {
 
 		bid, err := wrapped.Bid()
 		require.NoError(t, err)
-		require.Equal(t, primitives.Gwei(8), bid.ExecutionPayment())
+		require.Equal(t, primitives.Gwei(8), bid.SilaPayment())
 
 		gotSig := wrapped.Signature()
 		assert.DeepEqual(t, [96]byte(sig), gotSig)

@@ -730,7 +730,7 @@ func Test_GetPayloadAttribute(t *testing.T) {
 
 	// Cache hit, advance state, has fee recipient
 	suggestedAddr := common.HexToAddress("123")
-	service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.ExecutionAddress(suggestedAddr), Index: 0})
+	service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.SilaAddress(suggestedAddr), Index: 0})
 	service.cfg.PayloadIDCache.Set(slot, [32]byte{}, [8]byte{})
 	attr = service.getPayloadAttribute(ctx, st, slot, params.BeaconConfig().ZeroHash[:], true)
 	require.Equal(t, false, attr.IsEmpty())
@@ -773,7 +773,7 @@ func Test_GetPayloadAttributeV2(t *testing.T) {
 
 	// Cache hit, advance state, has fee recipient
 	suggestedAddr := common.HexToAddress("123")
-	service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.ExecutionAddress(suggestedAddr), Index: 0})
+	service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.SilaAddress(suggestedAddr), Index: 0})
 	service.cfg.PayloadIDCache.Set(slot, [32]byte{}, [8]byte{})
 	attr = service.getPayloadAttribute(ctx, st, slot, params.BeaconConfig().ZeroHash[:], true)
 	require.Equal(t, false, attr.IsEmpty())
@@ -825,7 +825,7 @@ func Test_GetPayloadAttributeV3(t *testing.T) {
 
 			// Cache hit, advance state, has fee recipient
 			suggestedAddr := common.HexToAddress("123")
-			service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.ExecutionAddress(suggestedAddr), Index: 0})
+			service.cfg.TrackedValidatorsCache.Set(cache.TrackedValidator{Active: true, FeeRecipient: primitives.SilaAddress(suggestedAddr), Index: 0})
 			service.cfg.PayloadIDCache.Set(slot, [32]byte{}, [8]byte{})
 			attr = service.getPayloadAttribute(ctx, test.st, slot, params.BeaconConfig().ZeroHash[:], true)
 			require.Equal(t, false, attr.IsEmpty())

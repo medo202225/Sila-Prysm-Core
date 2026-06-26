@@ -44,6 +44,6 @@ message BLSToSilaChange {
   // The public key of the BLS address requesting the change
   bytes from_bls_pubkey = 2 [ (sila.eth.ext.ssz_size) = "48" ];
 
-  // The new execution address to be the withdrawal credentials
+  // The new sila address to be the withdrawal credentials
   bytes to_sila_address = 3 [ (sila.eth.ext.ssz_size) = "20" ];
 }

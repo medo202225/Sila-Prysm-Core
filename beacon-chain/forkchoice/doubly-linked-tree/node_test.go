@@ -252,7 +252,7 @@ func TestNode_SetFullyValidated(t *testing.T) {
 		require.DeepEqual(t, storeNodes[i].node.root[:], respNode.BlockRoot)
 		require.Equal(t, storeNodes[i].node.balance, respNode.Balance)
 		require.Equal(t, storeNodes[i].node.weight, respNode.Weight)
-		require.Equal(t, storeNodes[i].optimistic, respNode.ExecutionOptimistic)
+		require.Equal(t, storeNodes[i].optimistic, respNode.SilaOptimistic)
 		require.Equal(t, storeNodes[i].node.justifiedEpoch, respNode.JustifiedEpoch)
 		require.Equal(t, storeNodes[i].node.unrealizedJustifiedEpoch, respNode.UnrealizedJustifiedEpoch)
 		require.Equal(t, storeNodes[i].node.finalizedEpoch, respNode.FinalizedEpoch)

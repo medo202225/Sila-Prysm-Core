@@ -102,7 +102,7 @@ type NewSignedProposerPreferencesVerifier func(p *silapb.SignedProposerPreferenc
 type SilaPayloadBidVerifier interface {
 	VerifyCurrentOrNextSlot() error
 	VerifyBuilderActive(state.ReadOnlyBeaconState) error
-	VerifyExecutionPaymentZero() error
+	VerifySilaPaymentZero() error
 	VerifyFeeRecipientMatches([]byte) error
 	VerifyParentBlockRootSeen(func([32]byte) bool) error
 	VerifyBidSlotHigherThanParent(parentSlot primitives.Slot) error

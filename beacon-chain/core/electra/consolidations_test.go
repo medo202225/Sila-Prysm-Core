@@ -83,7 +83,7 @@ func TestProcessPendingConsolidations(t *testing.T) {
 				// v1 withdrawal credentials should not be updated.
 				v1, err := st.ValidatorAtIndex(1)
 				require.NoError(t, err)
-				require.Equal(t, params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, v1.WithdrawalCredentials[0])
+				require.Equal(t, params.BeaconConfig().SilaAddressWithdrawalPrefixByte, v1.WithdrawalCredentials[0])
 			},
 			wantErr: false,
 		},

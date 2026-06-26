@@ -2954,7 +2954,7 @@ func SilaPayloadBidFromConsensus(b *eth.SilaPayloadBid) *SilaPayloadBid {
 		BuilderIndex:          fmt.Sprintf("%d", b.BuilderIndex),
 		Slot:                  fmt.Sprintf("%d", b.Slot),
 		Value:                 fmt.Sprintf("%d", b.Value),
-		ExecutionPayment:      fmt.Sprintf("%d", b.ExecutionPayment),
+		SilaPayment:      fmt.Sprintf("%d", b.SilaPayment),
 		BlobKzgCommitments:    blobKzgCommitments,
 		SilaRequestsRoot: hexutil.Encode(b.SilaRequestsRoot),
 	}
@@ -3226,9 +3226,9 @@ func (b *SilaPayloadBid) ToConsensus() (*eth.SilaPayloadBid, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Value")
 	}
-	executionPayment, err := strconv.ParseUint(b.ExecutionPayment, 10, 64)
+	silaPayment, err := strconv.ParseUint(b.SilaPayment, 10, 64)
 	if err != nil {
-		return nil, server.NewDecodeError(err, "ExecutionPayment")
+		return nil, server.NewDecodeError(err, "SilaPayment")
 	}
 	err = slice.VerifyMaxLength(b.BlobKzgCommitments, fieldparams.MaxBlobCommitmentsPerBlock)
 	if err != nil {
@@ -3256,7 +3256,7 @@ func (b *SilaPayloadBid) ToConsensus() (*eth.SilaPayloadBid, error) {
 		BuilderIndex:          primitives.BuilderIndex(builderIndex),
 		Slot:                  primitives.Slot(slot),
 		Value:                 primitives.Gwei(value),
-		ExecutionPayment:      primitives.Gwei(executionPayment),
+		SilaPayment:      primitives.Gwei(silaPayment),
 		BlobKzgCommitments:    blobKzgCommitments,
 		SilaRequestsRoot: silaRequestsRoot,
 	}, nil

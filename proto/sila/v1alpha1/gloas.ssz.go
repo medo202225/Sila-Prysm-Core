@@ -64,8 +64,8 @@ func (e *SilaPayloadBid) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	// Field (8) 'Value'
 	dst = ssz.MarshalUint(dst, e.Value)
 
-	// Field (9) 'ExecutionPayment'
-	dst = ssz.MarshalUint(dst, e.ExecutionPayment)
+	// Field (9) 'SilaPayment'
+	dst = ssz.MarshalUint(dst, e.SilaPayment)
 
 	// Offset (10) 'BlobKzgCommitments'
 	dst = ssz.WriteOffset(dst, offset)
@@ -147,8 +147,8 @@ func (e *SilaPayloadBid) UnmarshalSSZ(buf []byte) error {
 	// Field (8) 'Value'
 	e.Value = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei](buf[172:180])
 
-	// Field (9) 'ExecutionPayment'
-	e.ExecutionPayment = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei](buf[180:188])
+	// Field (9) 'SilaPayment'
+	e.SilaPayment = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei](buf[180:188])
 
 	// Offset (10) 'BlobKzgCommitments'
 	if o10 = ssz.ReadOffset(buf[188:192]); o10 > size {
@@ -249,8 +249,8 @@ func (e *SilaPayloadBid) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	// Field (8) 'Value'
 	ssz.PutUint(hh, e.Value)
 
-	// Field (9) 'ExecutionPayment'
-	ssz.PutUint(hh, e.ExecutionPayment)
+	// Field (9) 'SilaPayment'
+	ssz.PutUint(hh, e.SilaPayment)
 
 	// Field (10) 'BlobKzgCommitments'
 	{
@@ -4974,12 +4974,12 @@ func (b *Builder) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	}
 	dst = append(dst, b.Version...)
 
-	// Field (2) 'ExecutionAddress'
-	if size := len(b.ExecutionAddress); size != 20 {
-		err = ssz.ErrBytesLengthFn("--.ExecutionAddress", size, 20)
+	// Field (2) 'SilaAddress'
+	if size := len(b.SilaAddress); size != 20 {
+		err = ssz.ErrBytesLengthFn("--.SilaAddress", size, 20)
 		return
 	}
-	dst = append(dst, b.ExecutionAddress...)
+	dst = append(dst, b.SilaAddress...)
 
 	// Field (3) 'Balance'
 	dst = ssz.MarshalUint(dst, b.Balance)
@@ -5013,11 +5013,11 @@ func (b *Builder) UnmarshalSSZ(buf []byte) error {
 	}
 	b.Version = append(b.Version, buf[48:49]...)
 
-	// Field (2) 'ExecutionAddress'
-	if cap(b.ExecutionAddress) == 0 {
-		b.ExecutionAddress = make([]byte, 0, len(buf[49:69]))
+	// Field (2) 'SilaAddress'
+	if cap(b.SilaAddress) == 0 {
+		b.SilaAddress = make([]byte, 0, len(buf[49:69]))
 	}
-	b.ExecutionAddress = append(b.ExecutionAddress, buf[49:69]...)
+	b.SilaAddress = append(b.SilaAddress, buf[49:69]...)
 
 	// Field (3) 'Balance'
 	b.Balance = ssz.UnmarshallUint[github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei](buf[69:77])
@@ -5060,12 +5060,12 @@ func (b *Builder) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	}
 	hh.PutBytes(b.Version)
 
-	// Field (2) 'ExecutionAddress'
-	if size := len(b.ExecutionAddress); size != 20 {
-		err = ssz.ErrBytesLengthFn("--.ExecutionAddress", size, 20)
+	// Field (2) 'SilaAddress'
+	if size := len(b.SilaAddress); size != 20 {
+		err = ssz.ErrBytesLengthFn("--.SilaAddress", size, 20)
 		return
 	}
-	hh.PutBytes(b.ExecutionAddress)
+	hh.PutBytes(b.SilaAddress)
 
 	// Field (3) 'Balance'
 	ssz.PutUint(hh, b.Balance)

@@ -68,7 +68,7 @@ func (vs *Server) GetAttesterDuties(ctx context.Context, req *silapb.AttesterDut
 
 	return &silapb.AttesterDutiesResponse{
 		DependentRoot:       dependentRoot,
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Duties:              dutiesResponses,
 	}, nil
 }
@@ -122,7 +122,7 @@ func (vs *Server) GetProposerDutiesV2(ctx context.Context, req *silapb.ProposerD
 
 	return &silapb.ProposerDutiesResponse{
 		DependentRoot:       dependentRoot,
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Duties:              dutiesResponses,
 	}, nil
 }
@@ -171,7 +171,7 @@ func (vs *Server) GetSyncCommitteeDuties(ctx context.Context, req *silapb.SyncCo
 	}
 
 	return &silapb.SyncCommitteeDutiesResponse{
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Duties:              dutiesResponses,
 	}, nil
 }
@@ -230,7 +230,7 @@ func (vs *Server) GetPTCDuties(ctx context.Context, req *silapb.PTCDutiesRequest
 
 	return &silapb.PTCDutiesResponse{
 		DependentRoot:       dependentRoot,
-		ExecutionOptimistic: optimistic,
+		SilaOptimistic: optimistic,
 		Duties:              dutiesResponses,
 	}, nil
 }

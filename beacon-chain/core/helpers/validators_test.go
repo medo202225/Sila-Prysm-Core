@@ -901,7 +901,7 @@ func TestHasSilaExecutionWithdrawalCredentials(t *testing.T) {
 	roV, err := state_native.NewValidator(v)
 	require.NoError(t, err)
 	require.Equal(t, false, roV.HasSilaExecutionWithdrawalCredentials())
-	creds = []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC}
+	creds = []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC}
 	v = &silapb.Validator{WithdrawalCredentials: creds}
 	roV, err = state_native.NewValidator(v)
 	require.NoError(t, err)
@@ -941,7 +941,7 @@ func TestHasExecutionWithdrawalCredentials(t *testing.T) {
 			&silapb.Validator{WithdrawalCredentials: bytesutil.PadTo([]byte{params.BeaconConfig().CompoundingWithdrawalPrefixByte}, 32)},
 			true},
 		{"Has silaexec withdrawal credential",
-			&silapb.Validator{WithdrawalCredentials: bytesutil.PadTo([]byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte}, 32)},
+			&silapb.Validator{WithdrawalCredentials: bytesutil.PadTo([]byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte}, 32)},
 			true},
 		{"Does not have compounding withdrawal credential or silaexec withdrawal credential",
 			&silapb.Validator{WithdrawalCredentials: bytesutil.PadTo([]byte{0x00}, 32)},
@@ -978,7 +978,7 @@ func TestIsFullyWithdrawableValidator(t *testing.T) {
 		{
 			name: "Wrong withdrawable epoch",
 			validator: &silapb.Validator{
-				WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC},
+				WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC},
 				WithdrawableEpoch:     2,
 			},
 			balance: params.BeaconConfig().MaxEffectiveBalance,
@@ -988,7 +988,7 @@ func TestIsFullyWithdrawableValidator(t *testing.T) {
 		{
 			name: "No balance",
 			validator: &silapb.Validator{
-				WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC},
+				WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC},
 				WithdrawableEpoch:     2,
 			},
 			balance: 0,
@@ -998,7 +998,7 @@ func TestIsFullyWithdrawableValidator(t *testing.T) {
 		{
 			name: "Fully withdrawable",
 			validator: &silapb.Validator{
-				WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC},
+				WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC},
 				WithdrawableEpoch:     2,
 			},
 			balance: params.BeaconConfig().MaxEffectiveBalance,
@@ -1050,7 +1050,7 @@ func TestIsPartiallyWithdrawableValidator(t *testing.T) {
 			name: "No balance",
 			validator: &silapb.Validator{
 				EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
-				WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC},
+				WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC},
 			},
 			balance: 0,
 			epoch:   3,
@@ -1060,7 +1060,7 @@ func TestIsPartiallyWithdrawableValidator(t *testing.T) {
 			name: "Partially withdrawable",
 			validator: &silapb.Validator{
 				EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
-				WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC},
+				WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC},
 			},
 			balance: params.BeaconConfig().MaxEffectiveBalance * 2,
 			epoch:   3,
@@ -1070,7 +1070,7 @@ func TestIsPartiallyWithdrawableValidator(t *testing.T) {
 			name: "Fully withdrawable vanilla validator electra",
 			validator: &silapb.Validator{
 				EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
-				WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC},
+				WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC},
 			},
 			balance: params.BeaconConfig().MinActivationBalance * 2,
 			epoch:   params.BeaconConfig().ElectraForkEpoch,
@@ -1145,7 +1145,7 @@ func TestValidatorMaxEffectiveBalance(t *testing.T) {
 		},
 		{
 			name:      "Vanilla credentials",
-			validator: &silapb.Validator{WithdrawalCredentials: []byte{params.BeaconConfig().SilaExecutionAddressWithdrawalPrefixByte, 0xCC}},
+			validator: &silapb.Validator{WithdrawalCredentials: []byte{params.BeaconConfig().SilaAddressWithdrawalPrefixByte, 0xCC}},
 			want:      params.BeaconConfig().MinActivationBalance,
 		},
 	}

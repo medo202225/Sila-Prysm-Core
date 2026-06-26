@@ -123,7 +123,7 @@ func (vs *Server) createSelfBuildSilaPayloadBid(
 		BuilderIndex:          params.BeaconConfig().BuilderIndexSelfBuild,
 		Slot:                  block.Slot(),
 		Value:                 0,
-		ExecutionPayment:      0,
+		SilaPayment:      0,
 		BlobKzgCommitments:    local.BlobsBundler.GetKzgCommitments(),
 		SilaRequestsRoot: silaRequestsRoot[:],
 	}, nil
