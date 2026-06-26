@@ -7,10 +7,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/network"
+	"github.com/libp2p/go-libp2p/core/protocol"
+	"github.com/pkg/errors"
 	chainMock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	db2 "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
 	db "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/encoder"
 	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
@@ -23,17 +26,14 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common"
 	gethTypes "github.com/sila-chain/Sila/core/types"
-	"github.com/libp2p/go-libp2p/core/network"
-	"github.com/libp2p/go-libp2p/core/protocol"
-	"github.com/pkg/errors"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 
@@ -209,7 +209,7 @@ func TestRPCBeaconBlocksByRange_ReconstructsPayloads(t *testing.T) {
 		BaseFeePerGas: bytesutil.PadTo([]byte("baseFeePerGas"), fieldparams.RootLength),
 		Transactions:  encodedBinaryTxs,
 	}
-	mockEngine := &mockExecution.SilaEngineClient{
+	mockEngine := &mockSila.SilaEngineClient{
 		SilaPayloadByBlockHash: map[[32]byte]*silaenginev1.SilaPayload{
 			blockHash: payload,
 		},
@@ -347,7 +347,7 @@ func TestWriteBlockBatchToStream_ReconstructedBlocksPreserveCanonicalOrder(t *te
 	block2 := makeFullROBlock(2)
 	block3 := makeBlindedROBlock(3, payload3)
 
-	mockEngine := &mockExecution.SilaEngineClient{
+	mockEngine := &mockSila.SilaEngineClient{
 		SilaPayloadByBlockHash: map[[32]byte]*silaenginev1.SilaPayload{
 			bytesutil.ToBytes32(payload1.BlockHash): payload1,
 			bytesutil.ToBytes32(payload3.BlockHash): payload3,

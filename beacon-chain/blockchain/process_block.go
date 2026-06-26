@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/gloas"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
@@ -32,7 +32,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 	"github.com/sirupsen/logrus"
 )
 
@@ -390,7 +390,7 @@ func (s *Service) notifyEngineAndSaveData(
 				postVersionAndHeaders[i].version,
 				postVersionAndHeaders[i].header, b)
 			if err != nil {
-				return nil, false, s.handleInvalidExecutionError(ctx, err, root, b.Block().ParentRoot(), [32]byte(postVersionAndHeaders[i].header.ParentHash()))
+				return nil, false, s.handleInvalidSilaPayloadError(ctx, err, root, b.Block().ParentRoot(), [32]byte(postVersionAndHeaders[i].header.ParentHash()))
 			}
 			if isValidPayload {
 				if err := s.validateMergeTransitionBlock(ctx, preVersionAndHeaders[i].version,
@@ -1245,7 +1245,7 @@ func (s *Service) waitForSync() error {
 }
 
 // the caller of this function must hold a write lock in forkchoice store.
-func (s *Service) handleInvalidExecutionError(ctx context.Context, err error, blockRoot, parentRoot [32]byte, parentHash [32]byte) error {
+func (s *Service) handleInvalidSilaPayloadError(ctx context.Context, err error, blockRoot, parentRoot [32]byte, parentHash [32]byte) error {
 	if IsInvalidBlock(err) && InvalidBlockLVH(err) != [32]byte{} {
 		return s.pruneInvalidBlock(ctx, blockRoot, parentRoot, parentHash, InvalidBlockLVH(err))
 	}

@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -18,7 +18,7 @@ import (
 // When the current head is unchanged, saveHeadIfNeeded must return immediately
 // without touching the head or panicking.
 func TestSaveHeadIfNeeded_NotNewHead_NoOp(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	headRoot := bytesutil.ToBytes32([]byte("headroot"))

@@ -7,7 +7,7 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
@@ -16,8 +16,8 @@ import (
 	payloadattribute "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/payload-attribute"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -62,20 +62,20 @@ func prepareGloasForkchoiceState(
 		FinalizedCheckpoint:        finalizedCheckpoint,
 		LatestBlockHeader:          blockHeader,
 		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
-			BlockHash:             blockHash[:],
-			ParentBlockHash:       parentBlockHash[:],
-			ParentBlockRoot:       make([]byte, 32),
-			PrevRandao:            make([]byte, 32),
-			FeeRecipient:          make([]byte, 20),
-			BlobKzgCommitments:    [][]byte{make([]byte, 48)},
-			SilaRequestsRoot: make([]byte, 32),
+			BlockHash:          blockHash[:],
+			ParentBlockHash:    parentBlockHash[:],
+			ParentBlockRoot:    make([]byte, 32),
+			PrevRandao:         make([]byte, 32),
+			FeeRecipient:       make([]byte, 20),
+			BlobKzgCommitments: [][]byte{make([]byte, 48)},
+			SilaRequestsRoot:   make([]byte, 32),
 		},
-		Builders:                     make([]*silapb.Builder, 0),
-		BuilderPendingPayments:       builderPendingPayments,
-		SilaPayloadAvailability: make([]byte, 1024),
-		LatestBlockHash:              make([]byte, 32),
-		PayloadExpectedWithdrawals:   make([]*silaenginev1.Withdrawal, 0),
-		ProposerLookahead:            make([]primitives.ValidatorIndex, 64),
+		Builders:                   make([]*silapb.Builder, 0),
+		BuilderPendingPayments:     builderPendingPayments,
+		SilaPayloadAvailability:    make([]byte, 1024),
+		LatestBlockHash:            make([]byte, 32),
+		PayloadExpectedWithdrawals: make([]*silaenginev1.Withdrawal, 0),
+		ProposerLookahead:          make([]primitives.ValidatorIndex, 64),
 	}
 
 	st, err := state_native.InitializeFromProtoUnsafeGloas(base)
@@ -134,20 +134,20 @@ func testGloasState(t *testing.T, slot primitives.Slot, parentRoot [32]byte, blo
 			BlockHash:   make([]byte, 32),
 		},
 		LatestSilaPayloadBid: &silapb.SilaPayloadBid{
-			BlockHash:             blockHash[:],
-			ParentBlockHash:       make([]byte, 32),
-			ParentBlockRoot:       make([]byte, 32),
-			PrevRandao:            make([]byte, 32),
-			FeeRecipient:          make([]byte, 20),
-			BlobKzgCommitments:    [][]byte{make([]byte, 48)},
-			SilaRequestsRoot: make([]byte, 32),
+			BlockHash:          blockHash[:],
+			ParentBlockHash:    make([]byte, 32),
+			ParentBlockRoot:    make([]byte, 32),
+			PrevRandao:         make([]byte, 32),
+			FeeRecipient:       make([]byte, 20),
+			BlobKzgCommitments: [][]byte{make([]byte, 48)},
+			SilaRequestsRoot:   make([]byte, 32),
 		},
-		Builders:                     make([]*silapb.Builder, 0),
-		BuilderPendingPayments:       builderPendingPayments,
-		SilaPayloadAvailability: make([]byte, 1024),
-		LatestBlockHash:              make([]byte, 32),
-		PayloadExpectedWithdrawals:   make([]*silaenginev1.Withdrawal, 0),
-		ProposerLookahead:            make([]primitives.ValidatorIndex, 64),
+		Builders:                   make([]*silapb.Builder, 0),
+		BuilderPendingPayments:     builderPendingPayments,
+		SilaPayloadAvailability:    make([]byte, 1024),
+		LatestBlockHash:            make([]byte, 32),
+		PayloadExpectedWithdrawals: make([]*silaenginev1.Withdrawal, 0),
+		ProposerLookahead:          make([]primitives.ValidatorIndex, 64),
 	}
 
 	bid := util.HydrateSignedSilaPayloadBid(&silapb.SignedSilaPayloadBid{
@@ -183,7 +183,7 @@ func testSignedEnvelope(t *testing.T, blockRoot [32]byte, slot primitives.Slot, 
 				Transactions:  [][]byte{},
 				Withdrawals:   []*silaenginev1.Withdrawal{},
 			},
-			SilaRequests:     &silaenginev1.SilaRequests{},
+			SilaRequests:          &silaenginev1.SilaRequests{},
 			BuilderIndex:          0,
 			BeaconBlockRoot:       blockRoot[:],
 			ParentBeaconBlockRoot: make([]byte, 32),
@@ -192,7 +192,7 @@ func testSignedEnvelope(t *testing.T, blockRoot [32]byte, slot primitives.Slot, 
 	}
 }
 
-func setupGloasService(t *testing.T, silaEngineClient *mockExecution.SilaEngineClient) (*Service, *testServiceRequirements) {
+func setupGloasService(t *testing.T, silaEngineClient *mockSila.SilaEngineClient) (*Service, *testServiceRequirements) {
 	t.Helper()
 	return minimalTestService(t,
 		WithPayloadIDCache(cache.NewPayloadIDCache()),
@@ -216,7 +216,7 @@ func insertGloasBlock(t *testing.T, s *Service, base *silapb.BeaconStateGloas, b
 }
 
 func TestGetPayloadEnvelopePrestate_UnknownRoot(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 	unknownRoot := bytesutil.ToBytes32([]byte("unknown"))
 	env := &silapb.SilaPayloadEnvelope{
@@ -231,7 +231,7 @@ func TestGetPayloadEnvelopePrestate_UnknownRoot(t *testing.T) {
 }
 
 func TestGetPayloadEnvelopePrestate_OK(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -254,7 +254,7 @@ func TestGetPayloadEnvelopePrestate_OK(t *testing.T) {
 }
 
 func TestNotifyNewEnvelope_Valid(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -269,7 +269,7 @@ func TestNotifyNewEnvelope_Valid(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
@@ -280,7 +280,7 @@ func TestNotifyNewEnvelope_Valid(t *testing.T) {
 }
 
 func TestNotifyNewEnvelope_Syncing(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{
 		ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus,
 	})
 	ctx := t.Context()
@@ -297,7 +297,7 @@ func TestNotifyNewEnvelope_Syncing(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
@@ -308,7 +308,7 @@ func TestNotifyNewEnvelope_Syncing(t *testing.T) {
 }
 
 func TestNotifyNewEnvelope_Invalid(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{
 		ErrNewPayload: execution.ErrInvalidPayloadStatus,
 	})
 	ctx := t.Context()
@@ -325,7 +325,7 @@ func TestNotifyNewEnvelope_Invalid(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:]},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
@@ -336,7 +336,7 @@ func TestNotifyNewEnvelope_Invalid(t *testing.T) {
 
 func TestNotifyForkchoiceUpdateGloas_Valid(t *testing.T) {
 	pid := &silaenginev1.PayloadIDBytes{1, 2, 3, 4, 5, 6, 7, 8}
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{PayloadIDBytes: pid})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{PayloadIDBytes: pid})
 	ctx := t.Context()
 
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
@@ -348,7 +348,7 @@ func TestNotifyForkchoiceUpdateGloas_Valid(t *testing.T) {
 }
 
 func TestNotifyForkchoiceUpdateGloas_Syncing(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{
 		ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus,
 	})
 	ctx := t.Context()
@@ -359,7 +359,7 @@ func TestNotifyForkchoiceUpdateGloas_Syncing(t *testing.T) {
 }
 
 func TestNotifyForkchoiceUpdateGloas_Invalid(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{
 		ErrForkchoiceUpdated: execution.ErrInvalidPayloadStatus,
 	})
 	ctx := t.Context()
@@ -370,7 +370,7 @@ func TestNotifyForkchoiceUpdateGloas_Invalid(t *testing.T) {
 }
 
 func TestNotifyForkchoiceUpdateGloas_NilAttributes(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
@@ -381,7 +381,7 @@ func TestNotifyForkchoiceUpdateGloas_NilAttributes(t *testing.T) {
 func TestFcuFromReorgData_CachesPayloadID(t *testing.T) {
 	logHook := logTest.NewGlobal()
 	pid := &silaenginev1.PayloadIDBytes{1, 2, 3, 4, 5, 6, 7, 8}
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{PayloadIDBytes: pid})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{PayloadIDBytes: pid})
 
 	headRoot := bytesutil.ToBytes32([]byte("headroot"))
 	headHash := bytesutil.ToBytes32([]byte("headhash"))
@@ -406,7 +406,7 @@ func TestFcuFromReorgData_CachesPayloadID(t *testing.T) {
 
 func TestFcuFromReorgData_NilPayloadID_NoCache(t *testing.T) {
 	// Engine returns no payload ID (nil), so nothing should be cached.
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 
 	headRoot := bytesutil.ToBytes32([]byte("headroot"))
 	headHash := bytesutil.ToBytes32([]byte("headhash"))
@@ -422,7 +422,7 @@ func TestFcuFromReorgData_NilPayloadID_NoCache(t *testing.T) {
 func TestFcuFromReorgData_EngineError(t *testing.T) {
 	logHook := logTest.NewGlobal()
 	// An invalid-payload status surfaces as an error from notifyForkchoiceUpdateGloas.
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{
 		ErrForkchoiceUpdated: execution.ErrInvalidPayloadStatus,
 	})
 
@@ -439,7 +439,7 @@ func TestFcuFromReorgData_EngineError(t *testing.T) {
 }
 
 func TestSavePostPayload(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -455,8 +455,8 @@ func TestSavePostPayload(t *testing.T) {
 	require.Equal(t, true, s.cfg.BeaconDB.HasSilaPayloadEnvelope(ctx, blockRoot))
 }
 
-func TestValidateExecutionOnEnvelope_Valid(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+func TestValidateSilaPayloadOnEnvelope_Valid(t *testing.T) {
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -471,18 +471,18 @@ func TestValidateExecutionOnEnvelope_Valid(t *testing.T) {
 		BeaconBlockRoot:       blockRoot[:],
 		ParentBeaconBlockRoot: make([]byte, 32),
 		Payload:               &silaenginev1.SilaPayloadGloas{BlockHash: blockHash[:], ParentHash: make([]byte, 32)},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 	}
 	envelope, err := blocks.WrappedROSilaPayloadEnvelope(env)
 	require.NoError(t, err)
 
-	isValid, err := s.validateExecutionOnEnvelope(ctx, st, envelope)
+	isValid, err := s.validateSilaPayloadOnEnvelope(ctx, st, envelope)
 	require.NoError(t, err)
 	require.Equal(t, true, isValid)
 }
 
 func TestPostPayloadTasks_NotHead(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	root := bytesutil.ToBytes32([]byte("root1"))
@@ -505,7 +505,7 @@ func TestPostPayloadTasks_NotHead(t *testing.T) {
 }
 
 func TestPostPayloadTasks_DoesNotMutateHead(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	root := bytesutil.ToBytes32([]byte("root1"))
@@ -541,7 +541,7 @@ func TestPostPayloadTasks_DoesNotMutateHead(t *testing.T) {
 
 func TestLatePayloadTasks_ReturnsEarlyWhenBlockLate(t *testing.T) {
 	logHook := logTest.NewGlobal()
-	service, tr := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	service, tr := setupGloasService(t, &mockSila.SilaEngineClient{})
 
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
 	base, _ := testGloasState(t, 1, params.BeaconConfig().ZeroHash, blockHash)
@@ -573,7 +573,7 @@ func TestLatePayloadTasks_SendsFCU(t *testing.T) {
 	defer resetCfg()
 
 	pid := &silaenginev1.PayloadIDBytes{1, 2, 3, 4, 5, 6, 7, 8}
-	service, tr := setupGloasService(t, &mockExecution.SilaEngineClient{PayloadIDBytes: pid})
+	service, tr := setupGloasService(t, &mockSila.SilaEngineClient{PayloadIDBytes: pid})
 
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
 	base, blk := testGloasState(t, 1, params.BeaconConfig().ZeroHash, blockHash)
@@ -613,7 +613,7 @@ func TestLateBlockTasks_GloasFCU(t *testing.T) {
 	defer resetCfg()
 
 	pid := &silaenginev1.PayloadIDBytes{1, 2, 3, 4, 5, 6, 7, 8}
-	service, tr := setupGloasService(t, &mockExecution.SilaEngineClient{PayloadIDBytes: pid})
+	service, tr := setupGloasService(t, &mockSila.SilaEngineClient{PayloadIDBytes: pid})
 
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
 	base, blk := testGloasState(t, 1, params.BeaconConfig().ZeroHash, blockHash)
@@ -658,7 +658,7 @@ func TestLateBlockTasks_GloasForkBoundary_PreforkBidUsesHeadRoot(t *testing.T) {
 	params.OverrideBeaconConfig(cfg)
 
 	pid := &silaenginev1.PayloadIDBytes{1, 2, 3, 4, 5, 6, 7, 8}
-	service, tr := setupGloasService(t, &mockExecution.SilaEngineClient{PayloadIDBytes: pid})
+	service, tr := setupGloasService(t, &mockSila.SilaEngineClient{PayloadIDBytes: pid})
 
 	blockHash := bytesutil.ToBytes32([]byte("hash1"))
 	base, blk := testGloasState(t, 1, params.BeaconConfig().ZeroHash, blockHash)

@@ -7,11 +7,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/pkg/errors"
+	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
 	chainMock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
 	dbutil "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
@@ -30,13 +32,11 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
 	gethTypes "github.com/sila-chain/Sila/core/types"
 	"github.com/sila-chain/Sila/ethclient/simulated"
 	"github.com/sila-chain/Sila/rpc"
-	"github.com/pkg/errors"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 
@@ -92,7 +92,7 @@ func TestStart_OK(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -110,7 +110,7 @@ func TestStart_OK(t *testing.T) {
 	)
 	require.NoError(t, err, "unable to setup execution service")
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
 	testAcc.Backend.Commit()
@@ -146,7 +146,7 @@ func TestStop_OK(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -176,7 +176,7 @@ func TestService_SilaExecutionSynced(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -203,7 +203,7 @@ func TestFollowBlock_OK(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -222,7 +222,7 @@ func TestFollowBlock_OK(t *testing.T) {
 	params.OverrideBeaconConfig(conf)
 
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	block, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
 	require.NoError(t, err)
 	baseHeight := block.NumberU64()
@@ -272,7 +272,7 @@ func TestStatus(t *testing.T) {
 		{}: "",
 		{isRunning: true, latestSilaData: &silapb.LatestSilaData{BlockTime: afterFiveMinutesAgo}}:   "",
 		{isRunning: false, latestSilaData: &silapb.LatestSilaData{BlockTime: beforeFiveMinutesAgo}}: "",
-		{isRunning: false, runError: errors.New("test runError")}:                                  "",
+		{isRunning: false, runError: errors.New("test runError")}:                                   "",
 		// "status is error" cases
 		{isRunning: true, runError: errors.New("test runError")}: "test runError",
 	}
@@ -291,7 +291,7 @@ func TestStatus(t *testing.T) {
 func TestHandlePanic_OK(t *testing.T) {
 	hook := logTest.NewGlobal()
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -328,7 +328,7 @@ func TestLogTillGenesis_OK(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -342,7 +342,7 @@ func TestLogTillGenesis_OK(t *testing.T) {
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
 
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
 	for range 30 {
 		testAcc.Backend.Commit()
@@ -469,7 +469,7 @@ func TestNewService_EarliestVotingBlock(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -527,7 +527,7 @@ func TestNewService_SilaHeaderRequLimit(t *testing.T) {
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := dbutil.SetupDB(t)
 
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -583,7 +583,7 @@ func TestService_EnsureConsistentPowchainData(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	cache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	srv, endpoint, err := mockExecution.SetupRPCServer()
+	srv, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		srv.Stop()
@@ -615,7 +615,7 @@ func TestService_InitializeCorrectly(t *testing.T) {
 	cache, err := depositsnapshot.New()
 	require.NoError(t, err)
 
-	srv, endpoint, err := mockExecution.SetupRPCServer()
+	srv, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		srv.Stop()
@@ -645,7 +645,7 @@ func TestService_EnsureValidPowchainData(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	cache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	srv, endpoint, err := mockExecution.SetupRPCServer()
+	srv, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		srv.Stop()
@@ -735,7 +735,7 @@ func TestService_ValidateDepositContainers(t *testing.T) {
 }
 
 func TestSilaEndpoints(t *testing.T) {
-	server, firstEndpoint, err := mockExecution.SetupRPCServer()
+	server, firstEndpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -798,7 +798,7 @@ func TestService_FollowBlock(t *testing.T) {
 	}
 	s := &Service{
 		cfg:            &config{silaexecHeaderReqLimit: 1000},
-		rpcClient:      &mockExecution.RPCClient{BlockNumMap: bMap},
+		rpcClient:      &mockSila.RPCClient{BlockNumMap: bMap},
 		headerCache:    newHeaderCache(),
 		latestSilaData: &silapb.LatestSilaData{BlockTime: (3000 * 40) + followTime, BlockHeight: 3000},
 	}
@@ -842,7 +842,7 @@ func TestService_migrateOldDepositTree(t *testing.T) {
 	cache, err := depositsnapshot.New()
 	require.NoError(t, err)
 
-	srv, endpoint, err := mockExecution.SetupRPCServer()
+	srv, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		srv.Stop()

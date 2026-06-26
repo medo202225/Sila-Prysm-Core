@@ -8,7 +8,7 @@ import (
 	"time"
 
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
 	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
@@ -28,16 +28,16 @@ func TestLifecycle_OK(t *testing.T) {
 		Genesis: time.Now(),
 	}
 	rpcService := NewService(t.Context(), &Config{
-		Port:                  "7348",
-		SyncService:           &mockSync.Sync{IsSyncing: false},
-		BlockReceiver:         chainService,
-		AttestationReceiver:   chainService,
-		HeadFetcher:           chainService,
-		GenesisTimeFetcher:    chainService,
-		SilaChainService: &mockExecution.Chain{},
-		StateNotifier:         chainService.StateNotifier(),
-		Router:                http.NewServeMux(),
-		ClockWaiter:           startup.NewClockSynchronizer(),
+		Port:                "7348",
+		SyncService:         &mockSync.Sync{IsSyncing: false},
+		BlockReceiver:       chainService,
+		AttestationReceiver: chainService,
+		HeadFetcher:         chainService,
+		GenesisTimeFetcher:  chainService,
+		SilaChainService:    &mockSila.Chain{},
+		StateNotifier:       chainService.StateNotifier(),
+		Router:              http.NewServeMux(),
+		ClockWaiter:         startup.NewClockSynchronizer(),
 	})
 
 	rpcService.Start()
@@ -71,16 +71,16 @@ func TestRPC_InsecureEndpoint(t *testing.T) {
 	hook := logTest.NewGlobal()
 	chainService := &mock.ChainService{Genesis: time.Now()}
 	rpcService := NewService(t.Context(), &Config{
-		Port:                  "7777",
-		SyncService:           &mockSync.Sync{IsSyncing: false},
-		BlockReceiver:         chainService,
-		GenesisTimeFetcher:    chainService,
-		AttestationReceiver:   chainService,
-		HeadFetcher:           chainService,
-		SilaChainService: &mockExecution.Chain{},
-		StateNotifier:         chainService.StateNotifier(),
-		Router:                http.NewServeMux(),
-		ClockWaiter:           startup.NewClockSynchronizer(),
+		Port:                "7777",
+		SyncService:         &mockSync.Sync{IsSyncing: false},
+		BlockReceiver:       chainService,
+		GenesisTimeFetcher:  chainService,
+		AttestationReceiver: chainService,
+		HeadFetcher:         chainService,
+		SilaChainService:    &mockSila.Chain{},
+		StateNotifier:       chainService.StateNotifier(),
+		Router:              http.NewServeMux(),
+		ClockWaiter:         startup.NewClockSynchronizer(),
 	})
 
 	rpcService.Start()

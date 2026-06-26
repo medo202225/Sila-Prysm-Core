@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/electra"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
 	statefeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/state"
@@ -23,12 +24,11 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
-	silapbv1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
+	silapbv1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -108,7 +108,7 @@ func (s *Service) ReceiveBlock(ctx context.Context, block interfaces.ReadOnlySig
 	}
 
 	currentCheckpoints := s.saveCurrentCheckpoints(preState)
-	postState, isValidPayload, err := s.validateExecutionAndConsensus(ctx, preState, roblock)
+	postState, isValidPayload, err := s.validateSilaPayloadAndConsensus(ctx, preState, roblock)
 	if err != nil {
 		return errors.Wrap(err, "validator execution and consensus")
 	}
@@ -218,7 +218,7 @@ func (s *Service) reportEpochMetrics(postState state.BeaconState, prevEpoch prim
 	}()
 }
 
-func (s *Service) validateExecutionAndConsensus(
+func (s *Service) validateSilaPayloadAndConsensus(
 	ctx context.Context,
 	preState state.BeaconState,
 	block blocks.ROBlock,
@@ -253,7 +253,7 @@ func (s *Service) validateExecutionAndConsensus(
 	var isValidPayload bool
 	eg.Go(func() error {
 		var err error
-		isValidPayload, err = s.validateExecutionOnBlock(ctx, preStateVersion, preStateHeader, block)
+		isValidPayload, err = s.validateSilaPayloadOnBlock(ctx, preStateVersion, preStateHeader, block)
 		if err != nil {
 			return errors.Wrap(err, "could not notify the engine of the new payload")
 		}
@@ -643,9 +643,9 @@ func (s *Service) sendNewFinalizedEvent(ctx context.Context, postState state.Bea
 	s.cfg.StateNotifier.StateFeed().Send(&feed.Event{
 		Type: statefeed.FinalizedCheckpoint,
 		Data: &silapbv1.EventFinalizedCheckpoint{
-			Epoch:               postState.FinalizedCheckpoint().Epoch,
-			Block:               postState.FinalizedCheckpoint().Root,
-			State:               stateRoot[:],
+			Epoch:          postState.FinalizedCheckpoint().Epoch,
+			Block:          postState.FinalizedCheckpoint().Root,
+			State:          stateRoot[:],
 			SilaOptimistic: isValidPayload,
 		},
 	})
@@ -671,12 +671,12 @@ func (s *Service) sendBlockAttestationsToSlasher(signed interfaces.ReadOnlySigne
 	}
 }
 
-// validateExecutionOnBlock notifies the engine of the incoming block sila payload and returns true if the payload is valid
-func (s *Service) validateExecutionOnBlock(ctx context.Context, ver int, header interfaces.SilaData, block blocks.ROBlock) (bool, error) {
+// validateSilaPayloadOnBlock notifies the engine of the incoming block sila payload and returns true if the payload is valid
+func (s *Service) validateSilaPayloadOnBlock(ctx context.Context, ver int, header interfaces.SilaData, block blocks.ROBlock) (bool, error) {
 	isValidPayload, err := s.notifyNewPayload(ctx, ver, header, block)
 	if err != nil {
 		s.cfg.ForkChoiceStore.Lock()
-		err = s.handleInvalidExecutionError(ctx, err, block.Root(), block.Block().ParentRoot(), [32]byte(header.BlockHash()))
+		err = s.handleInvalidSilaPayloadError(ctx, err, block.Root(), block.Block().ParentRoot(), [32]byte(header.BlockHash()))
 		s.cfg.ForkChoiceStore.Unlock()
 		return false, err
 	}

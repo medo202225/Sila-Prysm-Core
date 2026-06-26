@@ -15,7 +15,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
 	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/slashings"
@@ -46,7 +46,7 @@ func setupBeaconChain(t *testing.T, beaconDB db.Database) *Service {
 	ctx := t.Context()
 	var web3Service *execution.Service
 	var err error
-	srv, endpoint, err := mockExecution.SetupRPCServer()
+	srv, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		srv.Stop()

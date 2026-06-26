@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
@@ -16,7 +17,6 @@ import (
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -164,7 +164,7 @@ func (s *Service) UpdateHead(ctx context.Context, proposingSlot primitives.Slot)
 				proposingSlot: proposingSlot,
 				attributes:    attr,
 			}
-			go s.forkchoiceUpdateWithExecution(s.ctx, fcuArgs)
+			go s.forkchoiceUpdateWithSilaEngine(s.ctx, fcuArgs)
 		}
 	}
 	if err := s.saveHead(s.ctx, newHeadRoot, headBlock, headState, full); err != nil {

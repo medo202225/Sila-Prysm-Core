@@ -6,7 +6,7 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
 	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
@@ -61,7 +61,7 @@ func TestService_getHeadStateAndBlock(t *testing.T) {
 	require.DeepEqual(t, blk, gotBlk)
 }
 
-func TestService_forkchoiceUpdateWithExecution_exceptionalCases(t *testing.T) {
+func TestService_forkchoiceUpdateWithSilaEngine_exceptionalCases(t *testing.T) {
 	ctx := t.Context()
 	opts := testServiceOptsWithDB(t)
 
@@ -102,14 +102,14 @@ func TestService_forkchoiceUpdateWithExecution_exceptionalCases(t *testing.T) {
 		headBlock:     wsb,
 		proposingSlot: service.CurrentSlot() + 1,
 	}
-	service.forkchoiceUpdateWithExecution(ctx, args)
+	service.forkchoiceUpdateWithSilaEngine(ctx, args)
 
 	payloadID, has := service.cfg.PayloadIDCache.PayloadID(2, [32]byte{2})
 	require.Equal(t, true, has)
 	require.Equal(t, primitives.PayloadID{1}, payloadID)
 }
 
-func TestService_forkchoiceUpdateWithExecution_SameHeadRootNewProposer(t *testing.T) {
+func TestService_forkchoiceUpdateWithSilaEngine_SameHeadRootNewProposer(t *testing.T) {
 	service, tr := minimalTestService(t, WithPayloadIDCache(cache.NewPayloadIDCache()))
 	ctx, beaconDB, fcs := tr.ctx, tr.db, tr.fcs
 
@@ -136,7 +136,7 @@ func TestService_forkchoiceUpdateWithExecution_SameHeadRootNewProposer(t *testin
 	require.NoError(t, err)
 	require.NoError(t, fcs.InsertNode(ctx, state, blkRoot))
 
-	service.cfg.SilaEngineCaller = &mockExecution.SilaEngineClient{}
+	service.cfg.SilaEngineCaller = &mockSila.SilaEngineClient{}
 	require.NoError(t, beaconDB.SaveState(ctx, st, bellatrixBlkRoot))
 	require.NoError(t, beaconDB.SaveGenesisBlockRoot(ctx, bellatrixBlkRoot))
 	sb, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockBellatrix(&silapb.SignedBeaconBlockBellatrix{}))
@@ -156,7 +156,7 @@ func TestService_forkchoiceUpdateWithExecution_SameHeadRootNewProposer(t *testin
 		headRoot:      r,
 		proposingSlot: service.CurrentSlot() + 1,
 	}
-	service.forkchoiceUpdateWithExecution(ctx, args)
+	service.forkchoiceUpdateWithSilaEngine(ctx, args)
 }
 
 func TestShouldOverrideFCU(t *testing.T) {

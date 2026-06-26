@@ -6,19 +6,19 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
 	statefeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
 	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	contracts "github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit/mock"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	"github.com/sila-chain/Sila"
 	"github.com/sila-chain/Sila/common"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
@@ -33,7 +33,7 @@ func TestProcessDepositLog_OK(t *testing.T) {
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
 
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -101,7 +101,7 @@ func TestProcessDepositLog_InsertsPendingDeposit(t *testing.T) {
 	beaconDB := testDB.SetupDB(t)
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -163,7 +163,7 @@ func TestUnpackDepositLogData_OK(t *testing.T) {
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
 	beaconDB := testDB.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -217,7 +217,7 @@ func TestProcessSilaGenesisLog_8DuplicatePubkeys(t *testing.T) {
 	beaconDB := testDB.SetupDB(t)
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -293,7 +293,7 @@ func TestProcessSilaGenesisLog(t *testing.T) {
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
 
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -307,7 +307,7 @@ func TestProcessSilaGenesisLog(t *testing.T) {
 	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	require.NoError(t, err)
 	params.SetupTestConfigCleanup(t)
 	bConfig := params.MinimalSpecConfig().Copy()
@@ -385,7 +385,7 @@ func TestProcessSilaGenesisLog_CorrectNumOfDeposits(t *testing.T) {
 	kvStore := testDB.SetupDB(t)
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -401,7 +401,7 @@ func TestProcessSilaGenesisLog_CorrectNumOfDeposits(t *testing.T) {
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
 	web3Service.latestSilaData.LastRequestedBlock = 0
 	block, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
@@ -486,7 +486,7 @@ func TestProcessLogs_DepositRequestsStarted(t *testing.T) {
 	kvStore := testDB.SetupDB(t)
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -502,7 +502,7 @@ func TestProcessLogs_DepositRequestsStarted(t *testing.T) {
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
 	web3Service.latestSilaData.LastRequestedBlock = 0
 	block, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
@@ -573,7 +573,7 @@ func TestProcessSilaGenesisLog_LargePeriodOfNoLogs(t *testing.T) {
 	kvStore := testDB.SetupDB(t)
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -589,7 +589,7 @@ func TestProcessSilaGenesisLog_LargePeriodOfNoLogs(t *testing.T) {
 	web3Service = setDefaultMocks(web3Service)
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	web3Service.httpLogger = testAcc.Backend.Client()
 	web3Service.latestSilaData.LastRequestedBlock = 0
 	b, err := testAcc.Backend.Client().BlockByNumber(t.Context(), nil)
@@ -692,7 +692,7 @@ func TestCheckForChainstart_NoValidator(t *testing.T) {
 func newPowchainService(t *testing.T, silaexecBackend *mock.TestAccount, beaconDB db.Database) *Service {
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -708,7 +708,7 @@ func newPowchainService(t *testing.T, silaexecBackend *mock.TestAccount, beaconD
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(silaexecBackend.ContractAddr, silaexecBackend.Backend.Client())
 	require.NoError(t, err)
 
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: silaexecBackend.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: silaexecBackend.Backend}
 	web3Service.httpLogger = &goodLogger{backend: silaexecBackend.Backend}
 	params.SetupTestConfigCleanup(t)
 	bConfig := params.MinimalSpecConfig().Copy()

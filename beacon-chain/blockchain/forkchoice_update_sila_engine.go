@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/pkg/errors"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -14,7 +15,6 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -80,7 +80,7 @@ func (s *Service) sendFCU(cfg *postBlockProcessConfig) {
 		return
 	}
 	if s.inRegularSync() {
-		go s.forkchoiceUpdateWithExecution(cfg.ctx, fcuArgs)
+		go s.forkchoiceUpdateWithSilaEngine(cfg.ctx, fcuArgs)
 	}
 
 	if s.isNewHead(fcuArgs.headRoot, true) {
@@ -93,8 +93,8 @@ func (s *Service) sendFCU(cfg *postBlockProcessConfig) {
 
 // fockchoiceUpdateWithExecution is a wrapper around notifyForkchoiceUpdate. It gets a forkchoice lock and calls the engine.
 // The caller of this function should NOT have a lock in forkchoice store.
-func (s *Service) forkchoiceUpdateWithExecution(ctx context.Context, args *fcuConfig) {
-	_, span := trace.StartSpan(ctx, "beacon-chain.blockchain.forkchoiceUpdateWithExecution")
+func (s *Service) forkchoiceUpdateWithSilaEngine(ctx context.Context, args *fcuConfig) {
+	_, span := trace.StartSpan(ctx, "beacon-chain.blockchain.forkchoiceUpdateWithSilaEngine")
 	defer span.End()
 	// Note: Use the service context here to avoid the parent context being ended during a forkchoice update.
 	ctx = trace.NewContext(s.ctx, span)

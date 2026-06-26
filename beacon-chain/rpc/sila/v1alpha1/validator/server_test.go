@@ -11,7 +11,7 @@ import (
 	mockChain "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -79,12 +79,12 @@ func TestWaitForActivation_ContextClosed(t *testing.T) {
 	require.NoError(t, err)
 
 	vs := &Server{
-		Ctx:               ctx,
-		ChainStartFetcher: &mockExecution.Chain{},
-		BlockFetcher:      &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: beaconState, Root: genesisRoot[:]},
+		Ctx:                  ctx,
+		ChainStartFetcher:    &mockSila.Chain{},
+		BlockFetcher:         &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: beaconState, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorActivationRequest{
 		PublicKeys: [][]byte{pubKey(1)},
@@ -147,7 +147,7 @@ func TestWaitForActivation_MultipleStatuses(t *testing.T) {
 	require.NoError(t, err)
 	vs := &Server{
 		Ctx:               t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{},
+		ChainStartFetcher: &mockSila.Chain{},
 		HeadFetcher:       &mockChain.ChainService{State: s, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorActivationRequest{
@@ -197,7 +197,7 @@ func TestWaitForChainStart_ContextClosed(t *testing.T) {
 	chainService := &mockChain.ChainService{}
 	server := &Server{
 		Ctx: ctx,
-		ChainStartFetcher: &mockExecution.FaultySilaChain{
+		ChainStartFetcher: &mockSila.FaultySilaChain{
 			ChainFeed: new(event.Feed),
 		},
 		StateNotifier: chainService.StateNotifier(),
@@ -229,7 +229,7 @@ func TestWaitForChainStart_AlreadyStarted(t *testing.T) {
 	chainService := &mockChain.ChainService{State: st, ValidatorsRoot: genesisValidatorsRoot}
 	Server := &Server{
 		Ctx: t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{
+		ChainStartFetcher: &mockSila.Chain{
 			ChainFeed: new(event.Feed),
 		},
 		StateNotifier: chainService.StateNotifier(),
@@ -255,7 +255,7 @@ func TestWaitForChainStart_HeadStateDoesNotExist(t *testing.T) {
 	gs := startup.NewClockSynchronizer()
 	Server := &Server{
 		Ctx: t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{
+		ChainStartFetcher: &mockSila.Chain{
 			ChainFeed: new(event.Feed),
 		},
 		StateNotifier: chainService.StateNotifier(),
@@ -287,7 +287,7 @@ func TestWaitForChainStart_NotStartedThenLogFired(t *testing.T) {
 
 	Server := &Server{
 		Ctx: t.Context(),
-		ChainStartFetcher: &mockExecution.FaultySilaChain{
+		ChainStartFetcher: &mockSila.FaultySilaChain{
 			ChainFeed: new(event.Feed),
 		},
 		StateNotifier: chainService.StateNotifier(),
@@ -329,7 +329,7 @@ func testSigDomainForSlot(t *testing.T, domain [4]byte, chsrv *mockChain.ChainSe
 	chsrv.State = s
 	vs := &Server{
 		Ctx:               t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{},
+		ChainStartFetcher: &mockSila.Chain{},
 		HeadFetcher:       chsrv,
 	}
 	domainResp, err := vs.DomainData(t.Context(), &silapb.DomainRequest{

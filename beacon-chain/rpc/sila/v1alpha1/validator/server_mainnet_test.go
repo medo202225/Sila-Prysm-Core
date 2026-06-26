@@ -6,7 +6,7 @@ import (
 	mockChain "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
@@ -73,12 +73,12 @@ func TestWaitForActivation_ValidatorOriginallyExists(t *testing.T) {
 	s, err := state_native.InitializeFromProtoUnsafePhase0(beaconState)
 	require.NoError(t, err)
 	vs := &Server{
-		Ctx:               t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{},
-		BlockFetcher:      &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: s, Root: genesisRoot[:]},
+		Ctx:                  t.Context(),
+		ChainStartFetcher:    &mockSila.Chain{},
+		BlockFetcher:         &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: s, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorActivationRequest{
 		PublicKeys: [][]byte{pubKey1, pubKey2},

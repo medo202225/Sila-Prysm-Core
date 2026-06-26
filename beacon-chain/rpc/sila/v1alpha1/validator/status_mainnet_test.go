@@ -8,7 +8,7 @@ import (
 	mockChain "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
@@ -66,17 +66,17 @@ func TestValidatorStatus_Active(t *testing.T) {
 	require.NoError(t, err)
 
 	timestamp := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			int(params.BeaconConfig().SilaExecutionFollowDistance): uint64(timestamp),
 		},
 	}
 	vs := &Server{
-		ChainStartFetcher: p,
-		BlockFetcher:      p,
-		SilaChainInfoFetcher:   p,
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
+		ChainStartFetcher:    p,
+		BlockFetcher:         p,
+		SilaChainInfoFetcher: p,
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorStatusRequest{
 		PublicKey: pubkey,

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	dbutil "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	contracts "github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
@@ -30,7 +30,7 @@ func TestLatestMainchainInfo_OK(t *testing.T) {
 	require.NoError(t, err, "Unable to set up simulated backend")
 
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -43,7 +43,7 @@ func TestLatestMainchainInfo_OK(t *testing.T) {
 	require.NoError(t, err, "Unable to setup web3 SILAEXEC.0 chain service")
 
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 
 	web3Service.silaDepositCaller, err = contracts.NewSilaDepositCaller(testAcc.ContractAddr, testAcc.Backend.Client())
 	require.NoError(t, err)
@@ -72,7 +72,7 @@ func TestLatestMainchainInfo_OK(t *testing.T) {
 
 func TestBlockHashByHeight_ReturnsHash(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -84,7 +84,7 @@ func TestBlockHashByHeight_ReturnsHash(t *testing.T) {
 	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{}
+	web3Service.rpcClient = &mockSila.RPCClient{}
 	ctx := t.Context()
 
 	header := &gethTypes.Header{
@@ -105,7 +105,7 @@ func TestBlockHashByHeight_ReturnsHash(t *testing.T) {
 
 func TestBlockHashByHeight_ReturnsError_WhenNoSilaClient(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -128,7 +128,7 @@ func TestBlockExists_ValidHash(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -140,7 +140,7 @@ func TestBlockExists_ValidHash(t *testing.T) {
 	require.NoError(t, err, "unable to setup web3 SILAEXEC.0 chain service")
 
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	testAcc.Backend.Commit()
 	block, err := testAcc.Backend.Client().BlockByNumber(t.Context(), big.NewInt(0))
 	assert.NoError(t, err)
@@ -158,7 +158,7 @@ func TestBlockExists_ValidHash(t *testing.T) {
 
 func TestBlockExists_InvalidHash(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -177,7 +177,7 @@ func TestBlockExists_InvalidHash(t *testing.T) {
 
 func TestBlockExists_UsesCachedBlockInfo(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -207,7 +207,7 @@ func TestService_BlockNumberByTimestamp(t *testing.T) {
 	testAcc, err := mock.Setup()
 
 	require.NoError(t, err, "Unable to set up simulated backend")
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -218,7 +218,7 @@ func TestService_BlockNumberByTimestamp(t *testing.T) {
 	)
 	require.NoError(t, err)
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 	// simulated backend sets silaexec block
 	params.SetupTestConfigCleanup(t)
 	conf := params.BeaconConfig().Copy()
@@ -245,7 +245,7 @@ func TestService_BlockNumberByTimestampLessTargetTime(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -256,7 +256,7 @@ func TestService_BlockNumberByTimestampLessTargetTime(t *testing.T) {
 	)
 	require.NoError(t, err)
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 
 	for range 200 {
 		testAcc.Backend.Commit()
@@ -283,7 +283,7 @@ func TestService_BlockNumberByTimestampMoreTargetTime(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	testAcc, err := mock.Setup()
 	require.NoError(t, err, "Unable to set up simulated backend")
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()
@@ -294,7 +294,7 @@ func TestService_BlockNumberByTimestampMoreTargetTime(t *testing.T) {
 	)
 	require.NoError(t, err)
 	web3Service = setDefaultMocks(web3Service)
-	web3Service.rpcClient = &mockExecution.RPCClient{Backend: testAcc.Backend}
+	web3Service.rpcClient = &mockSila.RPCClient{Backend: testAcc.Backend}
 
 	for range 200 {
 		testAcc.Backend.Commit()
@@ -319,7 +319,7 @@ func TestService_BlockNumberByTimestampMoreTargetTime(t *testing.T) {
 
 func TestService_BlockTimeByHeight_ReturnsError_WhenNoSilaClient(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
-	server, endpoint, err := mockExecution.SetupRPCServer()
+	server, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		server.Stop()

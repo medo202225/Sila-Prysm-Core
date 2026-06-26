@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	builderapi "github.com/sila-chain/Sila-Consensus-Core/v7/api/client/builder"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
@@ -21,7 +21,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
 	dbutil "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/blstoexec"
@@ -42,17 +42,17 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
 	attaggregation "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation/aggregation/attestations"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 	"github.com/sirupsen/logrus"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 	"google.golang.org/grpc/codes"
@@ -262,7 +262,7 @@ func TestServer_GetBeaconBlock_Bellatrix(t *testing.T) {
 	require.NoError(t, db.SaveState(ctx, beaconState, blkRoot), "Could not save genesis state")
 	require.NoError(t, db.SaveHeadBlockRoot(ctx, blkRoot), "Could not save genesis state")
 
-	c := mockExecution.New()
+	c := mockSila.New()
 	c.HashesByHeight[0] = terminalBlockHash
 	random, err := helpers.RandaoMix(beaconState, slots.ToEpoch(beaconState.Slot()))
 	require.NoError(t, err)
@@ -290,7 +290,7 @@ func TestServer_GetBeaconBlock_Bellatrix(t *testing.T) {
 	proposerServer.SilaBlockFetcher = c
 	ed, err := blocks.NewWrappedSilaData(payload)
 	require.NoError(t, err)
-	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
+	proposerServer.SilaEngineCaller = &mockSila.SilaEngineClient{
 		PayloadIDBytes:     &silaenginev1.PayloadIDBytes{1},
 		GetPayloadResponse: &blocks.GetPayloadResponse{SilaData: ed},
 	}
@@ -423,7 +423,7 @@ func TestServer_GetBeaconBlock_Capella(t *testing.T) {
 	}
 	ed, err := blocks.NewWrappedSilaData(payload)
 	require.NoError(t, err)
-	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
+	proposerServer.SilaEngineCaller = &mockSila.SilaEngineClient{
 		PayloadIDBytes:     &silaenginev1.PayloadIDBytes{1},
 		GetPayloadResponse: &blocks.GetPayloadResponse{SilaData: ed},
 	}
@@ -552,11 +552,11 @@ func TestServer_GetBeaconBlock_Deneb(t *testing.T) {
 		Root:            parentRoot[:],
 		ForkChoiceStore: doublylinkedtree.New(),
 	}
-	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
+	proposerServer.SilaEngineCaller = &mockSila.SilaEngineClient{
 		PayloadIDBytes: &silaenginev1.PayloadIDBytes{1},
 		GetPayloadResponse: &blocks.GetPayloadResponse{
-			SilaData: ed,
-			BlobsBundler:  bundle,
+			SilaData:     ed,
+			BlobsBundler: bundle,
 		},
 	}
 
@@ -695,7 +695,7 @@ func TestServer_GetBeaconBlock_Electra(t *testing.T) {
 	}
 	ed, err := blocks.NewWrappedSilaData(payload)
 	require.NoError(t, err)
-	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
+	proposerServer.SilaEngineCaller = &mockSila.SilaEngineClient{
 		PayloadIDBytes: &silaenginev1.PayloadIDBytes{1},
 		GetPayloadResponse: &blocks.GetPayloadResponse{SilaData: ed, SilaRequests: &silaenginev1.SilaRequests{
 			Withdrawals:    wr,
@@ -832,7 +832,7 @@ func TestServer_GetBeaconBlock_Fulu(t *testing.T) {
 	}
 	ed, err := blocks.NewWrappedSilaData(payload)
 	require.NoError(t, err)
-	proposerServer.SilaEngineCaller = &mockExecution.SilaEngineClient{
+	proposerServer.SilaEngineCaller = &mockSila.SilaEngineClient{
 		PayloadIDBytes: &silaenginev1.PayloadIDBytes{1},
 		GetPayloadResponse: &blocks.GetPayloadResponse{SilaData: ed, SilaRequests: &silaenginev1.SilaRequests{
 			Withdrawals:    wr,
@@ -886,22 +886,22 @@ func TestServer_GetBeaconBlock_Optimistic(t *testing.T) {
 func getProposerServer(ctx context.Context, db db.HeadAccessDatabase, headState state.BeaconState, headRoot []byte) *Server {
 	mockChainService := &mock.ChainService{State: headState, Root: headRoot, ForkChoiceStore: doublylinkedtree.New()}
 	return &Server{
-		HeadFetcher:           mockChainService,
-		SyncChecker:           &mockSync.Sync{IsSyncing: false},
-		BlockReceiver:         mockChainService,
-		ChainStartFetcher:     &mockExecution.Chain{},
-		SilaChainInfoFetcher:       &mockExecution.Chain{},
-		SilaBlockFetcher:      &mockExecution.Chain{},
-		FinalizationFetcher:   mockChainService,
-		ForkFetcher:           mockChainService,
-		ForkchoiceFetcher:     mockChainService,
-		MockSilaExecutionVotes:         true,
-		AttPool:               attestations.NewPool(),
-		SlashingsPool:         slashings.NewPool(),
-		ExitPool:              voluntaryexits.NewPool(),
-		StateGen:              stategen.New(db, doublylinkedtree.New()),
-		SyncCommitteePool:     synccommittee.NewStore(),
-		OptimisticModeFetcher: &mock.ChainService{},
+		HeadFetcher:            mockChainService,
+		SyncChecker:            &mockSync.Sync{IsSyncing: false},
+		BlockReceiver:          mockChainService,
+		ChainStartFetcher:      &mockSila.Chain{},
+		SilaChainInfoFetcher:   &mockSila.Chain{},
+		SilaBlockFetcher:       &mockSila.Chain{},
+		FinalizationFetcher:    mockChainService,
+		ForkFetcher:            mockChainService,
+		ForkchoiceFetcher:      mockChainService,
+		MockSilaExecutionVotes: true,
+		AttPool:                attestations.NewPool(),
+		SlashingsPool:          slashings.NewPool(),
+		ExitPool:               voluntaryexits.NewPool(),
+		StateGen:               stategen.New(db, doublylinkedtree.New()),
+		SyncCommitteePool:      synccommittee.NewStore(),
+		OptimisticModeFetcher:  &mock.ChainService{},
 		TimeFetcher: &testutil.MockGenesisTimeFetcher{
 			Genesis: time.Now(),
 		},
@@ -1327,10 +1327,10 @@ func TestProposer_ComputeStateRoot_OK(t *testing.T) {
 	beaconState, parentRoot, privKeys := util.DeterministicGenesisStateWithGenesisBlock(t, ctx, db, 100)
 
 	proposerServer := &Server{
-		ChainStartFetcher: &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		SilaBlockFetcher:  &mockExecution.Chain{},
-		StateGen:          stategen.New(db, doublylinkedtree.New()),
+		ChainStartFetcher:    &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		SilaBlockFetcher:     &mockSila.Chain{},
+		StateGen:             stategen.New(db, doublylinkedtree.New()),
 		BlockReceiver: &mock.ChainService{
 			State:           beaconState.Copy(),
 			Root:            parentRoot[:],
@@ -1417,7 +1417,7 @@ func TestProposer_PendingDeposits_SilaDataVoteOK(t *testing.T) {
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
 	newHeight := big.NewInt(height.Int64() + 11000)
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()):    []byte("0x0"),
@@ -1456,11 +1456,11 @@ func TestProposer_PendingDeposits_SilaDataVoteOK(t *testing.T) {
 	require.NoError(t, err)
 
 	bs := &Server{
-		ChainStartFetcher: p,
-		SilaChainInfoFetcher:   p,
-		SilaBlockFetcher:  p,
-		BlockReceiver:     &mock.ChainService{State: beaconState, Root: blkRoot[:]},
-		HeadFetcher:       &mock.ChainService{State: beaconState, Root: blkRoot[:]},
+		ChainStartFetcher:    p,
+		SilaChainInfoFetcher: p,
+		SilaBlockFetcher:     p,
+		BlockReceiver:        &mock.ChainService{State: beaconState, Root: blkRoot[:]},
+		HeadFetcher:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 	}
 
 	// It should also return the recent deposits after their follow window.
@@ -1496,7 +1496,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -1590,7 +1590,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1615,7 +1615,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaBlock(t *testing.T) {
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
 	newHeight := big.NewInt(height.Int64() + 11000)
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()):    []byte("0x0"),
@@ -1642,7 +1642,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaBlock(t *testing.T) {
 			DepositCount: 5,
 		},
 		SilaExecutionDepositIndex: 1,
-		SilaDataVotes:    votes,
+		SilaDataVotes:             votes,
 	})
 	require.NoError(t, err)
 	blk := util.NewBeaconBlock()
@@ -1723,7 +1723,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaBlock(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1747,7 +1747,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaBlock(t *testing.T) {
 func TestProposer_PendingDeposits_CantReturnBelowStateSilaExecutionDepositIndex(t *testing.T) {
 	ctx := t.Context()
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -1826,7 +1826,7 @@ func TestProposer_PendingDeposits_CantReturnBelowStateSilaExecutionDepositIndex(
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1847,7 +1847,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanMax(t *testing.T) {
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -1926,7 +1926,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanMax(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1945,7 +1945,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanDepositCount(t *testing.T) {
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -2026,7 +2026,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanDepositCount(t *testing.T) {
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2043,7 +2043,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -2137,7 +2137,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2159,7 +2159,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -2266,7 +2266,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2367,7 +2367,7 @@ func TestProposer_SilaData_MajorityVote_SpansGenesis(t *testing.T) {
 	slot := primitives.Slot(0)
 	earliestValidTime, latestValidTime := majorityVoteBoundaryTime(slot)
 
-	p := mockExecution.New().
+	p := mockSila.New().
 		InsertBlock(50, earliestValidTime, []byte("earliest")).
 		InsertBlock(100, latestValidTime, []byte("latest"))
 
@@ -2375,12 +2375,12 @@ func TestProposer_SilaData_MajorityVote_SpansGenesis(t *testing.T) {
 	depositCache, err := depositsnapshot.New()
 	require.NoError(t, err)
 	ps := &Server{
-		ChainStartFetcher: p,
-		SilaChainInfoFetcher:   p,
-		SilaBlockFetcher:  p,
-		BlockFetcher:      p,
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{BlockHash: headBlockHash, DepositCount: 0}},
+		ChainStartFetcher:    p,
+		SilaChainInfoFetcher: p,
+		SilaBlockFetcher:     p,
+		BlockFetcher:         p,
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{BlockHash: headBlockHash, DepositCount: 0}},
 	}
 
 	beaconState, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
@@ -2421,7 +2421,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("choose highest count", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(52, earliestValidTime+2, []byte("second")).
@@ -2438,12 +2438,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2458,7 +2458,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("highest count at earliest valid time - choose highest count", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(52, earliestValidTime+2, []byte("second")).
 			InsertBlock(100, latestValidTime, []byte("latest"))
@@ -2474,12 +2474,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2494,7 +2494,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("highest count at latest valid time - choose highest count", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(100, latestValidTime, []byte("latest"))
@@ -2510,12 +2510,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2530,7 +2530,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("highest count before range - choose highest count within range", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(49, earliestValidTime-1, []byte("before_range")).
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
@@ -2547,12 +2547,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2567,7 +2567,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("highest count after range - choose highest count within range", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(100, latestValidTime, []byte("latest")).
@@ -2584,12 +2584,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2604,7 +2604,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("highest count on unknown block - choose known block with highest count", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(52, earliestValidTime+2, []byte("second")).
@@ -2621,12 +2621,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2640,7 +2640,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("no blocks in range - choose current silaData", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(49, earliestValidTime-1, []byte("before_range")).
 			InsertBlock(101, latestValidTime+1, []byte("after_range"))
 
@@ -2651,12 +2651,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		currentSilaData := &silapb.SilaData{DepositCount: 1, BlockHash: []byte("current")}
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: currentSilaData},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: currentSilaData},
 		}
 
 		ctx := t.Context()
@@ -2670,7 +2670,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("no votes in range - choose most recent block", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(49, earliestValidTime-1, []byte("before_range")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(52, earliestValidTime+2, []byte("second")).
@@ -2686,12 +2686,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2706,7 +2706,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("no votes - choose more recent block", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(100, latestValidTime, []byte("latest"))
 
@@ -2716,12 +2716,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2736,7 +2736,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("no votes and more recent block has less deposits - choose current silaData", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(100, latestValidTime, []byte("latest"))
 
@@ -2748,12 +2748,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		// Set the deposit count in current silaData to exceed the latest most recent block's deposit count.
 		currentSilaData := &silapb.SilaData{DepositCount: 2, BlockHash: []byte("current")}
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: currentSilaData},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: currentSilaData},
 		}
 
 		ctx := t.Context()
@@ -2768,7 +2768,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("same count - choose more recent block", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(52, earliestValidTime+2, []byte("second")).
@@ -2784,12 +2784,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2804,7 +2804,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("highest count on block with less deposits - choose another block", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(51, earliestValidTime+1, []byte("first")).
 			InsertBlock(52, earliestValidTime+2, []byte("second")).
@@ -2821,12 +2821,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2841,7 +2841,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 	t.Run("only one block at earliest valid time - choose this block", func(t *testing.T) {
 		t.Skip()
-		p := mockExecution.New().InsertBlock(50, earliestValidTime, []byte("earliest"))
+		p := mockSila.New().InsertBlock(50, earliestValidTime, []byte("earliest"))
 
 		beaconState, err := state_native.InitializeFromProtoPhase0(&silapb.BeaconState{
 			Slot: slot,
@@ -2852,12 +2852,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2871,7 +2871,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("vote on last block before range - choose next block", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(49, earliestValidTime-1, []byte("before_range")).
 			// It is important to have height `50` with time `earliestValidTime+1` and not `earliestValidTime`
 			// because of earliest block increment in the algorithm.
@@ -2886,12 +2886,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 1}},
 		}
 
 		ctx := t.Context()
@@ -2906,7 +2906,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("no deposits - choose chain start silaData", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(100, latestValidTime, []byte("latest"))
 		p.SilaData = &silapb.SilaData{
@@ -2925,12 +2925,12 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
-			HeadFetcher:       &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 0}},
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
+			HeadFetcher:          &mock.ChainService{SILASilaData: &silapb.SilaData{DepositCount: 0}},
 		}
 
 		ctx := t.Context()
@@ -2944,7 +2944,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 	})
 
 	t.Run("post electra the head silaData should be returned", func(t *testing.T) {
-		p := mockExecution.New().
+		p := mockSila.New().
 			InsertBlock(50, earliestValidTime, []byte("earliest")).
 			InsertBlock(100, latestValidTime, []byte("latest"))
 		p.SilaData = &silapb.SilaData{
@@ -2961,11 +2961,11 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		require.NoError(t, err)
 
 		ps := &Server{
-			ChainStartFetcher: p,
-			SilaChainInfoFetcher:   p,
-			SilaBlockFetcher:  p,
-			BlockFetcher:      p,
-			DepositFetcher:    depositCache,
+			ChainStartFetcher:    p,
+			SilaChainInfoFetcher: p,
+			SilaBlockFetcher:     p,
+			BlockFetcher:         p,
+			DepositFetcher:       depositCache,
 		}
 
 		ctx := t.Context()
@@ -3077,7 +3077,7 @@ func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaDataEqGenesisSilaBlock(t
 	ctx := t.Context()
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()): []byte("0x0"),
@@ -3159,7 +3159,7 @@ func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaDataEqGenesisSilaBlock(t
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -3364,7 +3364,7 @@ func TestProposer_SubmitValidatorRegistrations(t *testing.T) {
 
 func majorityVoteBoundaryTime(slot primitives.Slot) (uint64, uint64) {
 	s := params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().EpochsPerSilaExecutionVotingPeriod))
-	slotStartTime := uint64(mockExecution.GenesisTime) + uint64((slot - (slot % (s))).Mul(params.BeaconConfig().SecondsPerSlot))
+	slotStartTime := uint64(mockSila.GenesisTime) + uint64((slot - (slot % (s))).Mul(params.BeaconConfig().SecondsPerSlot))
 	earliestValidTime := slotStartTime - 2*params.BeaconConfig().SecondsPerSilaBlock*params.BeaconConfig().SilaExecutionFollowDistance
 	latestValidTime := slotStartTime - params.BeaconConfig().SecondsPerSilaBlock*params.BeaconConfig().SilaExecutionFollowDistance
 
@@ -3425,11 +3425,11 @@ func TestProposer_GetParentHeadState(t *testing.T) {
 	require.NoError(t, transition.UpdateNextSlotCache(ctx, parentRoot[:], parentState))
 
 	proposerServer := &Server{
-		ChainStartFetcher: &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		SilaBlockFetcher:  &mockExecution.Chain{},
-		ForkchoiceFetcher: &mock.ChainService{},
-		StateGen:          stategen.New(db, doublylinkedtree.New()),
+		ChainStartFetcher:    &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		SilaBlockFetcher:     &mockSila.Chain{},
+		ForkchoiceFetcher:    &mock.ChainService{},
+		StateGen:             stategen.New(db, doublylinkedtree.New()),
 	}
 	t.Run("successful reorg", func(tt *testing.T) {
 		head, err := proposerServer.getParentStateFromReorgData(ctx, 1, parentRoot, parentRoot, headRoot)
@@ -3561,20 +3561,20 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
-			ChainStartFetcher: &mockExecution.Chain{},
-			SilaChainInfoFetcher:   &mockExecution.Chain{},
-			SilaBlockFetcher:  &mockExecution.Chain{},
-			BlockReceiver:     c,
-			BlobReceiver:      c,
-			HeadFetcher:       c,
-			BlockNotifier:     c.BlockNotifier(),
-			OperationNotifier: c.OperationNotifier(),
-			StateGen:          stategen.New(db, doublylinkedtree.New()),
-			TimeFetcher:       c,
-			SyncChecker:       &mockSync.Sync{IsSyncing: false},
-			BeaconDB:          db,
-			BlockBuilder:      mockBuilder,
-			P2P:               &mockp2p.MockBroadcaster{},
+			ChainStartFetcher:    &mockSila.Chain{},
+			SilaChainInfoFetcher: &mockSila.Chain{},
+			SilaBlockFetcher:     &mockSila.Chain{},
+			BlockReceiver:        c,
+			BlobReceiver:         c,
+			HeadFetcher:          c,
+			BlockNotifier:        c.BlockNotifier(),
+			OperationNotifier:    c.OperationNotifier(),
+			StateGen:             stategen.New(db, doublylinkedtree.New()),
+			TimeFetcher:          c,
+			SyncChecker:          &mockSync.Sync{IsSyncing: false},
+			BeaconDB:             db,
+			BlockBuilder:         mockBuilder,
+			P2P:                  &mockp2p.MockBroadcaster{},
 		}
 
 		// Create a blinded block at slot 160 (epoch 5, which is >= FuluForkEpoch)
@@ -3610,20 +3610,20 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
-			ChainStartFetcher: &mockExecution.Chain{},
-			SilaChainInfoFetcher:   &mockExecution.Chain{},
-			SilaBlockFetcher:  &mockExecution.Chain{},
-			BlockReceiver:     c,
-			BlobReceiver:      c,
-			HeadFetcher:       c,
-			BlockNotifier:     c.BlockNotifier(),
-			OperationNotifier: c.OperationNotifier(),
-			StateGen:          stategen.New(db, doublylinkedtree.New()),
-			TimeFetcher:       c,
-			SyncChecker:       &mockSync.Sync{IsSyncing: false},
-			BeaconDB:          db,
-			BlockBuilder:      mockBuilder,
-			P2P:               &mockp2p.MockBroadcaster{},
+			ChainStartFetcher:    &mockSila.Chain{},
+			SilaChainInfoFetcher: &mockSila.Chain{},
+			SilaBlockFetcher:     &mockSila.Chain{},
+			BlockReceiver:        c,
+			BlobReceiver:         c,
+			HeadFetcher:          c,
+			BlockNotifier:        c.BlockNotifier(),
+			OperationNotifier:    c.OperationNotifier(),
+			StateGen:             stategen.New(db, doublylinkedtree.New()),
+			TimeFetcher:          c,
+			SyncChecker:          &mockSync.Sync{IsSyncing: false},
+			BeaconDB:             db,
+			BlockBuilder:         mockBuilder,
+			P2P:                  &mockp2p.MockBroadcaster{},
 		}
 
 		// Create a blinded block at slot 160 (epoch 5)
@@ -3658,20 +3658,20 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
-			ChainStartFetcher: &mockExecution.Chain{},
-			SilaChainInfoFetcher:   &mockExecution.Chain{},
-			SilaBlockFetcher:  &mockExecution.Chain{},
-			BlockReceiver:     c,
-			BlobReceiver:      c,
-			HeadFetcher:       c,
-			BlockNotifier:     c.BlockNotifier(),
-			OperationNotifier: c.OperationNotifier(),
-			StateGen:          stategen.New(db, doublylinkedtree.New()),
-			TimeFetcher:       c,
-			SyncChecker:       &mockSync.Sync{IsSyncing: false},
-			BeaconDB:          db,
-			BlockBuilder:      mockBuilder,
-			P2P:               &mockp2p.MockBroadcaster{},
+			ChainStartFetcher:    &mockSila.Chain{},
+			SilaChainInfoFetcher: &mockSila.Chain{},
+			SilaBlockFetcher:     &mockSila.Chain{},
+			BlockReceiver:        c,
+			BlobReceiver:         c,
+			HeadFetcher:          c,
+			BlockNotifier:        c.BlockNotifier(),
+			OperationNotifier:    c.OperationNotifier(),
+			StateGen:             stategen.New(db, doublylinkedtree.New()),
+			TimeFetcher:          c,
+			SyncChecker:          &mockSync.Sync{IsSyncing: false},
+			BeaconDB:             db,
+			BlockBuilder:         mockBuilder,
+			P2P:                  &mockp2p.MockBroadcaster{},
 		}
 
 		// Create a blinded block at slot 160 (epoch 5, which is < FuluForkEpoch=10)
@@ -3707,20 +3707,20 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
-			ChainStartFetcher: &mockExecution.Chain{},
-			SilaChainInfoFetcher:   &mockExecution.Chain{},
-			SilaBlockFetcher:  &mockExecution.Chain{},
-			BlockReceiver:     c,
-			BlobReceiver:      c,
-			HeadFetcher:       c,
-			BlockNotifier:     c.BlockNotifier(),
-			OperationNotifier: c.OperationNotifier(),
-			StateGen:          stategen.New(db, doublylinkedtree.New()),
-			TimeFetcher:       c,
-			SyncChecker:       &mockSync.Sync{IsSyncing: false},
-			BeaconDB:          db,
-			BlockBuilder:      mockBuilder,
-			P2P:               &mockp2p.MockBroadcaster{},
+			ChainStartFetcher:    &mockSila.Chain{},
+			SilaChainInfoFetcher: &mockSila.Chain{},
+			SilaBlockFetcher:     &mockSila.Chain{},
+			BlockReceiver:        c,
+			BlobReceiver:         c,
+			HeadFetcher:          c,
+			BlockNotifier:        c.BlockNotifier(),
+			OperationNotifier:    c.OperationNotifier(),
+			StateGen:             stategen.New(db, doublylinkedtree.New()),
+			TimeFetcher:          c,
+			SyncChecker:          &mockSync.Sync{IsSyncing: false},
+			BeaconDB:             db,
+			BlockBuilder:         mockBuilder,
+			P2P:                  &mockp2p.MockBroadcaster{},
 		}
 
 		// Create a blinded block at slot 160 (exactly epoch 5)
@@ -3750,19 +3750,19 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
-			ChainStartFetcher: &mockExecution.Chain{},
-			SilaChainInfoFetcher:   &mockExecution.Chain{},
-			SilaBlockFetcher:  &mockExecution.Chain{},
-			BlockReceiver:     c,
-			BlobReceiver:      c,
-			HeadFetcher:       c,
-			BlockNotifier:     c.BlockNotifier(),
-			OperationNotifier: c.OperationNotifier(),
-			StateGen:          stategen.New(db, doublylinkedtree.New()),
-			TimeFetcher:       c,
-			SyncChecker:       &mockSync.Sync{IsSyncing: false},
-			BeaconDB:          db,
-			P2P:               &mockp2p.MockBroadcaster{},
+			ChainStartFetcher:    &mockSila.Chain{},
+			SilaChainInfoFetcher: &mockSila.Chain{},
+			SilaBlockFetcher:     &mockSila.Chain{},
+			BlockReceiver:        c,
+			BlobReceiver:         c,
+			HeadFetcher:          c,
+			BlockNotifier:        c.BlockNotifier(),
+			OperationNotifier:    c.OperationNotifier(),
+			StateGen:             stategen.New(db, doublylinkedtree.New()),
+			TimeFetcher:          c,
+			SyncChecker:          &mockSync.Sync{IsSyncing: false},
+			BeaconDB:             db,
+			P2P:                  &mockp2p.MockBroadcaster{},
 		}
 
 		// Create an unblinded block at slot 160 (epoch 5)
@@ -3802,20 +3802,20 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
-			ChainStartFetcher: &mockExecution.Chain{},
-			SilaChainInfoFetcher:   &mockExecution.Chain{},
-			SilaBlockFetcher:  &mockExecution.Chain{},
-			BlockReceiver:     c,
-			BlobReceiver:      c,
-			HeadFetcher:       c,
-			BlockNotifier:     c.BlockNotifier(),
-			OperationNotifier: c.OperationNotifier(),
-			StateGen:          stategen.New(db, doublylinkedtree.New()),
-			TimeFetcher:       c,
-			SyncChecker:       &mockSync.Sync{IsSyncing: false},
-			BeaconDB:          db,
-			BlockBuilder:      mockBuilder,
-			P2P:               &mockp2p.MockBroadcaster{},
+			ChainStartFetcher:    &mockSila.Chain{},
+			SilaChainInfoFetcher: &mockSila.Chain{},
+			SilaBlockFetcher:     &mockSila.Chain{},
+			BlockReceiver:        c,
+			BlobReceiver:         c,
+			HeadFetcher:          c,
+			BlockNotifier:        c.BlockNotifier(),
+			OperationNotifier:    c.OperationNotifier(),
+			StateGen:             stategen.New(db, doublylinkedtree.New()),
+			TimeFetcher:          c,
+			SyncChecker:          &mockSync.Sync{IsSyncing: false},
+			BeaconDB:             db,
+			BlockBuilder:         mockBuilder,
+			P2P:                  &mockp2p.MockBroadcaster{},
 		}
 
 		blindedBlock := util.NewBlindedBeaconBlockDeneb()

@@ -3,14 +3,14 @@ package sync
 import (
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
 	chainMock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
 	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/attestations"
 	mockp2p "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
@@ -23,7 +23,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -75,7 +75,7 @@ func TestService_beaconBlockSubscriber(t *testing.T) {
 					},
 					attPool:                attestations.NewPool(),
 					blobStorage:            filesystem.NewEphemeralBlobStorage(t),
-					executionReconstructor: &mockExecution.SilaEngineClient{},
+					executionReconstructor: &mockSila.SilaEngineClient{},
 				},
 			}
 			s.initCaches()
@@ -187,7 +187,7 @@ func TestProcessSidecarsFromExecutionFromBlock(t *testing.T) {
 						chain:       chainService,
 						clock:       startup.NewClock(time.Now(), [32]byte{}),
 						blobStorage: filesystem.NewEphemeralBlobStorage(t),
-						executionReconstructor: &mockExecution.SilaEngineClient{
+						executionReconstructor: &mockSila.SilaEngineClient{
 							BlobSidecars: tt.blobSidecars,
 						},
 						operationNotifier: &chainMock.MockOperationNotifier{},
@@ -268,7 +268,7 @@ func TestProcessSidecarsFromExecutionFromBlock(t *testing.T) {
 						chain:             chainService,
 						clock:             startup.NewClock(time.Now(), [32]byte{}),
 						dataColumnStorage: filesystem.NewEphemeralDataColumnStorage(t),
-						executionReconstructor: &mockExecution.SilaEngineClient{
+						executionReconstructor: &mockSila.SilaEngineClient{
 							DataColumnSidecars: tt.dataColumnSidecars,
 						},
 						operationNotifier: &chainMock.MockOperationNotifier{},
@@ -360,7 +360,7 @@ func TestProcessSidecarsFromExecutionFromBlock(t *testing.T) {
 						chain:             chainService,
 						clock:             startup.NewClock(time.Now(), [32]byte{}),
 						dataColumnStorage: filesystem.NewEphemeralDataColumnStorage(t),
-						executionReconstructor: &mockExecution.SilaEngineClient{
+						executionReconstructor: &mockSila.SilaEngineClient{
 							DataColumnSidecars: tt.dataColumnSidecars,
 						},
 						operationNotifier: &chainMock.MockOperationNotifier{},

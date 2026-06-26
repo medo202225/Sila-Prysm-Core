@@ -6,7 +6,7 @@ import (
 
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
@@ -76,7 +76,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 
 	height := big.NewInt(int64(params.BeaconConfig().SilaExecutionFollowDistance))
 	newHeight := big.NewInt(height.Int64() + 11000)
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		LatestBlockNumber: height,
 		HashesByHeight: map[int][]byte{
 			int(height.Int64()):    []byte("0x0"),
@@ -102,7 +102,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 			DepositRoot:  make([]byte, 32),
 			DepositCount: 5,
 		},
-		SilaExecutionDepositIndex:          1,
+		SilaExecutionDepositIndex: 1,
 		DepositRequestsStartIndex: 7,
 		SilaDataVotes:             votes,
 	})
@@ -185,7 +185,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaChainInfoFetcher:        p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,

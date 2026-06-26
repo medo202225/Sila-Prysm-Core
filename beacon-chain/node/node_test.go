@@ -16,7 +16,7 @@ import (
 	statefeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/monitor"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
@@ -129,7 +129,7 @@ func TestNodeStart_SyncChecker(t *testing.T) {
 // TestClearDB tests clearing the database
 func TestClearDB(t *testing.T) {
 	hook := logTest.NewGlobal()
-	srv, endpoint, err := mockExecution.SetupRPCServer()
+	srv, endpoint, err := mockSila.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		srv.Stop()

@@ -3,7 +3,7 @@ package blockchain
 import (
 	"testing"
 
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
@@ -15,13 +15,13 @@ import (
 )
 
 func TestReceivePayloadAttestationMessage_NilMessage(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	err := s.ReceivePayloadAttestationMessage(t.Context(), nil)
 	require.ErrorContains(t, "nil payload attestation message", err)
 }
 
 func TestReceivePayloadAttestationMessage_NilData(t *testing.T) {
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	msg := &silapb.PayloadAttestationMessage{}
 	err := s.ReceivePayloadAttestationMessage(t.Context(), msg)
 	require.ErrorContains(t, "nil payload attestation message", err)
@@ -33,7 +33,7 @@ func TestReceivePayloadAttestationMessage_ValidatorNotInPTC(t *testing.T) {
 	cfg.GloasForkEpoch = 0
 	params.OverrideBeaconConfig(cfg)
 
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -83,7 +83,7 @@ func TestReceivePayloadAttestationMessage_OK(t *testing.T) {
 	cfg.GloasForkEpoch = 0
 	params.OverrideBeaconConfig(cfg)
 
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	blockRoot := bytesutil.ToBytes32([]byte("root1"))

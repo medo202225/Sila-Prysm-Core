@@ -12,7 +12,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/execution"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/core"
 	beaconstate "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
@@ -215,13 +215,13 @@ func TestGetAltairDutiesV2_SyncCommitteeOK(t *testing.T) {
 		State: bs, Root: genesisRoot[:], Genesis: time.Now().Add(time.Duration(-1*int64(slot-1)) * time.Second),
 	}
 	vs := &Server{
-		HeadFetcher:       chain,
-		TimeFetcher:       chain,
-		ForkchoiceFetcher: chain,
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		SyncChecker:       &mockSync.Sync{IsSyncing: false},
-		PayloadIDCache:    cache.NewPayloadIDCache(),
-		CoreService:       &core.Service{},
+		HeadFetcher:          chain,
+		TimeFetcher:          chain,
+		ForkchoiceFetcher:    chain,
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		SyncChecker:          &mockSync.Sync{IsSyncing: false},
+		PayloadIDCache:       cache.NewPayloadIDCache(),
+		CoreService:          &core.Service{},
 	}
 
 	// Test the first validator in registry.
@@ -323,13 +323,13 @@ func TestGetBellatrixDutiesV2_SyncCommitteeOK(t *testing.T) {
 		State: bs, Root: genesisRoot[:], Genesis: time.Now().Add(time.Duration(-1*int64(slot-1)) * time.Second),
 	}
 	vs := &Server{
-		HeadFetcher:       chain,
-		TimeFetcher:       chain,
-		ForkchoiceFetcher: chain,
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		SyncChecker:       &mockSync.Sync{IsSyncing: false},
-		PayloadIDCache:    cache.NewPayloadIDCache(),
-		CoreService:       &core.Service{},
+		HeadFetcher:          chain,
+		TimeFetcher:          chain,
+		ForkchoiceFetcher:    chain,
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		SyncChecker:          &mockSync.Sync{IsSyncing: false},
+		PayloadIDCache:       cache.NewPayloadIDCache(),
+		CoreService:          &core.Service{},
 	}
 
 	// Test the first validator in registry.
@@ -417,14 +417,14 @@ func TestGetAltairDutiesV2_UnknownPubkey(t *testing.T) {
 	require.NoError(t, err)
 
 	vs := &Server{
-		HeadFetcher:       chain,
-		ForkchoiceFetcher: chain,
-		TimeFetcher:       chain,
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		SyncChecker:       &mockSync.Sync{IsSyncing: false},
-		DepositFetcher:    depositCache,
-		PayloadIDCache:    cache.NewPayloadIDCache(),
-		CoreService:       &core.Service{},
+		HeadFetcher:          chain,
+		ForkchoiceFetcher:    chain,
+		TimeFetcher:          chain,
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		SyncChecker:          &mockSync.Sync{IsSyncing: false},
+		DepositFetcher:       depositCache,
+		PayloadIDCache:       cache.NewPayloadIDCache(),
+		CoreService:          &core.Service{},
 	}
 
 	unknownPubkey := bytesutil.PadTo([]byte{'u'}, 48)

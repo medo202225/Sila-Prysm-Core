@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
@@ -23,7 +23,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
 	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
 	forkchoicetypes "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/types"
 	lightClient "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/light-client"
@@ -39,8 +39,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
@@ -49,7 +49,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common"
 	gethtypes "github.com/sila-chain/Sila/core/types"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 
@@ -1168,7 +1168,7 @@ func Test_validateMergeTransitionBlock(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			e := &mockExecution.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.SilaBlock{}}
+			e := &mockSila.SilaEngineClient{BlockByHashMap: map[[32]byte]*silaenginev1.SilaBlock{}}
 			e.BlockByHashMap[aHash] = &silaenginev1.SilaBlock{
 				Header: gethtypes.Header{
 					ParentHash: bHash,
@@ -1412,7 +1412,7 @@ func TestStore_NoViableHead_NewPayload(t *testing.T) {
 	config.BellatrixForkEpoch = 2
 	params.OverrideBeaconConfig(config)
 
-	mockEngine := &mockExecution.SilaEngineClient{ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus, ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus}
+	mockEngine := &mockSila.SilaEngineClient{ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus, ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus}
 	service, tr := minimalTestService(t, WithSilaEngineCaller(mockEngine))
 	ctx := tr.ctx
 
@@ -1537,7 +1537,7 @@ func TestStore_NoViableHead_NewPayload(t *testing.T) {
 	time.Sleep(20 * time.Millisecond) // wait for async forkchoice update to be processed
 
 	// import another block to find out that it was invalid
-	mockEngine = &mockExecution.SilaEngineClient{ErrNewPayload: execution.ErrInvalidPayloadStatus, NewPayloadResp: lvh}
+	mockEngine = &mockSila.SilaEngineClient{ErrNewPayload: execution.ErrInvalidPayloadStatus, NewPayloadResp: lvh}
 	service.cfg.SilaEngineCaller = mockEngine
 	driftGenesisTime(service, 19, 0)
 	st, err = service.HeadState(ctx)
@@ -1555,7 +1555,7 @@ func TestStore_NoViableHead_NewPayload(t *testing.T) {
 	require.NoError(t, err)
 	preStateVersion, preStateHeader, err := getStateVersionAndPayload(preState)
 	require.NoError(t, err)
-	_, err = service.validateExecutionOnBlock(ctx, preStateVersion, preStateHeader, rowsb)
+	_, err = service.validateSilaPayloadOnBlock(ctx, preStateVersion, preStateHeader, rowsb)
 	require.ErrorContains(t, "received an INVALID payload from SilaEngine", err)
 	// Check that forkchoice's head and store's headroot are the previous head (since the invalid block did
 	// not finish importing and it was never imported to forkchoice). Check
@@ -1569,7 +1569,7 @@ func TestStore_NoViableHead_NewPayload(t *testing.T) {
 	require.Equal(t, true, optimistic)
 
 	// import another block based on the last valid head state
-	mockEngine = &mockExecution.SilaEngineClient{}
+	mockEngine = &mockSila.SilaEngineClient{}
 	service.cfg.SilaEngineCaller = mockEngine
 	driftGenesisTime(service, 20, 0)
 	b, err = util.GenerateFullBlockBellatrix(validHeadState, keys, &util.BlockGenConfig{}, 20)
@@ -1616,7 +1616,7 @@ func TestStore_NoViableHead_Liveness(t *testing.T) {
 	config.BellatrixForkEpoch = 2
 	params.OverrideBeaconConfig(config)
 
-	mockEngine := &mockExecution.SilaEngineClient{ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus, ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus}
+	mockEngine := &mockSila.SilaEngineClient{ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus, ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus}
 	service, tr := minimalTestService(t, WithSilaEngineCaller(mockEngine))
 	ctx := tr.ctx
 
@@ -1741,7 +1741,7 @@ func TestStore_NoViableHead_Liveness(t *testing.T) {
 
 	// import block 19 to find out that the whole chain 13--18 was in fact
 	// invalid
-	mockEngine = &mockExecution.SilaEngineClient{ErrNewPayload: execution.ErrInvalidPayloadStatus, NewPayloadResp: lvh}
+	mockEngine = &mockSila.SilaEngineClient{ErrNewPayload: execution.ErrInvalidPayloadStatus, NewPayloadResp: lvh}
 	service.cfg.SilaEngineCaller = mockEngine
 	driftGenesisTime(service, 19, 0)
 	st, err = service.HeadState(ctx)
@@ -1759,7 +1759,7 @@ func TestStore_NoViableHead_Liveness(t *testing.T) {
 	require.NoError(t, err)
 	preStateVersion, preStateHeader, err := getStateVersionAndPayload(preState)
 	require.NoError(t, err)
-	_, err = service.validateExecutionOnBlock(ctx, preStateVersion, preStateHeader, rowsb)
+	_, err = service.validateSilaPayloadOnBlock(ctx, preStateVersion, preStateHeader, rowsb)
 	require.ErrorContains(t, "received an INVALID payload from SilaEngine", err)
 
 	// Check that forkchoice's head and store's headroot are the previous head (since the invalid block did
@@ -1784,7 +1784,7 @@ func TestStore_NoViableHead_Liveness(t *testing.T) {
 	require.Equal(t, primitives.Epoch(2), sjc.Epoch)
 
 	// import another block based on the last valid head state
-	mockEngine = &mockExecution.SilaEngineClient{}
+	mockEngine = &mockSila.SilaEngineClient{}
 	service.cfg.SilaEngineCaller = mockEngine
 	driftGenesisTime(service, 20, 0)
 	b, err = util.GenerateFullBlockBellatrix(validHeadState, keys, &util.BlockGenConfig{}, 20)
@@ -1882,7 +1882,7 @@ func TestNoViableHead_Reboot(t *testing.T) {
 	config.BellatrixForkEpoch = 2
 	params.OverrideBeaconConfig(config)
 
-	mockEngine := &mockExecution.SilaEngineClient{ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus, ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus}
+	mockEngine := &mockSila.SilaEngineClient{ErrNewPayload: execution.ErrAcceptedSyncingPayloadStatus, ErrForkchoiceUpdated: execution.ErrAcceptedSyncingPayloadStatus}
 	service, tr := minimalTestService(t, WithSilaEngineCaller(mockEngine))
 	ctx := tr.ctx
 
@@ -2010,7 +2010,7 @@ func TestNoViableHead_Reboot(t *testing.T) {
 
 	// import block 19 to find out that the whole chain 13--18 was in fact
 	// invalid
-	mockEngine = &mockExecution.SilaEngineClient{ErrNewPayload: execution.ErrInvalidPayloadStatus, NewPayloadResp: lvh}
+	mockEngine = &mockSila.SilaEngineClient{ErrNewPayload: execution.ErrInvalidPayloadStatus, NewPayloadResp: lvh}
 	service.cfg.SilaEngineCaller = mockEngine
 	driftGenesisTime(service, 19, 0)
 	st, err = service.HeadState(ctx)
@@ -2027,7 +2027,7 @@ func TestNoViableHead_Reboot(t *testing.T) {
 	require.NoError(t, err)
 	preStateVersion, preStateHeader, err := getStateVersionAndPayload(preState)
 	require.NoError(t, err)
-	_, err = service.validateExecutionOnBlock(ctx, preStateVersion, preStateHeader, rowsb)
+	_, err = service.validateSilaPayloadOnBlock(ctx, preStateVersion, preStateHeader, rowsb)
 	require.ErrorContains(t, "received an INVALID payload from SilaEngine", err)
 
 	// Check that the headroot/state are not in DB and restart the node
@@ -2061,7 +2061,7 @@ func TestNoViableHead_Reboot(t *testing.T) {
 	require.Equal(t, primitives.Epoch(2), sjc.Epoch)
 
 	// import another block based on the last valid head state
-	mockEngine = &mockExecution.SilaEngineClient{}
+	mockEngine = &mockSila.SilaEngineClient{}
 	service.cfg.SilaEngineCaller = mockEngine
 	driftGenesisTime(service, 20, 0)
 	b, err = util.GenerateFullBlockBellatrix(validHeadState, keys, &util.BlockGenConfig{}, 20)
@@ -3488,7 +3488,7 @@ func TestHandleBlockPayloadAttestations(t *testing.T) {
 	params.OverrideBeaconConfig(cfg)
 
 	t.Run("pre-Gloas block is no-op", func(t *testing.T) {
-		s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+		s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 		blk := util.NewBeaconBlockElectra()
 		wsb, err := consensusblocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
@@ -3498,7 +3498,7 @@ func TestHandleBlockPayloadAttestations(t *testing.T) {
 	})
 
 	t.Run("empty payload attestations", func(t *testing.T) {
-		s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+		s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 		blk := util.NewBeaconBlockGloas()
 		wsb, err := consensusblocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
@@ -3508,7 +3508,7 @@ func TestHandleBlockPayloadAttestations(t *testing.T) {
 	})
 
 	t.Run("unknown root is skipped", func(t *testing.T) {
-		s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+		s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 		ctx := t.Context()
 
 		numVals := 2048
@@ -3542,7 +3542,7 @@ func TestHandleBlockPayloadAttestations(t *testing.T) {
 	})
 
 	t.Run("known root sets PTC votes", func(t *testing.T) {
-		s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+		s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 		ctx := t.Context()
 
 		blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -3587,7 +3587,7 @@ func TestHandleBlockPayloadAttestations(t *testing.T) {
 	})
 
 	t.Run("multiple attestations", func(t *testing.T) {
-		s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+		s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 		ctx := t.Context()
 
 		blockRoot := bytesutil.ToBytes32([]byte("root1"))
@@ -3645,7 +3645,7 @@ func TestHandleBlockAttestations_GloasSameSlotPayloadVote(t *testing.T) {
 	cfg.GloasForkEpoch = 0
 	params.OverrideBeaconConfig(cfg)
 
-	s, _ := setupGloasService(t, &mockExecution.SilaEngineClient{})
+	s, _ := setupGloasService(t, &mockSila.SilaEngineClient{})
 	ctx := t.Context()
 
 	// Insert an empty node at slot 1 into forkchoice.

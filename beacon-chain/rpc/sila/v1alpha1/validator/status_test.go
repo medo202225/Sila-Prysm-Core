@@ -5,10 +5,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/d4l3k/messagediff"
 	mockChain "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache/depositsnapshot"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	mockstategen "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen/mock"
@@ -23,7 +24,6 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/d4l3k/messagediff"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
@@ -44,7 +44,7 @@ func TestValidatorStatus_DepositedSilaExecution(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
@@ -86,7 +86,7 @@ func TestValidatorStatus_Deposited(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
@@ -131,7 +131,7 @@ func TestValidatorStatus_PartiallyDeposited(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
@@ -186,7 +186,7 @@ func TestValidatorStatus_Pending_MultipleDeposits(t *testing.T) {
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 1, root))
 
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
@@ -262,17 +262,17 @@ func TestValidatorStatus_Pending(t *testing.T) {
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
 	}
 	vs := &Server{
-		ChainStartFetcher: p,
-		BlockFetcher:      p,
-		SilaChainInfoFetcher:   p,
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: st, Root: genesisRoot[:]},
+		ChainStartFetcher:    p,
+		BlockFetcher:         p,
+		SilaChainInfoFetcher: p,
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: st, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorStatusRequest{
 		PublicKey: pubKey,
@@ -324,17 +324,17 @@ func TestValidatorStatus_Exiting(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
 	}
 	vs := &Server{
-		ChainStartFetcher: p,
-		BlockFetcher:      p,
-		SilaChainInfoFetcher:   p,
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
+		ChainStartFetcher:    p,
+		BlockFetcher:         p,
+		SilaChainInfoFetcher: p,
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorStatusRequest{
 		PublicKey: pubKey,
@@ -383,17 +383,17 @@ func TestValidatorStatus_Slashing(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
 	}
 	vs := &Server{
-		ChainStartFetcher: p,
-		SilaChainInfoFetcher:   p,
-		DepositFetcher:    depositCache,
-		BlockFetcher:      p,
-		HeadFetcher:       &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
+		ChainStartFetcher:    p,
+		SilaChainInfoFetcher: p,
+		DepositFetcher:       depositCache,
+		BlockFetcher:         p,
+		HeadFetcher:          &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorStatusRequest{
 		PublicKey: pubKey,
@@ -441,17 +441,17 @@ func TestValidatorStatus_Exited(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
 	}
 	vs := &Server{
-		ChainStartFetcher: p,
-		SilaChainInfoFetcher:   p,
-		BlockFetcher:      p,
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: st, Root: genesisRoot[:]},
+		ChainStartFetcher:    p,
+		SilaChainInfoFetcher: p,
+		BlockFetcher:         p,
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: st, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorStatusRequest{
 		PublicKey: pubKey,
@@ -471,8 +471,8 @@ func TestValidatorStatus_UnknownStatus(t *testing.T) {
 	})
 	require.NoError(t, err)
 	vs := &Server{
-		DepositFetcher:  depositCache,
-		SilaChainInfoFetcher: &mockExecution.Chain{},
+		DepositFetcher:       depositCache,
+		SilaChainInfoFetcher: &mockSila.Chain{},
 		HeadFetcher: &mockChain.ChainService{
 			State: stateObj,
 		},
@@ -533,12 +533,12 @@ func TestActivationStatus_OK(t *testing.T) {
 	assert.NoError(t, depositCache.InsertDeposit(t.Context(), dep, 0, 1, root))
 
 	vs := &Server{
-		Ctx:               t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{},
-		BlockFetcher:      &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
+		Ctx:                  t.Context(),
+		ChainStartFetcher:    &mockSila.Chain{},
+		BlockFetcher:         &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
 	}
 	activeExists, response, err := vs.activationStatus(t.Context(), pubKeys)
 	require.NoError(t, err)
@@ -678,17 +678,17 @@ func TestValidatorStatus_CorrectActivationQueue(t *testing.T) {
 	}
 
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},
 	}
 	vs := &Server{
-		ChainStartFetcher: p,
-		BlockFetcher:      p,
-		SilaChainInfoFetcher:   p,
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: st, Root: genesisRoot[:]},
+		ChainStartFetcher:    p,
+		BlockFetcher:         p,
+		SilaChainInfoFetcher: p,
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: st, Root: genesisRoot[:]},
 	}
 	req := &silapb.ValidatorStatusRequest{
 		PublicKey: pbKey,
@@ -764,13 +764,13 @@ func TestMultipleValidatorStatus_Pubkeys(t *testing.T) {
 	assert.NoError(t, depositCache.InsertDeposit(t.Context(), dep, 0, 1, root))
 
 	vs := &Server{
-		Ctx:               t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{},
-		BlockFetcher:      &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		DepositFetcher:    depositCache,
-		HeadFetcher:       &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
-		SyncChecker:       &mockSync.Sync{IsSyncing: false},
+		Ctx:                  t.Context(),
+		ChainStartFetcher:    &mockSila.Chain{},
+		BlockFetcher:         &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		DepositFetcher:       depositCache,
+		HeadFetcher:          &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
+		SyncChecker:          &mockSync.Sync{IsSyncing: false},
 	}
 
 	want := []*silapb.ValidatorStatusResponse{
@@ -859,12 +859,12 @@ func TestMultipleValidatorStatus_Indices(t *testing.T) {
 	require.NoError(t, err, "Could not get signing root")
 
 	vs := &Server{
-		Ctx:               t.Context(),
-		ChainStartFetcher: &mockExecution.Chain{},
-		BlockFetcher:      &mockExecution.Chain{},
-		SilaChainInfoFetcher:   &mockExecution.Chain{},
-		HeadFetcher:       &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
-		SyncChecker:       &mockSync.Sync{IsSyncing: false},
+		Ctx:                  t.Context(),
+		ChainStartFetcher:    &mockSila.Chain{},
+		BlockFetcher:         &mockSila.Chain{},
+		SilaChainInfoFetcher: &mockSila.Chain{},
+		HeadFetcher:          &mockChain.ChainService{State: stateObj, Root: genesisRoot[:]},
+		SyncChecker:          &mockSync.Sync{IsSyncing: false},
 	}
 
 	want := []*silapb.ValidatorStatusResponse{
@@ -922,7 +922,7 @@ func TestValidatorStatus_Invalid(t *testing.T) {
 	require.NoError(t, err)
 	assert.NoError(t, depositCache.InsertDeposit(ctx, deposit, 0 /*blockNum*/, 0, root))
 	height := time.Unix(int64(params.BeaconConfig().SilaExecutionFollowDistance), 0).Unix()
-	p := &mockExecution.Chain{
+	p := &mockSila.Chain{
 		TimesByHeight: map[int]uint64{
 			0: uint64(height),
 		},

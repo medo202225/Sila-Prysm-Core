@@ -6,11 +6,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/network"
+	"github.com/libp2p/go-libp2p/core/protocol"
+	gcache "github.com/patrickmn/go-cache"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
 	db "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
 	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
@@ -23,17 +26,14 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common"
 	gethTypes "github.com/sila-chain/Sila/core/types"
 	"github.com/sila-chain/Sila/p2p/enr"
-	"github.com/libp2p/go-libp2p/core/network"
-	"github.com/libp2p/go-libp2p/core/protocol"
-	gcache "github.com/patrickmn/go-cache"
 )
 
 func TestRecentBeaconBlocksRPCHandler_ReturnsBlocks(t *testing.T) {
@@ -143,7 +143,7 @@ func TestRecentBeaconBlocksRPCHandler_ReturnsBlocks_ReconstructsPayload(t *testi
 		blkRoots = append(blkRoots, root)
 	}
 
-	mockEngine := &mockExecution.SilaEngineClient{
+	mockEngine := &mockSila.SilaEngineClient{
 		SilaPayloadByBlockHash: map[[32]byte]*silaenginev1.SilaPayload{
 			blockHash: payload,
 		},

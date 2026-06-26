@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/peer"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/async/event"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
@@ -14,7 +15,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filesystem"
 	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
 	lightclient "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/light-client"
@@ -30,7 +31,6 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
-	"github.com/libp2p/go-libp2p/core/peer"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -203,7 +203,7 @@ func minimalTestService(t *testing.T, opts ...Option) (*Service, *testServiceReq
 		WithBlobStorage(filesystem.NewEphemeralBlobStorage(t)),
 		WithDataColumnStorage(filesystem.NewEphemeralDataColumnStorage(t)),
 		WithSyncChecker(mock.MockChecker{}),
-		WithSilaEngineCaller(&mockExecution.SilaEngineClient{}),
+		WithSilaEngineCaller(&mockSila.SilaEngineClient{}),
 		WithP2PBroadcaster(&mockAccessor{}),
 		WithLightClientStore(&lightclient.Store{}),
 		WithGenesisTime(genesis),

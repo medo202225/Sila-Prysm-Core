@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
 	statefeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/state"
@@ -19,12 +20,11 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 )
@@ -75,7 +75,7 @@ func (s *Service) ReceiveSilaPayloadEnvelope(ctx context.Context, signed interfa
 	var elGroup errgroup.Group
 	elGroup.Go(func() error {
 		var elErr error
-		isValidPayload, elErr = s.validateExecutionOnEnvelope(elCtx, blockState, envelope)
+		isValidPayload, elErr = s.validateSilaPayloadOnEnvelope(elCtx, blockState, envelope)
 		return elErr
 	})
 
@@ -108,7 +108,7 @@ func (s *Service) ReceiveSilaPayloadEnvelope(ctx context.Context, signed interfa
 		return err
 	}
 
-	// sila_payload_available is emitted when an sila payload
+	// sila_payload_available is emitted when a Sila payload
 	// and all data are available for payload attestation
 	// without verifying the sila payload itself
 	s.cfg.StateNotifier.StateFeed().Send(&feed.Event{
@@ -149,7 +149,7 @@ func (s *Service) ReceiveSilaPayloadEnvelope(ctx context.Context, signed interfa
 		return err
 	}
 
-	// sila_payload is emitted when an sila payload is successfully imported.
+	// sila_payload is emitted when a Sila payload is successfully imported.
 	isOptimistic, err := s.cfg.ForkChoiceStore.IsOptimistic(root)
 	if err != nil {
 		log.WithError(err).Error("Could not get optimistic status of block root")
@@ -324,7 +324,7 @@ func (s *Service) notifyNewEnvelope(ctx context.Context, st state.BeaconState, e
 	return s.callNewPayload(ctx, payload, versionedHashes, common.Hash(envelope.ParentBeaconBlockRoot()), envelope.SilaRequests(), envelope.Slot())
 }
 
-func (s *Service) validateExecutionOnEnvelope(ctx context.Context, st state.BeaconState, envelope interfaces.ROSilaPayloadEnvelope) (bool, error) {
+func (s *Service) validateSilaPayloadOnEnvelope(ctx context.Context, st state.BeaconState, envelope interfaces.ROSilaPayloadEnvelope) (bool, error) {
 	isValid, err := s.notifyNewEnvelope(ctx, st, envelope)
 	if err == nil {
 		return isValid, nil
@@ -340,7 +340,7 @@ func (s *Service) validateExecutionOnEnvelope(ctx context.Context, st state.Beac
 
 	s.cfg.ForkChoiceStore.Lock()
 	defer s.cfg.ForkChoiceStore.Unlock()
-	return false, s.handleInvalidExecutionError(ctx, err, blockRoot, parentRoot, parentHash)
+	return false, s.handleInvalidSilaPayloadError(ctx, err, blockRoot, parentRoot, parentHash)
 }
 
 func (s *Service) savePostPayload(ctx context.Context, signed interfaces.ROSignedSilaPayloadEnvelope) error {
@@ -370,7 +370,7 @@ func (s *Service) PayloadEarly(root [32]byte) (bool, bool) {
 }
 
 // notifyForkchoiceUpdateGloas takes the block hash directly because Gloas
-// blocks don't carry an sila payload in the body.
+// blocks don't carry a Sila payload in the body.
 func (s *Service) notifyForkchoiceUpdateGloas(ctx context.Context, blockHash [32]byte, attributes payloadattribute.Attributer) (*silaenginev1.PayloadIDBytes, error) {
 	ctx, span := trace.StartSpan(ctx, "blockChain.notifyForkchoiceUpdateGloas")
 	defer span.End()

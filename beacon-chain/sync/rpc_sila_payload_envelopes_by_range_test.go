@@ -15,14 +15,14 @@ import (
 
 	chainMock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	testDB "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
-	mockExecution "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
+	mockSila "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	p2ptest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/startup"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	engpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	engpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -46,7 +46,7 @@ func testSignedEnvelope(slot primitives.Slot, beaconBlockRoot []byte) *pb.Signed
 				BlockHash:     root,
 				SlotNumber:    slot,
 			},
-			SilaRequests:     &engpb.SilaRequests{},
+			SilaRequests:          &engpb.SilaRequests{},
 			BeaconBlockRoot:       root,
 			ParentBeaconBlockRoot: make([]byte, 32),
 		},
@@ -263,9 +263,9 @@ func TestSilaPayloadEnvelopesByRangeRPCHandler(t *testing.T) {
 			}
 		}
 
-		mockEngine := &mockExecution.SilaEngineClient{
+		mockEngine := &mockSila.SilaEngineClient{
 			SilaPayloadByBlockHash: make(map[[32]byte]*engpb.SilaPayload, len(roots)),
-			SlotByBlockHash:             make(map[[32]byte]primitives.Slot, len(roots)),
+			SlotByBlockHash:        make(map[[32]byte]primitives.Slot, len(roots)),
 		}
 		for i, root := range roots[:3] {
 			mockEngine.SilaPayloadByBlockHash[root] = &engpb.SilaPayload{
@@ -370,9 +370,9 @@ func TestSilaPayloadEnvelopesByRangeRPCHandler(t *testing.T) {
 			}
 		}
 
-		mockEngine := &mockExecution.SilaEngineClient{
+		mockEngine := &mockSila.SilaEngineClient{
 			SilaPayloadByBlockHash: make(map[[32]byte]*engpb.SilaPayload, len(roots)),
-			SlotByBlockHash:             make(map[[32]byte]primitives.Slot, len(roots)),
+			SlotByBlockHash:        make(map[[32]byte]primitives.Slot, len(roots)),
 		}
 		for i, root := range roots[:3] {
 			mockEngine.SilaPayloadByBlockHash[root] = &engpb.SilaPayload{
