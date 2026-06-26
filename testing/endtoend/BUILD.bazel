@@ -1,6 +1,6 @@
 load("@sila//tools/go:def.bzl", "go_test")
 
-# gazelle:exclude geth_deps.go
+# gazelle:exclude sila_deps.go
 # gazelle:exclude mainnet_e2e_test.go
 # gazelle:exclude mainnet_scenario_e2e_test.go
 # gazelle:exclude minimal_scenario_e2e_test.go
