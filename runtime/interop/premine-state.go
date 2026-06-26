@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
@@ -15,11 +16,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila/core/types"
-	"github.com/pkg/errors"
 )
 
 var errUnsupportedVersion = errors.New("schema version not supported by PremineGenesisConfig")
@@ -29,7 +29,7 @@ type PremineGenesisConfig struct {
 	NVals           uint64
 	PregenesisCreds uint64
 	Version         int          // as in "github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
-	GB              *types.Block // geth genesis block
+	GB              *types.Block // Sila genesis block
 	depositEntries  *depositEntries
 }
 
@@ -540,8 +540,8 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				Transactions:  make([][]byte, 0),
 				Withdrawals:   make([]*silaenginev1.Withdrawal, 0),
 			},
-			BlsToSilaChanges: make([]*silapb.SignedBLSToSilaChange, 0),
-			BlobKzgCommitments:    make([][]byte, 0),
+			BlsToSilaChanges:   make([]*silapb.SignedBLSToSilaChange, 0),
+			BlobKzgCommitments: make([][]byte, 0),
 		}
 	case version.Electra:
 		body = &silapb.BeaconBlockBodyElectra{
@@ -568,8 +568,8 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				Transactions:  make([][]byte, 0),
 				Withdrawals:   make([]*silaenginev1.Withdrawal, 0),
 			},
-			BlsToSilaChanges: make([]*silapb.SignedBLSToSilaChange, 0),
-			BlobKzgCommitments:    make([][]byte, 0),
+			BlsToSilaChanges:   make([]*silapb.SignedBLSToSilaChange, 0),
+			BlobKzgCommitments: make([][]byte, 0),
 			SilaRequests: &silaenginev1.SilaRequests{
 				Deposits:       make([]*silaenginev1.DepositRequest, 0),
 				Withdrawals:    make([]*silaenginev1.WithdrawalRequest, 0),
@@ -601,8 +601,8 @@ func (s *PremineGenesisConfig) setLatestBlockHeader(g state.BeaconState) error {
 				Transactions:  make([][]byte, 0),
 				Withdrawals:   make([]*silaenginev1.Withdrawal, 0),
 			},
-			BlsToSilaChanges: make([]*silapb.SignedBLSToSilaChange, 0),
-			BlobKzgCommitments:    make([][]byte, 0),
+			BlsToSilaChanges:   make([]*silapb.SignedBLSToSilaChange, 0),
+			BlobKzgCommitments: make([][]byte, 0),
 			SilaRequests: &silaenginev1.SilaRequests{
 				Deposits:       make([]*silaenginev1.DepositRequest, 0),
 				Withdrawals:    make([]*silaenginev1.WithdrawalRequest, 0),

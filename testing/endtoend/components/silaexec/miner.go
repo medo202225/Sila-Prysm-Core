@@ -87,24 +87,24 @@ func (m *Miner) initAttempt(ctx context.Context, attempt int) (*os.File, error) 
 		return nil, errors.New("Sila binary not found")
 	}
 
-	gethJsonPath := path.Join(path.Dir(binaryPath), "genesis.json")
+	silaJsonPath := path.Join(path.Dir(binaryPath), "genesis.json")
 	gen := interop.GethTestnetGenesis(e2e.TestParams.SilaExecutionGenesisTime, params.BeaconConfig())
 	log.WithField("timestamp", e2e.TestParams.SilaExecutionGenesisTime).Info("SilaExecution miner genesis")
 	b, err := json.Marshal(gen)
 	if err != nil {
 		return nil, err
 	}
-	if err := file.WriteFile(gethJsonPath, b); err != nil {
+	if err := file.WriteFile(silaJsonPath, b); err != nil {
 		return nil, err
 	}
 
 	// write the same thing to the logs dir for inspection
-	gethJsonLogPath := e2e.TestParams.Logfile("genesis.json")
-	if err := file.WriteFile(gethJsonLogPath, b); err != nil {
+	silaJsonLogPath := e2e.TestParams.Logfile("genesis.json")
+	if err := file.WriteFile(silaJsonLogPath, b); err != nil {
 		return nil, err
 	}
 
-	initCmd := exec.CommandContext(ctx, binaryPath, "init", fmt.Sprintf("--datadir=%s", m.DataDir()), gethJsonPath) // #nosec G204 -- Safe
+	initCmd := exec.CommandContext(ctx, binaryPath, "init", fmt.Sprintf("--datadir=%s", m.DataDir()), silaJsonPath) // #nosec G204 -- Safe
 
 	// redirect stderr to a log file
 	initFile, err := helpers.DeleteAndCreatePath(e2e.TestParams.Logfile("silaexec-init_miner.log"))

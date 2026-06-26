@@ -11,14 +11,14 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/bazelbuild/rules_go/go/tools/bazel"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/helpers"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
-	"github.com/bazelbuild/rules_go/go/tools/bazel"
-	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -59,7 +59,7 @@ func (node *Node) Start(ctx context.Context) error {
 	if err := file.MkdirAll(silaexecPath); err != nil {
 		return err
 	}
-	gethJsonPath := path.Join(silaexecPath, "genesis.json")
+	silaJsonPath := path.Join(silaexecPath, "genesis.json")
 
 	gen := interop.GethTestnetGenesis(e2e.TestParams.SilaExecutionGenesisTime, params.BeaconConfig())
 	b, err := json.Marshal(gen)
@@ -67,7 +67,7 @@ func (node *Node) Start(ctx context.Context) error {
 		return err
 	}
 
-	if err := file.WriteFile(gethJsonPath, b); err != nil {
+	if err := file.WriteFile(silaJsonPath, b); err != nil {
 		return err
 	}
 	copyPath := path.Join(e2e.TestParams.LogPath, "silaexec-genesis.json")
@@ -75,7 +75,7 @@ func (node *Node) Start(ctx context.Context) error {
 		return err
 	}
 
-	initCmd := exec.CommandContext(ctx, binaryPath, "init", fmt.Sprintf("--datadir=%s", silaexecPath), gethJsonPath) // #nosec G204 -- Safe
+	initCmd := exec.CommandContext(ctx, binaryPath, "init", fmt.Sprintf("--datadir=%s", silaexecPath), silaJsonPath) // #nosec G204 -- Safe
 	initFile, err := helpers.DeleteAndCreateFile(e2e.TestParams.LogPath, "silaexec-init_"+strconv.Itoa(node.index)+".log")
 	if err != nil {
 		return err
