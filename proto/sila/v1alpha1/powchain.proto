@@ -33,8 +33,8 @@ message DepositSnapshot {
   ];
   bytes deposit_root = 2 [ (sila.eth.ext.ssz_size) = "32" ];
   uint64 deposit_count = 3;
-  bytes execution_hash = 4 [ (sila.eth.ext.ssz_size) = "32" ];
-  uint64 execution_depth = 5;
+  bytes sila_hash = 4 [ (sila.eth.ext.ssz_size) = "32" ];
+  uint64 sila_depth = 5;
 }
 
 // LatestSilaData contains the current state of the silaexec chain.

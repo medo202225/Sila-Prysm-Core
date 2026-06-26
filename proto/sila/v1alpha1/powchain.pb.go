@@ -108,14 +108,14 @@ func (x *SilaChainData) GetDepositSnapshot() *DepositSnapshot {
 }
 
 type DepositSnapshot struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Finalized      [][]byte               `protobuf:"bytes,1,rep,name=finalized,proto3" json:"finalized,omitempty" ssz-max:"32" ssz-size:"?,32"`
-	DepositRoot    []byte                 `protobuf:"bytes,2,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty" ssz-size:"32"`
-	DepositCount   uint64                 `protobuf:"varint,3,opt,name=deposit_count,json=depositCount,proto3" json:"deposit_count,omitempty"`
-	SilaHash  []byte                 `protobuf:"bytes,4,opt,name=execution_hash,json=executionHash,proto3" json:"execution_hash,omitempty" ssz-size:"32"`
-	SilaDepth uint64                 `protobuf:"varint,5,opt,name=execution_depth,json=executionDepth,proto3" json:"execution_depth,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Finalized     [][]byte               `protobuf:"bytes,1,rep,name=finalized,proto3" json:"finalized,omitempty" ssz-max:"32" ssz-size:"?,32"`
+	DepositRoot   []byte                 `protobuf:"bytes,2,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty" ssz-size:"32"`
+	DepositCount  uint64                 `protobuf:"varint,3,opt,name=deposit_count,json=depositCount,proto3" json:"deposit_count,omitempty"`
+	SilaHash      []byte                 `protobuf:"bytes,4,opt,name=sila_hash,json=silaHash,proto3" json:"sila_hash,omitempty" ssz-size:"32"`
+	SilaDepth     uint64                 `protobuf:"varint,5,opt,name=sila_depth,json=silaDepth,proto3" json:"sila_depth,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DepositSnapshot) Reset() {
