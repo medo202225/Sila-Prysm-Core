@@ -145,9 +145,9 @@ func lightClientHeaderToJSON(header interfaces.LightClientHeader) (json.RawMessa
 			return nil, err
 		}
 		result = &LightClientHeaderCapella{
-			Beacon:          BeaconBlockHeaderFromConsensus(header.Beacon()),
-			Execution:       execution,
-			ExecutionBranch: branchToJSON(silaPayloadBranch[:]),
+			Beacon:            BeaconBlockHeaderFromConsensus(header.Beacon()),
+			SilaPayload:       execution,
+			SilaPayloadBranch: branchToJSON(silaPayloadBranch[:]),
 		}
 	case version.Deneb:
 		exInterface, err := header.SilaData()
@@ -167,9 +167,9 @@ func lightClientHeaderToJSON(header interfaces.LightClientHeader) (json.RawMessa
 			return nil, err
 		}
 		result = &LightClientHeaderDeneb{
-			Beacon:          BeaconBlockHeaderFromConsensus(header.Beacon()),
-			Execution:       execution,
-			ExecutionBranch: branchToJSON(silaPayloadBranch[:]),
+			Beacon:            BeaconBlockHeaderFromConsensus(header.Beacon()),
+			SilaPayload:       execution,
+			SilaPayloadBranch: branchToJSON(silaPayloadBranch[:]),
 		}
 	case version.Electra:
 		exInterface, err := header.SilaData()
@@ -189,9 +189,9 @@ func lightClientHeaderToJSON(header interfaces.LightClientHeader) (json.RawMessa
 			return nil, err
 		}
 		result = &LightClientHeaderDeneb{
-			Beacon:          BeaconBlockHeaderFromConsensus(header.Beacon()),
-			Execution:       execution,
-			ExecutionBranch: branchToJSON(silaPayloadBranch[:]),
+			Beacon:            BeaconBlockHeaderFromConsensus(header.Beacon()),
+			SilaPayload:       execution,
+			SilaPayloadBranch: branchToJSON(silaPayloadBranch[:]),
 		}
 	default:
 		return nil, fmt.Errorf("unsupported header version %s", version.String(v))
