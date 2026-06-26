@@ -1,5 +1,5 @@
 // Package proxy provides a proxy middleware for SilaEngine API requests between Sila
-// consensus clients and execution clients accordingly. Allows for customizing
+// consensus clients and sila clients accordingly. Allows for customizing
 // in-flight requests or responses using custom triggers. Useful for end-to-end testing.
 package proxy
 
@@ -38,7 +38,7 @@ type interceptorConfig struct {
 	trigger     func() bool
 }
 
-// Proxy server that sits as a middleware between a Sila consensus client and an execution client,
+// Proxy server that sits as a middleware between a Sila consensus client and a Sila client,
 // allowing us to modify in-flight requests and responses for testing purposes.
 type Proxy struct {
 	cfg              *config
@@ -49,7 +49,7 @@ type Proxy struct {
 	backedUpRequests map[string][]*http.Request
 }
 
-// New creates a proxy server forwarding requests from a consensus client to an execution client.
+// New creates a proxy server forwarding requests from a consensus client to a Sila client.
 func New(opts ...Option) (*Proxy, error) {
 	p := &Proxy{
 		cfg: &config{
@@ -105,7 +105,7 @@ func (p *Proxy) Start(ctx context.Context) error {
 	}
 }
 
-// ServeHTTP requests from a consensus client to an execution client, modifying in-flight requests
+// ServeHTTP requests from a consensus client to a Sila client, modifying in-flight requests
 // and/or responses as desired. It also processes any backed-up requests.
 func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	requestBytes, err := parseRequestBytes(r)
@@ -202,7 +202,7 @@ func (p *Proxy) interceptIfNeeded(requestBytes []byte, w http.ResponseWriter, r 
 	return
 }
 
-// Create a new proxy request to the execution client.
+// Create a new proxy request to the Sila client.
 func (p *Proxy) proxyRequest(requestBytes []byte, w http.ResponseWriter, r *http.Request) {
 	jreq, err := unmarshalRPCObject(requestBytes)
 	if err != nil {
@@ -241,7 +241,7 @@ func (p *Proxy) sendHttpRequest(req *http.Request, requestBytes []byte) (*http.R
 	// Set the modified request as the proxy request body.
 	proxyReq.Body = io.NopCloser(bytes.NewBuffer(requestBytes))
 
-	// Required proxy headers for forwarding JSON-RPC requests to the execution client.
+	// Required proxy headers for forwarding JSON-RPC requests to the Sila client.
 	proxyReq.Header.Set("Host", req.Host)
 	proxyReq.Header.Set("X-Forwarded-For", req.RemoteAddr)
 	proxyReq.Header.Set("Content-Type", "application/json")
@@ -271,7 +271,7 @@ func parseRequestBytes(req *http.Request) ([]byte, error) {
 	return requestBytes, nil
 }
 
-// Checks whether the JSON-RPC request is for the Sila SilaEngine API.
+// Checks whether the JSON-RPC request is for the SilaEngine API.
 func isEngineAPICall(reqBytes []byte) bool {
 	jsonRequest, err := unmarshalRPCObject(reqBytes)
 	if err != nil {

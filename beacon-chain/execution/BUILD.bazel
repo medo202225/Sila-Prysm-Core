@@ -91,7 +91,7 @@ go_test(
         "deposit_test.go",
         "silaengine_client_fuzz_test.go",
         "silaengine_client_test.go",
-        "execution_chain_test.go",
+        "sila_chain_test.go",
         "graffiti_info_test.go",
         "init_test.go",
         "log_processing_test.go",

@@ -100,7 +100,7 @@ type SignedBeaconBlock interface {
 	Unblind(e SilaData) error
 }
 
-// SilaData represents execution layer information that is contained
+// SilaData represents Sila layer information that is contained
 // within post-Bellatrix beacon block bodies.
 type SilaData interface {
 	ssz.Marshaler

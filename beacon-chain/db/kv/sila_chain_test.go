@@ -8,7 +8,7 @@ import (
 
 func TestStore_SavePowchainData(t *testing.T) {
 	type args struct {
-		data *v2.SilaExecutionChainData
+		data *v2.SilaChainData
 	}
 	tests := []struct {
 		name    string
@@ -26,8 +26,8 @@ func TestStore_SavePowchainData(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			store := setupDB(t)
-			if err := store.SaveExecutionChainData(t.Context(), tt.args.data); (err != nil) != tt.wantErr {
-				t.Errorf("SaveExecutionChainData() error = %v, wantErr %v", err, tt.wantErr)
+			if err := store.SaveSilaChainData(t.Context(), tt.args.data); (err != nil) != tt.wantErr {
+				t.Errorf("SaveSilaChainData() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

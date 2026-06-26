@@ -20,7 +20,7 @@ import (
 )
 
 // ProcessWithdrawalRequests processes the validator withdrawals from the provided sila payload
-// into the beacon state triggered by the execution layer.
+// into the beacon state triggered by the Sila layer.
 //
 // Spec pseudocode definition:
 //
@@ -105,7 +105,7 @@ func ProcessWithdrawalRequests(ctx context.Context, st state.BeaconState, wrs []
 	}
 	for _, wr := range wrs {
 		if wr == nil {
-			return nil, errors.New("nil execution layer withdrawal request")
+			return nil, errors.New("nil Sila layer withdrawal request")
 		}
 		amount := wr.Amount
 		isFullExitRequest := amount == params.BeaconConfig().FullExitRequestAmount
@@ -114,13 +114,13 @@ func ProcessWithdrawalRequests(ctx context.Context, st state.BeaconState, wrs []
 			return nil, err
 		} else if n == params.BeaconConfig().PendingPartialWithdrawalsLimit && !isFullExitRequest {
 			// if the PendingPartialWithdrawalsLimit is met, the user would have paid for a partial withdrawal that's not included
-			log.Debug("Skipping execution layer withdrawal request, PendingPartialWithdrawalsLimit reached")
+			log.Debug("Skipping Sila layer withdrawal request, PendingPartialWithdrawalsLimit reached")
 			continue
 		}
 
 		vIdx, exists := st.ValidatorIndexByPubkey(bytesutil.ToBytes48(wr.ValidatorPubkey))
 		if !exists {
-			log.WithField("validator", hexutil.Encode(wr.ValidatorPubkey)).Debug("Skipping execution layer withdrawal request, validator index not found")
+			log.WithField("validator", hexutil.Encode(wr.ValidatorPubkey)).Debug("Skipping Sila layer withdrawal request, validator index not found")
 			continue
 		}
 		validator, err := st.ValidatorAtIndexReadOnly(vIdx)
@@ -132,23 +132,23 @@ func ProcessWithdrawalRequests(ctx context.Context, st state.BeaconState, wrs []
 		wc := validator.GetWithdrawalCredentials()
 		isCorrectSourceAddress := bytes.Equal(wc[12:], wr.SourceAddress)
 		if !hasCorrectCredential || !isCorrectSourceAddress {
-			log.Debug("Skipping execution layer withdrawal request, wrong withdrawal credentials")
+			log.Debug("Skipping Sila layer withdrawal request, wrong withdrawal credentials")
 			continue
 		}
 
 		// Verify the validator is active.
 		if !helpers.IsActiveValidatorUsingTrie(validator, currentEpoch) {
-			log.Debug("Skipping execution layer withdrawal request, validator not active")
+			log.Debug("Skipping Sila layer withdrawal request, validator not active")
 			continue
 		}
 		// Verify the validator has not yet submitted an exit.
 		if validator.ExitEpoch() != params.BeaconConfig().FarFutureEpoch {
-			log.Debug("Skipping execution layer withdrawal request, validator has submitted an exit already")
+			log.Debug("Skipping Sila layer withdrawal request, validator has submitted an exit already")
 			continue
 		}
 		// Verify the validator has been active long enough.
 		if currentEpoch < validator.ActivationEpoch().AddEpoch(params.BeaconConfig().ShardCommitteePeriod) {
-			log.Debug("Skipping execution layer withdrawal request, validator has not been active long enough")
+			log.Debug("Skipping Sila layer withdrawal request, validator has not been active long enough")
 			continue
 		}
 

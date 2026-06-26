@@ -104,7 +104,7 @@ type Builder struct {
 	srv            *http.Server
 }
 
-// New creates a proxy server forwarding requests from a consensus client to an execution client.
+// New creates a proxy server forwarding requests from a consensus client to a Sila client.
 func New(opts ...Option) (*Builder, error) {
 	p := &Builder{
 		cfg: &config{
@@ -176,7 +176,7 @@ func (p *Builder) Start(ctx context.Context) error {
 	}
 }
 
-// ServeHTTP requests from a consensus client to an execution client, modifying in-flight requests
+// ServeHTTP requests from a consensus client to a Sila client, modifying in-flight requests
 // and/or responses as desired. It also processes any backed-up requests.
 func (p *Builder) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	p.cfg.logger.Infof("Received %s request from beacon with url: %s", r.Method, r.URL.Path)
@@ -894,7 +894,7 @@ func (p *Builder) sendHttpRequest(req *http.Request, requestBytes []byte) (*http
 	// Set the modified request as the proxy request body.
 	proxyReq.Body = io.NopCloser(bytes.NewBuffer(requestBytes))
 
-	// Required proxy headers for forwarding JSON-RPC requests to the execution client.
+	// Required proxy headers for forwarding JSON-RPC requests to the Sila client.
 	proxyReq.Header.Set("Host", req.Host)
 	proxyReq.Header.Set("X-Forwarded-For", req.RemoteAddr)
 	proxyReq.Header.Set("Content-Type", "application/json")
@@ -924,7 +924,7 @@ func parseRequestBytes(req *http.Request) ([]byte, error) {
 	return requestBytes, nil
 }
 
-// Checks whether the JSON-RPC request is for the Sila SilaEngine API.
+// Checks whether the JSON-RPC request is for the SilaEngine API.
 func isEngineAPICall(reqBytes []byte) bool {
 	jsonRequest, err := unmarshalRPCObject(reqBytes)
 	if err != nil {

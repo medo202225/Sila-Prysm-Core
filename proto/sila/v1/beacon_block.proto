@@ -64,7 +64,7 @@ message BeaconBlockBody {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -114,7 +114,7 @@ message AttesterSlashing {
   IndexedAttestation attestation_2 = 2;
 }
 
-// Deposit into the Sila consensus from the Sila sila deposit.
+// Deposit into the Sila consensus from the Sila deposit.
 message Deposit {
   message Data {
     // 48 byte BLS public key of the validator.
@@ -165,7 +165,7 @@ message SignedVoluntaryExit {
   bytes signature = 2 [ (sila.eth.ext.ssz_size) = "96" ];
 }
 
-// SilaData represents references to the Sila sila deposit.
+// SilaData represents references to the Sila deposit.
 message SilaData {
   // The 32 byte deposit tree root for the last deposit included in this
   // block.
@@ -175,7 +175,7 @@ message SilaData {
   // including the deposits in this block.
   uint64 deposit_count = 2;
 
-  // The 32 byte block hash of the Sila sila block considered for deposit
+  // The 32 byte block hash of the Sila block considered for deposit
   // inclusion.
   bytes block_hash = 3 [ (sila.eth.ext.ssz_size) = "32" ];
 }

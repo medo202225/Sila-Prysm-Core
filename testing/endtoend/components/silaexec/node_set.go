@@ -29,7 +29,7 @@ func (s *NodeSet) SetMinerENR(enr string) {
 	s.enr = enr
 }
 
-// Start starts all the execution nodes in set.
+// Start starts all the sila nodes in set.
 func (s *NodeSet) Start(ctx context.Context) error {
 	// Create SilaExecution nodes. The number of nodes is the same as the number of beacon nodes.
 	// We want each beacon node to connect to its own SilaExecution node.
@@ -52,7 +52,7 @@ func (s *NodeSet) Start(ctx context.Context) error {
 	})
 }
 
-// Started checks whether execution node set is started and all nodes are ready to be queried.
+// Started checks whether Sila node set is started and all nodes are ready to be queried.
 func (s *NodeSet) Started() <-chan struct{} {
 	return s.started
 }

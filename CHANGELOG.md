@@ -13,7 +13,7 @@
 - No additional or removed source files.
 
 ### Sila Execution Integration
-- Integrated with the Sila execution layer (Chain ID 2026).
+- Integrated with the Sila layer (Chain ID 2026).
 - Beacon execution connectivity validated.
 
 ### Development Principles

@@ -185,7 +185,7 @@ func TestProposer_PendingDeposits_Electra(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,

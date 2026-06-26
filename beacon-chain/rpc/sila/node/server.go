@@ -17,5 +17,5 @@ type Server struct {
 	MetadataProvider          p2p.MetadataProvider
 	GenesisTimeFetcher        blockchain.TimeFetcher
 	HeadFetcher               blockchain.HeadFetcher
-	ExecutionChainInfoFetcher execution.ChainInfoFetcher
+	SilaChainInfoFetcher execution.ChainInfoFetcher
 }

@@ -22,7 +22,7 @@ func WithHttpEndpoint(endpointString string) Option {
 	}
 }
 
-// WithHttpEndpointAndJWTSecret for authenticating the execution node JSON-RPC endpoint.
+// WithHttpEndpointAndJWTSecret for authenticating the Sila node JSON-RPC endpoint.
 func WithHttpEndpointAndJWTSecret(endpointString string, secret []byte) Option {
 	return func(s *Service) error {
 		if len(secret) == 0 {
@@ -38,7 +38,7 @@ func WithHttpEndpointAndJWTSecret(endpointString string, secret []byte) Option {
 	}
 }
 
-// WithHeaders adds headers to the execution node JSON-RPC requests.
+// WithHeaders adds headers to the Sila node JSON-RPC requests.
 func WithHeaders(headers []string) Option {
 	return func(s *Service) error {
 		s.cfg.headers = headers

@@ -60,7 +60,7 @@ type Server struct {
 	BlockFetcher                     execution.POWBlockFetcher
 	DepositFetcher                   cache.DepositFetcher
 	ChainStartFetcher                execution.ChainStartFetcher
-	SilaExecutionInfoFetcher                  execution.ChainInfoFetcher
+	SilaChainInfoFetcher                  execution.ChainInfoFetcher
 	OptimisticModeFetcher            blockchain.OptimisticModeFetcher
 	SyncChecker                      silaSync.Checker
 	StateNotifier                    statefeed.Notifier

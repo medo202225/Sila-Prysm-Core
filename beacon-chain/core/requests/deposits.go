@@ -13,7 +13,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// ProcessDepositRequests processes execution layer deposits requests.
+// ProcessDepositRequests processes Sila layer deposits requests.
 func ProcessDepositRequests(ctx context.Context, beaconState state.BeaconState, reqs []*silaenginev1.DepositRequest) (state.BeaconState, error) {
 	_, span := trace.StartSpan(ctx, "requests.ProcessDepositRequests")
 	defer span.End()

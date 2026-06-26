@@ -200,7 +200,7 @@ var (
 	blobRecoveredFromELTotal = promauto.NewCounter(
 		prometheus.CounterOpts{
 			Name: "blob_recovered_from_el_total",
-			Help: "Count the number of times blobs have been recovered from the execution layer.",
+			Help: "Count the number of times blobs have been recovered from the Sila layer.",
 		},
 	)
 
@@ -214,14 +214,14 @@ var (
 	dataColumnsRecoveredFromELAttempts = promauto.NewCounter(
 		prometheus.CounterOpts{
 			Name: "data_columns_recovered_from_el_attempts",
-			Help: "Count the number of data columns recovery attempts from the execution layer.",
+			Help: "Count the number of data columns recovery attempts from the Sila layer.",
 		},
 	)
 
 	dataColumnsRecoveredFromELTotal = promauto.NewCounter(
 		prometheus.CounterOpts{
 			Name: "data_columns_recovered_from_el_total",
-			Help: "Count the number of times data columns have been recovered from the execution layer.",
+			Help: "Count the number of times data columns have been recovered from the Sila layer.",
 		},
 	)
 	syncSilaPayloadEnvelopeArrivalDelaySeconds = promauto.NewHistogram(
@@ -286,7 +286,7 @@ var (
 	dataColumnSidecarsObtainedViaELCount = promauto.NewSummary(
 		prometheus.SummaryOpts{
 			Name: "data_column_obtained_via_el_count",
-			Help: "Count the number of data column sidecars obtained via the execution layer.",
+			Help: "Count the number of data column sidecars obtained via the Sila layer.",
 		},
 	)
 

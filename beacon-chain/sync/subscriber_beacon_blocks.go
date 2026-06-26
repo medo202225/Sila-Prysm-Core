@@ -88,7 +88,7 @@ func (s *Service) beaconBlockSubscriber(ctx context.Context, msg proto.Message) 
 	return nil
 }
 
-// processSidecarsFromExecutionFromBlock retrieves (if available) sidecars data from the execution client,
+// processSidecarsFromExecutionFromBlock retrieves (if available) sidecars data from the Sila client,
 // builds corresponding sidecars, save them to the storage, and broadcasts them over P2P if necessary.
 func (s *Service) processSidecarsFromExecutionFromBlock(ctx context.Context, roBlock blocks.ROBlock) error {
 	if roBlock.Version() >= version.Gloas {
@@ -122,7 +122,7 @@ func (s *Service) processSidecarsFromExecutionFromBlock(ctx context.Context, roB
 	return nil
 }
 
-// processBlobSidecarsFromExecution retrieves (if available) blob sidecars data from the execution client,
+// processBlobSidecarsFromExecution retrieves (if available) blob sidecars data from the Sila client,
 // builds corresponding sidecars, save them to the storage, and broadcasts them over P2P if necessary.
 func (s *Service) processBlobSidecarsFromExecution(ctx context.Context, block interfaces.ReadOnlySignedBeaconBlock) {
 	startTime, err := slots.StartTime(s.cfg.clock.GenesisTime(), block.Block().Slot())
@@ -191,7 +191,7 @@ func (s *Service) processBlobSidecarsFromExecution(ctx context.Context, block in
 	}
 }
 
-// processDataColumnSidecarsFromExecution retrieves (if available) data column sidecars data from the execution client,
+// processDataColumnSidecarsFromExecution retrieves (if available) data column sidecars data from the Sila client,
 // builds corresponding sidecars, save them to the storage, and broadcasts them over P2P if necessary.
 func (s *Service) processDataColumnSidecarsFromExecution(ctx context.Context, source peerdas.ConstructionPopulator) error {
 	key := fmt.Sprintf("%#x", source.Root())
@@ -233,7 +233,7 @@ func (s *Service) processDataColumnSidecarsFromExecution(ctx context.Context, so
 			// Exit early if all sidecars to sample have been seen.
 			if s.haveAllSidecarsBeenSeen(source.Slot(), proposerIndex, columnIndicesToSample) {
 				if iteration > 0 && constructedSidecarCount == 0 {
-					log.Debug("No data column sidecars constructed from the execution client")
+					log.Debug("No data column sidecars constructed from the Sila client")
 				}
 
 				return nil, nil
@@ -248,7 +248,7 @@ func (s *Service) processDataColumnSidecarsFromExecution(ctx context.Context, so
 				dataColumnsRecoveredFromELAttempts.Inc()
 			}
 
-			// Try to reconstruct data column constructedSidecars from the execution client.
+			// Try to reconstruct data column constructedSidecars from the Sila client.
 			constructedSidecars, err := s.cfg.executionReconstructor.ConstructDataColumnSidecars(ctx, source)
 			if err != nil {
 				return nil, errors.Wrap(err, "reconstruct data column sidecars")
@@ -278,7 +278,7 @@ func (s *Service) processDataColumnSidecarsFromExecution(ctx context.Context, so
 					"type":          source.Type(),
 					"count":         len(unseenIndices),
 					"indices":       helpers.SortedPrettySliceFromMap(unseenIndices),
-				}).Debug("Constructed data column sidecars from the execution client")
+				}).Debug("Constructed data column sidecars from the Sila client")
 
 				return nil, nil
 			}

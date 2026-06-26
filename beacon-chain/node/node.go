@@ -80,7 +80,7 @@ const testSkipPowFlag = "test-skip-pow"
 // struct, as it is merely used to pass down configuration options into the appropriate services.
 type serviceFlagOpts struct {
 	blockchainFlagOpts     []blockchain.Option
-	executionChainFlagOpts []execution.Option
+	silaChainFlagOpts []execution.Option
 	builderOpts            []builder.Option
 }
 
@@ -808,7 +808,7 @@ func (b *BeaconNode) registerPOWChainService() error {
 
 	// skipcq: CRT-D0001
 	opts := append(
-		b.serviceFlagOpts.executionChainFlagOpts,
+		b.serviceFlagOpts.silaChainFlagOpts,
 		execution.WithSilaDepositAddress(common.HexToAddress(silaDepositAddr)),
 		execution.WithDatabase(b.db),
 		execution.WithDepositCache(b.depositCache),
@@ -1014,8 +1014,8 @@ func (b *BeaconNode) registerRPCService(router *http.ServeMux) error {
 		SlashingsPool:                    b.slashingsPool,
 		BLSChangesPool:                   b.blsToExecPool,
 		SyncCommitteeObjectPool:          b.syncCommitteePool,
-		ExecutionChainService:            web3Service,
-		ExecutionChainInfoFetcher:        web3Service,
+		SilaChainService:            web3Service,
+		SilaChainInfoFetcher:        web3Service,
 		ChainStartFetcher:                chainStartFetcher,
 		MockSilaExecutionVotes:                    mockSilaDataVotes,
 		SyncService:                      syncService,

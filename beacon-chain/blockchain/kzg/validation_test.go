@@ -206,7 +206,7 @@ func TestVerifyCellKZGProofBatchFromBlobData(t *testing.T) {
 		_, proofs, err := ComputeCellsAndKZGProofs(&blob)
 		require.NoError(t, err)
 
-		// Create flattened cell proofs (like execution client format)
+		// Create flattened cell proofs (like Sila client format)
 		cellProofs := make([][]byte, numberOfColumns)
 		for i := range numberOfColumns {
 			cellProofs[i] = proofs[i][:]

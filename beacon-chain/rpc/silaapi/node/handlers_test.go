@@ -53,7 +53,7 @@ func TestSyncStatus(t *testing.T) {
 		GenesisTimeFetcher:        chainService,
 		OptimisticModeFetcher:     chainService,
 		SyncChecker:               syncChecker,
-		ExecutionChainInfoFetcher: &testutil.MockExecutionChainInfoFetcher{},
+		SilaChainInfoFetcher: &testutil.MockSilaChainInfoFetcher{},
 	}
 
 	request := httptest.NewRequest(http.MethodGet, "http://example.com", nil)
@@ -103,7 +103,7 @@ func TestGetVersionV2(t *testing.T) {
 			SilaEngineCaller: &mockengine.SilaEngineClient{
 				ClientVersion: []*structs.ClientVersionV1{{
 					Code:    "EL",
-					Name:    "ExecutionClient",
+					Name:    "SilaClient",
 					Version: "v1.0.0",
 					Commit:  "abcdef12",
 				}},
@@ -117,11 +117,11 @@ func TestGetVersionV2(t *testing.T) {
 		require.NotNil(t, resp)
 		require.NotNil(t, resp.Data)
 		require.NotNil(t, resp.Data.BeaconNode)
-		require.NotNil(t, resp.Data.ExecutionClient)
-		require.Equal(t, "EL", resp.Data.ExecutionClient.Code)
-		require.Equal(t, "ExecutionClient", resp.Data.ExecutionClient.Name)
-		require.Equal(t, "v1.0.0", resp.Data.ExecutionClient.Version)
-		require.Equal(t, "abcdef12", resp.Data.ExecutionClient.Commit)
+		require.NotNil(t, resp.Data.SilaClient)
+		require.Equal(t, "EL", resp.Data.SilaClient.Code)
+		require.Equal(t, "SilaClient", resp.Data.SilaClient.Name)
+		require.Equal(t, "v1.0.0", resp.Data.SilaClient.Version)
+		require.Equal(t, "abcdef12", resp.Data.SilaClient.Commit)
 		require.Equal(t, "PM", resp.Data.BeaconNode.Code)
 		require.Equal(t, "Sila", resp.Data.BeaconNode.Name)
 		require.Equal(t, version.SemanticVersion(), resp.Data.BeaconNode.Version)
@@ -147,16 +147,16 @@ func TestGetVersionV2(t *testing.T) {
 		require.NotNil(t, resp)
 		require.NotNil(t, resp.Data)
 		require.NotNil(t, resp.Data.BeaconNode)
-		require.Equal(t, true, resp.Data.ExecutionClient == nil)
+		require.Equal(t, true, resp.Data.SilaClient == nil)
 
-		// make sure there is no 'execution_client' field
+		// make sure there is no 'sila_client' field
 		var payload map[string]any
 		require.NoError(t, json.Unmarshal(writer.Body.Bytes(), &payload))
 		data, ok := payload["data"].(map[string]any)
 		require.Equal(t, true, ok)
 		_, found := data["beacon_node"]
 		require.Equal(t, true, found)
-		_, found = data["execution_client"]
+		_, found = data["sila_client"]
 		require.Equal(t, false, found)
 	})
 

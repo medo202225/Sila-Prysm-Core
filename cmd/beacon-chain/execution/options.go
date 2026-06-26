@@ -14,7 +14,7 @@ import (
 
 // FlagOptions for execution service flag configurations.
 func FlagOptions(c *cli.Context) ([]execution.Option, error) {
-	endpoint, err := parseExecutionChainEndpoint(c)
+	endpoint, err := parseSilaChainEndpoint(c)
 	if err != nil {
 		return nil, err
 	}
@@ -35,8 +35,8 @@ func FlagOptions(c *cli.Context) ([]execution.Option, error) {
 	return opts, nil
 }
 
-// Parses a JWT secret from a file path. This secret is required when connecting to execution nodes
-// over HTTP, and must be the same one used in Sila and the execution node server Sila is connecting to.
+// Parses a JWT secret from a file path. This secret is required when connecting to sila nodes
+// over HTTP, and must be the same one used in Sila and the Sila node server Sila is connecting to.
 // The SilaEngine API specification here https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/authentication.md
 // Explains how we should validate this secret and the format of the file a user can specify.
 //
@@ -67,12 +67,12 @@ func parseJWTSecretFromFile(c *cli.Context) ([]byte, error) {
 	return secret, nil
 }
 
-func parseExecutionChainEndpoint(c *cli.Context) (string, error) {
+func parseSilaChainEndpoint(c *cli.Context) (string, error) {
 	if c.String(flags.ExecutionEngineEndpoint.Name) == "" {
 		return "", fmt.Errorf(
-			"you need to specify %s to provide a connection endpoint to an execution client "+
+			"you need to specify %s to provide a connection endpoint to a Sila client "+
 				"for your Sila beacon node. This is a requirement for running a node. You can read more about "+
-				"how to configure this execution client connection in our docs here "+
+				"how to configure this Sila client connection in our docs here "+
 				"https://docs.prylabs.network/docs/install/install-with-script",
 			flags.ExecutionEngineEndpoint.Name,
 		)

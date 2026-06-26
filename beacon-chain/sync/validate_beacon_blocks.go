@@ -429,7 +429,7 @@ func validateDenebBeaconBlock(blk interfaces.ReadOnlyBeaconBlock) error {
 //	   [REJECT] The block's sila payload timestamp is correct with respect to the slot --
 //	   i.e. sila_payload.timestamp == compute_timestamp_at_slot(state, block.slot).
 //
-//	   If sila_payload verification of block's parent by an execution node is not complete:
+//	   If sila_payload verification of block's parent by a Sila node is not complete:
 //	      [REJECT] The block's parent (defined by block.parent_root) passes all validation (excluding execution
 //	       node verification of the block.body.sila_payload).
 //	   otherwise:

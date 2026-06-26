@@ -168,7 +168,7 @@ message BeaconBlockBody {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -288,7 +288,7 @@ message BeaconBlockBodyAltair {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -360,7 +360,7 @@ message BeaconBlockBodyBellatrix {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -392,7 +392,7 @@ message BeaconBlockBodyBellatrix {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload from the execution chain. New in Bellatrix network
+  // Sila payload from the Sila chain. New in Bellatrix network
   // upgrade.
   sila.silaengine.v1.SilaPayload sila_payload = 10;
 }
@@ -431,7 +431,7 @@ message BlindedBeaconBlockBodyBellatrix {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -459,7 +459,7 @@ message BlindedBeaconBlockBodyBellatrix {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload header from the execution chain. New in Bellatrix network
+  // Sila payload header from the Sila chain. New in Bellatrix network
   // upgrade.
   sila.silaengine.v1.SilaPayloadHeader sila_payload_header = 10;
 }
@@ -502,7 +502,7 @@ message BeaconBlockBodyCapella {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -534,7 +534,7 @@ message BeaconBlockBodyCapella {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload from the execution chain.
+  // Sila payload from the Sila chain.
   sila.silaengine.v1.SilaPayloadCapella sila_payload = 10;
 
   // At most MAX_BLS_TO_SILA_CHANGES. New in Capella network upgrade.
@@ -576,7 +576,7 @@ message BlindedBeaconBlockBodyCapella {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -604,7 +604,7 @@ message BlindedBeaconBlockBodyCapella {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload header from the execution chain.
+  // Sila payload header from the Sila chain.
   sila.silaengine.v1.SilaPayloadHeaderCapella sila_payload_header =
       10;
 
@@ -686,7 +686,7 @@ message BeaconBlockBodyDeneb {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -718,7 +718,7 @@ message BeaconBlockBodyDeneb {
   // Sync aggregate object for the beacon chain to track sync committee votes.-
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload from the execution chain.
+  // Sila payload from the Sila chain.
   sila.silaengine.v1.SilaPayloadDeneb sila_payload = 10;
 
   // At most MAX_BLS_TO_SILA_CHANGES.
@@ -765,7 +765,7 @@ message BlindedBeaconBlockBodyDeneb {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -793,7 +793,7 @@ message BlindedBeaconBlockBodyDeneb {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload header from the execution chain.
+  // Sila payload header from the Sila chain.
   sila.silaengine.v1.SilaPayloadHeaderDeneb sila_payload_header = 10;
 
   // At most MAX_BLS_TO_SILA_CHANGES.
@@ -916,7 +916,7 @@ message BeaconBlockBodyElectra {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -949,7 +949,7 @@ message BeaconBlockBodyElectra {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload from the execution chain. New in Bellatrix network
+  // Sila payload from the Sila chain. New in Bellatrix network
   // upgrade.
   sila.silaengine.v1.SilaPayloadDeneb sila_payload = 10;
 
@@ -1001,7 +1001,7 @@ message BlindedBeaconBlockBodyElectra {
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 1 [ (sila.eth.ext.ssz_size) = "96" ];
 
-  // A reference to the Sila execution chain.
+  // A reference to the Sila chain.
   SilaData sila_data = 2;
 
   // 32 byte field of arbitrary data. This field may contain any data and
@@ -1030,7 +1030,7 @@ message BlindedBeaconBlockBodyElectra {
   // Sync aggregate object for the beacon chain to track sync committee votes.
   SyncAggregate sync_aggregate = 9;
 
-  // Sila payload header from the execution chain.
+  // Sila payload header from the Sila chain.
   sila.silaengine.v1.SilaPayloadHeaderDeneb sila_payload_header = 10;
 
   // At most MAX_BLS_TO_SILA_CHANGES.

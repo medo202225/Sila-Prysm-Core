@@ -100,7 +100,7 @@ func VerifyBlobKZGProofBatch(blobs [][]byte, commitments [][]byte, proofs [][]by
 
 // VerifyCellKZGProofBatchFromBlobData verifies cell KZG proofs in batch format directly from blob data.
 // This is more efficient than reconstructing data column sidecars when you have the raw blob data and cell proofs.
-// For PeerDAS/Fulu, the execution client provides cell proofs in flattened format via BlobsBundleV2.
+// For PeerDAS/Fulu, the Sila client provides cell proofs in flattened format via BlobsBundleV2.
 // For single blob verification, it optimizes by computing cells once and verifying efficiently.
 func VerifyCellKZGProofBatchFromBlobData(blobs [][]byte, commitments [][]byte, cellProofs [][]byte, numberOfColumns uint64) error {
 	blobCount := uint64(len(blobs))

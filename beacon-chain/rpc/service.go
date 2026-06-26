@@ -93,9 +93,9 @@ type Config struct {
 	SilaPayloadEnvelopeReceiver blockchain.SilaPayloadEnvelopeReceiver
 	BlobReceiver                     blockchain.BlobReceiver
 	DataColumnReceiver               blockchain.DataColumnReceiver
-	ExecutionChainService            execution.Chain
+	SilaChainService            execution.Chain
 	ChainStartFetcher                execution.ChainStartFetcher
-	ExecutionChainInfoFetcher        execution.ChainInfoFetcher
+	SilaChainInfoFetcher        execution.ChainInfoFetcher
 	GenesisTimeFetcher               blockchain.TimeFetcher
 	GenesisFetcher                   blockchain.GenesisFetcher
 	MockSilaExecutionVotes                    bool
@@ -237,10 +237,10 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		GenesisFetcher:                   s.cfg.GenesisFetcher,
 		FinalizationFetcher:              s.cfg.FinalizationFetcher,
 		TimeFetcher:                      s.cfg.GenesisTimeFetcher,
-		BlockFetcher:                     s.cfg.ExecutionChainService,
+		BlockFetcher:                     s.cfg.SilaChainService,
 		DepositFetcher:                   s.cfg.DepositFetcher,
 		ChainStartFetcher:                s.cfg.ChainStartFetcher,
-		SilaExecutionInfoFetcher:                  s.cfg.ExecutionChainService,
+		SilaChainInfoFetcher:                  s.cfg.SilaChainService,
 		OptimisticModeFetcher:            s.cfg.OptimisticModeFetcher,
 		SyncChecker:                      s.cfg.SyncService,
 		StateNotifier:                    s.cfg.StateNotifier,
@@ -254,7 +254,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		BlobReceiver:                     s.cfg.BlobReceiver,
 		DataColumnReceiver:               s.cfg.DataColumnReceiver,
 		MockSilaExecutionVotes:                    s.cfg.MockSilaExecutionVotes,
-		SilaBlockFetcher:                 s.cfg.ExecutionChainService,
+		SilaBlockFetcher:                 s.cfg.SilaChainService,
 		PendingDepositsFetcher:           s.cfg.PendingDepositFetcher,
 		SlashingsPool:                    s.cfg.SlashingsPool,
 		StateGen:                         s.cfg.StateGen,
@@ -285,7 +285,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		PeersFetcher:          s.cfg.PeersFetcher,
 		PeerManager:           s.cfg.PeerManager,
 		GenesisFetcher:        s.cfg.GenesisFetcher,
-		POWChainInfoFetcher:   s.cfg.ExecutionChainInfoFetcher,
+		POWChainInfoFetcher:   s.cfg.SilaChainInfoFetcher,
 		BeaconMonitoringHost:  s.cfg.BeaconMonitoringHost,
 		BeaconMonitoringPort:  s.cfg.BeaconMonitoringPort,
 		OptimisticModeFetcher: s.cfg.OptimisticModeFetcher,
@@ -302,7 +302,7 @@ func NewService(ctx context.Context, cfg *Config) *Service {
 		CanonicalFetcher:            s.cfg.CanonicalFetcher,
 		ChainStartFetcher:           s.cfg.ChainStartFetcher,
 		DepositFetcher:              s.cfg.DepositFetcher,
-		BlockFetcher:                s.cfg.ExecutionChainService,
+		BlockFetcher:                s.cfg.SilaChainService,
 		GenesisTimeFetcher:          s.cfg.GenesisTimeFetcher,
 		StateNotifier:               s.cfg.StateNotifier,
 		BlockNotifier:               s.cfg.BlockNotifier,
@@ -382,7 +382,7 @@ func (s *Service) Status() error {
 	}
 	if optimistic {
 		return errors.New("service is optimistic, validators can't perform duties " +
-			"please check if execution layer is fully synced")
+			"please check if Sila layer is fully synced")
 	}
 	if s.cfg.SyncService.Syncing() {
 		return errors.New("syncing")

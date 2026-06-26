@@ -20,7 +20,7 @@ func TestExecutionchainCmd(t *testing.T) {
 	set.String(flags.ExecutionEngineEndpoint.Name, "primary", "")
 	ctx := cli.NewContext(&app, set, nil)
 
-	endpoints, err := parseExecutionChainEndpoint(ctx)
+	endpoints, err := parseSilaChainEndpoint(ctx)
 	require.NoError(t, err)
 	assert.Equal(t, "primary", endpoints)
 }
@@ -108,6 +108,6 @@ func TestPowchainPreregistration_EmptyWeb3Provider(t *testing.T) {
 	set := flag.NewFlagSet("test", 0)
 	set.String(flags.ExecutionEngineEndpoint.Name, "", "")
 	ctx := cli.NewContext(&app, set, nil)
-	_, err := parseExecutionChainEndpoint(ctx)
+	_, err := parseSilaChainEndpoint(ctx)
 	assert.ErrorContains(t, "you need to specify", err)
 }

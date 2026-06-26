@@ -39,7 +39,7 @@ var (
 		OutputYaml         string
 		ForkName           string
 		OverrideSilaData   bool
-		ExecutionEndpoint  string
+		SilaEndpoint  string
 		GethGenesisJsonIn  string
 		GethGenesisJsonOut string
 	}{}
@@ -100,7 +100,7 @@ var (
 			&cli.BoolFlag{
 				Name:        "override-silaData",
 				Destination: &generateGenesisStateFlags.OverrideSilaData,
-				Usage:       "Overrides SilaData with values from execution client. If unset, defaults to false",
+				Usage:       "Overrides SilaData with values from Sila client. If unset, defaults to false",
 				Value:       false,
 			},
 			&cli.StringFlag{
@@ -115,8 +115,8 @@ var (
 			},
 			&cli.StringFlag{
 				Name:        "execution-endpoint",
-				Destination: &generateGenesisStateFlags.ExecutionEndpoint,
-				Usage:       "Endpoint to preferred execution client. If unset, defaults to Geth",
+				Destination: &generateGenesisStateFlags.SilaEndpoint,
+				Usage:       "Endpoint to preferred Sila client. If unset, defaults to Geth",
 				Value:       "http://localhost:8545",
 			},
 			flags.EnumValue{
@@ -336,13 +336,13 @@ func generateGenesis(ctx context.Context) (state.BeaconState, error) {
 	}
 
 	if f.OverrideSilaData {
-		log.Print("Overriding SilaData with data from execution client")
-		conn, err := rpc.Dial(generateGenesisStateFlags.ExecutionEndpoint)
+		log.Print("Overriding SilaData with data from Sila client")
+		conn, err := rpc.Dial(generateGenesisStateFlags.SilaEndpoint)
 		if err != nil {
 			return nil, errors.Wrapf(
 				err,
-				"could not dial %s please make sure you are running your execution client",
-				generateGenesisStateFlags.ExecutionEndpoint)
+				"could not dial %s please make sure you are running your Sila client",
+				generateGenesisStateFlags.SilaEndpoint)
 		}
 		client := ethclient.NewClient(conn)
 		header, err := client.HeaderByNumber(ctx, big.NewInt(0))

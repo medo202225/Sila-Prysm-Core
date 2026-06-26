@@ -25,7 +25,7 @@ option java_outer_classname = "ElectraProto";
 option java_package = "org.sila.silaengine.v1";
 option php_namespace = "Sila\\Engine\\v1";
 
-// WithdrawalRequest is the message from the execution layer to trigger the
+// WithdrawalRequest is the message from the Sila layer to trigger the
 // withdrawal of a validator's balance to its withdrawal address new in Electra
 message WithdrawalRequest {
   // The execution address receiving the funds
@@ -38,7 +38,7 @@ message WithdrawalRequest {
   uint64 amount = 3;
 }
 
-// DepositRequest is the message from the execution layer to trigger the deposit
+// DepositRequest is the message from the Sila layer to trigger the deposit
 // of a validator's balance to its balance new in Electra
 message DepositRequest {
   bytes pubkey = 1 [ (sila.eth.ext.ssz_size) = "48" ];
@@ -48,7 +48,7 @@ message DepositRequest {
   uint64 index = 5;
 }
 
-// ConsolidationRequest is the message from the execution layer to trigger the
+// ConsolidationRequest is the message from the Sila layer to trigger the
 // consolidation of one validator to another validator.
 message ConsolidationRequest {
   // Source address of account which originated the request.
@@ -60,7 +60,7 @@ message ConsolidationRequest {
 }
 
 // SilaRequests is a container that contains all the requests from the
-// execution layer to be included in a block
+// Sila layer to be included in a block
 message SilaRequests {
   repeated DepositRequest deposits = 1
       [ (sila.eth.ext.ssz_max) = "max_deposit_requests_per_payload.size" ];

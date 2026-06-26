@@ -283,14 +283,14 @@ func (ns *Server) ListPeers(ctx context.Context, _ *empty.Empty) (*silapb.Peers,
 // GetSilaExecutionConnectionStatus gets data about the SILAEXEC endpoints.
 func (ns *Server) GetSilaExecutionConnectionStatus(_ context.Context, _ *empty.Empty) (*silapb.SilaExecutionConnectionStatus, error) {
 	var currErr string
-	err := ns.POWChainInfoFetcher.ExecutionClientConnectionErr()
+	err := ns.POWChainInfoFetcher.SilaClientConnectionErr()
 	if err != nil {
 		currErr = err.Error()
 	}
 	return &silapb.SilaExecutionConnectionStatus{
-		CurrentAddress:         ns.POWChainInfoFetcher.ExecutionClientEndpoint(),
+		CurrentAddress:         ns.POWChainInfoFetcher.SilaClientEndpoint(),
 		CurrentConnectionError: currErr,
-		Addresses:              []string{ns.POWChainInfoFetcher.ExecutionClientEndpoint()},
+		Addresses:              []string{ns.POWChainInfoFetcher.SilaClientEndpoint()},
 	}, nil
 }
 

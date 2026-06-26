@@ -298,7 +298,7 @@ func (s *Service) notifyNewPayload(ctx context.Context, stVersion int, header in
 	return false, errors.WithMessage(ErrUndefinedSilaEngineError, err.Error())
 }
 
-// pruneInvalidBlock deals with the event that an invalid block was detected by the execution layer
+// pruneInvalidBlock deals with the event that an invalid block was detected by the Sila layer
 func (s *Service) pruneInvalidBlock(ctx context.Context, root, parentRoot, parentHash [32]byte, lvh [32]byte) error {
 	newPayloadInvalidNodeCount.Inc()
 	invalidRoots, err := s.cfg.ForkChoiceStore.SetOptimisticToInvalid(ctx, root, parentRoot, parentHash, lvh)

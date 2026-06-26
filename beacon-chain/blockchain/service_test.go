@@ -57,7 +57,7 @@ func setupBeaconChain(t *testing.T, beaconDB db.Database) *Service {
 	require.NoError(t, err)
 	mockTrie, err := trie.NewTrie(0)
 	require.NoError(t, err)
-	err = beaconDB.SaveExecutionChainData(ctx, &silapb.SilaExecutionChainData{
+	err = beaconDB.SaveSilaChainData(ctx, &silapb.SilaChainData{
 		BeaconState: pbState,
 		Trie:        mockTrie.ToProto(),
 		CurrentSilaData: &silapb.LatestSilaData{

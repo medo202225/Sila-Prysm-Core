@@ -7,7 +7,7 @@ import (
 )
 
 // GenerateRandomHexString generates a random hex string that follows the standards for jwt token
-// used for beacon node -> execution client
+// used for beacon node -> Sila client
 // used for web client -> validator client
 func GenerateRandomHexString() (string, error) {
 	secret := make([]byte, 32)

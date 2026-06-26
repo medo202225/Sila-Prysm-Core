@@ -226,7 +226,7 @@ func (s *Service) beaconBlocksRootRPCHandler(ctx context.Context, msg any, strea
 			blk, err = s.cfg.executionReconstructor.ReconstructFullBlock(ctx, blk)
 			if err != nil {
 				if errors.Is(err, execution.ErrEmptyBlockHash) {
-					log.WithError(err).Warn("Could not reconstruct block from header with syncing execution client. Waiting to complete syncing")
+					log.WithError(err).Warn("Could not reconstruct block from header with syncing Sila client. Waiting to complete syncing")
 				} else {
 					log.WithError(err).Error("Could not get reconstruct full block from blinded body")
 				}

@@ -82,7 +82,7 @@ func TestWaitForActivation_ContextClosed(t *testing.T) {
 		Ctx:               ctx,
 		ChainStartFetcher: &mockExecution.Chain{},
 		BlockFetcher:      &mockExecution.Chain{},
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		DepositFetcher:    depositCache,
 		HeadFetcher:       &mockChain.ChainService{State: beaconState, Root: genesisRoot[:]},
 	}
@@ -197,7 +197,7 @@ func TestWaitForChainStart_ContextClosed(t *testing.T) {
 	chainService := &mockChain.ChainService{}
 	server := &Server{
 		Ctx: ctx,
-		ChainStartFetcher: &mockExecution.FaultyExecutionChain{
+		ChainStartFetcher: &mockExecution.FaultySilaChain{
 			ChainFeed: new(event.Feed),
 		},
 		StateNotifier: chainService.StateNotifier(),
@@ -287,7 +287,7 @@ func TestWaitForChainStart_NotStartedThenLogFired(t *testing.T) {
 
 	Server := &Server{
 		Ctx: t.Context(),
-		ChainStartFetcher: &mockExecution.FaultyExecutionChain{
+		ChainStartFetcher: &mockExecution.FaultySilaChain{
 			ChainFeed: new(event.Feed),
 		},
 		StateNotifier: chainService.StateNotifier(),

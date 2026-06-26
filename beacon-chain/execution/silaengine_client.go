@@ -119,7 +119,7 @@ const (
 	GetBlobsV1 = "silaEngine_getBlobsV1"
 	// GetBlobsV2 request string for JSON-RPC.
 	GetBlobsV2 = "silaEngine_getBlobsV2"
-	// GetClientVersionV1 is the JSON-RPC method that identifies the execution client.
+	// GetClientVersionV1 is the JSON-RPC method that identifies the Sila client.
 	GetClientVersionV1 = "silaEngine_getClientVersionV1"
 	// Defines the seconds before timing out engine endpoints with non-block execution semantics.
 	defaultEngineTimeout = time.Second
@@ -135,7 +135,7 @@ type ForkchoiceUpdatedResponse struct {
 	ValidationError string             `json:"validationError"`
 }
 
-// Reconstructor defines a service responsible for reconstructing full beacon chain objects by utilizing the execution API and making requests through the execution client.
+// Reconstructor defines a service responsible for reconstructing full beacon chain objects by utilizing the execution API and making requests through the Sila client.
 type Reconstructor interface {
 	ReconstructFullBlock(
 		ctx context.Context, blindedBlock interfaces.ReadOnlySignedBeaconBlock,
@@ -152,7 +152,7 @@ type Reconstructor interface {
 }
 
 // EngineCaller defines a client that can interact with a Sila
-// execution node's engine service via JSON-RPC.
+// Sila node's engine service via JSON-RPC.
 type EngineCaller interface {
 	NewPayload(ctx context.Context, payload interfaces.SilaData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, silaRequests *pb.SilaRequests) ([]byte, error)
 	ForkchoiceUpdated(
@@ -396,7 +396,7 @@ func (s *Service) ExchangeCapabilities(ctx context.Context) ([]string, error) {
 	}
 
 	if len(unsupported) != 0 {
-		log.WithField("methods", unsupported).Warning("Connected execution client does not support some requested engine methods")
+		log.WithField("methods", unsupported).Warning("Connected Sila client does not support some requested engine methods")
 	}
 
 	return elSupportedEndpointsSlice, nil
@@ -633,7 +633,7 @@ func (s *Service) GetClientVersionV1(ctx context.Context) ([]*structs.ClientVers
 	}
 
 	if len(result) == 0 {
-		return nil, errors.New("execution client returned no result")
+		return nil, errors.New("Sila client returned no result")
 	}
 
 	return result, nil
@@ -775,7 +775,7 @@ func (s *Service) ReconstructFullGloasSilaPayloadsByHash(
 	return payloads, nil
 }
 
-// gloasPayloadFromSilaBlock extracts header fields from an sila block.
+// gloasPayloadFromSilaBlock extracts header fields from a Sila block.
 func gloasPayloadFromSilaBlock(
 	requestedHash [32]byte, blk *pb.SilaBlock,
 ) (*pb.SilaPayloadGloas, error) {
@@ -908,7 +908,7 @@ func (s *Service) ReconstructBlobSidecars(ctx context.Context, block interfaces.
 func (s *Service) ConstructDataColumnSidecars(ctx context.Context, populator peerdas.ConstructionPopulator) ([]blocks.VerifiedRODataColumn, error) {
 	root := populator.Root()
 
-	// Fetch cells and proofs from the execution client using the KZG commitments from the sidecar.
+	// Fetch cells and proofs from the Sila client using the KZG commitments from the sidecar.
 	commitments, err := populator.Commitments()
 	if err != nil {
 		return nil, wrapWithBlockRoot(err, root, "commitments")
@@ -916,7 +916,7 @@ func (s *Service) ConstructDataColumnSidecars(ctx context.Context, populator pee
 
 	cellsPerBlob, proofsPerBlob, err := s.fetchCellsAndProofsFromExecution(ctx, commitments)
 	if err != nil {
-		return nil, wrapWithBlockRoot(err, root, "fetch cells and proofs from execution client")
+		return nil, wrapWithBlockRoot(err, root, "fetch cells and proofs from Sila client")
 	}
 
 	// Return early if nothing is returned from the EL.
@@ -931,13 +931,13 @@ func (s *Service) ConstructDataColumnSidecars(ctx context.Context, populator pee
 	}
 
 	// Upgrade the sidecars to verified sidecars.
-	// We trust the execution layer we are connected to, so we can upgrade the sidecar into a verified one.
+	// We trust the Sila layer we are connected to, so we can upgrade the sidecar into a verified one.
 	verifiedROSidecars := upgradeSidecarsToVerifiedSidecars(roSidecars)
 
 	return verifiedROSidecars, nil
 }
 
-// fetchCellsAndProofsFromExecution fetches cells and proofs from the execution client (using silaEngine_getBlobsV2 execution API method)
+// fetchCellsAndProofsFromExecution fetches cells and proofs from the Sila client (using silaEngine_getBlobsV2 execution API method)
 func (s *Service) fetchCellsAndProofsFromExecution(ctx context.Context, kzgCommitments [][]byte) ([][]kzg.Cell, [][]kzg.Proof, error) {
 	// Collect KZG hashes for all blobs.
 	versionedHashes := make([]common.Hash, 0, len(kzgCommitments))
@@ -946,7 +946,7 @@ func (s *Service) fetchCellsAndProofsFromExecution(ctx context.Context, kzgCommi
 		versionedHashes = append(versionedHashes, versionedHash)
 	}
 
-	// Fetch all blobsAndCellsProofs from the execution client.
+	// Fetch all blobsAndCellsProofs from the Sila client.
 	blobAndProofV2s, err := s.GetBlobsV2(ctx, versionedHashes)
 	if err != nil {
 		return nil, nil, errors.Wrapf(err, "get blobs V2")
@@ -1069,11 +1069,11 @@ func handleRPCError(err error) error {
 	ok := errors.As(err, &e)
 	if !ok {
 		if strings.Contains(err.Error(), "401 Unauthorized") {
-			log.Error("HTTP authentication to your execution client is not working. Please ensure " +
+			log.Error("HTTP authentication to your Sila client is not working. Please ensure " +
 				"you are setting a correct value for the --jwt-secret flag in Sila, or use an IPC connection if on " +
 				"the same machine. Please see our documentation for more information on authenticating connections " +
 				"here https://docs.prylabs.network/docs/execution-node/authentication")
-			return fmt.Errorf("could not authenticate connection to execution client: %w", err)
+			return fmt.Errorf("could not authenticate connection to Sila client: %w", err)
 		}
 		return errors.Wrapf(err, "got an unexpected error in JSON-RPC response")
 	}

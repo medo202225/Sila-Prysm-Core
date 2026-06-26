@@ -62,7 +62,7 @@ func (s *Service) validateSilaPayloadBidParentSeen(_ context.Context, blk interf
 }
 
 // validateSilaPayloadBidParentValid validates parent payload verification status.
-// If sila_payload verification of block's sila payload parent by an execution node is complete:
+// If sila_payload verification of block's sila payload parent by a Sila node is complete:
 // [REJECT] The block's sila payload parent (defined by bid.parent_block_hash) passes all validation.
 func (s *Service) validateSilaPayloadBidParentValid(_ context.Context, blk interfaces.ReadOnlyBeaconBlock) (pubsub.ValidationResult, error) {
 	if blk.Version() < version.Gloas {

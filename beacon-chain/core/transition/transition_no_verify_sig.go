@@ -344,7 +344,7 @@ func ProcessBlockNoVerifyAnySig(
 //	    for_ops(body.voluntary_exits, process_voluntary_exit)  # [Modified in Electra:SIP7251]
 //	    for_ops(body.bls_to_sila_changes, process_bls_to_sila_change)
 //	    # [New in Electra:SIP7002:SIP7251]
-//	    for_ops(body.sila_payload.withdrawal_requests, process_execution_layer_withdrawal_request)
+//	    for_ops(body.sila_payload.withdrawal_requests, process_sila_layer_withdrawal_request)
 //	    for_ops(body.sila_payload.deposit_requests, process_deposit_requests)  # [New in Electra:SIP6110]
 //	    for_ops(body.consolidations, process_consolidation)  # [New in Electra:SIP7251]
 func ProcessOperationsNoVerifyAttsSigs(

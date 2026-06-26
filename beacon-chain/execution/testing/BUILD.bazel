@@ -5,7 +5,7 @@ go_library(
     testonly = True,
     srcs = [
         "mock_silaengine_client.go",
-        "mock_execution_chain.go",
+        "mock_sila_chain.go",
         "mock_faulty_powchain.go",
     ],
     importpath = "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/execution/testing",

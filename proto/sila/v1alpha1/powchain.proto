@@ -14,9 +14,9 @@ option java_outer_classname = "PowchainProto";
 option java_package = "org.sila.eth.v1alpha1";
 option php_namespace = "Sila\\Eth\\v1alpha1";
 
-// SilaExecutionChainData is a container which holds all the relevant silaexec
+// SilaChainData is a container which holds all the relevant silaexec
 // information
-message SilaExecutionChainData {
+message SilaChainData {
   LatestSilaData current_sila_data = 1;
   ChainStartData chainstart_data = 2;
   BeaconState beacon_state = 3;

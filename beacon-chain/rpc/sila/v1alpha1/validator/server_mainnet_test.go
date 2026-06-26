@@ -76,7 +76,7 @@ func TestWaitForActivation_ValidatorOriginallyExists(t *testing.T) {
 		Ctx:               t.Context(),
 		ChainStartFetcher: &mockExecution.Chain{},
 		BlockFetcher:      &mockExecution.Chain{},
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		DepositFetcher:    depositCache,
 		HeadFetcher:       &mockChain.ChainService{State: s, Root: genesisRoot[:]},
 	}

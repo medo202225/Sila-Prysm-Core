@@ -481,7 +481,7 @@ func (s *Service) nodeEndpoints() []endpoint {
 		PeerManager:               s.cfg.PeerManager,
 		MetadataProvider:          s.cfg.MetadataProvider,
 		HeadFetcher:               s.cfg.HeadFetcher,
-		ExecutionChainInfoFetcher: s.cfg.ExecutionChainInfoFetcher,
+		SilaChainInfoFetcher: s.cfg.SilaChainInfoFetcher,
 		SilaEngineCaller:     s.cfg.SilaEngineCaller,
 	}
 
@@ -1316,7 +1316,7 @@ func (s *Service) silaNodeEndpoints() []endpoint {
 		PeerManager:               s.cfg.PeerManager,
 		MetadataProvider:          s.cfg.MetadataProvider,
 		HeadFetcher:               s.cfg.HeadFetcher,
-		ExecutionChainInfoFetcher: s.cfg.ExecutionChainInfoFetcher,
+		SilaChainInfoFetcher: s.cfg.SilaChainInfoFetcher,
 	}
 
 	const namespace = "sila.node"

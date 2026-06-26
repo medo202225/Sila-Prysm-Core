@@ -23,7 +23,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type SilaExecutionChainData struct {
+type SilaChainData struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	CurrentSilaData   *LatestSilaData        `protobuf:"bytes,1,opt,name=current_sila_data,json=currentSilaData,proto3" json:"current_sila_data,omitempty"`
 	ChainstartData    *ChainStartData        `protobuf:"bytes,2,opt,name=chainstart_data,json=chainstartData,proto3" json:"chainstart_data,omitempty"`
@@ -35,20 +35,20 @@ type SilaExecutionChainData struct {
 	sizeCache         protoimpl.SizeCache
 }
 
-func (x *SilaExecutionChainData) Reset() {
-	*x = SilaExecutionChainData{}
+func (x *SilaChainData) Reset() {
+	*x = SilaChainData{}
 	mi := &file_proto_sila_v1alpha1_powchain_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SilaExecutionChainData) String() string {
+func (x *SilaChainData) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SilaExecutionChainData) ProtoMessage() {}
+func (*SilaChainData) ProtoMessage() {}
 
-func (x *SilaExecutionChainData) ProtoReflect() protoreflect.Message {
+func (x *SilaChainData) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_sila_v1alpha1_powchain_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -60,47 +60,47 @@ func (x *SilaExecutionChainData) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SilaExecutionChainData.ProtoReflect.Descriptor instead.
-func (*SilaExecutionChainData) Descriptor() ([]byte, []int) {
+// Deprecated: Use SilaChainData.ProtoReflect.Descriptor instead.
+func (*SilaChainData) Descriptor() ([]byte, []int) {
 	return file_proto_sila_v1alpha1_powchain_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SilaExecutionChainData) GetCurrentSilaData() *LatestSilaData {
+func (x *SilaChainData) GetCurrentSilaData() *LatestSilaData {
 	if x != nil {
 		return x.CurrentSilaData
 	}
 	return nil
 }
 
-func (x *SilaExecutionChainData) GetChainstartData() *ChainStartData {
+func (x *SilaChainData) GetChainstartData() *ChainStartData {
 	if x != nil {
 		return x.ChainstartData
 	}
 	return nil
 }
 
-func (x *SilaExecutionChainData) GetBeaconState() *BeaconState {
+func (x *SilaChainData) GetBeaconState() *BeaconState {
 	if x != nil {
 		return x.BeaconState
 	}
 	return nil
 }
 
-func (x *SilaExecutionChainData) GetTrie() *SparseMerkleTrie {
+func (x *SilaChainData) GetTrie() *SparseMerkleTrie {
 	if x != nil {
 		return x.Trie
 	}
 	return nil
 }
 
-func (x *SilaExecutionChainData) GetDepositContainers() []*DepositContainer {
+func (x *SilaChainData) GetDepositContainers() []*DepositContainer {
 	if x != nil {
 		return x.DepositContainers
 	}
 	return nil
 }
 
-func (x *SilaExecutionChainData) GetDepositSnapshot() *DepositSnapshot {
+func (x *SilaChainData) GetDepositSnapshot() *DepositSnapshot {
 	if x != nil {
 		return x.DepositSnapshot
 	}
@@ -636,7 +636,7 @@ func file_proto_sila_v1alpha1_powchain_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_powchain_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_sila_v1alpha1_powchain_proto_goTypes = []any{
-	(*SilaExecutionChainData)(nil),    // 0: sila.eth.v1alpha1.SilaExecutionChainData
+	(*SilaChainData)(nil),    // 0: sila.eth.v1alpha1.SilaChainData
 	(*DepositSnapshot)(nil),  // 1: sila.eth.v1alpha1.DepositSnapshot
 	(*LatestSilaData)(nil),   // 2: sila.eth.v1alpha1.LatestSilaData
 	(*ChainStartData)(nil),   // 3: sila.eth.v1alpha1.ChainStartData
@@ -648,12 +648,12 @@ var file_proto_sila_v1alpha1_powchain_proto_goTypes = []any{
 	(*Deposit)(nil),          // 9: sila.eth.v1alpha1.Deposit
 }
 var file_proto_sila_v1alpha1_powchain_proto_depIdxs = []int32{
-	2,  // 0: sila.eth.v1alpha1.SilaExecutionChainData.current_sila_data:type_name -> sila.eth.v1alpha1.LatestSilaData
-	3,  // 1: sila.eth.v1alpha1.SilaExecutionChainData.chainstart_data:type_name -> sila.eth.v1alpha1.ChainStartData
-	7,  // 2: sila.eth.v1alpha1.SilaExecutionChainData.beacon_state:type_name -> sila.eth.v1alpha1.BeaconState
-	4,  // 3: sila.eth.v1alpha1.SilaExecutionChainData.trie:type_name -> sila.eth.v1alpha1.SparseMerkleTrie
-	6,  // 4: sila.eth.v1alpha1.SilaExecutionChainData.deposit_containers:type_name -> sila.eth.v1alpha1.DepositContainer
-	1,  // 5: sila.eth.v1alpha1.SilaExecutionChainData.deposit_snapshot:type_name -> sila.eth.v1alpha1.DepositSnapshot
+	2,  // 0: sila.eth.v1alpha1.SilaChainData.current_sila_data:type_name -> sila.eth.v1alpha1.LatestSilaData
+	3,  // 1: sila.eth.v1alpha1.SilaChainData.chainstart_data:type_name -> sila.eth.v1alpha1.ChainStartData
+	7,  // 2: sila.eth.v1alpha1.SilaChainData.beacon_state:type_name -> sila.eth.v1alpha1.BeaconState
+	4,  // 3: sila.eth.v1alpha1.SilaChainData.trie:type_name -> sila.eth.v1alpha1.SparseMerkleTrie
+	6,  // 4: sila.eth.v1alpha1.SilaChainData.deposit_containers:type_name -> sila.eth.v1alpha1.DepositContainer
+	1,  // 5: sila.eth.v1alpha1.SilaChainData.deposit_snapshot:type_name -> sila.eth.v1alpha1.DepositSnapshot
 	8,  // 6: sila.eth.v1alpha1.ChainStartData.sila_data:type_name -> sila.eth.v1alpha1.SilaData
 	9,  // 7: sila.eth.v1alpha1.ChainStartData.chainstart_deposits:type_name -> sila.eth.v1alpha1.Deposit
 	5,  // 8: sila.eth.v1alpha1.SparseMerkleTrie.layers:type_name -> sila.eth.v1alpha1.TrieLayer

@@ -3879,7 +3879,7 @@ func Test_validateBlobs(t *testing.T) {
 		b, err := blocks.NewSignedBeaconBlock(blk)
 		require.NoError(t, err)
 
-		// Generate cell proofs for the blobs (flattened format like execution client)
+		// Generate cell proofs for the blobs (flattened format like Sila client)
 		cellProofs := make([][]byte, uint64(blobCount)*numberOfColumns)
 		for blobIdx := range blobCount {
 			_, proofs, err := kzg.ComputeCellsAndKZGProofs(&kzgBlobs[blobIdx])

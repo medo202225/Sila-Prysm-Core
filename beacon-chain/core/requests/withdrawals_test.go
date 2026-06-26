@@ -280,7 +280,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 				},
 			},
 			wantFn: func(t *testing.T, got state.BeaconState) {
-				assert.LogsContain(t, logHook, "Skipping execution layer withdrawal request, PendingPartialWithdrawalsLimit reached")
+				assert.LogsContain(t, logHook, "Skipping Sila layer withdrawal request, PendingPartialWithdrawalsLimit reached")
 				params.SetupTestConfigCleanup(t)
 				logrus.SetLevel(logrus.InfoLevel) // reset
 			},

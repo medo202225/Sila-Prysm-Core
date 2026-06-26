@@ -70,26 +70,26 @@ var (
 			" and the beacon will revert to local building.",
 		Value: 0,
 	}
-	// ExecutionEngineEndpoint provides an HTTP access endpoint to connect to an execution client on the execution layer
+	// ExecutionEngineEndpoint provides an HTTP access endpoint to connect to a Sila client on the Sila layer
 	ExecutionEngineEndpoint = &cli.StringFlag{
 		Name:  "execution-endpoint",
-		Usage: "An execution client http endpoint. Can contain auth header as well in the format",
+		Usage: "A Sila client http endpoint. Can contain auth header as well in the format",
 		Value: "http://localhost:8551",
 	}
-	// ExecutionEngineHeaders defines a list of HTTP headers to send with all execution client requests.
+	// ExecutionEngineHeaders defines a list of HTTP headers to send with all Sila client requests.
 	ExecutionEngineHeaders = &cli.StringFlag{
 		Name: "execution-headers",
 		Usage: "A comma separated list of key value pairs to pass as HTTP headers for all execution " +
 			"client calls. Example: --execution-headers=key1=value1,key2=value2",
 	}
 	// ExecutionJWTSecretFlag provides a path to a file containing a hex-encoded string representing a 32 byte secret
-	// used to authenticate with an execution node via HTTP. This is required if using an HTTP connection, otherwise all requests
-	// to execution nodes for consensus-related calls will fail. This is not required if using an IPC connection.
+	// used to authenticate with a Sila node via HTTP. This is required if using an HTTP connection, otherwise all requests
+	// to sila nodes for consensus-related calls will fail. This is not required if using an IPC connection.
 	ExecutionJWTSecretFlag = &cli.StringFlag{
 		Name: "jwt-secret",
-		Usage: "REQUIRED if connecting to an execution node via HTTP. Provides a path to a file containing " +
-			"a hex-encoded string representing a 32 byte secret used for authentication with an execution node via " +
-			"HTTP. If this is not set, all requests to execution nodes via HTTP for consensus-related calls will " +
+		Usage: "REQUIRED if connecting to a Sila node via HTTP. Provides a path to a file containing " +
+			"a hex-encoded string representing a 32 byte secret used for authentication with a Sila node via " +
+			"HTTP. If this is not set, all requests to sila nodes via HTTP for consensus-related calls will " +
 			"fail, which will prevent your validators from performing their duties. " +
 			"This is not required if using an IPC connection.",
 		Value: "",

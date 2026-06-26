@@ -315,7 +315,7 @@ func (vs *Server) validatorStatus(
 	// Unknown status means the validator has not been put into the state yet.
 	case silapb.ValidatorStatus_UNKNOWN_STATUS:
 		// If no connection to SILAEXEC, the deposit block number or position in queue cannot be determined.
-		if !vs.SilaExecutionInfoFetcher.ExecutionClientConnected() {
+		if !vs.SilaChainInfoFetcher.SilaClientConnected() {
 			log.Warn("Not connected to SILAEXEC. Cannot determine validator SILAEXEC deposit block number")
 			return resp, nonExistentIndex
 		}

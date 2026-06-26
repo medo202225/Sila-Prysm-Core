@@ -97,7 +97,7 @@ type BeaconChainConfig struct {
 	SyncMessageDueBPSGloas          primitives.BP    `yaml:"SYNC_MESSAGE_DUE_BPS_GLOAS" spec:"true"`          // SyncMessageDueBPSGloas defines the sync message due time in basis points of the slot (Gloas).
 	ContributionDueBPSGloas         primitives.BP    `yaml:"CONTRIBUTION_DUE_BPS_GLOAS" spec:"true"`          // ContributionDueBPSGloas defines the contribution due time in basis points of the slot (Gloas).
 	PayloadAttestationDueBPS        primitives.BP    `yaml:"PAYLOAD_ATTESTATION_DUE_BPS" spec:"true"`         // PayloadAttestationDueBPS defines the payload attestation due time in basis points of the slot.
-	PayloadDueBPS                   primitives.BP    `yaml:"PAYLOAD_DUE_BPS" spec:"true"`                     // PayloadDueBPS defines the cutoff for an sila payload to be considered timely, in basis points of the slot.
+	PayloadDueBPS                   primitives.BP    `yaml:"PAYLOAD_DUE_BPS" spec:"true"`                     // PayloadDueBPS defines the cutoff for a Sila payload to be considered timely, in basis points of the slot.
 
 	// Sila-internal (non-spec) parameters.
 	EquivocationEarlyDueBPS primitives.BP `yaml:"-"` // Cutoff for an "early" proposer equivocation, in basis points of the slot.
@@ -294,8 +294,8 @@ type BeaconChainConfig struct {
 	MaxPendingPartialsPerWithdrawalsSweep uint64 `yaml:"MAX_PENDING_PARTIALS_PER_WITHDRAWALS_SWEEP" spec:"true"` // MaxPendingPartialsPerWithdrawalsSweep is the maximum number of pending partial withdrawals to process per payload.
 	MaxPendingDepositsPerEpoch            uint64 `yaml:"MAX_PENDING_DEPOSITS_PER_EPOCH" spec:"true"`             // MaxPendingDepositsPerEpoch is the maximum number of pending deposits per epoch processing.
 	FullExitRequestAmount                 uint64 `yaml:"FULL_EXIT_REQUEST_AMOUNT" spec:"true"`                   // FullExitRequestAmount is the amount of Gwei required to request a full exit.
-	MaxWithdrawalRequestsPerPayload       uint64 `yaml:"MAX_WITHDRAWAL_REQUESTS_PER_PAYLOAD" spec:"true"`        // MaxWithdrawalRequestsPerPayload is the maximum number of execution layer withdrawal requests in each payload.
-	MaxDepositRequestsPerPayload          uint64 `yaml:"MAX_DEPOSIT_REQUESTS_PER_PAYLOAD" spec:"true"`           // MaxDepositRequestsPerPayload is the maximum number of execution layer deposits in each payload
+	MaxWithdrawalRequestsPerPayload       uint64 `yaml:"MAX_WITHDRAWAL_REQUESTS_PER_PAYLOAD" spec:"true"`        // MaxWithdrawalRequestsPerPayload is the maximum number of Sila layer withdrawal requests in each payload.
+	MaxDepositRequestsPerPayload          uint64 `yaml:"MAX_DEPOSIT_REQUESTS_PER_PAYLOAD" spec:"true"`           // MaxDepositRequestsPerPayload is the maximum number of Sila layer deposits in each payload
 	UnsetDepositRequestsStartIndex        uint64 `yaml:"UNSET_DEPOSIT_REQUESTS_START_INDEX" spec:"true"`         // UnsetDepositRequestsStartIndex is used to check the start index for sip6110
 
 	// Values introduced in Fulu upgrade

@@ -123,10 +123,10 @@ func toSilaBlockNumArg(number *big.Int) string {
 	}
 	return hexutil.EncodeBig(number)
 }
-func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpoint network.Endpoint) error {
+func (s *Service) setupSilaClientConnections(ctx context.Context, currEndpoint network.Endpoint) error {
 	client, err := s.newRPCClientWithAuth(ctx, currEndpoint)
 	if err != nil {
-		return errors.Wrap(err, "could not dial execution node")
+		return errors.Wrap(err, "could not dial Sila node")
 	}
 	// Attach the clients to the service struct.
 	fetcher := ethclient.NewClient(client)
@@ -141,12 +141,12 @@ func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpo
 	s.silaDepositCaller = silaDepositCaller
 
 	// Ensure we have the correct chain and deposit IDs.
-	if err := ensureCorrectExecutionChain(ctx, fetcher); err != nil {
+	if err := ensureCorrectSilaChain(ctx, fetcher); err != nil {
 		client.Close()
 		errStr := err.Error()
 		if strings.Contains(errStr, "401 Unauthorized") {
-			errStr = "could not verify execution chain ID as your connection is not authenticated. " +
-				"If connecting to your execution client via HTTP, you will need to set up JWT authentication. " +
+			errStr = "could not verify Sila chain ID as your connection is not authenticated. " +
+				"If connecting to your Sila client via HTTP, you will need to set up JWT authentication. " +
 				"See our documentation here https://docs.prylabs.network/docs/execution-node/authentication"
 		}
 		return errors.Wrap(err, errStr)
@@ -156,7 +156,7 @@ func (s *Service) setupExecutionClientConnections(ctx context.Context, currEndpo
 	return nil
 }
 
-// Every N seconds, defined as a backoffPeriod, attempts to re-establish an execution client
+// Every N seconds, defined as a backoffPeriod, attempts to re-establish a Sila client
 // connection and if this does not work, we fallback to the next endpoint if defined.
 func (s *Service) pollConnectionStatus(ctx context.Context) {
 	// Use a custom logger to only log errors
@@ -175,8 +175,8 @@ func (s *Service) pollConnectionStatus(ctx context.Context) {
 		case <-ticker.C:
 			log.Debugf("Trying to dial endpoint: %s", logs.MaskCredentialsLogging(s.cfg.currHttpEndpoint.Url))
 			currClient := s.rpcClient
-			if err := s.setupExecutionClientConnections(ctx, s.cfg.currHttpEndpoint); err != nil {
-				errorLogger(err, "Could not connect to execution client endpoint")
+			if err := s.setupSilaClientConnections(ctx, s.cfg.currHttpEndpoint); err != nil {
+				errorLogger(err, "Could not connect to Sila client endpoint")
 				continue
 			}
 			// Close previous client, if connection was successful.
@@ -187,7 +187,7 @@ func (s *Service) pollConnectionStatus(ctx context.Context) {
 
 			c, err := s.ExchangeCapabilities(ctx)
 			if err != nil {
-				errorLogger(err, "Could not exchange capabilities with execution client")
+				errorLogger(err, "Could not exchange capabilities with Sila client")
 			}
 			s.capabilityCache.save(c)
 
@@ -199,15 +199,15 @@ func (s *Service) pollConnectionStatus(ctx context.Context) {
 	}
 }
 
-// Forces to retry an execution client connection.
-func (s *Service) retryExecutionClientConnection(ctx context.Context, err error) {
-	s.runError = errors.Wrap(err, "retryExecutionClientConnection")
+// Forces to retry a Sila client connection.
+func (s *Service) retrySilaClientConnection(ctx context.Context, err error) {
+	s.runError = errors.Wrap(err, "retrySilaClientConnection")
 	s.updateConnectedSilaExecution(false)
 	// Back off for a while before redialing.
 	time.Sleep(backOffPeriod)
 	currClient := s.rpcClient
-	if err := s.setupExecutionClientConnections(ctx, s.cfg.currHttpEndpoint); err != nil {
-		s.runError = errors.Wrap(err, "setupExecutionClientConnections")
+	if err := s.setupSilaClientConnections(ctx, s.cfg.currHttpEndpoint); err != nil {
+		s.runError = errors.Wrap(err, "setupSilaClientConnections")
 		return
 	}
 	// Close previous client, if connection was successful.
@@ -242,9 +242,9 @@ func (s *Service) newRPCClientWithAuth(ctx context.Context, endpoint network.End
 	return network.NewExecutionRPCClient(ctx, endpoint, headers)
 }
 
-// Checks the chain ID of the execution client to ensure
+// Checks the chain ID of the Sila client to ensure
 // it matches local parameters of what Sila expects.
-func ensureCorrectExecutionChain(ctx context.Context, client *ethclient.Client) error {
+func ensureCorrectSilaChain(ctx context.Context, client *ethclient.Client) error {
 	var chainIDHex string
 	if err := client.Client().CallContext(ctx, &chainIDHex, "sila_chainId"); err != nil {
 		return err

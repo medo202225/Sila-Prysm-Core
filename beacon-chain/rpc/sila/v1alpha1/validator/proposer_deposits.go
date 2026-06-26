@@ -87,7 +87,7 @@ func (vs *Server) deposits(
 		return []*silapb.Deposit{}, nil
 	}
 
-	if !vs.SilaExecutionInfoFetcher.ExecutionClientConnected() {
+	if !vs.SilaChainInfoFetcher.SilaClientConnected() {
 		log.Warn("Not connected to silaexec node, skip pending deposit insertion")
 		return []*silapb.Deposit{}, nil
 	}
@@ -104,7 +104,7 @@ func (vs *Server) deposits(
 		return nil, err
 	}
 
-	_, genesisSilaBlock := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
+	_, genesisSilaBlock := vs.SilaChainInfoFetcher.GenesisSilaChainInfo()
 	if genesisSilaBlock.Cmp(canonicalSilaDataHeight) == 0 {
 		return []*silapb.Deposit{}, nil
 	}

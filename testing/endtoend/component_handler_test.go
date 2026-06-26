@@ -126,7 +126,7 @@ func (c *componentHandler) setup() {
 	silaexecNodes := silaexec.NewNodeSet()
 	g.Go(func() error {
 		if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{miner}); err != nil {
-			return errors.Wrap(err, "execution nodes require miner to run")
+			return errors.Wrap(err, "sila nodes require miner to run")
 		}
 		silaexecNodes.SetMinerENR(miner.ENR())
 		if err := silaexecNodes.Start(ctx); err != nil {
@@ -143,7 +143,7 @@ func (c *componentHandler) setup() {
 		builders = components.NewBuilderSet()
 		g.Go(func() error {
 			if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{silaexecNodes}); err != nil {
-				return errors.Wrap(err, "builders require execution nodes to run")
+				return errors.Wrap(err, "builders require sila nodes to run")
 			}
 			if err := builders.Start(ctx); err != nil {
 				return errors.Wrap(err, "failed to start builders")
@@ -156,7 +156,7 @@ func (c *componentHandler) setup() {
 		proxies = silaexec.NewProxySet()
 		g.Go(func() error {
 			if err := helpers.ComponentsStarted(ctx, []e2etypes.ComponentRunner{silaexecNodes}); err != nil {
-				return errors.Wrap(err, "proxies require execution nodes to run")
+				return errors.Wrap(err, "proxies require sila nodes to run")
 			}
 			if err := proxies.Start(ctx); err != nil {
 				return errors.Wrap(err, "failed to start proxies")

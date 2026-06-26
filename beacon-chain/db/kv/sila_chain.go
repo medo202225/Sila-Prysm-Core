@@ -11,9 +11,9 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-// SaveExecutionChainData saves the execution chain data.
-func (s *Store) SaveExecutionChainData(ctx context.Context, data *v2.SilaExecutionChainData) error {
-	_, span := trace.StartSpan(ctx, "BeaconDB.SaveExecutionChainData")
+// SaveSilaChainData saves the Sila chain data.
+func (s *Store) SaveSilaChainData(ctx context.Context, data *v2.SilaChainData) error {
+	_, span := trace.StartSpan(ctx, "BeaconDB.SaveSilaChainData")
 	defer span.End()
 
 	if data == nil {
@@ -34,19 +34,19 @@ func (s *Store) SaveExecutionChainData(ctx context.Context, data *v2.SilaExecuti
 	return err
 }
 
-// ExecutionChainData retrieves the execution chain data.
-func (s *Store) ExecutionChainData(ctx context.Context) (*v2.SilaExecutionChainData, error) {
-	_, span := trace.StartSpan(ctx, "BeaconDB.ExecutionChainData")
+// SilaChainData retrieves the Sila chain data.
+func (s *Store) SilaChainData(ctx context.Context) (*v2.SilaChainData, error) {
+	_, span := trace.StartSpan(ctx, "BeaconDB.SilaChainData")
 	defer span.End()
 
-	var data *v2.SilaExecutionChainData
+	var data *v2.SilaChainData
 	err := s.db.View(func(tx *bolt.Tx) error {
 		bkt := tx.Bucket(powchainBucket)
 		enc := bkt.Get(powchainDataKey)
 		if len(enc) == 0 {
 			return nil
 		}
-		data = &v2.SilaExecutionChainData{}
+		data = &v2.SilaChainData{}
 		return proto.Unmarshal(enc, data)
 	})
 	return data, err

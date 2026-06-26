@@ -158,8 +158,8 @@ var appHelpFlagGroups = []flagGroup{
 			genesis.StatePath,
 		},
 	},
-	{ // Flags relevant to interacting with the execution layer.
-		Name: "execution layer",
+	{ // Flags relevant to interacting with the Sila layer.
+		Name: "Sila layer",
 		Flags: []cli.Flag{
 			flags.ContractDeploymentBlock,
 			flags.SilaDepositFlag,

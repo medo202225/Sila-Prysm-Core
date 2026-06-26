@@ -143,7 +143,7 @@ func TestGetAltairDuties_SyncCommitteeOK(t *testing.T) {
 		HeadFetcher:       chain,
 		TimeFetcher:       chain,
 		ForkchoiceFetcher: chain,
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		SyncChecker:       &mockSync.Sync{IsSyncing: false},
 		PayloadIDCache:    cache.NewPayloadIDCache(),
 	}
@@ -250,7 +250,7 @@ func TestGetBellatrixDuties_SyncCommitteeOK(t *testing.T) {
 		HeadFetcher:       chain,
 		TimeFetcher:       chain,
 		ForkchoiceFetcher: chain,
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		SyncChecker:       &mockSync.Sync{IsSyncing: false},
 		PayloadIDCache:    cache.NewPayloadIDCache(),
 	}
@@ -343,7 +343,7 @@ func TestGetAltairDuties_UnknownPubkey(t *testing.T) {
 		HeadFetcher:       chain,
 		ForkchoiceFetcher: chain,
 		TimeFetcher:       chain,
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		SyncChecker:       &mockSync.Sync{IsSyncing: false},
 		DepositFetcher:    depositCache,
 		PayloadIDCache:    cache.NewPayloadIDCache(),

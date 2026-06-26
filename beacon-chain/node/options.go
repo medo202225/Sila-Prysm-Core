@@ -19,10 +19,10 @@ func WithBlockchainFlagOptions(opts []blockchain.Option) Option {
 	}
 }
 
-// WithExecutionChainOptions includes functional options for the execution chain service related to CLI flags.
-func WithExecutionChainOptions(opts []execution.Option) Option {
+// WithSilaChainOptions includes functional options for the Sila chain service related to CLI flags.
+func WithSilaChainOptions(opts []execution.Option) Option {
 	return func(bn *BeaconNode) error {
-		bn.serviceFlagOpts.executionChainFlagOpts = opts
+		bn.serviceFlagOpts.silaChainFlagOpts = opts
 		return nil
 	}
 }

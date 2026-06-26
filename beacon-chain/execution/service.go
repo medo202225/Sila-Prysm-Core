@@ -1,5 +1,5 @@
 // Package execution defines a runtime service which is tasked with
-// communicating with an silaexec endpoint, processing logs from a deposit
+// communicating with a silaexec endpoint, processing logs from a deposit
 // contract, and the latest silaexec data headers for usage in the beacon node.
 package execution
 
@@ -78,10 +78,10 @@ type ChainStartFetcher interface {
 
 // ChainInfoFetcher retrieves information about silaexec metadata at the Sila consensus genesis time.
 type ChainInfoFetcher interface {
-	GenesisExecutionChainInfo() (uint64, *big.Int)
-	ExecutionClientConnected() bool
-	ExecutionClientEndpoint() string
-	ExecutionClientConnectionErr() error
+	GenesisSilaChainInfo() (uint64, *big.Int)
+	SilaClientConnected() bool
+	SilaClientEndpoint() string
+	SilaClientConnectionErr() error
 }
 
 // POWBlockFetcher defines a struct that can retrieve mainchain blocks.
@@ -221,8 +221,8 @@ func NewService(ctx context.Context, opts ...Option) (*Service, error) {
 
 // Start the powchain service's main event loop.
 func (s *Service) Start() {
-	if err := s.setupExecutionClientConnections(s.ctx, s.cfg.currHttpEndpoint); err != nil {
-		log.WithError(err).Error("Could not connect to execution endpoint")
+	if err := s.setupSilaClientConnections(s.ctx, s.cfg.currHttpEndpoint); err != nil {
+		log.WithError(err).Error("Could not connect to sila endpoint")
 	}
 	// If the chain has not started already and we don't have access to silaexec nodes, we will not be
 	// able to generate the genesis state.
@@ -247,7 +247,7 @@ func (s *Service) Start() {
 
 	s.isRunning = true
 
-	// Poll the execution client connection and fallback if errors occur.
+	// Poll the Sila client connection and fallback if errors occur.
 	go s.pollConnectionStatus(s.ctx)
 
 	go s.run(s.ctx.Done())
@@ -291,24 +291,24 @@ func (s *Service) Status() error {
 	return s.runError
 }
 
-// ExecutionClientConnected checks whether are connected via RPC.
-func (s *Service) ExecutionClientConnected() bool {
+// SilaClientConnected checks whether are connected via RPC.
+func (s *Service) SilaClientConnected() bool {
 	return s.connectedSilaExecution
 }
 
-// ExecutionClientEndpoint returns the URL of the current, connected execution client.
-func (s *Service) ExecutionClientEndpoint() string {
+// SilaClientEndpoint returns the URL of the current, connected Sila client.
+func (s *Service) SilaClientEndpoint() string {
 	return s.cfg.currHttpEndpoint.Url
 }
 
-// ExecutionClientConnectionErr returns the error (if any) of the current connection.
-func (s *Service) ExecutionClientConnectionErr() error {
+// SilaClientConnectionErr returns the error (if any) of the current connection.
+func (s *Service) SilaClientConnectionErr() error {
 	return s.runError
 }
 
 func (s *Service) updateBeaconNodeStats() {
 	bs := clientstats.BeaconNodeStats{}
-	if s.ExecutionClientConnected() {
+	if s.SilaClientConnected() {
 		bs.SyncSilaExecutionConnected = true
 	}
 	s.cfg.beaconNodeStatsUpdater.Update(bs)
@@ -333,7 +333,7 @@ func (s *Service) updateGraffitiInfo() {
 	defer cancel()
 	versions, err := s.GetClientVersionV1(ctx)
 	if err != nil {
-		log.WithError(err).Debug("Could not get execution client version for graffiti")
+		log.WithError(err).Debug("Could not get Sila client version for graffiti")
 		return
 	}
 	if len(versions) >= 1 {
@@ -546,8 +546,8 @@ func (s *Service) initPOWService() {
 			header, err := s.HeaderByNumber(ctx, nil)
 			if err != nil {
 				err = errors.Wrap(err, "HeaderByNumber")
-				s.retryExecutionClientConnection(ctx, err)
-				errorLogger(err, "Unable to retrieve latest execution client header")
+				s.retrySilaClientConnection(ctx, err)
+				errorLogger(err, "Unable to retrieve latest Sila client header")
 				continue
 			}
 
@@ -560,21 +560,21 @@ func (s *Service) initPOWService() {
 			if !s.depositRequestsStarted {
 				if err := s.processPastLogs(ctx); err != nil {
 					err = errors.Wrap(err, "processPastLogs")
-					s.retryExecutionClientConnection(ctx, err)
+					s.retrySilaClientConnection(ctx, err)
 					errorLogger(
 						err,
-						"Unable to process past sila deposit logs, perhaps your execution client is not fully synced",
+						"Unable to process past sila deposit logs, perhaps your Sila client is not fully synced",
 					)
 					continue
 				}
 				// Cache silaexec headers from our voting period.
 				if err := s.cacheHeadersForSilaDataVote(ctx); err != nil {
 					err = errors.Wrap(err, "cacheHeadersForSilaDataVote")
-					s.retryExecutionClientConnection(ctx, err)
+					s.retrySilaClientConnection(ctx, err)
 					if errors.Is(err, errBlockTimeTooLate) {
-						log.WithError(err).Debug("Unable to cache headers for execution client votes")
+						log.WithError(err).Debug("Unable to cache headers for Sila client votes")
 					} else {
-						errorLogger(err, "Unable to cache headers for execution client votes")
+						errorLogger(err, "Unable to cache headers for Sila client votes")
 					}
 					continue
 				}
@@ -590,7 +590,7 @@ func (s *Service) initPOWService() {
 					genHeader, err := s.HeaderByHash(ctx, genHash)
 					if err != nil {
 						err = errors.Wrapf(err, "HeaderByHash, hash=%#x", genHash)
-						s.retryExecutionClientConnection(ctx, err)
+						s.retrySilaClientConnection(ctx, err)
 						errorLogger(err, "Unable to retrieve proof-of-stake genesis block data")
 						continue
 					}
@@ -599,8 +599,8 @@ func (s *Service) initPOWService() {
 				s.chainStartData.GenesisBlock = genBlock
 				if err := s.savePowchainData(ctx); err != nil {
 					err = errors.Wrap(err, "savePowchainData")
-					s.retryExecutionClientConnection(ctx, err)
-					errorLogger(err, "Unable to save execution client data")
+					s.retrySilaClientConnection(ctx, err)
+					errorLogger(err, "Unable to save Sila client data")
 					continue
 				}
 			}
@@ -775,7 +775,7 @@ func (s *Service) determineEarliestVotingBlock(ctx context.Context, followBlock 
 
 // initializes our service from the provided silaData object by initializing all the relevant
 // fields and data.
-func (s *Service) initializeSilaData(ctx context.Context, silaexecDataInDB *silapb.SilaExecutionChainData) error {
+func (s *Service) initializeSilaData(ctx context.Context, silaexecDataInDB *silapb.SilaChainData) error {
 	// The node has no silaData persisted on disk, so we exit and instead
 	// request from contract logs.
 	if silaexecDataInDB == nil {
@@ -849,12 +849,12 @@ func validateDepositContainers(ctrs []*silapb.DepositContainer) bool {
 
 // Validates the current powchain data is saved and makes sure that any
 // embedded genesis state is correctly accounted for.
-func (s *Service) validPowchainData(ctx context.Context) (*silapb.SilaExecutionChainData, error) {
+func (s *Service) validPowchainData(ctx context.Context) (*silapb.SilaChainData, error) {
 	genState, err := s.cfg.beaconDB.GenesisState(ctx)
 	if err != nil {
 		return nil, err
 	}
-	silaexecData, err := s.cfg.beaconDB.ExecutionChainData(ctx)
+	silaexecData, err := s.cfg.beaconDB.SilaChainData(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to retrieve silaexec data")
 	}
@@ -873,7 +873,7 @@ func (s *Service) validPowchainData(ctx context.Context) (*silapb.SilaExecutionC
 			SilaData:           genState.SilaData(),
 			ChainstartDeposits: make([]*silapb.Deposit, 0),
 		}
-		silaexecData = &silapb.SilaExecutionChainData{
+		silaexecData = &silapb.SilaChainData{
 			CurrentSilaData:   s.latestSilaData,
 			ChainstartData:    s.chainStartData,
 			BeaconState:       pbState,
@@ -887,7 +887,7 @@ func (s *Service) validPowchainData(ctx context.Context) (*silapb.SilaExecutionC
 		if err != nil {
 			return nil, err
 		}
-		if err := s.cfg.beaconDB.SaveExecutionChainData(ctx, silaexecData); err != nil {
+		if err := s.cfg.beaconDB.SaveSilaChainData(ctx, silaexecData); err != nil {
 			return nil, err
 		}
 	}
@@ -907,7 +907,7 @@ func dedupEndpoints(endpoints []string) []string {
 	return newEndpoints
 }
 
-func (s *Service) migrateOldDepositTree(silaexecDataInDB *silapb.SilaExecutionChainData) error {
+func (s *Service) migrateOldDepositTree(silaexecDataInDB *silapb.SilaChainData) error {
 	oldDepositTrie, err := trie.CreateTrieFromProto(silaexecDataInDB.Trie)
 	if err != nil {
 		return err

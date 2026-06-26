@@ -48,12 +48,12 @@ func (vs *Server) silaexecDataMajorityVote(ctx context.Context, beaconState stat
 	if vs.MockSilaExecutionVotes {
 		return vs.mockSilaDataVote(ctx, slot)
 	}
-	if !vs.SilaExecutionInfoFetcher.ExecutionClientConnected() {
+	if !vs.SilaChainInfoFetcher.SilaClientConnected() {
 		return vs.randomSilaDataVote(ctx)
 	}
 	silaexecDataNotification = false
 
-	genesisTime, _ := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
+	genesisTime, _ := vs.SilaChainInfoFetcher.GenesisSilaChainInfo()
 	followDistanceSeconds := params.BeaconConfig().SilaExecutionFollowDistance * params.BeaconConfig().SecondsPerSilaBlock
 	latestValidTime := votingPeriodStartTime - followDistanceSeconds
 	earliestValidTime := votingPeriodStartTime - 2*followDistanceSeconds
@@ -96,7 +96,7 @@ func (vs *Server) silaexecDataMajorityVote(ctx context.Context, beaconState stat
 }
 
 func (vs *Server) slotStartTime(slot primitives.Slot) uint64 {
-	startTime, _ := vs.SilaExecutionInfoFetcher.GenesisExecutionChainInfo()
+	startTime, _ := vs.SilaChainInfoFetcher.GenesisSilaChainInfo()
 	return slots.VotingPeriodStartTime(startTime, slot)
 }
 

@@ -46,7 +46,7 @@ func (s *Server) GetSyncStatus(w http.ResponseWriter, r *http.Request) {
 			SyncDistance: strconv.FormatUint(uint64(s.GenesisTimeFetcher.CurrentSlot()-headSlot), 10),
 			IsSyncing:    s.SyncChecker.Syncing(),
 			IsOptimistic: isOptimistic,
-			ElOffline:    !s.ExecutionChainInfoFetcher.ExecutionClientConnected(),
+			ElOffline:    !s.SilaChainInfoFetcher.SilaClientConnected(),
 		},
 	}
 	httputil.WriteJson(w, response)
@@ -119,7 +119,7 @@ func (*Server) GetVersion(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetVersionV2 Retrieves structured information about the version of the beacon node and its attached
-// execution client in the same format as used on the SilaEngine API
+// Sila client in the same format as used on the SilaEngine API
 func (s *Server) GetVersionV2(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "node.GetVersionV2")
 	defer span.End()
@@ -127,7 +127,7 @@ func (s *Server) GetVersionV2(w http.ResponseWriter, r *http.Request) {
 	var elData *structs.ClientVersionV1
 	elDataList, err := s.SilaEngineCaller.GetClientVersionV1(ctx)
 	if err != nil {
-		log.WithError(err).WithField("endpoint", "GetVersionV2").Debug("Could not get execution client version")
+		log.WithError(err).WithField("endpoint", "GetVersionV2").Debug("Could not get Sila client version")
 	} else if len(elDataList) > 0 {
 		elData = elDataList[0]
 	}
@@ -144,7 +144,7 @@ func (s *Server) GetVersionV2(w http.ResponseWriter, r *http.Request) {
 				Version: version.SemanticVersion(),
 				Commit:  commit,
 			},
-			ExecutionClient: elData,
+			SilaClient: elData,
 		},
 	}
 	httputil.WriteJson(w, resp)

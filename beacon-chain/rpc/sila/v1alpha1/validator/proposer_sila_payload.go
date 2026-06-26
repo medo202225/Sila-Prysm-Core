@@ -101,7 +101,7 @@ func (vs *Server) getLocalPayloadFromEngine(
 		// We need to figure out if it is actually important to "retry" by falling through to the code below when
 		// we get a timeout when trying to retrieve the cached payload id.
 		if !errors.Is(err, context.DeadlineExceeded) {
-			return nil, errors.Wrap(err, "could not get cached payload from execution client")
+			return nil, errors.Wrap(err, "could not get cached payload from Sila client")
 		}
 	}
 	log.WithFields(logFields).Debug("Payload ID cache miss")
@@ -225,7 +225,7 @@ func warnIfFeeRecipientDiffers(want, got []byte) {
 		logrus.WithFields(logrus.Fields{
 			"wantedFeeRecipient": fmt.Sprintf("%#x", want),
 			"received":           fmt.Sprintf("%#x", got),
-		}).Warn("Fee recipient address from execution client is not what was expected. " +
+		}).Warn("Fee recipient address from Sila client is not what was expected. " +
 			"It is possible someone has compromised your client to try and take your transaction fees")
 	}
 }

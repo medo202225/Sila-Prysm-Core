@@ -1,4 +1,4 @@
-// Package testing provides useful mocks for an silaexec powchain
+// Package testing provides useful mocks for a silaexec powchain
 // service as needed by unit tests for the beacon node.
 package testing
 
@@ -51,8 +51,8 @@ func New() *Chain {
 	}
 }
 
-// GenesisExecutionChainInfo --
-func (m *Chain) GenesisExecutionChainInfo() (uint64, *big.Int) {
+// GenesisSilaChainInfo --
+func (m *Chain) GenesisSilaChainInfo() (uint64, *big.Int) {
 	blk := m.GenesisSilaBlock
 	if blk == nil {
 		blk = big.NewInt(GenesisTime)
@@ -119,19 +119,19 @@ func (*Chain) ClearPreGenesisData() {
 	// no-op
 }
 
-func (*Chain) ExecutionClientConnected() bool {
+func (*Chain) SilaClientConnected() bool {
 	return true
 }
 
-func (m *Chain) ExecutionClientEndpoint() string {
+func (m *Chain) SilaClientEndpoint() string {
 	return m.CurrEndpoint
 }
 
-func (m *Chain) ExecutionClientConnectionErr() error {
+func (m *Chain) SilaClientConnectionErr() error {
 	return m.CurrError
 }
 
-func (m *Chain) SilaExecutionEndpoints() []string {
+func (m *Chain) SilaEndpoints() []string {
 	return m.Endpoints
 }
 

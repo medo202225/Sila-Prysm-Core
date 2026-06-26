@@ -340,7 +340,7 @@ func TestServer_getSilaPayload_UnexpectedFeeRecipient(t *testing.T) {
 	require.Equal(t, common.Address(res.SilaData.FeeRecipient()), feeRecipient)
 
 	// We should NOT be getting the warning.
-	require.LogsDoNotContain(t, hook, "Fee recipient address from execution client is not what was expected")
+	require.LogsDoNotContain(t, hook, "Fee recipient address from Sila client is not what was expected")
 	hook.Reset()
 
 	evilRecipientAddress := common.BytesToAddress([]byte("evil"))
@@ -352,7 +352,7 @@ func TestServer_getSilaPayload_UnexpectedFeeRecipient(t *testing.T) {
 	require.NotNil(t, res)
 
 	// Users should be warned.
-	require.LogsContain(t, hook, "Fee recipient address from execution client is not what was expected")
+	require.LogsContain(t, hook, "Fee recipient address from Sila client is not what was expected")
 }
 
 func TestServer_getTerminalBlockHashIfExists(t *testing.T) {

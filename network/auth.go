@@ -8,12 +8,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-// DefaultRPCHTTPTimeout for HTTP requests via an RPC connection to an execution node.
+// DefaultRPCHTTPTimeout for HTTP requests via an RPC connection to a Sila node.
 const DefaultRPCHTTPTimeout = time.Second * 30
 
 // This creates a custom HTTP transport which we can attach to our HTTP client
 // in order to inject JWT auth strings into our HTTP request headers. Authentication
-// is required when interacting with an Sila SilaEngine API server via HTTP, and JWT
+// is required when interacting with an SilaEngine API server via HTTP, and JWT
 // is chosen as the scheme of choice.
 // For more details on the requirements of authentication when using the SilaEngine API, see
 // the specification here: https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/authentication.md

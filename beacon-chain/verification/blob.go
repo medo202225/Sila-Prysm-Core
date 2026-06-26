@@ -53,9 +53,9 @@ var InitsyncBlobSidecarRequirements = requirementList(GossipBlobSidecarRequireme
 )
 
 // ELMemPoolRequirements defines the verification requirements for importing blobs and proofs
-// from the execution layer's mempool. Currently, no requirements are enforced because it is
-// assumed that blobs and proofs from the execution layer are correctly formatted,
-// given the trusted relationship between the consensus layer and execution layer.
+// from the Sila layer's mempool. Currently, no requirements are enforced because it is
+// assumed that blobs and proofs from the Sila layer are correctly formatted,
+// given the trusted relationship between the consensus layer and Sila layer.
 var ELMemPoolRequirements []Requirement
 
 // BackfillBlobSidecarRequirements is the same as InitsyncBlobSidecarRequirements.

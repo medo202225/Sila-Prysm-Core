@@ -959,7 +959,7 @@ message BlockRequest {
   bool skip_mev_boost = 4;
 
   // Percentage multiplier to apply to the builder's payload value when choosing
-  // between a builder payload header and payload from the paired execution node
+  // between a builder payload header and payload from the paired Sila node
   google.protobuf.UInt64Value builder_boost_factor = 5;
 
   // When true, eagerly compute the post-payload state root in the envelope

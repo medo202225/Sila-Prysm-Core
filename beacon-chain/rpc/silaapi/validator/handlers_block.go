@@ -36,7 +36,7 @@ const (
 // returned block may be blinded or unblinded, depending on the current state of the network as
 // decided by the execution and beacon nodes.
 // The beacon node must return an unblinded block if it obtains the sila payload from its
-// paired execution node. It must only return a blinded block if it obtains the sila payload
+// paired Sila node. It must only return a blinded block if it obtains the sila payload
 // header from an MEV relay.
 // Metadata in the response indicates the type of block produced, and the supported types of block
 // will be added to as forks progress.

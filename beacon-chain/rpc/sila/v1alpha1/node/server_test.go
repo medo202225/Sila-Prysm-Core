@@ -173,7 +173,7 @@ func TestNodeServer_GetSilaExecutionConnectionStatus(t *testing.T) {
 	ep := "foo"
 	err := errors.New("error1")
 	errStr := "error1"
-	mockFetcher := &testutil.MockExecutionChainInfoFetcher{
+	mockFetcher := &testutil.MockSilaChainInfoFetcher{
 		CurrEndpoint: ep,
 		CurrError:    err,
 	}

@@ -890,7 +890,7 @@ func getProposerServer(ctx context.Context, db db.HeadAccessDatabase, headState 
 		SyncChecker:           &mockSync.Sync{IsSyncing: false},
 		BlockReceiver:         mockChainService,
 		ChainStartFetcher:     &mockExecution.Chain{},
-		SilaExecutionInfoFetcher:       &mockExecution.Chain{},
+		SilaChainInfoFetcher:       &mockExecution.Chain{},
 		SilaBlockFetcher:      &mockExecution.Chain{},
 		FinalizationFetcher:   mockChainService,
 		ForkFetcher:           mockChainService,
@@ -1328,7 +1328,7 @@ func TestProposer_ComputeStateRoot_OK(t *testing.T) {
 
 	proposerServer := &Server{
 		ChainStartFetcher: &mockExecution.Chain{},
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		SilaBlockFetcher:  &mockExecution.Chain{},
 		StateGen:          stategen.New(db, doublylinkedtree.New()),
 		BlockReceiver: &mock.ChainService{
@@ -1457,7 +1457,7 @@ func TestProposer_PendingDeposits_SilaDataVoteOK(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher: p,
-		SilaExecutionInfoFetcher:   p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:  p,
 		BlockReceiver:     &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:       &mock.ChainService{State: beaconState, Root: blkRoot[:]},
@@ -1590,7 +1590,7 @@ func TestProposer_PendingDeposits_OutsideSilaExecutionFollowWindow(t *testing.T)
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1723,7 +1723,7 @@ func TestProposer_PendingDeposits_FollowsCorrectSilaBlock(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1826,7 +1826,7 @@ func TestProposer_PendingDeposits_CantReturnBelowStateSilaExecutionDepositIndex(
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -1926,7 +1926,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanMax(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2026,7 +2026,7 @@ func TestProposer_PendingDeposits_CantReturnMoreThanDepositCount(t *testing.T) {
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2137,7 +2137,7 @@ func TestProposer_DepositTrie_UtilizesCachedFinalizedDeposits(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2266,7 +2266,7 @@ func TestProposer_DepositTrie_RebuildTrie(t *testing.T) {
 
 	bs := &Server{
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -2376,7 +2376,7 @@ func TestProposer_SilaData_MajorityVote_SpansGenesis(t *testing.T) {
 	require.NoError(t, err)
 	ps := &Server{
 		ChainStartFetcher: p,
-		SilaExecutionInfoFetcher:   p,
+		SilaChainInfoFetcher:   p,
 		SilaBlockFetcher:  p,
 		BlockFetcher:      p,
 		DepositFetcher:    depositCache,
@@ -2439,7 +2439,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2475,7 +2475,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2511,7 +2511,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2548,7 +2548,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2585,7 +2585,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2622,7 +2622,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2652,7 +2652,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		currentSilaData := &silapb.SilaData{DepositCount: 1, BlockHash: []byte("current")}
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2687,7 +2687,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2717,7 +2717,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2749,7 +2749,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 		currentSilaData := &silapb.SilaData{DepositCount: 2, BlockHash: []byte("current")}
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2785,7 +2785,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2822,7 +2822,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2853,7 +2853,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2887,7 +2887,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2926,7 +2926,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -2962,7 +2962,7 @@ func TestProposer_SilaData_MajorityVote(t *testing.T) {
 
 		ps := &Server{
 			ChainStartFetcher: p,
-			SilaExecutionInfoFetcher:   p,
+			SilaChainInfoFetcher:   p,
 			SilaBlockFetcher:  p,
 			BlockFetcher:      p,
 			DepositFetcher:    depositCache,
@@ -3159,7 +3159,7 @@ func TestProposer_Deposits_ReturnsEmptyList_IfLatestSilaDataEqGenesisSilaBlock(t
 		BlockReceiver:          &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		HeadFetcher:            &mock.ChainService{State: beaconState, Root: blkRoot[:]},
 		ChainStartFetcher:      p,
-		SilaExecutionInfoFetcher:        p,
+		SilaChainInfoFetcher:        p,
 		SilaBlockFetcher:       p,
 		DepositFetcher:         depositCache,
 		PendingDepositsFetcher: depositCache,
@@ -3426,7 +3426,7 @@ func TestProposer_GetParentHeadState(t *testing.T) {
 
 	proposerServer := &Server{
 		ChainStartFetcher: &mockExecution.Chain{},
-		SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+		SilaChainInfoFetcher:   &mockExecution.Chain{},
 		SilaBlockFetcher:  &mockExecution.Chain{},
 		ForkchoiceFetcher: &mock.ChainService{},
 		StateGen:          stategen.New(db, doublylinkedtree.New()),
@@ -3562,7 +3562,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
-			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+			SilaChainInfoFetcher:   &mockExecution.Chain{},
 			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
@@ -3611,7 +3611,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
-			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+			SilaChainInfoFetcher:   &mockExecution.Chain{},
 			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
@@ -3659,7 +3659,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
-			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+			SilaChainInfoFetcher:   &mockExecution.Chain{},
 			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
@@ -3708,7 +3708,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
-			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+			SilaChainInfoFetcher:   &mockExecution.Chain{},
 			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
@@ -3751,7 +3751,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
-			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+			SilaChainInfoFetcher:   &mockExecution.Chain{},
 			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,
@@ -3803,7 +3803,7 @@ func TestServer_ProposeBeaconBlock_PostFuluBlindedBlock(t *testing.T) {
 		c := &mock.ChainService{State: beaconState, Root: parentRoot[:]}
 		proposerServer := &Server{
 			ChainStartFetcher: &mockExecution.Chain{},
-			SilaExecutionInfoFetcher:   &mockExecution.Chain{},
+			SilaChainInfoFetcher:   &mockExecution.Chain{},
 			SilaBlockFetcher:  &mockExecution.Chain{},
 			BlockReceiver:     c,
 			BlobReceiver:      c,

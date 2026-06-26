@@ -118,7 +118,7 @@ func TestStart_OK(t *testing.T) {
 	web3Service.Start()
 	if len(hook.Entries) > 0 {
 		msg := hook.LastEntry().Message
-		want := "Could not connect to execution endpoint"
+		want := "Could not connect to sila endpoint"
 		if strings.Contains(want, msg) {
 			t.Errorf("incorrect log, expected %s, got %s", want, msg)
 		}
@@ -603,7 +603,7 @@ func TestService_EnsureConsistentPowchainData(t *testing.T) {
 	_, err = s1.validPowchainData(t.Context())
 	require.NoError(t, err)
 
-	silaexecData, err := s1.cfg.beaconDB.ExecutionChainData(t.Context())
+	silaexecData, err := s1.cfg.beaconDB.SilaChainData(t.Context())
 	assert.NoError(t, err)
 
 	assert.NotNil(t, silaexecData)
@@ -634,7 +634,7 @@ func TestService_InitializeCorrectly(t *testing.T) {
 	_, err = s1.validPowchainData(t.Context())
 	require.NoError(t, err)
 
-	silaexecData, err := s1.cfg.beaconDB.ExecutionChainData(t.Context())
+	silaexecData, err := s1.cfg.beaconDB.SilaChainData(t.Context())
 	assert.NoError(t, err)
 
 	assert.NoError(t, s1.initializeSilaData(t.Context(), silaexecData))
@@ -663,7 +663,7 @@ func TestService_EnsureValidPowchainData(t *testing.T) {
 	genesis.StoreStateDuringTest(t, genState)
 	require.NoError(t, s1.cfg.beaconDB.SaveGenesisData(t.Context(), genState))
 
-	err = s1.cfg.beaconDB.SaveExecutionChainData(t.Context(), &silapb.SilaExecutionChainData{
+	err = s1.cfg.beaconDB.SaveSilaChainData(t.Context(), &silapb.SilaChainData{
 		ChainstartData:    &silapb.ChainStartData{Chainstarted: true},
 		DepositContainers: []*silapb.DepositContainer{{Index: 1}},
 	})
@@ -671,7 +671,7 @@ func TestService_EnsureValidPowchainData(t *testing.T) {
 	_, err = s1.validPowchainData(t.Context())
 	require.NoError(t, err)
 
-	silaexecData, err := s1.cfg.beaconDB.ExecutionChainData(t.Context())
+	silaexecData, err := s1.cfg.beaconDB.SilaChainData(t.Context())
 	assert.NoError(t, err)
 
 	assert.NotNil(t, silaexecData)
@@ -734,7 +734,7 @@ func TestService_ValidateDepositContainers(t *testing.T) {
 	}
 }
 
-func TestSilaExecutionEndpoints(t *testing.T) {
+func TestSilaEndpoints(t *testing.T) {
 	server, firstEndpoint, err := mockExecution.SetupRPCServer()
 	require.NoError(t, err)
 	t.Cleanup(func() {
@@ -757,7 +757,7 @@ func TestSilaExecutionEndpoints(t *testing.T) {
 	require.NoError(t, err)
 
 	// Check default endpoint is set to current.
-	assert.Equal(t, firstEndpoint, s1.ExecutionClientEndpoint(), "Unexpected http endpoint")
+	assert.Equal(t, firstEndpoint, s1.SilaClientEndpoint(), "Unexpected http endpoint")
 }
 
 func TestService_CacheBlockHeaders(t *testing.T) {
@@ -853,7 +853,7 @@ func TestService_migrateOldDepositTree(t *testing.T) {
 		WithDepositCache(cache),
 	)
 	require.NoError(t, err)
-	silaexecData := &silapb.SilaExecutionChainData{
+	silaexecData := &silapb.SilaChainData{
 		BeaconState: &silapb.BeaconState{
 			SilaData: &silapb.SilaData{
 				DepositCount: 800,

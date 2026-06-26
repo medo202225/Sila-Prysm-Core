@@ -89,6 +89,6 @@ type SilaPayloadProcessedData struct {
 	BuilderIndex primitives.BuilderIndex
 	BlockHash    [32]byte
 	BlockRoot    [32]byte
-	// Optimistic is true if the imported payload has not been fully validated by the execution layer.
+	// Optimistic is true if the imported payload has not been fully validated by the Sila layer.
 	Optimistic bool
 }

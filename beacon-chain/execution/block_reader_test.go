@@ -103,7 +103,7 @@ func TestBlockHashByHeight_ReturnsHash(t *testing.T) {
 	require.Equal(t, true, exists, "Expected block info to be cached")
 }
 
-func TestBlockHashByHeight_ReturnsError_WhenNoSilaExecutionClient(t *testing.T) {
+func TestBlockHashByHeight_ReturnsError_WhenNoSilaClient(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	server, endpoint, err := mockExecution.SetupRPCServer()
 	require.NoError(t, err)
@@ -317,7 +317,7 @@ func TestService_BlockNumberByTimestampMoreTargetTime(t *testing.T) {
 	require.Equal(t, hd.Number.Uint64(), blk.Number.Uint64(), "retrieved block is not equal to the head")
 }
 
-func TestService_BlockTimeByHeight_ReturnsError_WhenNoSilaExecutionClient(t *testing.T) {
+func TestService_BlockTimeByHeight_ReturnsError_WhenNoSilaClient(t *testing.T) {
 	beaconDB := dbutil.SetupDB(t)
 	server, endpoint, err := mockExecution.SetupRPCServer()
 	require.NoError(t, err)

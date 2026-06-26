@@ -52,9 +52,9 @@ func clientTimedOutError(err error) bool {
 	return strings.Contains(err.Error(), errTimedOut.Error())
 }
 
-// GenesisExecutionChainInfo retrieves the genesis time and sila block number of the beacon chain
+// GenesisSilaChainInfo retrieves the genesis time and sila block number of the beacon chain
 // from the sila deposit.
-func (s *Service) GenesisExecutionChainInfo() (uint64, *big.Int) {
+func (s *Service) GenesisSilaChainInfo() (uint64, *big.Int) {
 	return s.chainStartData.GenesisTime, big.NewInt(int64(s.chainStartData.GenesisBlock))
 }
 
@@ -214,7 +214,7 @@ func (s *Service) ProcessDepositLog(ctx context.Context, depositLog *gethtypes.L
 				log.WithFields(logrus.Fields{
 					"deposits":          deposits,
 					"genesisValidators": valCount,
-				}).Info("Processing deposits from Sila execution chain")
+				}).Info("Processing deposits from Sila chain")
 			}
 		}
 	} else {
@@ -432,10 +432,10 @@ func (s *Service) processBlockInBatch(ctx context.Context, currentBlockNum uint6
 			currentBlockNum = filterLog.BlockNumber
 		}
 		if err := s.ProcessLog(ctx, &logs[i]); err != nil {
-			// In the event the execution client gives us a garbled/bad log
+			// In the event the Sila client gives us a garbled/bad log
 			// we reset the last requested block to the previous valid block range. This
 			// prevents the beacon from advancing processing of logs to another range
-			// in the event of an execution client failure.
+			// in the event of a Sila client failure.
 			s.latestSilaDataLock.Lock()
 			s.latestSilaData.LastRequestedBlock = lastReqBlock
 			s.latestSilaDataLock.Unlock()
@@ -569,7 +569,7 @@ func (s *Service) savePowchainData(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	silaexecData := &silapb.SilaExecutionChainData{
+	silaexecData := &silapb.SilaChainData{
 		CurrentSilaData:   s.latestSilaData,
 		ChainstartData:    s.chainStartData,
 		BeaconState:       pbState, // I promise not to mutate it!
@@ -587,5 +587,5 @@ func (s *Service) savePowchainData(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	return s.cfg.beaconDB.SaveExecutionChainData(ctx, silaexecData)
+	return s.cfg.beaconDB.SaveSilaChainData(ctx, silaexecData)
 }

@@ -1040,7 +1040,7 @@ func (s *Server) validateBlobs(blk interfaces.SignedBeaconBlock, blobs [][]byte,
 		if uint64(len(proofs)) != expectedProofsCount || len(blobs) != len(commitments) {
 			return fmt.Errorf("number of blobs (%d), cell proofs (%d), and commitments (%d) do not match (expected %d cell proofs)", len(blobs), len(proofs), len(commitments), expectedProofsCount)
 		}
-		// For Fulu blocks, proofs are cell proofs from execution client's BlobsBundleV2
+		// For Fulu blocks, proofs are cell proofs from Sila client's BlobsBundleV2
 		// Verify cell proofs directly without reconstructing data column sidecars
 		if err := kzg.VerifyCellKZGProofBatchFromBlobData(blobs, commitments, proofs, numberOfColumns); err != nil {
 			return errors.Wrap(err, "could not verify cell proofs")

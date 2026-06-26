@@ -171,7 +171,7 @@ func WrappedBuilderBidCapella(p *silapb.BuilderBidCapella) (Bid, error) {
 
 // Header returns the sila data interface.
 func (b builderBidCapella) Header() (interfaces.SilaData, error) {
-	// We have to convert big endian to little endian because the value is coming from the execution layer.
+	// We have to convert big endian to little endian because the value is coming from the Sila layer.
 	return blocks.WrappedSilaPayloadHeaderCapella(b.p.Header)
 }
 
@@ -250,7 +250,7 @@ func (b builderBidDeneb) HashTreeRootWith(hh *ssz.Hasher) error {
 
 // Header --
 func (b builderBidDeneb) Header() (interfaces.SilaData, error) {
-	// We have to convert big endian to little endian because the value is coming from the execution layer.
+	// We have to convert big endian to little endian because the value is coming from the Sila layer.
 	return blocks.WrappedSilaPayloadHeaderDeneb(b.p.Header)
 }
 
@@ -337,7 +337,7 @@ func (b builderBidElectra) HashTreeRootWith(hh *ssz.Hasher) error {
 
 // Header --
 func (b builderBidElectra) Header() (interfaces.SilaData, error) {
-	// We have to convert big endian to little endian because the value is coming from the execution layer.
+	// We have to convert big endian to little endian because the value is coming from the Sila layer.
 	return blocks.WrappedSilaPayloadHeaderDeneb(b.p.Header)
 }
 

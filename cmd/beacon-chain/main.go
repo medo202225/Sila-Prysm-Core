@@ -373,7 +373,7 @@ func startNode(ctx *cli.Context, cancel context.CancelFunc) error {
 	}
 	opts := []node.Option{
 		node.WithBlockchainFlagOptions(blockchainFlagOpts),
-		node.WithExecutionChainOptions(executionFlagOpts),
+		node.WithSilaChainOptions(executionFlagOpts),
 		node.WithBuilderFlagOptions(builderFlagOpts),
 	}
 

@@ -250,7 +250,7 @@ func (s *Service) Status() error {
 	}
 	if optimistic {
 		return errors.New("service is optimistic, and only limited service functionality is provided " +
-			"please check if execution layer is fully synced")
+			"please check if Sila layer is fully synced")
 	}
 
 	if s.originBlockRoot == params.BeaconConfig().ZeroHash {

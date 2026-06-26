@@ -54,8 +54,8 @@ type ReadOnlyDatabase interface {
 	LastValidatedCheckpoint(ctx context.Context) (*silapb.Checkpoint, error)
 	// Sila deposit related handlers.
 	SilaDepositAddress(ctx context.Context) ([]byte, error)
-	// ExecutionChainData operations.
-	ExecutionChainData(ctx context.Context) (*silapb.SilaExecutionChainData, error)
+	// SilaChainData operations.
+	SilaChainData(ctx context.Context) (*silapb.SilaChainData, error)
 	// Fee recipients operations.
 	FeeRecipientByValidatorID(ctx context.Context, id primitives.ValidatorIndex) (common.Address, error)
 	RegistrationByValidatorID(ctx context.Context, id primitives.ValidatorIndex) (*silapb.ValidatorRegistrationV1, error)
@@ -110,8 +110,8 @@ type NoHeadAccessDatabase interface {
 	SaveLastValidatedCheckpoint(ctx context.Context, checkpoint *silapb.Checkpoint) error
 	// Sila deposit related handlers.
 	SaveSilaDepositAddress(ctx context.Context, addr common.Address) error
-	// SaveExecutionChainData operations.
-	SaveExecutionChainData(ctx context.Context, data *silapb.SilaExecutionChainData) error
+	// SaveSilaChainData operations.
+	SaveSilaChainData(ctx context.Context, data *silapb.SilaChainData) error
 	// Run any required database migrations.
 	RunMigrations(ctx context.Context) error
 	// Fee recipients operations.

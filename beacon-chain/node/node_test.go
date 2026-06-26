@@ -82,7 +82,7 @@ func TestNodeStart_Ok(t *testing.T) {
 	options := []Option{
 		WithBlockchainFlagOptions([]blockchain.Option{}),
 		WithBuilderFlagOptions([]builder.Option{}),
-		WithExecutionChainOptions([]execution.Option{}),
+		WithSilaChainOptions([]execution.Option{}),
 		WithBlobStorage(filesystem.NewEphemeralBlobStorage(t)),
 		WithDataColumnStorage(filesystem.NewEphemeralDataColumnStorage(t)),
 	}
@@ -111,7 +111,7 @@ func TestNodeStart_SyncChecker(t *testing.T) {
 	options := []Option{
 		WithBlockchainFlagOptions([]blockchain.Option{}),
 		WithBuilderFlagOptions([]builder.Option{}),
-		WithExecutionChainOptions([]execution.Option{}),
+		WithSilaChainOptions([]execution.Option{}),
 		WithBlobStorage(filesystem.NewEphemeralBlobStorage(t)),
 		WithDataColumnStorage(filesystem.NewEphemeralDataColumnStorage(t)),
 	}
@@ -146,7 +146,7 @@ func TestClearDB(t *testing.T) {
 	context, cancel := newCliContextWithCancel(&app, set)
 
 	options := []Option{
-		WithExecutionChainOptions([]execution.Option{execution.WithHttpEndpoint(endpoint)}),
+		WithSilaChainOptions([]execution.Option{execution.WithHttpEndpoint(endpoint)}),
 		WithBlobStorage(filesystem.NewEphemeralBlobStorage(t)),
 		WithDataColumnStorage(filesystem.NewEphemeralDataColumnStorage(t)),
 	}

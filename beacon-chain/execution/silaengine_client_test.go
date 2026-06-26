@@ -1027,7 +1027,7 @@ func TestClient_HTTP(t *testing.T) {
 				name:     "empty response",
 				want:     []*structs.ClientVersionV1{},
 				hasError: true,
-				errMsg:   "execution client returned no result",
+				errMsg:   "Sila client returned no result",
 			},
 			{
 				name:     "RPC error",
@@ -2536,7 +2536,7 @@ func Test_ExchangeCapabilities(t *testing.T) {
 		for _, item := range results {
 			require.NotNil(t, item)
 		}
-		assert.LogsContain(t, logHook, "Connected execution client does not support some requested engine methods")
+		assert.LogsContain(t, logHook, "Connected Sila client does not support some requested engine methods")
 	})
 	t.Run("list of items", func(t *testing.T) {
 		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -2719,7 +2719,7 @@ func TestConstructDataColumnSidecars(t *testing.T) {
 	// 	defer rpcClient.Close()
 
 	// 	_, err := client.ConstructDataColumnSidecars(ctx, peerdas.PopulateFromBlock(roBlock))
-	// 	require.ErrorContains(t, "fetch cells and proofs from execution client", err)
+	// 	require.ErrorContains(t, "fetch cells and proofs from Sila client", err)
 	// })
 }
 
