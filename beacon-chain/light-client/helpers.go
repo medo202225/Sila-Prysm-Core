@@ -58,9 +58,9 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 	} else if currentEpoch < params.BeaconConfig().DenebForkEpoch {
 		m = &pb.LightClientBootstrapCapella{
 			Header: &pb.LightClientHeaderCapella{
-				Beacon:          &pb.BeaconBlockHeader{},
-				Execution:       &silaenginev1.SilaPayloadHeaderCapella{},
-				ExecutionBranch: silaPayloadBranch,
+				Beacon:                       &pb.BeaconBlockHeader{},
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderCapella{},
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -68,9 +68,9 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 	} else if currentEpoch < params.BeaconConfig().ElectraForkEpoch {
 		m = &pb.LightClientBootstrapDeneb{
 			Header: &pb.LightClientHeaderDeneb{
-				Beacon:          &pb.BeaconBlockHeader{},
-				Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-				ExecutionBranch: silaPayloadBranch,
+				Beacon:                       &pb.BeaconBlockHeader{},
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{},
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,
@@ -78,9 +78,9 @@ func createDefaultLightClientBootstrap(currentSlot primitives.Slot) (interfaces.
 	} else {
 		m = &pb.LightClientBootstrapElectra{
 			Header: &pb.LightClientHeaderDeneb{
-				Beacon:          &pb.BeaconBlockHeader{},
-				Execution:       &silaenginev1.SilaPayloadHeaderDeneb{},
-				ExecutionBranch: silaPayloadBranch,
+				Beacon:                       &pb.BeaconBlockHeader{},
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{},
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			CurrentSyncCommittee:       currentSyncCommittee,
 			CurrentSyncCommitteeBranch: currentSyncCommitteeBranch,

@@ -11,8 +11,8 @@ import (
 	sync "sync"
 
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
+	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -85,13 +85,13 @@ func (x *LightClientBootstrapAltair) GetCurrentSyncCommitteeBranch() [][]byte {
 }
 
 type LightClientUpdateAltair struct {
-	state                   protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader          *LightClientHeaderAltair                                         `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	NextSyncCommittee       *SyncCommittee                                                   `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	NextSyncCommitteeBranch [][]byte                                                         `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"5,32"`
-	FinalizedHeader         *LightClientHeaderAltair                                         `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
-	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state                   protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader          *LightClientHeaderAltair                                                `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	NextSyncCommittee       *SyncCommittee                                                          `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	NextSyncCommitteeBranch [][]byte                                                                `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"5,32"`
+	FinalizedHeader         *LightClientHeaderAltair                                                `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch          [][]byte                                                                `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
+	SyncAggregate           *SyncAggregate                                                          `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -177,11 +177,11 @@ func (x *LightClientUpdateAltair) GetSignatureSlot() github_com_sila_chain_Sila_
 }
 
 type LightClientFinalityUpdateAltair struct {
-	state           protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader  *LightClientHeaderAltair                                         `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	FinalizedHeader *LightClientHeaderAltair                                         `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
-	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state           protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader  *LightClientHeaderAltair                                                `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	FinalizedHeader *LightClientHeaderAltair                                                `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch  [][]byte                                                                `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
+	SyncAggregate   *SyncAggregate                                                          `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -253,9 +253,9 @@ func (x *LightClientFinalityUpdateAltair) GetSignatureSlot() github_com_sila_cha
 }
 
 type LightClientOptimisticUpdateAltair struct {
-	state          protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader *LightClientHeaderAltair                                         `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	SyncAggregate  *SyncAggregate                                                   `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state          protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader *LightClientHeaderAltair                                                `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	SyncAggregate  *SyncAggregate                                                          `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -417,13 +417,13 @@ func (x *LightClientBootstrapCapella) GetCurrentSyncCommitteeBranch() [][]byte {
 }
 
 type LightClientUpdateCapella struct {
-	state                   protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader          *LightClientHeaderCapella                                        `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	NextSyncCommittee       *SyncCommittee                                                   `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	NextSyncCommitteeBranch [][]byte                                                         `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"5,32"`
-	FinalizedHeader         *LightClientHeaderCapella                                        `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
-	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state                   protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader          *LightClientHeaderCapella                                               `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	NextSyncCommittee       *SyncCommittee                                                          `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	NextSyncCommitteeBranch [][]byte                                                                `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"5,32"`
+	FinalizedHeader         *LightClientHeaderCapella                                               `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch          [][]byte                                                                `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
+	SyncAggregate           *SyncAggregate                                                          `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -509,11 +509,11 @@ func (x *LightClientUpdateCapella) GetSignatureSlot() github_com_sila_chain_Sila
 }
 
 type LightClientFinalityUpdateCapella struct {
-	state           protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader  *LightClientHeaderCapella                                        `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	FinalizedHeader *LightClientHeaderCapella                                        `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
-	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state           protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader  *LightClientHeaderCapella                                               `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	FinalizedHeader *LightClientHeaderCapella                                               `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch  [][]byte                                                                `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
+	SyncAggregate   *SyncAggregate                                                          `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -585,9 +585,9 @@ func (x *LightClientFinalityUpdateCapella) GetSignatureSlot() github_com_sila_ch
 }
 
 type LightClientOptimisticUpdateCapella struct {
-	state          protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader *LightClientHeaderCapella                                        `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	SyncAggregate  *SyncAggregate                                                   `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state          protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader *LightClientHeaderCapella                                               `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	SyncAggregate  *SyncAggregate                                                          `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -645,12 +645,12 @@ func (x *LightClientOptimisticUpdateCapella) GetSignatureSlot() github_com_sila_
 }
 
 type LightClientHeaderCapella struct {
-	state           protoimpl.MessageState            `protogen:"open.v1"`
-	Beacon          *BeaconBlockHeader                `protobuf:"bytes,1,opt,name=beacon,proto3" json:"beacon,omitempty"`
-	Execution       *v1.SilaPayloadHeaderCapella `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
-	ExecutionBranch [][]byte                          `protobuf:"bytes,3,rep,name=execution_branch,json=executionBranch,proto3" json:"execution_branch,omitempty" ssz-size:"4,32"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                        protoimpl.MessageState       `protogen:"open.v1"`
+	Beacon                       *BeaconBlockHeader           `protobuf:"bytes,1,opt,name=beacon,proto3" json:"beacon,omitempty"`
+	SilaLightClientPayloadHeader *v1.SilaPayloadHeaderCapella `protobuf:"bytes,2,opt,name=sila_light_client_payload_header,json=silaLightClientPayloadHeader,proto3" json:"sila_light_client_payload_header,omitempty"`
+	SilaLightClientPayloadBranch [][]byte                     `protobuf:"bytes,3,rep,name=sila_light_client_payload_branch,json=silaLightClientPayloadBranch,proto3" json:"sila_light_client_payload_branch,omitempty" ssz-size:"4,32"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *LightClientHeaderCapella) Reset() {
@@ -690,16 +690,16 @@ func (x *LightClientHeaderCapella) GetBeacon() *BeaconBlockHeader {
 	return nil
 }
 
-func (x *LightClientHeaderCapella) GetExecution() *v1.SilaPayloadHeaderCapella {
+func (x *LightClientHeaderCapella) GetSilaLightClientPayloadHeader() *v1.SilaPayloadHeaderCapella {
 	if x != nil {
-		return x.Execution
+		return x.SilaLightClientPayloadHeader
 	}
 	return nil
 }
 
-func (x *LightClientHeaderCapella) GetExecutionBranch() [][]byte {
+func (x *LightClientHeaderCapella) GetSilaLightClientPayloadBranch() [][]byte {
 	if x != nil {
-		return x.ExecutionBranch
+		return x.SilaLightClientPayloadBranch
 	}
 	return nil
 }
@@ -765,13 +765,13 @@ func (x *LightClientBootstrapDeneb) GetCurrentSyncCommitteeBranch() [][]byte {
 }
 
 type LightClientUpdateDeneb struct {
-	state                   protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader          *LightClientHeaderDeneb                                          `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	NextSyncCommittee       *SyncCommittee                                                   `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	NextSyncCommitteeBranch [][]byte                                                         `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"5,32"`
-	FinalizedHeader         *LightClientHeaderDeneb                                          `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
-	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state                   protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader          *LightClientHeaderDeneb                                                 `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	NextSyncCommittee       *SyncCommittee                                                          `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	NextSyncCommitteeBranch [][]byte                                                                `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"5,32"`
+	FinalizedHeader         *LightClientHeaderDeneb                                                 `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch          [][]byte                                                                `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
+	SyncAggregate           *SyncAggregate                                                          `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -857,11 +857,11 @@ func (x *LightClientUpdateDeneb) GetSignatureSlot() github_com_sila_chain_Sila_S
 }
 
 type LightClientFinalityUpdateDeneb struct {
-	state           protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader  *LightClientHeaderDeneb                                          `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	FinalizedHeader *LightClientHeaderDeneb                                          `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
-	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state           protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader  *LightClientHeaderDeneb                                                 `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	FinalizedHeader *LightClientHeaderDeneb                                                 `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch  [][]byte                                                                `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"6,32"`
+	SyncAggregate   *SyncAggregate                                                          `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -933,9 +933,9 @@ func (x *LightClientFinalityUpdateDeneb) GetSignatureSlot() github_com_sila_chai
 }
 
 type LightClientOptimisticUpdateDeneb struct {
-	state          protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader *LightClientHeaderDeneb                                          `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	SyncAggregate  *SyncAggregate                                                   `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state          protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader *LightClientHeaderDeneb                                                 `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	SyncAggregate  *SyncAggregate                                                          `protobuf:"bytes,2,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,3,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -993,12 +993,12 @@ func (x *LightClientOptimisticUpdateDeneb) GetSignatureSlot() github_com_sila_ch
 }
 
 type LightClientHeaderDeneb struct {
-	state           protoimpl.MessageState          `protogen:"open.v1"`
-	Beacon          *BeaconBlockHeader              `protobuf:"bytes,1,opt,name=beacon,proto3" json:"beacon,omitempty"`
-	Execution       *v1.SilaPayloadHeaderDeneb `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
-	ExecutionBranch [][]byte                        `protobuf:"bytes,3,rep,name=execution_branch,json=executionBranch,proto3" json:"execution_branch,omitempty" ssz-size:"4,32"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                        protoimpl.MessageState     `protogen:"open.v1"`
+	Beacon                       *BeaconBlockHeader         `protobuf:"bytes,1,opt,name=beacon,proto3" json:"beacon,omitempty"`
+	SilaLightClientPayloadHeader *v1.SilaPayloadHeaderDeneb `protobuf:"bytes,2,opt,name=sila_light_client_payload_header,json=silaLightClientPayloadHeader,proto3" json:"sila_light_client_payload_header,omitempty"`
+	SilaLightClientPayloadBranch [][]byte                   `protobuf:"bytes,3,rep,name=sila_light_client_payload_branch,json=silaLightClientPayloadBranch,proto3" json:"sila_light_client_payload_branch,omitempty" ssz-size:"4,32"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *LightClientHeaderDeneb) Reset() {
@@ -1038,16 +1038,16 @@ func (x *LightClientHeaderDeneb) GetBeacon() *BeaconBlockHeader {
 	return nil
 }
 
-func (x *LightClientHeaderDeneb) GetExecution() *v1.SilaPayloadHeaderDeneb {
+func (x *LightClientHeaderDeneb) GetSilaLightClientPayloadHeader() *v1.SilaPayloadHeaderDeneb {
 	if x != nil {
-		return x.Execution
+		return x.SilaLightClientPayloadHeader
 	}
 	return nil
 }
 
-func (x *LightClientHeaderDeneb) GetExecutionBranch() [][]byte {
+func (x *LightClientHeaderDeneb) GetSilaLightClientPayloadBranch() [][]byte {
 	if x != nil {
-		return x.ExecutionBranch
+		return x.SilaLightClientPayloadBranch
 	}
 	return nil
 }
@@ -1113,13 +1113,13 @@ func (x *LightClientBootstrapElectra) GetCurrentSyncCommitteeBranch() [][]byte {
 }
 
 type LightClientUpdateElectra struct {
-	state                   protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader          *LightClientHeaderDeneb                                          `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	NextSyncCommittee       *SyncCommittee                                                   `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	NextSyncCommitteeBranch [][]byte                                                         `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"6,32"`
-	FinalizedHeader         *LightClientHeaderDeneb                                          `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch          [][]byte                                                         `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"7,32"`
-	SyncAggregate           *SyncAggregate                                                   `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state                   protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader          *LightClientHeaderDeneb                                                 `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	NextSyncCommittee       *SyncCommittee                                                          `protobuf:"bytes,2,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	NextSyncCommitteeBranch [][]byte                                                                `protobuf:"bytes,3,rep,name=next_sync_committee_branch,json=nextSyncCommitteeBranch,proto3" json:"next_sync_committee_branch,omitempty" ssz-size:"6,32"`
+	FinalizedHeader         *LightClientHeaderDeneb                                                 `protobuf:"bytes,4,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch          [][]byte                                                                `protobuf:"bytes,5,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"7,32"`
+	SyncAggregate           *SyncAggregate                                                          `protobuf:"bytes,6,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,7,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -1205,11 +1205,11 @@ func (x *LightClientUpdateElectra) GetSignatureSlot() github_com_sila_chain_Sila
 }
 
 type LightClientFinalityUpdateElectra struct {
-	state           protoimpl.MessageState                                           `protogen:"open.v1"`
-	AttestedHeader  *LightClientHeaderDeneb                                          `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
-	FinalizedHeader *LightClientHeaderDeneb                                          `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
-	FinalityBranch  [][]byte                                                         `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"7,32"`
-	SyncAggregate   *SyncAggregate                                                   `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	state           protoimpl.MessageState                                                  `protogen:"open.v1"`
+	AttestedHeader  *LightClientHeaderDeneb                                                 `protobuf:"bytes,1,opt,name=attested_header,json=attestedHeader,proto3" json:"attested_header,omitempty"`
+	FinalizedHeader *LightClientHeaderDeneb                                                 `protobuf:"bytes,2,opt,name=finalized_header,json=finalizedHeader,proto3" json:"finalized_header,omitempty"`
+	FinalityBranch  [][]byte                                                                `protobuf:"bytes,3,rep,name=finality_branch,json=finalityBranch,proto3" json:"finality_branch,omitempty" ssz-size:"7,32"`
+	SyncAggregate   *SyncAggregate                                                          `protobuf:"bytes,4,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
 	SignatureSlot   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=signature_slot,json=signatureSlot,proto3" json:"signature_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -1766,8 +1766,8 @@ var file_proto_sila_v1alpha1_light_client_proto_goTypes = []any{
 	(*SyncCommittee)(nil),                      // 18: sila.eth.v1alpha1.SyncCommittee
 	(*SyncAggregate)(nil),                      // 19: sila.eth.v1alpha1.SyncAggregate
 	(*BeaconBlockHeader)(nil),                  // 20: sila.eth.v1alpha1.BeaconBlockHeader
-	(*v1.SilaPayloadHeaderCapella)(nil),   // 21: sila.silaengine.v1.SilaPayloadHeaderCapella
-	(*v1.SilaPayloadHeaderDeneb)(nil),     // 22: sila.silaengine.v1.SilaPayloadHeaderDeneb
+	(*v1.SilaPayloadHeaderCapella)(nil),        // 21: sila.silaengine.v1.SilaPayloadHeaderCapella
+	(*v1.SilaPayloadHeaderDeneb)(nil),          // 22: sila.silaengine.v1.SilaPayloadHeaderDeneb
 }
 var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
 	4,  // 0: sila.eth.v1alpha1.LightClientBootstrapAltair.header:type_name -> sila.eth.v1alpha1.LightClientHeaderAltair
@@ -1794,7 +1794,7 @@ var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
 	9,  // 21: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderCapella
 	19, // 22: sila.eth.v1alpha1.LightClientOptimisticUpdateCapella.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
 	20, // 23: sila.eth.v1alpha1.LightClientHeaderCapella.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
-	21, // 24: sila.eth.v1alpha1.LightClientHeaderCapella.execution:type_name -> sila.silaengine.v1.SilaPayloadHeaderCapella
+	21, // 24: sila.eth.v1alpha1.LightClientHeaderCapella.sila_light_client_payload_header:type_name -> sila.silaengine.v1.SilaPayloadHeaderCapella
 	14, // 25: sila.eth.v1alpha1.LightClientBootstrapDeneb.header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
 	18, // 26: sila.eth.v1alpha1.LightClientBootstrapDeneb.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	14, // 27: sila.eth.v1alpha1.LightClientUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
@@ -1807,7 +1807,7 @@ var file_proto_sila_v1alpha1_light_client_proto_depIdxs = []int32{
 	14, // 34: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
 	19, // 35: sila.eth.v1alpha1.LightClientOptimisticUpdateDeneb.sync_aggregate:type_name -> sila.eth.v1alpha1.SyncAggregate
 	20, // 36: sila.eth.v1alpha1.LightClientHeaderDeneb.beacon:type_name -> sila.eth.v1alpha1.BeaconBlockHeader
-	22, // 37: sila.eth.v1alpha1.LightClientHeaderDeneb.execution:type_name -> sila.silaengine.v1.SilaPayloadHeaderDeneb
+	22, // 37: sila.eth.v1alpha1.LightClientHeaderDeneb.sila_light_client_payload_header:type_name -> sila.silaengine.v1.SilaPayloadHeaderDeneb
 	14, // 38: sila.eth.v1alpha1.LightClientBootstrapElectra.header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb
 	18, // 39: sila.eth.v1alpha1.LightClientBootstrapElectra.current_sync_committee:type_name -> sila.eth.v1alpha1.SyncCommittee
 	14, // 40: sila.eth.v1alpha1.LightClientUpdateElectra.attested_header:type_name -> sila.eth.v1alpha1.LightClientHeaderDeneb

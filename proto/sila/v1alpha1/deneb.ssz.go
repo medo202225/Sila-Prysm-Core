@@ -4442,28 +4442,28 @@ func (l *LightClientHeaderDeneb) MarshalSSZTo(buf []byte) (dst []byte, err error
 		return
 	}
 
-	// Offset (1) 'Execution'
+	// Offset (1) 'SilaLightClientPayloadHeader'
 	dst = ssz.WriteOffset(dst, offset)
-	if l.Execution == nil {
-		l.Execution = new(v1.SilaPayloadHeaderDeneb)
+	if l.SilaLightClientPayloadHeader == nil {
+		l.SilaLightClientPayloadHeader = new(v1.SilaPayloadHeaderDeneb)
 	}
-	offset += l.Execution.SizeSSZ()
+	offset += l.SilaLightClientPayloadHeader.SizeSSZ()
 
-	// Field (2) 'ExecutionBranch'
-	if size := len(l.ExecutionBranch); size != 4 {
-		err = ssz.ErrVectorLengthFn("--.ExecutionBranch", size, 4)
+	// Field (2) 'SilaLightClientPayloadBranch'
+	if size := len(l.SilaLightClientPayloadBranch); size != 4 {
+		err = ssz.ErrVectorLengthFn("--.SilaLightClientPayloadBranch", size, 4)
 		return
 	}
 	for ii := 0; ii < 4; ii++ {
-		if size := len(l.ExecutionBranch[ii]); size != 32 {
-			err = ssz.ErrBytesLengthFn("--.ExecutionBranch[ii]", size, 32)
+		if size := len(l.SilaLightClientPayloadBranch[ii]); size != 32 {
+			err = ssz.ErrBytesLengthFn("--.SilaLightClientPayloadBranch[ii]", size, 32)
 			return
 		}
-		dst = append(dst, l.ExecutionBranch[ii]...)
+		dst = append(dst, l.SilaLightClientPayloadBranch[ii]...)
 	}
 
-	// Field (1) 'Execution'
-	if dst, err = l.Execution.MarshalSSZTo(dst); err != nil {
+	// Field (1) 'SilaLightClientPayloadHeader'
+	if dst, err = l.SilaLightClientPayloadHeader.MarshalSSZTo(dst); err != nil {
 		return
 	}
 
@@ -4489,7 +4489,7 @@ func (l *LightClientHeaderDeneb) UnmarshalSSZ(buf []byte) error {
 		return err
 	}
 
-	// Offset (1) 'Execution'
+	// Offset (1) 'SilaLightClientPayloadHeader'
 	if o1 = ssz.ReadOffset(buf[112:116]); o1 > size {
 		return ssz.ErrOffset
 	}
@@ -4498,22 +4498,22 @@ func (l *LightClientHeaderDeneb) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrInvalidVariableOffset
 	}
 
-	// Field (2) 'ExecutionBranch'
-	l.ExecutionBranch = make([][]byte, 4)
+	// Field (2) 'SilaLightClientPayloadBranch'
+	l.SilaLightClientPayloadBranch = make([][]byte, 4)
 	for ii := 0; ii < 4; ii++ {
-		if cap(l.ExecutionBranch[ii]) == 0 {
-			l.ExecutionBranch[ii] = make([]byte, 0, len(buf[116:244][ii*32:(ii+1)*32]))
+		if cap(l.SilaLightClientPayloadBranch[ii]) == 0 {
+			l.SilaLightClientPayloadBranch[ii] = make([]byte, 0, len(buf[116:244][ii*32:(ii+1)*32]))
 		}
-		l.ExecutionBranch[ii] = append(l.ExecutionBranch[ii], buf[116:244][ii*32:(ii+1)*32]...)
+		l.SilaLightClientPayloadBranch[ii] = append(l.SilaLightClientPayloadBranch[ii], buf[116:244][ii*32:(ii+1)*32]...)
 	}
 
-	// Field (1) 'Execution'
+	// Field (1) 'SilaLightClientPayloadHeader'
 	{
 		buf = tail[o1:]
-		if l.Execution == nil {
-			l.Execution = new(v1.SilaPayloadHeaderDeneb)
+		if l.SilaLightClientPayloadHeader == nil {
+			l.SilaLightClientPayloadHeader = new(v1.SilaPayloadHeaderDeneb)
 		}
-		if err = l.Execution.UnmarshalSSZ(buf); err != nil {
+		if err = l.SilaLightClientPayloadHeader.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
 	}
@@ -4524,11 +4524,11 @@ func (l *LightClientHeaderDeneb) UnmarshalSSZ(buf []byte) error {
 func (l *LightClientHeaderDeneb) SizeSSZ() (size int) {
 	size = 244
 
-	// Field (1) 'Execution'
-	if l.Execution == nil {
-		l.Execution = new(v1.SilaPayloadHeaderDeneb)
+	// Field (1) 'SilaLightClientPayloadHeader'
+	if l.SilaLightClientPayloadHeader == nil {
+		l.SilaLightClientPayloadHeader = new(v1.SilaPayloadHeaderDeneb)
 	}
-	size += l.Execution.SizeSSZ()
+	size += l.SilaLightClientPayloadHeader.SizeSSZ()
 
 	return
 }
@@ -4547,19 +4547,19 @@ func (l *LightClientHeaderDeneb) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 
-	// Field (1) 'Execution'
-	if err = l.Execution.HashTreeRootWith(hh); err != nil {
+	// Field (1) 'SilaLightClientPayloadHeader'
+	if err = l.SilaLightClientPayloadHeader.HashTreeRootWith(hh); err != nil {
 		return
 	}
 
-	// Field (2) 'ExecutionBranch'
+	// Field (2) 'SilaLightClientPayloadBranch'
 	{
-		if size := len(l.ExecutionBranch); size != 4 {
-			err = ssz.ErrVectorLengthFn("--.ExecutionBranch", size, 4)
+		if size := len(l.SilaLightClientPayloadBranch); size != 4 {
+			err = ssz.ErrVectorLengthFn("--.SilaLightClientPayloadBranch", size, 4)
 			return
 		}
 		subIndx := hh.Index()
-		for _, i := range l.ExecutionBranch {
+		for _, i := range l.SilaLightClientPayloadBranch {
 			if len(i) != 32 {
 				err = ssz.ErrBytesLength
 				return

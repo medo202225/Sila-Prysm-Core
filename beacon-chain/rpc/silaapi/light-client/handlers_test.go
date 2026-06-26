@@ -977,7 +977,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				StateRoot:     sampleRoot,
 				BodyRoot:      sampleRoot,
 			},
-			Execution: &silaenginev1.SilaPayloadHeaderCapella{
+			SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderCapella{
 				ParentHash:       make([]byte, fieldparams.RootLength),
 				FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:        make([]byte, fieldparams.RootLength),
@@ -990,7 +990,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleSilaPayloadBranch,
+			SilaLightClientPayloadBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockCapella())
@@ -1005,7 +1005,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				StateRoot:     sampleRoot,
 				BodyRoot:      sampleRoot,
 			},
-			Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+			SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 				ParentHash:       make([]byte, fieldparams.RootLength),
 				FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1018,7 +1018,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleSilaPayloadBranch,
+			SilaLightClientPayloadBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockDeneb())
@@ -1033,7 +1033,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				StateRoot:     sampleRoot,
 				BodyRoot:      sampleRoot,
 			},
-			Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+			SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 				ParentHash:       make([]byte, fieldparams.RootLength),
 				FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1046,7 +1046,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleSilaPayloadBranch,
+			SilaLightClientPayloadBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockElectra())
@@ -1061,7 +1061,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				StateRoot:     sampleRoot,
 				BodyRoot:      sampleRoot,
 			},
-			Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+			SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 				ParentHash:       make([]byte, fieldparams.RootLength),
 				FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 				StateRoot:        make([]byte, fieldparams.RootLength),
@@ -1074,7 +1074,7 @@ func createUpdate(t *testing.T, v int) (interfaces.LightClientUpdate, error) {
 				TransactionsRoot: make([]byte, fieldparams.RootLength),
 				WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 			},
-			ExecutionBranch: sampleSilaPayloadBranch,
+			SilaLightClientPayloadBranch: sampleSilaPayloadBranch,
 		})
 		require.NoError(t, err)
 		blk, err = blocks.NewSignedBeaconBlock(util.NewBeaconBlockFulu())

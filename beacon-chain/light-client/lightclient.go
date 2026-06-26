@@ -312,7 +312,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &silaenginev1.SilaPayloadHeaderCapella{
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderCapella{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -325,7 +325,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					TransactionsRoot: make([]byte, fieldparams.RootLength),
 					WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 				},
-				ExecutionBranch: silaPayloadBranch,
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -336,7 +336,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &silaenginev1.SilaPayloadHeaderCapella{
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderCapella{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -349,7 +349,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					TransactionsRoot: make([]byte, fieldparams.RootLength),
 					WithdrawalsRoot:  make([]byte, fieldparams.RootLength),
 				},
-				ExecutionBranch: silaPayloadBranch,
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			SyncAggregate: &pb.SyncAggregate{
 				SyncCommitteeBits:      make([]byte, 64),
@@ -365,7 +365,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -380,7 +380,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: silaPayloadBranch,
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -391,7 +391,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -406,7 +406,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: silaPayloadBranch,
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			SyncAggregate: &pb.SyncAggregate{
 				SyncCommitteeBits:      make([]byte, 64),
@@ -422,7 +422,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -437,7 +437,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: silaPayloadBranch,
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			NextSyncCommittee:       nextSyncCommittee,
 			NextSyncCommitteeBranch: nextSyncCommitteeBranch,
@@ -448,7 +448,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					StateRoot:  make([]byte, 32),
 					BodyRoot:   make([]byte, 32),
 				},
-				Execution: &silaenginev1.SilaPayloadHeaderDeneb{
+				SilaLightClientPayloadHeader: &silaenginev1.SilaPayloadHeaderDeneb{
 					ParentHash:       make([]byte, fieldparams.RootLength),
 					FeeRecipient:     make([]byte, fieldparams.FeeRecipientLength),
 					StateRoot:        make([]byte, fieldparams.RootLength),
@@ -463,7 +463,7 @@ func CreateDefaultLightClientUpdate(attestedBlock interfaces.ReadOnlySignedBeaco
 					GasLimit:         0,
 					GasUsed:          0,
 				},
-				ExecutionBranch: silaPayloadBranch,
+				SilaLightClientPayloadBranch: silaPayloadBranch,
 			},
 			SyncAggregate: &pb.SyncAggregate{
 				SyncCommitteeBits:      make([]byte, 64),
@@ -539,9 +539,9 @@ func BlockToLightClientHeader(
 			return nil, errors.Wrap(err, "could not make sila payload header and proof")
 		}
 		m = &pb.LightClientHeaderCapella{
-			Beacon:          beacon,
-			Execution:       payloadHeader,
-			ExecutionBranch: payloadProof,
+			Beacon:                       beacon,
+			SilaLightClientPayloadHeader: payloadHeader,
+			SilaLightClientPayloadBranch: payloadProof,
 		}
 	case version.Deneb, version.Electra, version.Fulu:
 		payloadHeader, payloadProof, err := makeExecutionAndProofDeneb(ctx, block)
@@ -549,9 +549,9 @@ func BlockToLightClientHeader(
 			return nil, errors.Wrap(err, "could not make sila payload header and proof")
 		}
 		m = &pb.LightClientHeaderDeneb{
-			Beacon:          beacon,
-			Execution:       payloadHeader,
-			ExecutionBranch: payloadProof,
+			Beacon:                       beacon,
+			SilaLightClientPayloadHeader: payloadHeader,
+			SilaLightClientPayloadBranch: payloadProof,
 		}
 	default:
 		return nil, fmt.Errorf("unsupported attested block version %s", version.String(attestedBlockVersion))

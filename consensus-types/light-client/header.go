@@ -90,14 +90,14 @@ func NewWrappedHeaderCapella(p *pb.LightClientHeaderCapella) (interfaces.LightCl
 	if p == nil {
 		return nil, consensustypes.ErrNilObjectWrapped
 	}
-	execution, err := blocks.WrappedSilaPayloadHeaderCapella(p.Execution)
+	execution, err := blocks.WrappedSilaPayloadHeaderCapella(p.SilaLightClientPayloadHeader)
 	if err != nil {
 		return nil, err
 	}
 
 	branch, err := createBranch[interfaces.LightClientSilaPayloadBranch](
 		"execution",
-		p.ExecutionBranch,
+		p.SilaLightClientPayloadBranch,
 		fieldparams.SilaPayloadBranchDepth,
 	)
 	if err != nil {
@@ -155,14 +155,14 @@ func NewWrappedHeaderDeneb(p *pb.LightClientHeaderDeneb) (interfaces.LightClient
 	if p == nil {
 		return nil, consensustypes.ErrNilObjectWrapped
 	}
-	execution, err := blocks.WrappedSilaPayloadHeaderDeneb(p.Execution)
+	execution, err := blocks.WrappedSilaPayloadHeaderDeneb(p.SilaLightClientPayloadHeader)
 	if err != nil {
 		return nil, err
 	}
 
 	branch, err := createBranch[interfaces.LightClientSilaPayloadBranch](
 		"execution",
-		p.ExecutionBranch,
+		p.SilaLightClientPayloadBranch,
 		fieldparams.SilaPayloadBranchDepth,
 	)
 	if err != nil {
@@ -220,14 +220,14 @@ func NewWrappedHeaderElectra(p *pb.LightClientHeaderDeneb) (interfaces.LightClie
 	if p == nil {
 		return nil, consensustypes.ErrNilObjectWrapped
 	}
-	execution, err := blocks.WrappedSilaPayloadHeaderDeneb(p.Execution)
+	execution, err := blocks.WrappedSilaPayloadHeaderDeneb(p.SilaLightClientPayloadHeader)
 	if err != nil {
 		return nil, err
 	}
 
 	branch, err := createBranch[interfaces.LightClientSilaPayloadBranch](
 		"execution",
-		p.ExecutionBranch,
+		p.SilaLightClientPayloadBranch,
 		fieldparams.SilaPayloadBranchDepth,
 	)
 	if err != nil {
