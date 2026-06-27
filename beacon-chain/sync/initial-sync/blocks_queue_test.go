@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/peer"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
@@ -19,13 +20,12 @@ import (
 	leakybucket "github.com/sila-chain/Sila-Consensus-Core/v7/container/leaky-bucket"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/slice"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/libp2p/go-libp2p/core/peer"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 
@@ -1030,7 +1030,7 @@ func TestBlocksQueue_stuckInUnfavourableFork(t *testing.T) {
 
 	// The chain1 contains 250 blocks and is a dead end.
 	// The chain2 contains 296 blocks, with fork started at slot 128 of chain1.
-	chain1 := extendBlockSequence(t, []*eth.SignedBeaconBlock{}, 250)
+	chain1 := extendBlockSequence(t, []*sila.SignedBeaconBlock{}, 250)
 	forkedSlot := primitives.Slot(201)
 	chain2 := extendBlockSequence(t, chain1[:forkedSlot], 100)
 	finalizedSlot := primitives.Slot(63)
@@ -1047,7 +1047,7 @@ func TestBlocksQueue_stuckInUnfavourableFork(t *testing.T) {
 		State: st,
 		Root:  genesisRoot[:],
 		DB:    beaconDB,
-		FinalizedCheckPoint: &eth.Checkpoint{
+		FinalizedCheckPoint: &sila.Checkpoint{
 			Epoch: finalizedEpoch,
 			Root:  fmt.Appendf(nil, "finalized_root %d", finalizedEpoch),
 		},
@@ -1235,7 +1235,7 @@ func TestBlocksQueue_stuckWhenHeadIsSetToOrphanedBlock(t *testing.T) {
 	beaconDB := dbtest.SetupDB(t)
 	p2p := p2pt.NewTestP2P(t)
 
-	chain := extendBlockSequence(t, []*eth.SignedBeaconBlock{}, 128)
+	chain := extendBlockSequence(t, []*sila.SignedBeaconBlock{}, 128)
 	finalizedSlot := primitives.Slot(82)
 	finalizedEpoch := slots.ToEpoch(finalizedSlot)
 
@@ -1250,7 +1250,7 @@ func TestBlocksQueue_stuckWhenHeadIsSetToOrphanedBlock(t *testing.T) {
 		State: st,
 		Root:  genesisRoot[:],
 		DB:    beaconDB,
-		FinalizedCheckPoint: &eth.Checkpoint{
+		FinalizedCheckPoint: &sila.Checkpoint{
 			Epoch: finalizedEpoch,
 			Root:  fmt.Appendf(nil, "finalized_root %d", finalizedEpoch),
 		},

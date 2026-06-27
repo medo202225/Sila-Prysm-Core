@@ -10,7 +10,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	chainMock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
@@ -18,13 +17,14 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	sszquerypb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/ssz_query"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common/hexutil"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func TestQueryBeaconState(t *testing.T) {
@@ -223,17 +223,17 @@ func TestQueryBeaconBlock(t *testing.T) {
 	require.NoError(t, err)
 	signature, err := hexutil.Decode("0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505")
 	require.NoError(t, err)
-	att := &eth.Attestation{
+	att := &sila.Attestation{
 		AggregationBits: bitfield.Bitlist{0x01},
-		Data: &eth.AttestationData{
+		Data: &sila.AttestationData{
 			Slot:            1,
 			CommitteeIndex:  1,
 			BeaconBlockRoot: root,
-			Source: &eth.Checkpoint{
+			Source: &sila.Checkpoint{
 				Epoch: 1,
 				Root:  root,
 			},
-			Target: &eth.Checkpoint{
+			Target: &sila.Checkpoint{
 				Epoch: 1,
 				Root:  root,
 			},
@@ -280,7 +280,7 @@ func TestQueryBeaconBlock(t *testing.T) {
 			path: ".body.attestations",
 			block: func() interfaces.ReadOnlySignedBeaconBlock {
 				b := util.NewBeaconBlock()
-				b.Block.Body.Attestations = []*eth.Attestation{
+				b.Block.Body.Attestations = []*sila.Attestation{
 					att,
 				}
 				sb, err := blocks.NewSignedBeaconBlock(b)

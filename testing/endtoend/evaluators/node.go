@@ -10,13 +10,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
-	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -102,7 +102,7 @@ func peersConnect(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) erro
 	}
 	ctx := context.Background()
 	for _, conn := range conns {
-		nodeClient := eth.NewNodeClient(conn)
+		nodeClient := sila.NewNodeClient(conn)
 		peersResp, err := nodeClient.ListPeers(ctx, &emptypb.Empty{})
 		if err != nil {
 			return err
@@ -118,7 +118,7 @@ func peersConnect(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) erro
 
 func finishedSyncing(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) error {
 	conn := conns[0]
-	syncNodeClient := eth.NewNodeClient(conn)
+	syncNodeClient := sila.NewNodeClient(conn)
 	syncStatus, err := syncNodeClient.GetSyncStatus(context.Background(), &emptypb.Empty{})
 	if err != nil {
 		return err
@@ -133,7 +133,7 @@ func finishedSyncing(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) e
 // and 3/4 into the current slot. This prevents race conditions at epoch
 // boundaries and slot boundaries where different nodes may report different heads.
 func waitForMidEpoch(ctx context.Context, conn *grpc.ClientConn) error {
-	beaconClient := eth.NewBeaconChainClient(conn)
+	beaconClient := sila.NewBeaconChainClient(conn)
 	slotsPerEpoch := params.BeaconConfig().SlotsPerEpoch
 	secondsPerSlot := params.BeaconConfig().SecondsPerSlot
 	midEpochSlot := slotsPerEpoch / 2
@@ -177,14 +177,14 @@ func allNodesHaveSameHead(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientCo
 	justifiedRoots := make([][]byte, len(conns))
 	prevJustifiedRoots := make([][]byte, len(conns))
 	finalizedRoots := make([][]byte, len(conns))
-	chainHeads := make([]*eth.ChainHead, len(conns))
+	chainHeads := make([]*sila.ChainHead, len(conns))
 	g, _ := errgroup.WithContext(context.Background())
 
 	for i, conn := range conns {
 		conIdx := i
 		currConn := conn
 		g.Go(func() error {
-			beaconClient := eth.NewBeaconChainClient(currConn)
+			beaconClient := sila.NewBeaconChainClient(currConn)
 			chainHead, err := beaconClient.GetChainHead(context.Background(), &emptypb.Empty{})
 			if err != nil {
 				return errors.Wrapf(err, "connection number=%d", conIdx)

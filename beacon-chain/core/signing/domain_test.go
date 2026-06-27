@@ -5,14 +5,14 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestDomain_OK(t *testing.T) {
-	state := &eth.BeaconState{
-		Fork: &eth.Fork{
+	state := &sila.BeaconState{
+		Fork: &sila.Fork{
 			Epoch:           3,
 			PreviousVersion: []byte{0, 0, 0, 2},
 			CurrentVersion:  []byte{0, 0, 0, 3},

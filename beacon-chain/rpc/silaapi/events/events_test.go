@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/r3labs/sse/v2"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	mockChain "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/cache"
@@ -27,13 +28,12 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	payloadattribute "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/payload-attribute"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common"
-	"github.com/r3labs/sse/v2"
 	"github.com/sirupsen/logrus"
 )
 
@@ -130,7 +130,7 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		SilaPayloadGossipTopic,
 	})
 	require.NoError(t, err)
-	ro, err := blocks.NewROBlob(util.HydrateBlobSidecar(&eth.BlobSidecar{}))
+	ro, err := blocks.NewROBlob(util.HydrateBlobSidecar(&sila.BlobSidecar{}))
 	require.NoError(t, err)
 	vblob := blocks.NewVerifiedROBlob(ro)
 
@@ -144,15 +144,15 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.UnaggregatedAttReceived,
 			Data: &operation.UnAggregatedAttReceivedData{
-				Attestation: util.HydrateAttestation(&eth.Attestation{}),
+				Attestation: util.HydrateAttestation(&sila.Attestation{}),
 			},
 		},
 		{
 			Type: operation.AggregatedAttReceived,
 			Data: &operation.AggregatedAttReceivedData{
-				Attestation: &eth.AggregateAttestationAndProof{
+				Attestation: &sila.AggregateAttestationAndProof{
 					AggregatorIndex: 0,
-					Aggregate:       util.HydrateAttestation(&eth.Attestation{}),
+					Aggregate:       util.HydrateAttestation(&sila.Attestation{}),
 					SelectionProof:  make([]byte, 96),
 				},
 			},
@@ -160,14 +160,14 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.SingleAttReceived,
 			Data: &operation.SingleAttReceivedData{
-				Attestation: util.HydrateSingleAttestation(&eth.SingleAttestation{}),
+				Attestation: util.HydrateSingleAttestation(&sila.SingleAttestation{}),
 			},
 		},
 		{
 			Type: operation.ExitReceived,
 			Data: &operation.ExitReceivedData{
-				Exit: &eth.SignedVoluntaryExit{
-					Exit: &eth.VoluntaryExit{
+				Exit: &sila.SignedVoluntaryExit{
+					Exit: &sila.VoluntaryExit{
 						Epoch:          0,
 						ValidatorIndex: 0,
 					},
@@ -178,10 +178,10 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.SyncCommitteeContributionReceived,
 			Data: &operation.SyncCommitteeContributionReceivedData{
-				Contribution: &eth.SignedContributionAndProof{
-					Message: &eth.ContributionAndProof{
+				Contribution: &sila.SignedContributionAndProof{
+					Message: &sila.ContributionAndProof{
 						AggregatorIndex: 0,
-						Contribution: &eth.SyncCommitteeContribution{
+						Contribution: &sila.SyncCommitteeContribution{
 							Slot:              0,
 							BlockRoot:         make([]byte, 32),
 							SubcommitteeIndex: 0,
@@ -197,11 +197,11 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.BLSToSilaChangeReceived,
 			Data: &operation.BLSToSilaChangeReceivedData{
-				Change: &eth.SignedBLSToSilaChange{
-					Message: &eth.BLSToSilaChange{
-						ValidatorIndex:     0,
-						FromBlsPubkey:      make([]byte, 48),
-						ToSilaAddress: make([]byte, 20),
+				Change: &sila.SignedBLSToSilaChange{
+					Message: &sila.BLSToSilaChange{
+						ValidatorIndex: 0,
+						FromBlsPubkey:  make([]byte, 48),
+						ToSilaAddress:  make([]byte, 20),
 					},
 					Signature: make([]byte, 96),
 				},
@@ -216,28 +216,28 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.AttesterSlashingReceived,
 			Data: &operation.AttesterSlashingReceivedData{
-				AttesterSlashing: &eth.AttesterSlashing{
-					Attestation_1: &eth.IndexedAttestation{
+				AttesterSlashing: &sila.AttesterSlashing{
+					Attestation_1: &sila.IndexedAttestation{
 						AttestingIndices: []uint64{0, 1},
-						Data: &eth.AttestationData{
+						Data: &sila.AttestationData{
 							BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-							Source: &eth.Checkpoint{
+							Source: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
-							Target: &eth.Checkpoint{
+							Target: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
 						},
 						Signature: make([]byte, fieldparams.BLSSignatureLength),
 					},
-					Attestation_2: &eth.IndexedAttestation{
+					Attestation_2: &sila.IndexedAttestation{
 						AttestingIndices: []uint64{0, 1},
-						Data: &eth.AttestationData{
+						Data: &sila.AttestationData{
 							BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-							Source: &eth.Checkpoint{
+							Source: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
-							Target: &eth.Checkpoint{
+							Target: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
 						},
@@ -249,28 +249,28 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.AttesterSlashingReceived,
 			Data: &operation.AttesterSlashingReceivedData{
-				AttesterSlashing: &eth.AttesterSlashingElectra{
-					Attestation_1: &eth.IndexedAttestationElectra{
+				AttesterSlashing: &sila.AttesterSlashingElectra{
+					Attestation_1: &sila.IndexedAttestationElectra{
 						AttestingIndices: []uint64{0, 1},
-						Data: &eth.AttestationData{
+						Data: &sila.AttestationData{
 							BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-							Source: &eth.Checkpoint{
+							Source: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
-							Target: &eth.Checkpoint{
+							Target: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
 						},
 						Signature: make([]byte, fieldparams.BLSSignatureLength),
 					},
-					Attestation_2: &eth.IndexedAttestationElectra{
+					Attestation_2: &sila.IndexedAttestationElectra{
 						AttestingIndices: []uint64{0, 1},
-						Data: &eth.AttestationData{
+						Data: &sila.AttestationData{
 							BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-							Source: &eth.Checkpoint{
+							Source: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
-							Target: &eth.Checkpoint{
+							Target: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
 						},
@@ -282,17 +282,17 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.ProposerSlashingReceived,
 			Data: &operation.ProposerSlashingReceivedData{
-				ProposerSlashing: &eth.ProposerSlashing{
-					Header_1: &eth.SignedBeaconBlockHeader{
-						Header: &eth.BeaconBlockHeader{
+				ProposerSlashing: &sila.ProposerSlashing{
+					Header_1: &sila.SignedBeaconBlockHeader{
+						Header: &sila.BeaconBlockHeader{
 							ParentRoot: make([]byte, fieldparams.RootLength),
 							StateRoot:  make([]byte, fieldparams.RootLength),
 							BodyRoot:   make([]byte, fieldparams.RootLength),
 						},
 						Signature: make([]byte, fieldparams.BLSSignatureLength),
 					},
-					Header_2: &eth.SignedBeaconBlockHeader{
-						Header: &eth.BeaconBlockHeader{
+					Header_2: &sila.SignedBeaconBlockHeader{
+						Header: &sila.BeaconBlockHeader{
 							ParentRoot: make([]byte, fieldparams.RootLength),
 							StateRoot:  make([]byte, fieldparams.RootLength),
 							BodyRoot:   make([]byte, fieldparams.RootLength),
@@ -320,9 +320,9 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.PayloadAttestationMessageReceived,
 			Data: &operation.PayloadAttestationMessageReceivedData{
-				Message: &eth.PayloadAttestationMessage{
+				Message: &sila.PayloadAttestationMessage{
 					ValidatorIndex: 0,
-					Data: &eth.PayloadAttestationData{
+					Data: &sila.PayloadAttestationData{
 						BeaconBlockRoot:   make([]byte, fieldparams.RootLength),
 						Slot:              0,
 						PayloadPresent:    true,
@@ -335,8 +335,8 @@ func operationEventsFixtures(t *testing.T) (*topicRequest, []*feed.Event) {
 		{
 			Type: operation.ProposerPreferencesReceived,
 			Data: &operation.ProposerPreferencesReceivedData{
-				Data: &eth.SignedProposerPreferences{
-					Message: &eth.ProposerPreferences{
+				Data: &sila.SignedProposerPreferences{
+					Message: &sila.ProposerPreferences{
 						DependentRoot:  make([]byte, fieldparams.RootLength),
 						ProposalSlot:   32,
 						ValidatorIndex: 7,
@@ -409,8 +409,8 @@ func TestStreamEvents_ProposerPreferencesWrappedWithVersion(t *testing.T) {
 	ev := &feed.Event{
 		Type: operation.ProposerPreferencesReceived,
 		Data: &operation.ProposerPreferencesReceivedData{
-			Data: &eth.SignedProposerPreferences{
-				Message: &eth.ProposerPreferences{
+			Data: &sila.SignedProposerPreferences{
+				Message: &sila.ProposerPreferences{
 					DependentRoot:  make([]byte, fieldparams.RootLength),
 					ProposalSlot:   32,
 					ValidatorIndex: 7,
@@ -482,7 +482,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 		request := topics.testHttpRequest(testSync.ctx, t)
 		w := NewStreamingResponseWriterRecorder(testSync.ctx)
 
-		b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlock(&eth.SignedBeaconBlock{}))
+		b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlock(&sila.SignedBeaconBlock{}))
 		require.NoError(t, err)
 		events := []*feed.Event{
 			{
@@ -504,28 +504,28 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					EpochTransition:           true,
 					PreviousDutyDependentRoot: make([]byte, 32),
 					CurrentDutyDependentRoot:  make([]byte, 32),
-					SilaOptimistic:       false,
+					SilaOptimistic:            false,
 				},
 			},
 			{
 				Type: statefeed.Reorg,
 				Data: &silapb.EventChainReorg{
-					Slot:                0,
-					Depth:               0,
-					OldHeadBlock:        make([]byte, 32),
-					NewHeadBlock:        make([]byte, 32),
-					OldHeadState:        make([]byte, 32),
-					NewHeadState:        make([]byte, 32),
-					Epoch:               0,
+					Slot:           0,
+					Depth:          0,
+					OldHeadBlock:   make([]byte, 32),
+					NewHeadBlock:   make([]byte, 32),
+					OldHeadState:   make([]byte, 32),
+					NewHeadState:   make([]byte, 32),
+					Epoch:          0,
 					SilaOptimistic: false,
 				},
 			},
 			{
 				Type: statefeed.FinalizedCheckpoint,
 				Data: &silapb.EventFinalizedCheckpoint{
-					Block:               make([]byte, 32),
-					State:               make([]byte, 32),
-					Epoch:               0,
+					Block:          make([]byte, 32),
+					State:          make([]byte, 32),
+					Epoch:          0,
 					SilaOptimistic: false,
 				},
 			},
@@ -571,7 +571,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					return st
 				},
 				getBlock: func() interfaces.SignedBeaconBlock {
-					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockBellatrix(&eth.SignedBeaconBlockBellatrix{}))
+					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockBellatrix(&sila.SignedBeaconBlockBellatrix{}))
 					require.NoError(t, err)
 					return b
 				},
@@ -584,7 +584,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					return st
 				},
 				getBlock: func() interfaces.SignedBeaconBlock {
-					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockCapella(&eth.SignedBeaconBlockCapella{}))
+					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockCapella(&sila.SignedBeaconBlockCapella{}))
 					require.NoError(t, err)
 					return b
 				},
@@ -597,7 +597,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					return st
 				},
 				getBlock: func() interfaces.SignedBeaconBlock {
-					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockDeneb(&eth.SignedBeaconBlockDeneb{}))
+					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockDeneb(&sila.SignedBeaconBlockDeneb{}))
 					require.NoError(t, err)
 					return b
 				},
@@ -610,7 +610,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 					return st
 				},
 				getBlock: func() interfaces.SignedBeaconBlock {
-					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockElectra(&eth.SignedBeaconBlockElectra{}))
+					b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockElectra(&sila.SignedBeaconBlockElectra{}))
 					require.NoError(t, err)
 					return b
 				},
@@ -629,8 +629,8 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 				defer testSync.cleanup()
 
 				st := tc.getState()
-				v := &eth.Validator{ExitEpoch: math.MaxUint64, EffectiveBalance: params.BeaconConfig().MinActivationBalance, WithdrawalCredentials: make([]byte, 32)}
-				require.NoError(t, st.SetValidators([]*eth.Validator{v}))
+				v := &sila.Validator{ExitEpoch: math.MaxUint64, EffectiveBalance: params.BeaconConfig().MinActivationBalance, WithdrawalCredentials: make([]byte, 32)}
+				require.NoError(t, st.SetValidators([]*sila.Validator{v}))
 				require.NoError(t, st.SetBalances([]uint64{0}))
 				currentSlot := primitives.Slot(0)
 				// to avoid slot processing
@@ -695,7 +695,7 @@ func TestStreamEvents_OperationsEvents(t *testing.T) {
 func TestFillEventData(t *testing.T) {
 	ctx := t.Context()
 	t.Run("AlreadyFilledData_ShouldShortCircuitWithoutError", func(t *testing.T) {
-		b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockBellatrix(&eth.SignedBeaconBlockBellatrix{}))
+		b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockBellatrix(&sila.SignedBeaconBlockBellatrix{}))
 		require.NoError(t, err)
 		attributor, err := payloadattribute.New(&silaenginev1.PayloadAttributes{
 			Timestamp: uint64(time.Now().Unix()),
@@ -722,7 +722,7 @@ func TestFillEventData(t *testing.T) {
 			inactivityScores[i] = 10
 		}
 		require.NoError(t, st.SetInactivityScores(inactivityScores))
-		b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockElectra(&eth.SignedBeaconBlockElectra{}))
+		b, err := blocks.NewSignedBeaconBlock(util.HydrateSignedBeaconBlockElectra(&sila.SignedBeaconBlockElectra{}))
 		require.NoError(t, err)
 		attributor, err := payloadattribute.New(&silaenginev1.PayloadAttributes{
 			Timestamp: uint64(time.Now().Unix()),
@@ -778,12 +778,12 @@ func TestFillEventData(t *testing.T) {
 
 func setActiveValidators(t *testing.T, st state.BeaconState, count int) {
 	balances := make([]uint64, count)
-	validators := make([]*eth.Validator, 0, count)
+	validators := make([]*sila.Validator, 0, count)
 	for i := range count {
 		pubKey := make([]byte, params.BeaconConfig().BLSPubkeyLength)
 		binary.LittleEndian.PutUint64(pubKey, uint64(i))
 		balances[i] = uint64(i)
-		validators = append(validators, &eth.Validator{
+		validators = append(validators, &sila.Validator{
 			PublicKey:             pubKey,
 			ActivationEpoch:       0,
 			ExitEpoch:             params.BeaconConfig().FarFutureEpoch,

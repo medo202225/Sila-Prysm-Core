@@ -14,7 +14,7 @@ import (
 	reflect "reflect"
 
 	validator "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	iface "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -59,10 +59,10 @@ func (mr *MockSilaChainClientMockRecorder) ValidatorCount(arg0, arg1, arg2 any) 
 }
 
 // ValidatorPerformance mocks base method.
-func (m *MockSilaChainClient) ValidatorPerformance(arg0 context.Context, arg1 *eth.ValidatorPerformanceRequest) (*eth.ValidatorPerformanceResponse, error) {
+func (m *MockSilaChainClient) ValidatorPerformance(arg0 context.Context, arg1 *sila.ValidatorPerformanceRequest) (*sila.ValidatorPerformanceResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorPerformance", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ValidatorPerformanceResponse)
+	ret0, _ := ret[0].(*sila.ValidatorPerformanceResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

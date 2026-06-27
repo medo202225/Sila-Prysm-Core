@@ -11,7 +11,7 @@ import (
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
@@ -27,9 +27,9 @@ func TestProcessRegistryUpdates(t *testing.T) {
 		{
 			name: "No rotation",
 			state: func() state.BeaconState {
-				base := &eth.BeaconStateElectra{
+				base := &sila.BeaconStateElectra{
 					Slot: 5 * params.BeaconConfig().SlotsPerEpoch,
-					Validators: []*eth.Validator{
+					Validators: []*sila.Validator{
 						{ExitEpoch: params.BeaconConfig().MaxSeedLookahead},
 						{ExitEpoch: params.BeaconConfig().MaxSeedLookahead},
 					},
@@ -37,7 +37,7 @@ func TestProcessRegistryUpdates(t *testing.T) {
 						params.BeaconConfig().MaxEffectiveBalance,
 						params.BeaconConfig().MaxEffectiveBalance,
 					},
-					FinalizedCheckpoint: &eth.Checkpoint{Root: make([]byte, fieldparams.RootLength)},
+					FinalizedCheckpoint: &sila.Checkpoint{Root: make([]byte, fieldparams.RootLength)},
 				}
 				st, err := state_native.InitializeFromProtoElectra(base)
 				require.NoError(t, err)
@@ -52,12 +52,12 @@ func TestProcessRegistryUpdates(t *testing.T) {
 		{
 			name: "Validators are activated",
 			state: func() state.BeaconState {
-				base := &eth.BeaconStateElectra{
+				base := &sila.BeaconStateElectra{
 					Slot:                5 * params.BeaconConfig().SlotsPerEpoch,
-					FinalizedCheckpoint: &eth.Checkpoint{Epoch: finalizedEpoch, Root: make([]byte, fieldparams.RootLength)},
+					FinalizedCheckpoint: &sila.Checkpoint{Epoch: finalizedEpoch, Root: make([]byte, fieldparams.RootLength)},
 				}
 				for range uint64(10) {
-					base.Validators = append(base.Validators, &eth.Validator{
+					base.Validators = append(base.Validators, &sila.Validator{
 						ActivationEligibilityEpoch: finalizedEpoch,
 						EffectiveBalance:           params.BeaconConfig().MaxEffectiveBalance,
 						ActivationEpoch:            params.BeaconConfig().FarFutureEpoch,
@@ -78,12 +78,12 @@ func TestProcessRegistryUpdates(t *testing.T) {
 		{
 			name: "Validators are exited",
 			state: func() state.BeaconState {
-				base := &eth.BeaconStateElectra{
+				base := &sila.BeaconStateElectra{
 					Slot:                5 * params.BeaconConfig().SlotsPerEpoch,
-					FinalizedCheckpoint: &eth.Checkpoint{Epoch: finalizedEpoch, Root: make([]byte, fieldparams.RootLength)},
+					FinalizedCheckpoint: &sila.Checkpoint{Epoch: finalizedEpoch, Root: make([]byte, fieldparams.RootLength)},
 				}
 				for range uint64(10) {
-					base.Validators = append(base.Validators, &eth.Validator{
+					base.Validators = append(base.Validators, &sila.Validator{
 						EffectiveBalance:  params.BeaconConfig().EjectionBalance - 1,
 						ExitEpoch:         params.BeaconConfig().FarFutureEpoch,
 						WithdrawableEpoch: params.BeaconConfig().FarFutureEpoch,
@@ -104,12 +104,12 @@ func TestProcessRegistryUpdates(t *testing.T) {
 		{
 			name: "Validators are exiting",
 			state: func() state.BeaconState {
-				base := &eth.BeaconStateElectra{
+				base := &sila.BeaconStateElectra{
 					Slot:                5 * params.BeaconConfig().SlotsPerEpoch,
-					FinalizedCheckpoint: &eth.Checkpoint{Epoch: finalizedEpoch, Root: make([]byte, fieldparams.RootLength)},
+					FinalizedCheckpoint: &sila.Checkpoint{Epoch: finalizedEpoch, Root: make([]byte, fieldparams.RootLength)},
 				}
 				for range uint64(10) {
-					base.Validators = append(base.Validators, &eth.Validator{
+					base.Validators = append(base.Validators, &sila.Validator{
 						EffectiveBalance:  params.BeaconConfig().EjectionBalance - 1,
 						ExitEpoch:         10,
 						WithdrawableEpoch: 20,
@@ -143,10 +143,10 @@ func TestProcessRegistryUpdates(t *testing.T) {
 func Benchmark_ProcessRegistryUpdates_MassEjection(b *testing.B) {
 	bal := params.BeaconConfig().EjectionBalance - 1
 	ffe := params.BeaconConfig().FarFutureEpoch
-	genValidators := func(num uint64) []*eth.Validator {
-		vals := make([]*eth.Validator, num)
+	genValidators := func(num uint64) []*sila.Validator {
+		vals := make([]*sila.Validator, num)
 		for i := range vals {
-			vals[i] = &eth.Validator{
+			vals[i] = &sila.Validator{
 				EffectiveBalance: bal,
 				ExitEpoch:        ffe,
 			}

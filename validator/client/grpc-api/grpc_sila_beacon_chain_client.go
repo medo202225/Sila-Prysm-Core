@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/helpers"
 	statenative "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	validatorHelpers "github.com/sila-chain/Sila-Consensus-Core/v7/validator/helpers"
-	"github.com/golang/protobuf/ptypes/empty"
-	"github.com/pkg/errors"
 )
 
 type grpcSilaChainClient struct {
@@ -38,7 +38,7 @@ func (g grpcSilaChainClient) ValidatorCount(ctx context.Context, _ string, statu
 	}
 
 	if len(statuses) == 0 {
-		for _, val := range eth.ValidatorStatus_value {
+		for _, val := range sila.ValidatorStatus_value {
 			statuses = append(statuses, validator.Status(val))
 		}
 	}

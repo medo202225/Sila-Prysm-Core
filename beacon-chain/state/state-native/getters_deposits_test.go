@@ -7,12 +7,12 @@ import (
 	stateTesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestDepositBalanceToConsume(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
 		DepositBalanceToConsume: 44,
 	})
 	require.NoError(t, err)
@@ -21,15 +21,15 @@ func TestDepositBalanceToConsume(t *testing.T) {
 	require.Equal(t, primitives.Gwei(44), dbtc)
 
 	// Fails for older than electra state
-	s, err = state_native.InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = state_native.InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
 	_, err = s.DepositBalanceToConsume()
 	require.ErrorContains(t, "not supported", err)
 }
 
 func TestPendingDeposits(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-		PendingDeposits: []*eth.PendingDeposit{
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+		PendingDeposits: []*sila.PendingDeposit{
 			{
 				PublicKey:             []byte{1, 2, 3},
 				WithdrawalCredentials: []byte{4, 5, 6},
@@ -63,7 +63,7 @@ func TestPendingDeposits(t *testing.T) {
 	require.Equal(t, primitives.Slot(2), pbd[1].Slot)
 
 	// Fails for older than electra state
-	s, err = state_native.InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = state_native.InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
 	_, err = s.DepositBalanceToConsume()
 	require.ErrorContains(t, "not supported", err)
@@ -75,8 +75,8 @@ func TestIsPendingValidator(t *testing.T) {
 	validDeposit := stateTesting.GeneratePendingDeposit(t, sk, 1000, [32]byte{0x01}, 0)
 
 	t.Run("valid signature returns true", func(t *testing.T) {
-		s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-			PendingDeposits: []*eth.PendingDeposit{validDeposit},
+		s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+			PendingDeposits: []*sila.PendingDeposit{validDeposit},
 		})
 		require.NoError(t, err)
 
@@ -86,14 +86,14 @@ func TestIsPendingValidator(t *testing.T) {
 	})
 
 	t.Run("invalid signature returns false", func(t *testing.T) {
-		invalidDeposit := &eth.PendingDeposit{
+		invalidDeposit := &sila.PendingDeposit{
 			PublicKey:             validDeposit.PublicKey,
 			WithdrawalCredentials: validDeposit.WithdrawalCredentials,
 			Amount:                validDeposit.Amount,
 			Signature:             make([]byte, 96), // invalid empty signature
 		}
-		s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-			PendingDeposits: []*eth.PendingDeposit{invalidDeposit},
+		s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+			PendingDeposits: []*sila.PendingDeposit{invalidDeposit},
 		})
 		require.NoError(t, err)
 
@@ -103,8 +103,8 @@ func TestIsPendingValidator(t *testing.T) {
 	})
 
 	t.Run("unknown pubkey returns false", func(t *testing.T) {
-		s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-			PendingDeposits: []*eth.PendingDeposit{validDeposit},
+		s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+			PendingDeposits: []*sila.PendingDeposit{validDeposit},
 		})
 		require.NoError(t, err)
 
@@ -114,8 +114,8 @@ func TestIsPendingValidator(t *testing.T) {
 	})
 
 	t.Run("nil deposit skipped", func(t *testing.T) {
-		s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-			PendingDeposits: []*eth.PendingDeposit{nil, validDeposit},
+		s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+			PendingDeposits: []*sila.PendingDeposit{nil, validDeposit},
 		})
 		require.NoError(t, err)
 
@@ -125,7 +125,7 @@ func TestIsPendingValidator(t *testing.T) {
 	})
 
 	t.Run("pre-electra not supported", func(t *testing.T) {
-		s, err := state_native.InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+		s, err := state_native.InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 		require.NoError(t, err)
 		_, err = s.IsPendingValidator([]byte{1, 2, 3})
 		require.ErrorContains(t, "not supported", err)

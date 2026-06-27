@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -13,17 +14,16 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	ethv1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 )
 
 var errNilValue = errors.New("nil value")
 
-func ValidatorFromConsensus(v *eth.Validator) *Validator {
+func ValidatorFromConsensus(v *sila.Validator) *Validator {
 	return &Validator{
 		Pubkey:                     hexutil.Encode(v.PublicKey),
 		WithdrawalCredentials:      hexutil.Encode(v.WithdrawalCredentials),
@@ -36,7 +36,7 @@ func ValidatorFromConsensus(v *eth.Validator) *Validator {
 	}
 }
 
-func PendingAttestationFromConsensus(a *eth.PendingAttestation) *PendingAttestation {
+func PendingAttestationFromConsensus(a *sila.PendingAttestation) *PendingAttestation {
 	return &PendingAttestation{
 		AggregationBits: hexutil.Encode(a.AggregationBits),
 		Data:            AttDataFromConsensus(a.Data),
@@ -45,14 +45,14 @@ func PendingAttestationFromConsensus(a *eth.PendingAttestation) *PendingAttestat
 	}
 }
 
-func HistoricalSummaryFromConsensus(s *eth.HistoricalSummary) *HistoricalSummary {
+func HistoricalSummaryFromConsensus(s *sila.HistoricalSummary) *HistoricalSummary {
 	return &HistoricalSummary{
 		BlockSummaryRoot: hexutil.Encode(s.BlockSummaryRoot),
 		StateSummaryRoot: hexutil.Encode(s.StateSummaryRoot),
 	}
 }
 
-func (s *SignedBLSToSilaChange) ToConsensus() (*eth.SignedBLSToSilaChange, error) {
+func (s *SignedBLSToSilaChange) ToConsensus() (*sila.SignedBLSToSilaChange, error) {
 	if s.Message == nil {
 		return nil, server.NewDecodeError(errNilValue, "Message")
 	}
@@ -64,13 +64,13 @@ func (s *SignedBLSToSilaChange) ToConsensus() (*eth.SignedBLSToSilaChange, error
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.SignedBLSToSilaChange{
+	return &sila.SignedBLSToSilaChange{
 		Message:   change,
 		Signature: sig,
 	}, nil
 }
 
-func (b *BLSToSilaChange) ToConsensus() (*eth.BLSToSilaChange, error) {
+func (b *BLSToSilaChange) ToConsensus() (*sila.BLSToSilaChange, error) {
 	index, err := strconv.ParseUint(b.ValidatorIndex, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "ValidatorIndex")
@@ -83,29 +83,29 @@ func (b *BLSToSilaChange) ToConsensus() (*eth.BLSToSilaChange, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "ToSilaAddress")
 	}
-	return &eth.BLSToSilaChange{
-		ValidatorIndex:     primitives.ValidatorIndex(index),
-		FromBlsPubkey:      pubkey,
-		ToSilaAddress: silaAddress,
+	return &sila.BLSToSilaChange{
+		ValidatorIndex: primitives.ValidatorIndex(index),
+		FromBlsPubkey:  pubkey,
+		ToSilaAddress:  silaAddress,
 	}, nil
 }
 
-func BLSChangeFromConsensus(ch *eth.BLSToSilaChange) *BLSToSilaChange {
+func BLSChangeFromConsensus(ch *sila.BLSToSilaChange) *BLSToSilaChange {
 	return &BLSToSilaChange{
-		ValidatorIndex:     fmt.Sprintf("%d", ch.ValidatorIndex),
-		FromBLSPubkey:      hexutil.Encode(ch.FromBlsPubkey),
-		ToSilaAddress: hexutil.Encode(ch.ToSilaAddress),
+		ValidatorIndex: fmt.Sprintf("%d", ch.ValidatorIndex),
+		FromBLSPubkey:  hexutil.Encode(ch.FromBlsPubkey),
+		ToSilaAddress:  hexutil.Encode(ch.ToSilaAddress),
 	}
 }
 
-func SignedBLSChangeFromConsensus(ch *eth.SignedBLSToSilaChange) *SignedBLSToSilaChange {
+func SignedBLSChangeFromConsensus(ch *sila.SignedBLSToSilaChange) *SignedBLSToSilaChange {
 	return &SignedBLSToSilaChange{
 		Message:   BLSChangeFromConsensus(ch.Message),
 		Signature: hexutil.Encode(ch.Signature),
 	}
 }
 
-func SignedBLSChangesToConsensus(src []*SignedBLSToSilaChange) ([]*eth.SignedBLSToSilaChange, error) {
+func SignedBLSChangesToConsensus(src []*SignedBLSToSilaChange) ([]*sila.SignedBLSToSilaChange, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "SignedBLSToSilaChanges")
 	}
@@ -113,7 +113,7 @@ func SignedBLSChangesToConsensus(src []*SignedBLSToSilaChange) ([]*eth.SignedBLS
 	if err != nil {
 		return nil, server.NewDecodeError(err, "SignedBLSToSilaChanges")
 	}
-	changes := make([]*eth.SignedBLSToSilaChange, len(src))
+	changes := make([]*sila.SignedBLSToSilaChange, len(src))
 	for i, ch := range src {
 		if ch == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -126,7 +126,7 @@ func SignedBLSChangesToConsensus(src []*SignedBLSToSilaChange) ([]*eth.SignedBLS
 	return changes, nil
 }
 
-func SignedBLSChangesFromConsensus(src []*eth.SignedBLSToSilaChange) []*SignedBLSToSilaChange {
+func SignedBLSChangesFromConsensus(src []*sila.SignedBLSToSilaChange) []*SignedBLSToSilaChange {
 	changes := make([]*SignedBLSToSilaChange, len(src))
 	for i, ch := range src {
 		changes[i] = SignedBLSChangeFromConsensus(ch)
@@ -134,7 +134,7 @@ func SignedBLSChangesFromConsensus(src []*eth.SignedBLSToSilaChange) []*SignedBL
 	return changes
 }
 
-func (s *Fork) ToConsensus() (*eth.Fork, error) {
+func (s *Fork) ToConsensus() (*sila.Fork, error) {
 	previousVersion, err := bytesutil.DecodeHexWithLength(s.PreviousVersion, 4)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "PreviousVersion")
@@ -147,14 +147,14 @@ func (s *Fork) ToConsensus() (*eth.Fork, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Epoch")
 	}
-	return &eth.Fork{
+	return &sila.Fork{
 		PreviousVersion: previousVersion,
 		CurrentVersion:  currentVersion,
 		Epoch:           primitives.Epoch(epoch),
 	}, nil
 }
 
-func ForkFromConsensus(f *eth.Fork) *Fork {
+func ForkFromConsensus(f *sila.Fork) *Fork {
 	return &Fork{
 		PreviousVersion: hexutil.Encode(f.PreviousVersion),
 		CurrentVersion:  hexutil.Encode(f.CurrentVersion),
@@ -162,7 +162,7 @@ func ForkFromConsensus(f *eth.Fork) *Fork {
 	}
 }
 
-func (s *SignedValidatorRegistration) ToConsensus() (*eth.SignedValidatorRegistrationV1, error) {
+func (s *SignedValidatorRegistration) ToConsensus() (*sila.SignedValidatorRegistrationV1, error) {
 	if s.Message == nil {
 		return nil, server.NewDecodeError(errNilValue, "Message")
 	}
@@ -174,13 +174,13 @@ func (s *SignedValidatorRegistration) ToConsensus() (*eth.SignedValidatorRegistr
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.SignedValidatorRegistrationV1{
+	return &sila.SignedValidatorRegistrationV1{
 		Message:   msg,
 		Signature: sig,
 	}, nil
 }
 
-func (s *ValidatorRegistration) ToConsensus() (*eth.ValidatorRegistrationV1, error) {
+func (s *ValidatorRegistration) ToConsensus() (*sila.ValidatorRegistrationV1, error) {
 	feeRecipient, err := bytesutil.DecodeHexWithLength(s.FeeRecipient, fieldparams.FeeRecipientLength)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "FeeRecipient")
@@ -197,7 +197,7 @@ func (s *ValidatorRegistration) ToConsensus() (*eth.ValidatorRegistrationV1, err
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Timestamp")
 	}
-	return &eth.ValidatorRegistrationV1{
+	return &sila.ValidatorRegistrationV1{
 		FeeRecipient: feeRecipient,
 		GasLimit:     gasLimit,
 		Timestamp:    timestamp,
@@ -205,7 +205,7 @@ func (s *ValidatorRegistration) ToConsensus() (*eth.ValidatorRegistrationV1, err
 	}, nil
 }
 
-func ValidatorRegistrationFromConsensus(vr *eth.ValidatorRegistrationV1) *ValidatorRegistration {
+func ValidatorRegistrationFromConsensus(vr *sila.ValidatorRegistrationV1) *ValidatorRegistration {
 	return &ValidatorRegistration{
 		FeeRecipient: hexutil.Encode(vr.FeeRecipient),
 		GasLimit:     fmt.Sprintf("%d", vr.GasLimit),
@@ -214,14 +214,14 @@ func ValidatorRegistrationFromConsensus(vr *eth.ValidatorRegistrationV1) *Valida
 	}
 }
 
-func SignedValidatorRegistrationFromConsensus(vr *eth.SignedValidatorRegistrationV1) *SignedValidatorRegistration {
+func SignedValidatorRegistrationFromConsensus(vr *sila.SignedValidatorRegistrationV1) *SignedValidatorRegistration {
 	return &SignedValidatorRegistration{
 		Message:   ValidatorRegistrationFromConsensus(vr.Message),
 		Signature: hexutil.Encode(vr.Signature),
 	}
 }
 
-func (s *SignedContributionAndProof) ToConsensus() (*eth.SignedContributionAndProof, error) {
+func (s *SignedContributionAndProof) ToConsensus() (*sila.SignedContributionAndProof, error) {
 	if s.Message == nil {
 		return nil, server.NewDecodeError(errNilValue, "Message")
 	}
@@ -234,13 +234,13 @@ func (s *SignedContributionAndProof) ToConsensus() (*eth.SignedContributionAndPr
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SignedContributionAndProof{
+	return &sila.SignedContributionAndProof{
 		Message:   msg,
 		Signature: sig,
 	}, nil
 }
 
-func SignedContributionAndProofFromConsensus(c *eth.SignedContributionAndProof) *SignedContributionAndProof {
+func SignedContributionAndProofFromConsensus(c *sila.SignedContributionAndProof) *SignedContributionAndProof {
 	contribution := ContributionAndProofFromConsensus(c.Message)
 	return &SignedContributionAndProof{
 		Message:   contribution,
@@ -248,7 +248,7 @@ func SignedContributionAndProofFromConsensus(c *eth.SignedContributionAndProof) 
 	}
 }
 
-func (c *ContributionAndProof) ToConsensus() (*eth.ContributionAndProof, error) {
+func (c *ContributionAndProof) ToConsensus() (*sila.ContributionAndProof, error) {
 	if c.Contribution == nil {
 		return nil, server.NewDecodeError(errNilValue, "Contribution")
 	}
@@ -265,14 +265,14 @@ func (c *ContributionAndProof) ToConsensus() (*eth.ContributionAndProof, error) 
 		return nil, server.NewDecodeError(err, "SelectionProof")
 	}
 
-	return &eth.ContributionAndProof{
+	return &sila.ContributionAndProof{
 		AggregatorIndex: primitives.ValidatorIndex(aggregatorIndex),
 		Contribution:    contribution,
 		SelectionProof:  selectionProof,
 	}, nil
 }
 
-func ContributionAndProofFromConsensus(c *eth.ContributionAndProof) *ContributionAndProof {
+func ContributionAndProofFromConsensus(c *sila.ContributionAndProof) *ContributionAndProof {
 	contribution := SyncCommitteeContributionFromConsensus(c.Contribution)
 	return &ContributionAndProof{
 		AggregatorIndex: fmt.Sprintf("%d", c.AggregatorIndex),
@@ -281,7 +281,7 @@ func ContributionAndProofFromConsensus(c *eth.ContributionAndProof) *Contributio
 	}
 }
 
-func (s *SyncCommitteeContribution) ToConsensus() (*eth.SyncCommitteeContribution, error) {
+func (s *SyncCommitteeContribution) ToConsensus() (*sila.SyncCommitteeContribution, error) {
 	slot, err := strconv.ParseUint(s.Slot, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Slot")
@@ -303,7 +303,7 @@ func (s *SyncCommitteeContribution) ToConsensus() (*eth.SyncCommitteeContributio
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SyncCommitteeContribution{
+	return &sila.SyncCommitteeContribution{
 		Slot:              primitives.Slot(slot),
 		BlockRoot:         bbRoot,
 		SubcommitteeIndex: subcommitteeIndex,
@@ -312,7 +312,7 @@ func (s *SyncCommitteeContribution) ToConsensus() (*eth.SyncCommitteeContributio
 	}, nil
 }
 
-func SyncCommitteeContributionFromConsensus(c *eth.SyncCommitteeContribution) *SyncCommitteeContribution {
+func SyncCommitteeContributionFromConsensus(c *sila.SyncCommitteeContribution) *SyncCommitteeContribution {
 	return &SyncCommitteeContribution{
 		Slot:              fmt.Sprintf("%d", c.Slot),
 		BeaconBlockRoot:   hexutil.Encode(c.BlockRoot),
@@ -322,7 +322,7 @@ func SyncCommitteeContributionFromConsensus(c *eth.SyncCommitteeContribution) *S
 	}
 }
 
-func (s *SignedAggregateAttestationAndProof) ToConsensus() (*eth.SignedAggregateAttestationAndProof, error) {
+func (s *SignedAggregateAttestationAndProof) ToConsensus() (*sila.SignedAggregateAttestationAndProof, error) {
 	if s.Message == nil {
 		return nil, server.NewDecodeError(errNilValue, "Message")
 	}
@@ -335,13 +335,13 @@ func (s *SignedAggregateAttestationAndProof) ToConsensus() (*eth.SignedAggregate
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SignedAggregateAttestationAndProof{
+	return &sila.SignedAggregateAttestationAndProof{
 		Message:   msg,
 		Signature: sig,
 	}, nil
 }
 
-func (a *AggregateAttestationAndProof) ToConsensus() (*eth.AggregateAttestationAndProof, error) {
+func (a *AggregateAttestationAndProof) ToConsensus() (*sila.AggregateAttestationAndProof, error) {
 	aggIndex, err := strconv.ParseUint(a.AggregatorIndex, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "AggregatorIndex")
@@ -357,14 +357,14 @@ func (a *AggregateAttestationAndProof) ToConsensus() (*eth.AggregateAttestationA
 	if err != nil {
 		return nil, server.NewDecodeError(err, "SelectionProof")
 	}
-	return &eth.AggregateAttestationAndProof{
+	return &sila.AggregateAttestationAndProof{
 		AggregatorIndex: primitives.ValidatorIndex(aggIndex),
 		Aggregate:       agg,
 		SelectionProof:  proof,
 	}, nil
 }
 
-func (s *SignedAggregateAttestationAndProofElectra) ToConsensus() (*eth.SignedAggregateAttestationAndProofElectra, error) {
+func (s *SignedAggregateAttestationAndProofElectra) ToConsensus() (*sila.SignedAggregateAttestationAndProofElectra, error) {
 	if s.Message == nil {
 		return nil, server.NewDecodeError(errNilValue, "Message")
 	}
@@ -377,13 +377,13 @@ func (s *SignedAggregateAttestationAndProofElectra) ToConsensus() (*eth.SignedAg
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SignedAggregateAttestationAndProofElectra{
+	return &sila.SignedAggregateAttestationAndProofElectra{
 		Message:   msg,
 		Signature: sig,
 	}, nil
 }
 
-func (a *AggregateAttestationAndProofElectra) ToConsensus() (*eth.AggregateAttestationAndProofElectra, error) {
+func (a *AggregateAttestationAndProofElectra) ToConsensus() (*sila.AggregateAttestationAndProofElectra, error) {
 	aggIndex, err := strconv.ParseUint(a.AggregatorIndex, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "AggregatorIndex")
@@ -399,14 +399,14 @@ func (a *AggregateAttestationAndProofElectra) ToConsensus() (*eth.AggregateAttes
 	if err != nil {
 		return nil, server.NewDecodeError(err, "SelectionProof")
 	}
-	return &eth.AggregateAttestationAndProofElectra{
+	return &sila.AggregateAttestationAndProofElectra{
 		AggregatorIndex: primitives.ValidatorIndex(aggIndex),
 		Aggregate:       agg,
 		SelectionProof:  proof,
 	}, nil
 }
 
-func (a *Attestation) ToConsensus() (*eth.Attestation, error) {
+func (a *Attestation) ToConsensus() (*sila.Attestation, error) {
 	aggBits, err := hexutil.Decode(a.AggregationBits)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "AggregationBits")
@@ -423,14 +423,14 @@ func (a *Attestation) ToConsensus() (*eth.Attestation, error) {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.Attestation{
+	return &sila.Attestation{
 		AggregationBits: aggBits,
 		Data:            data,
 		Signature:       sig,
 	}, nil
 }
 
-func AttFromConsensus(a *eth.Attestation) *Attestation {
+func AttFromConsensus(a *sila.Attestation) *Attestation {
 	return &Attestation{
 		AggregationBits: hexutil.Encode(a.AggregationBits),
 		Data:            AttDataFromConsensus(a.Data),
@@ -438,7 +438,7 @@ func AttFromConsensus(a *eth.Attestation) *Attestation {
 	}
 }
 
-func (a *AttestationElectra) ToConsensus() (*eth.AttestationElectra, error) {
+func (a *AttestationElectra) ToConsensus() (*sila.AttestationElectra, error) {
 	aggBits, err := hexutil.Decode(a.AggregationBits)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "AggregationBits")
@@ -459,7 +459,7 @@ func (a *AttestationElectra) ToConsensus() (*eth.AttestationElectra, error) {
 		return nil, server.NewDecodeError(err, "CommitteeBits")
 	}
 
-	return &eth.AttestationElectra{
+	return &sila.AttestationElectra{
 		AggregationBits: aggBits,
 		Data:            data,
 		Signature:       sig,
@@ -467,7 +467,7 @@ func (a *AttestationElectra) ToConsensus() (*eth.AttestationElectra, error) {
 	}, nil
 }
 
-func SingleAttFromConsensus(a *eth.SingleAttestation) *SingleAttestation {
+func SingleAttFromConsensus(a *sila.SingleAttestation) *SingleAttestation {
 	return &SingleAttestation{
 		CommitteeIndex: fmt.Sprintf("%d", a.CommitteeId),
 		AttesterIndex:  fmt.Sprintf("%d", a.AttesterIndex),
@@ -476,7 +476,7 @@ func SingleAttFromConsensus(a *eth.SingleAttestation) *SingleAttestation {
 	}
 }
 
-func (a *SingleAttestation) ToConsensus() (*eth.SingleAttestation, error) {
+func (a *SingleAttestation) ToConsensus() (*sila.SingleAttestation, error) {
 	ci, err := strconv.ParseUint(a.CommitteeIndex, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "CommitteeIndex")
@@ -497,7 +497,7 @@ func (a *SingleAttestation) ToConsensus() (*eth.SingleAttestation, error) {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SingleAttestation{
+	return &sila.SingleAttestation{
 		CommitteeId:   primitives.CommitteeIndex(ci),
 		AttesterIndex: primitives.ValidatorIndex(ai),
 		Data:          data,
@@ -505,7 +505,7 @@ func (a *SingleAttestation) ToConsensus() (*eth.SingleAttestation, error) {
 	}, nil
 }
 
-func AttElectraFromConsensus(a *eth.AttestationElectra) *AttestationElectra {
+func AttElectraFromConsensus(a *sila.AttestationElectra) *AttestationElectra {
 	return &AttestationElectra{
 		AggregationBits: hexutil.Encode(a.AggregationBits),
 		Data:            AttDataFromConsensus(a.Data),
@@ -514,7 +514,7 @@ func AttElectraFromConsensus(a *eth.AttestationElectra) *AttestationElectra {
 	}
 }
 
-func (a *AttestationData) ToConsensus() (*eth.AttestationData, error) {
+func (a *AttestationData) ToConsensus() (*sila.AttestationData, error) {
 	slot, err := strconv.ParseUint(a.Slot, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Slot")
@@ -542,7 +542,7 @@ func (a *AttestationData) ToConsensus() (*eth.AttestationData, error) {
 		return nil, server.NewDecodeError(err, "Target")
 	}
 
-	return &eth.AttestationData{
+	return &sila.AttestationData{
 		Slot:            primitives.Slot(slot),
 		CommitteeIndex:  primitives.CommitteeIndex(committeeIndex),
 		BeaconBlockRoot: bbRoot,
@@ -551,7 +551,7 @@ func (a *AttestationData) ToConsensus() (*eth.AttestationData, error) {
 	}, nil
 }
 
-func AttDataFromConsensus(a *eth.AttestationData) *AttestationData {
+func AttDataFromConsensus(a *sila.AttestationData) *AttestationData {
 	return &AttestationData{
 		Slot:            fmt.Sprintf("%d", a.Slot),
 		CommitteeIndex:  fmt.Sprintf("%d", a.CommitteeIndex),
@@ -561,7 +561,7 @@ func AttDataFromConsensus(a *eth.AttestationData) *AttestationData {
 	}
 }
 
-func (c *Checkpoint) ToConsensus() (*eth.Checkpoint, error) {
+func (c *Checkpoint) ToConsensus() (*sila.Checkpoint, error) {
 	epoch, err := strconv.ParseUint(c.Epoch, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Epoch")
@@ -571,13 +571,13 @@ func (c *Checkpoint) ToConsensus() (*eth.Checkpoint, error) {
 		return nil, server.NewDecodeError(err, "Root")
 	}
 
-	return &eth.Checkpoint{
+	return &sila.Checkpoint{
 		Epoch: primitives.Epoch(epoch),
 		Root:  root,
 	}, nil
 }
 
-func CheckpointFromConsensus(c *eth.Checkpoint) *Checkpoint {
+func CheckpointFromConsensus(c *sila.Checkpoint) *Checkpoint {
 	return &Checkpoint{
 		Epoch: fmt.Sprintf("%d", c.Epoch),
 		Root:  hexutil.Encode(c.Root),
@@ -635,7 +635,7 @@ func (b *BeaconCommitteeSubscription) ToConsensus() (*validator.BeaconCommitteeS
 	}, nil
 }
 
-func (e *SignedVoluntaryExit) ToConsensus() (*eth.SignedVoluntaryExit, error) {
+func (e *SignedVoluntaryExit) ToConsensus() (*sila.SignedVoluntaryExit, error) {
 	if e.Message == nil {
 		return nil, server.NewDecodeError(errNilValue, "Message")
 	}
@@ -647,20 +647,20 @@ func (e *SignedVoluntaryExit) ToConsensus() (*eth.SignedVoluntaryExit, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.SignedVoluntaryExit{
+	return &sila.SignedVoluntaryExit{
 		Exit:      exit,
 		Signature: sig,
 	}, nil
 }
 
-func SignedExitFromConsensus(e *eth.SignedVoluntaryExit) *SignedVoluntaryExit {
+func SignedExitFromConsensus(e *sila.SignedVoluntaryExit) *SignedVoluntaryExit {
 	return &SignedVoluntaryExit{
 		Message:   ExitFromConsensus(e.Exit),
 		Signature: hexutil.Encode(e.Signature),
 	}
 }
 
-func (e *VoluntaryExit) ToConsensus() (*eth.VoluntaryExit, error) {
+func (e *VoluntaryExit) ToConsensus() (*sila.VoluntaryExit, error) {
 	epoch, err := strconv.ParseUint(e.Epoch, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Epoch")
@@ -670,20 +670,20 @@ func (e *VoluntaryExit) ToConsensus() (*eth.VoluntaryExit, error) {
 		return nil, server.NewDecodeError(err, "ValidatorIndex")
 	}
 
-	return &eth.VoluntaryExit{
+	return &sila.VoluntaryExit{
 		Epoch:          primitives.Epoch(epoch),
 		ValidatorIndex: primitives.ValidatorIndex(valIndex),
 	}, nil
 }
 
-func ExitFromConsensus(e *eth.VoluntaryExit) *VoluntaryExit {
+func ExitFromConsensus(e *sila.VoluntaryExit) *VoluntaryExit {
 	return &VoluntaryExit{
 		Epoch:          fmt.Sprintf("%d", e.Epoch),
 		ValidatorIndex: fmt.Sprintf("%d", e.ValidatorIndex),
 	}
 }
 
-func (m *SyncCommitteeMessage) ToConsensus() (*eth.SyncCommitteeMessage, error) {
+func (m *SyncCommitteeMessage) ToConsensus() (*sila.SyncCommitteeMessage, error) {
 	slot, err := strconv.ParseUint(m.Slot, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Slot")
@@ -706,7 +706,7 @@ func (m *SyncCommitteeMessage) ToConsensus() (*eth.SyncCommitteeMessage, error) 
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SyncCommitteeMessage{
+	return &sila.SyncCommitteeMessage{
 		Slot:           primitives.Slot(slot),
 		BlockRoot:      root,
 		ValidatorIndex: primitives.ValidatorIndex(valIndex),
@@ -714,7 +714,7 @@ func (m *SyncCommitteeMessage) ToConsensus() (*eth.SyncCommitteeMessage, error) 
 	}, nil
 }
 
-func SyncCommitteeFromConsensus(sc *eth.SyncCommittee) *SyncCommittee {
+func SyncCommitteeFromConsensus(sc *sila.SyncCommittee) *SyncCommittee {
 	var sPubKeys []string
 	for _, p := range sc.Pubkeys {
 		sPubKeys = append(sPubKeys, hexutil.Encode(p))
@@ -726,7 +726,7 @@ func SyncCommitteeFromConsensus(sc *eth.SyncCommittee) *SyncCommittee {
 	}
 }
 
-func (sc *SyncCommittee) ToConsensus() (*eth.SyncCommittee, error) {
+func (sc *SyncCommittee) ToConsensus() (*sila.SyncCommittee, error) {
 	var pubKeys [][]byte
 	for _, p := range sc.Pubkeys {
 		pubKey, err := bytesutil.DecodeHexWithLength(p, fieldparams.BLSPubkeyLength)
@@ -739,13 +739,13 @@ func (sc *SyncCommittee) ToConsensus() (*eth.SyncCommittee, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "AggregatePubkey")
 	}
-	return &eth.SyncCommittee{
+	return &sila.SyncCommittee{
 		Pubkeys:         pubKeys,
 		AggregatePubkey: aggPubKey,
 	}, nil
 }
 
-func SilaDataFromConsensus(e1d *eth.SilaData) *SilaData {
+func SilaDataFromConsensus(e1d *sila.SilaData) *SilaData {
 	return &SilaData{
 		DepositRoot:  hexutil.Encode(e1d.DepositRoot),
 		DepositCount: fmt.Sprintf("%d", e1d.DepositCount),
@@ -753,7 +753,7 @@ func SilaDataFromConsensus(e1d *eth.SilaData) *SilaData {
 	}
 }
 
-func (s *ProposerSlashing) ToConsensus() (*eth.ProposerSlashing, error) {
+func (s *ProposerSlashing) ToConsensus() (*sila.ProposerSlashing, error) {
 	if s.SignedHeader1 == nil {
 		return nil, server.NewDecodeError(errNilValue, "SignedHeader1")
 	}
@@ -769,13 +769,13 @@ func (s *ProposerSlashing) ToConsensus() (*eth.ProposerSlashing, error) {
 		return nil, server.NewDecodeError(err, "SignedHeader2")
 	}
 
-	return &eth.ProposerSlashing{
+	return &sila.ProposerSlashing{
 		Header_1: h1,
 		Header_2: h2,
 	}, nil
 }
 
-func (s *AttesterSlashing) ToConsensus() (*eth.AttesterSlashing, error) {
+func (s *AttesterSlashing) ToConsensus() (*sila.AttesterSlashing, error) {
 	if s.Attestation1 == nil {
 		return nil, server.NewDecodeError(errNilValue, "Attestation1")
 	}
@@ -790,10 +790,10 @@ func (s *AttesterSlashing) ToConsensus() (*eth.AttesterSlashing, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Attestation2")
 	}
-	return &eth.AttesterSlashing{Attestation_1: att1, Attestation_2: att2}, nil
+	return &sila.AttesterSlashing{Attestation_1: att1, Attestation_2: att2}, nil
 }
 
-func (s *AttesterSlashingElectra) ToConsensus() (*eth.AttesterSlashingElectra, error) {
+func (s *AttesterSlashingElectra) ToConsensus() (*sila.AttesterSlashingElectra, error) {
 	if s.Attestation1 == nil {
 		return nil, server.NewDecodeError(errNilValue, "Attestation1")
 	}
@@ -808,10 +808,10 @@ func (s *AttesterSlashingElectra) ToConsensus() (*eth.AttesterSlashingElectra, e
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Attestation2")
 	}
-	return &eth.AttesterSlashingElectra{Attestation_1: att1, Attestation_2: att2}, nil
+	return &sila.AttesterSlashingElectra{Attestation_1: att1, Attestation_2: att2}, nil
 }
 
-func (a *IndexedAttestation) ToConsensus() (*eth.IndexedAttestation, error) {
+func (a *IndexedAttestation) ToConsensus() (*sila.IndexedAttestation, error) {
 	if err := slice.VerifyMaxLength(a.AttestingIndices, params.BeaconConfig().MaxValidatorsPerCommittee); err != nil {
 		return nil, err
 	}
@@ -836,14 +836,14 @@ func (a *IndexedAttestation) ToConsensus() (*eth.IndexedAttestation, error) {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.IndexedAttestation{
+	return &sila.IndexedAttestation{
 		AttestingIndices: indices,
 		Data:             data,
 		Signature:        sig,
 	}, nil
 }
 
-func (a *IndexedAttestationElectra) ToConsensus() (*eth.IndexedAttestationElectra, error) {
+func (a *IndexedAttestationElectra) ToConsensus() (*sila.IndexedAttestationElectra, error) {
 	if err := slice.VerifyMaxLength(
 		a.AttestingIndices,
 		params.BeaconConfig().MaxValidatorsPerCommittee*params.BeaconConfig().MaxCommitteesPerSlot,
@@ -871,7 +871,7 @@ func (a *IndexedAttestationElectra) ToConsensus() (*eth.IndexedAttestationElectr
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.IndexedAttestationElectra{
+	return &sila.IndexedAttestationElectra{
 		AttestingIndices: indices,
 		Data:             data,
 		Signature:        sig,
@@ -888,14 +888,14 @@ func WithdrawalsFromConsensus(ws []*silaenginev1.Withdrawal) []*Withdrawal {
 
 func WithdrawalFromConsensus(w *silaenginev1.Withdrawal) *Withdrawal {
 	return &Withdrawal{
-		WithdrawalIndex:  fmt.Sprintf("%d", w.Index),
-		ValidatorIndex:   fmt.Sprintf("%d", w.ValidatorIndex),
-		SilaAddress: hexutil.Encode(w.Address),
-		Amount:           fmt.Sprintf("%d", w.Amount),
+		WithdrawalIndex: fmt.Sprintf("%d", w.Index),
+		ValidatorIndex:  fmt.Sprintf("%d", w.ValidatorIndex),
+		SilaAddress:     hexutil.Encode(w.Address),
+		Amount:          fmt.Sprintf("%d", w.Amount),
 	}
 }
 
-func ProposerSlashingsToConsensus(src []*ProposerSlashing) ([]*eth.ProposerSlashing, error) {
+func ProposerSlashingsToConsensus(src []*ProposerSlashing) ([]*sila.ProposerSlashing, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "ProposerSlashings")
 	}
@@ -903,7 +903,7 @@ func ProposerSlashingsToConsensus(src []*ProposerSlashing) ([]*eth.ProposerSlash
 	if err != nil {
 		return nil, server.NewDecodeError(err, "ProposerSlashings")
 	}
-	proposerSlashings := make([]*eth.ProposerSlashing, len(src))
+	proposerSlashings := make([]*sila.ProposerSlashing, len(src))
 	for i, s := range src {
 		if s == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -969,9 +969,9 @@ func ProposerSlashingsToConsensus(src []*ProposerSlashing) ([]*eth.ProposerSlash
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("[%d].SignedHeader2.Message.BodyRoot", i))
 		}
-		proposerSlashings[i] = &eth.ProposerSlashing{
-			Header_1: &eth.SignedBeaconBlockHeader{
-				Header: &eth.BeaconBlockHeader{
+		proposerSlashings[i] = &sila.ProposerSlashing{
+			Header_1: &sila.SignedBeaconBlockHeader{
+				Header: &sila.BeaconBlockHeader{
 					Slot:          primitives.Slot(h1Slot),
 					ProposerIndex: primitives.ValidatorIndex(h1ProposerIndex),
 					ParentRoot:    h1ParentRoot,
@@ -980,8 +980,8 @@ func ProposerSlashingsToConsensus(src []*ProposerSlashing) ([]*eth.ProposerSlash
 				},
 				Signature: h1Sig,
 			},
-			Header_2: &eth.SignedBeaconBlockHeader{
-				Header: &eth.BeaconBlockHeader{
+			Header_2: &sila.SignedBeaconBlockHeader{
+				Header: &sila.BeaconBlockHeader{
 					Slot:          primitives.Slot(h2Slot),
 					ProposerIndex: primitives.ValidatorIndex(h2ProposerIndex),
 					ParentRoot:    h2ParentRoot,
@@ -995,7 +995,7 @@ func ProposerSlashingsToConsensus(src []*ProposerSlashing) ([]*eth.ProposerSlash
 	return proposerSlashings, nil
 }
 
-func ProposerSlashingsFromConsensus(src []*eth.ProposerSlashing) []*ProposerSlashing {
+func ProposerSlashingsFromConsensus(src []*sila.ProposerSlashing) []*ProposerSlashing {
 	proposerSlashings := make([]*ProposerSlashing, len(src))
 	for i, s := range src {
 		proposerSlashings[i] = ProposerSlashingFromConsensus(s)
@@ -1003,7 +1003,7 @@ func ProposerSlashingsFromConsensus(src []*eth.ProposerSlashing) []*ProposerSlas
 	return proposerSlashings
 }
 
-func ProposerSlashingFromConsensus(src *eth.ProposerSlashing) *ProposerSlashing {
+func ProposerSlashingFromConsensus(src *sila.ProposerSlashing) *ProposerSlashing {
 	return &ProposerSlashing{
 		SignedHeader1: &SignedBeaconBlockHeader{
 			Message: &BeaconBlockHeader{
@@ -1028,7 +1028,7 @@ func ProposerSlashingFromConsensus(src *eth.ProposerSlashing) *ProposerSlashing 
 	}
 }
 
-func AttesterSlashingsToConsensus(src []*AttesterSlashing) ([]*eth.AttesterSlashing, error) {
+func AttesterSlashingsToConsensus(src []*AttesterSlashing) ([]*sila.AttesterSlashing, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "AttesterSlashings")
 	}
@@ -1037,7 +1037,7 @@ func AttesterSlashingsToConsensus(src []*AttesterSlashing) ([]*eth.AttesterSlash
 		return nil, server.NewDecodeError(err, "AttesterSlashings")
 	}
 
-	attesterSlashings := make([]*eth.AttesterSlashing, len(src))
+	attesterSlashings := make([]*sila.AttesterSlashing, len(src))
 	for i, s := range src {
 		if s == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -1099,13 +1099,13 @@ func AttesterSlashingsToConsensus(src []*AttesterSlashing) ([]*eth.AttesterSlash
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("[%d].Attestation2.Data", i))
 		}
-		attesterSlashings[i] = &eth.AttesterSlashing{
-			Attestation_1: &eth.IndexedAttestation{
+		attesterSlashings[i] = &sila.AttesterSlashing{
+			Attestation_1: &sila.IndexedAttestation{
 				AttestingIndices: a1AttestingIndices,
 				Data:             a1Data,
 				Signature:        a1Sig,
 			},
-			Attestation_2: &eth.IndexedAttestation{
+			Attestation_2: &sila.IndexedAttestation{
 				AttestingIndices: a2AttestingIndices,
 				Data:             a2Data,
 				Signature:        a2Sig,
@@ -1115,7 +1115,7 @@ func AttesterSlashingsToConsensus(src []*AttesterSlashing) ([]*eth.AttesterSlash
 	return attesterSlashings, nil
 }
 
-func AttesterSlashingsFromConsensus(src []*eth.AttesterSlashing) []*AttesterSlashing {
+func AttesterSlashingsFromConsensus(src []*sila.AttesterSlashing) []*AttesterSlashing {
 	attesterSlashings := make([]*AttesterSlashing, len(src))
 	for i, s := range src {
 		attesterSlashings[i] = AttesterSlashingFromConsensus(s)
@@ -1123,7 +1123,7 @@ func AttesterSlashingsFromConsensus(src []*eth.AttesterSlashing) []*AttesterSlas
 	return attesterSlashings
 }
 
-func AttesterSlashingFromConsensus(src *eth.AttesterSlashing) *AttesterSlashing {
+func AttesterSlashingFromConsensus(src *sila.AttesterSlashing) *AttesterSlashing {
 	a1AttestingIndices := make([]string, len(src.Attestation_1.AttestingIndices))
 	for j, ix := range src.Attestation_1.AttestingIndices {
 		a1AttestingIndices[j] = fmt.Sprintf("%d", ix)
@@ -1170,7 +1170,7 @@ func AttesterSlashingFromConsensus(src *eth.AttesterSlashing) *AttesterSlashing 
 	}
 }
 
-func AttesterSlashingsElectraToConsensus(src []*AttesterSlashingElectra) ([]*eth.AttesterSlashingElectra, error) {
+func AttesterSlashingsElectraToConsensus(src []*AttesterSlashingElectra) ([]*sila.AttesterSlashingElectra, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "AttesterSlashingsElectra")
 	}
@@ -1179,7 +1179,7 @@ func AttesterSlashingsElectraToConsensus(src []*AttesterSlashingElectra) ([]*eth
 		return nil, server.NewDecodeError(err, "AttesterSlashingsElectra")
 	}
 
-	attesterSlashings := make([]*eth.AttesterSlashingElectra, len(src))
+	attesterSlashings := make([]*sila.AttesterSlashingElectra, len(src))
 	for i, s := range src {
 		if s == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -1241,13 +1241,13 @@ func AttesterSlashingsElectraToConsensus(src []*AttesterSlashingElectra) ([]*eth
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("[%d].Attestation2.Data", i))
 		}
-		attesterSlashings[i] = &eth.AttesterSlashingElectra{
-			Attestation_1: &eth.IndexedAttestationElectra{
+		attesterSlashings[i] = &sila.AttesterSlashingElectra{
+			Attestation_1: &sila.IndexedAttestationElectra{
 				AttestingIndices: a1AttestingIndices,
 				Data:             a1Data,
 				Signature:        a1Sig,
 			},
-			Attestation_2: &eth.IndexedAttestationElectra{
+			Attestation_2: &sila.IndexedAttestationElectra{
 				AttestingIndices: a2AttestingIndices,
 				Data:             a2Data,
 				Signature:        a2Sig,
@@ -1257,7 +1257,7 @@ func AttesterSlashingsElectraToConsensus(src []*AttesterSlashingElectra) ([]*eth
 	return attesterSlashings, nil
 }
 
-func AttesterSlashingsElectraFromConsensus(src []*eth.AttesterSlashingElectra) []*AttesterSlashingElectra {
+func AttesterSlashingsElectraFromConsensus(src []*sila.AttesterSlashingElectra) []*AttesterSlashingElectra {
 	attesterSlashings := make([]*AttesterSlashingElectra, len(src))
 	for i, s := range src {
 		attesterSlashings[i] = AttesterSlashingElectraFromConsensus(s)
@@ -1265,7 +1265,7 @@ func AttesterSlashingsElectraFromConsensus(src []*eth.AttesterSlashingElectra) [
 	return attesterSlashings
 }
 
-func AttesterSlashingElectraFromConsensus(src *eth.AttesterSlashingElectra) *AttesterSlashingElectra {
+func AttesterSlashingElectraFromConsensus(src *sila.AttesterSlashingElectra) *AttesterSlashingElectra {
 	a1AttestingIndices := make([]string, len(src.Attestation_1.AttestingIndices))
 	for j, ix := range src.Attestation_1.AttestingIndices {
 		a1AttestingIndices[j] = fmt.Sprintf("%d", ix)
@@ -1312,7 +1312,7 @@ func AttesterSlashingElectraFromConsensus(src *eth.AttesterSlashingElectra) *Att
 	}
 }
 
-func AttsToConsensus(src []*Attestation) ([]*eth.Attestation, error) {
+func AttsToConsensus(src []*Attestation) ([]*sila.Attestation, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "Attestations")
 	}
@@ -1321,7 +1321,7 @@ func AttsToConsensus(src []*Attestation) ([]*eth.Attestation, error) {
 		return nil, server.NewDecodeError(err, "Attestations")
 	}
 
-	atts := make([]*eth.Attestation, len(src))
+	atts := make([]*sila.Attestation, len(src))
 	for i, a := range src {
 		if a == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -1334,7 +1334,7 @@ func AttsToConsensus(src []*Attestation) ([]*eth.Attestation, error) {
 	return atts, nil
 }
 
-func AttsFromConsensus(src []*eth.Attestation) []*Attestation {
+func AttsFromConsensus(src []*sila.Attestation) []*Attestation {
 	atts := make([]*Attestation, len(src))
 	for i, a := range src {
 		atts[i] = AttFromConsensus(a)
@@ -1342,7 +1342,7 @@ func AttsFromConsensus(src []*eth.Attestation) []*Attestation {
 	return atts
 }
 
-func AttsElectraToConsensus(src []*AttestationElectra) ([]*eth.AttestationElectra, error) {
+func AttsElectraToConsensus(src []*AttestationElectra) ([]*sila.AttestationElectra, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "AttestationsElectra")
 	}
@@ -1351,7 +1351,7 @@ func AttsElectraToConsensus(src []*AttestationElectra) ([]*eth.AttestationElectr
 		return nil, server.NewDecodeError(err, "AttestationsElectra")
 	}
 
-	atts := make([]*eth.AttestationElectra, len(src))
+	atts := make([]*sila.AttestationElectra, len(src))
 	for i, a := range src {
 		if a == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -1364,7 +1364,7 @@ func AttsElectraToConsensus(src []*AttestationElectra) ([]*eth.AttestationElectr
 	return atts, nil
 }
 
-func AttsElectraFromConsensus(src []*eth.AttestationElectra) []*AttestationElectra {
+func AttsElectraFromConsensus(src []*sila.AttestationElectra) []*AttestationElectra {
 	atts := make([]*AttestationElectra, len(src))
 	for i, a := range src {
 		atts[i] = AttElectraFromConsensus(a)
@@ -1372,7 +1372,7 @@ func AttsElectraFromConsensus(src []*eth.AttestationElectra) []*AttestationElect
 	return atts
 }
 
-func DepositsToConsensus(src []*Deposit) ([]*eth.Deposit, error) {
+func DepositsToConsensus(src []*Deposit) ([]*sila.Deposit, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "Deposits")
 	}
@@ -1381,7 +1381,7 @@ func DepositsToConsensus(src []*Deposit) ([]*eth.Deposit, error) {
 		return nil, server.NewDecodeError(err, "Deposits")
 	}
 
-	deposits := make([]*eth.Deposit, len(src))
+	deposits := make([]*sila.Deposit, len(src))
 	for i, d := range src {
 		if d.Data == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d].Data", i))
@@ -1415,9 +1415,9 @@ func DepositsToConsensus(src []*Deposit) ([]*eth.Deposit, error) {
 		if err != nil {
 			return nil, server.NewDecodeError(err, fmt.Sprintf("[%d].Signature", i))
 		}
-		deposits[i] = &eth.Deposit{
+		deposits[i] = &sila.Deposit{
 			Proof: proof,
-			Data: &eth.Deposit_Data{
+			Data: &sila.Deposit_Data{
 				PublicKey:             pubkey,
 				WithdrawalCredentials: withdrawalCreds,
 				Amount:                amount,
@@ -1428,7 +1428,7 @@ func DepositsToConsensus(src []*Deposit) ([]*eth.Deposit, error) {
 	return deposits, nil
 }
 
-func DepositsFromConsensus(src []*eth.Deposit) []*Deposit {
+func DepositsFromConsensus(src []*sila.Deposit) []*Deposit {
 	deposits := make([]*Deposit, len(src))
 	for i, d := range src {
 		proof := make([]string, len(d.Proof))
@@ -1448,7 +1448,7 @@ func DepositsFromConsensus(src []*eth.Deposit) []*Deposit {
 	return deposits
 }
 
-func SignedExitsToConsensus(src []*SignedVoluntaryExit) ([]*eth.SignedVoluntaryExit, error) {
+func SignedExitsToConsensus(src []*SignedVoluntaryExit) ([]*sila.SignedVoluntaryExit, error) {
 	if src == nil {
 		return nil, server.NewDecodeError(errNilValue, "SignedVoluntaryExits")
 	}
@@ -1457,7 +1457,7 @@ func SignedExitsToConsensus(src []*SignedVoluntaryExit) ([]*eth.SignedVoluntaryE
 		return nil, server.NewDecodeError(err, "SignedVoluntaryExits")
 	}
 
-	exits := make([]*eth.SignedVoluntaryExit, len(src))
+	exits := make([]*sila.SignedVoluntaryExit, len(src))
 	for i, e := range src {
 		if e == nil {
 			return nil, server.NewDecodeError(errNilValue, fmt.Sprintf("[%d]", i))
@@ -1470,7 +1470,7 @@ func SignedExitsToConsensus(src []*SignedVoluntaryExit) ([]*eth.SignedVoluntaryE
 	return exits, nil
 }
 
-func SignedExitsFromConsensus(src []*eth.SignedVoluntaryExit) []*SignedVoluntaryExit {
+func SignedExitsFromConsensus(src []*sila.SignedVoluntaryExit) []*SignedVoluntaryExit {
 	exits := make([]*SignedVoluntaryExit, len(src))
 	for i, e := range src {
 		exits[i] = &SignedVoluntaryExit{
@@ -1492,7 +1492,7 @@ func sszBytesToUint256String(b []byte) (string, error) {
 	return bi.String(), nil
 }
 
-func PendingDepositsFromConsensus(ds []*eth.PendingDeposit) []*PendingDeposit {
+func PendingDepositsFromConsensus(ds []*sila.PendingDeposit) []*PendingDeposit {
 	deposits := make([]*PendingDeposit, len(ds))
 	for i, d := range ds {
 		deposits[i] = &PendingDeposit{
@@ -1506,7 +1506,7 @@ func PendingDepositsFromConsensus(ds []*eth.PendingDeposit) []*PendingDeposit {
 	return deposits
 }
 
-func PendingPartialWithdrawalsFromConsensus(ws []*eth.PendingPartialWithdrawal) []*PendingPartialWithdrawal {
+func PendingPartialWithdrawalsFromConsensus(ws []*sila.PendingPartialWithdrawal) []*PendingPartialWithdrawal {
 	withdrawals := make([]*PendingPartialWithdrawal, len(ws))
 	for i, w := range ws {
 		withdrawals[i] = &PendingPartialWithdrawal{
@@ -1518,7 +1518,7 @@ func PendingPartialWithdrawalsFromConsensus(ws []*eth.PendingPartialWithdrawal) 
 	return withdrawals
 }
 
-func PendingConsolidationsFromConsensus(cs []*eth.PendingConsolidation) []*PendingConsolidation {
+func PendingConsolidationsFromConsensus(cs []*sila.PendingConsolidation) []*PendingConsolidation {
 	consolidations := make([]*PendingConsolidation, len(cs))
 	for i, c := range cs {
 		consolidations[i] = &PendingConsolidation{
@@ -1535,7 +1535,7 @@ func HeadEventFromV1(event *ethv1.EventHead) *HeadEvent {
 		Block:                     hexutil.Encode(event.Block),
 		State:                     hexutil.Encode(event.State),
 		EpochTransition:           event.EpochTransition,
-		SilaOptimistic:       event.SilaOptimistic,
+		SilaOptimistic:            event.SilaOptimistic,
 		PreviousDutyDependentRoot: hexutil.Encode(event.PreviousDutyDependentRoot),
 		CurrentDutyDependentRoot:  hexutil.Encode(event.CurrentDutyDependentRoot),
 	}
@@ -1543,27 +1543,27 @@ func HeadEventFromV1(event *ethv1.EventHead) *HeadEvent {
 
 func FinalizedCheckpointEventFromV1(event *ethv1.EventFinalizedCheckpoint) *FinalizedCheckpointEvent {
 	return &FinalizedCheckpointEvent{
-		Block:               hexutil.Encode(event.Block),
-		State:               hexutil.Encode(event.State),
-		Epoch:               fmt.Sprintf("%d", event.Epoch),
+		Block:          hexutil.Encode(event.Block),
+		State:          hexutil.Encode(event.State),
+		Epoch:          fmt.Sprintf("%d", event.Epoch),
 		SilaOptimistic: event.SilaOptimistic,
 	}
 }
 
 func EventChainReorgFromV1(event *ethv1.EventChainReorg) *ChainReorgEvent {
 	return &ChainReorgEvent{
-		Slot:                fmt.Sprintf("%d", event.Slot),
-		Depth:               fmt.Sprintf("%d", event.Depth),
-		OldHeadBlock:        hexutil.Encode(event.OldHeadBlock),
-		NewHeadBlock:        hexutil.Encode(event.NewHeadBlock),
-		OldHeadState:        hexutil.Encode(event.OldHeadState),
-		NewHeadState:        hexutil.Encode(event.NewHeadState),
-		Epoch:               fmt.Sprintf("%d", event.Epoch),
+		Slot:           fmt.Sprintf("%d", event.Slot),
+		Depth:          fmt.Sprintf("%d", event.Depth),
+		OldHeadBlock:   hexutil.Encode(event.OldHeadBlock),
+		NewHeadBlock:   hexutil.Encode(event.NewHeadBlock),
+		OldHeadState:   hexutil.Encode(event.OldHeadState),
+		NewHeadState:   hexutil.Encode(event.NewHeadState),
+		Epoch:          fmt.Sprintf("%d", event.Epoch),
 		SilaOptimistic: event.SilaOptimistic,
 	}
 }
 
-func SyncAggregateFromConsensus(sa *eth.SyncAggregate) *SyncAggregate {
+func SyncAggregateFromConsensus(sa *sila.SyncAggregate) *SyncAggregate {
 	return &SyncAggregate{
 		SyncCommitteeBits:      hexutil.Encode(sa.SyncCommitteeBits),
 		SyncCommitteeSignature: hexutil.Encode(sa.SyncCommitteeSignature),

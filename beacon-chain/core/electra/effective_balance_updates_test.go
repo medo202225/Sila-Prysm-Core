@@ -7,13 +7,13 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestProcessEffectiveBalanceUpdates_SafeCopy(t *testing.T) {
-	pb := &eth.BeaconStateElectra{
-		Validators: []*eth.Validator{
+	pb := &sila.BeaconStateElectra{
+		Validators: []*sila.Validator{
 			{
 				EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
 				WithdrawalCredentials: []byte{params.BeaconConfig().CompoundingWithdrawalPrefixByte, 0x11},
@@ -49,8 +49,8 @@ func TestProcessEffectiveBalnceUpdates(t *testing.T) {
 		{
 			name: "validator with compounding withdrawal credentials updates effective balance",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{
-					Validators: []*eth.Validator{
+				pb := &sila.BeaconStateElectra{
+					Validators: []*sila.Validator{
 						{
 							EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
 							WithdrawalCredentials: []byte{params.BeaconConfig().CompoundingWithdrawalPrefixByte, 0x11},
@@ -73,8 +73,8 @@ func TestProcessEffectiveBalnceUpdates(t *testing.T) {
 		{
 			name: "validator without compounding withdrawal credentials updates effective balance",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{
-					Validators: []*eth.Validator{
+				pb := &sila.BeaconStateElectra{
+					Validators: []*sila.Validator{
 						{
 							EffectiveBalance:      params.BeaconConfig().MinActivationBalance / 2,
 							WithdrawalCredentials: make([]byte, 32),
@@ -97,8 +97,8 @@ func TestProcessEffectiveBalnceUpdates(t *testing.T) {
 		{
 			name: "validator effective balance moves only when outside of threshold",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{
-					Validators: []*eth.Validator{
+				pb := &sila.BeaconStateElectra{
+					Validators: []*sila.Validator{
 						{
 							EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
 							WithdrawalCredentials: []byte{params.BeaconConfig().CompoundingWithdrawalPrefixByte, 0x11},

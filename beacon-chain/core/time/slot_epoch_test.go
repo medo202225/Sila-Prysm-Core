@@ -9,7 +9,7 @@ import (
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -44,7 +44,7 @@ func TestCurrentEpoch_OK(t *testing.T) {
 		{slot: 200, epoch: 6},
 	}
 	for _, tt := range tests {
-		st, err := state_native.InitializeFromProtoPhase0(&eth.BeaconState{Slot: tt.slot})
+		st, err := state_native.InitializeFromProtoPhase0(&sila.BeaconState{Slot: tt.slot})
 		require.NoError(t, err)
 		assert.Equal(t, tt.epoch, time.CurrentEpoch(st), "ActiveCurrentEpoch(%d)", st.Slot())
 	}
@@ -60,7 +60,7 @@ func TestPrevEpoch_OK(t *testing.T) {
 		{slot: 2 * params.BeaconConfig().SlotsPerEpoch, epoch: 1},
 	}
 	for _, tt := range tests {
-		st, err := state_native.InitializeFromProtoPhase0(&eth.BeaconState{Slot: tt.slot})
+		st, err := state_native.InitializeFromProtoPhase0(&sila.BeaconState{Slot: tt.slot})
 		require.NoError(t, err)
 		assert.Equal(t, tt.epoch, time.PrevEpoch(st), "ActivePrevEpoch(%d)", st.Slot())
 	}
@@ -78,7 +78,7 @@ func TestNextEpoch_OK(t *testing.T) {
 		{slot: 200, epoch: primitives.Epoch(200/params.BeaconConfig().SlotsPerEpoch + 1)},
 	}
 	for _, tt := range tests {
-		st, err := state_native.InitializeFromProtoPhase0(&eth.BeaconState{Slot: tt.slot})
+		st, err := state_native.InitializeFromProtoPhase0(&sila.BeaconState{Slot: tt.slot})
 		require.NoError(t, err)
 		assert.Equal(t, tt.epoch, time.NextEpoch(st), "NextEpoch(%d)", st.Slot())
 	}
@@ -109,7 +109,7 @@ func TestCanProcessEpoch_TrueOnEpochsLastSlot(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		b := &eth.BeaconState{Slot: tt.slot}
+		b := &sila.BeaconState{Slot: tt.slot}
 		s, err := state_native.InitializeFromProtoPhase0(b)
 		require.NoError(t, err)
 		assert.Equal(t, tt.canProcessEpoch, time.CanProcessEpoch(s), "CanProcessEpoch(%d)", tt.slot)

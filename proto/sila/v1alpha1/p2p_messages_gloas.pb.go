@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/p2p_messages_gloas.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
@@ -24,9 +24,9 @@ const (
 )
 
 type SilaPayloadEnvelopesByRangeRequest struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	StartSlot     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Count         uint64                                                                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

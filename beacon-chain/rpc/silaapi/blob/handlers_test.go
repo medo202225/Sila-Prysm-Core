@@ -25,7 +25,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
@@ -132,7 +132,7 @@ func TestBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -225,7 +225,7 @@ func TestBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -257,7 +257,7 @@ func TestBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -297,7 +297,7 @@ func TestBlobs(t *testing.T) {
 		request.SetPathValue("block_id", fmt.Sprintf("%d", es))
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
-		moc := &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock}
+		moc := &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock}
 		s.Blocker = &lookup.BeaconDbBlocker{
 			ChainInfoFetcher:   moc,
 			GenesisTimeFetcher: moc, // genesis time is set to 0 here, so it results in current epoch being extremely large
@@ -329,7 +329,7 @@ func TestBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -399,7 +399,7 @@ func TestBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -411,7 +411,7 @@ func TestBlobs(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		require.Equal(t, len(writer.Body.Bytes()), fieldparams.BlobSidecarSize) // size of each sidecar
 		// can directly unmarshal to sidecar since there's only 1
-		var sidecar eth.BlobSidecar
+		var sidecar sila.BlobSidecar
 		require.NoError(t, sidecar.UnmarshalSSZ(writer.Body.Bytes()))
 		require.NotNil(t, sidecar.Blob)
 	})
@@ -423,7 +423,7 @@ func TestBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -474,7 +474,7 @@ func TestBlobs_Electra(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: electraBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: electraBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -507,7 +507,7 @@ func TestBlobs_Electra(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: electraBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: electraBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -689,7 +689,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -779,7 +779,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -802,7 +802,7 @@ func TestGetBlobs(t *testing.T) {
 		request.SetPathValue("block_id", "123")
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
-		moc := &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock}
+		moc := &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock}
 		s.Blocker = &lookup.BeaconDbBlocker{
 			ChainInfoFetcher:   moc,
 			GenesisTimeFetcher: moc, // genesis time is set to 0 here, so it results in current epoch being extremely large
@@ -833,7 +833,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}, Block: denebBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -901,7 +901,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -924,7 +924,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -945,7 +945,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -971,7 +971,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -998,7 +998,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -1028,7 +1028,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: blockRoot[:]}},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: blockRoot[:]}},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -1065,7 +1065,7 @@ func TestGetBlobs(t *testing.T) {
 		writer := httptest.NewRecorder()
 		writer.Body = &bytes.Buffer{}
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: electraBlockRoot[:]}, Block: electraBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: electraBlockRoot[:]}, Block: electraBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -1105,7 +1105,7 @@ func TestGetBlobs(t *testing.T) {
 		// Create an empty blob storage (won't be used but needs to be non-nil)
 		_, emptyBlobStorage := filesystem.NewEphemeralBlobStorageAndFs(t)
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: fuluBlockRoot[:]}, Block: fuluBlock.ReadOnlySignedBeaconBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: fuluBlockRoot[:]}, Block: fuluBlock.ReadOnlySignedBeaconBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},
@@ -1160,7 +1160,7 @@ func TestGetBlobs(t *testing.T) {
 		// Create an empty blob storage (won't be used but needs to be non-nil)
 		_, emptyBlobStorage := filesystem.NewEphemeralBlobStorageAndFs(t)
 		s.Blocker = &lookup.BeaconDbBlocker{
-			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &eth.Checkpoint{Root: fuluBlockRoot2[:]}, Block: fuluBlock2.ReadOnlySignedBeaconBlock},
+			ChainInfoFetcher: &mockChain.ChainService{FinalizedCheckPoint: &sila.Checkpoint{Root: fuluBlockRoot2[:]}, Block: fuluBlock2.ReadOnlySignedBeaconBlock},
 			GenesisTimeFetcher: &testutil.MockGenesisTimeFetcher{
 				Genesis: time.Now(),
 			},

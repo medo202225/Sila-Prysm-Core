@@ -7,7 +7,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
@@ -80,8 +80,8 @@ func TestROBlockSorting(t *testing.T) {
 }
 
 func testROBlock(t *testing.T, slot primitives.Slot, root [32]byte) ROBlock {
-	b, err := NewSignedBeaconBlock(&eth.SignedBeaconBlock{Block: &eth.BeaconBlock{
-		Body: &eth.BeaconBlockBody{},
+	b, err := NewSignedBeaconBlock(&sila.SignedBeaconBlock{Block: &sila.BeaconBlock{
+		Body: &sila.BeaconBlockBody{},
 		Slot: slot,
 	}})
 	require.NoError(t, err)

@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 	grpc "google.golang.org/grpc"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -44,14 +44,14 @@ func (m *MockBeaconChainClient) EXPECT() *MockBeaconChainClientMockRecorder {
 }
 
 // AttestationPool mocks base method.
-func (m *MockBeaconChainClient) AttestationPool(ctx context.Context, in *eth.AttestationPoolRequest, opts ...grpc.CallOption) (*eth.AttestationPoolResponse, error) {
+func (m *MockBeaconChainClient) AttestationPool(ctx context.Context, in *sila.AttestationPoolRequest, opts ...grpc.CallOption) (*sila.AttestationPoolResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "AttestationPool", varargs...)
-	ret0, _ := ret[0].(*eth.AttestationPoolResponse)
+	ret0, _ := ret[0].(*sila.AttestationPoolResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -64,14 +64,14 @@ func (mr *MockBeaconChainClientMockRecorder) AttestationPool(ctx, in any, opts .
 }
 
 // AttestationPoolElectra mocks base method.
-func (m *MockBeaconChainClient) AttestationPoolElectra(ctx context.Context, in *eth.AttestationPoolRequest, opts ...grpc.CallOption) (*eth.AttestationPoolElectraResponse, error) {
+func (m *MockBeaconChainClient) AttestationPoolElectra(ctx context.Context, in *sila.AttestationPoolRequest, opts ...grpc.CallOption) (*sila.AttestationPoolElectraResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "AttestationPoolElectra", varargs...)
-	ret0, _ := ret[0].(*eth.AttestationPoolElectraResponse)
+	ret0, _ := ret[0].(*sila.AttestationPoolElectraResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -84,14 +84,14 @@ func (mr *MockBeaconChainClientMockRecorder) AttestationPoolElectra(ctx, in any,
 }
 
 // GetBeaconConfig mocks base method.
-func (m *MockBeaconChainClient) GetBeaconConfig(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.BeaconConfig, error) {
+func (m *MockBeaconChainClient) GetBeaconConfig(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.BeaconConfig, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetBeaconConfig", varargs...)
-	ret0, _ := ret[0].(*eth.BeaconConfig)
+	ret0, _ := ret[0].(*sila.BeaconConfig)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -104,14 +104,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetBeaconConfig(ctx, in any, opts .
 }
 
 // GetChainHead mocks base method.
-func (m *MockBeaconChainClient) GetChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.ChainHead, error) {
+func (m *MockBeaconChainClient) GetChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.ChainHead, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetChainHead", varargs...)
-	ret0, _ := ret[0].(*eth.ChainHead)
+	ret0, _ := ret[0].(*sila.ChainHead)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -124,14 +124,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetChainHead(ctx, in any, opts ...a
 }
 
 // GetIndividualVotes mocks base method.
-func (m *MockBeaconChainClient) GetIndividualVotes(ctx context.Context, in *eth.IndividualVotesRequest, opts ...grpc.CallOption) (*eth.IndividualVotesRespond, error) {
+func (m *MockBeaconChainClient) GetIndividualVotes(ctx context.Context, in *sila.IndividualVotesRequest, opts ...grpc.CallOption) (*sila.IndividualVotesRespond, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetIndividualVotes", varargs...)
-	ret0, _ := ret[0].(*eth.IndividualVotesRespond)
+	ret0, _ := ret[0].(*sila.IndividualVotesRespond)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -144,14 +144,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetIndividualVotes(ctx, in any, opt
 }
 
 // GetValidator mocks base method.
-func (m *MockBeaconChainClient) GetValidator(ctx context.Context, in *eth.GetValidatorRequest, opts ...grpc.CallOption) (*eth.Validator, error) {
+func (m *MockBeaconChainClient) GetValidator(ctx context.Context, in *sila.GetValidatorRequest, opts ...grpc.CallOption) (*sila.Validator, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetValidator", varargs...)
-	ret0, _ := ret[0].(*eth.Validator)
+	ret0, _ := ret[0].(*sila.Validator)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -164,14 +164,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetValidator(ctx, in any, opts ...a
 }
 
 // GetValidatorActiveSetChanges mocks base method.
-func (m *MockBeaconChainClient) GetValidatorActiveSetChanges(ctx context.Context, in *eth.GetValidatorActiveSetChangesRequest, opts ...grpc.CallOption) (*eth.ActiveSetChanges, error) {
+func (m *MockBeaconChainClient) GetValidatorActiveSetChanges(ctx context.Context, in *sila.GetValidatorActiveSetChangesRequest, opts ...grpc.CallOption) (*sila.ActiveSetChanges, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetValidatorActiveSetChanges", varargs...)
-	ret0, _ := ret[0].(*eth.ActiveSetChanges)
+	ret0, _ := ret[0].(*sila.ActiveSetChanges)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -184,14 +184,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetValidatorActiveSetChanges(ctx, i
 }
 
 // GetValidatorParticipation mocks base method.
-func (m *MockBeaconChainClient) GetValidatorParticipation(ctx context.Context, in *eth.GetValidatorParticipationRequest, opts ...grpc.CallOption) (*eth.ValidatorParticipationResponse, error) {
+func (m *MockBeaconChainClient) GetValidatorParticipation(ctx context.Context, in *sila.GetValidatorParticipationRequest, opts ...grpc.CallOption) (*sila.ValidatorParticipationResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetValidatorParticipation", varargs...)
-	ret0, _ := ret[0].(*eth.ValidatorParticipationResponse)
+	ret0, _ := ret[0].(*sila.ValidatorParticipationResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -204,14 +204,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetValidatorParticipation(ctx, in a
 }
 
 // GetValidatorPerformance mocks base method.
-func (m *MockBeaconChainClient) GetValidatorPerformance(ctx context.Context, in *eth.ValidatorPerformanceRequest, opts ...grpc.CallOption) (*eth.ValidatorPerformanceResponse, error) {
+func (m *MockBeaconChainClient) GetValidatorPerformance(ctx context.Context, in *sila.ValidatorPerformanceRequest, opts ...grpc.CallOption) (*sila.ValidatorPerformanceResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetValidatorPerformance", varargs...)
-	ret0, _ := ret[0].(*eth.ValidatorPerformanceResponse)
+	ret0, _ := ret[0].(*sila.ValidatorPerformanceResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -224,14 +224,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetValidatorPerformance(ctx, in any
 }
 
 // GetValidatorQueue mocks base method.
-func (m *MockBeaconChainClient) GetValidatorQueue(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.ValidatorQueue, error) {
+func (m *MockBeaconChainClient) GetValidatorQueue(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.ValidatorQueue, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetValidatorQueue", varargs...)
-	ret0, _ := ret[0].(*eth.ValidatorQueue)
+	ret0, _ := ret[0].(*sila.ValidatorQueue)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -244,14 +244,14 @@ func (mr *MockBeaconChainClientMockRecorder) GetValidatorQueue(ctx, in any, opts
 }
 
 // ListAttestations mocks base method.
-func (m *MockBeaconChainClient) ListAttestations(ctx context.Context, in *eth.ListAttestationsRequest, opts ...grpc.CallOption) (*eth.ListAttestationsResponse, error) {
+func (m *MockBeaconChainClient) ListAttestations(ctx context.Context, in *sila.ListAttestationsRequest, opts ...grpc.CallOption) (*sila.ListAttestationsResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListAttestations", varargs...)
-	ret0, _ := ret[0].(*eth.ListAttestationsResponse)
+	ret0, _ := ret[0].(*sila.ListAttestationsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -264,14 +264,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListAttestations(ctx, in any, opts 
 }
 
 // ListAttestationsElectra mocks base method.
-func (m *MockBeaconChainClient) ListAttestationsElectra(ctx context.Context, in *eth.ListAttestationsRequest, opts ...grpc.CallOption) (*eth.ListAttestationsElectraResponse, error) {
+func (m *MockBeaconChainClient) ListAttestationsElectra(ctx context.Context, in *sila.ListAttestationsRequest, opts ...grpc.CallOption) (*sila.ListAttestationsElectraResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListAttestationsElectra", varargs...)
-	ret0, _ := ret[0].(*eth.ListAttestationsElectraResponse)
+	ret0, _ := ret[0].(*sila.ListAttestationsElectraResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -284,14 +284,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListAttestationsElectra(ctx, in any
 }
 
 // ListBeaconBlocks mocks base method.
-func (m *MockBeaconChainClient) ListBeaconBlocks(ctx context.Context, in *eth.ListBlocksRequest, opts ...grpc.CallOption) (*eth.ListBeaconBlocksResponse, error) {
+func (m *MockBeaconChainClient) ListBeaconBlocks(ctx context.Context, in *sila.ListBlocksRequest, opts ...grpc.CallOption) (*sila.ListBeaconBlocksResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListBeaconBlocks", varargs...)
-	ret0, _ := ret[0].(*eth.ListBeaconBlocksResponse)
+	ret0, _ := ret[0].(*sila.ListBeaconBlocksResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -304,14 +304,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListBeaconBlocks(ctx, in any, opts 
 }
 
 // ListBeaconCommittees mocks base method.
-func (m *MockBeaconChainClient) ListBeaconCommittees(ctx context.Context, in *eth.ListCommitteesRequest, opts ...grpc.CallOption) (*eth.BeaconCommittees, error) {
+func (m *MockBeaconChainClient) ListBeaconCommittees(ctx context.Context, in *sila.ListCommitteesRequest, opts ...grpc.CallOption) (*sila.BeaconCommittees, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListBeaconCommittees", varargs...)
-	ret0, _ := ret[0].(*eth.BeaconCommittees)
+	ret0, _ := ret[0].(*sila.BeaconCommittees)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -324,14 +324,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListBeaconCommittees(ctx, in any, o
 }
 
 // ListIndexedAttestations mocks base method.
-func (m *MockBeaconChainClient) ListIndexedAttestations(ctx context.Context, in *eth.ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*eth.ListIndexedAttestationsResponse, error) {
+func (m *MockBeaconChainClient) ListIndexedAttestations(ctx context.Context, in *sila.ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*sila.ListIndexedAttestationsResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListIndexedAttestations", varargs...)
-	ret0, _ := ret[0].(*eth.ListIndexedAttestationsResponse)
+	ret0, _ := ret[0].(*sila.ListIndexedAttestationsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -344,14 +344,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListIndexedAttestations(ctx, in any
 }
 
 // ListIndexedAttestationsElectra mocks base method.
-func (m *MockBeaconChainClient) ListIndexedAttestationsElectra(ctx context.Context, in *eth.ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*eth.ListIndexedAttestationsElectraResponse, error) {
+func (m *MockBeaconChainClient) ListIndexedAttestationsElectra(ctx context.Context, in *sila.ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*sila.ListIndexedAttestationsElectraResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListIndexedAttestationsElectra", varargs...)
-	ret0, _ := ret[0].(*eth.ListIndexedAttestationsElectraResponse)
+	ret0, _ := ret[0].(*sila.ListIndexedAttestationsElectraResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -364,14 +364,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListIndexedAttestationsElectra(ctx,
 }
 
 // ListValidatorAssignments mocks base method.
-func (m *MockBeaconChainClient) ListValidatorAssignments(ctx context.Context, in *eth.ListValidatorAssignmentsRequest, opts ...grpc.CallOption) (*eth.ValidatorAssignments, error) {
+func (m *MockBeaconChainClient) ListValidatorAssignments(ctx context.Context, in *sila.ListValidatorAssignmentsRequest, opts ...grpc.CallOption) (*sila.ValidatorAssignments, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListValidatorAssignments", varargs...)
-	ret0, _ := ret[0].(*eth.ValidatorAssignments)
+	ret0, _ := ret[0].(*sila.ValidatorAssignments)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -384,14 +384,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListValidatorAssignments(ctx, in an
 }
 
 // ListValidatorBalances mocks base method.
-func (m *MockBeaconChainClient) ListValidatorBalances(ctx context.Context, in *eth.ListValidatorBalancesRequest, opts ...grpc.CallOption) (*eth.ValidatorBalances, error) {
+func (m *MockBeaconChainClient) ListValidatorBalances(ctx context.Context, in *sila.ListValidatorBalancesRequest, opts ...grpc.CallOption) (*sila.ValidatorBalances, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListValidatorBalances", varargs...)
-	ret0, _ := ret[0].(*eth.ValidatorBalances)
+	ret0, _ := ret[0].(*sila.ValidatorBalances)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -404,14 +404,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListValidatorBalances(ctx, in any, 
 }
 
 // ListValidators mocks base method.
-func (m *MockBeaconChainClient) ListValidators(ctx context.Context, in *eth.ListValidatorsRequest, opts ...grpc.CallOption) (*eth.Validators, error) {
+func (m *MockBeaconChainClient) ListValidators(ctx context.Context, in *sila.ListValidatorsRequest, opts ...grpc.CallOption) (*sila.Validators, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListValidators", varargs...)
-	ret0, _ := ret[0].(*eth.Validators)
+	ret0, _ := ret[0].(*sila.Validators)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -424,14 +424,14 @@ func (mr *MockBeaconChainClientMockRecorder) ListValidators(ctx, in any, opts ..
 }
 
 // SubmitAttesterSlashing mocks base method.
-func (m *MockBeaconChainClient) SubmitAttesterSlashing(ctx context.Context, in *eth.AttesterSlashing, opts ...grpc.CallOption) (*eth.SubmitSlashingResponse, error) {
+func (m *MockBeaconChainClient) SubmitAttesterSlashing(ctx context.Context, in *sila.AttesterSlashing, opts ...grpc.CallOption) (*sila.SubmitSlashingResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "SubmitAttesterSlashing", varargs...)
-	ret0, _ := ret[0].(*eth.SubmitSlashingResponse)
+	ret0, _ := ret[0].(*sila.SubmitSlashingResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -444,14 +444,14 @@ func (mr *MockBeaconChainClientMockRecorder) SubmitAttesterSlashing(ctx, in any,
 }
 
 // SubmitAttesterSlashingElectra mocks base method.
-func (m *MockBeaconChainClient) SubmitAttesterSlashingElectra(ctx context.Context, in *eth.AttesterSlashingElectra, opts ...grpc.CallOption) (*eth.SubmitSlashingResponse, error) {
+func (m *MockBeaconChainClient) SubmitAttesterSlashingElectra(ctx context.Context, in *sila.AttesterSlashingElectra, opts ...grpc.CallOption) (*sila.SubmitSlashingResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "SubmitAttesterSlashingElectra", varargs...)
-	ret0, _ := ret[0].(*eth.SubmitSlashingResponse)
+	ret0, _ := ret[0].(*sila.SubmitSlashingResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -464,14 +464,14 @@ func (mr *MockBeaconChainClientMockRecorder) SubmitAttesterSlashingElectra(ctx, 
 }
 
 // SubmitProposerSlashing mocks base method.
-func (m *MockBeaconChainClient) SubmitProposerSlashing(ctx context.Context, in *eth.ProposerSlashing, opts ...grpc.CallOption) (*eth.SubmitSlashingResponse, error) {
+func (m *MockBeaconChainClient) SubmitProposerSlashing(ctx context.Context, in *sila.ProposerSlashing, opts ...grpc.CallOption) (*sila.SubmitSlashingResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "SubmitProposerSlashing", varargs...)
-	ret0, _ := ret[0].(*eth.SubmitSlashingResponse)
+	ret0, _ := ret[0].(*sila.SubmitSlashingResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

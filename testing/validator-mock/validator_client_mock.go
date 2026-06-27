@@ -13,11 +13,11 @@ import (
 	context "context"
 	reflect "reflect"
 
+	empty "github.com/golang/protobuf/ptypes/empty"
 	event "github.com/sila-chain/Sila-Consensus-Core/v7/api/client/event"
 	primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	iface "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -76,10 +76,10 @@ func (mr *MockValidatorClientMockRecorder) AggregatedSyncSelections(ctx, selecti
 }
 
 // AttestationData mocks base method.
-func (m *MockValidatorClient) AttestationData(ctx context.Context, in *eth.AttestationDataRequest) (*eth.AttestationData, error) {
+func (m *MockValidatorClient) AttestationData(ctx context.Context, in *sila.AttestationDataRequest) (*sila.AttestationData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AttestationData", ctx, in)
-	ret0, _ := ret[0].(*eth.AttestationData)
+	ret0, _ := ret[0].(*sila.AttestationData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -91,10 +91,10 @@ func (mr *MockValidatorClientMockRecorder) AttestationData(ctx, in any) *gomock.
 }
 
 // AttesterDuties mocks base method.
-func (m *MockValidatorClient) AttesterDuties(ctx context.Context, epoch primitives.Epoch, validatorIndices []primitives.ValidatorIndex) (*eth.AttesterDutiesResponse, error) {
+func (m *MockValidatorClient) AttesterDuties(ctx context.Context, epoch primitives.Epoch, validatorIndices []primitives.ValidatorIndex) (*sila.AttesterDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AttesterDuties", ctx, epoch, validatorIndices)
-	ret0, _ := ret[0].(*eth.AttesterDutiesResponse)
+	ret0, _ := ret[0].(*sila.AttesterDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -106,10 +106,10 @@ func (mr *MockValidatorClientMockRecorder) AttesterDuties(ctx, epoch, validatorI
 }
 
 // BeaconBlock mocks base method.
-func (m *MockValidatorClient) BeaconBlock(ctx context.Context, in *eth.BlockRequest) (*eth.GenericBeaconBlock, error) {
+func (m *MockValidatorClient) BeaconBlock(ctx context.Context, in *sila.BlockRequest) (*sila.GenericBeaconBlock, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BeaconBlock", ctx, in)
-	ret0, _ := ret[0].(*eth.GenericBeaconBlock)
+	ret0, _ := ret[0].(*sila.GenericBeaconBlock)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -121,10 +121,10 @@ func (mr *MockValidatorClientMockRecorder) BeaconBlock(ctx, in any) *gomock.Call
 }
 
 // CheckDoppelGanger mocks base method.
-func (m *MockValidatorClient) CheckDoppelGanger(ctx context.Context, in *eth.DoppelGangerRequest) (*eth.DoppelGangerResponse, error) {
+func (m *MockValidatorClient) CheckDoppelGanger(ctx context.Context, in *sila.DoppelGangerRequest) (*sila.DoppelGangerResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CheckDoppelGanger", ctx, in)
-	ret0, _ := ret[0].(*eth.DoppelGangerResponse)
+	ret0, _ := ret[0].(*sila.DoppelGangerResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -136,10 +136,10 @@ func (mr *MockValidatorClientMockRecorder) CheckDoppelGanger(ctx, in any) *gomoc
 }
 
 // DomainData mocks base method.
-func (m *MockValidatorClient) DomainData(ctx context.Context, in *eth.DomainRequest) (*eth.DomainResponse, error) {
+func (m *MockValidatorClient) DomainData(ctx context.Context, in *sila.DomainRequest) (*sila.DomainResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DomainData", ctx, in)
-	ret0, _ := ret[0].(*eth.DomainResponse)
+	ret0, _ := ret[0].(*sila.DomainResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -151,10 +151,10 @@ func (mr *MockValidatorClientMockRecorder) DomainData(ctx, in any) *gomock.Call 
 }
 
 // Duties mocks base method.
-func (m *MockValidatorClient) Duties(ctx context.Context, in *eth.DutiesRequest) (*eth.ValidatorDutiesContainer, error) {
+func (m *MockValidatorClient) Duties(ctx context.Context, in *sila.DutiesRequest) (*sila.ValidatorDutiesContainer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Duties", ctx, in)
-	ret0, _ := ret[0].(*eth.ValidatorDutiesContainer)
+	ret0, _ := ret[0].(*sila.ValidatorDutiesContainer)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -194,10 +194,10 @@ func (mr *MockValidatorClientMockRecorder) EventStreamIsRunning() *gomock.Call {
 }
 
 // FeeRecipientByPubKey mocks base method.
-func (m *MockValidatorClient) FeeRecipientByPubKey(ctx context.Context, in *eth.FeeRecipientByPubKeyRequest) (*eth.FeeRecipientByPubKeyResponse, error) {
+func (m *MockValidatorClient) FeeRecipientByPubKey(ctx context.Context, in *sila.FeeRecipientByPubKeyRequest) (*sila.FeeRecipientByPubKeyResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FeeRecipientByPubKey", ctx, in)
-	ret0, _ := ret[0].(*eth.FeeRecipientByPubKeyResponse)
+	ret0, _ := ret[0].(*sila.FeeRecipientByPubKeyResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -209,11 +209,11 @@ func (mr *MockValidatorClientMockRecorder) FeeRecipientByPubKey(ctx, in any) *go
 }
 
 // GetSilaPayloadEnvelope mocks base method.
-func (m *MockValidatorClient) GetSilaPayloadEnvelope(ctx context.Context, slot primitives.Slot, beaconBlockRoot [32]byte) (*eth.SilaPayloadEnvelope, *eth.WireBlindedSilaPayloadEnvelope, error) {
+func (m *MockValidatorClient) GetSilaPayloadEnvelope(ctx context.Context, slot primitives.Slot, beaconBlockRoot [32]byte) (*sila.SilaPayloadEnvelope, *sila.WireBlindedSilaPayloadEnvelope, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSilaPayloadEnvelope", ctx, slot, beaconBlockRoot)
-	ret0, _ := ret[0].(*eth.SilaPayloadEnvelope)
-	ret1, _ := ret[1].(*eth.WireBlindedSilaPayloadEnvelope)
+	ret0, _ := ret[0].(*sila.SilaPayloadEnvelope)
+	ret1, _ := ret[1].(*sila.WireBlindedSilaPayloadEnvelope)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
@@ -239,10 +239,10 @@ func (mr *MockValidatorClientMockRecorder) Host() *gomock.Call {
 }
 
 // MultipleValidatorStatus mocks base method.
-func (m *MockValidatorClient) MultipleValidatorStatus(ctx context.Context, in *eth.MultipleValidatorStatusRequest) (*eth.MultipleValidatorStatusResponse, error) {
+func (m *MockValidatorClient) MultipleValidatorStatus(ctx context.Context, in *sila.MultipleValidatorStatusRequest) (*sila.MultipleValidatorStatusResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "MultipleValidatorStatus", ctx, in)
-	ret0, _ := ret[0].(*eth.MultipleValidatorStatusResponse)
+	ret0, _ := ret[0].(*sila.MultipleValidatorStatusResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -254,10 +254,10 @@ func (mr *MockValidatorClientMockRecorder) MultipleValidatorStatus(ctx, in any) 
 }
 
 // PTCDuties mocks base method.
-func (m *MockValidatorClient) PTCDuties(ctx context.Context, epoch primitives.Epoch, validatorIndices []primitives.ValidatorIndex) (*eth.PTCDutiesResponse, error) {
+func (m *MockValidatorClient) PTCDuties(ctx context.Context, epoch primitives.Epoch, validatorIndices []primitives.ValidatorIndex) (*sila.PTCDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PTCDuties", ctx, epoch, validatorIndices)
-	ret0, _ := ret[0].(*eth.PTCDutiesResponse)
+	ret0, _ := ret[0].(*sila.PTCDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -269,10 +269,10 @@ func (mr *MockValidatorClientMockRecorder) PTCDuties(ctx, epoch, validatorIndice
 }
 
 // PayloadAttestationData mocks base method.
-func (m *MockValidatorClient) PayloadAttestationData(ctx context.Context, slot primitives.Slot) (*eth.PayloadAttestationData, error) {
+func (m *MockValidatorClient) PayloadAttestationData(ctx context.Context, slot primitives.Slot) (*sila.PayloadAttestationData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PayloadAttestationData", ctx, slot)
-	ret0, _ := ret[0].(*eth.PayloadAttestationData)
+	ret0, _ := ret[0].(*sila.PayloadAttestationData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -284,7 +284,7 @@ func (mr *MockValidatorClientMockRecorder) PayloadAttestationData(ctx, slot any)
 }
 
 // PrepareBeaconProposer mocks base method.
-func (m *MockValidatorClient) PrepareBeaconProposer(ctx context.Context, in *eth.PrepareBeaconProposerRequest) (*empty.Empty, error) {
+func (m *MockValidatorClient) PrepareBeaconProposer(ctx context.Context, in *sila.PrepareBeaconProposerRequest) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PrepareBeaconProposer", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -299,10 +299,10 @@ func (mr *MockValidatorClientMockRecorder) PrepareBeaconProposer(ctx, in any) *g
 }
 
 // ProposeAttestation mocks base method.
-func (m *MockValidatorClient) ProposeAttestation(ctx context.Context, in *eth.Attestation) (*eth.AttestResponse, error) {
+func (m *MockValidatorClient) ProposeAttestation(ctx context.Context, in *sila.Attestation) (*sila.AttestResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeAttestation", ctx, in)
-	ret0, _ := ret[0].(*eth.AttestResponse)
+	ret0, _ := ret[0].(*sila.AttestResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -314,10 +314,10 @@ func (mr *MockValidatorClientMockRecorder) ProposeAttestation(ctx, in any) *gomo
 }
 
 // ProposeAttestationElectra mocks base method.
-func (m *MockValidatorClient) ProposeAttestationElectra(ctx context.Context, in *eth.SingleAttestation) (*eth.AttestResponse, error) {
+func (m *MockValidatorClient) ProposeAttestationElectra(ctx context.Context, in *sila.SingleAttestation) (*sila.AttestResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeAttestationElectra", ctx, in)
-	ret0, _ := ret[0].(*eth.AttestResponse)
+	ret0, _ := ret[0].(*sila.AttestResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -329,10 +329,10 @@ func (mr *MockValidatorClientMockRecorder) ProposeAttestationElectra(ctx, in any
 }
 
 // ProposeBeaconBlock mocks base method.
-func (m *MockValidatorClient) ProposeBeaconBlock(ctx context.Context, in *eth.GenericSignedBeaconBlock) (*eth.ProposeResponse, error) {
+func (m *MockValidatorClient) ProposeBeaconBlock(ctx context.Context, in *sila.GenericSignedBeaconBlock) (*sila.ProposeResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeBeaconBlock", ctx, in)
-	ret0, _ := ret[0].(*eth.ProposeResponse)
+	ret0, _ := ret[0].(*sila.ProposeResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -344,10 +344,10 @@ func (mr *MockValidatorClientMockRecorder) ProposeBeaconBlock(ctx, in any) *gomo
 }
 
 // ProposeExit mocks base method.
-func (m *MockValidatorClient) ProposeExit(ctx context.Context, in *eth.SignedVoluntaryExit) (*eth.ProposeExitResponse, error) {
+func (m *MockValidatorClient) ProposeExit(ctx context.Context, in *sila.SignedVoluntaryExit) (*sila.ProposeExitResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeExit", ctx, in)
-	ret0, _ := ret[0].(*eth.ProposeExitResponse)
+	ret0, _ := ret[0].(*sila.ProposeExitResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -359,10 +359,10 @@ func (mr *MockValidatorClientMockRecorder) ProposeExit(ctx, in any) *gomock.Call
 }
 
 // ProposerDuties mocks base method.
-func (m *MockValidatorClient) ProposerDuties(ctx context.Context, epoch primitives.Epoch) (*eth.ProposerDutiesResponse, error) {
+func (m *MockValidatorClient) ProposerDuties(ctx context.Context, epoch primitives.Epoch) (*sila.ProposerDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposerDuties", ctx, epoch)
-	ret0, _ := ret[0].(*eth.ProposerDutiesResponse)
+	ret0, _ := ret[0].(*sila.ProposerDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -374,7 +374,7 @@ func (mr *MockValidatorClientMockRecorder) ProposerDuties(ctx, epoch any) *gomoc
 }
 
 // PublishSilaPayloadEnvelope mocks base method.
-func (m *MockValidatorClient) PublishSilaPayloadEnvelope(ctx context.Context, in *eth.SignedSilaPayloadEnvelope) (*empty.Empty, error) {
+func (m *MockValidatorClient) PublishSilaPayloadEnvelope(ctx context.Context, in *sila.SignedSilaPayloadEnvelope) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PublishSilaPayloadEnvelope", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -389,7 +389,7 @@ func (mr *MockValidatorClientMockRecorder) PublishSilaPayloadEnvelope(ctx, in an
 }
 
 // PublishBlindedSilaPayloadEnvelope mocks base method.
-func (m *MockValidatorClient) PublishBlindedSilaPayloadEnvelope(ctx context.Context, in *eth.SignedWireBlindedSilaPayloadEnvelope) (*empty.Empty, error) {
+func (m *MockValidatorClient) PublishBlindedSilaPayloadEnvelope(ctx context.Context, in *sila.SignedWireBlindedSilaPayloadEnvelope) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PublishBlindedSilaPayloadEnvelope", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -404,7 +404,7 @@ func (mr *MockValidatorClientMockRecorder) PublishBlindedSilaPayloadEnvelope(ctx
 }
 
 // SubmitSignedProposerPreferences mocks base method.
-func (m *MockValidatorClient) SubmitSignedProposerPreferences(ctx context.Context, in *eth.SubmitSignedProposerPreferencesRequest) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubmitSignedProposerPreferences(ctx context.Context, in *sila.SubmitSignedProposerPreferencesRequest) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedProposerPreferences", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -419,7 +419,7 @@ func (mr *MockValidatorClientMockRecorder) SubmitSignedProposerPreferences(ctx, 
 }
 
 // SubmitSignedSilaPayloadBid mocks base method.
-func (m *MockValidatorClient) SubmitSignedSilaPayloadBid(ctx context.Context, in *eth.SignedSilaPayloadBid) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubmitSignedSilaPayloadBid(ctx context.Context, in *sila.SignedSilaPayloadBid) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedSilaPayloadBid", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -446,10 +446,10 @@ func (mr *MockValidatorClientMockRecorder) StartEventStream(ctx, topics, eventsC
 }
 
 // SubmitAggregateSelectionProof mocks base method.
-func (m *MockValidatorClient) SubmitAggregateSelectionProof(ctx context.Context, in *eth.AggregateSelectionRequest, index primitives.ValidatorIndex, committeeLength uint64) (*eth.AggregateSelectionResponse, error) {
+func (m *MockValidatorClient) SubmitAggregateSelectionProof(ctx context.Context, in *sila.AggregateSelectionRequest, index primitives.ValidatorIndex, committeeLength uint64) (*sila.AggregateSelectionResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitAggregateSelectionProof", ctx, in, index, committeeLength)
-	ret0, _ := ret[0].(*eth.AggregateSelectionResponse)
+	ret0, _ := ret[0].(*sila.AggregateSelectionResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -461,10 +461,10 @@ func (mr *MockValidatorClientMockRecorder) SubmitAggregateSelectionProof(ctx, in
 }
 
 // SubmitAggregateSelectionProofElectra mocks base method.
-func (m *MockValidatorClient) SubmitAggregateSelectionProofElectra(ctx context.Context, in *eth.AggregateSelectionRequest, arg2 primitives.ValidatorIndex, arg3 uint64) (*eth.AggregateSelectionElectraResponse, error) {
+func (m *MockValidatorClient) SubmitAggregateSelectionProofElectra(ctx context.Context, in *sila.AggregateSelectionRequest, arg2 primitives.ValidatorIndex, arg3 uint64) (*sila.AggregateSelectionElectraResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitAggregateSelectionProofElectra", ctx, in, arg2, arg3)
-	ret0, _ := ret[0].(*eth.AggregateSelectionElectraResponse)
+	ret0, _ := ret[0].(*sila.AggregateSelectionElectraResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -476,7 +476,7 @@ func (mr *MockValidatorClientMockRecorder) SubmitAggregateSelectionProofElectra(
 }
 
 // SubmitPayloadAttestation mocks base method.
-func (m *MockValidatorClient) SubmitPayloadAttestation(ctx context.Context, in *eth.PayloadAttestationMessage) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubmitPayloadAttestation(ctx context.Context, in *sila.PayloadAttestationMessage) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitPayloadAttestation", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -491,10 +491,10 @@ func (mr *MockValidatorClientMockRecorder) SubmitPayloadAttestation(ctx, in any)
 }
 
 // SubmitSignedAggregateSelectionProof mocks base method.
-func (m *MockValidatorClient) SubmitSignedAggregateSelectionProof(ctx context.Context, in *eth.SignedAggregateSubmitRequest) (*eth.SignedAggregateSubmitResponse, error) {
+func (m *MockValidatorClient) SubmitSignedAggregateSelectionProof(ctx context.Context, in *sila.SignedAggregateSubmitRequest) (*sila.SignedAggregateSubmitResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedAggregateSelectionProof", ctx, in)
-	ret0, _ := ret[0].(*eth.SignedAggregateSubmitResponse)
+	ret0, _ := ret[0].(*sila.SignedAggregateSubmitResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -506,10 +506,10 @@ func (mr *MockValidatorClientMockRecorder) SubmitSignedAggregateSelectionProof(c
 }
 
 // SubmitSignedAggregateSelectionProofElectra mocks base method.
-func (m *MockValidatorClient) SubmitSignedAggregateSelectionProofElectra(ctx context.Context, in *eth.SignedAggregateSubmitElectraRequest) (*eth.SignedAggregateSubmitResponse, error) {
+func (m *MockValidatorClient) SubmitSignedAggregateSelectionProofElectra(ctx context.Context, in *sila.SignedAggregateSubmitElectraRequest) (*sila.SignedAggregateSubmitResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedAggregateSelectionProofElectra", ctx, in)
-	ret0, _ := ret[0].(*eth.SignedAggregateSubmitResponse)
+	ret0, _ := ret[0].(*sila.SignedAggregateSubmitResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -521,7 +521,7 @@ func (mr *MockValidatorClientMockRecorder) SubmitSignedAggregateSelectionProofEl
 }
 
 // SubmitSignedContributionAndProof mocks base method.
-func (m *MockValidatorClient) SubmitSignedContributionAndProof(ctx context.Context, in *eth.SignedContributionAndProof) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubmitSignedContributionAndProof(ctx context.Context, in *sila.SignedContributionAndProof) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedContributionAndProof", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -536,7 +536,7 @@ func (mr *MockValidatorClientMockRecorder) SubmitSignedContributionAndProof(ctx,
 }
 
 // SubmitSyncMessage mocks base method.
-func (m *MockValidatorClient) SubmitSyncMessage(ctx context.Context, in *eth.SyncCommitteeMessage) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubmitSyncMessage(ctx context.Context, in *sila.SyncCommitteeMessage) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSyncMessage", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -551,7 +551,7 @@ func (mr *MockValidatorClientMockRecorder) SubmitSyncMessage(ctx, in any) *gomoc
 }
 
 // SubmitValidatorRegistrations mocks base method.
-func (m *MockValidatorClient) SubmitValidatorRegistrations(ctx context.Context, in *eth.SignedValidatorRegistrationsV1) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubmitValidatorRegistrations(ctx context.Context, in *sila.SignedValidatorRegistrationsV1) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitValidatorRegistrations", ctx, in)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -566,7 +566,7 @@ func (mr *MockValidatorClientMockRecorder) SubmitValidatorRegistrations(ctx, in 
 }
 
 // SubscribeCommitteeSubnets mocks base method.
-func (m *MockValidatorClient) SubscribeCommitteeSubnets(ctx context.Context, in *eth.CommitteeSubnetsSubscribeRequest, duties []*eth.ValidatorDuty) (*empty.Empty, error) {
+func (m *MockValidatorClient) SubscribeCommitteeSubnets(ctx context.Context, in *sila.CommitteeSubnetsSubscribeRequest, duties []*sila.ValidatorDuty) (*empty.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubscribeCommitteeSubnets", ctx, in, duties)
 	ret0, _ := ret[0].(*empty.Empty)
@@ -581,10 +581,10 @@ func (mr *MockValidatorClientMockRecorder) SubscribeCommitteeSubnets(ctx, in, du
 }
 
 // SyncCommitteeContribution mocks base method.
-func (m *MockValidatorClient) SyncCommitteeContribution(ctx context.Context, in *eth.SyncCommitteeContributionRequest) (*eth.SyncCommitteeContribution, error) {
+func (m *MockValidatorClient) SyncCommitteeContribution(ctx context.Context, in *sila.SyncCommitteeContributionRequest) (*sila.SyncCommitteeContribution, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SyncCommitteeContribution", ctx, in)
-	ret0, _ := ret[0].(*eth.SyncCommitteeContribution)
+	ret0, _ := ret[0].(*sila.SyncCommitteeContribution)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -596,10 +596,10 @@ func (mr *MockValidatorClientMockRecorder) SyncCommitteeContribution(ctx, in any
 }
 
 // SyncCommitteeDuties mocks base method.
-func (m *MockValidatorClient) SyncCommitteeDuties(ctx context.Context, epoch primitives.Epoch, validatorIndices []primitives.ValidatorIndex) (*eth.SyncCommitteeDutiesResponse, error) {
+func (m *MockValidatorClient) SyncCommitteeDuties(ctx context.Context, epoch primitives.Epoch, validatorIndices []primitives.ValidatorIndex) (*sila.SyncCommitteeDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SyncCommitteeDuties", ctx, epoch, validatorIndices)
-	ret0, _ := ret[0].(*eth.SyncCommitteeDutiesResponse)
+	ret0, _ := ret[0].(*sila.SyncCommitteeDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -611,10 +611,10 @@ func (mr *MockValidatorClientMockRecorder) SyncCommitteeDuties(ctx, epoch, valid
 }
 
 // SyncMessageBlockRoot mocks base method.
-func (m *MockValidatorClient) SyncMessageBlockRoot(ctx context.Context, in *empty.Empty) (*eth.SyncMessageBlockRootResponse, error) {
+func (m *MockValidatorClient) SyncMessageBlockRoot(ctx context.Context, in *empty.Empty) (*sila.SyncMessageBlockRootResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SyncMessageBlockRoot", ctx, in)
-	ret0, _ := ret[0].(*eth.SyncMessageBlockRootResponse)
+	ret0, _ := ret[0].(*sila.SyncMessageBlockRootResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -626,10 +626,10 @@ func (mr *MockValidatorClientMockRecorder) SyncMessageBlockRoot(ctx, in any) *go
 }
 
 // SyncSubcommitteeIndex mocks base method.
-func (m *MockValidatorClient) SyncSubcommitteeIndex(ctx context.Context, in *eth.SyncSubcommitteeIndexRequest) (*eth.SyncSubcommitteeIndexResponse, error) {
+func (m *MockValidatorClient) SyncSubcommitteeIndex(ctx context.Context, in *sila.SyncSubcommitteeIndexRequest) (*sila.SyncSubcommitteeIndexResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SyncSubcommitteeIndex", ctx, in)
-	ret0, _ := ret[0].(*eth.SyncSubcommitteeIndexResponse)
+	ret0, _ := ret[0].(*sila.SyncSubcommitteeIndexResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -641,10 +641,10 @@ func (mr *MockValidatorClientMockRecorder) SyncSubcommitteeIndex(ctx, in any) *g
 }
 
 // ValidatorIndex mocks base method.
-func (m *MockValidatorClient) ValidatorIndex(ctx context.Context, in *eth.ValidatorIndexRequest) (*eth.ValidatorIndexResponse, error) {
+func (m *MockValidatorClient) ValidatorIndex(ctx context.Context, in *sila.ValidatorIndexRequest) (*sila.ValidatorIndexResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorIndex", ctx, in)
-	ret0, _ := ret[0].(*eth.ValidatorIndexResponse)
+	ret0, _ := ret[0].(*sila.ValidatorIndexResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -656,10 +656,10 @@ func (mr *MockValidatorClientMockRecorder) ValidatorIndex(ctx, in any) *gomock.C
 }
 
 // ValidatorStatus mocks base method.
-func (m *MockValidatorClient) ValidatorStatus(ctx context.Context, in *eth.ValidatorStatusRequest) (*eth.ValidatorStatusResponse, error) {
+func (m *MockValidatorClient) ValidatorStatus(ctx context.Context, in *sila.ValidatorStatusRequest) (*sila.ValidatorStatusResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorStatus", ctx, in)
-	ret0, _ := ret[0].(*eth.ValidatorStatusResponse)
+	ret0, _ := ret[0].(*sila.ValidatorStatusResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -671,10 +671,10 @@ func (mr *MockValidatorClientMockRecorder) ValidatorStatus(ctx, in any) *gomock.
 }
 
 // WaitForChainStart mocks base method.
-func (m *MockValidatorClient) WaitForChainStart(ctx context.Context, in *empty.Empty) (*eth.ChainStartResponse, error) {
+func (m *MockValidatorClient) WaitForChainStart(ctx context.Context, in *empty.Empty) (*sila.ChainStartResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "WaitForChainStart", ctx, in)
-	ret0, _ := ret[0].(*eth.ChainStartResponse)
+	ret0, _ := ret[0].(*sila.ChainStartResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

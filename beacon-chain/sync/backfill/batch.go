@@ -6,12 +6,12 @@ import (
 	"sort"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/das"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sirupsen/logrus"
 )
 
@@ -145,16 +145,16 @@ func (b batch) ensureParent(expected [32]byte) error {
 	return nil
 }
 
-func (b batch) blockRequest() *eth.BeaconBlocksByRangeRequest {
-	return &eth.BeaconBlocksByRangeRequest{
+func (b batch) blockRequest() *sila.BeaconBlocksByRangeRequest {
+	return &sila.BeaconBlocksByRangeRequest{
 		StartSlot: b.begin,
 		Count:     uint64(b.end.FlooredSubSlot(b.begin)),
 		Step:      1,
 	}
 }
 
-func (b batch) blobRequest() *eth.BlobSidecarsByRangeRequest {
-	return &eth.BlobSidecarsByRangeRequest{
+func (b batch) blobRequest() *sila.BlobSidecarsByRangeRequest {
+	return &sila.BlobSidecarsByRangeRequest{
 		StartSlot: b.begin,
 		Count:     uint64(b.end.FlooredSubSlot(b.begin)),
 	}

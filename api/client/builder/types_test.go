@@ -11,18 +11,18 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	consensusblocks "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func ezDecode(t *testing.T, s string) []byte {
@@ -32,8 +32,8 @@ func ezDecode(t *testing.T, s string) []byte {
 }
 
 func TestSignedValidatorRegistration_MarshalJSON(t *testing.T) {
-	svr := &eth.SignedValidatorRegistrationV1{
-		Message: &eth.ValidatorRegistrationV1{
+	svr := &sila.SignedValidatorRegistrationV1{
+		Message: &sila.ValidatorRegistrationV1{
 			FeeRecipient: make([]byte, 20),
 			GasLimit:     0,
 			Timestamp:    0,
@@ -538,8 +538,8 @@ func TestSilaHeaderResponseToProto(t *testing.T) {
 	txRoot, err := hexutil.Decode("0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2")
 	require.NoError(t, err)
 
-	expected := &eth.SignedBuilderBid{
-		Message: &eth.BuilderBid{
+	expected := &sila.SignedBuilderBid{
+		Message: &sila.BuilderBid{
 			Header: &v1.SilaPayloadHeader{
 				ParentHash:       parentHash,
 				FeeRecipient:     feeRecipient,
@@ -598,8 +598,8 @@ func TestSilaHeaderResponseCapellaToProto(t *testing.T) {
 	withdrawalsRoot, err := hexutil.Decode("0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2")
 	require.NoError(t, err)
 
-	expected := &eth.SignedBuilderBidCapella{
-		Message: &eth.BuilderBidCapella{
+	expected := &sila.SignedBuilderBidCapella{
+		Message: &sila.BuilderBidCapella{
 			Header: &v1.SilaPayloadHeaderCapella{
 				ParentHash:       parentHash,
 				FeeRecipient:     feeRecipient,
@@ -1214,25 +1214,25 @@ func TestSilaPayloadResponseDenebToProtoDifferentProofCount(t *testing.T) {
 	require.ErrorContains(t, "proofs length 2 does not equal blobs length 1", err)
 }
 
-func pbSilaData() *eth.SilaData {
-	return &eth.SilaData{
+func pbSilaData() *sila.SilaData {
+	return &sila.SilaData{
 		DepositRoot:  make([]byte, 32),
 		DepositCount: 23,
 		BlockHash:    make([]byte, 32),
 	}
 }
 
-func pbSyncAggregate() *eth.SyncAggregate {
-	return &eth.SyncAggregate{
+func pbSyncAggregate() *sila.SyncAggregate {
+	return &sila.SyncAggregate{
 		SyncCommitteeSignature: make([]byte, 48),
 		SyncCommitteeBits:      bitfield.Bitvector512{0x01},
 	}
 }
 
-func pbDeposit(t *testing.T) *eth.Deposit {
-	return &eth.Deposit{
+func pbDeposit(t *testing.T) *sila.Deposit {
+	return &sila.Deposit{
 		Proof: [][]byte{ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2")},
-		Data: &eth.Deposit_Data{
+		Data: &sila.Deposit_Data{
 			PublicKey:             ezDecode(t, "0x93247f2209abcacf57b75a51dafae777f9dd38bc7053d1af526f220a7489a6d3a2753e5f3e8b1cfe39b56f43611df74a"),
 			WithdrawalCredentials: ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 			Amount:                1,
@@ -1241,9 +1241,9 @@ func pbDeposit(t *testing.T) *eth.Deposit {
 	}
 }
 
-func pbSignedVoluntaryExit(t *testing.T) *eth.SignedVoluntaryExit {
-	return &eth.SignedVoluntaryExit{
-		Exit: &eth.VoluntaryExit{
+func pbSignedVoluntaryExit(t *testing.T) *sila.SignedVoluntaryExit {
+	return &sila.SignedVoluntaryExit{
+		Exit: &sila.VoluntaryExit{
 			Epoch:          1,
 			ValidatorIndex: 1,
 		},
@@ -1251,18 +1251,18 @@ func pbSignedVoluntaryExit(t *testing.T) *eth.SignedVoluntaryExit {
 	}
 }
 
-func pbAttestation(t *testing.T) *eth.Attestation {
-	return &eth.Attestation{
+func pbAttestation(t *testing.T) *sila.Attestation {
+	return &sila.Attestation{
 		AggregationBits: bitfield.Bitlist{0x01},
-		Data: &eth.AttestationData{
+		Data: &sila.AttestationData{
 			Slot:            1,
 			CommitteeIndex:  1,
 			BeaconBlockRoot: ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
-			Source: &eth.Checkpoint{
+			Source: &sila.Checkpoint{
 				Epoch: 1,
 				Root:  ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 			},
-			Target: &eth.Checkpoint{
+			Target: &sila.Checkpoint{
 				Epoch: 1,
 				Root:  ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 			},
@@ -1271,37 +1271,37 @@ func pbAttestation(t *testing.T) *eth.Attestation {
 	}
 }
 
-func pbAttesterSlashing(t *testing.T) *eth.AttesterSlashing {
-	return &eth.AttesterSlashing{
-		Attestation_1: &eth.IndexedAttestation{
+func pbAttesterSlashing(t *testing.T) *sila.AttesterSlashing {
+	return &sila.AttesterSlashing{
+		Attestation_1: &sila.IndexedAttestation{
 			AttestingIndices: []uint64{1},
 			Signature:        ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            1,
 				CommitteeIndex:  1,
 				BeaconBlockRoot: ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 1,
 					Root:  ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 1,
 					Root:  ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 				},
 			},
 		},
-		Attestation_2: &eth.IndexedAttestation{
+		Attestation_2: &sila.IndexedAttestation{
 			AttestingIndices: []uint64{1},
 			Signature:        ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            1,
 				CommitteeIndex:  1,
 				BeaconBlockRoot: ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 1,
 					Root:  ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 1,
 					Root:  ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 				},
@@ -1318,10 +1318,10 @@ func TestAttesterSlashing_MarshalJSON(t *testing.T) {
 	require.Equal(t, expected, string(b))
 }
 
-func pbProposerSlashing(t *testing.T) *eth.ProposerSlashing {
-	return &eth.ProposerSlashing{
-		Header_1: &eth.SignedBeaconBlockHeader{
-			Header: &eth.BeaconBlockHeader{
+func pbProposerSlashing(t *testing.T) *sila.ProposerSlashing {
+	return &sila.ProposerSlashing{
+		Header_1: &sila.SignedBeaconBlockHeader{
+			Header: &sila.BeaconBlockHeader{
 				Slot:          1,
 				ProposerIndex: 1,
 				ParentRoot:    ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
@@ -1330,8 +1330,8 @@ func pbProposerSlashing(t *testing.T) *eth.ProposerSlashing {
 			},
 			Signature: ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
 		},
-		Header_2: &eth.SignedBeaconBlockHeader{
-			Header: &eth.BeaconBlockHeader{
+		Header_2: &sila.SignedBeaconBlockHeader{
+			Header: &sila.BeaconBlockHeader{
 				Slot:          1,
 				ProposerIndex: 1,
 				ParentRoot:    ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
@@ -1596,21 +1596,21 @@ func TestUint256UnmarshalTooBig(t *testing.T) {
 func TestMarshalBlindedBeaconBlockBodyBellatrix(t *testing.T) {
 	expected, err := os.ReadFile("testdata/blinded-block.json")
 	require.NoError(t, err)
-	b, err := structs.BlindedBeaconBlockBellatrixFromConsensus(&eth.BlindedBeaconBlockBellatrix{
+	b, err := structs.BlindedBeaconBlockBellatrixFromConsensus(&sila.BlindedBeaconBlockBellatrix{
 		Slot:          1,
 		ProposerIndex: 1,
 		ParentRoot:    ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 		StateRoot:     ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
-		Body: &eth.BlindedBeaconBlockBodyBellatrix{
-			RandaoReveal:           ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
-			SilaData:               pbSilaData(),
-			Graffiti:               ezDecode(t, "0xdeadbeefc0ffee"),
-			ProposerSlashings:      []*eth.ProposerSlashing{pbProposerSlashing(t)},
-			AttesterSlashings:      []*eth.AttesterSlashing{pbAttesterSlashing(t)},
-			Attestations:           []*eth.Attestation{pbAttestation(t)},
-			Deposits:               []*eth.Deposit{pbDeposit(t)},
-			VoluntaryExits:         []*eth.SignedVoluntaryExit{pbSignedVoluntaryExit(t)},
-			SyncAggregate:          pbSyncAggregate(),
+		Body: &sila.BlindedBeaconBlockBodyBellatrix{
+			RandaoReveal:      ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
+			SilaData:          pbSilaData(),
+			Graffiti:          ezDecode(t, "0xdeadbeefc0ffee"),
+			ProposerSlashings: []*sila.ProposerSlashing{pbProposerSlashing(t)},
+			AttesterSlashings: []*sila.AttesterSlashing{pbAttesterSlashing(t)},
+			Attestations:      []*sila.Attestation{pbAttestation(t)},
+			Deposits:          []*sila.Deposit{pbDeposit(t)},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{pbSignedVoluntaryExit(t)},
+			SyncAggregate:     pbSyncAggregate(),
 			SilaPayloadHeader: pbSilaPayloadHeader(t),
 		},
 	})
@@ -1626,21 +1626,21 @@ func TestMarshalBlindedBeaconBlockBodyBellatrix(t *testing.T) {
 func TestMarshalBlindedBeaconBlockBodyCapella(t *testing.T) {
 	expected, err := os.ReadFile("testdata/blinded-block-capella.json")
 	require.NoError(t, err)
-	b, err := structs.BlindedBeaconBlockCapellaFromConsensus(&eth.BlindedBeaconBlockCapella{
+	b, err := structs.BlindedBeaconBlockCapellaFromConsensus(&sila.BlindedBeaconBlockCapella{
 		Slot:          1,
 		ProposerIndex: 1,
 		ParentRoot:    ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
 		StateRoot:     ezDecode(t, "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"),
-		Body: &eth.BlindedBeaconBlockBodyCapella{
-			RandaoReveal:           ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
-			SilaData:               pbSilaData(),
-			Graffiti:               ezDecode(t, "0xdeadbeefc0ffee"),
-			ProposerSlashings:      []*eth.ProposerSlashing{pbProposerSlashing(t)},
-			AttesterSlashings:      []*eth.AttesterSlashing{pbAttesterSlashing(t)},
-			Attestations:           []*eth.Attestation{pbAttestation(t)},
-			Deposits:               []*eth.Deposit{pbDeposit(t)},
-			VoluntaryExits:         []*eth.SignedVoluntaryExit{pbSignedVoluntaryExit(t)},
-			SyncAggregate:          pbSyncAggregate(),
+		Body: &sila.BlindedBeaconBlockBodyCapella{
+			RandaoReveal:      ezDecode(t, "0x1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505cc411d61252fb6cb3fa0017b679f8bb2305b26a285fa2737f175668d0dff91cc1b66ac1fb663c9bc59509846d6ec05345bd908eda73e670af888da41af171505"),
+			SilaData:          pbSilaData(),
+			Graffiti:          ezDecode(t, "0xdeadbeefc0ffee"),
+			ProposerSlashings: []*sila.ProposerSlashing{pbProposerSlashing(t)},
+			AttesterSlashings: []*sila.AttesterSlashing{pbAttesterSlashing(t)},
+			Attestations:      []*sila.Attestation{pbAttestation(t)},
+			Deposits:          []*sila.Deposit{pbDeposit(t)},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{pbSignedVoluntaryExit(t)},
+			SyncAggregate:     pbSyncAggregate(),
 			SilaPayloadHeader: pbSilaPayloadHeaderCapella(t),
 		},
 	})

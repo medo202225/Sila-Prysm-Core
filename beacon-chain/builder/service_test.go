@@ -8,7 +8,7 @@ import (
 	blockchainTesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	dbtesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
@@ -34,7 +34,7 @@ func Test_RegisterValidator(t *testing.T) {
 	require.NoError(t, err)
 	pubkey := bytesutil.ToBytes48([]byte("pubkey"))
 	var feeRecipient [20]byte
-	require.NoError(t, s.RegisterValidator(ctx, []*eth.SignedValidatorRegistrationV1{{Message: &eth.ValidatorRegistrationV1{Pubkey: pubkey[:], FeeRecipient: feeRecipient[:]}}}))
+	require.NoError(t, s.RegisterValidator(ctx, []*sila.SignedValidatorRegistrationV1{{Message: &sila.ValidatorRegistrationV1{Pubkey: pubkey[:], FeeRecipient: feeRecipient[:]}}}))
 	assert.Equal(t, true, builder.RegisteredVals[pubkey])
 }
 
@@ -46,8 +46,8 @@ func Test_RegisterValidator_WithCache(t *testing.T) {
 	require.NoError(t, err)
 	pubkey := bytesutil.ToBytes48([]byte("pubkey"))
 	var feeRecipient [20]byte
-	reg := &eth.ValidatorRegistrationV1{Pubkey: pubkey[:], Timestamp: uint64(time.Now().UTC().Unix()), FeeRecipient: feeRecipient[:]}
-	require.NoError(t, s.RegisterValidator(ctx, []*eth.SignedValidatorRegistrationV1{{Message: reg}}))
+	reg := &sila.ValidatorRegistrationV1{Pubkey: pubkey[:], Timestamp: uint64(time.Now().UTC().Unix()), FeeRecipient: feeRecipient[:]}
+	require.NoError(t, s.RegisterValidator(ctx, []*sila.SignedValidatorRegistrationV1{{Message: reg}}))
 	registration, err := s.registrationCache.RegistrationByIndex(0)
 	require.NoError(t, err)
 	require.DeepEqual(t, reg, registration)

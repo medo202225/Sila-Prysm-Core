@@ -6,8 +6,8 @@ import (
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common/hexutil"
@@ -80,7 +80,7 @@ func TestConstructGenericBeaconBlock(t *testing.T) {
 			},
 		}
 
-		contents := &eth.BeaconBlockContentsDeneb{Block: eb.Block, KzgProofs: bundle.Proofs, Blobs: bundle.Blobs}
+		contents := &sila.BeaconBlockContentsDeneb{Block: eb.Block, KzgProofs: bundle.Proofs, Blobs: bundle.Blobs}
 		r1, err := contents.HashTreeRoot()
 		require.NoError(t, err)
 		result, err := vs.constructGenericBeaconBlock(b, bundle, primitives.ZeroWei())

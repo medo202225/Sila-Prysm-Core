@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/altair"
@@ -30,12 +30,12 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/blst"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func BlockRewardTestSetup(t *testing.T, ver int) (state.BeaconState, interfaces.SignedBeaconBlock, error) {
@@ -82,14 +82,14 @@ func BlockRewardTestSetup(t *testing.T, ver int) (state.BeaconState, interfaces.
 	valCount := 64
 	require.NoError(t, st.SetSlot(1))
 	require.NoError(t, err)
-	validators := make([]*eth.Validator, 0, valCount)
+	validators := make([]*sila.Validator, 0, valCount)
 	balances := make([]uint64, 0, valCount)
 	secretKeys := make([]bls.SecretKey, 0, valCount)
 	for range valCount {
 		blsKey, err := bls.RandKey()
 		require.NoError(t, err)
 		secretKeys = append(secretKeys, blsKey)
-		validators = append(validators, &eth.Validator{
+		validators = append(validators, &sila.Validator{
 			PublicKey:         blsKey.PublicKey().Marshal(),
 			ExitEpoch:         params.BeaconConfig().FarFutureEpoch,
 			WithdrawableEpoch: params.BeaconConfig().FarFutureEpoch,
@@ -117,42 +117,42 @@ func BlockRewardTestSetup(t *testing.T, ver int) (state.BeaconState, interfaces.
 		sbb.SetProposerIndex(12)
 	}
 
-	var atts []eth.Att
+	var atts []sila.Att
 	if ver >= version.Electra {
 		cb := primitives.NewAttestationCommitteeBits()
 		cb.SetBitAt(0, true)
-		atts = []eth.Att{
-			&eth.AttestationElectra{
+		atts = []sila.Att{
+			&sila.AttestationElectra{
 				AggregationBits: bitfield.Bitlist{0b00000111},
-				Data:            util.HydrateAttestationData(&eth.AttestationData{}),
+				Data:            util.HydrateAttestationData(&sila.AttestationData{}),
 				Signature:       make([]byte, fieldparams.BLSSignatureLength),
 				CommitteeBits:   cb,
 			},
-			&eth.AttestationElectra{
+			&sila.AttestationElectra{
 				AggregationBits: bitfield.Bitlist{0b00000111},
-				Data:            util.HydrateAttestationData(&eth.AttestationData{}),
+				Data:            util.HydrateAttestationData(&sila.AttestationData{}),
 				Signature:       make([]byte, fieldparams.BLSSignatureLength),
 				CommitteeBits:   cb,
 			},
 		}
 	} else {
-		atts = []eth.Att{
-			&eth.Attestation{
+		atts = []sila.Att{
+			&sila.Attestation{
 				AggregationBits: bitfield.Bitlist{0b00000111},
-				Data:            util.HydrateAttestationData(&eth.AttestationData{}),
+				Data:            util.HydrateAttestationData(&sila.AttestationData{}),
 				Signature:       make([]byte, fieldparams.BLSSignatureLength),
 			},
-			&eth.Attestation{
+			&sila.Attestation{
 				AggregationBits: bitfield.Bitlist{0b00000111},
-				Data:            util.HydrateAttestationData(&eth.AttestationData{}),
+				Data:            util.HydrateAttestationData(&sila.AttestationData{}),
 				Signature:       make([]byte, fieldparams.BLSSignatureLength),
 			},
 		}
 	}
 	require.NoError(t, sbb.SetAttestations(atts))
 
-	attData1 := util.HydrateAttestationData(&eth.AttestationData{BeaconBlockRoot: bytesutil.PadTo([]byte("root1"), 32)})
-	attData2 := util.HydrateAttestationData(&eth.AttestationData{BeaconBlockRoot: bytesutil.PadTo([]byte("root2"), 32)})
+	attData1 := util.HydrateAttestationData(&sila.AttestationData{BeaconBlockRoot: bytesutil.PadTo([]byte("root1"), 32)})
+	attData2 := util.HydrateAttestationData(&sila.AttestationData{BeaconBlockRoot: bytesutil.PadTo([]byte("root2"), 32)})
 	domain, err := signing.Domain(st.Fork(), 0, params.BeaconConfig().DomainBeaconAttester, st.GenesisValidatorsRoot())
 	require.NoError(t, err)
 	sigRoot1, err := signing.ComputeSigningRoot(attData1, domain)
@@ -160,44 +160,44 @@ func BlockRewardTestSetup(t *testing.T, ver int) (state.BeaconState, interfaces.
 	sigRoot2, err := signing.ComputeSigningRoot(attData2, domain)
 	require.NoError(t, err)
 
-	var attSlashing eth.AttSlashing
+	var attSlashing sila.AttSlashing
 	if ver >= version.Electra {
-		attSlashing = &eth.AttesterSlashingElectra{
-			Attestation_1: &eth.IndexedAttestationElectra{
+		attSlashing = &sila.AttesterSlashingElectra{
+			Attestation_1: &sila.IndexedAttestationElectra{
 				AttestingIndices: []uint64{0},
 				Data:             attData1,
 				Signature:        secretKeys[0].Sign(sigRoot1[:]).Marshal(),
 			},
-			Attestation_2: &eth.IndexedAttestationElectra{
+			Attestation_2: &sila.IndexedAttestationElectra{
 				AttestingIndices: []uint64{0},
 				Data:             attData2,
 				Signature:        secretKeys[0].Sign(sigRoot2[:]).Marshal(),
 			},
 		}
 	} else {
-		attSlashing = &eth.AttesterSlashing{
-			Attestation_1: &eth.IndexedAttestation{
+		attSlashing = &sila.AttesterSlashing{
+			Attestation_1: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{0},
 				Data:             attData1,
 				Signature:        secretKeys[0].Sign(sigRoot1[:]).Marshal(),
 			},
-			Attestation_2: &eth.IndexedAttestation{
+			Attestation_2: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{0},
 				Data:             attData2,
 				Signature:        secretKeys[0].Sign(sigRoot2[:]).Marshal(),
 			},
 		}
 	}
-	require.NoError(t, sbb.SetAttesterSlashings([]eth.AttSlashing{attSlashing}))
+	require.NoError(t, sbb.SetAttesterSlashings([]sila.AttSlashing{attSlashing}))
 
-	header1 := &eth.BeaconBlockHeader{
+	header1 := &sila.BeaconBlockHeader{
 		Slot:          0,
 		ProposerIndex: 1,
 		ParentRoot:    bytesutil.PadTo([]byte("root1"), 32),
 		StateRoot:     bytesutil.PadTo([]byte("root1"), 32),
 		BodyRoot:      bytesutil.PadTo([]byte("root1"), 32),
 	}
-	header2 := &eth.BeaconBlockHeader{
+	header2 := &sila.BeaconBlockHeader{
 		Slot:          0,
 		ProposerIndex: 1,
 		ParentRoot:    bytesutil.PadTo([]byte("root2"), 32),
@@ -210,13 +210,13 @@ func BlockRewardTestSetup(t *testing.T, ver int) (state.BeaconState, interfaces.
 	require.NoError(t, err)
 	sigRoot2, err = signing.ComputeSigningRoot(header2, domain)
 	require.NoError(t, err)
-	sbb.SetProposerSlashings([]*eth.ProposerSlashing{
+	sbb.SetProposerSlashings([]*sila.ProposerSlashing{
 		{
-			Header_1: &eth.SignedBeaconBlockHeader{
+			Header_1: &sila.SignedBeaconBlockHeader{
 				Header:    header1,
 				Signature: secretKeys[1].Sign(sigRoot1[:]).Marshal(),
 			},
-			Header_2: &eth.SignedBeaconBlockHeader{
+			Header_2: &sila.SignedBeaconBlockHeader{
 				Header:    header2,
 				Signature: secretKeys[1].Sign(sigRoot2[:]).Marshal(),
 			},
@@ -247,7 +247,7 @@ func BlockRewardTestSetup(t *testing.T, ver int) (state.BeaconState, interfaces.
 	sig2, err := blst.SignatureFromBytes(secretKeys[scValIdx2].Sign(r[:]).Marshal())
 	require.NoError(t, err)
 	aggSig := bls.AggregateSignatures([]bls.Signature{sig1, sig2}).Marshal()
-	err = sbb.SetSyncAggregate(&eth.SyncAggregate{SyncCommitteeBits: scBits, SyncCommitteeSignature: aggSig})
+	err = sbb.SetSyncAggregate(&sila.SyncAggregate{SyncCommitteeBits: scBits, SyncCommitteeSignature: aggSig})
 	require.NoError(t, err)
 
 	return st, sbb, nil
@@ -478,14 +478,14 @@ func TestAttestationRewards(t *testing.T) {
 	st, err := util.NewBeaconStateCapella()
 	require.NoError(t, err)
 	require.NoError(t, st.SetSlot(params.BeaconConfig().SlotsPerEpoch*3-1))
-	validators := make([]*eth.Validator, 0, valCount)
+	validators := make([]*sila.Validator, 0, valCount)
 	balances := make([]uint64, 0, valCount)
 	secretKeys := make([]bls.SecretKey, 0, valCount)
 	for i := range valCount {
 		blsKey, err := bls.RandKey()
 		require.NoError(t, err)
 		secretKeys = append(secretKeys, blsKey)
-		validators = append(validators, &eth.Validator{
+		validators = append(validators, &sila.Validator{
 			PublicKey:         blsKey.PublicKey().Marshal(),
 			ExitEpoch:         params.BeaconConfig().FarFutureEpoch,
 			WithdrawableEpoch: params.BeaconConfig().FarFutureEpoch,
@@ -794,13 +794,13 @@ func TestSyncCommiteeRewards(t *testing.T) {
 	st, err := util.NewBeaconStateCapella()
 	require.NoError(t, err)
 	require.NoError(t, st.SetSlot(params.BeaconConfig().SlotsPerEpoch-1))
-	validators := make([]*eth.Validator, 0, valCount)
+	validators := make([]*sila.Validator, 0, valCount)
 	secretKeys := make([]bls.SecretKey, 0, valCount)
 	for range valCount {
 		blsKey, err := bls.RandKey()
 		require.NoError(t, err)
 		secretKeys = append(secretKeys, blsKey)
-		validators = append(validators, &eth.Validator{
+		validators = append(validators, &sila.Validator{
 			PublicKey:         blsKey.PublicKey().Marshal(),
 			ExitEpoch:         params.BeaconConfig().FarFutureEpoch,
 			WithdrawableEpoch: params.BeaconConfig().FarFutureEpoch,
@@ -815,7 +815,7 @@ func TestSyncCommiteeRewards(t *testing.T) {
 	}
 	aggPubkey, err := bls.AggregatePublicKeys(syncCommitteePubkeys)
 	require.NoError(t, err)
-	require.NoError(t, st.SetCurrentSyncCommittee(&eth.SyncCommittee{
+	require.NoError(t, st.SetCurrentSyncCommittee(&sila.SyncCommittee{
 		Pubkeys:         syncCommitteePubkeys,
 		AggregatePubkey: aggPubkey.Marshal(),
 	}))
@@ -841,7 +841,7 @@ func TestSyncCommiteeRewards(t *testing.T) {
 		require.NoError(t, err)
 	}
 	aggSig := bls.AggregateSignatures(sigs).Marshal()
-	b.Block.Body.SyncAggregate = &eth.SyncAggregate{SyncCommitteeBits: scBits, SyncCommitteeSignature: aggSig}
+	b.Block.Body.SyncAggregate = &sila.SyncAggregate{SyncCommitteeBits: scBits, SyncCommitteeSignature: aggSig}
 	sbb, err := blocks.NewSignedBeaconBlock(b)
 	require.NoError(t, err)
 	phase0block, err := blocks.NewSignedBeaconBlock(util.NewBeaconBlock())

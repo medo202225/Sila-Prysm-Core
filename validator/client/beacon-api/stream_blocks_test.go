@@ -6,15 +6,15 @@ import (
 	"testing"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	rpctesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared/testing"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
 	testhelpers "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/test-helpers"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	"go.uber.org/mock/gomock"
 )
 
@@ -37,7 +37,7 @@ func TestStreamBlocks_UnsupportedConsensusVersion(t *testing.T) {
 	).Times(1)
 
 	validatorClient := &beaconApiValidatorClient{handler: handler}
-	streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{}, time.Millisecond*100)
+	streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{}, time.Millisecond*100)
 	_, err := streamBlocksClient.Recv()
 	assert.ErrorContains(t, "unsupported consensus version `foo`", err)
 }
@@ -163,7 +163,7 @@ func TestStreamBlocks_Error(t *testing.T) {
 
 					beaconBlockConverter := testSuite.generateBeaconBlockConverter(ctrl, testCase.conversionError)
 					validatorClient := &beaconApiValidatorClient{handler: handler, beaconBlockConverter: beaconBlockConverter}
-					streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{}, time.Millisecond*100)
+					streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{}, time.Millisecond*100)
 
 					_, err := streamBlocksClient.Recv()
 					assert.ErrorContains(t, fmt.Sprintf(testCase.expectedErrorMessage, testSuite.consensusVersion), err)
@@ -221,9 +221,9 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "phase0",
+					Version:        "phase0",
 					SilaOptimistic: false,
-					Data:                marshalledSignedBeaconBlockContainer1,
+					Data:           marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
 
@@ -258,9 +258,9 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "phase0",
+					Version:        "phase0",
 					SilaOptimistic: true,
-					Data:                marshalledSignedBeaconBlockContainer2,
+					Data:           marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
 
@@ -285,9 +285,9 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 				).SetArg(
 					2,
 					abstractSignedBlockResponseJson{
-						Version:             "phase0",
+						Version:        "phase0",
 						SilaOptimistic: false,
-						Data:                marshalledSignedBeaconBlockContainer2,
+						Data:           marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
 
@@ -300,15 +300,15 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 			}
 
 			validatorClient := &beaconApiValidatorClient{handler: handler, beaconBlockConverter: beaconBlockConverter}
-			streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
+			streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
 
 			// Get the first block
 			streamBlocksResponse1, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse1 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_Phase0Block{
-					Phase0Block: &eth.SignedBeaconBlock{
+			expectedStreamBlocksResponse1 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_Phase0Block{
+					Phase0Block: &sila.SignedBeaconBlock{
 						Block:     phase0ProtoBeaconBlock1,
 						Signature: []byte{1},
 					},
@@ -321,9 +321,9 @@ func TestStreamBlocks_Phase0Valid(t *testing.T) {
 			streamBlocksResponse2, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse2 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_Phase0Block{
-					Phase0Block: &eth.SignedBeaconBlock{
+			expectedStreamBlocksResponse2 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_Phase0Block{
+					Phase0Block: &sila.SignedBeaconBlock{
 						Block:     phase0ProtoBeaconBlock2,
 						Signature: []byte{2},
 					},
@@ -382,9 +382,9 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "altair",
+					Version:        "altair",
 					SilaOptimistic: false,
-					Data:                marshalledSignedBeaconBlockContainer1,
+					Data:           marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
 
@@ -419,9 +419,9 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "altair",
+					Version:        "altair",
 					SilaOptimistic: true,
-					Data:                marshalledSignedBeaconBlockContainer2,
+					Data:           marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
 
@@ -446,9 +446,9 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 				).SetArg(
 					2,
 					abstractSignedBlockResponseJson{
-						Version:             "altair",
+						Version:        "altair",
 						SilaOptimistic: false,
-						Data:                marshalledSignedBeaconBlockContainer2,
+						Data:           marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
 
@@ -461,15 +461,15 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 			}
 
 			validatorClient := &beaconApiValidatorClient{handler: handler, beaconBlockConverter: beaconBlockConverter}
-			streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
+			streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
 
 			// Get the first block
 			streamBlocksResponse1, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse1 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_AltairBlock{
-					AltairBlock: &eth.SignedBeaconBlockAltair{
+			expectedStreamBlocksResponse1 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_AltairBlock{
+					AltairBlock: &sila.SignedBeaconBlockAltair{
 						Block:     altairProtoBeaconBlock1,
 						Signature: []byte{1},
 					},
@@ -482,9 +482,9 @@ func TestStreamBlocks_AltairValid(t *testing.T) {
 			streamBlocksResponse2, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse2 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_AltairBlock{
-					AltairBlock: &eth.SignedBeaconBlockAltair{
+			expectedStreamBlocksResponse2 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_AltairBlock{
+					AltairBlock: &sila.SignedBeaconBlockAltair{
 						Block:     altairProtoBeaconBlock2,
 						Signature: []byte{2},
 					},
@@ -543,9 +543,9 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "bellatrix",
+					Version:        "bellatrix",
 					SilaOptimistic: false,
-					Data:                marshalledSignedBeaconBlockContainer1,
+					Data:           marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
 
@@ -580,9 +580,9 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "bellatrix",
+					Version:        "bellatrix",
 					SilaOptimistic: true,
-					Data:                marshalledSignedBeaconBlockContainer2,
+					Data:           marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
 
@@ -607,9 +607,9 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 				).SetArg(
 					2,
 					abstractSignedBlockResponseJson{
-						Version:             "bellatrix",
+						Version:        "bellatrix",
 						SilaOptimistic: false,
-						Data:                marshalledSignedBeaconBlockContainer2,
+						Data:           marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
 
@@ -622,15 +622,15 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 			}
 
 			validatorClient := &beaconApiValidatorClient{handler: handler, beaconBlockConverter: beaconBlockConverter}
-			streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
+			streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
 
 			// Get the first block
 			streamBlocksResponse1, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse1 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_BellatrixBlock{
-					BellatrixBlock: &eth.SignedBeaconBlockBellatrix{
+			expectedStreamBlocksResponse1 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_BellatrixBlock{
+					BellatrixBlock: &sila.SignedBeaconBlockBellatrix{
 						Block:     bellatrixProtoBeaconBlock1,
 						Signature: []byte{1},
 					},
@@ -643,9 +643,9 @@ func TestStreamBlocks_BellatrixValid(t *testing.T) {
 			streamBlocksResponse2, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse2 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_BellatrixBlock{
-					BellatrixBlock: &eth.SignedBeaconBlockBellatrix{
+			expectedStreamBlocksResponse2 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_BellatrixBlock{
+					BellatrixBlock: &sila.SignedBeaconBlockBellatrix{
 						Block:     bellatrixProtoBeaconBlock2,
 						Signature: []byte{2},
 					},
@@ -704,9 +704,9 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "capella",
+					Version:        "capella",
 					SilaOptimistic: false,
-					Data:                marshalledSignedBeaconBlockContainer1,
+					Data:           marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
 
@@ -741,9 +741,9 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "capella",
+					Version:        "capella",
 					SilaOptimistic: true,
-					Data:                marshalledSignedBeaconBlockContainer2,
+					Data:           marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
 
@@ -768,9 +768,9 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 				).SetArg(
 					2,
 					abstractSignedBlockResponseJson{
-						Version:             "capella",
+						Version:        "capella",
 						SilaOptimistic: false,
-						Data:                marshalledSignedBeaconBlockContainer2,
+						Data:           marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
 
@@ -783,15 +783,15 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 			}
 
 			validatorClient := &beaconApiValidatorClient{handler: handler, beaconBlockConverter: beaconBlockConverter}
-			streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
+			streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
 
 			// Get the first block
 			streamBlocksResponse1, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse1 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_CapellaBlock{
-					CapellaBlock: &eth.SignedBeaconBlockCapella{
+			expectedStreamBlocksResponse1 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_CapellaBlock{
+					CapellaBlock: &sila.SignedBeaconBlockCapella{
 						Block:     capellaProtoBeaconBlock1,
 						Signature: []byte{1},
 					},
@@ -804,9 +804,9 @@ func TestStreamBlocks_CapellaValid(t *testing.T) {
 			streamBlocksResponse2, err := streamBlocksClient.Recv()
 			require.NoError(t, err)
 
-			expectedStreamBlocksResponse2 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_CapellaBlock{
-					CapellaBlock: &eth.SignedBeaconBlockCapella{
+			expectedStreamBlocksResponse2 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_CapellaBlock{
+					CapellaBlock: &sila.SignedBeaconBlockCapella{
 						Block:     capellaProtoBeaconBlock2,
 						Signature: []byte{2},
 					},
@@ -865,9 +865,9 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "deneb",
+					Version:        "deneb",
 					SilaOptimistic: false,
-					Data:                marshalledSignedBeaconBlockContainer1,
+					Data:           marshalledSignedBeaconBlockContainer1,
 				},
 			).Times(2)
 
@@ -894,9 +894,9 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 			).SetArg(
 				2,
 				abstractSignedBlockResponseJson{
-					Version:             "deneb",
+					Version:        "deneb",
 					SilaOptimistic: true,
-					Data:                marshalledSignedBeaconBlockContainer2,
+					Data:           marshalledSignedBeaconBlockContainer2,
 				},
 			).Times(1)
 
@@ -911,15 +911,15 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 				).SetArg(
 					2,
 					abstractSignedBlockResponseJson{
-						Version:             "deneb",
+						Version:        "deneb",
 						SilaOptimistic: false,
-						Data:                marshalledSignedBeaconBlockContainer2,
+						Data:           marshalledSignedBeaconBlockContainer2,
 					},
 				).Times(1)
 			}
 
 			validatorClient := &beaconApiValidatorClient{handler: handler, beaconBlockConverter: beaconBlockConverter}
-			streamBlocksClient := validatorClient.streamBlocks(ctx, &eth.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
+			streamBlocksClient := validatorClient.streamBlocks(ctx, &sila.StreamBlocksRequest{VerifiedOnly: testCase.verifiedOnly}, time.Millisecond*100)
 
 			// Get the first block
 			streamBlocksResponse1, err := streamBlocksClient.Recv()
@@ -929,9 +929,9 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 			require.NoError(t, err)
 			sigBytes, err := hexutil.Decode(sig)
 			require.NoError(t, err)
-			expectedStreamBlocksResponse1 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_DenebBlock{
-					DenebBlock: &eth.SignedBeaconBlockDeneb{
+			expectedStreamBlocksResponse1 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_DenebBlock{
+					DenebBlock: &sila.SignedBeaconBlockDeneb{
 						Block:     consensusBlock,
 						Signature: sigBytes,
 					},
@@ -946,9 +946,9 @@ func TestStreamBlocks_DenebValid(t *testing.T) {
 			consensusBlock.Slot = 2
 			sig2Bytes, err := hexutil.Decode(sig2)
 			require.NoError(t, err)
-			expectedStreamBlocksResponse2 := &eth.StreamBlocksResponse{
-				Block: &eth.StreamBlocksResponse_DenebBlock{
-					DenebBlock: &eth.SignedBeaconBlockDeneb{
+			expectedStreamBlocksResponse2 := &sila.StreamBlocksResponse{
+				Block: &sila.StreamBlocksResponse_DenebBlock{
+					DenebBlock: &sila.SignedBeaconBlockDeneb{
 						Block:     consensusBlock,
 						Signature: sig2Bytes,
 					},

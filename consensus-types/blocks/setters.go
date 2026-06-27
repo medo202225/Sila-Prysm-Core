@@ -6,7 +6,7 @@ import (
 	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
@@ -55,35 +55,35 @@ func (b *SignedBeaconBlock) SetGraffiti(g []byte) {
 
 // SetSilaData sets the silaexec data in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetSilaData(e *eth.SilaData) {
+func (b *SignedBeaconBlock) SetSilaData(e *sila.SilaData) {
 	b.block.body.silaexecData = e
 }
 
 // SetProposerSlashings sets the proposer slashings in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetProposerSlashings(p []*eth.ProposerSlashing) {
+func (b *SignedBeaconBlock) SetProposerSlashings(p []*sila.ProposerSlashing) {
 	b.block.body.proposerSlashings = p
 }
 
 // SetAttesterSlashings sets the attester slashings in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetAttesterSlashings(slashings []eth.AttSlashing) error {
+func (b *SignedBeaconBlock) SetAttesterSlashings(slashings []sila.AttSlashing) error {
 	if b.version < version.Electra {
-		blockSlashings := make([]*eth.AttesterSlashing, 0, len(slashings))
+		blockSlashings := make([]*sila.AttesterSlashing, 0, len(slashings))
 		for _, slashing := range slashings {
-			s, ok := slashing.(*eth.AttesterSlashing)
+			s, ok := slashing.(*sila.AttesterSlashing)
 			if !ok {
-				return fmt.Errorf("slashing of type %T is not *eth.AttesterSlashing", slashing)
+				return fmt.Errorf("slashing of type %T is not *sila.AttesterSlashing", slashing)
 			}
 			blockSlashings = append(blockSlashings, s)
 		}
 		b.block.body.attesterSlashings = blockSlashings
 	} else {
-		blockSlashings := make([]*eth.AttesterSlashingElectra, 0, len(slashings))
+		blockSlashings := make([]*sila.AttesterSlashingElectra, 0, len(slashings))
 		for _, slashing := range slashings {
-			s, ok := slashing.(*eth.AttesterSlashingElectra)
+			s, ok := slashing.(*sila.AttesterSlashingElectra)
 			if !ok {
-				return fmt.Errorf("slashing of type %T is not *eth.AttesterSlashingElectra", slashing)
+				return fmt.Errorf("slashing of type %T is not *sila.AttesterSlashingElectra", slashing)
 			}
 			blockSlashings = append(blockSlashings, s)
 		}
@@ -94,23 +94,23 @@ func (b *SignedBeaconBlock) SetAttesterSlashings(slashings []eth.AttSlashing) er
 
 // SetAttestations sets the attestations in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetAttestations(atts []eth.Att) error {
+func (b *SignedBeaconBlock) SetAttestations(atts []sila.Att) error {
 	if b.version < version.Electra {
-		blockAtts := make([]*eth.Attestation, 0, len(atts))
+		blockAtts := make([]*sila.Attestation, 0, len(atts))
 		for _, att := range atts {
-			a, ok := att.(*eth.Attestation)
+			a, ok := att.(*sila.Attestation)
 			if !ok {
-				return fmt.Errorf("attestation of type %T is not *eth.Attestation", att)
+				return fmt.Errorf("attestation of type %T is not *sila.Attestation", att)
 			}
 			blockAtts = append(blockAtts, a)
 		}
 		b.block.body.attestations = blockAtts
 	} else {
-		blockAtts := make([]*eth.AttestationElectra, 0, len(atts))
+		blockAtts := make([]*sila.AttestationElectra, 0, len(atts))
 		for _, att := range atts {
-			a, ok := att.(*eth.AttestationElectra)
+			a, ok := att.(*sila.AttestationElectra)
 			if !ok {
-				return fmt.Errorf("attestation of type %T is not *eth.AttestationElectra", att)
+				return fmt.Errorf("attestation of type %T is not *sila.AttestationElectra", att)
 			}
 			blockAtts = append(blockAtts, a)
 		}
@@ -121,19 +121,19 @@ func (b *SignedBeaconBlock) SetAttestations(atts []eth.Att) error {
 
 // SetDeposits sets the deposits in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetDeposits(d []*eth.Deposit) {
+func (b *SignedBeaconBlock) SetDeposits(d []*sila.Deposit) {
 	b.block.body.deposits = d
 }
 
 // SetVoluntaryExits sets the voluntary exits in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetVoluntaryExits(v []*eth.SignedVoluntaryExit) {
+func (b *SignedBeaconBlock) SetVoluntaryExits(v []*sila.SignedVoluntaryExit) {
 	b.block.body.voluntaryExits = v
 }
 
 // SetSyncAggregate sets the sync aggregate in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetSyncAggregate(s *eth.SyncAggregate) error {
+func (b *SignedBeaconBlock) SetSyncAggregate(s *sila.SyncAggregate) error {
 	if b.version == version.Phase0 {
 		return consensus_types.ErrNotSupported("SyncAggregate", b.version)
 	}
@@ -157,7 +157,7 @@ func (b *SignedBeaconBlock) SetSilaData(e interfaces.SilaData) error {
 
 // SetBLSToSilaChanges sets the BLS to Sila changes in the block.
 // This function is not thread safe, it is only used during block creation.
-func (b *SignedBeaconBlock) SetBLSToSilaChanges(blsToSilaChanges []*eth.SignedBLSToSilaChange) error {
+func (b *SignedBeaconBlock) SetBLSToSilaChanges(blsToSilaChanges []*sila.SignedBLSToSilaChange) error {
 	if b.version < version.Capella {
 		return consensus_types.ErrNotSupported("BLSToSilaChanges", b.version)
 	}
@@ -184,7 +184,7 @@ func (b *SignedBeaconBlock) SetSilaRequests(req *silaenginev1.SilaRequests) erro
 }
 
 // SetPayloadAttestations sets the payload attestations in the block.
-func (b *SignedBeaconBlock) SetPayloadAttestations(pa []*eth.PayloadAttestation) error {
+func (b *SignedBeaconBlock) SetPayloadAttestations(pa []*sila.PayloadAttestation) error {
 	if b.version < version.Gloas {
 		return consensus_types.ErrNotSupported("SetPayloadAttestations", b.version)
 	}
@@ -202,7 +202,7 @@ func (b *SignedBeaconBlock) SetParentSilaRequests(r *silaenginev1.SilaRequests) 
 }
 
 // SetSignedSilaPayloadBid sets the signed sila payload header in the block.
-func (b *SignedBeaconBlock) SetSignedSilaPayloadBid(header *eth.SignedSilaPayloadBid) error {
+func (b *SignedBeaconBlock) SetSignedSilaPayloadBid(header *sila.SignedSilaPayloadBid) error {
 	if b.version < version.Gloas {
 		return consensus_types.ErrNotSupported("SetSignedSilaPayloadBid", b.version)
 	}

@@ -3,35 +3,35 @@ package blocks
 import (
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/go-bitfield"
 )
 
 type fields struct {
 	root                     [32]byte
 	sig                      [96]byte
-	deposits                 []*eth.Deposit
-	atts                     []*eth.Attestation
-	attsElectra              []*eth.AttestationElectra
-	proposerSlashings        []*eth.ProposerSlashing
-	attesterSlashings        []*eth.AttesterSlashing
-	attesterSlashingsElectra []*eth.AttesterSlashingElectra
-	voluntaryExits           []*eth.SignedVoluntaryExit
-	syncAggregate            *eth.SyncAggregate
+	deposits                 []*sila.Deposit
+	atts                     []*sila.Attestation
+	attsElectra              []*sila.AttestationElectra
+	proposerSlashings        []*sila.ProposerSlashing
+	attesterSlashings        []*sila.AttesterSlashing
+	attesterSlashingsElectra []*sila.AttesterSlashingElectra
+	voluntaryExits           []*sila.SignedVoluntaryExit
+	syncAggregate            *sila.SyncAggregate
 	execPayload              *silaenginev1.SilaPayload
 	execPayloadHeader        *silaenginev1.SilaPayloadHeader
 	execPayloadCapella       *silaenginev1.SilaPayloadCapella
 	execPayloadHeaderCapella *silaenginev1.SilaPayloadHeaderCapella
 	execPayloadDeneb         *silaenginev1.SilaPayloadDeneb
 	execPayloadHeaderDeneb   *silaenginev1.SilaPayloadHeaderDeneb
-	blsToSilaChanges    []*eth.SignedBLSToSilaChange
+	blsToSilaChanges         []*sila.SignedBLSToSilaChange
 	kzgCommitments           [][]byte
 	execRequests             *silaenginev1.SilaRequests
 }
@@ -40,8 +40,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 	f := getFields()
 
 	t.Run("Phase0", func(t *testing.T) {
-		expectedBlock := &eth.SignedBeaconBlock{
-			Block: &eth.BeaconBlock{
+		expectedBlock := &sila.SignedBeaconBlock{
+			Block: &sila.BeaconBlock{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -65,7 +65,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBeaconBlock)
+		resultBlock, ok := result.(*sila.SignedBeaconBlock)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -74,8 +74,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Altair", func(t *testing.T) {
-		expectedBlock := &eth.SignedBeaconBlockAltair{
-			Block: &eth.BeaconBlockAltair{
+		expectedBlock := &sila.SignedBeaconBlockAltair{
+			Block: &sila.BeaconBlockAltair{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -99,7 +99,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBeaconBlockAltair)
+		resultBlock, ok := result.(*sila.SignedBeaconBlockAltair)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -108,8 +108,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Bellatrix", func(t *testing.T) {
-		expectedBlock := &eth.SignedBeaconBlockBellatrix{
-			Block: &eth.BeaconBlockBellatrix{
+		expectedBlock := &sila.SignedBeaconBlockBellatrix{
+			Block: &sila.BeaconBlockBellatrix{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -133,7 +133,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBeaconBlockBellatrix)
+		resultBlock, ok := result.(*sila.SignedBeaconBlockBellatrix)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -142,8 +142,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("BellatrixBlind", func(t *testing.T) {
-		expectedBlock := &eth.SignedBlindedBeaconBlockBellatrix{
-			Block: &eth.BlindedBeaconBlockBellatrix{
+		expectedBlock := &sila.SignedBlindedBeaconBlockBellatrix{
+			Block: &sila.BlindedBeaconBlockBellatrix{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -167,7 +167,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBlindedBeaconBlockBellatrix)
+		resultBlock, ok := result.(*sila.SignedBlindedBeaconBlockBellatrix)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -176,8 +176,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Capella", func(t *testing.T) {
-		expectedBlock := &eth.SignedBeaconBlockCapella{
-			Block: &eth.BeaconBlockCapella{
+		expectedBlock := &sila.SignedBeaconBlockCapella{
+			Block: &sila.BeaconBlockCapella{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -201,7 +201,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBeaconBlockCapella)
+		resultBlock, ok := result.(*sila.SignedBeaconBlockCapella)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -210,8 +210,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("CapellaBlind", func(t *testing.T) {
-		expectedBlock := &eth.SignedBlindedBeaconBlockCapella{
-			Block: &eth.BlindedBeaconBlockCapella{
+		expectedBlock := &sila.SignedBlindedBeaconBlockCapella{
+			Block: &sila.BlindedBeaconBlockCapella{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -235,7 +235,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBlindedBeaconBlockCapella)
+		resultBlock, ok := result.(*sila.SignedBlindedBeaconBlockCapella)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -244,8 +244,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Deneb", func(t *testing.T) {
-		expectedBlock := &eth.SignedBeaconBlockDeneb{
-			Block: &eth.BeaconBlockDeneb{
+		expectedBlock := &sila.SignedBeaconBlockDeneb{
+			Block: &sila.BeaconBlockDeneb{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -269,7 +269,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBeaconBlockDeneb)
+		resultBlock, ok := result.(*sila.SignedBeaconBlockDeneb)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -278,8 +278,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("DenebBlind", func(t *testing.T) {
-		expectedBlock := &eth.SignedBlindedBeaconBlockDeneb{
-			Message: &eth.BlindedBeaconBlockDeneb{
+		expectedBlock := &sila.SignedBlindedBeaconBlockDeneb{
+			Message: &sila.BlindedBeaconBlockDeneb{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -303,7 +303,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBlindedBeaconBlockDeneb)
+		resultBlock, ok := result.(*sila.SignedBlindedBeaconBlockDeneb)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -312,8 +312,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Electra", func(t *testing.T) {
-		expectedBlock := &eth.SignedBeaconBlockElectra{
-			Block: &eth.BeaconBlockElectra{
+		expectedBlock := &sila.SignedBeaconBlockElectra{
+			Block: &sila.BeaconBlockElectra{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -337,7 +337,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBeaconBlockElectra)
+		resultBlock, ok := result.(*sila.SignedBeaconBlockElectra)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -346,8 +346,8 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("ElectraBlind", func(t *testing.T) {
-		expectedBlock := &eth.SignedBlindedBeaconBlockElectra{
-			Message: &eth.BlindedBeaconBlockElectra{
+		expectedBlock := &sila.SignedBlindedBeaconBlockElectra{
+			Message: &sila.BlindedBeaconBlockElectra{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    f.root[:],
@@ -371,7 +371,7 @@ func Test_SignedBeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.SignedBlindedBeaconBlockElectra)
+		resultBlock, ok := result.(*sila.SignedBlindedBeaconBlockElectra)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -385,7 +385,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 	f := getFields()
 
 	t.Run("Phase0", func(t *testing.T) {
-		expectedBlock := &eth.BeaconBlock{
+		expectedBlock := &sila.BeaconBlock{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -403,7 +403,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlock)
+		resultBlock, ok := result.(*sila.BeaconBlock)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -412,7 +412,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Altair", func(t *testing.T) {
-		expectedBlock := &eth.BeaconBlockAltair{
+		expectedBlock := &sila.BeaconBlockAltair{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -430,7 +430,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockAltair)
+		resultBlock, ok := result.(*sila.BeaconBlockAltair)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -439,7 +439,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Bellatrix", func(t *testing.T) {
-		expectedBlock := &eth.BeaconBlockBellatrix{
+		expectedBlock := &sila.BeaconBlockBellatrix{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -457,7 +457,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBellatrix)
+		resultBlock, ok := result.(*sila.BeaconBlockBellatrix)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -466,7 +466,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("BellatrixBlind", func(t *testing.T) {
-		expectedBlock := &eth.BlindedBeaconBlockBellatrix{
+		expectedBlock := &sila.BlindedBeaconBlockBellatrix{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -484,7 +484,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockBellatrix)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockBellatrix)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -493,7 +493,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Capella", func(t *testing.T) {
-		expectedBlock := &eth.BeaconBlockCapella{
+		expectedBlock := &sila.BeaconBlockCapella{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -511,7 +511,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockCapella)
+		resultBlock, ok := result.(*sila.BeaconBlockCapella)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -520,7 +520,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("CapellaBlind", func(t *testing.T) {
-		expectedBlock := &eth.BlindedBeaconBlockCapella{
+		expectedBlock := &sila.BlindedBeaconBlockCapella{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -538,7 +538,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockCapella)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockCapella)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -547,7 +547,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Deneb", func(t *testing.T) {
-		expectedBlock := &eth.BeaconBlockDeneb{
+		expectedBlock := &sila.BeaconBlockDeneb{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -565,7 +565,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockDeneb)
+		resultBlock, ok := result.(*sila.BeaconBlockDeneb)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -574,7 +574,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("DenebBlind", func(t *testing.T) {
-		expectedBlock := &eth.BlindedBeaconBlockDeneb{
+		expectedBlock := &sila.BlindedBeaconBlockDeneb{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -592,7 +592,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockDeneb)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockDeneb)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -601,7 +601,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("Electra", func(t *testing.T) {
-		expectedBlock := &eth.BeaconBlockElectra{
+		expectedBlock := &sila.BeaconBlockElectra{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -619,7 +619,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockElectra)
+		resultBlock, ok := result.(*sila.BeaconBlockElectra)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -628,7 +628,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 		assert.DeepEqual(t, expectedHTR, resultHTR)
 	})
 	t.Run("ElectraBlind", func(t *testing.T) {
-		expectedBlock := &eth.BlindedBeaconBlockElectra{
+		expectedBlock := &sila.BlindedBeaconBlockElectra{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -646,7 +646,7 @@ func Test_BeaconBlock_Proto(t *testing.T) {
 
 		result, err := block.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockElectra)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockElectra)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -663,7 +663,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBody)
+		resultBlock, ok := result.(*sila.BeaconBlockBody)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -676,7 +676,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyAltair()
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBodyAltair)
+		resultBlock, ok := result.(*sila.BeaconBlockBodyAltair)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -689,7 +689,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyBellatrix(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBodyBellatrix)
+		resultBlock, ok := result.(*sila.BeaconBlockBodyBellatrix)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -702,7 +702,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyBlindedBellatrix(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockBodyBellatrix)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockBodyBellatrix)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -715,7 +715,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyCapella(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBodyCapella)
+		resultBlock, ok := result.(*sila.BeaconBlockBodyCapella)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -728,7 +728,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyBlindedCapella(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockBodyCapella)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockBodyCapella)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -741,7 +741,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyDeneb(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBodyDeneb)
+		resultBlock, ok := result.(*sila.BeaconBlockBodyDeneb)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -754,7 +754,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyBlindedDeneb(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockBodyDeneb)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockBodyDeneb)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -767,7 +767,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyElectra(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BeaconBlockBodyElectra)
+		resultBlock, ok := result.(*sila.BeaconBlockBodyElectra)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -780,7 +780,7 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 		body := bodyBlindedElectra(t)
 		result, err := body.Proto()
 		require.NoError(t, err)
-		resultBlock, ok := result.(*eth.BlindedBeaconBlockBodyElectra)
+		resultBlock, ok := result.(*sila.BlindedBeaconBlockBodyElectra)
 		require.Equal(t, true, ok)
 		resultHTR, err := resultBlock.HashTreeRoot()
 		require.NoError(t, err)
@@ -840,8 +840,8 @@ func Test_BeaconBlockBody_Proto(t *testing.T) {
 
 func Test_initSignedBlockFromProtoPhase0(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBeaconBlock{
-		Block: &eth.BeaconBlock{
+	expectedBlock := &sila.SignedBeaconBlock{
+		Block: &sila.BeaconBlock{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -862,8 +862,8 @@ func Test_initSignedBlockFromProtoPhase0(t *testing.T) {
 
 func Test_initSignedBlockFromProtoAltair(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBeaconBlockAltair{
-		Block: &eth.BeaconBlockAltair{
+	expectedBlock := &sila.SignedBeaconBlockAltair{
+		Block: &sila.BeaconBlockAltair{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -884,8 +884,8 @@ func Test_initSignedBlockFromProtoAltair(t *testing.T) {
 
 func Test_initSignedBlockFromProtoBellatrix(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBeaconBlockBellatrix{
-		Block: &eth.BeaconBlockBellatrix{
+	expectedBlock := &sila.SignedBeaconBlockBellatrix{
+		Block: &sila.BeaconBlockBellatrix{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -906,8 +906,8 @@ func Test_initSignedBlockFromProtoBellatrix(t *testing.T) {
 
 func Test_initBlindedSignedBlockFromProtoBellatrix(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBlindedBeaconBlockBellatrix{
-		Block: &eth.BlindedBeaconBlockBellatrix{
+	expectedBlock := &sila.SignedBlindedBeaconBlockBellatrix{
+		Block: &sila.BlindedBeaconBlockBellatrix{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -928,8 +928,8 @@ func Test_initBlindedSignedBlockFromProtoBellatrix(t *testing.T) {
 
 func Test_initSignedBlockFromProtoCapella(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBeaconBlockCapella{
-		Block: &eth.BeaconBlockCapella{
+	expectedBlock := &sila.SignedBeaconBlockCapella{
+		Block: &sila.BeaconBlockCapella{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -950,8 +950,8 @@ func Test_initSignedBlockFromProtoCapella(t *testing.T) {
 
 func Test_initBlindedSignedBlockFromProtoCapella(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBlindedBeaconBlockCapella{
-		Block: &eth.BlindedBeaconBlockCapella{
+	expectedBlock := &sila.SignedBlindedBeaconBlockCapella{
+		Block: &sila.BlindedBeaconBlockCapella{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -972,8 +972,8 @@ func Test_initBlindedSignedBlockFromProtoCapella(t *testing.T) {
 
 func Test_initSignedBlockFromProtoDeneb(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBeaconBlockDeneb{
-		Block: &eth.BeaconBlockDeneb{
+	expectedBlock := &sila.SignedBeaconBlockDeneb{
+		Block: &sila.BeaconBlockDeneb{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -994,8 +994,8 @@ func Test_initSignedBlockFromProtoDeneb(t *testing.T) {
 
 func Test_initBlindedSignedBlockFromProtoDeneb(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBlindedBeaconBlockDeneb{
-		Message: &eth.BlindedBeaconBlockDeneb{
+	expectedBlock := &sila.SignedBlindedBeaconBlockDeneb{
+		Message: &sila.BlindedBeaconBlockDeneb{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -1016,8 +1016,8 @@ func Test_initBlindedSignedBlockFromProtoDeneb(t *testing.T) {
 
 func Test_initSignedBlockFromProtoElectra(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBeaconBlockElectra{
-		Block: &eth.BeaconBlockElectra{
+	expectedBlock := &sila.SignedBeaconBlockElectra{
+		Block: &sila.BeaconBlockElectra{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -1038,8 +1038,8 @@ func Test_initSignedBlockFromProtoElectra(t *testing.T) {
 
 func Test_initBlindedSignedBlockFromProtoElectra(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.SignedBlindedBeaconBlockElectra{
-		Message: &eth.BlindedBeaconBlockElectra{
+	expectedBlock := &sila.SignedBlindedBeaconBlockElectra{
+		Message: &sila.BlindedBeaconBlockElectra{
 			Slot:          128,
 			ProposerIndex: 128,
 			ParentRoot:    f.root[:],
@@ -1060,7 +1060,7 @@ func Test_initBlindedSignedBlockFromProtoElectra(t *testing.T) {
 
 func Test_initBlockFromProtoPhase0(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BeaconBlock{
+	expectedBlock := &sila.BeaconBlock{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1078,7 +1078,7 @@ func Test_initBlockFromProtoPhase0(t *testing.T) {
 
 func Test_initBlockFromProtoAltair(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BeaconBlockAltair{
+	expectedBlock := &sila.BeaconBlockAltair{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1096,7 +1096,7 @@ func Test_initBlockFromProtoAltair(t *testing.T) {
 
 func Test_initBlockFromProtoBellatrix(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BeaconBlockBellatrix{
+	expectedBlock := &sila.BeaconBlockBellatrix{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1114,7 +1114,7 @@ func Test_initBlockFromProtoBellatrix(t *testing.T) {
 
 func Test_initBlockFromProtoBlindedBellatrix(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BlindedBeaconBlockBellatrix{
+	expectedBlock := &sila.BlindedBeaconBlockBellatrix{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1132,7 +1132,7 @@ func Test_initBlockFromProtoBlindedBellatrix(t *testing.T) {
 
 func Test_initBlockFromProtoCapella(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BeaconBlockCapella{
+	expectedBlock := &sila.BeaconBlockCapella{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1150,7 +1150,7 @@ func Test_initBlockFromProtoCapella(t *testing.T) {
 
 func Test_initBlockFromProtoBlindedCapella(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BlindedBeaconBlockCapella{
+	expectedBlock := &sila.BlindedBeaconBlockCapella{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1168,7 +1168,7 @@ func Test_initBlockFromProtoBlindedCapella(t *testing.T) {
 
 func Test_initBlockFromProtoDeneb(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BeaconBlockDeneb{
+	expectedBlock := &sila.BeaconBlockDeneb{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1186,7 +1186,7 @@ func Test_initBlockFromProtoDeneb(t *testing.T) {
 
 func Test_initBlockFromProtoBlindedDeneb(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BlindedBeaconBlockDeneb{
+	expectedBlock := &sila.BlindedBeaconBlockDeneb{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1204,7 +1204,7 @@ func Test_initBlockFromProtoBlindedDeneb(t *testing.T) {
 
 func Test_initBlockFromProtoElectra(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BeaconBlockElectra{
+	expectedBlock := &sila.BeaconBlockElectra{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1222,7 +1222,7 @@ func Test_initBlockFromProtoElectra(t *testing.T) {
 
 func Test_initBlockFromProtoBlindedElectra(t *testing.T) {
 	f := getFields()
-	expectedBlock := &eth.BlindedBeaconBlockElectra{
+	expectedBlock := &sila.BlindedBeaconBlockElectra{
 		Slot:          128,
 		ProposerIndex: 128,
 		ParentRoot:    f.root[:],
@@ -1348,11 +1348,11 @@ func Test_initBlockBodyFromProtoBlindedElectra(t *testing.T) {
 	assert.DeepEqual(t, expectedHTR, resultHTR)
 }
 
-func bodyPbPhase0() *eth.BeaconBlockBody {
+func bodyPbPhase0() *sila.BeaconBlockBody {
 	f := getFields()
-	return &eth.BeaconBlockBody{
+	return &sila.BeaconBlockBody{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1366,30 +1366,11 @@ func bodyPbPhase0() *eth.BeaconBlockBody {
 	}
 }
 
-func bodyPbAltair() *eth.BeaconBlockBodyAltair {
+func bodyPbAltair() *sila.BeaconBlockBodyAltair {
 	f := getFields()
-	return &eth.BeaconBlockBodyAltair{
+	return &sila.BeaconBlockBodyAltair{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
-			DepositRoot:  f.root[:],
-			DepositCount: 128,
-			BlockHash:    f.root[:],
-		},
-		Graffiti:          f.root[:],
-		ProposerSlashings: f.proposerSlashings,
-		AttesterSlashings: f.attesterSlashings,
-		Attestations:      f.atts,
-		Deposits:          f.deposits,
-		VoluntaryExits:    f.voluntaryExits,
-		SyncAggregate:     f.syncAggregate,
-	}
-}
-
-func bodyPbBellatrix() *eth.BeaconBlockBodyBellatrix {
-	f := getFields()
-	return &eth.BeaconBlockBodyBellatrix{
-		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1401,159 +1382,178 @@ func bodyPbBellatrix() *eth.BeaconBlockBodyBellatrix {
 		Deposits:          f.deposits,
 		VoluntaryExits:    f.voluntaryExits,
 		SyncAggregate:     f.syncAggregate,
-		SilaPayload:  f.execPayload,
 	}
 }
 
-func bodyPbBlindedBellatrix() *eth.BlindedBeaconBlockBodyBellatrix {
+func bodyPbBellatrix() *sila.BeaconBlockBodyBellatrix {
 	f := getFields()
-	return &eth.BlindedBeaconBlockBodyBellatrix{
+	return &sila.BeaconBlockBodyBellatrix{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:               f.root[:],
-		ProposerSlashings:      f.proposerSlashings,
-		AttesterSlashings:      f.attesterSlashings,
-		Attestations:           f.atts,
-		Deposits:               f.deposits,
-		VoluntaryExits:         f.voluntaryExits,
-		SyncAggregate:          f.syncAggregate,
+		Graffiti:          f.root[:],
+		ProposerSlashings: f.proposerSlashings,
+		AttesterSlashings: f.attesterSlashings,
+		Attestations:      f.atts,
+		Deposits:          f.deposits,
+		VoluntaryExits:    f.voluntaryExits,
+		SyncAggregate:     f.syncAggregate,
+		SilaPayload:       f.execPayload,
+	}
+}
+
+func bodyPbBlindedBellatrix() *sila.BlindedBeaconBlockBodyBellatrix {
+	f := getFields()
+	return &sila.BlindedBeaconBlockBodyBellatrix{
+		RandaoReveal: f.sig[:],
+		SilaData: &sila.SilaData{
+			DepositRoot:  f.root[:],
+			DepositCount: 128,
+			BlockHash:    f.root[:],
+		},
+		Graffiti:          f.root[:],
+		ProposerSlashings: f.proposerSlashings,
+		AttesterSlashings: f.attesterSlashings,
+		Attestations:      f.atts,
+		Deposits:          f.deposits,
+		VoluntaryExits:    f.voluntaryExits,
+		SyncAggregate:     f.syncAggregate,
 		SilaPayloadHeader: f.execPayloadHeader,
 	}
 }
 
-func bodyPbCapella() *eth.BeaconBlockBodyCapella {
+func bodyPbCapella() *sila.BeaconBlockBodyCapella {
 	f := getFields()
-	return &eth.BeaconBlockBodyCapella{
+	return &sila.BeaconBlockBodyCapella{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:              f.root[:],
-		ProposerSlashings:     f.proposerSlashings,
-		AttesterSlashings:     f.attesterSlashings,
-		Attestations:          f.atts,
-		Deposits:              f.deposits,
-		VoluntaryExits:        f.voluntaryExits,
-		SyncAggregate:         f.syncAggregate,
-		SilaPayload:      f.execPayloadCapella,
-		BlsToSilaChanges: f.blsToSilaChanges,
+		Graffiti:          f.root[:],
+		ProposerSlashings: f.proposerSlashings,
+		AttesterSlashings: f.attesterSlashings,
+		Attestations:      f.atts,
+		Deposits:          f.deposits,
+		VoluntaryExits:    f.voluntaryExits,
+		SyncAggregate:     f.syncAggregate,
+		SilaPayload:       f.execPayloadCapella,
+		BlsToSilaChanges:  f.blsToSilaChanges,
 	}
 }
 
-func bodyPbBlindedCapella() *eth.BlindedBeaconBlockBodyCapella {
+func bodyPbBlindedCapella() *sila.BlindedBeaconBlockBodyCapella {
 	f := getFields()
-	return &eth.BlindedBeaconBlockBodyCapella{
+	return &sila.BlindedBeaconBlockBodyCapella{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:               f.root[:],
-		ProposerSlashings:      f.proposerSlashings,
-		AttesterSlashings:      f.attesterSlashings,
-		Attestations:           f.atts,
-		Deposits:               f.deposits,
-		VoluntaryExits:         f.voluntaryExits,
-		SyncAggregate:          f.syncAggregate,
+		Graffiti:          f.root[:],
+		ProposerSlashings: f.proposerSlashings,
+		AttesterSlashings: f.attesterSlashings,
+		Attestations:      f.atts,
+		Deposits:          f.deposits,
+		VoluntaryExits:    f.voluntaryExits,
+		SyncAggregate:     f.syncAggregate,
 		SilaPayloadHeader: f.execPayloadHeaderCapella,
 		BlsToSilaChanges:  f.blsToSilaChanges,
 	}
 }
 
-func bodyPbDeneb() *eth.BeaconBlockBodyDeneb {
+func bodyPbDeneb() *sila.BeaconBlockBodyDeneb {
 	f := getFields()
-	return &eth.BeaconBlockBodyDeneb{
+	return &sila.BeaconBlockBodyDeneb{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:              f.root[:],
-		ProposerSlashings:     f.proposerSlashings,
-		AttesterSlashings:     f.attesterSlashings,
-		Attestations:          f.atts,
-		Deposits:              f.deposits,
-		VoluntaryExits:        f.voluntaryExits,
-		SyncAggregate:         f.syncAggregate,
-		SilaPayload:      f.execPayloadDeneb,
-		BlsToSilaChanges: f.blsToSilaChanges,
-		BlobKzgCommitments:    f.kzgCommitments,
+		Graffiti:           f.root[:],
+		ProposerSlashings:  f.proposerSlashings,
+		AttesterSlashings:  f.attesterSlashings,
+		Attestations:       f.atts,
+		Deposits:           f.deposits,
+		VoluntaryExits:     f.voluntaryExits,
+		SyncAggregate:      f.syncAggregate,
+		SilaPayload:        f.execPayloadDeneb,
+		BlsToSilaChanges:   f.blsToSilaChanges,
+		BlobKzgCommitments: f.kzgCommitments,
 	}
 }
 
-func bodyPbBlindedDeneb() *eth.BlindedBeaconBlockBodyDeneb {
+func bodyPbBlindedDeneb() *sila.BlindedBeaconBlockBodyDeneb {
 	f := getFields()
-	return &eth.BlindedBeaconBlockBodyDeneb{
+	return &sila.BlindedBeaconBlockBodyDeneb{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:               f.root[:],
-		ProposerSlashings:      f.proposerSlashings,
-		AttesterSlashings:      f.attesterSlashings,
-		Attestations:           f.atts,
-		Deposits:               f.deposits,
-		VoluntaryExits:         f.voluntaryExits,
-		SyncAggregate:          f.syncAggregate,
-		SilaPayloadHeader: f.execPayloadHeaderDeneb,
-		BlsToSilaChanges:  f.blsToSilaChanges,
-		BlobKzgCommitments:     f.kzgCommitments,
+		Graffiti:           f.root[:],
+		ProposerSlashings:  f.proposerSlashings,
+		AttesterSlashings:  f.attesterSlashings,
+		Attestations:       f.atts,
+		Deposits:           f.deposits,
+		VoluntaryExits:     f.voluntaryExits,
+		SyncAggregate:      f.syncAggregate,
+		SilaPayloadHeader:  f.execPayloadHeaderDeneb,
+		BlsToSilaChanges:   f.blsToSilaChanges,
+		BlobKzgCommitments: f.kzgCommitments,
 	}
 }
 
-func bodyPbElectra() *eth.BeaconBlockBodyElectra {
+func bodyPbElectra() *sila.BeaconBlockBodyElectra {
 	f := getFields()
-	return &eth.BeaconBlockBodyElectra{
+	return &sila.BeaconBlockBodyElectra{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:              f.root[:],
-		ProposerSlashings:     f.proposerSlashings,
-		AttesterSlashings:     f.attesterSlashingsElectra,
-		Attestations:          f.attsElectra,
-		Deposits:              f.deposits,
-		VoluntaryExits:        f.voluntaryExits,
-		SyncAggregate:         f.syncAggregate,
-		SilaPayload:      f.execPayloadDeneb,
-		BlsToSilaChanges: f.blsToSilaChanges,
-		BlobKzgCommitments:    f.kzgCommitments,
-		SilaRequests:     f.execRequests,
+		Graffiti:           f.root[:],
+		ProposerSlashings:  f.proposerSlashings,
+		AttesterSlashings:  f.attesterSlashingsElectra,
+		Attestations:       f.attsElectra,
+		Deposits:           f.deposits,
+		VoluntaryExits:     f.voluntaryExits,
+		SyncAggregate:      f.syncAggregate,
+		SilaPayload:        f.execPayloadDeneb,
+		BlsToSilaChanges:   f.blsToSilaChanges,
+		BlobKzgCommitments: f.kzgCommitments,
+		SilaRequests:       f.execRequests,
 	}
 }
 
-func bodyPbBlindedElectra() *eth.BlindedBeaconBlockBodyElectra {
+func bodyPbBlindedElectra() *sila.BlindedBeaconBlockBodyElectra {
 	f := getFields()
-	return &eth.BlindedBeaconBlockBodyElectra{
+	return &sila.BlindedBeaconBlockBodyElectra{
 		RandaoReveal: f.sig[:],
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		Graffiti:               f.root[:],
-		ProposerSlashings:      f.proposerSlashings,
-		AttesterSlashings:      f.attesterSlashingsElectra,
-		Attestations:           f.attsElectra,
-		Deposits:               f.deposits,
-		VoluntaryExits:         f.voluntaryExits,
-		SyncAggregate:          f.syncAggregate,
-		SilaPayloadHeader: f.execPayloadHeaderDeneb,
-		BlsToSilaChanges:  f.blsToSilaChanges,
-		BlobKzgCommitments:     f.kzgCommitments,
-		SilaRequests:      f.execRequests,
+		Graffiti:           f.root[:],
+		ProposerSlashings:  f.proposerSlashings,
+		AttesterSlashings:  f.attesterSlashingsElectra,
+		Attestations:       f.attsElectra,
+		Deposits:           f.deposits,
+		VoluntaryExits:     f.voluntaryExits,
+		SyncAggregate:      f.syncAggregate,
+		SilaPayloadHeader:  f.execPayloadHeaderDeneb,
+		BlsToSilaChanges:   f.blsToSilaChanges,
+		BlobKzgCommitments: f.kzgCommitments,
+		SilaRequests:       f.execRequests,
 	}
 }
 
@@ -1562,7 +1562,7 @@ func bodyPhase0() *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Phase0,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1581,7 +1581,7 @@ func bodyAltair() *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Altair,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1603,7 +1603,7 @@ func bodyBellatrix(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Bellatrix,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1615,7 +1615,7 @@ func bodyBellatrix(t *testing.T) *BeaconBlockBody {
 		deposits:          f.deposits,
 		voluntaryExits:    f.voluntaryExits,
 		syncAggregate:     f.syncAggregate,
-		silaPayload:  p,
+		silaPayload:       p,
 	}
 }
 
@@ -1626,18 +1626,18 @@ func bodyBlindedBellatrix(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Bellatrix,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		graffiti:               f.root,
-		proposerSlashings:      f.proposerSlashings,
-		attesterSlashings:      f.attesterSlashings,
-		attestations:           f.atts,
-		deposits:               f.deposits,
-		voluntaryExits:         f.voluntaryExits,
-		syncAggregate:          f.syncAggregate,
+		graffiti:          f.root,
+		proposerSlashings: f.proposerSlashings,
+		attesterSlashings: f.attesterSlashings,
+		attestations:      f.atts,
+		deposits:          f.deposits,
+		voluntaryExits:    f.voluntaryExits,
+		syncAggregate:     f.syncAggregate,
 		silaPayloadHeader: ph,
 	}
 }
@@ -1649,20 +1649,20 @@ func bodyCapella(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Capella,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		graffiti:              f.root,
-		proposerSlashings:     f.proposerSlashings,
-		attesterSlashings:     f.attesterSlashings,
-		attestations:          f.atts,
-		deposits:              f.deposits,
-		voluntaryExits:        f.voluntaryExits,
-		syncAggregate:         f.syncAggregate,
-		silaPayload:      p,
-		blsToSilaChanges: f.blsToSilaChanges,
+		graffiti:          f.root,
+		proposerSlashings: f.proposerSlashings,
+		attesterSlashings: f.attesterSlashings,
+		attestations:      f.atts,
+		deposits:          f.deposits,
+		voluntaryExits:    f.voluntaryExits,
+		syncAggregate:     f.syncAggregate,
+		silaPayload:       p,
+		blsToSilaChanges:  f.blsToSilaChanges,
 	}
 }
 
@@ -1673,18 +1673,18 @@ func bodyBlindedCapella(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Capella,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		graffiti:               f.root,
-		proposerSlashings:      f.proposerSlashings,
-		attesterSlashings:      f.attesterSlashings,
-		attestations:           f.atts,
-		deposits:               f.deposits,
-		voluntaryExits:         f.voluntaryExits,
-		syncAggregate:          f.syncAggregate,
+		graffiti:          f.root,
+		proposerSlashings: f.proposerSlashings,
+		attesterSlashings: f.attesterSlashings,
+		attestations:      f.atts,
+		deposits:          f.deposits,
+		voluntaryExits:    f.voluntaryExits,
+		syncAggregate:     f.syncAggregate,
 		silaPayloadHeader: ph,
 		blsToSilaChanges:  f.blsToSilaChanges,
 	}
@@ -1697,21 +1697,21 @@ func bodyDeneb(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Deneb,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		graffiti:              f.root,
-		proposerSlashings:     f.proposerSlashings,
-		attesterSlashings:     f.attesterSlashings,
-		attestations:          f.atts,
-		deposits:              f.deposits,
-		voluntaryExits:        f.voluntaryExits,
-		syncAggregate:         f.syncAggregate,
-		silaPayload:      p,
-		blsToSilaChanges: f.blsToSilaChanges,
-		blobKzgCommitments:    f.kzgCommitments,
+		graffiti:           f.root,
+		proposerSlashings:  f.proposerSlashings,
+		attesterSlashings:  f.attesterSlashings,
+		attestations:       f.atts,
+		deposits:           f.deposits,
+		voluntaryExits:     f.voluntaryExits,
+		syncAggregate:      f.syncAggregate,
+		silaPayload:        p,
+		blsToSilaChanges:   f.blsToSilaChanges,
+		blobKzgCommitments: f.kzgCommitments,
 	}
 }
 
@@ -1722,21 +1722,21 @@ func bodyBlindedDeneb(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Deneb,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
 		},
-		graffiti:               f.root,
-		proposerSlashings:      f.proposerSlashings,
-		attesterSlashings:      f.attesterSlashings,
-		attestations:           f.atts,
-		deposits:               f.deposits,
-		voluntaryExits:         f.voluntaryExits,
-		syncAggregate:          f.syncAggregate,
-		silaPayloadHeader: ph,
-		blsToSilaChanges:  f.blsToSilaChanges,
-		blobKzgCommitments:     f.kzgCommitments,
+		graffiti:           f.root,
+		proposerSlashings:  f.proposerSlashings,
+		attesterSlashings:  f.attesterSlashings,
+		attestations:       f.atts,
+		deposits:           f.deposits,
+		voluntaryExits:     f.voluntaryExits,
+		syncAggregate:      f.syncAggregate,
+		silaPayloadHeader:  ph,
+		blsToSilaChanges:   f.blsToSilaChanges,
+		blobKzgCommitments: f.kzgCommitments,
 	}
 }
 
@@ -1747,7 +1747,7 @@ func bodyElectra(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Electra,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1759,10 +1759,10 @@ func bodyElectra(t *testing.T) *BeaconBlockBody {
 		deposits:                 f.deposits,
 		voluntaryExits:           f.voluntaryExits,
 		syncAggregate:            f.syncAggregate,
-		silaPayload:         p,
-		blsToSilaChanges:    f.blsToSilaChanges,
+		silaPayload:              p,
+		blsToSilaChanges:         f.blsToSilaChanges,
 		blobKzgCommitments:       f.kzgCommitments,
-		silaRequests:        f.execRequests,
+		silaRequests:             f.execRequests,
 	}
 }
 
@@ -1773,7 +1773,7 @@ func bodyBlindedElectra(t *testing.T) *BeaconBlockBody {
 	return &BeaconBlockBody{
 		version:      version.Electra,
 		randaoReveal: f.sig,
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot:  f.root[:],
 			DepositCount: 128,
 			BlockHash:    f.root[:],
@@ -1785,23 +1785,23 @@ func bodyBlindedElectra(t *testing.T) *BeaconBlockBody {
 		deposits:                 f.deposits,
 		voluntaryExits:           f.voluntaryExits,
 		syncAggregate:            f.syncAggregate,
-		silaPayloadHeader:   ph,
-		blsToSilaChanges:    f.blsToSilaChanges,
+		silaPayloadHeader:        ph,
+		blsToSilaChanges:         f.blsToSilaChanges,
 		blobKzgCommitments:       f.kzgCommitments,
-		silaRequests:        f.execRequests,
+		silaRequests:             f.execRequests,
 	}
 }
 
 func TestSignedBeaconBlockProtoGloas(t *testing.T) {
-	payload := []*eth.PayloadAttestation{{Signature: []byte{0x01}}}
-	bid := &eth.SignedSilaPayloadBid{Signature: []byte{0x02}}
+	payload := []*sila.PayloadAttestation{{Signature: []byte{0x01}}}
+	bid := &sila.SignedSilaPayloadBid{Signature: []byte{0x02}}
 	sb := &SignedBeaconBlock{
 		version: version.Gloas,
 		block: &BeaconBlock{
 			version: version.Gloas,
 			body: &BeaconBlockBody{
-				version:                   version.Gloas,
-				payloadAttestations:       payload,
+				version:              version.Gloas,
+				payloadAttestations:  payload,
 				signedSilaPayloadBid: bid,
 			},
 		},
@@ -1809,7 +1809,7 @@ func TestSignedBeaconBlockProtoGloas(t *testing.T) {
 
 	msg, err := sb.Proto()
 	require.NoError(t, err)
-	gloas, ok := msg.(*eth.SignedBeaconBlockGloas)
+	gloas, ok := msg.(*sila.SignedBeaconBlockGloas)
 	require.Equal(t, true, ok)
 	require.DeepEqual(t, payload, gloas.Block.Body.PayloadAttestations)
 	require.DeepEqual(t, bid, gloas.Block.Body.SignedSilaPayloadBid)
@@ -1818,16 +1818,16 @@ func TestSignedBeaconBlockProtoGloas(t *testing.T) {
 func TestInitSignedBlockFromProtoGloas(t *testing.T) {
 	bits := bitfield.NewBitvector512()
 	bits.SetBitAt(0, true)
-	pb := &eth.SignedBeaconBlockGloas{
-		Block: &eth.BeaconBlockGloas{
-			Body: &eth.BeaconBlockBodyGloas{
-				PayloadAttestations: []*eth.PayloadAttestation{
+	pb := &sila.SignedBeaconBlockGloas{
+		Block: &sila.BeaconBlockGloas{
+			Body: &sila.BeaconBlockBodyGloas{
+				PayloadAttestations: []*sila.PayloadAttestation{
 					{
 						AggregationBits: bits,
 						Signature:       []byte{0x01},
 					},
 				},
-				SignedSilaPayloadBid: &eth.SignedSilaPayloadBid{Signature: []byte{0x02}},
+				SignedSilaPayloadBid: &sila.SignedSilaPayloadBid{Signature: []byte{0x02}},
 			},
 		},
 		Signature: []byte{0x03},
@@ -1858,14 +1858,14 @@ func getFields() fields {
 	b256[0], b256[5], b256[10] = 'x', 'y', 'z'
 	root[0], root[5], root[10] = 'a', 'b', 'c'
 	sig[0], sig[5], sig[10] = 'd', 'e', 'f'
-	deposits := make([]*eth.Deposit, 16)
+	deposits := make([]*sila.Deposit, 16)
 	for i := range deposits {
-		deposits[i] = &eth.Deposit{}
+		deposits[i] = &sila.Deposit{}
 		deposits[i].Proof = make([][]byte, 33)
 		for j := range deposits[i].Proof {
 			deposits[i].Proof[j] = root[:]
 		}
-		deposits[i].Data = &eth.Deposit_Data{
+		deposits[i].Data = &sila.Deposit_Data{
 			PublicKey:             b48,
 			WithdrawalCredentials: root[:],
 			Amount:                128,
@@ -1875,49 +1875,49 @@ func getFields() fields {
 
 	attBits := bitfield.NewBitlist(1)
 	committeeBits := primitives.NewAttestationCommitteeBits()
-	atts := make([]*eth.Attestation, params.BeaconConfig().MaxAttestations)
+	atts := make([]*sila.Attestation, params.BeaconConfig().MaxAttestations)
 	for i := range atts {
-		atts[i] = &eth.Attestation{}
+		atts[i] = &sila.Attestation{}
 		atts[i].Signature = sig[:]
 		atts[i].AggregationBits = attBits
-		atts[i].Data = &eth.AttestationData{
+		atts[i].Data = &sila.AttestationData{
 			Slot:            128,
 			CommitteeIndex:  128,
 			BeaconBlockRoot: root[:],
-			Source: &eth.Checkpoint{
+			Source: &sila.Checkpoint{
 				Epoch: 128,
 				Root:  root[:],
 			},
-			Target: &eth.Checkpoint{
+			Target: &sila.Checkpoint{
 				Epoch: 128,
 				Root:  root[:],
 			},
 		}
 	}
-	attsElectra := make([]*eth.AttestationElectra, params.BeaconConfig().MaxAttestationsElectra)
+	attsElectra := make([]*sila.AttestationElectra, params.BeaconConfig().MaxAttestationsElectra)
 	for i := range attsElectra {
-		attsElectra[i] = &eth.AttestationElectra{}
+		attsElectra[i] = &sila.AttestationElectra{}
 		attsElectra[i].Signature = sig[:]
 		attsElectra[i].AggregationBits = attBits
 		attsElectra[i].CommitteeBits = committeeBits
-		attsElectra[i].Data = &eth.AttestationData{
+		attsElectra[i].Data = &sila.AttestationData{
 			Slot:            128,
 			CommitteeIndex:  128,
 			BeaconBlockRoot: root[:],
-			Source: &eth.Checkpoint{
+			Source: &sila.Checkpoint{
 				Epoch: 128,
 				Root:  root[:],
 			},
-			Target: &eth.Checkpoint{
+			Target: &sila.Checkpoint{
 				Epoch: 128,
 				Root:  root[:],
 			},
 		}
 	}
 
-	proposerSlashing := &eth.ProposerSlashing{
-		Header_1: &eth.SignedBeaconBlockHeader{
-			Header: &eth.BeaconBlockHeader{
+	proposerSlashing := &sila.ProposerSlashing{
+		Header_1: &sila.SignedBeaconBlockHeader{
+			Header: &sila.BeaconBlockHeader{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    root[:],
@@ -1926,8 +1926,8 @@ func getFields() fields {
 			},
 			Signature: sig[:],
 		},
-		Header_2: &eth.SignedBeaconBlockHeader{
-			Header: &eth.BeaconBlockHeader{
+		Header_2: &sila.SignedBeaconBlockHeader{
+			Header: &sila.BeaconBlockHeader{
 				Slot:          128,
 				ProposerIndex: 128,
 				ParentRoot:    root[:],
@@ -1937,71 +1937,35 @@ func getFields() fields {
 			Signature: sig[:],
 		},
 	}
-	attesterSlashing := &eth.AttesterSlashing{
-		Attestation_1: &eth.IndexedAttestation{
+	attesterSlashing := &sila.AttesterSlashing{
+		Attestation_1: &sila.IndexedAttestation{
 			AttestingIndices: []uint64{1, 2, 8},
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            128,
 				CommitteeIndex:  128,
 				BeaconBlockRoot: root[:],
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 128,
 					Root:  root[:],
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 128,
 					Root:  root[:],
 				},
 			},
 			Signature: sig[:],
 		},
-		Attestation_2: &eth.IndexedAttestation{
+		Attestation_2: &sila.IndexedAttestation{
 			AttestingIndices: []uint64{1, 2, 8},
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            128,
 				CommitteeIndex:  128,
 				BeaconBlockRoot: root[:],
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 128,
 					Root:  root[:],
 				},
-				Target: &eth.Checkpoint{
-					Epoch: 128,
-					Root:  root[:],
-				},
-			},
-			Signature: sig[:],
-		},
-	}
-	attesterSlashingElectra := &eth.AttesterSlashingElectra{
-		Attestation_1: &eth.IndexedAttestationElectra{
-			AttestingIndices: []uint64{1, 2, 8},
-			Data: &eth.AttestationData{
-				Slot:            128,
-				CommitteeIndex:  128,
-				BeaconBlockRoot: root[:],
-				Source: &eth.Checkpoint{
-					Epoch: 128,
-					Root:  root[:],
-				},
-				Target: &eth.Checkpoint{
-					Epoch: 128,
-					Root:  root[:],
-				},
-			},
-			Signature: sig[:],
-		},
-		Attestation_2: &eth.IndexedAttestationElectra{
-			AttestingIndices: []uint64{1, 2, 8},
-			Data: &eth.AttestationData{
-				Slot:            128,
-				CommitteeIndex:  128,
-				BeaconBlockRoot: root[:],
-				Source: &eth.Checkpoint{
-					Epoch: 128,
-					Root:  root[:],
-				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 128,
 					Root:  root[:],
 				},
@@ -2009,8 +1973,44 @@ func getFields() fields {
 			Signature: sig[:],
 		},
 	}
-	voluntaryExit := &eth.SignedVoluntaryExit{
-		Exit: &eth.VoluntaryExit{
+	attesterSlashingElectra := &sila.AttesterSlashingElectra{
+		Attestation_1: &sila.IndexedAttestationElectra{
+			AttestingIndices: []uint64{1, 2, 8},
+			Data: &sila.AttestationData{
+				Slot:            128,
+				CommitteeIndex:  128,
+				BeaconBlockRoot: root[:],
+				Source: &sila.Checkpoint{
+					Epoch: 128,
+					Root:  root[:],
+				},
+				Target: &sila.Checkpoint{
+					Epoch: 128,
+					Root:  root[:],
+				},
+			},
+			Signature: sig[:],
+		},
+		Attestation_2: &sila.IndexedAttestationElectra{
+			AttestingIndices: []uint64{1, 2, 8},
+			Data: &sila.AttestationData{
+				Slot:            128,
+				CommitteeIndex:  128,
+				BeaconBlockRoot: root[:],
+				Source: &sila.Checkpoint{
+					Epoch: 128,
+					Root:  root[:],
+				},
+				Target: &sila.Checkpoint{
+					Epoch: 128,
+					Root:  root[:],
+				},
+			},
+			Signature: sig[:],
+		},
+	}
+	voluntaryExit := &sila.SignedVoluntaryExit{
+		Exit: &sila.VoluntaryExit{
 			Epoch:          128,
 			ValidatorIndex: 128,
 		},
@@ -2020,7 +2020,7 @@ func getFields() fields {
 	syncCommitteeBits.SetBitAt(1, true)
 	syncCommitteeBits.SetBitAt(2, true)
 	syncCommitteeBits.SetBitAt(8, true)
-	syncAggregate := &eth.SyncAggregate{
+	syncAggregate := &sila.SyncAggregate{
 		SyncCommitteeBits:      syncCommitteeBits,
 		SyncCommitteeSignature: sig[:],
 	}
@@ -2104,11 +2104,11 @@ func getFields() fields {
 		TransactionsRoot: root[:],
 		WithdrawalsRoot:  root[:],
 	}
-	blsToSilaChanges := []*eth.SignedBLSToSilaChange{{
-		Message: &eth.BLSToSilaChange{
-			ValidatorIndex:     128,
-			FromBlsPubkey:      b48,
-			ToSilaAddress: b20,
+	blsToSilaChanges := []*sila.SignedBLSToSilaChange{{
+		Message: &sila.BLSToSilaChange{
+			ValidatorIndex: 128,
+			FromBlsPubkey:  b48,
+			ToSilaAddress:  b20,
 		},
 		Signature: sig[:],
 	}}
@@ -2195,10 +2195,10 @@ func getFields() fields {
 		deposits:                 deposits,
 		atts:                     atts,
 		attsElectra:              attsElectra,
-		proposerSlashings:        []*eth.ProposerSlashing{proposerSlashing},
-		attesterSlashings:        []*eth.AttesterSlashing{attesterSlashing},
-		attesterSlashingsElectra: []*eth.AttesterSlashingElectra{attesterSlashingElectra},
-		voluntaryExits:           []*eth.SignedVoluntaryExit{voluntaryExit},
+		proposerSlashings:        []*sila.ProposerSlashing{proposerSlashing},
+		attesterSlashings:        []*sila.AttesterSlashing{attesterSlashing},
+		attesterSlashingsElectra: []*sila.AttesterSlashingElectra{attesterSlashingElectra},
+		voluntaryExits:           []*sila.SignedVoluntaryExit{voluntaryExit},
 		syncAggregate:            syncAggregate,
 		execPayload:              execPayload,
 		execPayloadHeader:        execPayloadHeader,
@@ -2206,7 +2206,7 @@ func getFields() fields {
 		execPayloadHeaderCapella: execPayloadHeaderCapella,
 		execPayloadDeneb:         execPayloadDeneb,
 		execPayloadHeaderDeneb:   execPayloadHeaderDeneb,
-		blsToSilaChanges:    blsToSilaChanges,
+		blsToSilaChanges:         blsToSilaChanges,
 		kzgCommitments:           kzgCommitments,
 		execRequests:             execRequests,
 	}

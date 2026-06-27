@@ -7,6 +7,9 @@ import (
 	"path"
 	"strings"
 
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
@@ -16,12 +19,9 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -43,9 +43,9 @@ func (s *Service) validateBlob(ctx context.Context, pid peer.ID, msg *pubsub.Mes
 		return pubsub.ValidationReject, err
 	}
 
-	bpb, ok := m.(*eth.BlobSidecar)
+	bpb, ok := m.(*sila.BlobSidecar)
 	if !ok {
-		log.WithField("message", m).Error("Message is not of type *eth.BlobSidecar")
+		log.WithField("message", m).Error("Message is not of type *sila.BlobSidecar")
 		return pubsub.ValidationReject, errWrongMessage
 	}
 	blob, err := blocks.NewROBlob(bpb)

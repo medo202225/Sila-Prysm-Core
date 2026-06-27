@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
@@ -14,11 +15,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	silaMath "github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/math"
-	"github.com/pkg/errors"
 )
 
 // ProcessConsolidationRequests implements the spec definition below. This method makes mutating
@@ -229,7 +229,7 @@ func ProcessConsolidationRequests(ctx context.Context, st state.BeaconState, req
 			return fmt.Errorf("failed to update validator: %w", err) // This should never happen.
 		}
 
-		if err := st.AppendPendingConsolidation(&eth.PendingConsolidation{SourceIndex: srcIdx, TargetIndex: tgtIdx}); err != nil {
+		if err := st.AppendPendingConsolidation(&sila.PendingConsolidation{SourceIndex: srcIdx, TargetIndex: tgtIdx}); err != nil {
 			return fmt.Errorf("failed to append pending consolidation: %w", err) // This should never happen.
 		}
 	}
@@ -309,7 +309,7 @@ func queueExcessActiveBalance(st state.BeaconState, idx primitives.ValidatorInde
 			return err
 		}
 		pk := val.PublicKey()
-		return st.AppendPendingDeposit(&eth.PendingDeposit{
+		return st.AppendPendingDeposit(&sila.PendingDeposit{
 			PublicKey:             pk[:],
 			WithdrawalCredentials: val.GetWithdrawalCredentials(),
 			Amount:                excessBalance,

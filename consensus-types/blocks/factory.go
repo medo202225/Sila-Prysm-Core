@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
@@ -34,57 +34,57 @@ func NewSignedBeaconBlock(i any) (interfaces.SignedBeaconBlock, error) {
 	switch b := i.(type) {
 	case nil:
 		return nil, ErrNilObject
-	case *eth.GenericSignedBeaconBlock_Phase0:
+	case *sila.GenericSignedBeaconBlock_Phase0:
 		return initSignedBlockFromProtoPhase0(b.Phase0)
-	case *eth.SignedBeaconBlock:
+	case *sila.SignedBeaconBlock:
 		return initSignedBlockFromProtoPhase0(b)
-	case *eth.GenericSignedBeaconBlock_Altair:
+	case *sila.GenericSignedBeaconBlock_Altair:
 		return initSignedBlockFromProtoAltair(b.Altair)
-	case *eth.SignedBeaconBlockAltair:
+	case *sila.SignedBeaconBlockAltair:
 		return initSignedBlockFromProtoAltair(b)
-	case *eth.GenericSignedBeaconBlock_Bellatrix:
+	case *sila.GenericSignedBeaconBlock_Bellatrix:
 		return initSignedBlockFromProtoBellatrix(b.Bellatrix)
-	case *eth.SignedBeaconBlockBellatrix:
+	case *sila.SignedBeaconBlockBellatrix:
 		return initSignedBlockFromProtoBellatrix(b)
-	case *eth.GenericSignedBeaconBlock_BlindedBellatrix:
+	case *sila.GenericSignedBeaconBlock_BlindedBellatrix:
 		return initBlindedSignedBlockFromProtoBellatrix(b.BlindedBellatrix)
-	case *eth.SignedBlindedBeaconBlockBellatrix:
+	case *sila.SignedBlindedBeaconBlockBellatrix:
 		return initBlindedSignedBlockFromProtoBellatrix(b)
-	case *eth.GenericSignedBeaconBlock_Capella:
+	case *sila.GenericSignedBeaconBlock_Capella:
 		return initSignedBlockFromProtoCapella(b.Capella)
-	case *eth.SignedBeaconBlockCapella:
+	case *sila.SignedBeaconBlockCapella:
 		return initSignedBlockFromProtoCapella(b)
-	case *eth.GenericSignedBeaconBlock_BlindedCapella:
+	case *sila.GenericSignedBeaconBlock_BlindedCapella:
 		return initBlindedSignedBlockFromProtoCapella(b.BlindedCapella)
-	case *eth.SignedBlindedBeaconBlockCapella:
+	case *sila.SignedBlindedBeaconBlockCapella:
 		return initBlindedSignedBlockFromProtoCapella(b)
-	case *eth.GenericSignedBeaconBlock_Deneb:
+	case *sila.GenericSignedBeaconBlock_Deneb:
 		return initSignedBlockFromProtoDeneb(b.Deneb.Block)
-	case *eth.SignedBeaconBlockDeneb:
+	case *sila.SignedBeaconBlockDeneb:
 		return initSignedBlockFromProtoDeneb(b)
-	case *eth.SignedBlindedBeaconBlockDeneb:
+	case *sila.SignedBlindedBeaconBlockDeneb:
 		return initBlindedSignedBlockFromProtoDeneb(b)
-	case *eth.GenericSignedBeaconBlock_BlindedDeneb:
+	case *sila.GenericSignedBeaconBlock_BlindedDeneb:
 		return initBlindedSignedBlockFromProtoDeneb(b.BlindedDeneb)
-	case *eth.GenericSignedBeaconBlock_Electra:
+	case *sila.GenericSignedBeaconBlock_Electra:
 		return initSignedBlockFromProtoElectra(b.Electra.Block)
-	case *eth.SignedBeaconBlockElectra:
+	case *sila.SignedBeaconBlockElectra:
 		return initSignedBlockFromProtoElectra(b)
-	case *eth.SignedBlindedBeaconBlockElectra:
+	case *sila.SignedBlindedBeaconBlockElectra:
 		return initBlindedSignedBlockFromProtoElectra(b)
-	case *eth.GenericSignedBeaconBlock_BlindedElectra:
+	case *sila.GenericSignedBeaconBlock_BlindedElectra:
 		return initBlindedSignedBlockFromProtoElectra(b.BlindedElectra)
-	case *eth.GenericSignedBeaconBlock_Fulu:
+	case *sila.GenericSignedBeaconBlock_Fulu:
 		return initSignedBlockFromProtoFulu(b.Fulu.Block)
-	case *eth.SignedBeaconBlockFulu:
+	case *sila.SignedBeaconBlockFulu:
 		return initSignedBlockFromProtoFulu(b)
-	case *eth.SignedBlindedBeaconBlockFulu:
+	case *sila.SignedBlindedBeaconBlockFulu:
 		return initBlindedSignedBlockFromProtoFulu(b)
-	case *eth.GenericSignedBeaconBlock_BlindedFulu:
+	case *sila.GenericSignedBeaconBlock_BlindedFulu:
 		return initBlindedSignedBlockFromProtoFulu(b.BlindedFulu)
-	case *eth.GenericSignedBeaconBlock_Gloas:
+	case *sila.GenericSignedBeaconBlock_Gloas:
 		return initSignedBlockFromProtoGloas(b.Gloas)
-	case *eth.SignedBeaconBlockGloas:
+	case *sila.SignedBeaconBlockGloas:
 		return initSignedBlockFromProtoGloas(b)
 	default:
 		return nil, errors.Wrapf(ErrUnsupportedSignedBeaconBlock, "unable to create block from type %T", i)
@@ -96,55 +96,55 @@ func NewBeaconBlock(i any) (interfaces.ReadOnlyBeaconBlock, error) {
 	switch b := i.(type) {
 	case nil:
 		return nil, ErrNilObject
-	case *eth.GenericBeaconBlock_Phase0:
+	case *sila.GenericBeaconBlock_Phase0:
 		return initBlockFromProtoPhase0(b.Phase0)
-	case *eth.BeaconBlock:
+	case *sila.BeaconBlock:
 		return initBlockFromProtoPhase0(b)
-	case *eth.GenericBeaconBlock_Altair:
+	case *sila.GenericBeaconBlock_Altair:
 		return initBlockFromProtoAltair(b.Altair)
-	case *eth.BeaconBlockAltair:
+	case *sila.BeaconBlockAltair:
 		return initBlockFromProtoAltair(b)
-	case *eth.GenericBeaconBlock_Bellatrix:
+	case *sila.GenericBeaconBlock_Bellatrix:
 		return initBlockFromProtoBellatrix(b.Bellatrix)
-	case *eth.BeaconBlockBellatrix:
+	case *sila.BeaconBlockBellatrix:
 		return initBlockFromProtoBellatrix(b)
-	case *eth.GenericBeaconBlock_BlindedBellatrix:
+	case *sila.GenericBeaconBlock_BlindedBellatrix:
 		return initBlindedBlockFromProtoBellatrix(b.BlindedBellatrix)
-	case *eth.BlindedBeaconBlockBellatrix:
+	case *sila.BlindedBeaconBlockBellatrix:
 		return initBlindedBlockFromProtoBellatrix(b)
-	case *eth.GenericBeaconBlock_Capella:
+	case *sila.GenericBeaconBlock_Capella:
 		return initBlockFromProtoCapella(b.Capella)
-	case *eth.BeaconBlockCapella:
+	case *sila.BeaconBlockCapella:
 		return initBlockFromProtoCapella(b)
-	case *eth.GenericBeaconBlock_BlindedCapella:
+	case *sila.GenericBeaconBlock_BlindedCapella:
 		return initBlindedBlockFromProtoCapella(b.BlindedCapella)
-	case *eth.BlindedBeaconBlockCapella:
+	case *sila.BlindedBeaconBlockCapella:
 		return initBlindedBlockFromProtoCapella(b)
-	case *eth.GenericBeaconBlock_Deneb:
+	case *sila.GenericBeaconBlock_Deneb:
 		return initBlockFromProtoDeneb(b.Deneb.Block)
-	case *eth.BeaconBlockDeneb:
+	case *sila.BeaconBlockDeneb:
 		return initBlockFromProtoDeneb(b)
-	case *eth.BlindedBeaconBlockDeneb:
+	case *sila.BlindedBeaconBlockDeneb:
 		return initBlindedBlockFromProtoDeneb(b)
-	case *eth.GenericBeaconBlock_BlindedDeneb:
+	case *sila.GenericBeaconBlock_BlindedDeneb:
 		return initBlindedBlockFromProtoDeneb(b.BlindedDeneb)
-	case *eth.GenericBeaconBlock_Electra:
+	case *sila.GenericBeaconBlock_Electra:
 		return initBlockFromProtoElectra(b.Electra.Block)
-	case *eth.BeaconBlockElectra:
+	case *sila.BeaconBlockElectra:
 		return initBlockFromProtoElectra(b)
-	case *eth.BlindedBeaconBlockElectra:
+	case *sila.BlindedBeaconBlockElectra:
 		return initBlindedBlockFromProtoElectra(b)
-	case *eth.GenericBeaconBlock_BlindedElectra:
+	case *sila.GenericBeaconBlock_BlindedElectra:
 		return initBlindedBlockFromProtoElectra(b.BlindedElectra)
-	case *eth.GenericBeaconBlock_Fulu:
+	case *sila.GenericBeaconBlock_Fulu:
 		return initBlockFromProtoFulu(b.Fulu.Block)
-	case *eth.BlindedBeaconBlockFulu:
+	case *sila.BlindedBeaconBlockFulu:
 		return initBlindedBlockFromProtoFulu(b)
-	case *eth.GenericBeaconBlock_BlindedFulu:
+	case *sila.GenericBeaconBlock_BlindedFulu:
 		return initBlindedBlockFromProtoFulu(b.BlindedFulu)
-	case *eth.GenericBeaconBlock_Gloas:
+	case *sila.GenericBeaconBlock_Gloas:
 		return initBlockFromProtoGloas(b.Gloas)
-	case *eth.BeaconBlockGloas:
+	case *sila.BeaconBlockGloas:
 		return initBlockFromProtoGloas(b)
 	default:
 		return nil, errors.Wrapf(errUnsupportedBeaconBlock, "unable to create block from type %T", i)
@@ -156,27 +156,27 @@ func NewBeaconBlockBody(i any) (interfaces.ReadOnlyBeaconBlockBody, error) {
 	switch b := i.(type) {
 	case nil:
 		return nil, ErrNilObject
-	case *eth.BeaconBlockBody:
+	case *sila.BeaconBlockBody:
 		return initBlockBodyFromProtoPhase0(b)
-	case *eth.BeaconBlockBodyAltair:
+	case *sila.BeaconBlockBodyAltair:
 		return initBlockBodyFromProtoAltair(b)
-	case *eth.BeaconBlockBodyBellatrix:
+	case *sila.BeaconBlockBodyBellatrix:
 		return initBlockBodyFromProtoBellatrix(b)
-	case *eth.BlindedBeaconBlockBodyBellatrix:
+	case *sila.BlindedBeaconBlockBodyBellatrix:
 		return initBlindedBlockBodyFromProtoBellatrix(b)
-	case *eth.BeaconBlockBodyCapella:
+	case *sila.BeaconBlockBodyCapella:
 		return initBlockBodyFromProtoCapella(b)
-	case *eth.BlindedBeaconBlockBodyCapella:
+	case *sila.BlindedBeaconBlockBodyCapella:
 		return initBlindedBlockBodyFromProtoCapella(b)
-	case *eth.BeaconBlockBodyDeneb:
+	case *sila.BeaconBlockBodyDeneb:
 		return initBlockBodyFromProtoDeneb(b)
-	case *eth.BlindedBeaconBlockBodyDeneb:
+	case *sila.BlindedBeaconBlockBodyDeneb:
 		return initBlindedBlockBodyFromProtoDeneb(b)
-	case *eth.BeaconBlockBodyElectra:
+	case *sila.BeaconBlockBodyElectra:
 		return initBlockBodyFromProtoElectra(b)
-	case *eth.BlindedBeaconBlockBodyElectra:
+	case *sila.BlindedBeaconBlockBodyElectra:
 		return initBlindedBlockBodyFromProtoElectra(b)
-	case *eth.BeaconBlockBodyGloas:
+	case *sila.BeaconBlockBodyGloas:
 		return initBlockBodyFromProtoGloas(b)
 	default:
 		return nil, errors.Wrapf(errUnsupportedBeaconBlockBody, "unable to create block body from type %T", i)
@@ -194,88 +194,88 @@ func BuildSignedBeaconBlock(blk interfaces.ReadOnlyBeaconBlock, signature []byte
 
 	switch blk.Version() {
 	case version.Phase0:
-		pb, ok := pb.(*eth.BeaconBlock)
+		pb, ok := pb.(*sila.BeaconBlock)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlock{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlock{Block: pb, Signature: signature})
 	case version.Altair:
-		pb, ok := pb.(*eth.BeaconBlockAltair)
+		pb, ok := pb.(*sila.BeaconBlockAltair)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockAltair{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockAltair{Block: pb, Signature: signature})
 	case version.Bellatrix:
 		if blk.IsBlinded() {
-			pb, ok := pb.(*eth.BlindedBeaconBlockBellatrix)
+			pb, ok := pb.(*sila.BlindedBeaconBlockBellatrix)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
-			return NewSignedBeaconBlock(&eth.SignedBlindedBeaconBlockBellatrix{Block: pb, Signature: signature})
+			return NewSignedBeaconBlock(&sila.SignedBlindedBeaconBlockBellatrix{Block: pb, Signature: signature})
 		}
-		pb, ok := pb.(*eth.BeaconBlockBellatrix)
+		pb, ok := pb.(*sila.BeaconBlockBellatrix)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockBellatrix{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockBellatrix{Block: pb, Signature: signature})
 	case version.Capella:
 		if blk.IsBlinded() {
-			pb, ok := pb.(*eth.BlindedBeaconBlockCapella)
+			pb, ok := pb.(*sila.BlindedBeaconBlockCapella)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
-			return NewSignedBeaconBlock(&eth.SignedBlindedBeaconBlockCapella{Block: pb, Signature: signature})
+			return NewSignedBeaconBlock(&sila.SignedBlindedBeaconBlockCapella{Block: pb, Signature: signature})
 		}
-		pb, ok := pb.(*eth.BeaconBlockCapella)
+		pb, ok := pb.(*sila.BeaconBlockCapella)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockCapella{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockCapella{Block: pb, Signature: signature})
 	case version.Deneb:
 		if blk.IsBlinded() {
-			pb, ok := pb.(*eth.BlindedBeaconBlockDeneb)
+			pb, ok := pb.(*sila.BlindedBeaconBlockDeneb)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
-			return NewSignedBeaconBlock(&eth.SignedBlindedBeaconBlockDeneb{Message: pb, Signature: signature})
+			return NewSignedBeaconBlock(&sila.SignedBlindedBeaconBlockDeneb{Message: pb, Signature: signature})
 		}
-		pb, ok := pb.(*eth.BeaconBlockDeneb)
+		pb, ok := pb.(*sila.BeaconBlockDeneb)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockDeneb{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockDeneb{Block: pb, Signature: signature})
 	case version.Electra:
 		if blk.IsBlinded() {
-			pb, ok := pb.(*eth.BlindedBeaconBlockElectra)
+			pb, ok := pb.(*sila.BlindedBeaconBlockElectra)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
-			return NewSignedBeaconBlock(&eth.SignedBlindedBeaconBlockElectra{Message: pb, Signature: signature})
+			return NewSignedBeaconBlock(&sila.SignedBlindedBeaconBlockElectra{Message: pb, Signature: signature})
 		}
-		pb, ok := pb.(*eth.BeaconBlockElectra)
+		pb, ok := pb.(*sila.BeaconBlockElectra)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockElectra{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockElectra{Block: pb, Signature: signature})
 	case version.Fulu:
 		if blk.IsBlinded() {
-			pb, ok := pb.(*eth.BlindedBeaconBlockFulu)
+			pb, ok := pb.(*sila.BlindedBeaconBlockFulu)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
-			return NewSignedBeaconBlock(&eth.SignedBlindedBeaconBlockFulu{Message: pb, Signature: signature})
+			return NewSignedBeaconBlock(&sila.SignedBlindedBeaconBlockFulu{Message: pb, Signature: signature})
 		}
-		pb, ok := pb.(*eth.BeaconBlockElectra)
+		pb, ok := pb.(*sila.BeaconBlockElectra)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockFulu{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockFulu{Block: pb, Signature: signature})
 	case version.Gloas:
-		pb, ok := pb.(*eth.BeaconBlockGloas)
+		pb, ok := pb.(*sila.BeaconBlockGloas)
 		if !ok {
 			return nil, errIncorrectBlockVersion
 		}
-		return NewSignedBeaconBlock(&eth.SignedBeaconBlockGloas{Block: pb, Signature: signature})
+		return NewSignedBeaconBlock(&sila.SignedBeaconBlockGloas{Block: pb, Signature: signature})
 	default:
 		return nil, errUnsupportedBeaconBlock
 	}
@@ -361,35 +361,35 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 		if !ok {
 			return nil, fmt.Errorf("payload has wrong type (expected %T, got %T)", &silaenginev1.SilaPayload{}, payload)
 		}
-		var atts []*eth.Attestation
+		var atts []*sila.Attestation
 		if b.Body().Attestations() != nil {
-			atts = make([]*eth.Attestation, len(b.Body().Attestations()))
+			atts = make([]*sila.Attestation, len(b.Body().Attestations()))
 			for i, att := range b.Body().Attestations() {
-				a, ok := att.(*eth.Attestation)
+				a, ok := att.(*sila.Attestation)
 				if !ok {
-					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &eth.Attestation{}, att)
+					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &sila.Attestation{}, att)
 				}
 				atts[i] = a
 			}
 		}
-		var attSlashings []*eth.AttesterSlashing
+		var attSlashings []*sila.AttesterSlashing
 		if b.Body().AttesterSlashings() != nil {
-			attSlashings = make([]*eth.AttesterSlashing, len(b.Body().AttesterSlashings()))
+			attSlashings = make([]*sila.AttesterSlashing, len(b.Body().AttesterSlashings()))
 			for i, slashing := range b.Body().AttesterSlashings() {
-				s, ok := slashing.(*eth.AttesterSlashing)
+				s, ok := slashing.(*sila.AttesterSlashing)
 				if !ok {
-					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &eth.AttesterSlashing{}, slashing)
+					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &sila.AttesterSlashing{}, slashing)
 				}
 				attSlashings[i] = s
 			}
 		}
-		fullBlock = &eth.SignedBeaconBlockBellatrix{
-			Block: &eth.BeaconBlockBellatrix{
+		fullBlock = &sila.SignedBeaconBlockBellatrix{
+			Block: &sila.BeaconBlockBellatrix{
 				Slot:          b.Slot(),
 				ProposerIndex: b.ProposerIndex(),
 				ParentRoot:    parentRoot[:],
 				StateRoot:     stateRoot[:],
-				Body: &eth.BeaconBlockBodyBellatrix{
+				Body: &sila.BeaconBlockBodyBellatrix{
 					RandaoReveal:      randaoReveal[:],
 					SilaData:          b.Body().SilaData(),
 					Graffiti:          graffiti[:],
@@ -413,35 +413,35 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 		if err != nil {
 			return nil, err
 		}
-		var atts []*eth.Attestation
+		var atts []*sila.Attestation
 		if b.Body().Attestations() != nil {
-			atts = make([]*eth.Attestation, len(b.Body().Attestations()))
+			atts = make([]*sila.Attestation, len(b.Body().Attestations()))
 			for i, att := range b.Body().Attestations() {
-				a, ok := att.(*eth.Attestation)
+				a, ok := att.(*sila.Attestation)
 				if !ok {
-					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &eth.Attestation{}, att)
+					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &sila.Attestation{}, att)
 				}
 				atts[i] = a
 			}
 		}
-		var attSlashings []*eth.AttesterSlashing
+		var attSlashings []*sila.AttesterSlashing
 		if b.Body().AttesterSlashings() != nil {
-			attSlashings = make([]*eth.AttesterSlashing, len(b.Body().AttesterSlashings()))
+			attSlashings = make([]*sila.AttesterSlashing, len(b.Body().AttesterSlashings()))
 			for i, slashing := range b.Body().AttesterSlashings() {
-				s, ok := slashing.(*eth.AttesterSlashing)
+				s, ok := slashing.(*sila.AttesterSlashing)
 				if !ok {
-					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &eth.AttesterSlashing{}, slashing)
+					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &sila.AttesterSlashing{}, slashing)
 				}
 				attSlashings[i] = s
 			}
 		}
-		fullBlock = &eth.SignedBeaconBlockCapella{
-			Block: &eth.BeaconBlockCapella{
+		fullBlock = &sila.SignedBeaconBlockCapella{
+			Block: &sila.BeaconBlockCapella{
 				Slot:          b.Slot(),
 				ProposerIndex: b.ProposerIndex(),
 				ParentRoot:    parentRoot[:],
 				StateRoot:     stateRoot[:],
-				Body: &eth.BeaconBlockBodyCapella{
+				Body: &sila.BeaconBlockBodyCapella{
 					RandaoReveal:      randaoReveal[:],
 					SilaData:          b.Body().SilaData(),
 					Graffiti:          graffiti[:],
@@ -470,35 +470,35 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 		if err != nil {
 			return nil, err
 		}
-		var atts []*eth.Attestation
+		var atts []*sila.Attestation
 		if b.Body().Attestations() != nil {
-			atts = make([]*eth.Attestation, len(b.Body().Attestations()))
+			atts = make([]*sila.Attestation, len(b.Body().Attestations()))
 			for i, att := range b.Body().Attestations() {
-				a, ok := att.(*eth.Attestation)
+				a, ok := att.(*sila.Attestation)
 				if !ok {
-					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &eth.Attestation{}, att)
+					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &sila.Attestation{}, att)
 				}
 				atts[i] = a
 			}
 		}
-		var attSlashings []*eth.AttesterSlashing
+		var attSlashings []*sila.AttesterSlashing
 		if b.Body().AttesterSlashings() != nil {
-			attSlashings = make([]*eth.AttesterSlashing, len(b.Body().AttesterSlashings()))
+			attSlashings = make([]*sila.AttesterSlashing, len(b.Body().AttesterSlashings()))
 			for i, slashing := range b.Body().AttesterSlashings() {
-				s, ok := slashing.(*eth.AttesterSlashing)
+				s, ok := slashing.(*sila.AttesterSlashing)
 				if !ok {
-					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &eth.AttesterSlashing{}, slashing)
+					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &sila.AttesterSlashing{}, slashing)
 				}
 				attSlashings[i] = s
 			}
 		}
-		fullBlock = &eth.SignedBeaconBlockDeneb{
-			Block: &eth.BeaconBlockDeneb{
+		fullBlock = &sila.SignedBeaconBlockDeneb{
+			Block: &sila.BeaconBlockDeneb{
 				Slot:          b.Slot(),
 				ProposerIndex: b.ProposerIndex(),
 				ParentRoot:    parentRoot[:],
 				StateRoot:     stateRoot[:],
-				Body: &eth.BeaconBlockBodyDeneb{
+				Body: &sila.BeaconBlockBodyDeneb{
 					RandaoReveal:       randaoReveal[:],
 					SilaData:           b.Body().SilaData(),
 					Graffiti:           graffiti[:],
@@ -528,24 +528,24 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 		if err != nil {
 			return nil, err
 		}
-		var atts []*eth.AttestationElectra
+		var atts []*sila.AttestationElectra
 		if b.Body().Attestations() != nil {
-			atts = make([]*eth.AttestationElectra, len(b.Body().Attestations()))
+			atts = make([]*sila.AttestationElectra, len(b.Body().Attestations()))
 			for i, att := range b.Body().Attestations() {
-				a, ok := att.(*eth.AttestationElectra)
+				a, ok := att.(*sila.AttestationElectra)
 				if !ok {
-					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &eth.AttestationElectra{}, att)
+					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &sila.AttestationElectra{}, att)
 				}
 				atts[i] = a
 			}
 		}
-		var attSlashings []*eth.AttesterSlashingElectra
+		var attSlashings []*sila.AttesterSlashingElectra
 		if b.Body().AttesterSlashings() != nil {
-			attSlashings = make([]*eth.AttesterSlashingElectra, len(b.Body().AttesterSlashings()))
+			attSlashings = make([]*sila.AttesterSlashingElectra, len(b.Body().AttesterSlashings()))
 			for i, slashing := range b.Body().AttesterSlashings() {
-				s, ok := slashing.(*eth.AttesterSlashingElectra)
+				s, ok := slashing.(*sila.AttesterSlashingElectra)
 				if !ok {
-					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &eth.AttesterSlashingElectra{}, slashing)
+					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &sila.AttesterSlashingElectra{}, slashing)
 				}
 				attSlashings[i] = s
 			}
@@ -556,13 +556,13 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 			return nil, err
 		}
 
-		fullBlock = &eth.SignedBeaconBlockElectra{
-			Block: &eth.BeaconBlockElectra{
+		fullBlock = &sila.SignedBeaconBlockElectra{
+			Block: &sila.BeaconBlockElectra{
 				Slot:          b.Slot(),
 				ProposerIndex: b.ProposerIndex(),
 				ParentRoot:    parentRoot[:],
 				StateRoot:     stateRoot[:],
-				Body: &eth.BeaconBlockBodyElectra{
+				Body: &sila.BeaconBlockBodyElectra{
 					RandaoReveal:       randaoReveal[:],
 					SilaData:           b.Body().SilaData(),
 					Graffiti:           graffiti[:],
@@ -593,24 +593,24 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 		if err != nil {
 			return nil, err
 		}
-		var atts []*eth.AttestationElectra
+		var atts []*sila.AttestationElectra
 		if b.Body().Attestations() != nil {
-			atts = make([]*eth.AttestationElectra, len(b.Body().Attestations()))
+			atts = make([]*sila.AttestationElectra, len(b.Body().Attestations()))
 			for i, att := range b.Body().Attestations() {
-				a, ok := att.(*eth.AttestationElectra)
+				a, ok := att.(*sila.AttestationElectra)
 				if !ok {
-					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &eth.Attestation{}, att)
+					return nil, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &sila.Attestation{}, att)
 				}
 				atts[i] = a
 			}
 		}
-		var attSlashings []*eth.AttesterSlashingElectra
+		var attSlashings []*sila.AttesterSlashingElectra
 		if b.Body().AttesterSlashings() != nil {
-			attSlashings = make([]*eth.AttesterSlashingElectra, len(b.Body().AttesterSlashings()))
+			attSlashings = make([]*sila.AttesterSlashingElectra, len(b.Body().AttesterSlashings()))
 			for i, slashing := range b.Body().AttesterSlashings() {
-				s, ok := slashing.(*eth.AttesterSlashingElectra)
+				s, ok := slashing.(*sila.AttesterSlashingElectra)
 				if !ok {
-					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &eth.AttesterSlashing{}, slashing)
+					return nil, fmt.Errorf("attester slashing has wrong type (expected %T, got %T)", &sila.AttesterSlashing{}, slashing)
 				}
 				attSlashings[i] = s
 			}
@@ -621,13 +621,13 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 			return nil, err
 		}
 
-		fullBlock = &eth.SignedBeaconBlockFulu{
-			Block: &eth.BeaconBlockElectra{
+		fullBlock = &sila.SignedBeaconBlockFulu{
+			Block: &sila.BeaconBlockElectra{
 				Slot:          b.Slot(),
 				ProposerIndex: b.ProposerIndex(),
 				ParentRoot:    parentRoot[:],
 				StateRoot:     stateRoot[:],
-				Body: &eth.BeaconBlockBodyElectra{
+				Body: &sila.BeaconBlockBodyElectra{
 					RandaoReveal:       randaoReveal[:],
 					SilaData:           b.Body().SilaData(),
 					Graffiti:           graffiti[:],
@@ -656,31 +656,31 @@ func BuildSignedBeaconBlockFromSilaPayload(blk interfaces.ReadOnlySignedBeaconBl
 
 // BeaconBlockContainerToSignedBeaconBlock converts BeaconBlockContainer (API response) to a SignedBeaconBlock.
 // This is particularly useful for using the values from API calls.
-func BeaconBlockContainerToSignedBeaconBlock(obj *eth.BeaconBlockContainer) (interfaces.ReadOnlySignedBeaconBlock, error) {
+func BeaconBlockContainerToSignedBeaconBlock(obj *sila.BeaconBlockContainer) (interfaces.ReadOnlySignedBeaconBlock, error) {
 	switch obj.Block.(type) {
-	case *eth.BeaconBlockContainer_BlindedFuluBlock:
+	case *sila.BeaconBlockContainer_BlindedFuluBlock:
 		return NewSignedBeaconBlock(obj.GetBlindedFuluBlock())
-	case *eth.BeaconBlockContainer_FuluBlock:
+	case *sila.BeaconBlockContainer_FuluBlock:
 		return NewSignedBeaconBlock(obj.GetFuluBlock())
-	case *eth.BeaconBlockContainer_BlindedElectraBlock:
+	case *sila.BeaconBlockContainer_BlindedElectraBlock:
 		return NewSignedBeaconBlock(obj.GetBlindedElectraBlock())
-	case *eth.BeaconBlockContainer_ElectraBlock:
+	case *sila.BeaconBlockContainer_ElectraBlock:
 		return NewSignedBeaconBlock(obj.GetElectraBlock())
-	case *eth.BeaconBlockContainer_BlindedDenebBlock:
+	case *sila.BeaconBlockContainer_BlindedDenebBlock:
 		return NewSignedBeaconBlock(obj.GetBlindedDenebBlock())
-	case *eth.BeaconBlockContainer_DenebBlock:
+	case *sila.BeaconBlockContainer_DenebBlock:
 		return NewSignedBeaconBlock(obj.GetDenebBlock())
-	case *eth.BeaconBlockContainer_BlindedCapellaBlock:
+	case *sila.BeaconBlockContainer_BlindedCapellaBlock:
 		return NewSignedBeaconBlock(obj.GetBlindedCapellaBlock())
-	case *eth.BeaconBlockContainer_CapellaBlock:
+	case *sila.BeaconBlockContainer_CapellaBlock:
 		return NewSignedBeaconBlock(obj.GetCapellaBlock())
-	case *eth.BeaconBlockContainer_BlindedBellatrixBlock:
+	case *sila.BeaconBlockContainer_BlindedBellatrixBlock:
 		return NewSignedBeaconBlock(obj.GetBlindedBellatrixBlock())
-	case *eth.BeaconBlockContainer_BellatrixBlock:
+	case *sila.BeaconBlockContainer_BellatrixBlock:
 		return NewSignedBeaconBlock(obj.GetBellatrixBlock())
-	case *eth.BeaconBlockContainer_AltairBlock:
+	case *sila.BeaconBlockContainer_AltairBlock:
 		return NewSignedBeaconBlock(obj.GetAltairBlock())
-	case *eth.BeaconBlockContainer_Phase0Block:
+	case *sila.BeaconBlockContainer_Phase0Block:
 		return NewSignedBeaconBlock(obj.GetPhase0Block())
 	default:
 		return nil, errors.New("container block type not recognized")

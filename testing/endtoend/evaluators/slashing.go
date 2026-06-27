@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -12,12 +13,11 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/slice"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
 	e2eTypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
@@ -63,13 +63,13 @@ var slashedIndices []uint64
 func validatorsSlashed(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn) error {
 	conn := conns[0]
 	ctx := context.Background()
-	client := eth.NewBeaconChainClient(conn)
+	client := sila.NewBeaconChainClient(conn)
 
 	actualSlashedIndices := 0
 
 	for _, slashedIndex := range slashedIndices {
-		req := &eth.GetValidatorRequest{
-			QueryFilter: &eth.GetValidatorRequest_Index{
+		req := &sila.GetValidatorRequest{
+			QueryFilter: &sila.GetValidatorRequest_Index{
 				Index: primitives.ValidatorIndex(slashedIndex),
 			},
 		}
@@ -92,11 +92,11 @@ func validatorsSlashed(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn)
 func validatorsLoseBalance(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn) error {
 	conn := conns[0]
 	ctx := context.Background()
-	client := eth.NewBeaconChainClient(conn)
+	client := sila.NewBeaconChainClient(conn)
 
 	for i, slashedIndex := range slashedIndices {
-		req := &eth.GetValidatorRequest{
-			QueryFilter: &eth.GetValidatorRequest_Index{
+		req := &sila.GetValidatorRequest{
+			QueryFilter: &sila.GetValidatorRequest_Index{
 				Index: primitives.ValidatorIndex(slashedIndex),
 			},
 		}
@@ -121,8 +121,8 @@ func validatorsLoseBalance(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientC
 
 func insertDoubleAttestationIntoPool(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn) error {
 	conn := conns[0]
-	valClient := eth.NewBeaconNodeValidatorClient(conn)
-	beaconClient := eth.NewBeaconChainClient(conn)
+	valClient := sila.NewBeaconNodeValidatorClient(conn)
+	beaconClient := sila.NewBeaconChainClient(conn)
 
 	ctx := context.Background()
 
@@ -146,7 +146,7 @@ func insertDoubleAttestationIntoPool(_ *e2eTypes.EvaluationContext, conns ...*gr
 
 		// Need to send proposal to both beacon nodes to avoid flakiness.
 		// See: https://github.com/sila-chain/sila/issues/12415#issuecomment-1874643269
-		c := eth.NewBeaconNodeValidatorClient(conns[0])
+		c := sila.NewBeaconNodeValidatorClient(conns[0])
 		att, err := h.getSlashableAttestation(i)
 		if err != nil {
 			return err
@@ -155,7 +155,7 @@ func insertDoubleAttestationIntoPool(_ *e2eTypes.EvaluationContext, conns ...*gr
 			return errors.Wrap(err, "could not propose attestation")
 		}
 
-		c1 := eth.NewBeaconNodeValidatorClient(conns[1])
+		c1 := sila.NewBeaconNodeValidatorClient(conns[1])
 		att1, err := h.getSlashableAttestation(i)
 		if err != nil {
 			return err
@@ -171,8 +171,8 @@ func insertDoubleAttestationIntoPool(_ *e2eTypes.EvaluationContext, conns ...*gr
 
 func proposeDoubleBlock(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn) error {
 	conn := conns[0]
-	valClient := eth.NewBeaconNodeValidatorClient(conn)
-	beaconClient := eth.NewBeaconChainClient(conn)
+	valClient := sila.NewBeaconNodeValidatorClient(conn)
+	beaconClient := sila.NewBeaconChainClient(conn)
 
 	ctx := context.Background()
 	chainHead, err := beaconClient.GetChainHead(ctx, &emptypb.Empty{})
@@ -187,7 +187,7 @@ func proposeDoubleBlock(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn
 	for i, priv := range privKeys {
 		pubKeys[i] = priv.PublicKey().Marshal()
 	}
-	duties, err := valClient.GetDuties(ctx, &eth.DutiesRequest{
+	duties, err := valClient.GetDuties(ctx, &sila.DutiesRequest{
 		Epoch:      chainHead.HeadEpoch,
 		PublicKeys: pubKeys,
 	})
@@ -213,7 +213,7 @@ func proposeDoubleBlock(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn
 	// If the proposer index is in the second validator client, we connect to
 	// the corresponding beacon node instead.
 	if proposerIndex >= primitives.ValidatorIndex(uint64(validatorsPerNode)) {
-		valClient = eth.NewBeaconNodeValidatorClient(conns[1])
+		valClient = sila.NewBeaconNodeValidatorClient(conns[1])
 	}
 
 	b, err := generateSignedBeaconBlock(chainHead, proposerIndex, valClient, privKeys, "bad state root")
@@ -237,37 +237,37 @@ func proposeDoubleBlock(_ *e2eTypes.EvaluationContext, conns ...*grpc.ClientConn
 }
 
 func generateSignedBeaconBlock(
-	chainHead *eth.ChainHead,
+	chainHead *sila.ChainHead,
 	proposerIndex primitives.ValidatorIndex,
-	valClient eth.BeaconNodeValidatorClient,
+	valClient sila.BeaconNodeValidatorClient,
 	privKeys []bls.SecretKey,
 	stateRoot string,
-) (*eth.GenericSignedBeaconBlock, error) {
+) (*sila.GenericSignedBeaconBlock, error) {
 	ctx := context.Background()
 
 	hashLen := 32
-	blk := &eth.BeaconBlock{
+	blk := &sila.BeaconBlock{
 		Slot:          chainHead.HeadSlot - 1,
 		ParentRoot:    chainHead.HeadBlockRoot,
 		StateRoot:     bytesutil.PadTo([]byte(stateRoot), hashLen),
 		ProposerIndex: proposerIndex,
-		Body: &eth.BeaconBlockBody{
-			SilaData: &eth.SilaData{
+		Body: &sila.BeaconBlockBody{
+			SilaData: &sila.SilaData{
 				BlockHash:    bytesutil.PadTo([]byte("bad block hash"), hashLen),
 				DepositRoot:  bytesutil.PadTo([]byte("bad deposit root"), hashLen),
 				DepositCount: 1,
 			},
 			RandaoReveal:      bytesutil.PadTo([]byte("bad randao"), fieldparams.BLSSignatureLength),
 			Graffiti:          bytesutil.PadTo([]byte("teehee"), hashLen),
-			ProposerSlashings: []*eth.ProposerSlashing{},
-			AttesterSlashings: []*eth.AttesterSlashing{},
-			Attestations:      []*eth.Attestation{},
-			Deposits:          []*eth.Deposit{},
-			VoluntaryExits:    []*eth.SignedVoluntaryExit{},
+			ProposerSlashings: []*sila.ProposerSlashing{},
+			AttesterSlashings: []*sila.AttesterSlashing{},
+			Attestations:      []*sila.Attestation{},
+			Deposits:          []*sila.Deposit{},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{},
 		},
 	}
 
-	req := &eth.DomainRequest{
+	req := &sila.DomainRequest{
 		Epoch:  chainHead.HeadEpoch,
 		Domain: params.BeaconConfig().DomainBeaconProposer[:],
 	}
@@ -280,7 +280,7 @@ func generateSignedBeaconBlock(
 		return nil, errors.Wrap(err, "could not compute signing root")
 	}
 	sig := privKeys[proposerIndex].Sign(signingRoot[:]).Marshal()
-	signedBlk := &eth.SignedBeaconBlock{
+	signedBlk := &sila.SignedBeaconBlock{
 		Block:     blk,
 		Signature: sig,
 	}

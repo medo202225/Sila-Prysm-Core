@@ -8,7 +8,7 @@ import (
 	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
@@ -52,116 +52,116 @@ func (b *SignedBeaconBlock) Copy() (interfaces.SignedBeaconBlock, error) {
 	}
 	switch b.version {
 	case version.Phase0:
-		return initSignedBlockFromProtoPhase0(pb.(*eth.SignedBeaconBlock).Copy())
+		return initSignedBlockFromProtoPhase0(pb.(*sila.SignedBeaconBlock).Copy())
 	case version.Altair:
-		return initSignedBlockFromProtoAltair(pb.(*eth.SignedBeaconBlockAltair).Copy())
+		return initSignedBlockFromProtoAltair(pb.(*sila.SignedBeaconBlockAltair).Copy())
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return initBlindedSignedBlockFromProtoBellatrix(pb.(*eth.SignedBlindedBeaconBlockBellatrix).Copy())
+			return initBlindedSignedBlockFromProtoBellatrix(pb.(*sila.SignedBlindedBeaconBlockBellatrix).Copy())
 		}
-		return initSignedBlockFromProtoBellatrix(pb.(*eth.SignedBeaconBlockBellatrix).Copy())
+		return initSignedBlockFromProtoBellatrix(pb.(*sila.SignedBeaconBlockBellatrix).Copy())
 	case version.Capella:
 		if b.IsBlinded() {
-			return initBlindedSignedBlockFromProtoCapella(pb.(*eth.SignedBlindedBeaconBlockCapella).Copy())
+			return initBlindedSignedBlockFromProtoCapella(pb.(*sila.SignedBlindedBeaconBlockCapella).Copy())
 		}
-		return initSignedBlockFromProtoCapella(pb.(*eth.SignedBeaconBlockCapella).Copy())
+		return initSignedBlockFromProtoCapella(pb.(*sila.SignedBeaconBlockCapella).Copy())
 	case version.Deneb:
 		if b.IsBlinded() {
-			return initBlindedSignedBlockFromProtoDeneb(pb.(*eth.SignedBlindedBeaconBlockDeneb).Copy())
+			return initBlindedSignedBlockFromProtoDeneb(pb.(*sila.SignedBlindedBeaconBlockDeneb).Copy())
 		}
-		return initSignedBlockFromProtoDeneb(pb.(*eth.SignedBeaconBlockDeneb).Copy())
+		return initSignedBlockFromProtoDeneb(pb.(*sila.SignedBeaconBlockDeneb).Copy())
 	case version.Electra:
 		if b.IsBlinded() {
-			return initBlindedSignedBlockFromProtoElectra(pb.(*eth.SignedBlindedBeaconBlockElectra).Copy())
+			return initBlindedSignedBlockFromProtoElectra(pb.(*sila.SignedBlindedBeaconBlockElectra).Copy())
 		}
-		return initSignedBlockFromProtoElectra(pb.(*eth.SignedBeaconBlockElectra).Copy())
+		return initSignedBlockFromProtoElectra(pb.(*sila.SignedBeaconBlockElectra).Copy())
 	case version.Fulu:
 		if b.IsBlinded() {
-			return initBlindedSignedBlockFromProtoFulu(pb.(*eth.SignedBlindedBeaconBlockFulu).Copy())
+			return initBlindedSignedBlockFromProtoFulu(pb.(*sila.SignedBlindedBeaconBlockFulu).Copy())
 		}
-		return initSignedBlockFromProtoFulu(pb.(*eth.SignedBeaconBlockFulu).Copy())
+		return initSignedBlockFromProtoFulu(pb.(*sila.SignedBeaconBlockFulu).Copy())
 	case version.Gloas:
-		return initSignedBlockFromProtoGloas(eth.CopySignedBeaconBlockGloas(pb.(*eth.SignedBeaconBlockGloas)))
+		return initSignedBlockFromProtoGloas(sila.CopySignedBeaconBlockGloas(pb.(*sila.SignedBeaconBlockGloas)))
 	default:
 		return nil, errIncorrectBlockVersion
 	}
 }
 
 // PbGenericBlock returns a generic signed beacon block.
-func (b *SignedBeaconBlock) PbGenericBlock() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlock) PbGenericBlock() (*sila.GenericSignedBeaconBlock, error) {
 	pb, err := b.Proto()
 	if err != nil {
 		return nil, err
 	}
 	switch b.version {
 	case version.Phase0:
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Phase0{Phase0: pb.(*eth.SignedBeaconBlock)},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Phase0{Phase0: pb.(*sila.SignedBeaconBlock)},
 		}, nil
 	case version.Altair:
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Altair{Altair: pb.(*eth.SignedBeaconBlockAltair)},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Altair{Altair: pb.(*sila.SignedBeaconBlockAltair)},
 		}, nil
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return &eth.GenericSignedBeaconBlock{
-				Block: &eth.GenericSignedBeaconBlock_BlindedBellatrix{BlindedBellatrix: pb.(*eth.SignedBlindedBeaconBlockBellatrix)},
+			return &sila.GenericSignedBeaconBlock{
+				Block: &sila.GenericSignedBeaconBlock_BlindedBellatrix{BlindedBellatrix: pb.(*sila.SignedBlindedBeaconBlockBellatrix)},
 			}, nil
 		}
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Bellatrix{Bellatrix: pb.(*eth.SignedBeaconBlockBellatrix)},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Bellatrix{Bellatrix: pb.(*sila.SignedBeaconBlockBellatrix)},
 		}, nil
 	case version.Capella:
 		if b.IsBlinded() {
-			return &eth.GenericSignedBeaconBlock{
-				Block: &eth.GenericSignedBeaconBlock_BlindedCapella{BlindedCapella: pb.(*eth.SignedBlindedBeaconBlockCapella)},
+			return &sila.GenericSignedBeaconBlock{
+				Block: &sila.GenericSignedBeaconBlock_BlindedCapella{BlindedCapella: pb.(*sila.SignedBlindedBeaconBlockCapella)},
 			}, nil
 		}
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Capella{Capella: pb.(*eth.SignedBeaconBlockCapella)},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Capella{Capella: pb.(*sila.SignedBeaconBlockCapella)},
 		}, nil
 	case version.Deneb:
 		if b.IsBlinded() {
-			return &eth.GenericSignedBeaconBlock{
-				Block: &eth.GenericSignedBeaconBlock_BlindedDeneb{BlindedDeneb: pb.(*eth.SignedBlindedBeaconBlockDeneb)},
+			return &sila.GenericSignedBeaconBlock{
+				Block: &sila.GenericSignedBeaconBlock_BlindedDeneb{BlindedDeneb: pb.(*sila.SignedBlindedBeaconBlockDeneb)},
 			}, nil
 		}
-		bc, ok := pb.(*eth.SignedBeaconBlockContentsDeneb)
+		bc, ok := pb.(*sila.SignedBeaconBlockContentsDeneb)
 		if !ok {
 			return nil, fmt.Errorf("PbGenericBlock() only supports block content type but got %T", pb)
 		}
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Deneb{Deneb: bc},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Deneb{Deneb: bc},
 		}, nil
 	case version.Electra:
 		if b.IsBlinded() {
-			return &eth.GenericSignedBeaconBlock{
-				Block: &eth.GenericSignedBeaconBlock_BlindedElectra{BlindedElectra: pb.(*eth.SignedBlindedBeaconBlockElectra)},
+			return &sila.GenericSignedBeaconBlock{
+				Block: &sila.GenericSignedBeaconBlock_BlindedElectra{BlindedElectra: pb.(*sila.SignedBlindedBeaconBlockElectra)},
 			}, nil
 		}
-		bc, ok := pb.(*eth.SignedBeaconBlockContentsElectra)
+		bc, ok := pb.(*sila.SignedBeaconBlockContentsElectra)
 		if !ok {
 			return nil, fmt.Errorf("PbGenericBlock() only supports block content type but got %T", pb)
 		}
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Electra{Electra: bc},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Electra{Electra: bc},
 		}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
-			return &eth.GenericSignedBeaconBlock{
-				Block: &eth.GenericSignedBeaconBlock_BlindedFulu{BlindedFulu: pb.(*eth.SignedBlindedBeaconBlockFulu)},
+			return &sila.GenericSignedBeaconBlock{
+				Block: &sila.GenericSignedBeaconBlock_BlindedFulu{BlindedFulu: pb.(*sila.SignedBlindedBeaconBlockFulu)},
 			}, nil
 		}
-		bc, ok := pb.(*eth.SignedBeaconBlockContentsFulu)
+		bc, ok := pb.(*sila.SignedBeaconBlockContentsFulu)
 		if !ok {
 			return nil, fmt.Errorf("PbGenericBlock() only supports block content type but got %T", pb)
 		}
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Fulu{Fulu: bc},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Fulu{Fulu: bc},
 		}, nil
 	case version.Gloas:
-		return &eth.GenericSignedBeaconBlock{
-			Block: &eth.GenericSignedBeaconBlock_Gloas{Gloas: pb.(*eth.SignedBeaconBlockGloas)},
+		return &sila.GenericSignedBeaconBlock{
+			Block: &sila.GenericSignedBeaconBlock_Gloas{Gloas: pb.(*sila.SignedBeaconBlockGloas)},
 		}, nil
 	default:
 		return nil, errIncorrectBlockVersion
@@ -195,13 +195,13 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 		}
 
 		return initBlindedSignedBlockFromProtoFulu(
-			&eth.SignedBlindedBeaconBlockFulu{
-				Message: &eth.BlindedBeaconBlockFulu{
+			&sila.SignedBlindedBeaconBlockFulu{
+				Message: &sila.BlindedBeaconBlockFulu{
 					Slot:          b.block.slot,
 					ProposerIndex: b.block.proposerIndex,
 					ParentRoot:    b.block.parentRoot[:],
 					StateRoot:     b.block.stateRoot[:],
-					Body: &eth.BlindedBeaconBlockBodyElectra{
+					Body: &sila.BlindedBeaconBlockBodyElectra{
 						RandaoReveal:       b.block.body.randaoReveal[:],
 						SilaData:           b.block.body.silaexecData,
 						Graffiti:           b.block.body.graffiti[:],
@@ -231,13 +231,13 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 			return nil, errors.Wrap(err, "payload to header electra")
 		}
 		return initBlindedSignedBlockFromProtoElectra(
-			&eth.SignedBlindedBeaconBlockElectra{
-				Message: &eth.BlindedBeaconBlockElectra{
+			&sila.SignedBlindedBeaconBlockElectra{
+				Message: &sila.BlindedBeaconBlockElectra{
 					Slot:          b.block.slot,
 					ProposerIndex: b.block.proposerIndex,
 					ParentRoot:    b.block.parentRoot[:],
 					StateRoot:     b.block.stateRoot[:],
-					Body: &eth.BlindedBeaconBlockBodyElectra{
+					Body: &sila.BlindedBeaconBlockBodyElectra{
 						RandaoReveal:       b.block.body.randaoReveal[:],
 						SilaData:           b.block.body.silaexecData,
 						Graffiti:           b.block.body.graffiti[:],
@@ -264,13 +264,13 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 			return nil, errors.Wrap(err, "payload to header")
 		}
 		return initBlindedSignedBlockFromProtoBellatrix(
-			&eth.SignedBlindedBeaconBlockBellatrix{
-				Block: &eth.BlindedBeaconBlockBellatrix{
+			&sila.SignedBlindedBeaconBlockBellatrix{
+				Block: &sila.BlindedBeaconBlockBellatrix{
 					Slot:          b.block.slot,
 					ProposerIndex: b.block.proposerIndex,
 					ParentRoot:    b.block.parentRoot[:],
 					StateRoot:     b.block.stateRoot[:],
-					Body: &eth.BlindedBeaconBlockBodyBellatrix{
+					Body: &sila.BlindedBeaconBlockBodyBellatrix{
 						RandaoReveal:      b.block.body.randaoReveal[:],
 						SilaData:          b.block.body.silaexecData,
 						Graffiti:          b.block.body.graffiti[:],
@@ -291,13 +291,13 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 			return nil, err
 		}
 		return initBlindedSignedBlockFromProtoCapella(
-			&eth.SignedBlindedBeaconBlockCapella{
-				Block: &eth.BlindedBeaconBlockCapella{
+			&sila.SignedBlindedBeaconBlockCapella{
+				Block: &sila.BlindedBeaconBlockCapella{
 					Slot:          b.block.slot,
 					ProposerIndex: b.block.proposerIndex,
 					ParentRoot:    b.block.parentRoot[:],
 					StateRoot:     b.block.stateRoot[:],
-					Body: &eth.BlindedBeaconBlockBodyCapella{
+					Body: &sila.BlindedBeaconBlockBodyCapella{
 						RandaoReveal:      b.block.body.randaoReveal[:],
 						SilaData:          b.block.body.silaexecData,
 						Graffiti:          b.block.body.graffiti[:],
@@ -319,13 +319,13 @@ func (b *SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, e
 			return nil, errors.Wrap(err, "payload to header deneb")
 		}
 		return initBlindedSignedBlockFromProtoDeneb(
-			&eth.SignedBlindedBeaconBlockDeneb{
-				Message: &eth.BlindedBeaconBlockDeneb{
+			&sila.SignedBlindedBeaconBlockDeneb{
+				Message: &sila.BlindedBeaconBlockDeneb{
 					Slot:          b.block.slot,
 					ProposerIndex: b.block.proposerIndex,
 					ParentRoot:    b.block.parentRoot[:],
 					StateRoot:     b.block.stateRoot[:],
-					Body: &eth.BlindedBeaconBlockBodyDeneb{
+					Body: &sila.BlindedBeaconBlockBodyDeneb{
 						RandaoReveal:       b.block.body.randaoReveal[:],
 						SilaData:           b.block.body.silaexecData,
 						Graffiti:           b.block.body.graffiti[:],
@@ -386,7 +386,7 @@ func (b *SignedBeaconBlock) IsBlinded() bool {
 }
 
 // Header converts the underlying protobuf object from blinded block to header format.
-func (b *SignedBeaconBlock) Header() (*eth.SignedBeaconBlockHeader, error) {
+func (b *SignedBeaconBlock) Header() (*sila.SignedBeaconBlockHeader, error) {
 	if b.IsNil() {
 		return nil, errNilBlock
 	}
@@ -395,8 +395,8 @@ func (b *SignedBeaconBlock) Header() (*eth.SignedBeaconBlockHeader, error) {
 		return nil, errors.Wrapf(err, "could not hash block body")
 	}
 
-	return &eth.SignedBeaconBlockHeader{
-		Header: &eth.BeaconBlockHeader{
+	return &sila.SignedBeaconBlockHeader{
+		Header: &sila.BeaconBlockHeader{
 			Slot:          b.block.slot,
 			ProposerIndex: b.block.proposerIndex,
 			ParentRoot:    b.block.parentRoot[:],
@@ -415,36 +415,36 @@ func (b *SignedBeaconBlock) MarshalSSZ() ([]byte, error) {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.SignedBeaconBlock).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlock).MarshalSSZ()
 	case version.Altair:
-		return pb.(*eth.SignedBeaconBlockAltair).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockAltair).MarshalSSZ()
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockBellatrix).MarshalSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockBellatrix).MarshalSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockBellatrix).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockBellatrix).MarshalSSZ()
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockCapella).MarshalSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockCapella).MarshalSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockCapella).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockCapella).MarshalSSZ()
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockDeneb).MarshalSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockDeneb).MarshalSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockDeneb).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockDeneb).MarshalSSZ()
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockElectra).MarshalSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockElectra).MarshalSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockElectra).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockElectra).MarshalSSZ()
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockFulu).MarshalSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockFulu).MarshalSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockFulu).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockFulu).MarshalSSZ()
 	case version.Gloas:
-		return pb.(*eth.SignedBeaconBlockGloas).MarshalSSZ()
+		return pb.(*sila.SignedBeaconBlockGloas).MarshalSSZ()
 	default:
 		return []byte{}, errIncorrectBlockVersion
 	}
@@ -459,36 +459,36 @@ func (b *SignedBeaconBlock) MarshalSSZTo(dst []byte) ([]byte, error) {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.SignedBeaconBlock).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlock).MarshalSSZTo(dst)
 	case version.Altair:
-		return pb.(*eth.SignedBeaconBlockAltair).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockAltair).MarshalSSZTo(dst)
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockBellatrix).MarshalSSZTo(dst)
+			return pb.(*sila.SignedBlindedBeaconBlockBellatrix).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.SignedBeaconBlockBellatrix).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockBellatrix).MarshalSSZTo(dst)
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockCapella).MarshalSSZTo(dst)
+			return pb.(*sila.SignedBlindedBeaconBlockCapella).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.SignedBeaconBlockCapella).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockCapella).MarshalSSZTo(dst)
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockDeneb).MarshalSSZTo(dst)
+			return pb.(*sila.SignedBlindedBeaconBlockDeneb).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.SignedBeaconBlockDeneb).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockDeneb).MarshalSSZTo(dst)
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockElectra).MarshalSSZTo(dst)
+			return pb.(*sila.SignedBlindedBeaconBlockElectra).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.SignedBeaconBlockElectra).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockElectra).MarshalSSZTo(dst)
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockFulu).MarshalSSZTo(dst)
+			return pb.(*sila.SignedBlindedBeaconBlockFulu).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.SignedBeaconBlockFulu).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockFulu).MarshalSSZTo(dst)
 	case version.Gloas:
-		return pb.(*eth.SignedBeaconBlockGloas).MarshalSSZTo(dst)
+		return pb.(*sila.SignedBeaconBlockGloas).MarshalSSZTo(dst)
 	default:
 		return []byte{}, errIncorrectBlockVersion
 	}
@@ -508,36 +508,36 @@ func (b *SignedBeaconBlock) SizeSSZ() int {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.SignedBeaconBlock).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlock).SizeSSZ()
 	case version.Altair:
-		return pb.(*eth.SignedBeaconBlockAltair).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockAltair).SizeSSZ()
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockBellatrix).SizeSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockBellatrix).SizeSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockBellatrix).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockBellatrix).SizeSSZ()
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockCapella).SizeSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockCapella).SizeSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockCapella).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockCapella).SizeSSZ()
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockDeneb).SizeSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockDeneb).SizeSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockDeneb).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockDeneb).SizeSSZ()
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockElectra).SizeSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockElectra).SizeSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockElectra).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockElectra).SizeSSZ()
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.SignedBlindedBeaconBlockFulu).SizeSSZ()
+			return pb.(*sila.SignedBlindedBeaconBlockFulu).SizeSSZ()
 		}
-		return pb.(*eth.SignedBeaconBlockFulu).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockFulu).SizeSSZ()
 	case version.Gloas:
-		return pb.(*eth.SignedBeaconBlockGloas).SizeSSZ()
+		return pb.(*sila.SignedBeaconBlockGloas).SizeSSZ()
 	default:
 		panic(incorrectBlockVersion)
 	}
@@ -549,7 +549,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 	var newBlock *SignedBeaconBlock
 	switch b.version {
 	case version.Phase0:
-		pb := &eth.SignedBeaconBlock{}
+		pb := &sila.SignedBeaconBlock{}
 		if err := pb.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
@@ -559,7 +559,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 			return err
 		}
 	case version.Altair:
-		pb := &eth.SignedBeaconBlockAltair{}
+		pb := &sila.SignedBeaconBlockAltair{}
 		if err := pb.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
@@ -570,7 +570,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			pb := &eth.SignedBlindedBeaconBlockBellatrix{}
+			pb := &sila.SignedBlindedBeaconBlockBellatrix{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -580,7 +580,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.SignedBeaconBlockBellatrix{}
+			pb := &sila.SignedBeaconBlockBellatrix{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -592,7 +592,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Capella:
 		if b.IsBlinded() {
-			pb := &eth.SignedBlindedBeaconBlockCapella{}
+			pb := &sila.SignedBlindedBeaconBlockCapella{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -602,7 +602,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.SignedBeaconBlockCapella{}
+			pb := &sila.SignedBeaconBlockCapella{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -614,7 +614,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Deneb:
 		if b.IsBlinded() {
-			pb := &eth.SignedBlindedBeaconBlockDeneb{}
+			pb := &sila.SignedBlindedBeaconBlockDeneb{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -624,7 +624,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.SignedBeaconBlockDeneb{}
+			pb := &sila.SignedBeaconBlockDeneb{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -636,7 +636,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Electra:
 		if b.IsBlinded() {
-			pb := &eth.SignedBlindedBeaconBlockElectra{}
+			pb := &sila.SignedBlindedBeaconBlockElectra{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -646,7 +646,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.SignedBeaconBlockElectra{}
+			pb := &sila.SignedBeaconBlockElectra{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -658,7 +658,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Fulu:
 		if b.IsBlinded() {
-			pb := &eth.SignedBlindedBeaconBlockFulu{}
+			pb := &sila.SignedBlindedBeaconBlockFulu{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -668,7 +668,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.SignedBeaconBlockFulu{}
+			pb := &sila.SignedBeaconBlockFulu{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -679,7 +679,7 @@ func (b *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 			}
 		}
 	case version.Gloas:
-		pb := &eth.SignedBeaconBlockGloas{}
+		pb := &sila.SignedBeaconBlockGloas{}
 		err := pb.UnmarshalSSZ(buf)
 		if err != nil {
 			return err
@@ -743,36 +743,36 @@ func (b *BeaconBlock) HashTreeRoot() ([field_params.RootLength]byte, error) {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.BeaconBlock).HashTreeRoot()
+		return pb.(*sila.BeaconBlock).HashTreeRoot()
 	case version.Altair:
-		return pb.(*eth.BeaconBlockAltair).HashTreeRoot()
+		return pb.(*sila.BeaconBlockAltair).HashTreeRoot()
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBellatrix).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockBellatrix).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockBellatrix).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBellatrix).HashTreeRoot()
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockCapella).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockCapella).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockCapella).HashTreeRoot()
+		return pb.(*sila.BeaconBlockCapella).HashTreeRoot()
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockDeneb).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockDeneb).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockDeneb).HashTreeRoot()
+		return pb.(*sila.BeaconBlockDeneb).HashTreeRoot()
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockElectra).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockElectra).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockElectra).HashTreeRoot()
+		return pb.(*sila.BeaconBlockElectra).HashTreeRoot()
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockFulu).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockFulu).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockElectra).HashTreeRoot()
+		return pb.(*sila.BeaconBlockElectra).HashTreeRoot()
 	case version.Gloas:
-		return pb.(*eth.BeaconBlockGloas).HashTreeRoot()
+		return pb.(*sila.BeaconBlockGloas).HashTreeRoot()
 
 	default:
 		return [field_params.RootLength]byte{}, errIncorrectBlockVersion
@@ -787,36 +787,36 @@ func (b *BeaconBlock) HashTreeRootWith(h *ssz.Hasher) error {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.BeaconBlock).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlock).HashTreeRootWith(h)
 	case version.Altair:
-		return pb.(*eth.BeaconBlockAltair).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockAltair).HashTreeRootWith(h)
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBellatrix).HashTreeRootWith(h)
+			return pb.(*sila.BlindedBeaconBlockBellatrix).HashTreeRootWith(h)
 		}
-		return pb.(*eth.BeaconBlockBellatrix).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockBellatrix).HashTreeRootWith(h)
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockCapella).HashTreeRootWith(h)
+			return pb.(*sila.BlindedBeaconBlockCapella).HashTreeRootWith(h)
 		}
-		return pb.(*eth.BeaconBlockCapella).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockCapella).HashTreeRootWith(h)
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockDeneb).HashTreeRootWith(h)
+			return pb.(*sila.BlindedBeaconBlockDeneb).HashTreeRootWith(h)
 		}
-		return pb.(*eth.BeaconBlockDeneb).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockDeneb).HashTreeRootWith(h)
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockElectra).HashTreeRootWith(h)
+			return pb.(*sila.BlindedBeaconBlockElectra).HashTreeRootWith(h)
 		}
-		return pb.(*eth.BeaconBlockElectra).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockElectra).HashTreeRootWith(h)
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockFulu).HashTreeRootWith(h)
+			return pb.(*sila.BlindedBeaconBlockFulu).HashTreeRootWith(h)
 		}
-		return pb.(*eth.BeaconBlockElectra).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockElectra).HashTreeRootWith(h)
 	case version.Gloas:
-		return pb.(*eth.BeaconBlockGloas).HashTreeRootWith(h)
+		return pb.(*sila.BeaconBlockGloas).HashTreeRootWith(h)
 	default:
 		return errIncorrectBlockVersion
 	}
@@ -831,36 +831,36 @@ func (b *BeaconBlock) MarshalSSZ() ([]byte, error) {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.BeaconBlock).MarshalSSZ()
+		return pb.(*sila.BeaconBlock).MarshalSSZ()
 	case version.Altair:
-		return pb.(*eth.BeaconBlockAltair).MarshalSSZ()
+		return pb.(*sila.BeaconBlockAltair).MarshalSSZ()
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBellatrix).MarshalSSZ()
+			return pb.(*sila.BlindedBeaconBlockBellatrix).MarshalSSZ()
 		}
-		return pb.(*eth.BeaconBlockBellatrix).MarshalSSZ()
+		return pb.(*sila.BeaconBlockBellatrix).MarshalSSZ()
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockCapella).MarshalSSZ()
+			return pb.(*sila.BlindedBeaconBlockCapella).MarshalSSZ()
 		}
-		return pb.(*eth.BeaconBlockCapella).MarshalSSZ()
+		return pb.(*sila.BeaconBlockCapella).MarshalSSZ()
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockDeneb).MarshalSSZ()
+			return pb.(*sila.BlindedBeaconBlockDeneb).MarshalSSZ()
 		}
-		return pb.(*eth.BeaconBlockDeneb).MarshalSSZ()
+		return pb.(*sila.BeaconBlockDeneb).MarshalSSZ()
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockElectra).MarshalSSZ()
+			return pb.(*sila.BlindedBeaconBlockElectra).MarshalSSZ()
 		}
-		return pb.(*eth.BeaconBlockElectra).MarshalSSZ()
+		return pb.(*sila.BeaconBlockElectra).MarshalSSZ()
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockFulu).MarshalSSZ()
+			return pb.(*sila.BlindedBeaconBlockFulu).MarshalSSZ()
 		}
-		return pb.(*eth.BeaconBlockElectra).MarshalSSZ()
+		return pb.(*sila.BeaconBlockElectra).MarshalSSZ()
 	case version.Gloas:
-		return pb.(*eth.BeaconBlockGloas).MarshalSSZ()
+		return pb.(*sila.BeaconBlockGloas).MarshalSSZ()
 	default:
 		return []byte{}, errIncorrectBlockVersion
 	}
@@ -875,36 +875,36 @@ func (b *BeaconBlock) MarshalSSZTo(dst []byte) ([]byte, error) {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.BeaconBlock).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlock).MarshalSSZTo(dst)
 	case version.Altair:
-		return pb.(*eth.BeaconBlockAltair).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockAltair).MarshalSSZTo(dst)
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBellatrix).MarshalSSZTo(dst)
+			return pb.(*sila.BlindedBeaconBlockBellatrix).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.BeaconBlockBellatrix).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockBellatrix).MarshalSSZTo(dst)
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockCapella).MarshalSSZTo(dst)
+			return pb.(*sila.BlindedBeaconBlockCapella).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.BeaconBlockCapella).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockCapella).MarshalSSZTo(dst)
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockDeneb).MarshalSSZTo(dst)
+			return pb.(*sila.BlindedBeaconBlockDeneb).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.BeaconBlockDeneb).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockDeneb).MarshalSSZTo(dst)
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockElectra).MarshalSSZTo(dst)
+			return pb.(*sila.BlindedBeaconBlockElectra).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.BeaconBlockElectra).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockElectra).MarshalSSZTo(dst)
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockFulu).MarshalSSZTo(dst)
+			return pb.(*sila.BlindedBeaconBlockFulu).MarshalSSZTo(dst)
 		}
-		return pb.(*eth.BeaconBlockElectra).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockElectra).MarshalSSZTo(dst)
 	case version.Gloas:
-		return pb.(*eth.BeaconBlockGloas).MarshalSSZTo(dst)
+		return pb.(*sila.BeaconBlockGloas).MarshalSSZTo(dst)
 	default:
 		return []byte{}, errIncorrectBlockVersion
 	}
@@ -924,36 +924,36 @@ func (b *BeaconBlock) SizeSSZ() int {
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.BeaconBlock).SizeSSZ()
+		return pb.(*sila.BeaconBlock).SizeSSZ()
 	case version.Altair:
-		return pb.(*eth.BeaconBlockAltair).SizeSSZ()
+		return pb.(*sila.BeaconBlockAltair).SizeSSZ()
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBellatrix).SizeSSZ()
+			return pb.(*sila.BlindedBeaconBlockBellatrix).SizeSSZ()
 		}
-		return pb.(*eth.BeaconBlockBellatrix).SizeSSZ()
+		return pb.(*sila.BeaconBlockBellatrix).SizeSSZ()
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockCapella).SizeSSZ()
+			return pb.(*sila.BlindedBeaconBlockCapella).SizeSSZ()
 		}
-		return pb.(*eth.BeaconBlockCapella).SizeSSZ()
+		return pb.(*sila.BeaconBlockCapella).SizeSSZ()
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockDeneb).SizeSSZ()
+			return pb.(*sila.BlindedBeaconBlockDeneb).SizeSSZ()
 		}
-		return pb.(*eth.BeaconBlockDeneb).SizeSSZ()
+		return pb.(*sila.BeaconBlockDeneb).SizeSSZ()
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockElectra).SizeSSZ()
+			return pb.(*sila.BlindedBeaconBlockElectra).SizeSSZ()
 		}
-		return pb.(*eth.BeaconBlockElectra).SizeSSZ()
+		return pb.(*sila.BeaconBlockElectra).SizeSSZ()
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockFulu).SizeSSZ()
+			return pb.(*sila.BlindedBeaconBlockFulu).SizeSSZ()
 		}
-		return pb.(*eth.BeaconBlockElectra).SizeSSZ()
+		return pb.(*sila.BeaconBlockElectra).SizeSSZ()
 	case version.Gloas:
-		return pb.(*eth.BeaconBlockGloas).SizeSSZ()
+		return pb.(*sila.BeaconBlockGloas).SizeSSZ()
 	default:
 		panic(incorrectBodyVersion)
 	}
@@ -965,7 +965,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	var newBlock *BeaconBlock
 	switch b.version {
 	case version.Phase0:
-		pb := &eth.BeaconBlock{}
+		pb := &sila.BeaconBlock{}
 		if err := pb.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
@@ -975,7 +975,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 			return err
 		}
 	case version.Altair:
-		pb := &eth.BeaconBlockAltair{}
+		pb := &sila.BeaconBlockAltair{}
 		if err := pb.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
@@ -986,7 +986,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			pb := &eth.BlindedBeaconBlockBellatrix{}
+			pb := &sila.BlindedBeaconBlockBellatrix{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -996,7 +996,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.BeaconBlockBellatrix{}
+			pb := &sila.BeaconBlockBellatrix{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1008,7 +1008,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Capella:
 		if b.IsBlinded() {
-			pb := &eth.BlindedBeaconBlockCapella{}
+			pb := &sila.BlindedBeaconBlockCapella{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1018,7 +1018,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.BeaconBlockCapella{}
+			pb := &sila.BeaconBlockCapella{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1030,7 +1030,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Deneb:
 		if b.IsBlinded() {
-			pb := &eth.BlindedBeaconBlockDeneb{}
+			pb := &sila.BlindedBeaconBlockDeneb{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1040,7 +1040,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.BeaconBlockDeneb{}
+			pb := &sila.BeaconBlockDeneb{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1052,7 +1052,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Electra:
 		if b.IsBlinded() {
-			pb := &eth.BlindedBeaconBlockElectra{}
+			pb := &sila.BlindedBeaconBlockElectra{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1062,7 +1062,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.BeaconBlockElectra{}
+			pb := &sila.BeaconBlockElectra{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1074,7 +1074,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 		}
 	case version.Fulu:
 		if b.IsBlinded() {
-			pb := &eth.BlindedBeaconBlockFulu{}
+			pb := &sila.BlindedBeaconBlockFulu{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1084,7 +1084,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 				return err
 			}
 		} else {
-			pb := &eth.BeaconBlockElectra{}
+			pb := &sila.BeaconBlockElectra{}
 			if err := pb.UnmarshalSSZ(buf); err != nil {
 				return err
 			}
@@ -1095,7 +1095,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 			}
 		}
 	case version.Gloas:
-		pb := &eth.BeaconBlockGloas{}
+		pb := &sila.BeaconBlockGloas{}
 		if err := pb.UnmarshalSSZ(buf); err != nil {
 			return err
 		}
@@ -1119,36 +1119,36 @@ func (b *BeaconBlock) AsSignRequestObject() (validatorpb.SignRequestObject, erro
 	}
 	switch b.version {
 	case version.Phase0:
-		return &validatorpb.SignRequest_Block{Block: pb.(*eth.BeaconBlock)}, nil
+		return &validatorpb.SignRequest_Block{Block: pb.(*sila.BeaconBlock)}, nil
 	case version.Altair:
-		return &validatorpb.SignRequest_BlockAltair{BlockAltair: pb.(*eth.BeaconBlockAltair)}, nil
+		return &validatorpb.SignRequest_BlockAltair{BlockAltair: pb.(*sila.BeaconBlockAltair)}, nil
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return &validatorpb.SignRequest_BlindedBlockBellatrix{BlindedBlockBellatrix: pb.(*eth.BlindedBeaconBlockBellatrix)}, nil
+			return &validatorpb.SignRequest_BlindedBlockBellatrix{BlindedBlockBellatrix: pb.(*sila.BlindedBeaconBlockBellatrix)}, nil
 		}
-		return &validatorpb.SignRequest_BlockBellatrix{BlockBellatrix: pb.(*eth.BeaconBlockBellatrix)}, nil
+		return &validatorpb.SignRequest_BlockBellatrix{BlockBellatrix: pb.(*sila.BeaconBlockBellatrix)}, nil
 	case version.Capella:
 		if b.IsBlinded() {
-			return &validatorpb.SignRequest_BlindedBlockCapella{BlindedBlockCapella: pb.(*eth.BlindedBeaconBlockCapella)}, nil
+			return &validatorpb.SignRequest_BlindedBlockCapella{BlindedBlockCapella: pb.(*sila.BlindedBeaconBlockCapella)}, nil
 		}
-		return &validatorpb.SignRequest_BlockCapella{BlockCapella: pb.(*eth.BeaconBlockCapella)}, nil
+		return &validatorpb.SignRequest_BlockCapella{BlockCapella: pb.(*sila.BeaconBlockCapella)}, nil
 	case version.Deneb:
 		if b.IsBlinded() {
-			return &validatorpb.SignRequest_BlindedBlockDeneb{BlindedBlockDeneb: pb.(*eth.BlindedBeaconBlockDeneb)}, nil
+			return &validatorpb.SignRequest_BlindedBlockDeneb{BlindedBlockDeneb: pb.(*sila.BlindedBeaconBlockDeneb)}, nil
 		}
-		return &validatorpb.SignRequest_BlockDeneb{BlockDeneb: pb.(*eth.BeaconBlockDeneb)}, nil
+		return &validatorpb.SignRequest_BlockDeneb{BlockDeneb: pb.(*sila.BeaconBlockDeneb)}, nil
 	case version.Electra:
 		if b.IsBlinded() {
-			return &validatorpb.SignRequest_BlindedBlockElectra{BlindedBlockElectra: pb.(*eth.BlindedBeaconBlockElectra)}, nil
+			return &validatorpb.SignRequest_BlindedBlockElectra{BlindedBlockElectra: pb.(*sila.BlindedBeaconBlockElectra)}, nil
 		}
-		return &validatorpb.SignRequest_BlockElectra{BlockElectra: pb.(*eth.BeaconBlockElectra)}, nil
+		return &validatorpb.SignRequest_BlockElectra{BlockElectra: pb.(*sila.BeaconBlockElectra)}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
-			return &validatorpb.SignRequest_BlindedBlockFulu{BlindedBlockFulu: pb.(*eth.BlindedBeaconBlockFulu)}, nil
+			return &validatorpb.SignRequest_BlindedBlockFulu{BlindedBlockFulu: pb.(*sila.BlindedBeaconBlockFulu)}, nil
 		}
-		return &validatorpb.SignRequest_BlockFulu{BlockFulu: pb.(*eth.BeaconBlockElectra)}, nil
+		return &validatorpb.SignRequest_BlockFulu{BlockFulu: pb.(*sila.BeaconBlockElectra)}, nil
 	case version.Gloas:
-		return &validatorpb.SignRequest_BlockGloas{BlockGloas: pb.(*eth.BeaconBlockGloas)}, nil
+		return &validatorpb.SignRequest_BlockGloas{BlockGloas: pb.(*sila.BeaconBlockGloas)}, nil
 	default:
 		return nil, errIncorrectBlockVersion
 	}
@@ -1165,7 +1165,7 @@ func (b *BeaconBlockBody) RandaoReveal() [field_params.BLSSignatureLength]byte {
 }
 
 // SilaData returns the silaexec data in the block.
-func (b *BeaconBlockBody) SilaData() *eth.SilaData {
+func (b *BeaconBlockBody) SilaData() *sila.SilaData {
 	return b.silaexecData
 }
 
@@ -1175,18 +1175,18 @@ func (b *BeaconBlockBody) Graffiti() [field_params.RootLength]byte {
 }
 
 // ProposerSlashings returns the proposer slashings in the block.
-func (b *BeaconBlockBody) ProposerSlashings() []*eth.ProposerSlashing {
+func (b *BeaconBlockBody) ProposerSlashings() []*sila.ProposerSlashing {
 	return b.proposerSlashings
 }
 
 // AttesterSlashings returns the attester slashings in the block.
-func (b *BeaconBlockBody) AttesterSlashings() []eth.AttSlashing {
-	var slashings []eth.AttSlashing
+func (b *BeaconBlockBody) AttesterSlashings() []sila.AttSlashing {
+	var slashings []sila.AttSlashing
 	if b.version < version.Electra {
 		if b.attesterSlashings == nil {
 			return nil
 		}
-		slashings = make([]eth.AttSlashing, len(b.attesterSlashings))
+		slashings = make([]sila.AttSlashing, len(b.attesterSlashings))
 		for i, s := range b.attesterSlashings {
 			slashings[i] = s
 		}
@@ -1194,7 +1194,7 @@ func (b *BeaconBlockBody) AttesterSlashings() []eth.AttSlashing {
 		if b.attesterSlashingsElectra == nil {
 			return nil
 		}
-		slashings = make([]eth.AttSlashing, len(b.attesterSlashingsElectra))
+		slashings = make([]sila.AttSlashing, len(b.attesterSlashingsElectra))
 		for i, s := range b.attesterSlashingsElectra {
 			slashings[i] = s
 		}
@@ -1203,13 +1203,13 @@ func (b *BeaconBlockBody) AttesterSlashings() []eth.AttSlashing {
 }
 
 // Attestations returns the stored attestations in the block.
-func (b *BeaconBlockBody) Attestations() []eth.Att {
-	var atts []eth.Att
+func (b *BeaconBlockBody) Attestations() []sila.Att {
+	var atts []sila.Att
 	if b.version < version.Electra {
 		if b.attestations == nil {
 			return nil
 		}
-		atts = make([]eth.Att, len(b.attestations))
+		atts = make([]sila.Att, len(b.attestations))
 		for i, a := range b.attestations {
 			atts[i] = a
 		}
@@ -1217,7 +1217,7 @@ func (b *BeaconBlockBody) Attestations() []eth.Att {
 		if b.attestationsElectra == nil {
 			return nil
 		}
-		atts = make([]eth.Att, len(b.attestationsElectra))
+		atts = make([]sila.Att, len(b.attestationsElectra))
 		for i, a := range b.attestationsElectra {
 			atts[i] = a
 		}
@@ -1226,17 +1226,17 @@ func (b *BeaconBlockBody) Attestations() []eth.Att {
 }
 
 // Deposits returns the stored deposits in the block.
-func (b *BeaconBlockBody) Deposits() []*eth.Deposit {
+func (b *BeaconBlockBody) Deposits() []*sila.Deposit {
 	return b.deposits
 }
 
 // VoluntaryExits returns the voluntary exits in the block.
-func (b *BeaconBlockBody) VoluntaryExits() []*eth.SignedVoluntaryExit {
+func (b *BeaconBlockBody) VoluntaryExits() []*sila.SignedVoluntaryExit {
 	return b.voluntaryExits
 }
 
 // SyncAggregate returns the sync aggregate in the block.
-func (b *BeaconBlockBody) SyncAggregate() (*eth.SyncAggregate, error) {
+func (b *BeaconBlockBody) SyncAggregate() (*sila.SyncAggregate, error) {
 	if b.version == version.Phase0 {
 		return nil, consensus_types.ErrNotSupported("SyncAggregate", b.version)
 	}
@@ -1254,7 +1254,7 @@ func (b *BeaconBlockBody) SilaData() (interfaces.SilaData, error) {
 	return b.silaPayload, nil
 }
 
-func (b *BeaconBlockBody) BLSToSilaChanges() ([]*eth.SignedBLSToSilaChange, error) {
+func (b *BeaconBlockBody) BLSToSilaChanges() ([]*sila.SignedBLSToSilaChange, error) {
 	if b.version < version.Capella {
 		return nil, consensus_types.ErrNotSupported("BLSToSilaChanges", b.version)
 	}
@@ -1288,7 +1288,7 @@ func (b *BeaconBlockBody) SilaRequests() (*silaenginev1.SilaRequests, error) {
 }
 
 // PayloadAttestations returns the payload attestations in the block.
-func (b *BeaconBlockBody) PayloadAttestations() ([]*eth.PayloadAttestation, error) {
+func (b *BeaconBlockBody) PayloadAttestations() ([]*sila.PayloadAttestation, error) {
 	if b.version >= version.Gloas {
 		return b.payloadAttestations, nil
 	}
@@ -1296,7 +1296,7 @@ func (b *BeaconBlockBody) PayloadAttestations() ([]*eth.PayloadAttestation, erro
 }
 
 // SignedSilaPayloadBid returns the signed sila payload header in the block.
-func (b *BeaconBlockBody) SignedSilaPayloadBid() (*eth.SignedSilaPayloadBid, error) {
+func (b *BeaconBlockBody) SignedSilaPayloadBid() (*sila.SignedSilaPayloadBid, error) {
 	if b.version >= version.Gloas {
 		return b.signedSilaPayloadBid, nil
 	}
@@ -1324,36 +1324,36 @@ func (b *BeaconBlockBody) HashTreeRoot() ([field_params.RootLength]byte, error) 
 	}
 	switch b.version {
 	case version.Phase0:
-		return pb.(*eth.BeaconBlockBody).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBody).HashTreeRoot()
 	case version.Altair:
-		return pb.(*eth.BeaconBlockBodyAltair).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyAltair).HashTreeRoot()
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBodyBellatrix).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockBodyBellatrix).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockBodyBellatrix).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyBellatrix).HashTreeRoot()
 	case version.Capella:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBodyCapella).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockBodyCapella).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockBodyCapella).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyCapella).HashTreeRoot()
 	case version.Deneb:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBodyDeneb).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockBodyDeneb).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockBodyDeneb).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyDeneb).HashTreeRoot()
 	case version.Electra:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBodyElectra).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockBodyElectra).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockBodyElectra).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyElectra).HashTreeRoot()
 	case version.Fulu:
 		if b.IsBlinded() {
-			return pb.(*eth.BlindedBeaconBlockBodyElectra).HashTreeRoot()
+			return pb.(*sila.BlindedBeaconBlockBodyElectra).HashTreeRoot()
 		}
-		return pb.(*eth.BeaconBlockBodyElectra).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyElectra).HashTreeRoot()
 	case version.Gloas:
-		return pb.(*eth.BeaconBlockBodyGloas).HashTreeRoot()
+		return pb.(*sila.BeaconBlockBodyGloas).HashTreeRoot()
 	default:
 		return [field_params.RootLength]byte{}, errIncorrectBodyVersion
 	}

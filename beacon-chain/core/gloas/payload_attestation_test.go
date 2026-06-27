@@ -8,7 +8,6 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/gloas"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
@@ -19,23 +18,24 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	testutil "github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func TestProcessPayloadAttestations_WrongParent(t *testing.T) {
 	setupTestConfig(t)
 
 	_, pk := newKey(t)
-	st := newTestState(t, []*eth.Validator{activeValidator(pk)}, 1)
+	st := newTestState(t, []*sila.Validator{activeValidator(pk)}, 1)
 	require.NoError(t, st.SetSlot(2))
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	att := &eth.PayloadAttestation{
-		Data: &eth.PayloadAttestationData{
+	att := &sila.PayloadAttestation{
+		Data: &sila.PayloadAttestationData{
 			BeaconBlockRoot: bytes.Repeat([]byte{0xbb}, 32),
 			Slot:            1,
 		},
@@ -52,13 +52,13 @@ func TestProcessPayloadAttestations_WrongSlot(t *testing.T) {
 	setupTestConfig(t)
 
 	_, pk := newKey(t)
-	st := newTestState(t, []*eth.Validator{activeValidator(pk)}, 1)
+	st := newTestState(t, []*sila.Validator{activeValidator(pk)}, 1)
 	require.NoError(t, st.SetSlot(3))
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	att := &eth.PayloadAttestation{
-		Data: &eth.PayloadAttestationData{
+	att := &sila.PayloadAttestation{
+		Data: &sila.PayloadAttestationData{
 			BeaconBlockRoot: parentRoot,
 			Slot:            1,
 		},
@@ -76,16 +76,16 @@ func TestProcessPayloadAttestations_InvalidSignature(t *testing.T) {
 
 	_, pk1 := newKey(t)
 	sk2, pk2 := newKey(t)
-	vals := []*eth.Validator{activeValidator(pk1), activeValidator(pk2)}
+	vals := []*sila.Validator{activeValidator(pk1), activeValidator(pk2)}
 	st := newTestState(t, vals, 2)
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	attData := &eth.PayloadAttestationData{
+	attData := &sila.PayloadAttestationData{
 		BeaconBlockRoot: parentRoot,
 		Slot:            1,
 	}
-	att := &eth.PayloadAttestation{
+	att := &sila.PayloadAttestation{
 		Data:            attData,
 		AggregationBits: setBits(bitfield.NewBitvector512(), 0),
 		Signature:       signAttestation(t, st, attData, []common.SecretKey{sk2}),
@@ -101,16 +101,16 @@ func TestProcessPayloadAttestations_EmptyAggregationBits(t *testing.T) {
 	setupTestConfig(t)
 
 	_, pk := newKey(t)
-	st := newTestState(t, []*eth.Validator{activeValidator(pk)}, 1)
+	st := newTestState(t, []*sila.Validator{activeValidator(pk)}, 1)
 	require.NoError(t, st.SetSlot(2))
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	attData := &eth.PayloadAttestationData{
+	attData := &sila.PayloadAttestationData{
 		BeaconBlockRoot: parentRoot,
 		Slot:            1,
 	}
-	att := &eth.PayloadAttestation{
+	att := &sila.PayloadAttestation{
 		Data:            attData,
 		AggregationBits: bitfield.NewBitvector512(),
 		Signature:       make([]byte, 96),
@@ -127,13 +127,13 @@ func TestProcessPayloadAttestations_HappyPath(t *testing.T) {
 
 	sk1, pk1 := newKey(t)
 	sk2, pk2 := newKey(t)
-	vals := []*eth.Validator{activeValidator(pk1), activeValidator(pk2)}
+	vals := []*sila.Validator{activeValidator(pk1), activeValidator(pk2)}
 
 	st := newTestState(t, vals, 2)
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	attData := &eth.PayloadAttestationData{
+	attData := &sila.PayloadAttestationData{
 		BeaconBlockRoot: parentRoot,
 		Slot:            1,
 	}
@@ -141,7 +141,7 @@ func TestProcessPayloadAttestations_HappyPath(t *testing.T) {
 	aggBits.SetBitAt(0, true)
 	aggBits.SetBitAt(1, true)
 
-	att := &eth.PayloadAttestation{
+	att := &sila.PayloadAttestation{
 		Data:            attData,
 		AggregationBits: aggBits,
 		Signature:       signAttestation(t, st, attData, []common.SecretKey{sk1, sk2}),
@@ -157,27 +157,27 @@ func TestProcessPayloadAttestations_MultipleAttestations(t *testing.T) {
 
 	sk1, pk1 := newKey(t)
 	sk2, pk2 := newKey(t)
-	vals := []*eth.Validator{activeValidator(pk1), activeValidator(pk2)}
+	vals := []*sila.Validator{activeValidator(pk1), activeValidator(pk2)}
 
 	st := newTestState(t, vals, 2)
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	attData1 := &eth.PayloadAttestationData{
+	attData1 := &sila.PayloadAttestationData{
 		BeaconBlockRoot: parentRoot,
 		Slot:            1,
 	}
-	attData2 := &eth.PayloadAttestationData{
+	attData2 := &sila.PayloadAttestationData{
 		BeaconBlockRoot: parentRoot,
 		Slot:            1,
 	}
 
-	att1 := &eth.PayloadAttestation{
+	att1 := &sila.PayloadAttestation{
 		Data:            attData1,
 		AggregationBits: setBits(bitfield.NewBitvector512(), 0),
 		Signature:       signAttestation(t, st, attData1, []common.SecretKey{sk1}),
 	}
-	att2 := &eth.PayloadAttestation{
+	att2 := &sila.PayloadAttestation{
 		Data:            attData2,
 		AggregationBits: setBits(bitfield.NewBitvector512(), 1),
 		Signature:       signAttestation(t, st, attData2, []common.SecretKey{sk2}),
@@ -193,15 +193,15 @@ func TestProcessPayloadAttestations_IndexedVerificationError(t *testing.T) {
 	setupTestConfig(t)
 
 	_, pk := newKey(t)
-	st := newTestState(t, []*eth.Validator{activeValidator(pk)}, 1)
+	st := newTestState(t, []*sila.Validator{activeValidator(pk)}, 1)
 	parentRoot := bytes.Repeat([]byte{0xaa}, 32)
-	require.NoError(t, st.SetLatestBlockHeader(&eth.BeaconBlockHeader{ParentRoot: parentRoot}))
+	require.NoError(t, st.SetLatestBlockHeader(&sila.BeaconBlockHeader{ParentRoot: parentRoot}))
 
-	attData := &eth.PayloadAttestationData{
+	attData := &sila.PayloadAttestationData{
 		BeaconBlockRoot: parentRoot,
 		Slot:            0,
 	}
-	att := &eth.PayloadAttestation{
+	att := &sila.PayloadAttestation{
 		Data:            attData,
 		AggregationBits: setBits(bitfield.NewBitvector512(), 0),
 		Signature:       make([]byte, 96),
@@ -217,10 +217,10 @@ func TestProcessPayloadAttestations_IndexedVerificationError(t *testing.T) {
 	require.ErrorContains(t, "validator 0", err)
 }
 
-func newTestState(t *testing.T, vals []*eth.Validator, slot primitives.Slot) state.BeaconState {
+func newTestState(t *testing.T, vals []*sila.Validator, slot primitives.Slot) state.BeaconState {
 	t.Helper()
 
-	st, err := testutil.NewBeaconStateGloas(func(seed *eth.BeaconStateGloas) error {
+	st, err := testutil.NewBeaconStateGloas(func(seed *sila.BeaconStateGloas) error {
 		seed.Slot = slot
 		seed.Validators = vals
 		seed.Balances = make([]uint64, len(vals))
@@ -234,7 +234,7 @@ func newTestState(t *testing.T, vals []*eth.Validator, slot primitives.Slot) sta
 	return st
 }
 
-func newPhase0TestState(t *testing.T, vals []*eth.Validator, slot primitives.Slot) state.BeaconState {
+func newPhase0TestState(t *testing.T, vals []*sila.Validator, slot primitives.Slot) state.BeaconState {
 	t.Helper()
 
 	st, err := testutil.NewBeaconState()
@@ -247,8 +247,8 @@ func newPhase0TestState(t *testing.T, vals []*eth.Validator, slot primitives.Slo
 	return st
 }
 
-func deterministicPTCWindow(validatorCount int) []*eth.PTCs {
-	window := make([]*eth.PTCs, 3*params.BeaconConfig().SlotsPerEpoch)
+func deterministicPTCWindow(validatorCount int) []*sila.PTCs {
+	window := make([]*sila.PTCs, 3*params.BeaconConfig().SlotsPerEpoch)
 	indices := make([]primitives.ValidatorIndex, fieldparams.PTCSize)
 	if validatorCount > 0 {
 		for i := range indices {
@@ -256,7 +256,7 @@ func deterministicPTCWindow(validatorCount int) []*eth.PTCs {
 		}
 	}
 	for i := range window {
-		window[i] = &eth.PTCs{
+		window[i] = &sila.PTCs{
 			ValidatorIndices: slices.Clone(indices),
 		}
 	}
@@ -271,19 +271,19 @@ func setupTestConfig(t *testing.T) {
 	params.OverrideBeaconConfig(cfg)
 }
 
-func buildBody(t *testing.T, atts ...*eth.PayloadAttestation) interfaces.ReadOnlyBeaconBlockBody {
-	body := &eth.BeaconBlockBodyGloas{
-		PayloadAttestations:   atts,
-		RandaoReveal:          make([]byte, 96),
-		SilaData:              &eth.SilaData{},
-		Graffiti:              make([]byte, 32),
-		ProposerSlashings:     []*eth.ProposerSlashing{},
-		AttesterSlashings:     []*eth.AttesterSlashingElectra{},
-		Attestations:          []*eth.AttestationElectra{},
-		Deposits:              []*eth.Deposit{},
-		VoluntaryExits:        []*eth.SignedVoluntaryExit{},
-		SyncAggregate:         &eth.SyncAggregate{},
-		BlsToSilaChanges: []*eth.SignedBLSToSilaChange{},
+func buildBody(t *testing.T, atts ...*sila.PayloadAttestation) interfaces.ReadOnlyBeaconBlockBody {
+	body := &sila.BeaconBlockBodyGloas{
+		PayloadAttestations: atts,
+		RandaoReveal:        make([]byte, 96),
+		SilaData:            &sila.SilaData{},
+		Graffiti:            make([]byte, 32),
+		ProposerSlashings:   []*sila.ProposerSlashing{},
+		AttesterSlashings:   []*sila.AttesterSlashingElectra{},
+		Attestations:        []*sila.AttestationElectra{},
+		Deposits:            []*sila.Deposit{},
+		VoluntaryExits:      []*sila.SignedVoluntaryExit{},
+		SyncAggregate:       &sila.SyncAggregate{},
+		BlsToSilaChanges:    []*sila.SignedBLSToSilaChange{},
 	}
 	wrapped, err := blocks.NewBeaconBlockBody(body)
 	require.NoError(t, err)
@@ -295,8 +295,8 @@ func setBits(bits bitfield.Bitvector512, idx uint64) bitfield.Bitvector512 {
 	return bits
 }
 
-func activeValidator(pub []byte) *eth.Validator {
-	return &eth.Validator{
+func activeValidator(pub []byte) *sila.Validator {
+	return &sila.Validator{
 		PublicKey:                  pub,
 		EffectiveBalance:           params.BeaconConfig().MaxEffectiveBalance,
 		WithdrawalCredentials:      make([]byte, 32),
@@ -313,7 +313,7 @@ func newKey(t *testing.T) (common.SecretKey, []byte) {
 	return sk, sk.PublicKey().Marshal()
 }
 
-func signAttestation(t *testing.T, st state.ReadOnlyBeaconState, data *eth.PayloadAttestationData, sks []common.SecretKey) []byte {
+func signAttestation(t *testing.T, st state.ReadOnlyBeaconState, data *sila.PayloadAttestationData, sks []common.SecretKey) []byte {
 	domain, err := signing.Domain(st.Fork(), slots.ToEpoch(data.Slot), params.BeaconConfig().DomainPTCAttester, st.GenesisValidatorsRoot())
 	require.NoError(t, err)
 	root, err := signing.ComputeSigningRoot(data, domain)

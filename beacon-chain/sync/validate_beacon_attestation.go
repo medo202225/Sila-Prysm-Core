@@ -8,6 +8,9 @@ import (
 	"slices"
 	"time"
 
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
@@ -21,13 +24,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
 )
 
 // Validation
@@ -68,7 +68,7 @@ func (s *Service) validateCommitteeIndexBeaconAttestation(
 		return pubsub.ValidationReject, err
 	}
 
-	att, ok := m.(eth.Att)
+	att, ok := m.(sila.Att)
 	if !ok {
 		return pubsub.ValidationReject, errWrongMessage
 	}
@@ -160,17 +160,17 @@ func (s *Service) validateCommitteeIndexBeaconAttestation(
 
 	// Consolidated handling of Electra SingleAttestation vs Phase0 unaggregated attestation
 	var (
-		attForValidation eth.Att // what we'll pass to further validation
+		attForValidation sila.Att // what we'll pass to further validation
 		eventType        feed.EventType
 		eventData        any
 	)
 
 	if att.Version() >= version.Electra {
-		singleAtt, ok := att.(*eth.SingleAttestation)
+		singleAtt, ok := att.(*sila.SingleAttestation)
 		if !ok {
 			return pubsub.ValidationIgnore, fmt.Errorf(
 				"attestation has wrong type (expected %T, got %T)",
-				&eth.SingleAttestation{}, att,
+				&sila.SingleAttestation{}, att,
 			)
 		}
 		// Convert Electra SingleAttestation to unaggregated ElectraAttestation. This is needed because many parts of the codebase assume that attestations have a certain structure and SingleAttestation validates these assumptions.
@@ -240,7 +240,7 @@ func (s *Service) validateCommitteeIndexBeaconAttestation(
 }
 
 // This validates beacon unaggregated attestation has correct topic string.
-func (s *Service) validateUnaggregatedAttTopic(ctx context.Context, a eth.Att, bs state.ReadOnlyBeaconState, t string) (pubsub.ValidationResult, error) {
+func (s *Service) validateUnaggregatedAttTopic(ctx context.Context, a sila.Att, bs state.ReadOnlyBeaconState, t string) (pubsub.ValidationResult, error) {
 	ctx, span := trace.StartSpan(ctx, "sync.validateUnaggregatedAttTopic")
 	defer span.End()
 
@@ -249,7 +249,7 @@ func (s *Service) validateUnaggregatedAttTopic(ctx context.Context, a eth.Att, b
 		return result, err
 	}
 	subnet := helpers.ComputeSubnetForAttestation(valCount, a)
-	format := p2p.GossipTypeMapping[reflect.TypeFor[*eth.Attestation]()]
+	format := p2p.GossipTypeMapping[reflect.TypeFor[*sila.Attestation]()]
 	digest := params.ForkDigest(slots.ToEpoch(a.GetData().Slot))
 	expected := fmt.Sprintf(format, digest, subnet) + s.cfg.p2p.Encoding().ProtocolSuffix()
 	if t != expected {
@@ -261,7 +261,7 @@ func (s *Service) validateUnaggregatedAttTopic(ctx context.Context, a eth.Att, b
 
 func (s *Service) validateCommitteeIndexAndCount(
 	ctx context.Context,
-	a eth.Att,
+	a sila.Att,
 	bs state.ReadOnlyBeaconState,
 ) (primitives.CommitteeIndex, uint64, pubsub.ValidationResult, error) {
 	// Validate committee index based on fork.
@@ -307,13 +307,13 @@ func (s *Service) validateCommitteeIndexAndCount(
 
 func validateAttesterData(
 	ctx context.Context,
-	a eth.Att,
+	a sila.Att,
 	committee []primitives.ValidatorIndex,
 ) (pubsub.ValidationResult, error) {
 	if a.Version() >= version.Electra {
-		singleAtt, ok := a.(*eth.SingleAttestation)
+		singleAtt, ok := a.(*sila.SingleAttestation)
 		if !ok {
-			return pubsub.ValidationIgnore, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &eth.SingleAttestation{}, a)
+			return pubsub.ValidationIgnore, fmt.Errorf("attestation has wrong type (expected %T, got %T)", &sila.SingleAttestation{}, a)
 		}
 		return validateAttestingIndex(ctx, singleAtt.AttesterIndex, committee)
 	}
@@ -333,11 +333,11 @@ func validateAttesterData(
 }
 
 // This validates beacon unaggregated attestation using the given state, the validation consists of signature verification.
-func (s *Service) validateUnaggregatedAttWithState(ctx context.Context, a eth.Att, bs state.ReadOnlyBeaconState) (pubsub.ValidationResult, error) {
+func (s *Service) validateUnaggregatedAttWithState(ctx context.Context, a sila.Att, bs state.ReadOnlyBeaconState) (pubsub.ValidationResult, error) {
 	ctx, span := trace.StartSpan(ctx, "sync.validateUnaggregatedAttWithState")
 	defer span.End()
 
-	set, err := blocks.AttestationSignatureBatch(ctx, bs, []eth.Att{a})
+	set, err := blocks.AttestationSignatureBatch(ctx, bs, []sila.Att{a})
 	if err != nil {
 		tracing.AnnotateError(span, err)
 		attBadSignatureBatchCount.Inc()
@@ -370,7 +370,7 @@ func validateAttestingIndex(
 // [REJECT] attestation.data.index == 0 if block.slot == attestation.data.slot. (New in Gloas)
 // [REJECT] If attestation.data.index == 1, the sila payload for the block passes validation. (New in Gloas)
 // [IGNORE] When attestation.data.index == 1, the sila payload for the block has been seen. (New in Gloas)
-func (s *Service) validateGloasCommitteeIndex(data *eth.AttestationData) (pubsub.ValidationResult, error) {
+func (s *Service) validateGloasCommitteeIndex(data *sila.AttestationData) (pubsub.ValidationResult, error) {
 	if data.CommitteeIndex >= 2 {
 		return pubsub.ValidationReject, errors.New("attestation data's committee index must be < 2")
 	}
@@ -401,7 +401,7 @@ func (s *Service) validateGloasCommitteeIndex(data *eth.AttestationData) (pubsub
 }
 
 // generateUnaggregatedAttCacheKey generates the cache key for unaggregated attestation tracking.
-func generateUnaggregatedAttCacheKey(att eth.Att) (string, error) {
+func generateUnaggregatedAttCacheKey(att sila.Att) (string, error) {
 	var attester uint64
 	if att.Version() >= version.Electra {
 		if !att.IsSingle() {
@@ -453,7 +453,7 @@ func (s *Service) hasBlockAndState(ctx context.Context, blockRoot [32]byte) bool
 	return hasState && s.cfg.chain.HasBlock(ctx, blockRoot)
 }
 
-func wrapAttestationError(err error, att eth.Att) error {
+func wrapAttestationError(err error, att sila.Att) error {
 	slotsPerEpoch := params.BeaconConfig().SlotsPerEpoch
 	committeeIndex := att.GetCommitteeIndex()
 

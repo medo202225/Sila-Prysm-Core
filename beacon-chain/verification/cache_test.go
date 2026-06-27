@@ -8,7 +8,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/interop"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -39,8 +39,8 @@ func TestVerifySignature(t *testing.T) {
 	b := blobs[0]
 
 	sc := newSigCache(valRoot[:], 1, nil)
-	cb := func(idx primitives.ValidatorIndex) (*eth.Validator, error) {
-		return &eth.Validator{PublicKey: pk.Marshal()}, nil
+	cb := func(idx primitives.ValidatorIndex) (*sila.Validator, error) {
+		return &sila.Validator{PublicKey: pk.Marshal()}, nil
 	}
 	mv := &mockValidatorAtIndexer{cb: cb}
 
@@ -54,8 +54,8 @@ func TestSignatureCacheMissThenHit(t *testing.T) {
 	b := blobs[0]
 
 	sc := newSigCache(valRoot[:], 1, nil)
-	cb := func(idx primitives.ValidatorIndex) (*eth.Validator, error) {
-		return &eth.Validator{PublicKey: pk.Marshal()}, nil
+	cb := func(idx primitives.ValidatorIndex) (*sila.Validator, error) {
+		return &sila.Validator{PublicKey: pk.Marshal()}, nil
 	}
 
 	sd := blobToSignatureData(b)
@@ -85,8 +85,8 @@ func TestSignatureCacheMissThenHit(t *testing.T) {
 	_, pks, err := interop.DeterministicallyGenerateKeys(1, 1)
 	require.NoError(t, err)
 	wrongKey := pks[0]
-	cb = func(idx primitives.ValidatorIndex) (*eth.Validator, error) {
-		return &eth.Validator{PublicKey: wrongKey.Marshal()}, nil
+	cb = func(idx primitives.ValidatorIndex) (*sila.Validator, error) {
+		return &sila.Validator{PublicKey: wrongKey.Marshal()}, nil
 	}
 	mv = &mockValidatorAtIndexer{cb: cb}
 	require.ErrorIs(t, sc.VerifySignature(badSd, mv), signing.ErrSigFailedToVerify)
@@ -98,11 +98,11 @@ func TestSignatureCacheMissThenHit(t *testing.T) {
 }
 
 type mockValidatorAtIndexer struct {
-	cb func(idx primitives.ValidatorIndex) (*eth.Validator, error)
+	cb func(idx primitives.ValidatorIndex) (*sila.Validator, error)
 }
 
 // ValidatorAtIndex implements validatorAtIndexer.
-func (m *mockValidatorAtIndexer) ValidatorAtIndex(idx primitives.ValidatorIndex) (*eth.Validator, error) {
+func (m *mockValidatorAtIndexer) ValidatorAtIndex(idx primitives.ValidatorIndex) (*sila.Validator, error) {
 	return m.cb(idx)
 }
 

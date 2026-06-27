@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/peerdas"
@@ -19,10 +20,9 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/wrapperspb"
@@ -90,7 +90,7 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 		graffiti = g
 	}
 
-	v1alpha1resp, err := s.V1Alpha1Server.GetBeaconBlock(ctx, &eth.BlockRequest{
+	v1alpha1resp, err := s.V1Alpha1Server.GetBeaconBlock(ctx, &sila.BlockRequest{
 		Slot:                  primitives.Slot(slot),
 		RandaoReveal:          randaoReveal,
 		Graffiti:              graffiti,
@@ -103,7 +103,7 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	gloasBlock, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Gloas)
+	gloasBlock, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Gloas)
 	if !ok {
 		httputil.HandleError(w, fmt.Sprintf("expected Gloas block, got %T", v1alpha1resp.Block), http.StatusInternalServerError)
 		return
@@ -128,7 +128,7 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 	isSSZ := httputil.RespondWithSsz(r)
 
 	if includePayload {
-		envelopeResp, err := s.V1Alpha1Server.GetSilaPayloadEnvelope(ctx, &eth.SilaPayloadEnvelopeRequest{
+		envelopeResp, err := s.V1Alpha1Server.GetSilaPayloadEnvelope(ctx, &sila.SilaPayloadEnvelopeRequest{
 			Slot: primitives.Slot(slot),
 		})
 		if err != nil {
@@ -146,11 +146,11 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if isSSZ {
-			sszResp, err := (&eth.BeaconBlockContentsGloas{
-				Block:                    gloasBlock.Gloas,
+			sszResp, err := (&sila.BeaconBlockContentsGloas{
+				Block:               gloasBlock.Gloas,
 				SilaPayloadEnvelope: envelopeResp.Envelope,
-				KzgProofs:                kzgProofs,
-				Blobs:                    blobs,
+				KzgProofs:           kzgProofs,
+				Blobs:               blobs,
 			}).MarshalSSZ()
 			if err != nil {
 				httputil.HandleError(w, err.Error(), http.StatusInternalServerError)
@@ -171,10 +171,10 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		httputil.WriteJson(w, &structs.ProduceBlockV4Response{
-			Version:                  version.String(version.Gloas),
-			ConsensusBlockValue:      consensusBlockValue,
+			Version:             version.String(version.Gloas),
+			ConsensusBlockValue: consensusBlockValue,
 			SilaPayloadIncluded: true,
-			Data:                     jsonBytes,
+			Data:                jsonBytes,
 		})
 		return
 	}
@@ -201,16 +201,16 @@ func (s *Server) ProduceBlockV4(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV4Response{
-		Version:                  version.String(version.Gloas),
-		ConsensusBlockValue:      consensusBlockValue,
+		Version:             version.String(version.Gloas),
+		ConsensusBlockValue: consensusBlockValue,
 		SilaPayloadIncluded: false,
-		Data:                     jsonBytes,
+		Data:                jsonBytes,
 	})
 }
 
 // gloasBlockSelfBuilt reports whether the block's bid is the proposer's own
 // self-built payload rather than an external builder's.
-func gloasBlockSelfBuilt(b *eth.BeaconBlockGloas) bool {
+func gloasBlockSelfBuilt(b *sila.BeaconBlockGloas) bool {
 	bid := b.GetBody().GetSignedSilaPayloadBid().GetMessage()
 	return bid != nil && bid.BuilderIndex == params.BeaconConfig().BuilderIndexSelfBuild
 }
@@ -243,7 +243,7 @@ func (s *Server) SilaPayloadEnvelope(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := s.V1Alpha1Server.GetSilaPayloadEnvelope(ctx, &eth.SilaPayloadEnvelopeRequest{
+	resp, err := s.V1Alpha1Server.GetSilaPayloadEnvelope(ctx, &sila.SilaPayloadEnvelopeRequest{
 		Slot: primitives.Slot(slot),
 	})
 	if err != nil {

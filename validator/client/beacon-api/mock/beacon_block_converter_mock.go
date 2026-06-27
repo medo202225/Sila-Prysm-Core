@@ -13,7 +13,7 @@ import (
 	reflect "reflect"
 
 	structs "github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -42,10 +42,10 @@ func (m *MockBeaconBlockConverter) EXPECT() *MockBeaconBlockConverterMockRecorde
 }
 
 // ConvertRESTAltairBlockToProto mocks base method.
-func (m *MockBeaconBlockConverter) ConvertRESTAltairBlockToProto(block *structs.BeaconBlockAltair) (*eth.BeaconBlockAltair, error) {
+func (m *MockBeaconBlockConverter) ConvertRESTAltairBlockToProto(block *structs.BeaconBlockAltair) (*sila.BeaconBlockAltair, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ConvertRESTAltairBlockToProto", block)
-	ret0, _ := ret[0].(*eth.BeaconBlockAltair)
+	ret0, _ := ret[0].(*sila.BeaconBlockAltair)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -57,10 +57,10 @@ func (mr *MockBeaconBlockConverterMockRecorder) ConvertRESTAltairBlockToProto(bl
 }
 
 // ConvertRESTBellatrixBlockToProto mocks base method.
-func (m *MockBeaconBlockConverter) ConvertRESTBellatrixBlockToProto(block *structs.BeaconBlockBellatrix) (*eth.BeaconBlockBellatrix, error) {
+func (m *MockBeaconBlockConverter) ConvertRESTBellatrixBlockToProto(block *structs.BeaconBlockBellatrix) (*sila.BeaconBlockBellatrix, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ConvertRESTBellatrixBlockToProto", block)
-	ret0, _ := ret[0].(*eth.BeaconBlockBellatrix)
+	ret0, _ := ret[0].(*sila.BeaconBlockBellatrix)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -72,10 +72,10 @@ func (mr *MockBeaconBlockConverterMockRecorder) ConvertRESTBellatrixBlockToProto
 }
 
 // ConvertRESTCapellaBlockToProto mocks base method.
-func (m *MockBeaconBlockConverter) ConvertRESTCapellaBlockToProto(block *structs.BeaconBlockCapella) (*eth.BeaconBlockCapella, error) {
+func (m *MockBeaconBlockConverter) ConvertRESTCapellaBlockToProto(block *structs.BeaconBlockCapella) (*sila.BeaconBlockCapella, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ConvertRESTCapellaBlockToProto", block)
-	ret0, _ := ret[0].(*eth.BeaconBlockCapella)
+	ret0, _ := ret[0].(*sila.BeaconBlockCapella)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -87,10 +87,10 @@ func (mr *MockBeaconBlockConverterMockRecorder) ConvertRESTCapellaBlockToProto(b
 }
 
 // ConvertRESTPhase0BlockToProto mocks base method.
-func (m *MockBeaconBlockConverter) ConvertRESTPhase0BlockToProto(block *structs.BeaconBlock) (*eth.BeaconBlock, error) {
+func (m *MockBeaconBlockConverter) ConvertRESTPhase0BlockToProto(block *structs.BeaconBlock) (*sila.BeaconBlock, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ConvertRESTPhase0BlockToProto", block)
-	ret0, _ := ret[0].(*eth.BeaconBlock)
+	ret0, _ := ret[0].(*sila.BeaconBlock)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

@@ -7,6 +7,7 @@ import (
 	"math/big"
 	"net/http"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/rewards"
@@ -18,9 +19,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
@@ -88,7 +88,7 @@ func (s *Server) ProduceBlockV3(w http.ResponseWriter, r *http.Request) {
 		graffiti = g
 	}
 
-	s.produceBlockV3(ctx, w, r, &eth.BlockRequest{
+	s.produceBlockV3(ctx, w, r, &sila.BlockRequest{
 		Slot:               primitives.Slot(slot),
 		RandaoReveal:       randaoReveal,
 		Graffiti:           graffiti,
@@ -97,7 +97,7 @@ func (s *Server) ProduceBlockV3(w http.ResponseWriter, r *http.Request) {
 	}, any)
 }
 
-func (s *Server) produceBlockV3(ctx context.Context, w http.ResponseWriter, r *http.Request, v1alpha1req *eth.BlockRequest, requiredType blockType) {
+func (s *Server) produceBlockV3(ctx context.Context, w http.ResponseWriter, r *http.Request, v1alpha1req *sila.BlockRequest, requiredType blockType) {
 	isSSZ := httputil.RespondWithSsz(r)
 	v1alpha1resp, err := s.V1Alpha1Server.GetBeaconBlock(ctx, v1alpha1req)
 	if err != nil {
@@ -125,14 +125,14 @@ func (s *Server) produceBlockV3(ctx context.Context, w http.ResponseWriter, r *h
 	w.Header().Set(api.SilaPayloadValueHeader, v1alpha1resp.PayloadValue)
 	w.Header().Set(api.ConsensusBlockValueHeader, consensusBlockValue)
 
-	phase0Block, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Phase0)
+	phase0Block, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Phase0)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Phase0))
 		// rewards aren't used in phase 0
 		handleProducePhase0V3(w, isSSZ, phase0Block, v1alpha1resp.PayloadValue)
 		return
 	}
-	altairBlock, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Altair)
+	altairBlock, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Altair)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Altair))
 		handleProduceAltairV3(w, isSSZ, altairBlock, v1alpha1resp.PayloadValue, consensusBlockValue)
@@ -147,61 +147,61 @@ func (s *Server) produceBlockV3(ctx context.Context, w http.ResponseWriter, r *h
 		httputil.HandleError(w, "The node is currently optimistic and cannot serve validators", http.StatusServiceUnavailable)
 		return
 	}
-	blindedBellatrixBlock, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_BlindedBellatrix)
+	blindedBellatrixBlock, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_BlindedBellatrix)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Bellatrix))
 		handleProduceBlindedBellatrixV3(w, isSSZ, blindedBellatrixBlock, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	bellatrixBlock, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Bellatrix)
+	bellatrixBlock, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Bellatrix)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Bellatrix))
 		handleProduceBellatrixV3(w, isSSZ, bellatrixBlock, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	blindedCapellaBlock, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_BlindedCapella)
+	blindedCapellaBlock, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_BlindedCapella)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Capella))
 		handleProduceBlindedCapellaV3(w, isSSZ, blindedCapellaBlock, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	capellaBlock, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Capella)
+	capellaBlock, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Capella)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Capella))
 		handleProduceCapellaV3(w, isSSZ, capellaBlock, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	blindedDenebBlockContents, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_BlindedDeneb)
+	blindedDenebBlockContents, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_BlindedDeneb)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Deneb))
 		handleProduceBlindedDenebV3(w, isSSZ, blindedDenebBlockContents, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	denebBlockContents, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Deneb)
+	denebBlockContents, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Deneb)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Deneb))
 		handleProduceDenebV3(w, isSSZ, denebBlockContents, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	blindedElectraBlockContents, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_BlindedElectra)
+	blindedElectraBlockContents, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_BlindedElectra)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Electra))
 		handleProduceBlindedElectraV3(w, isSSZ, blindedElectraBlockContents, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	electraBlockContents, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Electra)
+	electraBlockContents, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Electra)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Electra))
 		handleProduceElectraV3(w, isSSZ, electraBlockContents, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	blindedFuluBlockContents, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_BlindedFulu)
+	blindedFuluBlockContents, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_BlindedFulu)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Fulu))
 		handleProduceBlindedFuluV3(w, isSSZ, blindedFuluBlockContents, v1alpha1resp.PayloadValue, consensusBlockValue)
 		return
 	}
-	fuluBlockContents, ok := v1alpha1resp.Block.(*eth.GenericBeaconBlock_Fulu)
+	fuluBlockContents, ok := v1alpha1resp.Block.(*sila.GenericBeaconBlock_Fulu)
 	if ok {
 		w.Header().Set(api.VersionHeader, version.String(version.Fulu))
 		handleProduceFuluV3(w, isSSZ, fuluBlockContents, v1alpha1resp.PayloadValue, consensusBlockValue)
@@ -241,7 +241,7 @@ func getConsensusBlockValue(ctx context.Context, blockRewardsFetcher rewards.Blo
 func handleProducePhase0V3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Phase0,
+	blk *sila.GenericBeaconBlock_Phase0,
 	payloadValue string,
 ) {
 	if isSSZ {
@@ -259,18 +259,18 @@ func handleProducePhase0V3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Phase0),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   payloadValue, // mev not available at this point
-		ConsensusBlockValue:     "",           // rewards not applicable before altair
-		Data:                    jsonBytes,
+		Version:             version.String(version.Phase0),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    payloadValue, // mev not available at this point
+		ConsensusBlockValue: "",           // rewards not applicable before altair
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceAltairV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Altair,
+	blk *sila.GenericBeaconBlock_Altair,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -289,18 +289,18 @@ func handleProduceAltairV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Altair),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   silaPayloadValue, // mev not available at this point
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Altair),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    silaPayloadValue, // mev not available at this point
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceBellatrixV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Bellatrix,
+	blk *sila.GenericBeaconBlock_Bellatrix,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -324,18 +324,18 @@ func handleProduceBellatrixV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Bellatrix),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   silaPayloadValue, // mev not available at this point
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Bellatrix),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    silaPayloadValue, // mev not available at this point
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceBlindedBellatrixV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_BlindedBellatrix,
+	blk *sila.GenericBeaconBlock_BlindedBellatrix,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -359,18 +359,18 @@ func handleProduceBlindedBellatrixV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Bellatrix),
-		SilaPayloadBlinded: true,
-		SilaPayloadValue:   silaPayloadValue,
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Bellatrix),
+		SilaPayloadBlinded:  true,
+		SilaPayloadValue:    silaPayloadValue,
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceBlindedCapellaV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_BlindedCapella,
+	blk *sila.GenericBeaconBlock_BlindedCapella,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -394,18 +394,18 @@ func handleProduceBlindedCapellaV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Capella),
-		SilaPayloadBlinded: true,
-		SilaPayloadValue:   silaPayloadValue,
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Capella),
+		SilaPayloadBlinded:  true,
+		SilaPayloadValue:    silaPayloadValue,
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceCapellaV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Capella,
+	blk *sila.GenericBeaconBlock_Capella,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -429,18 +429,18 @@ func handleProduceCapellaV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Capella),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   silaPayloadValue, // mev not available at this point
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Capella),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    silaPayloadValue, // mev not available at this point
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceBlindedDenebV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_BlindedDeneb,
+	blk *sila.GenericBeaconBlock_BlindedDeneb,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -464,18 +464,18 @@ func handleProduceBlindedDenebV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Deneb),
-		SilaPayloadBlinded: true,
-		SilaPayloadValue:   silaPayloadValue,
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Deneb),
+		SilaPayloadBlinded:  true,
+		SilaPayloadValue:    silaPayloadValue,
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceDenebV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Deneb,
+	blk *sila.GenericBeaconBlock_Deneb,
 	silaPayloadValue string,
 	consensusBlockValue string,
 ) {
@@ -500,18 +500,18 @@ func handleProduceDenebV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Deneb),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   silaPayloadValue, // mev not available at this point
-		ConsensusBlockValue:     consensusBlockValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Deneb),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    silaPayloadValue, // mev not available at this point
+		ConsensusBlockValue: consensusBlockValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceBlindedElectraV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_BlindedElectra,
+	blk *sila.GenericBeaconBlock_BlindedElectra,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -535,18 +535,18 @@ func handleProduceBlindedElectraV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Electra),
-		SilaPayloadBlinded: true,
-		SilaPayloadValue:   silaPayloadValue,
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Electra),
+		SilaPayloadBlinded:  true,
+		SilaPayloadValue:    silaPayloadValue,
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceElectraV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Electra,
+	blk *sila.GenericBeaconBlock_Electra,
 	silaPayloadValue string,
 	consensusBlockValue string,
 ) {
@@ -571,18 +571,18 @@ func handleProduceElectraV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Electra),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   silaPayloadValue, // mev not available at this point
-		ConsensusBlockValue:     consensusBlockValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Electra),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    silaPayloadValue, // mev not available at this point
+		ConsensusBlockValue: consensusBlockValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceBlindedFuluV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_BlindedFulu,
+	blk *sila.GenericBeaconBlock_BlindedFulu,
 	silaPayloadValue string,
 	consensusPayloadValue string,
 ) {
@@ -606,18 +606,18 @@ func handleProduceBlindedFuluV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Fulu),
-		SilaPayloadBlinded: true,
-		SilaPayloadValue:   silaPayloadValue,
-		ConsensusBlockValue:     consensusPayloadValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Fulu),
+		SilaPayloadBlinded:  true,
+		SilaPayloadValue:    silaPayloadValue,
+		ConsensusBlockValue: consensusPayloadValue,
+		Data:                jsonBytes,
 	})
 }
 
 func handleProduceFuluV3(
 	w http.ResponseWriter,
 	isSSZ bool,
-	blk *eth.GenericBeaconBlock_Fulu,
+	blk *sila.GenericBeaconBlock_Fulu,
 	silaPayloadValue string,
 	consensusBlockValue string,
 ) {
@@ -642,10 +642,10 @@ func handleProduceFuluV3(
 		return
 	}
 	httputil.WriteJson(w, &structs.ProduceBlockV3Response{
-		Version:                 version.String(version.Fulu),
-		SilaPayloadBlinded: false,
-		SilaPayloadValue:   silaPayloadValue, // mev not available at this point
-		ConsensusBlockValue:     consensusBlockValue,
-		Data:                    jsonBytes,
+		Version:             version.String(version.Fulu),
+		SilaPayloadBlinded:  false,
+		SilaPayloadValue:    silaPayloadValue, // mev not available at this point
+		ConsensusBlockValue: consensusBlockValue,
+		Data:                jsonBytes,
 	})
 }

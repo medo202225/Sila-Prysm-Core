@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
@@ -12,9 +14,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/migration"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // GetPeer retrieves data about the given peer.
@@ -63,13 +63,13 @@ func (s *Server) GetPeer(w http.ResponseWriter, r *http.Request) {
 		httputil.HandleError(w, "Could not obtain direction: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	if eth.PeerDirection(direction) == eth.PeerDirection_UNKNOWN {
+	if sila.PeerDirection(direction) == sila.PeerDirection_UNKNOWN {
 		httputil.HandleError(w, "Peer not found", http.StatusNotFound)
 		return
 	}
 
-	v1ConnState := migration.V1Alpha1ConnectionStateToV1(eth.ConnectionState(state))
-	v1PeerDirection, err := migration.V1Alpha1PeerDirectionToV1(eth.PeerDirection(direction))
+	v1ConnState := migration.V1Alpha1ConnectionStateToV1(sila.ConnectionState(state))
+	v1PeerDirection, err := migration.V1Alpha1PeerDirectionToV1(sila.PeerDirection(direction))
 	if err != nil {
 		httputil.HandleError(w, "Could not handle peer direction: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -270,13 +270,13 @@ func peerInfo(peerStatus *peers.Status, id peer.ID) (*structs.Peer, error) {
 		}
 		return nil, errors.Wrap(err, "could not obtain direction")
 	}
-	if eth.PeerDirection(direction) == eth.PeerDirection_UNKNOWN {
+	if sila.PeerDirection(direction) == sila.PeerDirection_UNKNOWN {
 		return nil, nil
 	}
 	p := &structs.Peer{
 		PeerId:    id.String(),
-		State:     strings.ToLower(eth.ConnectionState(connectionState).String()),
-		Direction: strings.ToLower(eth.PeerDirection(direction).String()),
+		State:     strings.ToLower(sila.ConnectionState(connectionState).String()),
+		Direction: strings.ToLower(sila.PeerDirection(direction).String()),
 	}
 	if address != nil {
 		p.LastSeenP2PAddress = address.String()

@@ -3,12 +3,12 @@ package blocks
 import (
 	"fmt"
 
+	"github.com/pkg/errors"
 	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -25,176 +25,176 @@ func (b *SignedBeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 
 	switch b.version {
 	case version.Phase0:
-		var block *eth.BeaconBlock
+		var block *sila.BeaconBlock
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlock)
+			block, ok = blockMessage.(*sila.BeaconBlock)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlock{
+		return &sila.SignedBeaconBlock{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Altair:
-		var block *eth.BeaconBlockAltair
+		var block *sila.BeaconBlockAltair
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockAltair)
+			block, ok = blockMessage.(*sila.BeaconBlockAltair)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockAltair{
+		return &sila.SignedBeaconBlockAltair{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			var block *eth.BlindedBeaconBlockBellatrix
+			var block *sila.BlindedBeaconBlockBellatrix
 			if blockMessage != nil {
 				var ok bool
-				block, ok = blockMessage.(*eth.BlindedBeaconBlockBellatrix)
+				block, ok = blockMessage.(*sila.BlindedBeaconBlockBellatrix)
 				if !ok {
 					return nil, errIncorrectBlockVersion
 				}
 			}
-			return &eth.SignedBlindedBeaconBlockBellatrix{
+			return &sila.SignedBlindedBeaconBlockBellatrix{
 				Block:     block,
 				Signature: b.signature[:],
 			}, nil
 		}
-		var block *eth.BeaconBlockBellatrix
+		var block *sila.BeaconBlockBellatrix
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockBellatrix)
+			block, ok = blockMessage.(*sila.BeaconBlockBellatrix)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockBellatrix{
+		return &sila.SignedBeaconBlockBellatrix{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Capella:
 		if b.IsBlinded() {
-			var block *eth.BlindedBeaconBlockCapella
+			var block *sila.BlindedBeaconBlockCapella
 			if blockMessage != nil {
 				var ok bool
-				block, ok = blockMessage.(*eth.BlindedBeaconBlockCapella)
+				block, ok = blockMessage.(*sila.BlindedBeaconBlockCapella)
 				if !ok {
 					return nil, errIncorrectBlockVersion
 				}
 			}
-			return &eth.SignedBlindedBeaconBlockCapella{
+			return &sila.SignedBlindedBeaconBlockCapella{
 				Block:     block,
 				Signature: b.signature[:],
 			}, nil
 		}
-		var block *eth.BeaconBlockCapella
+		var block *sila.BeaconBlockCapella
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockCapella)
+			block, ok = blockMessage.(*sila.BeaconBlockCapella)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockCapella{
+		return &sila.SignedBeaconBlockCapella{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Deneb:
 		if b.IsBlinded() {
-			var block *eth.BlindedBeaconBlockDeneb
+			var block *sila.BlindedBeaconBlockDeneb
 			if blockMessage != nil {
 				var ok bool
-				block, ok = blockMessage.(*eth.BlindedBeaconBlockDeneb)
+				block, ok = blockMessage.(*sila.BlindedBeaconBlockDeneb)
 				if !ok {
 					return nil, errIncorrectBlockVersion
 				}
 			}
-			return &eth.SignedBlindedBeaconBlockDeneb{
+			return &sila.SignedBlindedBeaconBlockDeneb{
 				Message:   block,
 				Signature: b.signature[:],
 			}, nil
 		}
-		var block *eth.BeaconBlockDeneb
+		var block *sila.BeaconBlockDeneb
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockDeneb)
+			block, ok = blockMessage.(*sila.BeaconBlockDeneb)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockDeneb{
+		return &sila.SignedBeaconBlockDeneb{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Electra:
 		if b.IsBlinded() {
-			var block *eth.BlindedBeaconBlockElectra
+			var block *sila.BlindedBeaconBlockElectra
 			if blockMessage != nil {
 				var ok bool
-				block, ok = blockMessage.(*eth.BlindedBeaconBlockElectra)
+				block, ok = blockMessage.(*sila.BlindedBeaconBlockElectra)
 				if !ok {
 					return nil, errIncorrectBlockVersion
 				}
 			}
-			return &eth.SignedBlindedBeaconBlockElectra{
+			return &sila.SignedBlindedBeaconBlockElectra{
 				Message:   block,
 				Signature: b.signature[:],
 			}, nil
 		}
-		var block *eth.BeaconBlockElectra
+		var block *sila.BeaconBlockElectra
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockElectra)
+			block, ok = blockMessage.(*sila.BeaconBlockElectra)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockElectra{
+		return &sila.SignedBeaconBlockElectra{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
-			var block *eth.BlindedBeaconBlockFulu
+			var block *sila.BlindedBeaconBlockFulu
 			if blockMessage != nil {
 				var ok bool
-				block, ok = blockMessage.(*eth.BlindedBeaconBlockFulu)
+				block, ok = blockMessage.(*sila.BlindedBeaconBlockFulu)
 				if !ok {
 					return nil, errIncorrectBlockVersion
 				}
 			}
-			return &eth.SignedBlindedBeaconBlockFulu{
+			return &sila.SignedBlindedBeaconBlockFulu{
 				Message:   block,
 				Signature: b.signature[:],
 			}, nil
 		}
-		var block *eth.BeaconBlockElectra
+		var block *sila.BeaconBlockElectra
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockElectra)
+			block, ok = blockMessage.(*sila.BeaconBlockElectra)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockFulu{
+		return &sila.SignedBeaconBlockFulu{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
 	case version.Gloas:
-		var block *eth.BeaconBlockGloas
+		var block *sila.BeaconBlockGloas
 		if blockMessage != nil {
 			var ok bool
-			block, ok = blockMessage.(*eth.BeaconBlockGloas)
+			block, ok = blockMessage.(*sila.BeaconBlockGloas)
 			if !ok {
 				return nil, errIncorrectBlockVersion
 			}
 		}
-		return &eth.SignedBeaconBlockGloas{
+		return &sila.SignedBeaconBlockGloas{
 			Block:     block,
 			Signature: b.signature[:],
 		}, nil
@@ -216,15 +216,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 
 	switch b.version {
 	case version.Phase0:
-		var body *eth.BeaconBlockBody
+		var body *sila.BeaconBlockBody
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBody)
+			body, ok = bodyMessage.(*sila.BeaconBlockBody)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlock{
+		return &sila.BeaconBlock{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -232,15 +232,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 			Body:          body,
 		}, nil
 	case version.Altair:
-		var body *eth.BeaconBlockBodyAltair
+		var body *sila.BeaconBlockBodyAltair
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyAltair)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyAltair)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockAltair{
+		return &sila.BeaconBlockAltair{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -249,15 +249,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 		}, nil
 	case version.Bellatrix:
 		if b.IsBlinded() {
-			var body *eth.BlindedBeaconBlockBodyBellatrix
+			var body *sila.BlindedBeaconBlockBodyBellatrix
 			if bodyMessage != nil {
 				var ok bool
-				body, ok = bodyMessage.(*eth.BlindedBeaconBlockBodyBellatrix)
+				body, ok = bodyMessage.(*sila.BlindedBeaconBlockBodyBellatrix)
 				if !ok {
 					return nil, errIncorrectBodyVersion
 				}
 			}
-			return &eth.BlindedBeaconBlockBellatrix{
+			return &sila.BlindedBeaconBlockBellatrix{
 				Slot:          b.slot,
 				ProposerIndex: b.proposerIndex,
 				ParentRoot:    b.parentRoot[:],
@@ -265,15 +265,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 				Body:          body,
 			}, nil
 		}
-		var body *eth.BeaconBlockBodyBellatrix
+		var body *sila.BeaconBlockBodyBellatrix
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyBellatrix)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyBellatrix)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockBellatrix{
+		return &sila.BeaconBlockBellatrix{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -282,15 +282,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 		}, nil
 	case version.Capella:
 		if b.IsBlinded() {
-			var body *eth.BlindedBeaconBlockBodyCapella
+			var body *sila.BlindedBeaconBlockBodyCapella
 			if bodyMessage != nil {
 				var ok bool
-				body, ok = bodyMessage.(*eth.BlindedBeaconBlockBodyCapella)
+				body, ok = bodyMessage.(*sila.BlindedBeaconBlockBodyCapella)
 				if !ok {
 					return nil, errIncorrectBodyVersion
 				}
 			}
-			return &eth.BlindedBeaconBlockCapella{
+			return &sila.BlindedBeaconBlockCapella{
 				Slot:          b.slot,
 				ProposerIndex: b.proposerIndex,
 				ParentRoot:    b.parentRoot[:],
@@ -298,15 +298,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 				Body:          body,
 			}, nil
 		}
-		var body *eth.BeaconBlockBodyCapella
+		var body *sila.BeaconBlockBodyCapella
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyCapella)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyCapella)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockCapella{
+		return &sila.BeaconBlockCapella{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -315,15 +315,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 		}, nil
 	case version.Deneb:
 		if b.IsBlinded() {
-			var body *eth.BlindedBeaconBlockBodyDeneb
+			var body *sila.BlindedBeaconBlockBodyDeneb
 			if bodyMessage != nil {
 				var ok bool
-				body, ok = bodyMessage.(*eth.BlindedBeaconBlockBodyDeneb)
+				body, ok = bodyMessage.(*sila.BlindedBeaconBlockBodyDeneb)
 				if !ok {
 					return nil, errIncorrectBodyVersion
 				}
 			}
-			return &eth.BlindedBeaconBlockDeneb{
+			return &sila.BlindedBeaconBlockDeneb{
 				Slot:          b.slot,
 				ProposerIndex: b.proposerIndex,
 				ParentRoot:    b.parentRoot[:],
@@ -331,15 +331,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 				Body:          body,
 			}, nil
 		}
-		var body *eth.BeaconBlockBodyDeneb
+		var body *sila.BeaconBlockBodyDeneb
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyDeneb)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyDeneb)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockDeneb{
+		return &sila.BeaconBlockDeneb{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -348,15 +348,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 		}, nil
 	case version.Electra:
 		if b.IsBlinded() {
-			var body *eth.BlindedBeaconBlockBodyElectra
+			var body *sila.BlindedBeaconBlockBodyElectra
 			if bodyMessage != nil {
 				var ok bool
-				body, ok = bodyMessage.(*eth.BlindedBeaconBlockBodyElectra)
+				body, ok = bodyMessage.(*sila.BlindedBeaconBlockBodyElectra)
 				if !ok {
 					return nil, errIncorrectBodyVersion
 				}
 			}
-			return &eth.BlindedBeaconBlockElectra{
+			return &sila.BlindedBeaconBlockElectra{
 				Slot:          b.slot,
 				ProposerIndex: b.proposerIndex,
 				ParentRoot:    b.parentRoot[:],
@@ -364,15 +364,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 				Body:          body,
 			}, nil
 		}
-		var body *eth.BeaconBlockBodyElectra
+		var body *sila.BeaconBlockBodyElectra
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyElectra)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyElectra)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockElectra{
+		return &sila.BeaconBlockElectra{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -381,15 +381,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 		}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
-			var body *eth.BlindedBeaconBlockBodyElectra
+			var body *sila.BlindedBeaconBlockBodyElectra
 			if bodyMessage != nil {
 				var ok bool
-				body, ok = bodyMessage.(*eth.BlindedBeaconBlockBodyElectra)
+				body, ok = bodyMessage.(*sila.BlindedBeaconBlockBodyElectra)
 				if !ok {
 					return nil, errIncorrectBodyVersion
 				}
 			}
-			return &eth.BlindedBeaconBlockFulu{
+			return &sila.BlindedBeaconBlockFulu{
 				Slot:          b.slot,
 				ProposerIndex: b.proposerIndex,
 				ParentRoot:    b.parentRoot[:],
@@ -397,15 +397,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 				Body:          body,
 			}, nil
 		}
-		var body *eth.BeaconBlockBodyElectra
+		var body *sila.BeaconBlockBodyElectra
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyElectra)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyElectra)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockElectra{
+		return &sila.BeaconBlockElectra{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -413,15 +413,15 @@ func (b *BeaconBlock) Proto() (proto.Message, error) { // nolint:gocognit
 			Body:          body,
 		}, nil
 	case version.Gloas:
-		var body *eth.BeaconBlockBodyGloas
+		var body *sila.BeaconBlockBodyGloas
 		if bodyMessage != nil {
 			var ok bool
-			body, ok = bodyMessage.(*eth.BeaconBlockBodyGloas)
+			body, ok = bodyMessage.(*sila.BeaconBlockBodyGloas)
 			if !ok {
 				return nil, errIncorrectBodyVersion
 			}
 		}
-		return &eth.BeaconBlockGloas{
+		return &sila.BeaconBlockGloas{
 			Slot:          b.slot,
 			ProposerIndex: b.proposerIndex,
 			ParentRoot:    b.parentRoot[:],
@@ -442,7 +442,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 
 	switch b.version {
 	case version.Phase0:
-		return &eth.BeaconBlockBody{
+		return &sila.BeaconBlockBody{
 			RandaoReveal:      b.randaoReveal[:],
 			SilaData:          b.silaexecData,
 			Graffiti:          b.graffiti[:],
@@ -453,7 +453,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			VoluntaryExits:    b.voluntaryExits,
 		}, nil
 	case version.Altair:
-		return &eth.BeaconBlockBodyAltair{
+		return &sila.BeaconBlockBodyAltair{
 			RandaoReveal:      b.randaoReveal[:],
 			SilaData:          b.silaexecData,
 			Graffiti:          b.graffiti[:],
@@ -474,16 +474,16 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 					return nil, errPayloadHeaderWrongType
 				}
 			}
-			return &eth.BlindedBeaconBlockBodyBellatrix{
-				RandaoReveal:           b.randaoReveal[:],
-				SilaData:               b.silaexecData,
-				Graffiti:               b.graffiti[:],
-				ProposerSlashings:      b.proposerSlashings,
-				AttesterSlashings:      b.attesterSlashings,
-				Attestations:           b.attestations,
-				Deposits:               b.deposits,
-				VoluntaryExits:         b.voluntaryExits,
-				SyncAggregate:          b.syncAggregate,
+			return &sila.BlindedBeaconBlockBodyBellatrix{
+				RandaoReveal:      b.randaoReveal[:],
+				SilaData:          b.silaexecData,
+				Graffiti:          b.graffiti[:],
+				ProposerSlashings: b.proposerSlashings,
+				AttesterSlashings: b.attesterSlashings,
+				Attestations:      b.attestations,
+				Deposits:          b.deposits,
+				VoluntaryExits:    b.voluntaryExits,
+				SyncAggregate:     b.syncAggregate,
 				SilaPayloadHeader: ph,
 			}, nil
 		}
@@ -495,7 +495,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				return nil, errPayloadWrongType
 			}
 		}
-		return &eth.BeaconBlockBodyBellatrix{
+		return &sila.BeaconBlockBodyBellatrix{
 			RandaoReveal:      b.randaoReveal[:],
 			SilaData:          b.silaexecData,
 			Graffiti:          b.graffiti[:],
@@ -505,7 +505,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 			Deposits:          b.deposits,
 			VoluntaryExits:    b.voluntaryExits,
 			SyncAggregate:     b.syncAggregate,
-			SilaPayload:  p,
+			SilaPayload:       p,
 		}, nil
 	case version.Capella:
 		if b.IsBlinded() {
@@ -517,16 +517,16 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 					return nil, errPayloadHeaderWrongType
 				}
 			}
-			return &eth.BlindedBeaconBlockBodyCapella{
-				RandaoReveal:           b.randaoReveal[:],
-				SilaData:               b.silaexecData,
-				Graffiti:               b.graffiti[:],
-				ProposerSlashings:      b.proposerSlashings,
-				AttesterSlashings:      b.attesterSlashings,
-				Attestations:           b.attestations,
-				Deposits:               b.deposits,
-				VoluntaryExits:         b.voluntaryExits,
-				SyncAggregate:          b.syncAggregate,
+			return &sila.BlindedBeaconBlockBodyCapella{
+				RandaoReveal:      b.randaoReveal[:],
+				SilaData:          b.silaexecData,
+				Graffiti:          b.graffiti[:],
+				ProposerSlashings: b.proposerSlashings,
+				AttesterSlashings: b.attesterSlashings,
+				Attestations:      b.attestations,
+				Deposits:          b.deposits,
+				VoluntaryExits:    b.voluntaryExits,
+				SyncAggregate:     b.syncAggregate,
 				SilaPayloadHeader: ph,
 				BlsToSilaChanges:  b.blsToSilaChanges,
 			}, nil
@@ -539,18 +539,18 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				return nil, errPayloadWrongType
 			}
 		}
-		return &eth.BeaconBlockBodyCapella{
-			RandaoReveal:          b.randaoReveal[:],
-			SilaData:              b.silaexecData,
-			Graffiti:              b.graffiti[:],
-			ProposerSlashings:     b.proposerSlashings,
-			AttesterSlashings:     b.attesterSlashings,
-			Attestations:          b.attestations,
-			Deposits:              b.deposits,
-			VoluntaryExits:        b.voluntaryExits,
-			SyncAggregate:         b.syncAggregate,
-			SilaPayload:      p,
-			BlsToSilaChanges: b.blsToSilaChanges,
+		return &sila.BeaconBlockBodyCapella{
+			RandaoReveal:      b.randaoReveal[:],
+			SilaData:          b.silaexecData,
+			Graffiti:          b.graffiti[:],
+			ProposerSlashings: b.proposerSlashings,
+			AttesterSlashings: b.attesterSlashings,
+			Attestations:      b.attestations,
+			Deposits:          b.deposits,
+			VoluntaryExits:    b.voluntaryExits,
+			SyncAggregate:     b.syncAggregate,
+			SilaPayload:       p,
+			BlsToSilaChanges:  b.blsToSilaChanges,
 		}, nil
 	case version.Deneb:
 		if b.IsBlinded() {
@@ -562,19 +562,19 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 					return nil, errPayloadHeaderWrongType
 				}
 			}
-			return &eth.BlindedBeaconBlockBodyDeneb{
-				RandaoReveal:           b.randaoReveal[:],
-				SilaData:               b.silaexecData,
-				Graffiti:               b.graffiti[:],
-				ProposerSlashings:      b.proposerSlashings,
-				AttesterSlashings:      b.attesterSlashings,
-				Attestations:           b.attestations,
-				Deposits:               b.deposits,
-				VoluntaryExits:         b.voluntaryExits,
-				SyncAggregate:          b.syncAggregate,
-				SilaPayloadHeader: ph,
-				BlsToSilaChanges:  b.blsToSilaChanges,
-				BlobKzgCommitments:     b.blobKzgCommitments,
+			return &sila.BlindedBeaconBlockBodyDeneb{
+				RandaoReveal:       b.randaoReveal[:],
+				SilaData:           b.silaexecData,
+				Graffiti:           b.graffiti[:],
+				ProposerSlashings:  b.proposerSlashings,
+				AttesterSlashings:  b.attesterSlashings,
+				Attestations:       b.attestations,
+				Deposits:           b.deposits,
+				VoluntaryExits:     b.voluntaryExits,
+				SyncAggregate:      b.syncAggregate,
+				SilaPayloadHeader:  ph,
+				BlsToSilaChanges:   b.blsToSilaChanges,
+				BlobKzgCommitments: b.blobKzgCommitments,
 			}, nil
 		}
 		var p *silaenginev1.SilaPayloadDeneb
@@ -585,19 +585,19 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				return nil, errPayloadWrongType
 			}
 		}
-		return &eth.BeaconBlockBodyDeneb{
-			RandaoReveal:          b.randaoReveal[:],
-			SilaData:              b.silaexecData,
-			Graffiti:              b.graffiti[:],
-			ProposerSlashings:     b.proposerSlashings,
-			AttesterSlashings:     b.attesterSlashings,
-			Attestations:          b.attestations,
-			Deposits:              b.deposits,
-			VoluntaryExits:        b.voluntaryExits,
-			SyncAggregate:         b.syncAggregate,
-			SilaPayload:      p,
-			BlsToSilaChanges: b.blsToSilaChanges,
-			BlobKzgCommitments:    b.blobKzgCommitments,
+		return &sila.BeaconBlockBodyDeneb{
+			RandaoReveal:       b.randaoReveal[:],
+			SilaData:           b.silaexecData,
+			Graffiti:           b.graffiti[:],
+			ProposerSlashings:  b.proposerSlashings,
+			AttesterSlashings:  b.attesterSlashings,
+			Attestations:       b.attestations,
+			Deposits:           b.deposits,
+			VoluntaryExits:     b.voluntaryExits,
+			SyncAggregate:      b.syncAggregate,
+			SilaPayload:        p,
+			BlsToSilaChanges:   b.blsToSilaChanges,
+			BlobKzgCommitments: b.blobKzgCommitments,
 		}, nil
 	case version.Electra:
 		if b.IsBlinded() {
@@ -609,20 +609,20 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 					return nil, errPayloadHeaderWrongType
 				}
 			}
-			return &eth.BlindedBeaconBlockBodyElectra{
-				RandaoReveal:           b.randaoReveal[:],
-				SilaData:               b.silaexecData,
-				Graffiti:               b.graffiti[:],
-				ProposerSlashings:      b.proposerSlashings,
-				AttesterSlashings:      b.attesterSlashingsElectra,
-				Attestations:           b.attestationsElectra,
-				Deposits:               b.deposits,
-				VoluntaryExits:         b.voluntaryExits,
-				SyncAggregate:          b.syncAggregate,
-				SilaPayloadHeader: ph,
-				BlsToSilaChanges:  b.blsToSilaChanges,
-				BlobKzgCommitments:     b.blobKzgCommitments,
-				SilaRequests:      b.silaRequests,
+			return &sila.BlindedBeaconBlockBodyElectra{
+				RandaoReveal:       b.randaoReveal[:],
+				SilaData:           b.silaexecData,
+				Graffiti:           b.graffiti[:],
+				ProposerSlashings:  b.proposerSlashings,
+				AttesterSlashings:  b.attesterSlashingsElectra,
+				Attestations:       b.attestationsElectra,
+				Deposits:           b.deposits,
+				VoluntaryExits:     b.voluntaryExits,
+				SyncAggregate:      b.syncAggregate,
+				SilaPayloadHeader:  ph,
+				BlsToSilaChanges:   b.blsToSilaChanges,
+				BlobKzgCommitments: b.blobKzgCommitments,
+				SilaRequests:       b.silaRequests,
 			}, nil
 		}
 		var p *silaenginev1.SilaPayloadDeneb
@@ -633,20 +633,20 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				return nil, errPayloadWrongType
 			}
 		}
-		return &eth.BeaconBlockBodyElectra{
-			RandaoReveal:          b.randaoReveal[:],
-			SilaData:              b.silaexecData,
-			Graffiti:              b.graffiti[:],
-			ProposerSlashings:     b.proposerSlashings,
-			AttesterSlashings:     b.attesterSlashingsElectra,
-			Attestations:          b.attestationsElectra,
-			Deposits:              b.deposits,
-			VoluntaryExits:        b.voluntaryExits,
-			SyncAggregate:         b.syncAggregate,
-			SilaPayload:      p,
-			BlsToSilaChanges: b.blsToSilaChanges,
-			BlobKzgCommitments:    b.blobKzgCommitments,
-			SilaRequests:     b.silaRequests,
+		return &sila.BeaconBlockBodyElectra{
+			RandaoReveal:       b.randaoReveal[:],
+			SilaData:           b.silaexecData,
+			Graffiti:           b.graffiti[:],
+			ProposerSlashings:  b.proposerSlashings,
+			AttesterSlashings:  b.attesterSlashingsElectra,
+			Attestations:       b.attestationsElectra,
+			Deposits:           b.deposits,
+			VoluntaryExits:     b.voluntaryExits,
+			SyncAggregate:      b.syncAggregate,
+			SilaPayload:        p,
+			BlsToSilaChanges:   b.blsToSilaChanges,
+			BlobKzgCommitments: b.blobKzgCommitments,
+			SilaRequests:       b.silaRequests,
 		}, nil
 	case version.Fulu:
 		if b.IsBlinded() {
@@ -658,20 +658,20 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 					return nil, errPayloadHeaderWrongType
 				}
 			}
-			return &eth.BlindedBeaconBlockBodyElectra{
-				RandaoReveal:           b.randaoReveal[:],
-				SilaData:               b.silaexecData,
-				Graffiti:               b.graffiti[:],
-				ProposerSlashings:      b.proposerSlashings,
-				AttesterSlashings:      b.attesterSlashingsElectra,
-				Attestations:           b.attestationsElectra,
-				Deposits:               b.deposits,
-				VoluntaryExits:         b.voluntaryExits,
-				SyncAggregate:          b.syncAggregate,
-				SilaPayloadHeader: ph,
-				BlsToSilaChanges:  b.blsToSilaChanges,
-				BlobKzgCommitments:     b.blobKzgCommitments,
-				SilaRequests:      b.silaRequests,
+			return &sila.BlindedBeaconBlockBodyElectra{
+				RandaoReveal:       b.randaoReveal[:],
+				SilaData:           b.silaexecData,
+				Graffiti:           b.graffiti[:],
+				ProposerSlashings:  b.proposerSlashings,
+				AttesterSlashings:  b.attesterSlashingsElectra,
+				Attestations:       b.attestationsElectra,
+				Deposits:           b.deposits,
+				VoluntaryExits:     b.voluntaryExits,
+				SyncAggregate:      b.syncAggregate,
+				SilaPayloadHeader:  ph,
+				BlsToSilaChanges:   b.blsToSilaChanges,
+				BlobKzgCommitments: b.blobKzgCommitments,
+				SilaRequests:       b.silaRequests,
 			}, nil
 		}
 		var p *silaenginev1.SilaPayloadDeneb
@@ -682,35 +682,35 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 				return nil, errPayloadWrongType
 			}
 		}
-		return &eth.BeaconBlockBodyElectra{
-			RandaoReveal:          b.randaoReveal[:],
-			SilaData:              b.silaexecData,
-			Graffiti:              b.graffiti[:],
-			ProposerSlashings:     b.proposerSlashings,
-			AttesterSlashings:     b.attesterSlashingsElectra,
-			Attestations:          b.attestationsElectra,
-			Deposits:              b.deposits,
-			VoluntaryExits:        b.voluntaryExits,
-			SyncAggregate:         b.syncAggregate,
-			SilaPayload:      p,
-			BlsToSilaChanges: b.blsToSilaChanges,
-			BlobKzgCommitments:    b.blobKzgCommitments,
-			SilaRequests:     b.silaRequests,
+		return &sila.BeaconBlockBodyElectra{
+			RandaoReveal:       b.randaoReveal[:],
+			SilaData:           b.silaexecData,
+			Graffiti:           b.graffiti[:],
+			ProposerSlashings:  b.proposerSlashings,
+			AttesterSlashings:  b.attesterSlashingsElectra,
+			Attestations:       b.attestationsElectra,
+			Deposits:           b.deposits,
+			VoluntaryExits:     b.voluntaryExits,
+			SyncAggregate:      b.syncAggregate,
+			SilaPayload:        p,
+			BlsToSilaChanges:   b.blsToSilaChanges,
+			BlobKzgCommitments: b.blobKzgCommitments,
+			SilaRequests:       b.silaRequests,
 		}, nil
 	case version.Gloas:
-		return &eth.BeaconBlockBodyGloas{
-			RandaoReveal:              b.randaoReveal[:],
-			SilaData:                  b.silaexecData,
-			Graffiti:                  b.graffiti[:],
-			ProposerSlashings:         b.proposerSlashings,
-			AttesterSlashings:         b.attesterSlashingsElectra,
-			Attestations:              b.attestationsElectra,
-			Deposits:                  b.deposits,
-			VoluntaryExits:            b.voluntaryExits,
-			SyncAggregate:             b.syncAggregate,
+		return &sila.BeaconBlockBodyGloas{
+			RandaoReveal:         b.randaoReveal[:],
+			SilaData:             b.silaexecData,
+			Graffiti:             b.graffiti[:],
+			ProposerSlashings:    b.proposerSlashings,
+			AttesterSlashings:    b.attesterSlashingsElectra,
+			Attestations:         b.attestationsElectra,
+			Deposits:             b.deposits,
+			VoluntaryExits:       b.voluntaryExits,
+			SyncAggregate:        b.syncAggregate,
 			BlsToSilaChanges:     b.blsToSilaChanges,
 			SignedSilaPayloadBid: b.signedSilaPayloadBid,
-			PayloadAttestations:       b.payloadAttestations,
+			PayloadAttestations:  b.payloadAttestations,
 			ParentSilaRequests:   b.parentSilaRequests,
 		}, nil
 	default:
@@ -722,7 +722,7 @@ func (b *BeaconBlockBody) Proto() (proto.Message, error) {
 // Phase 0
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoPhase0(pb *eth.SignedBeaconBlock) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoPhase0(pb *sila.SignedBeaconBlock) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -739,7 +739,7 @@ func initSignedBlockFromProtoPhase0(pb *eth.SignedBeaconBlock) (*SignedBeaconBlo
 	return b, nil
 }
 
-func initBlockFromProtoPhase0(pb *eth.BeaconBlock) (*BeaconBlock, error) {
+func initBlockFromProtoPhase0(pb *sila.BeaconBlock) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -759,7 +759,7 @@ func initBlockFromProtoPhase0(pb *eth.BeaconBlock) (*BeaconBlock, error) {
 	return b, nil
 }
 
-func initBlockBodyFromProtoPhase0(pb *eth.BeaconBlockBody) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoPhase0(pb *sila.BeaconBlockBody) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -767,7 +767,7 @@ func initBlockBodyFromProtoPhase0(pb *eth.BeaconBlockBody) (*BeaconBlockBody, er
 	b := &BeaconBlockBody{
 		version:           version.Phase0,
 		randaoReveal:      bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:          pb.SilaData,
+		silaexecData:      pb.SilaData,
 		graffiti:          bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings: pb.ProposerSlashings,
 		attesterSlashings: pb.AttesterSlashings,
@@ -782,7 +782,7 @@ func initBlockBodyFromProtoPhase0(pb *eth.BeaconBlockBody) (*BeaconBlockBody, er
 // Altair
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoAltair(pb *eth.SignedBeaconBlockAltair) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoAltair(pb *sila.SignedBeaconBlockAltair) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -799,7 +799,7 @@ func initSignedBlockFromProtoAltair(pb *eth.SignedBeaconBlockAltair) (*SignedBea
 	return b, nil
 }
 
-func initBlockFromProtoAltair(pb *eth.BeaconBlockAltair) (*BeaconBlock, error) {
+func initBlockFromProtoAltair(pb *sila.BeaconBlockAltair) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -819,7 +819,7 @@ func initBlockFromProtoAltair(pb *eth.BeaconBlockAltair) (*BeaconBlock, error) {
 	return b, nil
 }
 
-func initBlockBodyFromProtoAltair(pb *eth.BeaconBlockBodyAltair) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoAltair(pb *sila.BeaconBlockBodyAltair) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -827,7 +827,7 @@ func initBlockBodyFromProtoAltair(pb *eth.BeaconBlockBodyAltair) (*BeaconBlockBo
 	b := &BeaconBlockBody{
 		version:           version.Altair,
 		randaoReveal:      bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:          pb.SilaData,
+		silaexecData:      pb.SilaData,
 		graffiti:          bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings: pb.ProposerSlashings,
 		attesterSlashings: pb.AttesterSlashings,
@@ -843,7 +843,7 @@ func initBlockBodyFromProtoAltair(pb *eth.BeaconBlockBodyAltair) (*BeaconBlockBo
 // Bellatrix
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoBellatrix(pb *eth.SignedBeaconBlockBellatrix) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoBellatrix(pb *sila.SignedBeaconBlockBellatrix) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -860,7 +860,7 @@ func initSignedBlockFromProtoBellatrix(pb *eth.SignedBeaconBlockBellatrix) (*Sig
 	return b, nil
 }
 
-func initBlindedSignedBlockFromProtoBellatrix(pb *eth.SignedBlindedBeaconBlockBellatrix) (*SignedBeaconBlock, error) {
+func initBlindedSignedBlockFromProtoBellatrix(pb *sila.SignedBlindedBeaconBlockBellatrix) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -877,7 +877,7 @@ func initBlindedSignedBlockFromProtoBellatrix(pb *eth.SignedBlindedBeaconBlockBe
 	return b, nil
 }
 
-func initBlockFromProtoBellatrix(pb *eth.BeaconBlockBellatrix) (*BeaconBlock, error) {
+func initBlockFromProtoBellatrix(pb *sila.BeaconBlockBellatrix) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -897,7 +897,7 @@ func initBlockFromProtoBellatrix(pb *eth.BeaconBlockBellatrix) (*BeaconBlock, er
 	return b, nil
 }
 
-func initBlindedBlockFromProtoBellatrix(pb *eth.BlindedBeaconBlockBellatrix) (*BeaconBlock, error) {
+func initBlindedBlockFromProtoBellatrix(pb *sila.BlindedBeaconBlockBellatrix) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -917,7 +917,7 @@ func initBlindedBlockFromProtoBellatrix(pb *eth.BlindedBeaconBlockBellatrix) (*B
 	return b, nil
 }
 
-func initBlockBodyFromProtoBellatrix(pb *eth.BeaconBlockBodyBellatrix) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoBellatrix(pb *sila.BeaconBlockBodyBellatrix) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -930,7 +930,7 @@ func initBlockBodyFromProtoBellatrix(pb *eth.BeaconBlockBodyBellatrix) (*BeaconB
 	b := &BeaconBlockBody{
 		version:           version.Bellatrix,
 		randaoReveal:      bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:          pb.SilaData,
+		silaexecData:      pb.SilaData,
 		graffiti:          bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings: pb.ProposerSlashings,
 		attesterSlashings: pb.AttesterSlashings,
@@ -938,12 +938,12 @@ func initBlockBodyFromProtoBellatrix(pb *eth.BeaconBlockBodyBellatrix) (*BeaconB
 		deposits:          pb.Deposits,
 		voluntaryExits:    pb.VoluntaryExits,
 		syncAggregate:     pb.SyncAggregate,
-		silaPayload:  p,
+		silaPayload:       p,
 	}
 	return b, nil
 }
 
-func initBlindedBlockBodyFromProtoBellatrix(pb *eth.BlindedBeaconBlockBodyBellatrix) (*BeaconBlockBody, error) {
+func initBlindedBlockBodyFromProtoBellatrix(pb *sila.BlindedBeaconBlockBodyBellatrix) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -954,16 +954,16 @@ func initBlindedBlockBodyFromProtoBellatrix(pb *eth.BlindedBeaconBlockBodyBellat
 		return nil, err
 	}
 	b := &BeaconBlockBody{
-		version:                version.Bellatrix,
-		randaoReveal:           bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:               pb.SilaData,
-		graffiti:               bytesutil.ToBytes32(pb.Graffiti),
-		proposerSlashings:      pb.ProposerSlashings,
-		attesterSlashings:      pb.AttesterSlashings,
-		attestations:           pb.Attestations,
-		deposits:               pb.Deposits,
-		voluntaryExits:         pb.VoluntaryExits,
-		syncAggregate:          pb.SyncAggregate,
+		version:           version.Bellatrix,
+		randaoReveal:      bytesutil.ToBytes96(pb.RandaoReveal),
+		silaexecData:      pb.SilaData,
+		graffiti:          bytesutil.ToBytes32(pb.Graffiti),
+		proposerSlashings: pb.ProposerSlashings,
+		attesterSlashings: pb.AttesterSlashings,
+		attestations:      pb.Attestations,
+		deposits:          pb.Deposits,
+		voluntaryExits:    pb.VoluntaryExits,
+		syncAggregate:     pb.SyncAggregate,
 		silaPayloadHeader: ph,
 	}
 	return b, nil
@@ -973,7 +973,7 @@ func initBlindedBlockBodyFromProtoBellatrix(pb *eth.BlindedBeaconBlockBodyBellat
 // Capella
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoCapella(pb *eth.SignedBeaconBlockCapella) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoCapella(pb *sila.SignedBeaconBlockCapella) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -990,7 +990,7 @@ func initSignedBlockFromProtoCapella(pb *eth.SignedBeaconBlockCapella) (*SignedB
 	return b, nil
 }
 
-func initBlindedSignedBlockFromProtoCapella(pb *eth.SignedBlindedBeaconBlockCapella) (*SignedBeaconBlock, error) {
+func initBlindedSignedBlockFromProtoCapella(pb *sila.SignedBlindedBeaconBlockCapella) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1007,7 +1007,7 @@ func initBlindedSignedBlockFromProtoCapella(pb *eth.SignedBlindedBeaconBlockCape
 	return b, nil
 }
 
-func initBlockFromProtoCapella(pb *eth.BeaconBlockCapella) (*BeaconBlock, error) {
+func initBlockFromProtoCapella(pb *sila.BeaconBlockCapella) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1027,7 +1027,7 @@ func initBlockFromProtoCapella(pb *eth.BeaconBlockCapella) (*BeaconBlock, error)
 	return b, nil
 }
 
-func initBlindedBlockFromProtoCapella(pb *eth.BlindedBeaconBlockCapella) (*BeaconBlock, error) {
+func initBlindedBlockFromProtoCapella(pb *sila.BlindedBeaconBlockCapella) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1047,7 +1047,7 @@ func initBlindedBlockFromProtoCapella(pb *eth.BlindedBeaconBlockCapella) (*Beaco
 	return b, nil
 }
 
-func initBlockBodyFromProtoCapella(pb *eth.BeaconBlockBodyCapella) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoCapella(pb *sila.BeaconBlockBodyCapella) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1058,23 +1058,23 @@ func initBlockBodyFromProtoCapella(pb *eth.BeaconBlockBodyCapella) (*BeaconBlock
 		return nil, err
 	}
 	b := &BeaconBlockBody{
-		version:               version.Capella,
-		randaoReveal:          bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:              pb.SilaData,
-		graffiti:              bytesutil.ToBytes32(pb.Graffiti),
-		proposerSlashings:     pb.ProposerSlashings,
-		attesterSlashings:     pb.AttesterSlashings,
-		attestations:          pb.Attestations,
-		deposits:              pb.Deposits,
-		voluntaryExits:        pb.VoluntaryExits,
-		syncAggregate:         pb.SyncAggregate,
-		silaPayload:      p,
-		blsToSilaChanges: pb.BlsToSilaChanges,
+		version:           version.Capella,
+		randaoReveal:      bytesutil.ToBytes96(pb.RandaoReveal),
+		silaexecData:      pb.SilaData,
+		graffiti:          bytesutil.ToBytes32(pb.Graffiti),
+		proposerSlashings: pb.ProposerSlashings,
+		attesterSlashings: pb.AttesterSlashings,
+		attestations:      pb.Attestations,
+		deposits:          pb.Deposits,
+		voluntaryExits:    pb.VoluntaryExits,
+		syncAggregate:     pb.SyncAggregate,
+		silaPayload:       p,
+		blsToSilaChanges:  pb.BlsToSilaChanges,
 	}
 	return b, nil
 }
 
-func initBlindedBlockBodyFromProtoCapella(pb *eth.BlindedBeaconBlockBodyCapella) (*BeaconBlockBody, error) {
+func initBlindedBlockBodyFromProtoCapella(pb *sila.BlindedBeaconBlockBodyCapella) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1085,16 +1085,16 @@ func initBlindedBlockBodyFromProtoCapella(pb *eth.BlindedBeaconBlockBodyCapella)
 		return nil, err
 	}
 	b := &BeaconBlockBody{
-		version:                version.Capella,
-		randaoReveal:           bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:               pb.SilaData,
-		graffiti:               bytesutil.ToBytes32(pb.Graffiti),
-		proposerSlashings:      pb.ProposerSlashings,
-		attesterSlashings:      pb.AttesterSlashings,
-		attestations:           pb.Attestations,
-		deposits:               pb.Deposits,
-		voluntaryExits:         pb.VoluntaryExits,
-		syncAggregate:          pb.SyncAggregate,
+		version:           version.Capella,
+		randaoReveal:      bytesutil.ToBytes96(pb.RandaoReveal),
+		silaexecData:      pb.SilaData,
+		graffiti:          bytesutil.ToBytes32(pb.Graffiti),
+		proposerSlashings: pb.ProposerSlashings,
+		attesterSlashings: pb.AttesterSlashings,
+		attestations:      pb.Attestations,
+		deposits:          pb.Deposits,
+		voluntaryExits:    pb.VoluntaryExits,
+		syncAggregate:     pb.SyncAggregate,
 		silaPayloadHeader: ph,
 		blsToSilaChanges:  pb.BlsToSilaChanges,
 	}
@@ -1105,7 +1105,7 @@ func initBlindedBlockBodyFromProtoCapella(pb *eth.BlindedBeaconBlockBodyCapella)
 // Deneb
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoDeneb(pb *eth.SignedBeaconBlockDeneb) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoDeneb(pb *sila.SignedBeaconBlockDeneb) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1122,7 +1122,7 @@ func initSignedBlockFromProtoDeneb(pb *eth.SignedBeaconBlockDeneb) (*SignedBeaco
 	return b, nil
 }
 
-func initBlindedSignedBlockFromProtoDeneb(pb *eth.SignedBlindedBeaconBlockDeneb) (*SignedBeaconBlock, error) {
+func initBlindedSignedBlockFromProtoDeneb(pb *sila.SignedBlindedBeaconBlockDeneb) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1139,7 +1139,7 @@ func initBlindedSignedBlockFromProtoDeneb(pb *eth.SignedBlindedBeaconBlockDeneb)
 	return b, nil
 }
 
-func initBlockFromProtoDeneb(pb *eth.BeaconBlockDeneb) (*BeaconBlock, error) {
+func initBlockFromProtoDeneb(pb *sila.BeaconBlockDeneb) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1159,7 +1159,7 @@ func initBlockFromProtoDeneb(pb *eth.BeaconBlockDeneb) (*BeaconBlock, error) {
 	return b, nil
 }
 
-func initBlindedBlockFromProtoDeneb(pb *eth.BlindedBeaconBlockDeneb) (*BeaconBlock, error) {
+func initBlindedBlockFromProtoDeneb(pb *sila.BlindedBeaconBlockDeneb) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1179,7 +1179,7 @@ func initBlindedBlockFromProtoDeneb(pb *eth.BlindedBeaconBlockDeneb) (*BeaconBlo
 	return b, nil
 }
 
-func initBlockBodyFromProtoDeneb(pb *eth.BeaconBlockBodyDeneb) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoDeneb(pb *sila.BeaconBlockBodyDeneb) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1190,24 +1190,24 @@ func initBlockBodyFromProtoDeneb(pb *eth.BeaconBlockBodyDeneb) (*BeaconBlockBody
 		return nil, err
 	}
 	b := &BeaconBlockBody{
-		version:               version.Deneb,
-		randaoReveal:          bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:              pb.SilaData,
-		graffiti:              bytesutil.ToBytes32(pb.Graffiti),
-		proposerSlashings:     pb.ProposerSlashings,
-		attesterSlashings:     pb.AttesterSlashings,
-		attestations:          pb.Attestations,
-		deposits:              pb.Deposits,
-		voluntaryExits:        pb.VoluntaryExits,
-		syncAggregate:         pb.SyncAggregate,
-		silaPayload:      p,
-		blsToSilaChanges: pb.BlsToSilaChanges,
-		blobKzgCommitments:    pb.BlobKzgCommitments,
+		version:            version.Deneb,
+		randaoReveal:       bytesutil.ToBytes96(pb.RandaoReveal),
+		silaexecData:       pb.SilaData,
+		graffiti:           bytesutil.ToBytes32(pb.Graffiti),
+		proposerSlashings:  pb.ProposerSlashings,
+		attesterSlashings:  pb.AttesterSlashings,
+		attestations:       pb.Attestations,
+		deposits:           pb.Deposits,
+		voluntaryExits:     pb.VoluntaryExits,
+		syncAggregate:      pb.SyncAggregate,
+		silaPayload:        p,
+		blsToSilaChanges:   pb.BlsToSilaChanges,
+		blobKzgCommitments: pb.BlobKzgCommitments,
 	}
 	return b, nil
 }
 
-func initBlindedBlockBodyFromProtoDeneb(pb *eth.BlindedBeaconBlockBodyDeneb) (*BeaconBlockBody, error) {
+func initBlindedBlockBodyFromProtoDeneb(pb *sila.BlindedBeaconBlockBodyDeneb) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1218,19 +1218,19 @@ func initBlindedBlockBodyFromProtoDeneb(pb *eth.BlindedBeaconBlockBodyDeneb) (*B
 		return nil, err
 	}
 	b := &BeaconBlockBody{
-		version:                version.Deneb,
-		randaoReveal:           bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:               pb.SilaData,
-		graffiti:               bytesutil.ToBytes32(pb.Graffiti),
-		proposerSlashings:      pb.ProposerSlashings,
-		attesterSlashings:      pb.AttesterSlashings,
-		attestations:           pb.Attestations,
-		deposits:               pb.Deposits,
-		voluntaryExits:         pb.VoluntaryExits,
-		syncAggregate:          pb.SyncAggregate,
-		silaPayloadHeader: ph,
-		blsToSilaChanges:  pb.BlsToSilaChanges,
-		blobKzgCommitments:     pb.BlobKzgCommitments,
+		version:            version.Deneb,
+		randaoReveal:       bytesutil.ToBytes96(pb.RandaoReveal),
+		silaexecData:       pb.SilaData,
+		graffiti:           bytesutil.ToBytes32(pb.Graffiti),
+		proposerSlashings:  pb.ProposerSlashings,
+		attesterSlashings:  pb.AttesterSlashings,
+		attestations:       pb.Attestations,
+		deposits:           pb.Deposits,
+		voluntaryExits:     pb.VoluntaryExits,
+		syncAggregate:      pb.SyncAggregate,
+		silaPayloadHeader:  ph,
+		blsToSilaChanges:   pb.BlsToSilaChanges,
+		blobKzgCommitments: pb.BlobKzgCommitments,
 	}
 	return b, nil
 }
@@ -1239,7 +1239,7 @@ func initBlindedBlockBodyFromProtoDeneb(pb *eth.BlindedBeaconBlockBodyDeneb) (*B
 // Electra
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoElectra(pb *eth.SignedBeaconBlockElectra) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoElectra(pb *sila.SignedBeaconBlockElectra) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1256,7 +1256,7 @@ func initSignedBlockFromProtoElectra(pb *eth.SignedBeaconBlockElectra) (*SignedB
 	return b, nil
 }
 
-func initBlindedSignedBlockFromProtoElectra(pb *eth.SignedBlindedBeaconBlockElectra) (*SignedBeaconBlock, error) {
+func initBlindedSignedBlockFromProtoElectra(pb *sila.SignedBlindedBeaconBlockElectra) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1273,7 +1273,7 @@ func initBlindedSignedBlockFromProtoElectra(pb *eth.SignedBlindedBeaconBlockElec
 	return b, nil
 }
 
-func initBlockFromProtoElectra(pb *eth.BeaconBlockElectra) (*BeaconBlock, error) {
+func initBlockFromProtoElectra(pb *sila.BeaconBlockElectra) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1293,7 +1293,7 @@ func initBlockFromProtoElectra(pb *eth.BeaconBlockElectra) (*BeaconBlock, error)
 	return b, nil
 }
 
-func initBlindedBlockFromProtoElectra(pb *eth.BlindedBeaconBlockElectra) (*BeaconBlock, error) {
+func initBlindedBlockFromProtoElectra(pb *sila.BlindedBeaconBlockElectra) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1313,7 +1313,7 @@ func initBlindedBlockFromProtoElectra(pb *eth.BlindedBeaconBlockElectra) (*Beaco
 	return b, nil
 }
 
-func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoElectra(pb *sila.BeaconBlockBodyElectra) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1330,7 +1330,7 @@ func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlock
 	b := &BeaconBlockBody{
 		version:                  version.Electra,
 		randaoReveal:             bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:                 pb.SilaData,
+		silaexecData:             pb.SilaData,
 		graffiti:                 bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings:        pb.ProposerSlashings,
 		attesterSlashingsElectra: pb.AttesterSlashings,
@@ -1338,15 +1338,15 @@ func initBlockBodyFromProtoElectra(pb *eth.BeaconBlockBodyElectra) (*BeaconBlock
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		silaPayload:         p,
-		blsToSilaChanges:    pb.BlsToSilaChanges,
+		silaPayload:              p,
+		blsToSilaChanges:         pb.BlsToSilaChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		silaRequests:        er,
+		silaRequests:             er,
 	}
 	return b, nil
 }
 
-func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra) (*BeaconBlockBody, error) {
+func initBlindedBlockBodyFromProtoElectra(pb *sila.BlindedBeaconBlockBodyElectra) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1363,7 +1363,7 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 	b := &BeaconBlockBody{
 		version:                  version.Electra,
 		randaoReveal:             bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:                 pb.SilaData,
+		silaexecData:             pb.SilaData,
 		graffiti:                 bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings:        pb.ProposerSlashings,
 		attesterSlashingsElectra: pb.AttesterSlashings,
@@ -1371,10 +1371,10 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		silaPayloadHeader:   ph,
-		blsToSilaChanges:    pb.BlsToSilaChanges,
+		silaPayloadHeader:        ph,
+		blsToSilaChanges:         pb.BlsToSilaChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		silaRequests:        er,
+		silaRequests:             er,
 	}
 	return b, nil
 }
@@ -1383,7 +1383,7 @@ func initBlindedBlockBodyFromProtoElectra(pb *eth.BlindedBeaconBlockBodyElectra)
 // Fulu
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoFulu(pb *eth.SignedBeaconBlockFulu) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoFulu(pb *sila.SignedBeaconBlockFulu) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1400,7 +1400,7 @@ func initSignedBlockFromProtoFulu(pb *eth.SignedBeaconBlockFulu) (*SignedBeaconB
 	return b, nil
 }
 
-func initBlindedSignedBlockFromProtoFulu(pb *eth.SignedBlindedBeaconBlockFulu) (*SignedBeaconBlock, error) {
+func initBlindedSignedBlockFromProtoFulu(pb *sila.SignedBlindedBeaconBlockFulu) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1417,7 +1417,7 @@ func initBlindedSignedBlockFromProtoFulu(pb *eth.SignedBlindedBeaconBlockFulu) (
 	return b, nil
 }
 
-func initBlockFromProtoFulu(pb *eth.BeaconBlockElectra) (*BeaconBlock, error) {
+func initBlockFromProtoFulu(pb *sila.BeaconBlockElectra) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1437,7 +1437,7 @@ func initBlockFromProtoFulu(pb *eth.BeaconBlockElectra) (*BeaconBlock, error) {
 	return b, nil
 }
 
-func initBlindedBlockFromProtoFulu(pb *eth.BlindedBeaconBlockFulu) (*BeaconBlock, error) {
+func initBlindedBlockFromProtoFulu(pb *sila.BlindedBeaconBlockFulu) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1457,7 +1457,7 @@ func initBlindedBlockFromProtoFulu(pb *eth.BlindedBeaconBlockFulu) (*BeaconBlock
 	return b, nil
 }
 
-func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoFulu(pb *sila.BeaconBlockBodyElectra) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1474,7 +1474,7 @@ func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBod
 	b := &BeaconBlockBody{
 		version:                  version.Fulu,
 		randaoReveal:             bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:                 pb.SilaData,
+		silaexecData:             pb.SilaData,
 		graffiti:                 bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings:        pb.ProposerSlashings,
 		attesterSlashingsElectra: pb.AttesterSlashings,
@@ -1482,15 +1482,15 @@ func initBlockBodyFromProtoFulu(pb *eth.BeaconBlockBodyElectra) (*BeaconBlockBod
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		silaPayload:         p,
-		blsToSilaChanges:    pb.BlsToSilaChanges,
+		silaPayload:              p,
+		blsToSilaChanges:         pb.BlsToSilaChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		silaRequests:        er,
+		silaRequests:             er,
 	}
 	return b, nil
 }
 
-func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*BeaconBlockBody, error) {
+func initBlindedBlockBodyFromProtoFulu(pb *sila.BlindedBeaconBlockBodyElectra) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1507,7 +1507,7 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 	b := &BeaconBlockBody{
 		version:                  version.Fulu,
 		randaoReveal:             bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:                 pb.SilaData,
+		silaexecData:             pb.SilaData,
 		graffiti:                 bytesutil.ToBytes32(pb.Graffiti),
 		proposerSlashings:        pb.ProposerSlashings,
 		attesterSlashingsElectra: pb.AttesterSlashings,
@@ -1515,10 +1515,10 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 		deposits:                 pb.Deposits,
 		voluntaryExits:           pb.VoluntaryExits,
 		syncAggregate:            pb.SyncAggregate,
-		silaPayloadHeader:   ph,
-		blsToSilaChanges:    pb.BlsToSilaChanges,
+		silaPayloadHeader:        ph,
+		blsToSilaChanges:         pb.BlsToSilaChanges,
 		blobKzgCommitments:       pb.BlobKzgCommitments,
-		silaRequests:        er,
+		silaRequests:             er,
 	}
 	return b, nil
 }
@@ -1527,7 +1527,7 @@ func initBlindedBlockBodyFromProtoFulu(pb *eth.BlindedBeaconBlockBodyElectra) (*
 // Gloas
 // ----------------------------------------------------------------------------
 
-func initSignedBlockFromProtoGloas(pb *eth.SignedBeaconBlockGloas) (*SignedBeaconBlock, error) {
+func initSignedBlockFromProtoGloas(pb *sila.SignedBeaconBlockGloas) (*SignedBeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1544,7 +1544,7 @@ func initSignedBlockFromProtoGloas(pb *eth.SignedBeaconBlockGloas) (*SignedBeaco
 	return b, nil
 }
 
-func initBlockFromProtoGloas(pb *eth.BeaconBlockGloas) (*BeaconBlock, error) {
+func initBlockFromProtoGloas(pb *sila.BeaconBlockGloas) (*BeaconBlock, error) {
 	if pb == nil {
 		return nil, errNilBlock
 	}
@@ -1564,7 +1564,7 @@ func initBlockFromProtoGloas(pb *eth.BeaconBlockGloas) (*BeaconBlock, error) {
 	return b, nil
 }
 
-func initBlockBodyFromProtoGloas(pb *eth.BeaconBlockBodyGloas) (*BeaconBlockBody, error) {
+func initBlockBodyFromProtoGloas(pb *sila.BeaconBlockBodyGloas) (*BeaconBlockBody, error) {
 	if pb == nil {
 		return nil, errNilBlockBody
 	}
@@ -1574,20 +1574,20 @@ func initBlockBodyFromProtoGloas(pb *eth.BeaconBlockBodyGloas) (*BeaconBlockBody
 		per = &silaenginev1.SilaRequests{}
 	}
 	b := &BeaconBlockBody{
-		version:                   version.Gloas,
-		randaoReveal:              bytesutil.ToBytes96(pb.RandaoReveal),
-		silaexecData:                  pb.SilaData,
-		graffiti:                  bytesutil.ToBytes32(pb.Graffiti),
-		proposerSlashings:         pb.ProposerSlashings,
-		attesterSlashingsElectra:  pb.AttesterSlashings,
-		attestationsElectra:       pb.Attestations,
-		deposits:                  pb.Deposits,
-		voluntaryExits:            pb.VoluntaryExits,
-		syncAggregate:             pb.SyncAggregate,
-		blsToSilaChanges:     pb.BlsToSilaChanges,
-		signedSilaPayloadBid: pb.SignedSilaPayloadBid,
-		payloadAttestations:       pb.PayloadAttestations,
-		parentSilaRequests:   per,
+		version:                  version.Gloas,
+		randaoReveal:             bytesutil.ToBytes96(pb.RandaoReveal),
+		silaexecData:             pb.SilaData,
+		graffiti:                 bytesutil.ToBytes32(pb.Graffiti),
+		proposerSlashings:        pb.ProposerSlashings,
+		attesterSlashingsElectra: pb.AttesterSlashings,
+		attestationsElectra:      pb.Attestations,
+		deposits:                 pb.Deposits,
+		voluntaryExits:           pb.VoluntaryExits,
+		syncAggregate:            pb.SyncAggregate,
+		blsToSilaChanges:         pb.BlsToSilaChanges,
+		signedSilaPayloadBid:     pb.SignedSilaPayloadBid,
+		payloadAttestations:      pb.PayloadAttestations,
+		parentSilaRequests:       per,
 	}
 	return b, nil
 }

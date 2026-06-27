@@ -4,15 +4,15 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/sync_committee.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -26,11 +26,11 @@ const (
 
 // Deprecated: Marked as deprecated in proto/sila/v1alpha1/sync_committee.proto.
 type SyncCommitteeMessage struct {
-	state          protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state          protoimpl.MessageState                                                            `protogen:"open.v1"`
 	Slot           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	BlockRoot      []byte                                                                     `protobuf:"bytes,2,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
+	BlockRoot      []byte                                                                            `protobuf:"bytes,2,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
 	ValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,3,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	Signature      []byte                                                                     `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature      []byte                                                                            `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -146,10 +146,10 @@ func (x *SignedContributionAndProof) GetSignature() []byte {
 }
 
 type ContributionAndProof struct {
-	state           protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state           protoimpl.MessageState                                                            `protogen:"open.v1"`
 	AggregatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=aggregator_index,json=aggregatorIndex,proto3" json:"aggregator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	Contribution    *SyncCommitteeContribution                                                 `protobuf:"bytes,2,opt,name=contribution,proto3" json:"contribution,omitempty"`
-	SelectionProof  []byte                                                                     `protobuf:"bytes,3,opt,name=selection_proof,json=selectionProof,proto3" json:"selection_proof,omitempty" ssz-size:"96"`
+	Contribution    *SyncCommitteeContribution                                                        `protobuf:"bytes,2,opt,name=contribution,proto3" json:"contribution,omitempty"`
+	SelectionProof  []byte                                                                            `protobuf:"bytes,3,opt,name=selection_proof,json=selectionProof,proto3" json:"selection_proof,omitempty" ssz-size:"96"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -206,12 +206,12 @@ func (x *ContributionAndProof) GetSelectionProof() []byte {
 }
 
 type SyncCommitteeContribution struct {
-	state             protoimpl.MessageState                                           `protogen:"open.v1"`
+	state             protoimpl.MessageState                                                  `protogen:"open.v1"`
 	Slot              github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	BlockRoot         []byte                                                           `protobuf:"bytes,2,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
-	SubcommitteeIndex uint64                                                           `protobuf:"varint,3,opt,name=subcommittee_index,json=subcommitteeIndex,proto3" json:"subcommittee_index,omitempty"`
-	AggregationBits   github_com_sila_chain_go_bitfield.Bitvector128                 `protobuf:"bytes,4,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector128" ssz-size:"16"`
-	Signature         []byte                                                           `protobuf:"bytes,5,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	BlockRoot         []byte                                                                  `protobuf:"bytes,2,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
+	SubcommitteeIndex uint64                                                                  `protobuf:"varint,3,opt,name=subcommittee_index,json=subcommitteeIndex,proto3" json:"subcommittee_index,omitempty"`
+	AggregationBits   github_com_sila_chain_go_bitfield.Bitvector128                          `protobuf:"bytes,4,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector128" ssz-size:"16"`
+	Signature         []byte                                                                  `protobuf:"bytes,5,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }

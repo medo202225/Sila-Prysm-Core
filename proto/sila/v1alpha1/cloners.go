@@ -1,4 +1,4 @@
-package eth
+package sila
 
 import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
@@ -44,7 +44,7 @@ func CopyBuilder(builder *Builder) *Builder {
 	return &Builder{
 		Pubkey:            bytesutil.SafeCopyBytes(builder.Pubkey),
 		Version:           bytesutil.SafeCopyBytes(builder.Version),
-		SilaAddress:  bytesutil.SafeCopyBytes(builder.SilaAddress),
+		SilaAddress:       bytesutil.SafeCopyBytes(builder.SilaAddress),
 		Balance:           builder.Balance,
 		DepositEpoch:      builder.DepositEpoch,
 		WithdrawableEpoch: builder.WithdrawableEpoch,
@@ -145,18 +145,18 @@ func copySignedSilaPayloadBid(header *SignedSilaPayloadBid) *SignedSilaPayloadBi
 	}
 	if header.Message != nil {
 		copied.Message = &SilaPayloadBid{
-			ParentBlockHash:       bytesutil.SafeCopyBytes(header.Message.ParentBlockHash),
-			ParentBlockRoot:       bytesutil.SafeCopyBytes(header.Message.ParentBlockRoot),
-			BlockHash:             bytesutil.SafeCopyBytes(header.Message.BlockHash),
-			PrevRandao:            bytesutil.SafeCopyBytes(header.Message.PrevRandao),
-			FeeRecipient:          bytesutil.SafeCopyBytes(header.Message.FeeRecipient),
-			GasLimit:              header.Message.GasLimit,
-			BuilderIndex:          header.Message.BuilderIndex,
-			Slot:                  header.Message.Slot,
-			Value:                 header.Message.Value,
-			SilaPayment:      header.Message.SilaPayment,
-			BlobKzgCommitments:    bytesutil.SafeCopy2dBytes(header.Message.BlobKzgCommitments),
-			SilaRequestsRoot: bytesutil.SafeCopyBytes(header.Message.SilaRequestsRoot),
+			ParentBlockHash:    bytesutil.SafeCopyBytes(header.Message.ParentBlockHash),
+			ParentBlockRoot:    bytesutil.SafeCopyBytes(header.Message.ParentBlockRoot),
+			BlockHash:          bytesutil.SafeCopyBytes(header.Message.BlockHash),
+			PrevRandao:         bytesutil.SafeCopyBytes(header.Message.PrevRandao),
+			FeeRecipient:       bytesutil.SafeCopyBytes(header.Message.FeeRecipient),
+			GasLimit:           header.Message.GasLimit,
+			BuilderIndex:       header.Message.BuilderIndex,
+			Slot:               header.Message.Slot,
+			Value:              header.Message.Value,
+			SilaPayment:        header.Message.SilaPayment,
+			BlobKzgCommitments: bytesutil.SafeCopy2dBytes(header.Message.BlobKzgCommitments),
+			SilaRequestsRoot:   bytesutil.SafeCopyBytes(header.Message.SilaRequestsRoot),
 		}
 	}
 	return copied
@@ -213,7 +213,7 @@ func copySilaPayloadEnvelope(env *SilaPayloadEnvelope) *SilaPayloadEnvelope {
 	}
 	return &SilaPayloadEnvelope{
 		Payload:               env.Payload, // engine proto, not deep copied here
-		SilaRequests:     env.SilaRequests,
+		SilaRequests:          env.SilaRequests,
 		BuilderIndex:          env.BuilderIndex,
 		BeaconBlockRoot:       bytesutil.SafeCopyBytes(env.BeaconBlockRoot),
 		ParentBeaconBlockRoot: bytesutil.SafeCopyBytes(env.ParentBeaconBlockRoot),
@@ -238,7 +238,7 @@ func copyBlindedSilaPayloadEnvelope(env *BlindedSilaPayloadEnvelope) *BlindedSil
 	}
 	return &BlindedSilaPayloadEnvelope{
 		BlockHash:             bytesutil.SafeCopyBytes(env.BlockHash),
-		SilaRequests:     env.SilaRequests,
+		SilaRequests:          env.SilaRequests,
 		BuilderIndex:          env.BuilderIndex,
 		BeaconBlockRoot:       bytesutil.SafeCopyBytes(env.BeaconBlockRoot),
 		Slot:                  env.Slot,

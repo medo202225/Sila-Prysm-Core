@@ -1,6 +1,6 @@
 //go:build !minimal
 
-package eth
+package sila
 
 import "github.com/sila-chain/go-bitfield"
 

@@ -1,12 +1,12 @@
 package blocks
 
 import (
+	"github.com/pkg/errors"
 	field_params "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	"github.com/pkg/errors"
 )
 
 var (
@@ -40,26 +40,26 @@ var (
 
 // BeaconBlockBody is the main beacon block body structure. It can represent any block type.
 type BeaconBlockBody struct {
-	version                   int
-	randaoReveal              [field_params.BLSSignatureLength]byte
-	silaexecData                  *eth.SilaData
-	graffiti                  [field_params.RootLength]byte
-	proposerSlashings         []*eth.ProposerSlashing
-	attesterSlashings         []*eth.AttesterSlashing
-	attesterSlashingsElectra  []*eth.AttesterSlashingElectra
-	attestations              []*eth.Attestation
-	attestationsElectra       []*eth.AttestationElectra
-	deposits                  []*eth.Deposit
-	voluntaryExits            []*eth.SignedVoluntaryExit
-	syncAggregate             *eth.SyncAggregate
-	silaPayload          interfaces.SilaData
-	silaPayloadHeader    interfaces.SilaData
-	blsToSilaChanges     []*eth.SignedBLSToSilaChange
-	blobKzgCommitments        [][]byte
-	silaRequests         *silaenginev1.SilaRequests
-	signedSilaPayloadBid *eth.SignedSilaPayloadBid
-	payloadAttestations       []*eth.PayloadAttestation
-	parentSilaRequests   *silaenginev1.SilaRequests
+	version                  int
+	randaoReveal             [field_params.BLSSignatureLength]byte
+	silaexecData             *sila.SilaData
+	graffiti                 [field_params.RootLength]byte
+	proposerSlashings        []*sila.ProposerSlashing
+	attesterSlashings        []*sila.AttesterSlashing
+	attesterSlashingsElectra []*sila.AttesterSlashingElectra
+	attestations             []*sila.Attestation
+	attestationsElectra      []*sila.AttestationElectra
+	deposits                 []*sila.Deposit
+	voluntaryExits           []*sila.SignedVoluntaryExit
+	syncAggregate            *sila.SyncAggregate
+	silaPayload              interfaces.SilaData
+	silaPayloadHeader        interfaces.SilaData
+	blsToSilaChanges         []*sila.SignedBLSToSilaChange
+	blobKzgCommitments       [][]byte
+	silaRequests             *silaenginev1.SilaRequests
+	signedSilaPayloadBid     *sila.SignedSilaPayloadBid
+	payloadAttestations      []*sila.PayloadAttestation
+	parentSilaRequests       *silaenginev1.SilaRequests
 }
 
 var _ interfaces.ReadOnlyBeaconBlockBody = &BeaconBlockBody{}

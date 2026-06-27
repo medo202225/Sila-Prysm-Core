@@ -4,16 +4,16 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/beacon_state.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
+	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -26,28 +26,28 @@ const (
 )
 
 type BeaconState struct {
-	state                       protoimpl.MessageState                                           `protogen:"open.v1"`
-	GenesisTime                 uint64                                                           `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot       []byte                                                           `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                       protoimpl.MessageState                                                  `protogen:"open.v1"`
+	GenesisTime                 uint64                                                                  `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot       []byte                                                                  `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                        *Fork                                                            `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader           *BeaconBlockHeader                                               `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                  [][]byte                                                         `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                  [][]byte                                                         `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots             [][]byte                                                         `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                    *SilaData                                                        `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes               []*SilaData                                                      `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex            uint64                                                           `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                  []*Validator                                                     `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                    []uint64                                                         `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                 [][]byte                                                         `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                   []uint64                                                         `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochAttestations   []*PendingAttestation                                            `protobuf:"bytes,7001,rep,name=previous_epoch_attestations,json=previousEpochAttestations,proto3" json:"previous_epoch_attestations,omitempty" ssz-max:"4096"`
-	CurrentEpochAttestations    []*PendingAttestation                                            `protobuf:"bytes,7002,rep,name=current_epoch_attestations,json=currentEpochAttestations,proto3" json:"current_epoch_attestations,omitempty" ssz-max:"4096"`
-	JustificationBits           github_com_sila_chain_go_bitfield.Bitvector4                   `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint *Checkpoint                                                      `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint  *Checkpoint                                                      `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint         *Checkpoint                                                      `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	Fork                        *Fork                                                                   `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader           *BeaconBlockHeader                                                      `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                  [][]byte                                                                `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                  [][]byte                                                                `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots             [][]byte                                                                `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                    *SilaData                                                               `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes               []*SilaData                                                             `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex   uint64                                                                  `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                  []*Validator                                                            `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                    []uint64                                                                `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                 [][]byte                                                                `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                   []uint64                                                                `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochAttestations   []*PendingAttestation                                                   `protobuf:"bytes,7001,rep,name=previous_epoch_attestations,json=previousEpochAttestations,proto3" json:"previous_epoch_attestations,omitempty" ssz-max:"4096"`
+	CurrentEpochAttestations    []*PendingAttestation                                                   `protobuf:"bytes,7002,rep,name=current_epoch_attestations,json=currentEpochAttestations,proto3" json:"current_epoch_attestations,omitempty" ssz-max:"4096"`
+	JustificationBits           github_com_sila_chain_go_bitfield.Bitvector4                            `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint *Checkpoint                                                             `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint  *Checkpoint                                                             `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint         *Checkpoint                                                             `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -230,9 +230,9 @@ func (x *BeaconState) GetFinalizedCheckpoint() *Checkpoint {
 }
 
 type PendingAttestation struct {
-	state           protoimpl.MessageState                                                     `protogen:"open.v1"`
-	AggregationBits github_com_sila_chain_go_bitfield.Bitlist                                `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitlist" ssz-max:"2048"`
-	Data            *AttestationData                                                           `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	state           protoimpl.MessageState                                                            `protogen:"open.v1"`
+	AggregationBits github_com_sila_chain_go_bitfield.Bitlist                                         `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitlist" ssz-max:"2048"`
+	Data            *AttestationData                                                                  `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	InclusionDelay  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,3,opt,name=inclusion_delay,json=inclusionDelay,proto3" json:"inclusion_delay,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	ProposerIndex   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,4,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	unknownFields   protoimpl.UnknownFields
@@ -350,9 +350,9 @@ func (x *HistoricalBatch) GetStateRoots() [][]byte {
 }
 
 type StateSummary struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	Slot          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Root          []byte                                                           `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty"`
+	Root          []byte                                                                  `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -702,31 +702,31 @@ func (x *PowBlock) GetTotalDifficulty() []byte {
 }
 
 type BeaconStateAltair struct {
-	state                       protoimpl.MessageState                                           `protogen:"open.v1"`
-	GenesisTime                 uint64                                                           `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot       []byte                                                           `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                       protoimpl.MessageState                                                  `protogen:"open.v1"`
+	GenesisTime                 uint64                                                                  `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot       []byte                                                                  `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                        *Fork                                                            `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader           *BeaconBlockHeader                                               `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                  [][]byte                                                         `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                  [][]byte                                                         `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots             [][]byte                                                         `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                    *SilaData                                                        `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes               []*SilaData                                                      `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex            uint64                                                           `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                  []*Validator                                                     `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                    []uint64                                                         `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                 [][]byte                                                         `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                   []uint64                                                         `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation  []byte                                                           `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation   []byte                                                           `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits           github_com_sila_chain_go_bitfield.Bitvector4                   `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint *Checkpoint                                                      `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint  *Checkpoint                                                      `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint         *Checkpoint                                                      `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores            []uint64                                                         `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee        *SyncCommittee                                                   `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee           *SyncCommittee                                                   `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	Fork                        *Fork                                                                   `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader           *BeaconBlockHeader                                                      `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                  [][]byte                                                                `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                  [][]byte                                                                `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots             [][]byte                                                                `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                    *SilaData                                                               `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes               []*SilaData                                                             `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex   uint64                                                                  `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                  []*Validator                                                            `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                    []uint64                                                                `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                 [][]byte                                                                `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                   []uint64                                                                `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation  []byte                                                                  `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation   []byte                                                                  `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits           github_com_sila_chain_go_bitfield.Bitvector4                            `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint *Checkpoint                                                             `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint  *Checkpoint                                                             `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint         *Checkpoint                                                             `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores            []uint64                                                                `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee        *SyncCommittee                                                          `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee           *SyncCommittee                                                          `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -930,9 +930,9 @@ func (x *BeaconStateAltair) GetNextSyncCommittee() *SyncCommittee {
 }
 
 type SyncAggregatorSelectionData struct {
-	state             protoimpl.MessageState                                           `protogen:"open.v1"`
+	state             protoimpl.MessageState                                                  `protogen:"open.v1"`
 	Slot              github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	SubcommitteeIndex uint64                                                           `protobuf:"varint,2,opt,name=subcommittee_index,json=subcommitteeIndex,proto3" json:"subcommittee_index,omitempty"`
+	SubcommitteeIndex uint64                                                                  `protobuf:"varint,2,opt,name=subcommittee_index,json=subcommitteeIndex,proto3" json:"subcommittee_index,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -982,34 +982,34 @@ func (x *SyncAggregatorSelectionData) GetSubcommitteeIndex() uint64 {
 }
 
 type BeaconStateBellatrix struct {
-	state                        protoimpl.MessageState                                           `protogen:"open.v1"`
-	GenesisTime                  uint64                                                           `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot        []byte                                                           `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
-	Slot                         github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                         *Fork                                                            `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader            *BeaconBlockHeader                                               `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                   [][]byte                                                         `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                   [][]byte                                                         `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots              [][]byte                                                         `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                     *SilaData                                                        `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes                []*SilaData                                                      `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex             uint64                                                           `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                   []*Validator                                                     `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                     []uint64                                                         `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                  [][]byte                                                         `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                    []uint64                                                         `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation   []byte                                                           `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation    []byte                                                           `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits            github_com_sila_chain_go_bitfield.Bitvector4                   `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint  *Checkpoint                                                      `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint   *Checkpoint                                                      `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint          *Checkpoint                                                      `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores             []uint64                                                         `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee         *SyncCommittee                                                   `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee            *SyncCommittee                                                   `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestSilaPayloadHeader *v1.SilaPayloadHeader                                       `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
-	unknownFields                protoimpl.UnknownFields
-	sizeCache                    protoimpl.SizeCache
+	state                       protoimpl.MessageState                                                  `protogen:"open.v1"`
+	GenesisTime                 uint64                                                                  `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot       []byte                                                                  `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	Slot                        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
+	Fork                        *Fork                                                                   `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader           *BeaconBlockHeader                                                      `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                  [][]byte                                                                `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                  [][]byte                                                                `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots             [][]byte                                                                `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                    *SilaData                                                               `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes               []*SilaData                                                             `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex   uint64                                                                  `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                  []*Validator                                                            `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                    []uint64                                                                `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                 [][]byte                                                                `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                   []uint64                                                                `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation  []byte                                                                  `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation   []byte                                                                  `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits           github_com_sila_chain_go_bitfield.Bitvector4                            `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint *Checkpoint                                                             `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint  *Checkpoint                                                             `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint         *Checkpoint                                                             `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores            []uint64                                                                `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee        *SyncCommittee                                                          `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee           *SyncCommittee                                                          `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	LatestSilaPayloadHeader     *v1.SilaPayloadHeader                                                   `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *BeaconStateBellatrix) Reset() {
@@ -1218,35 +1218,35 @@ func (x *BeaconStateBellatrix) GetLatestSilaPayloadHeader() *v1.SilaPayloadHeade
 }
 
 type BeaconStateCapella struct {
-	state                        protoimpl.MessageState                                                     `protogen:"open.v1"`
-	GenesisTime                  uint64                                                                     `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot        []byte                                                                     `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                        protoimpl.MessageState                                                            `protogen:"open.v1"`
+	GenesisTime                  uint64                                                                            `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot        []byte                                                                            `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                         github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                         *Fork                                                                      `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader            *BeaconBlockHeader                                                         `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                   [][]byte                                                                   `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                   [][]byte                                                                   `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots              [][]byte                                                                   `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                     *SilaData                                                                  `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes                []*SilaData                                                                `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex             uint64                                                                     `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                   []*Validator                                                               `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                     []uint64                                                                   `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                  [][]byte                                                                   `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                    []uint64                                                                   `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation   []byte                                                                     `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation    []byte                                                                     `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits            github_com_sila_chain_go_bitfield.Bitvector4                             `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint  *Checkpoint                                                                `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint   *Checkpoint                                                                `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint          *Checkpoint                                                                `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores             []uint64                                                                   `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee         *SyncCommittee                                                             `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee            *SyncCommittee                                                             `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestSilaPayloadHeader *v1.SilaPayloadHeaderCapella                                          `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
-	NextWithdrawalIndex          uint64                                                                     `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
+	Fork                         *Fork                                                                             `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader            *BeaconBlockHeader                                                                `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                   [][]byte                                                                          `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                   [][]byte                                                                          `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots              [][]byte                                                                          `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                     *SilaData                                                                         `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes                []*SilaData                                                                       `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex    uint64                                                                            `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                   []*Validator                                                                      `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                     []uint64                                                                          `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                  [][]byte                                                                          `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                    []uint64                                                                          `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation   []byte                                                                            `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation    []byte                                                                            `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits            github_com_sila_chain_go_bitfield.Bitvector4                                      `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint  *Checkpoint                                                                       `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint   *Checkpoint                                                                       `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint          *Checkpoint                                                                       `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores             []uint64                                                                          `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee         *SyncCommittee                                                                    `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee            *SyncCommittee                                                                    `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	LatestSilaPayloadHeader      *v1.SilaPayloadHeaderCapella                                                      `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
+	NextWithdrawalIndex          uint64                                                                            `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	HistoricalSummaries          []*HistoricalSummary                                                       `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
+	HistoricalSummaries          []*HistoricalSummary                                                              `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -1478,35 +1478,35 @@ func (x *BeaconStateCapella) GetHistoricalSummaries() []*HistoricalSummary {
 }
 
 type BeaconStateDeneb struct {
-	state                        protoimpl.MessageState                                                     `protogen:"open.v1"`
-	GenesisTime                  uint64                                                                     `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot        []byte                                                                     `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                        protoimpl.MessageState                                                            `protogen:"open.v1"`
+	GenesisTime                  uint64                                                                            `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot        []byte                                                                            `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                         github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                         *Fork                                                                      `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader            *BeaconBlockHeader                                                         `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                   [][]byte                                                                   `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                   [][]byte                                                                   `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots              [][]byte                                                                   `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                     *SilaData                                                                  `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes                []*SilaData                                                                `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex             uint64                                                                     `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                   []*Validator                                                               `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                     []uint64                                                                   `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                  [][]byte                                                                   `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                    []uint64                                                                   `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation   []byte                                                                     `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation    []byte                                                                     `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits            github_com_sila_chain_go_bitfield.Bitvector4                             `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint  *Checkpoint                                                                `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint   *Checkpoint                                                                `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint          *Checkpoint                                                                `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores             []uint64                                                                   `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee         *SyncCommittee                                                             `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee            *SyncCommittee                                                             `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestSilaPayloadHeader *v1.SilaPayloadHeaderDeneb                                            `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
-	NextWithdrawalIndex          uint64                                                                     `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
+	Fork                         *Fork                                                                             `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader            *BeaconBlockHeader                                                                `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                   [][]byte                                                                          `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                   [][]byte                                                                          `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots              [][]byte                                                                          `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                     *SilaData                                                                         `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes                []*SilaData                                                                       `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex    uint64                                                                            `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                   []*Validator                                                                      `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                     []uint64                                                                          `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                  [][]byte                                                                          `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                    []uint64                                                                          `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation   []byte                                                                            `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation    []byte                                                                            `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits            github_com_sila_chain_go_bitfield.Bitvector4                                      `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint  *Checkpoint                                                                       `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint   *Checkpoint                                                                       `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint          *Checkpoint                                                                       `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores             []uint64                                                                          `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee         *SyncCommittee                                                                    `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee            *SyncCommittee                                                                    `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	LatestSilaPayloadHeader      *v1.SilaPayloadHeaderDeneb                                                        `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
+	NextWithdrawalIndex          uint64                                                                            `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	HistoricalSummaries          []*HistoricalSummary                                                       `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
+	HistoricalSummaries          []*HistoricalSummary                                                              `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -1738,44 +1738,44 @@ func (x *BeaconStateDeneb) GetHistoricalSummaries() []*HistoricalSummary {
 }
 
 type BeaconStateElectra struct {
-	state                         protoimpl.MessageState                                                     `protogen:"open.v1"`
-	GenesisTime                   uint64                                                                     `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot         []byte                                                                     `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                         protoimpl.MessageState                                                            `protogen:"open.v1"`
+	GenesisTime                   uint64                                                                            `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot         []byte                                                                            `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                          *Fork                                                                      `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader             *BeaconBlockHeader                                                         `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                    [][]byte                                                                   `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                    [][]byte                                                                   `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots               [][]byte                                                                   `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                      *SilaData                                                                  `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes                 []*SilaData                                                                `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex              uint64                                                                     `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                    []*Validator                                                               `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                      []uint64                                                                   `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                   [][]byte                                                                   `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                     []uint64                                                                   `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation    []byte                                                                     `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation     []byte                                                                     `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits             github_com_sila_chain_go_bitfield.Bitvector4                             `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint   *Checkpoint                                                                `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint    *Checkpoint                                                                `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint           *Checkpoint                                                                `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores              []uint64                                                                   `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee          *SyncCommittee                                                             `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee             *SyncCommittee                                                             `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestSilaPayloadHeader  *v1.SilaPayloadHeaderDeneb                                            `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
-	NextWithdrawalIndex           uint64                                                                     `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
+	Fork                          *Fork                                                                             `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader             *BeaconBlockHeader                                                                `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                    [][]byte                                                                          `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                    [][]byte                                                                          `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots               [][]byte                                                                          `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                      *SilaData                                                                         `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes                 []*SilaData                                                                       `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex     uint64                                                                            `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                    []*Validator                                                                      `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                      []uint64                                                                          `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                   [][]byte                                                                          `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                     []uint64                                                                          `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation    []byte                                                                            `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation     []byte                                                                            `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits             github_com_sila_chain_go_bitfield.Bitvector4                                      `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint   *Checkpoint                                                                       `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint    *Checkpoint                                                                       `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint           *Checkpoint                                                                       `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores              []uint64                                                                          `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee          *SyncCommittee                                                                    `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee             *SyncCommittee                                                                    `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	LatestSilaPayloadHeader       *v1.SilaPayloadHeaderDeneb                                                        `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
+	NextWithdrawalIndex           uint64                                                                            `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	HistoricalSummaries           []*HistoricalSummary                                                       `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
-	DepositRequestsStartIndex     uint64                                                                     `protobuf:"varint,12001,opt,name=deposit_requests_start_index,json=depositRequestsStartIndex,proto3" json:"deposit_requests_start_index,omitempty"`
+	HistoricalSummaries           []*HistoricalSummary                                                              `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
+	DepositRequestsStartIndex     uint64                                                                            `protobuf:"varint,12001,opt,name=deposit_requests_start_index,json=depositRequestsStartIndex,proto3" json:"deposit_requests_start_index,omitempty"`
 	DepositBalanceToConsume       github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei           `protobuf:"varint,12002,opt,name=deposit_balance_to_consume,json=depositBalanceToConsume,proto3" json:"deposit_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	ExitBalanceToConsume          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei           `protobuf:"varint,12003,opt,name=exit_balance_to_consume,json=exitBalanceToConsume,proto3" json:"exit_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	EarliestExitEpoch             github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch          `protobuf:"varint,12004,opt,name=earliest_exit_epoch,json=earliestExitEpoch,proto3" json:"earliest_exit_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	ConsolidationBalanceToConsume github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei           `protobuf:"varint,12005,opt,name=consolidation_balance_to_consume,json=consolidationBalanceToConsume,proto3" json:"consolidation_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	EarliestConsolidationEpoch    github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch          `protobuf:"varint,12006,opt,name=earliest_consolidation_epoch,json=earliestConsolidationEpoch,proto3" json:"earliest_consolidation_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	PendingDeposits               []*PendingDeposit                                                          `protobuf:"bytes,12007,rep,name=pending_deposits,json=pendingDeposits,proto3" json:"pending_deposits,omitempty" ssz-max:"134217728"`
-	PendingPartialWithdrawals     []*PendingPartialWithdrawal                                                `protobuf:"bytes,12008,rep,name=pending_partial_withdrawals,json=pendingPartialWithdrawals,proto3" json:"pending_partial_withdrawals,omitempty" ssz-max:"134217728"`
-	PendingConsolidations         []*PendingConsolidation                                                    `protobuf:"bytes,12009,rep,name=pending_consolidations,json=pendingConsolidations,proto3" json:"pending_consolidations,omitempty" ssz-max:"262144"`
+	PendingDeposits               []*PendingDeposit                                                                 `protobuf:"bytes,12007,rep,name=pending_deposits,json=pendingDeposits,proto3" json:"pending_deposits,omitempty" ssz-max:"134217728"`
+	PendingPartialWithdrawals     []*PendingPartialWithdrawal                                                       `protobuf:"bytes,12008,rep,name=pending_partial_withdrawals,json=pendingPartialWithdrawals,proto3" json:"pending_partial_withdrawals,omitempty" ssz-max:"134217728"`
+	PendingConsolidations         []*PendingConsolidation                                                           `protobuf:"bytes,12009,rep,name=pending_consolidations,json=pendingConsolidations,proto3" json:"pending_consolidations,omitempty" ssz-max:"262144"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -2070,44 +2070,44 @@ func (x *BeaconStateElectra) GetPendingConsolidations() []*PendingConsolidation 
 }
 
 type BeaconStateFulu struct {
-	state                         protoimpl.MessageState                                                       `protogen:"open.v1"`
-	GenesisTime                   uint64                                                                       `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot         []byte                                                                       `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                         protoimpl.MessageState                                                              `protogen:"open.v1"`
+	GenesisTime                   uint64                                                                              `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot         []byte                                                                              `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot             `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                          *Fork                                                                        `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader             *BeaconBlockHeader                                                           `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                    [][]byte                                                                     `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                    [][]byte                                                                     `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots               [][]byte                                                                     `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                      *SilaData                                                                    `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes                 []*SilaData                                                                  `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex              uint64                                                                       `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                    []*Validator                                                                 `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                      []uint64                                                                     `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                   [][]byte                                                                     `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                     []uint64                                                                     `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation    []byte                                                                       `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation     []byte                                                                       `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits             github_com_sila_chain_go_bitfield.Bitvector4                               `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint   *Checkpoint                                                                  `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint    *Checkpoint                                                                  `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint           *Checkpoint                                                                  `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores              []uint64                                                                     `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee          *SyncCommittee                                                               `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee             *SyncCommittee                                                               `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestSilaPayloadHeader  *v1.SilaPayloadHeaderDeneb                                              `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
-	NextWithdrawalIndex           uint64                                                                       `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
+	Fork                          *Fork                                                                               `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader             *BeaconBlockHeader                                                                  `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                    [][]byte                                                                            `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                    [][]byte                                                                            `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots               [][]byte                                                                            `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                      *SilaData                                                                           `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes                 []*SilaData                                                                         `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex     uint64                                                                              `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                    []*Validator                                                                        `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                      []uint64                                                                            `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                   [][]byte                                                                            `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                     []uint64                                                                            `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation    []byte                                                                              `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation     []byte                                                                              `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits             github_com_sila_chain_go_bitfield.Bitvector4                                        `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint   *Checkpoint                                                                         `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint    *Checkpoint                                                                         `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint           *Checkpoint                                                                         `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores              []uint64                                                                            `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee          *SyncCommittee                                                                      `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee             *SyncCommittee                                                                      `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	LatestSilaPayloadHeader       *v1.SilaPayloadHeaderDeneb                                                          `protobuf:"bytes,10001,opt,name=latest_sila_payload_header,json=latestSilaPayloadHeader,proto3" json:"latest_sila_payload_header,omitempty"`
+	NextWithdrawalIndex           uint64                                                                              `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex   `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	HistoricalSummaries           []*HistoricalSummary                                                         `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
-	DepositRequestsStartIndex     uint64                                                                       `protobuf:"varint,12001,opt,name=deposit_requests_start_index,json=depositRequestsStartIndex,proto3" json:"deposit_requests_start_index,omitempty"`
+	HistoricalSummaries           []*HistoricalSummary                                                                `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
+	DepositRequestsStartIndex     uint64                                                                              `protobuf:"varint,12001,opt,name=deposit_requests_start_index,json=depositRequestsStartIndex,proto3" json:"deposit_requests_start_index,omitempty"`
 	DepositBalanceToConsume       github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei             `protobuf:"varint,12002,opt,name=deposit_balance_to_consume,json=depositBalanceToConsume,proto3" json:"deposit_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	ExitBalanceToConsume          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei             `protobuf:"varint,12003,opt,name=exit_balance_to_consume,json=exitBalanceToConsume,proto3" json:"exit_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	EarliestExitEpoch             github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch            `protobuf:"varint,12004,opt,name=earliest_exit_epoch,json=earliestExitEpoch,proto3" json:"earliest_exit_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	ConsolidationBalanceToConsume github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei             `protobuf:"varint,12005,opt,name=consolidation_balance_to_consume,json=consolidationBalanceToConsume,proto3" json:"consolidation_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	EarliestConsolidationEpoch    github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch            `protobuf:"varint,12006,opt,name=earliest_consolidation_epoch,json=earliestConsolidationEpoch,proto3" json:"earliest_consolidation_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	PendingDeposits               []*PendingDeposit                                                            `protobuf:"bytes,12007,rep,name=pending_deposits,json=pendingDeposits,proto3" json:"pending_deposits,omitempty" ssz-max:"134217728"`
-	PendingPartialWithdrawals     []*PendingPartialWithdrawal                                                  `protobuf:"bytes,12008,rep,name=pending_partial_withdrawals,json=pendingPartialWithdrawals,proto3" json:"pending_partial_withdrawals,omitempty" ssz-max:"134217728"`
-	PendingConsolidations         []*PendingConsolidation                                                      `protobuf:"bytes,12009,rep,name=pending_consolidations,json=pendingConsolidations,proto3" json:"pending_consolidations,omitempty" ssz-max:"262144"`
+	PendingDeposits               []*PendingDeposit                                                                   `protobuf:"bytes,12007,rep,name=pending_deposits,json=pendingDeposits,proto3" json:"pending_deposits,omitempty" ssz-max:"134217728"`
+	PendingPartialWithdrawals     []*PendingPartialWithdrawal                                                         `protobuf:"bytes,12008,rep,name=pending_partial_withdrawals,json=pendingPartialWithdrawals,proto3" json:"pending_partial_withdrawals,omitempty" ssz-max:"134217728"`
+	PendingConsolidations         []*PendingConsolidation                                                             `protobuf:"bytes,12009,rep,name=pending_consolidations,json=pendingConsolidations,proto3" json:"pending_consolidations,omitempty" ssz-max:"262144"`
 	ProposerLookahead             []github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,13001,rep,packed,name=proposer_lookahead,json=proposerLookahead,proto3" json:"proposer_lookahead,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex" ssz-size:"64"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
@@ -3560,36 +3560,36 @@ func file_proto_sila_v1alpha1_beacon_state_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_beacon_state_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_sila_v1alpha1_beacon_state_proto_goTypes = []any{
-	(*BeaconState)(nil),                      // 0: sila.eth.v1alpha1.BeaconState
-	(*PendingAttestation)(nil),               // 1: sila.eth.v1alpha1.PendingAttestation
-	(*HistoricalBatch)(nil),                  // 2: sila.eth.v1alpha1.HistoricalBatch
-	(*StateSummary)(nil),                     // 3: sila.eth.v1alpha1.StateSummary
-	(*SigningData)(nil),                      // 4: sila.eth.v1alpha1.SigningData
-	(*ForkData)(nil),                         // 5: sila.eth.v1alpha1.ForkData
-	(*CheckPtInfo)(nil),                      // 6: sila.eth.v1alpha1.CheckPtInfo
-	(*DepositMessage)(nil),                   // 7: sila.eth.v1alpha1.DepositMessage
-	(*PowBlock)(nil),                         // 8: sila.eth.v1alpha1.PowBlock
-	(*BeaconStateAltair)(nil),                // 9: sila.eth.v1alpha1.BeaconStateAltair
-	(*SyncAggregatorSelectionData)(nil),      // 10: sila.eth.v1alpha1.SyncAggregatorSelectionData
-	(*BeaconStateBellatrix)(nil),             // 11: sila.eth.v1alpha1.BeaconStateBellatrix
-	(*BeaconStateCapella)(nil),               // 12: sila.eth.v1alpha1.BeaconStateCapella
-	(*BeaconStateDeneb)(nil),                 // 13: sila.eth.v1alpha1.BeaconStateDeneb
-	(*BeaconStateElectra)(nil),               // 14: sila.eth.v1alpha1.BeaconStateElectra
-	(*BeaconStateFulu)(nil),                  // 15: sila.eth.v1alpha1.BeaconStateFulu
-	(*Fork)(nil),                             // 16: sila.eth.v1alpha1.Fork
-	(*BeaconBlockHeader)(nil),                // 17: sila.eth.v1alpha1.BeaconBlockHeader
-	(*SilaData)(nil),                         // 18: sila.eth.v1alpha1.SilaData
-	(*Validator)(nil),                        // 19: sila.eth.v1alpha1.Validator
-	(*Checkpoint)(nil),                       // 20: sila.eth.v1alpha1.Checkpoint
-	(*AttestationData)(nil),                  // 21: sila.eth.v1alpha1.AttestationData
-	(*SyncCommittee)(nil),                    // 22: sila.eth.v1alpha1.SyncCommittee
+	(*BeaconState)(nil),                 // 0: sila.eth.v1alpha1.BeaconState
+	(*PendingAttestation)(nil),          // 1: sila.eth.v1alpha1.PendingAttestation
+	(*HistoricalBatch)(nil),             // 2: sila.eth.v1alpha1.HistoricalBatch
+	(*StateSummary)(nil),                // 3: sila.eth.v1alpha1.StateSummary
+	(*SigningData)(nil),                 // 4: sila.eth.v1alpha1.SigningData
+	(*ForkData)(nil),                    // 5: sila.eth.v1alpha1.ForkData
+	(*CheckPtInfo)(nil),                 // 6: sila.eth.v1alpha1.CheckPtInfo
+	(*DepositMessage)(nil),              // 7: sila.eth.v1alpha1.DepositMessage
+	(*PowBlock)(nil),                    // 8: sila.eth.v1alpha1.PowBlock
+	(*BeaconStateAltair)(nil),           // 9: sila.eth.v1alpha1.BeaconStateAltair
+	(*SyncAggregatorSelectionData)(nil), // 10: sila.eth.v1alpha1.SyncAggregatorSelectionData
+	(*BeaconStateBellatrix)(nil),        // 11: sila.eth.v1alpha1.BeaconStateBellatrix
+	(*BeaconStateCapella)(nil),          // 12: sila.eth.v1alpha1.BeaconStateCapella
+	(*BeaconStateDeneb)(nil),            // 13: sila.eth.v1alpha1.BeaconStateDeneb
+	(*BeaconStateElectra)(nil),          // 14: sila.eth.v1alpha1.BeaconStateElectra
+	(*BeaconStateFulu)(nil),             // 15: sila.eth.v1alpha1.BeaconStateFulu
+	(*Fork)(nil),                        // 16: sila.eth.v1alpha1.Fork
+	(*BeaconBlockHeader)(nil),           // 17: sila.eth.v1alpha1.BeaconBlockHeader
+	(*SilaData)(nil),                    // 18: sila.eth.v1alpha1.SilaData
+	(*Validator)(nil),                   // 19: sila.eth.v1alpha1.Validator
+	(*Checkpoint)(nil),                  // 20: sila.eth.v1alpha1.Checkpoint
+	(*AttestationData)(nil),             // 21: sila.eth.v1alpha1.AttestationData
+	(*SyncCommittee)(nil),               // 22: sila.eth.v1alpha1.SyncCommittee
 	(*v1.SilaPayloadHeader)(nil),        // 23: sila.silaengine.v1.SilaPayloadHeader
 	(*v1.SilaPayloadHeaderCapella)(nil), // 24: sila.silaengine.v1.SilaPayloadHeaderCapella
-	(*HistoricalSummary)(nil),                // 25: sila.eth.v1alpha1.HistoricalSummary
+	(*HistoricalSummary)(nil),           // 25: sila.eth.v1alpha1.HistoricalSummary
 	(*v1.SilaPayloadHeaderDeneb)(nil),   // 26: sila.silaengine.v1.SilaPayloadHeaderDeneb
-	(*PendingDeposit)(nil),                   // 27: sila.eth.v1alpha1.PendingDeposit
-	(*PendingPartialWithdrawal)(nil),         // 28: sila.eth.v1alpha1.PendingPartialWithdrawal
-	(*PendingConsolidation)(nil),             // 29: sila.eth.v1alpha1.PendingConsolidation
+	(*PendingDeposit)(nil),              // 27: sila.eth.v1alpha1.PendingDeposit
+	(*PendingPartialWithdrawal)(nil),    // 28: sila.eth.v1alpha1.PendingPartialWithdrawal
+	(*PendingConsolidation)(nil),        // 29: sila.eth.v1alpha1.PendingConsolidation
 }
 var file_proto_sila_v1alpha1_beacon_state_proto_depIdxs = []int32{
 	16, // 0: sila.eth.v1alpha1.BeaconState.fork:type_name -> sila.eth.v1alpha1.Fork

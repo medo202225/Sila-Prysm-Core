@@ -7,36 +7,36 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestBeaconBlockHeaderFromBlock(t *testing.T) {
 	hashLen := 32
-	blk := &eth.BeaconBlock{
+	blk := &sila.BeaconBlock{
 		Slot:          200,
 		ProposerIndex: 2,
 		ParentRoot:    bytesutil.PadTo([]byte("parent root"), hashLen),
 		StateRoot:     bytesutil.PadTo([]byte("state root"), hashLen),
-		Body: &eth.BeaconBlockBody{
-			SilaData: &eth.SilaData{
+		Body: &sila.BeaconBlockBody{
+			SilaData: &sila.SilaData{
 				BlockHash:    bytesutil.PadTo([]byte("block hash"), hashLen),
 				DepositRoot:  bytesutil.PadTo([]byte("deposit root"), hashLen),
 				DepositCount: 1,
 			},
 			RandaoReveal:      bytesutil.PadTo([]byte("randao"), fieldparams.BLSSignatureLength),
 			Graffiti:          bytesutil.PadTo([]byte("teehee"), hashLen),
-			ProposerSlashings: []*eth.ProposerSlashing{},
-			AttesterSlashings: []*eth.AttesterSlashing{},
-			Attestations:      []*eth.Attestation{},
-			Deposits:          []*eth.Deposit{},
-			VoluntaryExits:    []*eth.SignedVoluntaryExit{},
+			ProposerSlashings: []*sila.ProposerSlashing{},
+			AttesterSlashings: []*sila.AttesterSlashing{},
+			Attestations:      []*sila.Attestation{},
+			Deposits:          []*sila.Deposit{},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{},
 		},
 	}
 	bodyRoot, err := blk.Body.HashTreeRoot()
 	require.NoError(t, err)
-	want := &eth.BeaconBlockHeader{
+	want := &sila.BeaconBlockHeader{
 		Slot:          blk.Slot,
 		ProposerIndex: blk.ProposerIndex,
 		ParentRoot:    blk.ParentRoot,
@@ -51,29 +51,29 @@ func TestBeaconBlockHeaderFromBlock(t *testing.T) {
 
 func TestBeaconBlockHeaderFromBlockInterface(t *testing.T) {
 	hashLen := 32
-	blk := &eth.BeaconBlock{
+	blk := &sila.BeaconBlock{
 		Slot:          200,
 		ProposerIndex: 2,
 		ParentRoot:    bytesutil.PadTo([]byte("parent root"), hashLen),
 		StateRoot:     bytesutil.PadTo([]byte("state root"), hashLen),
-		Body: &eth.BeaconBlockBody{
-			SilaData: &eth.SilaData{
+		Body: &sila.BeaconBlockBody{
+			SilaData: &sila.SilaData{
 				BlockHash:    bytesutil.PadTo([]byte("block hash"), hashLen),
 				DepositRoot:  bytesutil.PadTo([]byte("deposit root"), hashLen),
 				DepositCount: 1,
 			},
 			RandaoReveal:      bytesutil.PadTo([]byte("randao"), fieldparams.BLSSignatureLength),
 			Graffiti:          bytesutil.PadTo([]byte("teehee"), hashLen),
-			ProposerSlashings: []*eth.ProposerSlashing{},
-			AttesterSlashings: []*eth.AttesterSlashing{},
-			Attestations:      []*eth.Attestation{},
-			Deposits:          []*eth.Deposit{},
-			VoluntaryExits:    []*eth.SignedVoluntaryExit{},
+			ProposerSlashings: []*sila.ProposerSlashing{},
+			AttesterSlashings: []*sila.AttesterSlashing{},
+			Attestations:      []*sila.Attestation{},
+			Deposits:          []*sila.Deposit{},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{},
 		},
 	}
 	bodyRoot, err := blk.Body.HashTreeRoot()
 	require.NoError(t, err)
-	want := &eth.BeaconBlockHeader{
+	want := &sila.BeaconBlockHeader{
 		Slot:          blk.Slot,
 		ProposerIndex: blk.ProposerIndex,
 		ParentRoot:    blk.ParentRoot,
@@ -90,7 +90,7 @@ func TestBeaconBlockHeaderFromBlockInterface(t *testing.T) {
 
 func TestBeaconBlockHeaderFromBlock_NilBlockBody(t *testing.T) {
 	hashLen := 32
-	blk := &eth.BeaconBlock{
+	blk := &sila.BeaconBlock{
 		Slot:          200,
 		ProposerIndex: 2,
 		ParentRoot:    bytesutil.PadTo([]byte("parent root"), hashLen),
@@ -102,31 +102,31 @@ func TestBeaconBlockHeaderFromBlock_NilBlockBody(t *testing.T) {
 
 func TestSignedBeaconBlockHeaderFromBlock(t *testing.T) {
 	hashLen := 32
-	blk := &eth.SignedBeaconBlock{Block: &eth.BeaconBlock{
+	blk := &sila.SignedBeaconBlock{Block: &sila.BeaconBlock{
 		Slot:          200,
 		ProposerIndex: 2,
 		ParentRoot:    bytesutil.PadTo([]byte("parent root"), hashLen),
 		StateRoot:     bytesutil.PadTo([]byte("state root"), hashLen),
-		Body: &eth.BeaconBlockBody{
-			SilaData: &eth.SilaData{
+		Body: &sila.BeaconBlockBody{
+			SilaData: &sila.SilaData{
 				BlockHash:    bytesutil.PadTo([]byte("block hash"), hashLen),
 				DepositRoot:  bytesutil.PadTo([]byte("deposit root"), hashLen),
 				DepositCount: 1,
 			},
 			RandaoReveal:      bytesutil.PadTo([]byte("randao"), fieldparams.BLSSignatureLength),
 			Graffiti:          bytesutil.PadTo([]byte("teehee"), hashLen),
-			ProposerSlashings: []*eth.ProposerSlashing{},
-			AttesterSlashings: []*eth.AttesterSlashing{},
-			Attestations:      []*eth.Attestation{},
-			Deposits:          []*eth.Deposit{},
-			VoluntaryExits:    []*eth.SignedVoluntaryExit{},
+			ProposerSlashings: []*sila.ProposerSlashing{},
+			AttesterSlashings: []*sila.AttesterSlashing{},
+			Attestations:      []*sila.Attestation{},
+			Deposits:          []*sila.Deposit{},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{},
 		},
 	},
 		Signature: bytesutil.PadTo([]byte("signature"), fieldparams.BLSSignatureLength),
 	}
 	bodyRoot, err := blk.Block.Body.HashTreeRoot()
 	require.NoError(t, err)
-	want := &eth.SignedBeaconBlockHeader{Header: &eth.BeaconBlockHeader{
+	want := &sila.SignedBeaconBlockHeader{Header: &sila.BeaconBlockHeader{
 		Slot:          blk.Block.Slot,
 		ProposerIndex: blk.Block.ProposerIndex,
 		ParentRoot:    blk.Block.ParentRoot,
@@ -143,31 +143,31 @@ func TestSignedBeaconBlockHeaderFromBlock(t *testing.T) {
 
 func TestSignedBeaconBlockHeaderFromBlockInterface(t *testing.T) {
 	hashLen := 32
-	blk := &eth.SignedBeaconBlock{Block: &eth.BeaconBlock{
+	blk := &sila.SignedBeaconBlock{Block: &sila.BeaconBlock{
 		Slot:          200,
 		ProposerIndex: 2,
 		ParentRoot:    bytesutil.PadTo([]byte("parent root"), hashLen),
 		StateRoot:     bytesutil.PadTo([]byte("state root"), hashLen),
-		Body: &eth.BeaconBlockBody{
-			SilaData: &eth.SilaData{
+		Body: &sila.BeaconBlockBody{
+			SilaData: &sila.SilaData{
 				BlockHash:    bytesutil.PadTo([]byte("block hash"), hashLen),
 				DepositRoot:  bytesutil.PadTo([]byte("deposit root"), hashLen),
 				DepositCount: 1,
 			},
 			RandaoReveal:      bytesutil.PadTo([]byte("randao"), fieldparams.BLSSignatureLength),
 			Graffiti:          bytesutil.PadTo([]byte("teehee"), hashLen),
-			ProposerSlashings: []*eth.ProposerSlashing{},
-			AttesterSlashings: []*eth.AttesterSlashing{},
-			Attestations:      []*eth.Attestation{},
-			Deposits:          []*eth.Deposit{},
-			VoluntaryExits:    []*eth.SignedVoluntaryExit{},
+			ProposerSlashings: []*sila.ProposerSlashing{},
+			AttesterSlashings: []*sila.AttesterSlashing{},
+			Attestations:      []*sila.Attestation{},
+			Deposits:          []*sila.Deposit{},
+			VoluntaryExits:    []*sila.SignedVoluntaryExit{},
 		},
 	},
 		Signature: bytesutil.PadTo([]byte("signature"), fieldparams.BLSSignatureLength),
 	}
 	bodyRoot, err := blk.Block.Body.HashTreeRoot()
 	require.NoError(t, err)
-	want := &eth.SignedBeaconBlockHeader{Header: &eth.BeaconBlockHeader{
+	want := &sila.SignedBeaconBlockHeader{Header: &sila.BeaconBlockHeader{
 		Slot:          blk.Block.Slot,
 		ProposerIndex: blk.Block.ProposerIndex,
 		ParentRoot:    blk.Block.ParentRoot,
@@ -185,7 +185,7 @@ func TestSignedBeaconBlockHeaderFromBlockInterface(t *testing.T) {
 
 func TestSignedBeaconBlockHeaderFromBlock_NilBlockBody(t *testing.T) {
 	hashLen := 32
-	blk := &eth.SignedBeaconBlock{Block: &eth.BeaconBlock{
+	blk := &sila.SignedBeaconBlock{Block: &sila.BeaconBlock{
 		Slot:          200,
 		ProposerIndex: 2,
 		ParentRoot:    bytesutil.PadTo([]byte("parent root"), hashLen),

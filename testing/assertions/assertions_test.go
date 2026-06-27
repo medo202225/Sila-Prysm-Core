@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	testpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assertions"
@@ -339,11 +339,11 @@ func TestAssert_DeepSSZEqual(t *testing.T) {
 			name: "equal structs",
 			args: args{
 				tb: &assertions.TBMock{},
-				expected: &eth.Checkpoint{
+				expected: &sila.Checkpoint{
 					Epoch: 5,
 					Root:  []byte("hi there"),
 				},
-				actual: &eth.Checkpoint{
+				actual: &sila.Checkpoint{
 					Epoch: 5,
 					Root:  []byte("hi there"),
 				},
@@ -410,11 +410,11 @@ func TestAssert_DeepNotSSZEqual(t *testing.T) {
 			name: "not equal structs",
 			args: args{
 				tb: &assertions.TBMock{},
-				expected: &eth.Checkpoint{
+				expected: &sila.Checkpoint{
 					Epoch: 5,
 					Root:  []byte("hello there"),
 				},
-				actual: &eth.Checkpoint{
+				actual: &sila.Checkpoint{
 					Epoch: 3,
 					Root:  []byte("hi there"),
 				},
@@ -616,7 +616,7 @@ func Test_NotNil(t *testing.T) {
 		obj  any
 		msgs []any
 	}
-	var nilBlock *eth.SignedBeaconBlock = nil
+	var nilBlock *sila.SignedBeaconBlock = nil
 	tests := []struct {
 		name        string
 		args        args

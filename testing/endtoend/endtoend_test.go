@@ -26,7 +26,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
@@ -133,7 +133,7 @@ func (r *testRunner) waitExtra(ctx context.Context, e primitives.Epoch, conn *gr
 	spe := uint64(params.BeaconConfig().SlotsPerEpoch.Mul(params.BeaconConfig().SecondsPerSlot))
 	dl := time.Now().Add(time.Second * time.Duration(uint64(extra)*spe))
 
-	beaconClient := eth.NewBeaconChainClient(conn)
+	beaconClient := sila.NewBeaconChainClient(conn)
 	ctx, cancel := context.WithDeadline(ctx, dl)
 	defer cancel()
 	for {
@@ -267,8 +267,8 @@ func (r *testRunner) waitForMatchingHead(ctx context.Context, timeout time.Durat
 	start := time.Now()
 	dctx, cancel := context.WithDeadline(ctx, start.Add(timeout))
 	defer cancel()
-	checkClient := eth.NewBeaconChainClient(check)
-	refClient := eth.NewBeaconChainClient(ref)
+	checkClient := sila.NewBeaconChainClient(check)
+	refClient := sila.NewBeaconChainClient(ref)
 	for {
 		select {
 		case <-dctx.Done():
@@ -520,7 +520,7 @@ func (r *testRunner) defaultEndToEndRun() error {
 	defer closeConns()
 
 	// Calculate genesis time.
-	nodeClient := eth.NewNodeClient(conns[0])
+	nodeClient := sila.NewNodeClient(conns[0])
 	genesis, err := nodeClient.GetGenesis(t.Context(), &emptypb.Empty{})
 	require.NoError(t, err)
 	tickingStartTime := helpers.EpochTickerStartTime(genesis)
@@ -619,7 +619,7 @@ func (r *testRunner) scenarioRun() error {
 	defer closeConns()
 
 	// Calculate genesis time.
-	nodeClient := eth.NewNodeClient(conns[0])
+	nodeClient := sila.NewNodeClient(conns[0])
 	genesis, err := nodeClient.GetGenesis(t.Context(), &emptypb.Empty{})
 	require.NoError(t, err)
 	tickingStartTime := helpers.EpochTickerStartTime(genesis)

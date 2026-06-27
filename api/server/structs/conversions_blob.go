@@ -5,10 +5,10 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
-func (sc *Sidecar) ToConsensus() (*eth.BlobSidecar, error) {
+func (sc *Sidecar) ToConsensus() (*sila.BlobSidecar, error) {
 	if sc == nil {
 		return nil, errNilValue
 	}
@@ -48,7 +48,7 @@ func (sc *Sidecar) ToConsensus() (*eth.BlobSidecar, error) {
 		commitmentInclusionProof = append(commitmentInclusionProof, proofBytes)
 	}
 
-	bsc := &eth.BlobSidecar{
+	bsc := &sila.BlobSidecar{
 		Index:                    index,
 		Blob:                     blob,
 		KzgCommitment:            kzgCommitment,

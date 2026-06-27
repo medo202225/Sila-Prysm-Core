@@ -3,19 +3,19 @@ package attestation_test
 import (
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/attestation"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func TestAttestingIndices(t *testing.T) {
 	type args struct {
-		att        eth.Att
+		att        sila.Att
 		committees [][]primitives.ValidatorIndex
 	}
 	tests := []struct {
@@ -27,7 +27,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Full committee attested",
 			args: args{
-				att:        &eth.Attestation{AggregationBits: bitfield.Bitlist{0b1111}},
+				att:        &sila.Attestation{AggregationBits: bitfield.Bitlist{0b1111}},
 				committees: [][]primitives.ValidatorIndex{{0, 1, 2}},
 			},
 			want: []uint64{0, 1, 2},
@@ -35,7 +35,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Partial committee attested",
 			args: args{
-				att:        &eth.Attestation{AggregationBits: bitfield.Bitlist{0b1101}},
+				att:        &sila.Attestation{AggregationBits: bitfield.Bitlist{0b1101}},
 				committees: [][]primitives.ValidatorIndex{{0, 1, 2}},
 			},
 			want: []uint64{0, 2},
@@ -43,7 +43,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Invalid bit length",
 			args: args{
-				att:        &eth.Attestation{AggregationBits: bitfield.Bitlist{0b11111}},
+				att:        &sila.Attestation{AggregationBits: bitfield.Bitlist{0b11111}},
 				committees: [][]primitives.ValidatorIndex{{0, 1, 2}},
 			},
 			err: "bitfield length 4 is not equal to committee length 3",
@@ -51,7 +51,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Electra - Full committee attested",
 			args: args{
-				att:        &eth.AttestationElectra{AggregationBits: bitfield.Bitlist{0b11111}},
+				att:        &sila.AttestationElectra{AggregationBits: bitfield.Bitlist{0b11111}},
 				committees: [][]primitives.ValidatorIndex{{0, 1}, {2, 3}},
 			},
 			want: []uint64{0, 1, 2, 3},
@@ -59,7 +59,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Electra - Partial committee attested",
 			args: args{
-				att:        &eth.AttestationElectra{AggregationBits: bitfield.Bitlist{0b10110}},
+				att:        &sila.AttestationElectra{AggregationBits: bitfield.Bitlist{0b10110}},
 				committees: [][]primitives.ValidatorIndex{{0, 1}, {2, 3}},
 			},
 			want: []uint64{1, 2},
@@ -67,7 +67,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Electra - Invalid bit length",
 			args: args{
-				att:        &eth.AttestationElectra{AggregationBits: bitfield.Bitlist{0b111111}},
+				att:        &sila.AttestationElectra{AggregationBits: bitfield.Bitlist{0b111111}},
 				committees: [][]primitives.ValidatorIndex{{0, 1}, {2, 3}},
 			},
 			err: "bitfield length 5 is not equal to committee length 4",
@@ -75,7 +75,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Electra - No duplicates",
 			args: args{
-				att:        &eth.AttestationElectra{AggregationBits: bitfield.Bitlist{0b11111}},
+				att:        &sila.AttestationElectra{AggregationBits: bitfield.Bitlist{0b11111}},
 				committees: [][]primitives.ValidatorIndex{{0, 1}, {0, 1}},
 			},
 			want: []uint64{0, 1},
@@ -83,7 +83,7 @@ func TestAttestingIndices(t *testing.T) {
 		{
 			name: "Electra - No attester in committee",
 			args: args{
-				att:        &eth.AttestationElectra{AggregationBits: bitfield.Bitlist{0b11100}},
+				att:        &sila.AttestationElectra{AggregationBits: bitfield.Bitlist{0b11100}},
 				committees: [][]primitives.ValidatorIndex{{0, 1}, {0, 1}},
 			},
 			err: "no attesting indices found for committee index 0",
@@ -105,15 +105,15 @@ func TestAttestingIndices(t *testing.T) {
 func TestIsValidAttestationIndices(t *testing.T) {
 	tests := []struct {
 		name      string
-		att       eth.IndexedAtt
+		att       sila.IndexedAtt
 		wantedErr string
 	}{
 		{
 			name: "Indices should not be nil",
-			att: &eth.IndexedAttestation{
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+			att: &sila.IndexedAttestation{
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
@@ -121,11 +121,11 @@ func TestIsValidAttestationIndices(t *testing.T) {
 		},
 		{
 			name: "Indices should be non-empty",
-			att: &eth.IndexedAttestation{
+			att: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{},
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
@@ -133,11 +133,11 @@ func TestIsValidAttestationIndices(t *testing.T) {
 		},
 		{
 			name: "Greater than max validators per committee",
-			att: &eth.IndexedAttestation{
+			att: &sila.IndexedAttestation{
 				AttestingIndices: make([]uint64, params.BeaconConfig().MaxValidatorsPerCommittee+1),
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
@@ -145,11 +145,11 @@ func TestIsValidAttestationIndices(t *testing.T) {
 		},
 		{
 			name: "Needs to be sorted",
-			att: &eth.IndexedAttestation{
+			att: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{3, 2, 1},
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
@@ -157,44 +157,44 @@ func TestIsValidAttestationIndices(t *testing.T) {
 		},
 		{
 			name: "Valid indices",
-			att: &eth.IndexedAttestation{
+			att: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{1, 2, 3},
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
 		},
 		{
 			name: "Valid indices with length of 2",
-			att: &eth.IndexedAttestation{
+			att: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{1, 2},
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
 		},
 		{
 			name: "Valid indices with length of 1",
-			att: &eth.IndexedAttestation{
+			att: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{1},
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
 		},
 		{
 			name: "Electra - Greater than max validators per slot",
-			att: &eth.IndexedAttestationElectra{
+			att: &sila.IndexedAttestationElectra{
 				AttestingIndices: make([]uint64, params.BeaconConfig().MaxValidatorsPerCommittee*params.BeaconConfig().MaxCommitteesPerSlot+1),
-				Data: &eth.AttestationData{
-					Target: &eth.Checkpoint{},
-					Source: &eth.Checkpoint{},
+				Data: &sila.AttestationData{
+					Target: &sila.Checkpoint{},
+					Source: &sila.Checkpoint{},
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
 			},
@@ -218,7 +218,7 @@ func BenchmarkAttestingIndices_PartialCommittee(b *testing.B) {
 	committee := []primitives.ValidatorIndex{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33}
 
 	for b.Loop() {
-		_, err := attestation.AttestingIndices(&eth.Attestation{AggregationBits: bf}, committee)
+		_, err := attestation.AttestingIndices(&sila.Attestation{AggregationBits: bf}, committee)
 		require.NoError(b, err)
 	}
 }
@@ -228,11 +228,11 @@ func BenchmarkIsValidAttestationIndices(b *testing.B) {
 	for i := range indices {
 		indices[i] = uint64(i)
 	}
-	att := &eth.IndexedAttestation{
+	att := &sila.IndexedAttestation{
 		AttestingIndices: indices,
-		Data: &eth.AttestationData{
-			Target: &eth.Checkpoint{},
-			Source: &eth.Checkpoint{},
+		Data: &sila.AttestationData{
+			Target: &sila.Checkpoint{},
+			Source: &sila.Checkpoint{},
 		},
 		Signature: make([]byte, fieldparams.BLSSignatureLength),
 	}
@@ -247,35 +247,35 @@ func BenchmarkIsValidAttestationIndices(b *testing.B) {
 func TestAttDataIsEqual(t *testing.T) {
 	type test struct {
 		name     string
-		attData1 *eth.AttestationData
-		attData2 *eth.AttestationData
+		attData1 *sila.AttestationData
+		attData2 *sila.AttestationData
 		equal    bool
 	}
 	tests := []test{
 		{
 			name: "same",
-			attData1: &eth.AttestationData{
+			attData1: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
 			},
-			attData2: &eth.AttestationData{
+			attData2: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
@@ -284,28 +284,28 @@ func TestAttDataIsEqual(t *testing.T) {
 		},
 		{
 			name: "diff slot",
-			attData1: &eth.AttestationData{
+			attData1: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
 			},
-			attData2: &eth.AttestationData{
+			attData2: &sila.AttestationData{
 				Slot:            4,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
@@ -313,28 +313,28 @@ func TestAttDataIsEqual(t *testing.T) {
 		},
 		{
 			name: "diff block",
-			attData1: &eth.AttestationData{
+			attData1: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("good block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
 			},
-			attData2: &eth.AttestationData{
+			attData2: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
@@ -342,28 +342,28 @@ func TestAttDataIsEqual(t *testing.T) {
 		},
 		{
 			name: "diff source root",
-			attData1: &eth.AttestationData{
+			attData1: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("good source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
 			},
-			attData2: &eth.AttestationData{
+			attData2: &sila.AttestationData{
 				Slot:            5,
 				CommitteeIndex:  2,
 				BeaconBlockRoot: []byte("great block"),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 4,
 					Root:  []byte("bad source"),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 10,
 					Root:  []byte("good target"),
 				},
@@ -380,18 +380,18 @@ func TestAttDataIsEqual(t *testing.T) {
 func TestCheckPtIsEqual(t *testing.T) {
 	type test struct {
 		name     string
-		checkPt1 *eth.Checkpoint
-		checkPt2 *eth.Checkpoint
+		checkPt1 *sila.Checkpoint
+		checkPt2 *sila.Checkpoint
 		equal    bool
 	}
 	tests := []test{
 		{
 			name: "same",
-			checkPt1: &eth.Checkpoint{
+			checkPt1: &sila.Checkpoint{
 				Epoch: 4,
 				Root:  []byte("good source"),
 			},
-			checkPt2: &eth.Checkpoint{
+			checkPt2: &sila.Checkpoint{
 				Epoch: 4,
 				Root:  []byte("good source"),
 			},
@@ -399,11 +399,11 @@ func TestCheckPtIsEqual(t *testing.T) {
 		},
 		{
 			name: "diff epoch",
-			checkPt1: &eth.Checkpoint{
+			checkPt1: &sila.Checkpoint{
 				Epoch: 4,
 				Root:  []byte("good source"),
 			},
-			checkPt2: &eth.Checkpoint{
+			checkPt2: &sila.Checkpoint{
 				Epoch: 5,
 				Root:  []byte("good source"),
 			},
@@ -411,11 +411,11 @@ func TestCheckPtIsEqual(t *testing.T) {
 		},
 		{
 			name: "diff root",
-			checkPt1: &eth.Checkpoint{
+			checkPt1: &sila.Checkpoint{
 				Epoch: 4,
 				Root:  []byte("good source"),
 			},
-			checkPt2: &eth.Checkpoint{
+			checkPt2: &sila.Checkpoint{
 				Epoch: 4,
 				Root:  []byte("bad source"),
 			},
@@ -430,28 +430,28 @@ func TestCheckPtIsEqual(t *testing.T) {
 }
 
 func BenchmarkAttDataIsEqual(b *testing.B) {
-	attData1 := &eth.AttestationData{
+	attData1 := &sila.AttestationData{
 		Slot:            5,
 		CommitteeIndex:  2,
 		BeaconBlockRoot: []byte("great block"),
-		Source: &eth.Checkpoint{
+		Source: &sila.Checkpoint{
 			Epoch: 4,
 			Root:  []byte("good source"),
 		},
-		Target: &eth.Checkpoint{
+		Target: &sila.Checkpoint{
 			Epoch: 10,
 			Root:  []byte("good target"),
 		},
 	}
-	attData2 := &eth.AttestationData{
+	attData2 := &sila.AttestationData{
 		Slot:            5,
 		CommitteeIndex:  2,
 		BeaconBlockRoot: []byte("great block"),
-		Source: &eth.Checkpoint{
+		Source: &sila.Checkpoint{
 			Epoch: 4,
 			Root:  []byte("good source"),
 		},
-		Target: &eth.Checkpoint{
+		Target: &sila.Checkpoint{
 			Epoch: 10,
 			Root:  []byte("good target"),
 		},

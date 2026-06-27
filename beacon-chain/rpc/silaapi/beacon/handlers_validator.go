@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared"
@@ -20,10 +21,9 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 )
 
 // GetValidators returns filterable list of validators with their balance, status and index.
@@ -87,9 +87,9 @@ func (s *Server) GetValidators(w http.ResponseWriter, r *http.Request) {
 	// return no data if all IDs are ignored
 	if len(rawIds) > 0 && len(ids) == 0 {
 		resp := &structs.GetValidatorsResponse{
-			Data:                []*structs.ValidatorContainer{},
+			Data:           []*structs.ValidatorContainer{},
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
+			Finalized:      isFinalized,
 		}
 		httputil.WriteJson(w, resp)
 		return
@@ -115,9 +115,9 @@ func (s *Server) GetValidators(w http.ResponseWriter, r *http.Request) {
 			containers = append(containers, valContainerFromReadOnlyVal(val, id, balance, valStatus))
 		}
 		resp := &structs.GetValidatorsResponse{
-			Data:                containers,
+			Data:           containers,
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
+			Finalized:      isFinalized,
 		}
 		httputil.WriteJson(w, resp)
 		return
@@ -155,9 +155,9 @@ func (s *Server) GetValidators(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := &structs.GetValidatorsResponse{
-		Data:                valContainers,
+		Data:           valContainers,
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, resp)
 }
@@ -222,9 +222,9 @@ func (s *Server) GetValidator(w http.ResponseWriter, r *http.Request) {
 	isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 
 	resp := &structs.GetValidatorResponse{
-		Data:                container,
+		Data:           container,
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, resp)
 }
@@ -275,9 +275,9 @@ func (s *Server) GetValidatorBalances(w http.ResponseWriter, r *http.Request) {
 	// return no data if all IDs are ignored
 	if len(rawIds) > 0 && len(ids) == 0 {
 		resp := &structs.GetValidatorBalancesResponse{
-			Data:                []*structs.ValidatorBalance{},
+			Data:           []*structs.ValidatorBalance{},
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
+			Finalized:      isFinalized,
 		}
 		httputil.WriteJson(w, resp)
 		return
@@ -304,9 +304,9 @@ func (s *Server) GetValidatorBalances(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := &structs.GetValidatorBalancesResponse{
-		Data:                valBalances,
+		Data:           valBalances,
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, resp)
 }
@@ -353,19 +353,19 @@ func (s *Server) getValidatorIdentitiesSSZ(w http.ResponseWriter, st state.Beaco
 		return
 	}
 
-	var identities []*eth.ValidatorIdentity
+	var identities []*sila.ValidatorIdentity
 	if len(ids) == 0 {
-		identities = make([]*eth.ValidatorIdentity, 0, st.NumValidators())
+		identities = make([]*sila.ValidatorIdentity, 0, st.NumValidators())
 		for i, v := range st.ValidatorsReadOnlySeq() {
 			pubkey := v.PublicKey()
-			identities = append(identities, &eth.ValidatorIdentity{
+			identities = append(identities, &sila.ValidatorIdentity{
 				Index:           i,
 				Pubkey:          pubkey[:],
 				ActivationEpoch: v.ActivationEpoch(),
 			})
 		}
 	} else {
-		identities = make([]*eth.ValidatorIdentity, len(ids))
+		identities = make([]*sila.ValidatorIdentity, len(ids))
 		for i, id := range ids {
 			v, err := st.ValidatorAtIndexReadOnly(id)
 			if err != nil {
@@ -373,7 +373,7 @@ func (s *Server) getValidatorIdentitiesSSZ(w http.ResponseWriter, st state.Beaco
 				return
 			}
 			pubkey := v.PublicKey()
-			identities[i] = &eth.ValidatorIdentity{
+			identities[i] = &sila.ValidatorIdentity{
 				Index:           id,
 				Pubkey:          pubkey[:],
 				ActivationEpoch: v.ActivationEpoch(),
@@ -381,7 +381,7 @@ func (s *Server) getValidatorIdentitiesSSZ(w http.ResponseWriter, st state.Beaco
 		}
 	}
 
-	sszLen := (&eth.ValidatorIdentity{}).SizeSSZ()
+	sszLen := (&sila.ValidatorIdentity{}).SizeSSZ()
 	resp := make([]byte, len(identities)*sszLen)
 	for i, vi := range identities {
 		ssz, err := vi.MarshalSSZ()
@@ -417,9 +417,9 @@ func (s *Server) getValidatorIdentitiesJSON(
 	// return no data if all IDs are ignored
 	if len(rawIds) > 0 && len(ids) == 0 {
 		resp := &structs.GetValidatorIdentitiesResponse{
-			Data:                []*structs.ValidatorIdentity{},
+			Data:           []*structs.ValidatorIdentity{},
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
+			Finalized:      isFinalized,
 		}
 		httputil.WriteJson(w, resp)
 		return
@@ -454,9 +454,9 @@ func (s *Server) getValidatorIdentitiesJSON(
 	}
 
 	resp := &structs.GetValidatorIdentitiesResponse{
-		Data:                identities,
+		Data:           identities,
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, resp)
 }

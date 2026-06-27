@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/withdrawals.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
@@ -25,7 +25,7 @@ const (
 
 type SignedBLSToSilaChange struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       *BLSToSilaChange  `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Message       *BLSToSilaChange       `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Signature     []byte                 `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -76,12 +76,12 @@ func (x *SignedBLSToSilaChange) GetSignature() []byte {
 }
 
 type BLSToSilaChange struct {
-	state              protoimpl.MessageState                                                     `protogen:"open.v1"`
-	ValidatorIndex     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	FromBlsPubkey      []byte                                                                     `protobuf:"bytes,2,opt,name=from_bls_pubkey,json=fromBlsPubkey,proto3" json:"from_bls_pubkey,omitempty" ssz-size:"48"`
-	ToSilaAddress []byte                                                                     `protobuf:"bytes,3,opt,name=to_sila_address,json=toSilaAddress,proto3" json:"to_sila_address,omitempty" ssz-size:"20"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state          protoimpl.MessageState                                                            `protogen:"open.v1"`
+	ValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
+	FromBlsPubkey  []byte                                                                            `protobuf:"bytes,2,opt,name=from_bls_pubkey,json=fromBlsPubkey,proto3" json:"from_bls_pubkey,omitempty" ssz-size:"48"`
+	ToSilaAddress  []byte                                                                            `protobuf:"bytes,3,opt,name=to_sila_address,json=toSilaAddress,proto3" json:"to_sila_address,omitempty" ssz-size:"20"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *BLSToSilaChange) Reset() {

@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/paulbellamy/ratecounter"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/async/abool"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/das"
@@ -17,11 +18,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/slice"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	"github.com/paulbellamy/ratecounter"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 
@@ -302,7 +302,7 @@ func TestService_roundRobinSync(t *testing.T) {
 				State: st,
 				Root:  genesisRoot[:],
 				DB:    beaconDB,
-				FinalizedCheckPoint: &eth.Checkpoint{
+				FinalizedCheckPoint: &sila.Checkpoint{
 					Epoch: 0,
 				},
 				Genesis:        gt,
@@ -352,7 +352,7 @@ func TestService_processBlock(t *testing.T) {
 			State: st,
 			Root:  genesisBlkRoot[:],
 			DB:    beaconDB,
-			FinalizedCheckPoint: &eth.Checkpoint{
+			FinalizedCheckPoint: &sila.Checkpoint{
 				Epoch: 0,
 			},
 			Genesis:        time.Now(),
@@ -426,7 +426,7 @@ func TestService_processBlockBatch(t *testing.T) {
 			State: st,
 			Root:  genesisBlkRoot[:],
 			DB:    beaconDB,
-			FinalizedCheckPoint: &eth.Checkpoint{
+			FinalizedCheckPoint: &sila.Checkpoint{
 				Epoch: 0,
 			},
 		},
@@ -528,7 +528,7 @@ func TestService_processBatchedBlocksReturnsFilteredCount(t *testing.T) {
 			State: st,
 			Root:  genesisBlkRoot[:],
 			DB:    beaconDB,
-			FinalizedCheckPoint: &eth.Checkpoint{
+			FinalizedCheckPoint: &sila.Checkpoint{
 				Epoch: 0,
 			},
 		},
@@ -622,7 +622,7 @@ func TestService_blockProviderScoring(t *testing.T) {
 		State: st,
 		Root:  genesisRoot[:],
 		DB:    beaconDB,
-		FinalizedCheckPoint: &eth.Checkpoint{
+		FinalizedCheckPoint: &sila.Checkpoint{
 			Epoch: 0,
 			Root:  make([]byte, 32),
 		},
@@ -692,7 +692,7 @@ func TestService_syncToFinalizedEpoch(t *testing.T) {
 		State: st,
 		Root:  genesisRoot[:],
 		DB:    beaconDB,
-		FinalizedCheckPoint: &eth.Checkpoint{
+		FinalizedCheckPoint: &sila.Checkpoint{
 			Epoch: 0,
 			Root:  make([]byte, 32),
 		},
@@ -812,7 +812,7 @@ func TestService_PropcessFetchedDataRegSync(t *testing.T) {
 	const validatorCount = uint64(64)
 	state, _ := util.DeterministicGenesisState(t, validatorCount)
 	chain := &mock.ChainService{
-		FinalizedCheckPoint: &eth.Checkpoint{},
+		FinalizedCheckPoint: &sila.Checkpoint{},
 		DB:                  dbtest.SetupDB(t),
 		State:               state,
 		Root:                block1Root[:],

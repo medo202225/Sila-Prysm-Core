@@ -4,15 +4,15 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/p2p_messages.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
@@ -26,11 +26,11 @@ const (
 )
 
 type Status struct {
-	state          protoimpl.MessageState                                            `protogen:"open.v1"`
-	ForkDigest     []byte                                                            `protobuf:"bytes,1,opt,name=fork_digest,json=forkDigest,proto3" json:"fork_digest,omitempty" ssz-size:"4"`
-	FinalizedRoot  []byte                                                            `protobuf:"bytes,2,opt,name=finalized_root,json=finalizedRoot,proto3" json:"finalized_root,omitempty" ssz-size:"32"`
+	state          protoimpl.MessageState                                                   `protogen:"open.v1"`
+	ForkDigest     []byte                                                                   `protobuf:"bytes,1,opt,name=fork_digest,json=forkDigest,proto3" json:"fork_digest,omitempty" ssz-size:"4"`
+	FinalizedRoot  []byte                                                                   `protobuf:"bytes,2,opt,name=finalized_root,json=finalizedRoot,proto3" json:"finalized_root,omitempty" ssz-size:"32"`
 	FinalizedEpoch github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	HeadRoot       []byte                                                            `protobuf:"bytes,4,opt,name=head_root,json=headRoot,proto3" json:"head_root,omitempty" ssz-size:"32"`
+	HeadRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=head_root,json=headRoot,proto3" json:"head_root,omitempty" ssz-size:"32"`
 	HeadSlot       github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,5,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -102,11 +102,11 @@ func (x *Status) GetHeadSlot() github_com_sila_chain_Sila_Sila_Core_v7_consensus
 }
 
 type StatusV2 struct {
-	state                 protoimpl.MessageState                                            `protogen:"open.v1"`
-	ForkDigest            []byte                                                            `protobuf:"bytes,1,opt,name=fork_digest,json=forkDigest,proto3" json:"fork_digest,omitempty" ssz-size:"4"`
-	FinalizedRoot         []byte                                                            `protobuf:"bytes,2,opt,name=finalized_root,json=finalizedRoot,proto3" json:"finalized_root,omitempty" ssz-size:"32"`
+	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
+	ForkDigest            []byte                                                                   `protobuf:"bytes,1,opt,name=fork_digest,json=forkDigest,proto3" json:"fork_digest,omitempty" ssz-size:"4"`
+	FinalizedRoot         []byte                                                                   `protobuf:"bytes,2,opt,name=finalized_root,json=finalizedRoot,proto3" json:"finalized_root,omitempty" ssz-size:"32"`
 	FinalizedEpoch        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	HeadRoot              []byte                                                            `protobuf:"bytes,4,opt,name=head_root,json=headRoot,proto3" json:"head_root,omitempty" ssz-size:"32"`
+	HeadRoot              []byte                                                                   `protobuf:"bytes,4,opt,name=head_root,json=headRoot,proto3" json:"head_root,omitempty" ssz-size:"32"`
 	HeadSlot              github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,5,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	EarliestAvailableSlot github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot  `protobuf:"varint,6,opt,name=earliest_available_slot,json=earliestAvailableSlot,proto3" json:"earliest_available_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields         protoimpl.UnknownFields
@@ -186,10 +186,10 @@ func (x *StatusV2) GetEarliestAvailableSlot() github_com_sila_chain_Sila_Sila_Co
 }
 
 type BeaconBlocksByRangeRequest struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	StartSlot     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	Step          uint64                                                           `protobuf:"varint,3,opt,name=step,proto3" json:"step,omitempty"`
+	Count         uint64                                                                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Step          uint64                                                                  `protobuf:"varint,3,opt,name=step,proto3" json:"step,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -246,9 +246,9 @@ func (x *BeaconBlocksByRangeRequest) GetStep() uint64 {
 }
 
 type ENRForkID struct {
-	state             protoimpl.MessageState                                            `protogen:"open.v1"`
-	CurrentForkDigest []byte                                                            `protobuf:"bytes,1,opt,name=current_fork_digest,json=currentForkDigest,proto3" json:"current_fork_digest,omitempty" ssz-size:"4"`
-	NextForkVersion   []byte                                                            `protobuf:"bytes,2,opt,name=next_fork_version,json=nextForkVersion,proto3" json:"next_fork_version,omitempty" ssz-size:"4"`
+	state             protoimpl.MessageState                                                   `protogen:"open.v1"`
+	CurrentForkDigest []byte                                                                   `protobuf:"bytes,1,opt,name=current_fork_digest,json=currentForkDigest,proto3" json:"current_fork_digest,omitempty" ssz-size:"4"`
+	NextForkVersion   []byte                                                                   `protobuf:"bytes,2,opt,name=next_fork_version,json=nextForkVersion,proto3" json:"next_fork_version,omitempty" ssz-size:"4"`
 	NextForkEpoch     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=next_fork_epoch,json=nextForkEpoch,proto3" json:"next_fork_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -306,8 +306,8 @@ func (x *ENRForkID) GetNextForkEpoch() github_com_sila_chain_Sila_Sila_Core_v7_c
 }
 
 type MetaDataV0 struct {
-	state         protoimpl.MessageState                          `protogen:"open.v1"`
-	SeqNumber     uint64                                          `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
+	state         protoimpl.MessageState                        `protogen:"open.v1"`
+	SeqNumber     uint64                                        `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
 	Attnets       github_com_sila_chain_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -358,8 +358,8 @@ func (x *MetaDataV0) GetAttnets() github_com_sila_chain_go_bitfield.Bitvector64 
 }
 
 type MetaDataV1 struct {
-	state         protoimpl.MessageState                          `protogen:"open.v1"`
-	SeqNumber     uint64                                          `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
+	state         protoimpl.MessageState                        `protogen:"open.v1"`
+	SeqNumber     uint64                                        `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
 	Attnets       github_com_sila_chain_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
 	Syncnets      github_com_sila_chain_go_bitfield.Bitvector4  `protobuf:"bytes,3,opt,name=syncnets,proto3" json:"syncnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
 	unknownFields protoimpl.UnknownFields
@@ -418,11 +418,11 @@ func (x *MetaDataV1) GetSyncnets() github_com_sila_chain_go_bitfield.Bitvector4 
 }
 
 type MetaDataV2 struct {
-	state             protoimpl.MessageState                          `protogen:"open.v1"`
-	SeqNumber         uint64                                          `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
+	state             protoimpl.MessageState                        `protogen:"open.v1"`
+	SeqNumber         uint64                                        `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
 	Attnets           github_com_sila_chain_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector64" ssz-size:"8"`
 	Syncnets          github_com_sila_chain_go_bitfield.Bitvector4  `protobuf:"bytes,3,opt,name=syncnets,proto3" json:"syncnets,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	CustodyGroupCount uint64                                          `protobuf:"varint,4,opt,name=custody_group_count,json=custodyGroupCount,proto3" json:"custody_group_count,omitempty"`
+	CustodyGroupCount uint64                                        `protobuf:"varint,4,opt,name=custody_group_count,json=custodyGroupCount,proto3" json:"custody_group_count,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -486,9 +486,9 @@ func (x *MetaDataV2) GetCustodyGroupCount() uint64 {
 }
 
 type BlobSidecarsByRangeRequest struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	StartSlot     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Count         uint64                                                                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -538,10 +538,10 @@ func (x *BlobSidecarsByRangeRequest) GetCount() uint64 {
 }
 
 type DataColumnSidecarsByRangeRequest struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	StartSlot     github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,1,opt,name=start_slot,json=startSlot,proto3" json:"start_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Count         uint64                                                           `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	Columns       []uint64                                                         `protobuf:"varint,3,rep,packed,name=columns,proto3" json:"columns,omitempty" ssz-max:"128"`
+	Count         uint64                                                                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Columns       []uint64                                                                `protobuf:"varint,3,rep,packed,name=columns,proto3" json:"columns,omitempty" ssz-max:"128"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

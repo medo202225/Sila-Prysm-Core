@@ -6,7 +6,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/operations/voluntaryexits"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
@@ -23,7 +23,7 @@ func TestServer_getExits(t *testing.T) {
 		ExitPool: voluntaryexits.NewPool(),
 	}
 
-	exits := make([]*eth.SignedVoluntaryExit, params.BeaconConfig().MaxVoluntaryExits)
+	exits := make([]*sila.SignedVoluntaryExit, params.BeaconConfig().MaxVoluntaryExits)
 	for i := primitives.ValidatorIndex(0); uint64(i) < params.BeaconConfig().MaxVoluntaryExits; i++ {
 		exit, err := util.GenerateVoluntaryExits(beaconState, privKeys[i], i)
 		require.NoError(t, err)

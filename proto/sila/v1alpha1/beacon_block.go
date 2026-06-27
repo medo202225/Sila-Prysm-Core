@@ -1,4 +1,4 @@
-package eth
+package sila
 
 import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
@@ -267,7 +267,7 @@ func (body *BeaconBlockBodyBellatrix) Copy() *BeaconBlockBodyBellatrix {
 		Deposits:          CopySlice(body.Deposits),
 		VoluntaryExits:    CopySlice(body.VoluntaryExits),
 		SyncAggregate:     body.SyncAggregate.Copy(),
-		SilaPayload:  body.SilaPayload.Copy(),
+		SilaPayload:       body.SilaPayload.Copy(),
 	}
 }
 
@@ -302,15 +302,15 @@ func (body *BlindedBeaconBlockBodyBellatrix) Copy() *BlindedBeaconBlockBodyBella
 		return nil
 	}
 	return &BlindedBeaconBlockBodyBellatrix{
-		RandaoReveal:           bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:               body.SilaData.Copy(),
-		Graffiti:               bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:      CopySlice(body.ProposerSlashings),
-		AttesterSlashings:      CopySlice(body.AttesterSlashings),
-		Attestations:           CopySlice(body.Attestations),
-		Deposits:               CopySlice(body.Deposits),
-		VoluntaryExits:         CopySlice(body.VoluntaryExits),
-		SyncAggregate:          body.SyncAggregate.Copy(),
+		RandaoReveal:      bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:          body.SilaData.Copy(),
+		Graffiti:          bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings: CopySlice(body.ProposerSlashings),
+		AttesterSlashings: CopySlice(body.AttesterSlashings),
+		Attestations:      CopySlice(body.Attestations),
+		Deposits:          CopySlice(body.Deposits),
+		VoluntaryExits:    CopySlice(body.VoluntaryExits),
+		SyncAggregate:     body.SyncAggregate.Copy(),
 		SilaPayloadHeader: body.SilaPayloadHeader.Copy(),
 	}
 }
@@ -350,17 +350,17 @@ func (body *BeaconBlockBodyCapella) Copy() *BeaconBlockBodyCapella {
 		return nil
 	}
 	return &BeaconBlockBodyCapella{
-		RandaoReveal:          bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:              body.SilaData.Copy(),
-		Graffiti:              bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:     CopySlice(body.ProposerSlashings),
-		AttesterSlashings:     CopySlice(body.AttesterSlashings),
-		Attestations:          CopySlice(body.Attestations),
-		Deposits:              CopySlice(body.Deposits),
-		VoluntaryExits:        CopySlice(body.VoluntaryExits),
-		SyncAggregate:         body.SyncAggregate.Copy(),
-		SilaPayload:      body.SilaPayload.Copy(),
-		BlsToSilaChanges: CopySlice(body.BlsToSilaChanges),
+		RandaoReveal:      bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:          body.SilaData.Copy(),
+		Graffiti:          bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings: CopySlice(body.ProposerSlashings),
+		AttesterSlashings: CopySlice(body.AttesterSlashings),
+		Attestations:      CopySlice(body.Attestations),
+		Deposits:          CopySlice(body.Deposits),
+		VoluntaryExits:    CopySlice(body.VoluntaryExits),
+		SyncAggregate:     body.SyncAggregate.Copy(),
+		SilaPayload:       body.SilaPayload.Copy(),
+		BlsToSilaChanges:  CopySlice(body.BlsToSilaChanges),
 	}
 }
 
@@ -395,15 +395,15 @@ func (body *BlindedBeaconBlockBodyCapella) Copy() *BlindedBeaconBlockBodyCapella
 		return nil
 	}
 	return &BlindedBeaconBlockBodyCapella{
-		RandaoReveal:           bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:               body.SilaData.Copy(),
-		Graffiti:               bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:      CopySlice(body.ProposerSlashings),
-		AttesterSlashings:      CopySlice(body.AttesterSlashings),
-		Attestations:           CopySlice(body.Attestations),
-		Deposits:               CopySlice(body.Deposits),
-		VoluntaryExits:         CopySlice(body.VoluntaryExits),
-		SyncAggregate:          body.SyncAggregate.Copy(),
+		RandaoReveal:      bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:          body.SilaData.Copy(),
+		Graffiti:          bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings: CopySlice(body.ProposerSlashings),
+		AttesterSlashings: CopySlice(body.AttesterSlashings),
+		Attestations:      CopySlice(body.Attestations),
+		Deposits:          CopySlice(body.Deposits),
+		VoluntaryExits:    CopySlice(body.VoluntaryExits),
+		SyncAggregate:     body.SyncAggregate.Copy(),
 		SilaPayloadHeader: body.SilaPayloadHeader.Copy(),
 		BlsToSilaChanges:  CopySlice(body.BlsToSilaChanges),
 	}
@@ -426,9 +426,9 @@ func (change *BLSToSilaChange) Copy() *BLSToSilaChange {
 		return nil
 	}
 	return &BLSToSilaChange{
-		ValidatorIndex:     change.ValidatorIndex,
-		FromBlsPubkey:      bytesutil.SafeCopyBytes(change.FromBlsPubkey),
-		ToSilaAddress: bytesutil.SafeCopyBytes(change.ToSilaAddress),
+		ValidatorIndex: change.ValidatorIndex,
+		FromBlsPubkey:  bytesutil.SafeCopyBytes(change.FromBlsPubkey),
+		ToSilaAddress:  bytesutil.SafeCopyBytes(change.ToSilaAddress),
 	}
 }
 
@@ -467,18 +467,18 @@ func (body *BlindedBeaconBlockBodyDeneb) Copy() *BlindedBeaconBlockBodyDeneb {
 		return nil
 	}
 	return &BlindedBeaconBlockBodyDeneb{
-		RandaoReveal:           bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:               body.SilaData.Copy(),
-		Graffiti:               bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:      CopySlice(body.ProposerSlashings),
-		AttesterSlashings:      CopySlice(body.AttesterSlashings),
-		Attestations:           CopySlice(body.Attestations),
-		Deposits:               CopySlice(body.Deposits),
-		VoluntaryExits:         CopySlice(body.VoluntaryExits),
-		SyncAggregate:          body.SyncAggregate.Copy(),
-		SilaPayloadHeader: body.SilaPayloadHeader.Copy(),
-		BlsToSilaChanges:  CopySlice(body.BlsToSilaChanges),
-		BlobKzgCommitments:     CopyBlobKZGs(body.BlobKzgCommitments),
+		RandaoReveal:       bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:           body.SilaData.Copy(),
+		Graffiti:           bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings:  CopySlice(body.ProposerSlashings),
+		AttesterSlashings:  CopySlice(body.AttesterSlashings),
+		Attestations:       CopySlice(body.Attestations),
+		Deposits:           CopySlice(body.Deposits),
+		VoluntaryExits:     CopySlice(body.VoluntaryExits),
+		SyncAggregate:      body.SyncAggregate.Copy(),
+		SilaPayloadHeader:  body.SilaPayloadHeader.Copy(),
+		BlsToSilaChanges:   CopySlice(body.BlsToSilaChanges),
+		BlobKzgCommitments: CopyBlobKZGs(body.BlobKzgCommitments),
 	}
 }
 
@@ -513,18 +513,18 @@ func (body *BeaconBlockBodyDeneb) Copy() *BeaconBlockBodyDeneb {
 		return nil
 	}
 	return &BeaconBlockBodyDeneb{
-		RandaoReveal:          bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:              body.SilaData.Copy(),
-		Graffiti:              bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:     CopySlice(body.ProposerSlashings),
-		AttesterSlashings:     CopySlice(body.AttesterSlashings),
-		Attestations:          CopySlice(body.Attestations),
-		Deposits:              CopySlice(body.Deposits),
-		VoluntaryExits:        CopySlice(body.VoluntaryExits),
-		SyncAggregate:         body.SyncAggregate.Copy(),
-		SilaPayload:      body.SilaPayload.Copy(),
-		BlsToSilaChanges: CopySlice(body.BlsToSilaChanges),
-		BlobKzgCommitments:    CopyBlobKZGs(body.BlobKzgCommitments),
+		RandaoReveal:       bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:           body.SilaData.Copy(),
+		Graffiti:           bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings:  CopySlice(body.ProposerSlashings),
+		AttesterSlashings:  CopySlice(body.AttesterSlashings),
+		Attestations:       CopySlice(body.Attestations),
+		Deposits:           CopySlice(body.Deposits),
+		VoluntaryExits:     CopySlice(body.VoluntaryExits),
+		SyncAggregate:      body.SyncAggregate.Copy(),
+		SilaPayload:        body.SilaPayload.Copy(),
+		BlsToSilaChanges:   CopySlice(body.BlsToSilaChanges),
+		BlobKzgCommitments: CopyBlobKZGs(body.BlobKzgCommitments),
 	}
 }
 
@@ -568,19 +568,19 @@ func (body *BlindedBeaconBlockBodyElectra) Copy() *BlindedBeaconBlockBodyElectra
 		return nil
 	}
 	return &BlindedBeaconBlockBodyElectra{
-		RandaoReveal:           bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:               body.SilaData.Copy(),
-		Graffiti:               bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:      CopySlice(body.ProposerSlashings),
-		AttesterSlashings:      CopySlice(body.AttesterSlashings),
-		Attestations:           CopySlice(body.Attestations),
-		Deposits:               CopySlice(body.Deposits),
-		VoluntaryExits:         CopySlice(body.VoluntaryExits),
-		SyncAggregate:          body.SyncAggregate.Copy(),
-		SilaPayloadHeader: body.SilaPayloadHeader.Copy(),
-		BlsToSilaChanges:  CopySlice(body.BlsToSilaChanges),
-		BlobKzgCommitments:     CopyBlobKZGs(body.BlobKzgCommitments),
-		SilaRequests:      CopySilaRequests(body.SilaRequests),
+		RandaoReveal:       bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:           body.SilaData.Copy(),
+		Graffiti:           bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings:  CopySlice(body.ProposerSlashings),
+		AttesterSlashings:  CopySlice(body.AttesterSlashings),
+		Attestations:       CopySlice(body.Attestations),
+		Deposits:           CopySlice(body.Deposits),
+		VoluntaryExits:     CopySlice(body.VoluntaryExits),
+		SyncAggregate:      body.SyncAggregate.Copy(),
+		SilaPayloadHeader:  body.SilaPayloadHeader.Copy(),
+		BlsToSilaChanges:   CopySlice(body.BlsToSilaChanges),
+		BlobKzgCommitments: CopyBlobKZGs(body.BlobKzgCommitments),
+		SilaRequests:       CopySilaRequests(body.SilaRequests),
 	}
 }
 
@@ -615,19 +615,19 @@ func (body *BeaconBlockBodyElectra) Copy() *BeaconBlockBodyElectra {
 		return nil
 	}
 	return &BeaconBlockBodyElectra{
-		RandaoReveal:          bytesutil.SafeCopyBytes(body.RandaoReveal),
-		SilaData:              body.SilaData.Copy(),
-		Graffiti:              bytesutil.SafeCopyBytes(body.Graffiti),
-		ProposerSlashings:     CopySlice(body.ProposerSlashings),
-		AttesterSlashings:     CopySlice(body.AttesterSlashings),
-		Attestations:          CopySlice(body.Attestations),
-		Deposits:              CopySlice(body.Deposits),
-		VoluntaryExits:        CopySlice(body.VoluntaryExits),
-		SyncAggregate:         body.SyncAggregate.Copy(),
-		SilaPayload:      body.SilaPayload.Copy(),
-		BlsToSilaChanges: CopySlice(body.BlsToSilaChanges),
-		BlobKzgCommitments:    CopyBlobKZGs(body.BlobKzgCommitments),
-		SilaRequests:     CopySilaRequests(body.SilaRequests),
+		RandaoReveal:       bytesutil.SafeCopyBytes(body.RandaoReveal),
+		SilaData:           body.SilaData.Copy(),
+		Graffiti:           bytesutil.SafeCopyBytes(body.Graffiti),
+		ProposerSlashings:  CopySlice(body.ProposerSlashings),
+		AttesterSlashings:  CopySlice(body.AttesterSlashings),
+		Attestations:       CopySlice(body.Attestations),
+		Deposits:           CopySlice(body.Deposits),
+		VoluntaryExits:     CopySlice(body.VoluntaryExits),
+		SyncAggregate:      body.SyncAggregate.Copy(),
+		SilaPayload:        body.SilaPayload.Copy(),
+		BlsToSilaChanges:   CopySlice(body.BlsToSilaChanges),
+		BlobKzgCommitments: CopyBlobKZGs(body.BlobKzgCommitments),
+		SilaRequests:       CopySilaRequests(body.SilaRequests),
 	}
 }
 

@@ -12,8 +12,8 @@ import (
 
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_validator "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
-	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
 	v1alpha1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -110,7 +110,7 @@ type SignRequest struct {
 	//	*SignRequest_SilaPayloadEnvelope
 	//	*SignRequest_PayloadAttestationData
 	//	*SignRequest_ProposerPreference
-	Object        isSignRequest_Object                                             `protobuf_oneof:"object"`
+	Object        isSignRequest_Object                                                    `protobuf_oneof:"object"`
 	SigningSlot   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,6,opt,name=signing_slot,json=signingSlot,proto3" json:"signing_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -688,10 +688,10 @@ func (x *ProposerOptionPayload) GetGraffiti() string {
 }
 
 type BuilderConfig struct {
-	state         protoimpl.MessageState                                            `protogen:"open.v1"`
-	Enabled       bool                                                              `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	state         protoimpl.MessageState                                                   `protogen:"open.v1"`
+	Enabled       bool                                                                     `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	GasLimit      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_validator.Uint64 `protobuf:"varint,2,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator.Uint64"`
-	Relays        []string                                                          `protobuf:"bytes,3,rep,name=relays,proto3" json:"relays,omitempty"`
+	Relays        []string                                                                 `protobuf:"bytes,3,rep,name=relays,proto3" json:"relays,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1086,53 +1086,53 @@ var file_proto_sila_v1alpha1_validator_client_keymanager_proto_goTypes = []any{
 	(*BuilderConfig)(nil),                                // 4: sila.validator.accounts.v2.BuilderConfig
 	(*ProposerSettingsPayload)(nil),                      // 5: sila.validator.accounts.v2.ProposerSettingsPayload
 	nil,                                                  // 6: sila.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry
-	(*v1alpha1.BeaconBlock)(nil),                         // 7: sila.eth.v1alpha1.BeaconBlock
-	(*v1alpha1.AttestationData)(nil),                     // 8: sila.eth.v1alpha1.AttestationData
-	(*v1alpha1.AggregateAttestationAndProof)(nil),        // 9: sila.eth.v1alpha1.AggregateAttestationAndProof
-	(*v1alpha1.VoluntaryExit)(nil),                       // 10: sila.eth.v1alpha1.VoluntaryExit
-	(*v1alpha1.BeaconBlockAltair)(nil),                   // 11: sila.eth.v1alpha1.BeaconBlockAltair
-	(*v1alpha1.SyncAggregatorSelectionData)(nil),         // 12: sila.eth.v1alpha1.SyncAggregatorSelectionData
-	(*v1alpha1.ContributionAndProof)(nil),                // 13: sila.eth.v1alpha1.ContributionAndProof
-	(*v1alpha1.BeaconBlockBellatrix)(nil),                // 14: sila.eth.v1alpha1.BeaconBlockBellatrix
-	(*v1alpha1.BlindedBeaconBlockBellatrix)(nil),         // 15: sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	(*v1alpha1.ValidatorRegistrationV1)(nil),             // 16: sila.eth.v1alpha1.ValidatorRegistrationV1
-	(*v1alpha1.BeaconBlockCapella)(nil),                  // 17: sila.eth.v1alpha1.BeaconBlockCapella
-	(*v1alpha1.BlindedBeaconBlockCapella)(nil),           // 18: sila.eth.v1alpha1.BlindedBeaconBlockCapella
-	(*v1alpha1.BeaconBlockDeneb)(nil),                    // 19: sila.eth.v1alpha1.BeaconBlockDeneb
-	(*v1alpha1.BlindedBeaconBlockDeneb)(nil),             // 20: sila.eth.v1alpha1.BlindedBeaconBlockDeneb
-	(*v1alpha1.BeaconBlockElectra)(nil),                  // 21: sila.eth.v1alpha1.BeaconBlockElectra
-	(*v1alpha1.BlindedBeaconBlockElectra)(nil),           // 22: sila.eth.v1alpha1.BlindedBeaconBlockElectra
-	(*v1alpha1.AggregateAttestationAndProofElectra)(nil), // 23: sila.eth.v1alpha1.AggregateAttestationAndProofElectra
-	(*v1alpha1.BlindedBeaconBlockFulu)(nil),              // 24: sila.eth.v1alpha1.BlindedBeaconBlockFulu
-	(*v1alpha1.BeaconBlockGloas)(nil),                    // 25: sila.eth.v1alpha1.BeaconBlockGloas
-	(*v1alpha1.SilaPayloadEnvelope)(nil),            // 26: sila.eth.v1alpha1.SilaPayloadEnvelope
-	(*v1alpha1.PayloadAttestationData)(nil),              // 27: sila.eth.v1alpha1.PayloadAttestationData
-	(*v1alpha1.ProposerPreferences)(nil),                 // 28: sila.eth.v1alpha1.ProposerPreferences
+	(*v1alpha1.BeaconBlock)(nil),                         // 7: sila.sila.v1alpha1.BeaconBlock
+	(*v1alpha1.AttestationData)(nil),                     // 8: sila.sila.v1alpha1.AttestationData
+	(*v1alpha1.AggregateAttestationAndProof)(nil),        // 9: sila.sila.v1alpha1.AggregateAttestationAndProof
+	(*v1alpha1.VoluntaryExit)(nil),                       // 10: sila.sila.v1alpha1.VoluntaryExit
+	(*v1alpha1.BeaconBlockAltair)(nil),                   // 11: sila.sila.v1alpha1.BeaconBlockAltair
+	(*v1alpha1.SyncAggregatorSelectionData)(nil),         // 12: sila.sila.v1alpha1.SyncAggregatorSelectionData
+	(*v1alpha1.ContributionAndProof)(nil),                // 13: sila.sila.v1alpha1.ContributionAndProof
+	(*v1alpha1.BeaconBlockBellatrix)(nil),                // 14: sila.sila.v1alpha1.BeaconBlockBellatrix
+	(*v1alpha1.BlindedBeaconBlockBellatrix)(nil),         // 15: sila.sila.v1alpha1.BlindedBeaconBlockBellatrix
+	(*v1alpha1.ValidatorRegistrationV1)(nil),             // 16: sila.sila.v1alpha1.ValidatorRegistrationV1
+	(*v1alpha1.BeaconBlockCapella)(nil),                  // 17: sila.sila.v1alpha1.BeaconBlockCapella
+	(*v1alpha1.BlindedBeaconBlockCapella)(nil),           // 18: sila.sila.v1alpha1.BlindedBeaconBlockCapella
+	(*v1alpha1.BeaconBlockDeneb)(nil),                    // 19: sila.sila.v1alpha1.BeaconBlockDeneb
+	(*v1alpha1.BlindedBeaconBlockDeneb)(nil),             // 20: sila.sila.v1alpha1.BlindedBeaconBlockDeneb
+	(*v1alpha1.BeaconBlockElectra)(nil),                  // 21: sila.sila.v1alpha1.BeaconBlockElectra
+	(*v1alpha1.BlindedBeaconBlockElectra)(nil),           // 22: sila.sila.v1alpha1.BlindedBeaconBlockElectra
+	(*v1alpha1.AggregateAttestationAndProofElectra)(nil), // 23: sila.sila.v1alpha1.AggregateAttestationAndProofElectra
+	(*v1alpha1.BlindedBeaconBlockFulu)(nil),              // 24: sila.sila.v1alpha1.BlindedBeaconBlockFulu
+	(*v1alpha1.BeaconBlockGloas)(nil),                    // 25: sila.sila.v1alpha1.BeaconBlockGloas
+	(*v1alpha1.SilaPayloadEnvelope)(nil),                 // 26: sila.sila.v1alpha1.SilaPayloadEnvelope
+	(*v1alpha1.PayloadAttestationData)(nil),              // 27: sila.sila.v1alpha1.PayloadAttestationData
+	(*v1alpha1.ProposerPreferences)(nil),                 // 28: sila.sila.v1alpha1.ProposerPreferences
 }
 var file_proto_sila_v1alpha1_validator_client_keymanager_proto_depIdxs = []int32{
-	7,  // 0: sila.validator.accounts.v2.SignRequest.block:type_name -> sila.eth.v1alpha1.BeaconBlock
-	8,  // 1: sila.validator.accounts.v2.SignRequest.attestation_data:type_name -> sila.eth.v1alpha1.AttestationData
-	9,  // 2: sila.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof:type_name -> sila.eth.v1alpha1.AggregateAttestationAndProof
-	10, // 3: sila.validator.accounts.v2.SignRequest.exit:type_name -> sila.eth.v1alpha1.VoluntaryExit
-	11, // 4: sila.validator.accounts.v2.SignRequest.block_altair:type_name -> sila.eth.v1alpha1.BeaconBlockAltair
-	12, // 5: sila.validator.accounts.v2.SignRequest.sync_aggregator_selection_data:type_name -> sila.eth.v1alpha1.SyncAggregatorSelectionData
-	13, // 6: sila.validator.accounts.v2.SignRequest.contribution_and_proof:type_name -> sila.eth.v1alpha1.ContributionAndProof
-	14, // 7: sila.validator.accounts.v2.SignRequest.block_bellatrix:type_name -> sila.eth.v1alpha1.BeaconBlockBellatrix
-	15, // 8: sila.validator.accounts.v2.SignRequest.blinded_block_bellatrix:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockBellatrix
-	16, // 9: sila.validator.accounts.v2.SignRequest.registration:type_name -> sila.eth.v1alpha1.ValidatorRegistrationV1
-	17, // 10: sila.validator.accounts.v2.SignRequest.block_capella:type_name -> sila.eth.v1alpha1.BeaconBlockCapella
-	18, // 11: sila.validator.accounts.v2.SignRequest.blinded_block_capella:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockCapella
-	19, // 12: sila.validator.accounts.v2.SignRequest.block_deneb:type_name -> sila.eth.v1alpha1.BeaconBlockDeneb
-	20, // 13: sila.validator.accounts.v2.SignRequest.blinded_block_deneb:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockDeneb
-	21, // 14: sila.validator.accounts.v2.SignRequest.block_electra:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
-	22, // 15: sila.validator.accounts.v2.SignRequest.blinded_block_electra:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockElectra
-	23, // 16: sila.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof_electra:type_name -> sila.eth.v1alpha1.AggregateAttestationAndProofElectra
-	21, // 17: sila.validator.accounts.v2.SignRequest.block_fulu:type_name -> sila.eth.v1alpha1.BeaconBlockElectra
-	24, // 18: sila.validator.accounts.v2.SignRequest.blinded_block_fulu:type_name -> sila.eth.v1alpha1.BlindedBeaconBlockFulu
-	25, // 19: sila.validator.accounts.v2.SignRequest.block_gloas:type_name -> sila.eth.v1alpha1.BeaconBlockGloas
-	26, // 20: sila.validator.accounts.v2.SignRequest.sila_payload_envelope:type_name -> sila.eth.v1alpha1.SilaPayloadEnvelope
-	27, // 21: sila.validator.accounts.v2.SignRequest.payload_attestation_data:type_name -> sila.eth.v1alpha1.PayloadAttestationData
-	28, // 22: sila.validator.accounts.v2.SignRequest.proposer_preference:type_name -> sila.eth.v1alpha1.ProposerPreferences
+	7,  // 0: sila.validator.accounts.v2.SignRequest.block:type_name -> sila.sila.v1alpha1.BeaconBlock
+	8,  // 1: sila.validator.accounts.v2.SignRequest.attestation_data:type_name -> sila.sila.v1alpha1.AttestationData
+	9,  // 2: sila.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof:type_name -> sila.sila.v1alpha1.AggregateAttestationAndProof
+	10, // 3: sila.validator.accounts.v2.SignRequest.exit:type_name -> sila.sila.v1alpha1.VoluntaryExit
+	11, // 4: sila.validator.accounts.v2.SignRequest.block_altair:type_name -> sila.sila.v1alpha1.BeaconBlockAltair
+	12, // 5: sila.validator.accounts.v2.SignRequest.sync_aggregator_selection_data:type_name -> sila.sila.v1alpha1.SyncAggregatorSelectionData
+	13, // 6: sila.validator.accounts.v2.SignRequest.contribution_and_proof:type_name -> sila.sila.v1alpha1.ContributionAndProof
+	14, // 7: sila.validator.accounts.v2.SignRequest.block_bellatrix:type_name -> sila.sila.v1alpha1.BeaconBlockBellatrix
+	15, // 8: sila.validator.accounts.v2.SignRequest.blinded_block_bellatrix:type_name -> sila.sila.v1alpha1.BlindedBeaconBlockBellatrix
+	16, // 9: sila.validator.accounts.v2.SignRequest.registration:type_name -> sila.sila.v1alpha1.ValidatorRegistrationV1
+	17, // 10: sila.validator.accounts.v2.SignRequest.block_capella:type_name -> sila.sila.v1alpha1.BeaconBlockCapella
+	18, // 11: sila.validator.accounts.v2.SignRequest.blinded_block_capella:type_name -> sila.sila.v1alpha1.BlindedBeaconBlockCapella
+	19, // 12: sila.validator.accounts.v2.SignRequest.block_deneb:type_name -> sila.sila.v1alpha1.BeaconBlockDeneb
+	20, // 13: sila.validator.accounts.v2.SignRequest.blinded_block_deneb:type_name -> sila.sila.v1alpha1.BlindedBeaconBlockDeneb
+	21, // 14: sila.validator.accounts.v2.SignRequest.block_electra:type_name -> sila.sila.v1alpha1.BeaconBlockElectra
+	22, // 15: sila.validator.accounts.v2.SignRequest.blinded_block_electra:type_name -> sila.sila.v1alpha1.BlindedBeaconBlockElectra
+	23, // 16: sila.validator.accounts.v2.SignRequest.aggregate_attestation_and_proof_electra:type_name -> sila.sila.v1alpha1.AggregateAttestationAndProofElectra
+	21, // 17: sila.validator.accounts.v2.SignRequest.block_fulu:type_name -> sila.sila.v1alpha1.BeaconBlockElectra
+	24, // 18: sila.validator.accounts.v2.SignRequest.blinded_block_fulu:type_name -> sila.sila.v1alpha1.BlindedBeaconBlockFulu
+	25, // 19: sila.validator.accounts.v2.SignRequest.block_gloas:type_name -> sila.sila.v1alpha1.BeaconBlockGloas
+	26, // 20: sila.validator.accounts.v2.SignRequest.sila_payload_envelope:type_name -> sila.sila.v1alpha1.SilaPayloadEnvelope
+	27, // 21: sila.validator.accounts.v2.SignRequest.payload_attestation_data:type_name -> sila.sila.v1alpha1.PayloadAttestationData
+	28, // 22: sila.validator.accounts.v2.SignRequest.proposer_preference:type_name -> sila.sila.v1alpha1.ProposerPreferences
 	0,  // 23: sila.validator.accounts.v2.SignResponse.status:type_name -> sila.validator.accounts.v2.SignResponse.Status
 	4,  // 24: sila.validator.accounts.v2.ProposerOptionPayload.builder:type_name -> sila.validator.accounts.v2.BuilderConfig
 	6,  // 25: sila.validator.accounts.v2.ProposerSettingsPayload.proposer_config:type_name -> sila.validator.accounts.v2.ProposerSettingsPayload.ProposerConfigEntry

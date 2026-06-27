@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
@@ -28,10 +29,9 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -56,7 +56,7 @@ func (s *Server) ListAttestationsV2(w http.ResponseWriter, r *http.Request) {
 		v = slots.ToForkVersion(s.TimeFetcher.CurrentSlot())
 	}
 
-	var attestations []eth.Att
+	var attestations []sila.Att
 	if features.Get().EnableExperimentalAttestationPool {
 		attestations = s.AttestationCache.GetAll()
 	} else {
@@ -69,7 +69,7 @@ func (s *Server) ListAttestationsV2(w http.ResponseWriter, r *http.Request) {
 	for _, att := range attestations {
 		var includeAttestation bool
 		if v >= version.Electra && att.Version() >= version.Electra {
-			attElectra, ok := att.(*eth.AttestationElectra)
+			attElectra, ok := att.(*sila.AttestationElectra)
 			if !ok {
 				httputil.HandleError(w, fmt.Sprintf("Unable to convert attestation of type %T", att), http.StatusInternalServerError)
 				return
@@ -81,7 +81,7 @@ func (s *Server) ListAttestationsV2(w http.ResponseWriter, r *http.Request) {
 				filteredAtts = append(filteredAtts, attStruct)
 			}
 		} else if v < version.Electra && att.Version() < version.Electra {
-			attPhase0, ok := att.(*eth.Attestation)
+			attPhase0, ok := att.(*sila.Attestation)
 			if !ok {
 				httputil.HandleError(w, fmt.Sprintf("Unable to convert attestation of type %T", att), http.StatusInternalServerError)
 				return
@@ -110,7 +110,7 @@ func (s *Server) ListAttestationsV2(w http.ResponseWriter, r *http.Request) {
 
 // Helper function to determine if an attestation should be included
 func shouldIncludeAttestation(
-	att eth.Att,
+	att sila.Att,
 	rawSlot string,
 	slot uint64,
 	rawCommitteeIndex string,
@@ -210,7 +210,7 @@ func (s *Server) handleAttestationsPostElectra(
 		return nil, nil, errors.New("no data submitted")
 	}
 
-	var validAttestations []*eth.SingleAttestation
+	var validAttestations []*sila.SingleAttestation
 	for i, sourceAtt := range sourceAttestations {
 		att, err := sourceAtt.ToConsensus()
 		if err != nil {
@@ -316,7 +316,7 @@ func (s *Server) handleAttestationsPostElectra(
 			}
 			att := singleAtt.ToAttestationElectra(committee)
 
-			set, err := blocks.AttestationSignatureBatch(context.Background(), targetState, []eth.Att{att})
+			set, err := blocks.AttestationSignatureBatch(context.Background(), targetState, []sila.Att{att})
 			if err != nil {
 				log.WithError(err).Error("Could not create attestation signature set")
 				continue
@@ -366,7 +366,7 @@ func (s *Server) handleAttestations(
 		return nil, nil, errors.New("no data submitted")
 	}
 
-	var validAttestations []*eth.Attestation
+	var validAttestations []*sila.Attestation
 	for i, sourceAtt := range sourceAttestations {
 		att, err := sourceAtt.ToConsensus()
 		if err != nil {
@@ -562,7 +562,7 @@ func (s *Server) SubmitSyncCommitteeSignatures(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	var validMessages []*eth.SyncCommitteeMessage
+	var validMessages []*sila.SyncCommitteeMessage
 	var msgFailures []*server.IndexedError
 	for i, sourceMsg := range req.Data {
 		msg, err := sourceMsg.ToConsensus()
@@ -604,7 +604,7 @@ func (s *Server) SubmitBLSToSilaChanges(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	var failures []*server.IndexedError
-	var toBroadcast []*eth.SignedBLSToSilaChange
+	var toBroadcast []*sila.SignedBLSToSilaChange
 
 	var req []*structs.SignedBLSToSilaChange
 	err = json.NewDecoder(r.Body).Decode(&req)
@@ -670,7 +670,7 @@ func (s *Server) SubmitBLSToSilaChanges(w http.ResponseWriter, r *http.Request) 
 // broadcastBLSBatch broadcasts the first `broadcastBLSChangesRateLimit` messages from the slice pointed to by ptr.
 // It validates the messages again because they could have been invalidated by being included in blocks since the last validation.
 // It removes the messages from the slice and modifies it in place.
-func (s *Server) broadcastBLSBatch(ctx context.Context, ptr *[]*eth.SignedBLSToSilaChange) {
+func (s *Server) broadcastBLSBatch(ctx context.Context, ptr *[]*sila.SignedBLSToSilaChange) {
 	limit := min(len(*ptr), broadcastBLSChangesRateLimit)
 	st, err := s.ChainInfoFetcher.HeadStateReadOnly(ctx)
 	if err != nil {
@@ -692,7 +692,7 @@ func (s *Server) broadcastBLSBatch(ctx context.Context, ptr *[]*eth.SignedBLSToS
 	*ptr = (*ptr)[limit:]
 }
 
-func (s *Server) broadcastBLSChanges(ctx context.Context, changes []*eth.SignedBLSToSilaChange) {
+func (s *Server) broadcastBLSChanges(ctx context.Context, changes []*sila.SignedBLSToSilaChange) {
 	s.broadcastBLSBatch(ctx, &changes)
 	if len(changes) == 0 {
 		return
@@ -746,14 +746,14 @@ func (s *Server) GetAttesterSlashingsV2(w http.ResponseWriter, r *http.Request) 
 	for _, slashing := range sourceSlashings {
 		var attStruct any
 		if v >= version.Electra && slashing.Version() >= version.Electra {
-			a, ok := slashing.(*eth.AttesterSlashingElectra)
+			a, ok := slashing.(*sila.AttesterSlashingElectra)
 			if !ok {
 				httputil.HandleError(w, fmt.Sprintf("Unable to convert slashing of type %T to an Electra slashing", slashing), http.StatusInternalServerError)
 				return
 			}
 			attStruct = structs.AttesterSlashingElectraFromConsensus(a)
 		} else if v < version.Electra && slashing.Version() < version.Electra {
-			a, ok := slashing.(*eth.AttesterSlashing)
+			a, ok := slashing.(*sila.AttesterSlashing)
 			if !ok {
 				httputil.HandleError(w, fmt.Sprintf("Unable to convert slashing of type %T to a Phase0 slashing", slashing), http.StatusInternalServerError)
 				return
@@ -838,7 +838,7 @@ func (s *Server) SubmitAttesterSlashingsV2(w http.ResponseWriter, r *http.Reques
 func (s *Server) submitAttesterSlashing(
 	w http.ResponseWriter,
 	ctx context.Context,
-	slashing eth.AttSlashing,
+	slashing sila.AttSlashing,
 ) {
 	headState, err := s.ChainInfoFetcher.HeadState(ctx)
 	if err != nil {
@@ -974,7 +974,7 @@ func (s *Server) SubmitPayloadAttestations(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	var consensusMsgs []*eth.PayloadAttestationMessage
+	var consensusMsgs []*sila.PayloadAttestationMessage
 	var failures []*server.IndexedError
 	var decodeErr error
 	if httputil.IsRequestSsz(r) {
@@ -1097,20 +1097,20 @@ func (s *Server) ListPayloadAttestations(w http.ResponseWriter, r *http.Request)
 // List[PayloadAttestationMessage, PTC_SIZE] from body. Returns one slot per
 // message in the input (nil for messages that failed to decode), plus the
 // per-index decode failures.
-func decodePayloadAttestationMessagesSSZ(r io.Reader) ([]*eth.PayloadAttestationMessage, []*server.IndexedError, error) {
+func decodePayloadAttestationMessagesSSZ(r io.Reader) ([]*sila.PayloadAttestationMessage, []*server.IndexedError, error) {
 	body, err := io.ReadAll(r)
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "could not read request body")
 	}
-	sszSize := (&eth.PayloadAttestationMessage{}).SizeSSZ()
+	sszSize := (&sila.PayloadAttestationMessage{}).SizeSSZ()
 	if len(body) == 0 || len(body)%sszSize != 0 {
 		return nil, nil, errors.New("Invalid SSZ payload attestation message list size")
 	}
 	n := len(body) / sszSize
-	msgs := make([]*eth.PayloadAttestationMessage, n)
+	msgs := make([]*sila.PayloadAttestationMessage, n)
 	var failures []*server.IndexedError
 	for i := range n {
-		m := &eth.PayloadAttestationMessage{}
+		m := &sila.PayloadAttestationMessage{}
 		if err := m.UnmarshalSSZ(body[i*sszSize : (i+1)*sszSize]); err != nil {
 			failures = append(failures, &server.IndexedError{
 				Index:   i,
@@ -1127,12 +1127,12 @@ func decodePayloadAttestationMessagesSSZ(r io.Reader) ([]*eth.PayloadAttestation
 // PayloadAttestationMessage from body. Returns one slot per message in the
 // input (nil for messages that failed to convert), plus per-index conversion
 // failures.
-func decodePayloadAttestationMessagesJSON(r io.Reader) ([]*eth.PayloadAttestationMessage, []*server.IndexedError, error) {
+func decodePayloadAttestationMessagesJSON(r io.Reader) ([]*sila.PayloadAttestationMessage, []*server.IndexedError, error) {
 	var jsonMsgs []*structs.PayloadAttestationMessage
 	if err := json.NewDecoder(r).Decode(&jsonMsgs); err != nil {
 		return nil, nil, errors.Wrap(err, "could not decode request body")
 	}
-	msgs := make([]*eth.PayloadAttestationMessage, len(jsonMsgs))
+	msgs := make([]*sila.PayloadAttestationMessage, len(jsonMsgs))
 	var failures []*server.IndexedError
 	for i, msg := range jsonMsgs {
 		cm, err := msg.ToConsensus()
@@ -1150,8 +1150,8 @@ func decodePayloadAttestationMessagesJSON(r io.Reader) ([]*eth.PayloadAttestatio
 
 // marshalPayloadAttestationsSSZ serializes atts as the SSZ encoding of
 // List[PayloadAttestation, MAX_PAYLOAD_ATTESTATIONS].
-func marshalPayloadAttestationsSSZ(atts []*eth.PayloadAttestation) ([]byte, error) {
-	sszSize := (&eth.PayloadAttestation{}).SizeSSZ()
+func marshalPayloadAttestationsSSZ(atts []*sila.PayloadAttestation) ([]byte, error) {
+	sszSize := (&sila.PayloadAttestation{}).SizeSSZ()
 	body := make([]byte, sszSize*len(atts))
 	for i, att := range atts {
 		b, err := att.MarshalSSZ()

@@ -9,6 +9,7 @@ import (
 	"math"
 	"slices"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
@@ -21,9 +22,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 )
 
 var ErrValidatorNotInPTC = stderrors.New("validator not in PTC")
@@ -87,7 +87,7 @@ func ProcessPayloadAttestations(ctx context.Context, st state.BeaconState, body 
 }
 
 // indexedPayloadAttestation converts a payload attestation into its indexed form.
-func indexedPayloadAttestation(ctx context.Context, st state.ReadOnlyBeaconState, att *eth.PayloadAttestation) (*consensus_types.IndexedPayloadAttestation, error) {
+func indexedPayloadAttestation(ctx context.Context, st state.ReadOnlyBeaconState, att *sila.PayloadAttestation) (*consensus_types.IndexedPayloadAttestation, error) {
 	committee, err := st.PayloadCommitteeReadOnly(att.Data.Slot)
 	if err != nil {
 		return nil, err
@@ -366,13 +366,13 @@ func ProcessPTCWindow(ctx context.Context, st state.BeaconState) error {
 		return err
 	}
 
-	newSlots := make([]*eth.PTCs, slotsPerEpoch)
+	newSlots := make([]*sila.PTCs, slotsPerEpoch)
 	for i := range slotsPerEpoch {
 		ptc, err := computePTC(ctx, st, startSlot+primitives.Slot(i))
 		if err != nil {
 			return err
 		}
-		newSlots[i] = &eth.PTCs{ValidatorIndices: ptc}
+		newSlots[i] = &sila.PTCs{ValidatorIndices: ptc}
 	}
 
 	return st.RotatePTCWindow(newSlots)

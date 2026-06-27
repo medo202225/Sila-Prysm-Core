@@ -1,15 +1,15 @@
-package eth_test
+package sila_test
 
 import (
 	"math/rand"
 	"reflect"
 	"testing"
 
-	bitfield "github.com/sila-chain/go-bitfield"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	v1alpha1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
+	bitfield "github.com/sila-chain/go-bitfield"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -671,7 +671,7 @@ func genBeaconBlockBodyBellatrix() *v1alpha1.BeaconBlockBodyBellatrix {
 		Deposits:          genDeposits(5),
 		VoluntaryExits:    genSignedVoluntaryExits(12),
 		SyncAggregate:     genSyncAggregate(),
-		SilaPayload:  genPayload(),
+		SilaPayload:       genPayload(),
 	}
 }
 
@@ -694,17 +694,17 @@ func genSignedBeaconBlockBellatrix() *v1alpha1.SignedBeaconBlockBellatrix {
 
 func genBeaconBlockBodyCapella() *v1alpha1.BeaconBlockBodyCapella {
 	return &v1alpha1.BeaconBlockBodyCapella{
-		RandaoReveal:          bytes(96),
-		SilaData:              genSilaData(),
-		Graffiti:              bytes(32),
-		ProposerSlashings:     genProposerSlashings(5),
-		AttesterSlashings:     genAttesterSlashings(5),
-		Attestations:          genAttestations(10),
-		Deposits:              genDeposits(5),
-		VoluntaryExits:        genSignedVoluntaryExits(12),
-		SyncAggregate:         genSyncAggregate(),
-		SilaPayload:      genPayloadCapella(),
-		BlsToSilaChanges: genBLSToSilaChanges(10),
+		RandaoReveal:      bytes(96),
+		SilaData:          genSilaData(),
+		Graffiti:          bytes(32),
+		ProposerSlashings: genProposerSlashings(5),
+		AttesterSlashings: genAttesterSlashings(5),
+		Attestations:      genAttestations(10),
+		Deposits:          genDeposits(5),
+		VoluntaryExits:    genSignedVoluntaryExits(12),
+		SyncAggregate:     genSyncAggregate(),
+		SilaPayload:       genPayloadCapella(),
+		BlsToSilaChanges:  genBLSToSilaChanges(10),
 	}
 }
 
@@ -727,15 +727,15 @@ func genSignedBeaconBlockCapella() *v1alpha1.SignedBeaconBlockCapella {
 
 func genBlindedBeaconBlockBodyCapella() *v1alpha1.BlindedBeaconBlockBodyCapella {
 	return &v1alpha1.BlindedBeaconBlockBodyCapella{
-		RandaoReveal:           bytes(96),
-		SilaData:               genSilaData(),
-		Graffiti:               bytes(32),
-		ProposerSlashings:      genProposerSlashings(5),
-		AttesterSlashings:      genAttesterSlashings(5),
-		Attestations:           genAttestations(10),
-		Deposits:               genDeposits(5),
-		VoluntaryExits:         genSignedVoluntaryExits(12),
-		SyncAggregate:          genSyncAggregate(),
+		RandaoReveal:      bytes(96),
+		SilaData:          genSilaData(),
+		Graffiti:          bytes(32),
+		ProposerSlashings: genProposerSlashings(5),
+		AttesterSlashings: genAttesterSlashings(5),
+		Attestations:      genAttestations(10),
+		Deposits:          genDeposits(5),
+		VoluntaryExits:    genSignedVoluntaryExits(12),
+		SyncAggregate:     genSyncAggregate(),
 		SilaPayloadHeader: genPayloadHeaderCapella(),
 		BlsToSilaChanges:  genBLSToSilaChanges(10),
 	}
@@ -760,18 +760,18 @@ func genSignedBlindedBeaconBlockCapella() *v1alpha1.SignedBlindedBeaconBlockCape
 
 func genBeaconBlockBodyDeneb() *v1alpha1.BeaconBlockBodyDeneb {
 	return &v1alpha1.BeaconBlockBodyDeneb{
-		RandaoReveal:          bytes(96),
-		SilaData:              genSilaData(),
-		Graffiti:              bytes(32),
-		ProposerSlashings:     genProposerSlashings(5),
-		AttesterSlashings:     genAttesterSlashings(5),
-		Attestations:          genAttestations(10),
-		Deposits:              genDeposits(5),
-		VoluntaryExits:        genSignedVoluntaryExits(12),
-		SyncAggregate:         genSyncAggregate(),
-		SilaPayload:      genPayloadDeneb(),
-		BlsToSilaChanges: genBLSToSilaChanges(10),
-		BlobKzgCommitments:    getKZGCommitments(4),
+		RandaoReveal:       bytes(96),
+		SilaData:           genSilaData(),
+		Graffiti:           bytes(32),
+		ProposerSlashings:  genProposerSlashings(5),
+		AttesterSlashings:  genAttesterSlashings(5),
+		Attestations:       genAttestations(10),
+		Deposits:           genDeposits(5),
+		VoluntaryExits:     genSignedVoluntaryExits(12),
+		SyncAggregate:      genSyncAggregate(),
+		SilaPayload:        genPayloadDeneb(),
+		BlsToSilaChanges:   genBLSToSilaChanges(10),
+		BlobKzgCommitments: getKZGCommitments(4),
 	}
 }
 
@@ -794,18 +794,18 @@ func genSignedBeaconBlockDeneb() *v1alpha1.SignedBeaconBlockDeneb {
 
 func genBlindedBeaconBlockBodyDeneb() *v1alpha1.BlindedBeaconBlockBodyDeneb {
 	return &v1alpha1.BlindedBeaconBlockBodyDeneb{
-		RandaoReveal:           bytes(96),
-		SilaData:               genSilaData(),
-		Graffiti:               bytes(32),
-		ProposerSlashings:      genProposerSlashings(5),
-		AttesterSlashings:      genAttesterSlashings(5),
-		Attestations:           genAttestations(10),
-		Deposits:               genDeposits(5),
-		VoluntaryExits:         genSignedVoluntaryExits(12),
-		SyncAggregate:          genSyncAggregate(),
-		SilaPayloadHeader: genPayloadHeaderDeneb(),
-		BlsToSilaChanges:  genBLSToSilaChanges(10),
-		BlobKzgCommitments:     getKZGCommitments(4),
+		RandaoReveal:       bytes(96),
+		SilaData:           genSilaData(),
+		Graffiti:           bytes(32),
+		ProposerSlashings:  genProposerSlashings(5),
+		AttesterSlashings:  genAttesterSlashings(5),
+		Attestations:       genAttestations(10),
+		Deposits:           genDeposits(5),
+		VoluntaryExits:     genSignedVoluntaryExits(12),
+		SyncAggregate:      genSyncAggregate(),
+		SilaPayloadHeader:  genPayloadHeaderDeneb(),
+		BlsToSilaChanges:   genBLSToSilaChanges(10),
+		BlobKzgCommitments: getKZGCommitments(4),
 	}
 }
 
@@ -996,9 +996,9 @@ func genBLSToSilaChanges(num int) []*v1alpha1.SignedBLSToSilaChange {
 func genBLSToSilaChange() *v1alpha1.SignedBLSToSilaChange {
 	return &v1alpha1.SignedBLSToSilaChange{
 		Message: &v1alpha1.BLSToSilaChange{
-			ValidatorIndex:     123456,
-			FromBlsPubkey:      bytes(48),
-			ToSilaAddress: bytes(20),
+			ValidatorIndex: 123456,
+			FromBlsPubkey:  bytes(48),
+			ToSilaAddress:  bytes(20),
 		},
 		Signature: bytes(96),
 	}
@@ -1063,19 +1063,19 @@ func genBlindedBeaconBlockElectra() *v1alpha1.BlindedBeaconBlockElectra {
 
 func genBlindedBeaconBlockBodyElectra() *v1alpha1.BlindedBeaconBlockBodyElectra {
 	return &v1alpha1.BlindedBeaconBlockBodyElectra{
-		RandaoReveal:           bytes(96),
-		SilaData:               genSilaData(),
-		Graffiti:               bytes(32),
-		ProposerSlashings:      genProposerSlashings(5),
-		AttesterSlashings:      genAttesterSlashingsElectra(5),
-		Attestations:           genAttestationsElectra(10),
-		Deposits:               genDeposits(5),
-		VoluntaryExits:         genSignedVoluntaryExits(12),
-		SyncAggregate:          genSyncAggregate(),
-		SilaPayloadHeader: genPayloadHeaderElectra(),
-		BlsToSilaChanges:  genBLSToSilaChanges(10),
-		BlobKzgCommitments:     getKZGCommitments(4),
-		SilaRequests:      genSilaRequests(),
+		RandaoReveal:       bytes(96),
+		SilaData:           genSilaData(),
+		Graffiti:           bytes(32),
+		ProposerSlashings:  genProposerSlashings(5),
+		AttesterSlashings:  genAttesterSlashingsElectra(5),
+		Attestations:       genAttestationsElectra(10),
+		Deposits:           genDeposits(5),
+		VoluntaryExits:     genSignedVoluntaryExits(12),
+		SyncAggregate:      genSyncAggregate(),
+		SilaPayloadHeader:  genPayloadHeaderElectra(),
+		BlsToSilaChanges:   genBLSToSilaChanges(10),
+		BlobKzgCommitments: getKZGCommitments(4),
+		SilaRequests:       genSilaRequests(),
 	}
 }
 
@@ -1098,19 +1098,19 @@ func genBeaconBlockElectra() *v1alpha1.BeaconBlockElectra {
 
 func genBeaconBlockBodyElectra() *v1alpha1.BeaconBlockBodyElectra {
 	return &v1alpha1.BeaconBlockBodyElectra{
-		RandaoReveal:          bytes(96),
-		SilaData:              genSilaData(),
-		Graffiti:              bytes(32),
-		ProposerSlashings:     genProposerSlashings(5),
-		AttesterSlashings:     genAttesterSlashingsElectra(5),
-		Attestations:          genAttestationsElectra(10),
-		Deposits:              genDeposits(5),
-		VoluntaryExits:        genSignedVoluntaryExits(12),
-		SyncAggregate:         genSyncAggregate(),
-		SilaPayload:      genPayloadElectra(),
-		BlsToSilaChanges: genBLSToSilaChanges(10),
-		BlobKzgCommitments:    getKZGCommitments(4),
-		SilaRequests:     genSilaRequests(),
+		RandaoReveal:       bytes(96),
+		SilaData:           genSilaData(),
+		Graffiti:           bytes(32),
+		ProposerSlashings:  genProposerSlashings(5),
+		AttesterSlashings:  genAttesterSlashingsElectra(5),
+		Attestations:       genAttestationsElectra(10),
+		Deposits:           genDeposits(5),
+		VoluntaryExits:     genSignedVoluntaryExits(12),
+		SyncAggregate:      genSyncAggregate(),
+		SilaPayload:        genPayloadElectra(),
+		BlsToSilaChanges:   genBLSToSilaChanges(10),
+		BlobKzgCommitments: getKZGCommitments(4),
+		SilaRequests:       genSilaRequests(),
 	}
 }
 
@@ -1191,18 +1191,18 @@ func genBeaconBlockGloas() *v1alpha1.BeaconBlockGloas {
 
 func genBeaconBlockBodyGloas() *v1alpha1.BeaconBlockBodyGloas {
 	return &v1alpha1.BeaconBlockBodyGloas{
-		RandaoReveal:              bytes(96),
-		SilaData:                  genSilaData(),
-		Graffiti:                  bytes(32),
-		ProposerSlashings:         genProposerSlashings(3),
-		AttesterSlashings:         genAttesterSlashingsElectra(3),
-		Attestations:              genAttestationsElectra(3),
-		Deposits:                  genDeposits(3),
-		VoluntaryExits:            genSignedVoluntaryExits(3),
-		SyncAggregate:             genSyncAggregate(),
+		RandaoReveal:         bytes(96),
+		SilaData:             genSilaData(),
+		Graffiti:             bytes(32),
+		ProposerSlashings:    genProposerSlashings(3),
+		AttesterSlashings:    genAttesterSlashingsElectra(3),
+		Attestations:         genAttestationsElectra(3),
+		Deposits:             genDeposits(3),
+		VoluntaryExits:       genSignedVoluntaryExits(3),
+		SyncAggregate:        genSyncAggregate(),
 		BlsToSilaChanges:     genBLSToSilaChanges(2),
 		SignedSilaPayloadBid: genSignedSilaPayloadBidGloas(),
-		PayloadAttestations:       genPayloadAttestations(2),
+		PayloadAttestations:  genPayloadAttestations(2),
 	}
 }
 
@@ -1223,7 +1223,7 @@ func genSilaPayloadBidGloas() *v1alpha1.SilaPayloadBid {
 		BuilderIndex:       primitives.BuilderIndex(rand.Uint64()),
 		Slot:               primitives.Slot(rand.Uint64()),
 		Value:              primitives.Gwei(rand.Uint64()),
-		SilaPayment:   primitives.Gwei(rand.Uint64()),
+		SilaPayment:        primitives.Gwei(rand.Uint64()),
 		BlobKzgCommitments: [][]byte{bytes(48)},
 	}
 }

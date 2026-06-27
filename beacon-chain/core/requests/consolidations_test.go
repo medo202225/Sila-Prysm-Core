@@ -11,20 +11,20 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
-func createValidatorsWithTotalActiveBalance(totalBal primitives.Gwei) []*eth.Validator {
+func createValidatorsWithTotalActiveBalance(totalBal primitives.Gwei) []*sila.Validator {
 	num := totalBal / primitives.Gwei(params.BeaconConfig().MinActivationBalance)
-	vals := make([]*eth.Validator, num)
+	vals := make([]*sila.Validator, num)
 	for i := range vals {
 		wd := make([]byte, 32)
 		wd[0] = params.BeaconConfig().CompoundingWithdrawalPrefixByte
 		wd[31] = byte(i)
 
-		vals[i] = &eth.Validator{
+		vals[i] = &sila.Validator{
 			ActivationEpoch:       primitives.Epoch(0),
 			EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
 			ExitEpoch:             params.BeaconConfig().FarFutureEpoch,
@@ -34,7 +34,7 @@ func createValidatorsWithTotalActiveBalance(totalBal primitives.Gwei) []*eth.Val
 		}
 	}
 	if totalBal%primitives.Gwei(params.BeaconConfig().MinActivationBalance) != 0 {
-		vals = append(vals, &eth.Validator{
+		vals = append(vals, &sila.Validator{
 			ActivationEpoch:  primitives.Epoch(0),
 			ExitEpoch:        params.BeaconConfig().FarFutureEpoch,
 			EffectiveBalance: uint64(totalBal) % params.BeaconConfig().MinActivationBalance,
@@ -54,7 +54,7 @@ func TestProcessConsolidationRequests(t *testing.T) {
 		{
 			name: "nil request",
 			state: func() state.BeaconState {
-				st := &eth.BeaconStateElectra{}
+				st := &sila.BeaconStateElectra{}
 				s, err := state_native.InitializeFromProtoElectra(st)
 				require.NoError(t, err)
 				return s
@@ -68,7 +68,7 @@ func TestProcessConsolidationRequests(t *testing.T) {
 		{
 			name: "one valid request",
 			state: func() state.BeaconState {
-				st := &eth.BeaconStateElectra{
+				st := &sila.BeaconStateElectra{
 					Slot:       params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().ShardCommitteePeriod)),
 					Validators: createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
 				}
@@ -79,7 +79,7 @@ func TestProcessConsolidationRequests(t *testing.T) {
 				st.Validators[12].ActivationEpoch = params.BeaconConfig().FarFutureEpoch
 				st.Validators[13].ExitEpoch = 10
 				st.Validators[16].ExitEpoch = 10
-				st.PendingPartialWithdrawals = []*eth.PendingPartialWithdrawal{
+				st.PendingPartialWithdrawals = []*sila.PendingPartialWithdrawal{
 					{
 						Index:  17,
 						Amount: 100,
@@ -185,9 +185,9 @@ func TestProcessConsolidationRequests(t *testing.T) {
 		{
 			name: "pending consolidations limit reached",
 			state: func() state.BeaconState {
-				st := &eth.BeaconStateElectra{
+				st := &sila.BeaconStateElectra{
 					Validators:            createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
-					PendingConsolidations: make([]*eth.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit),
+					PendingConsolidations: make([]*sila.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit),
 				}
 				s, err := state_native.InitializeFromProtoElectra(st)
 				require.NoError(t, err)
@@ -217,10 +217,10 @@ func TestProcessConsolidationRequests(t *testing.T) {
 		{
 			name: "pending consolidations limit reached during processing",
 			state: func() state.BeaconState {
-				st := &eth.BeaconStateElectra{
+				st := &sila.BeaconStateElectra{
 					Slot:                  params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().ShardCommitteePeriod)),
 					Validators:            createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
-					PendingConsolidations: make([]*eth.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit-1),
+					PendingConsolidations: make([]*sila.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit-1),
 				}
 				s, err := state_native.InitializeFromProtoElectra(st)
 				require.NoError(t, err)
@@ -261,10 +261,10 @@ func TestProcessConsolidationRequests(t *testing.T) {
 		{
 			name: "pending consolidations limit reached and compounded consolidation after",
 			state: func() state.BeaconState {
-				st := &eth.BeaconStateElectra{
+				st := &sila.BeaconStateElectra{
 					Slot:                  params.BeaconConfig().SlotsPerEpoch.Mul(uint64(params.BeaconConfig().ShardCommitteePeriod)),
 					Validators:            createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
-					PendingConsolidations: make([]*eth.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit),
+					PendingConsolidations: make([]*sila.PendingConsolidation, params.BeaconConfig().PendingConsolidationsLimit),
 				}
 				// To allow compounding consolidation requests.
 				st.Validators[3].WithdrawalCredentials[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte

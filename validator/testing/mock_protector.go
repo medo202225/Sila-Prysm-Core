@@ -3,7 +3,7 @@ package testing
 import (
 	"context"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // MockProtector mocks the protector.
@@ -16,13 +16,13 @@ type MockProtector struct {
 }
 
 // CheckAttestationSafety returns bool with allow attestation value.
-func (mp *MockProtector) CheckAttestationSafety(_ context.Context, _ *eth.IndexedAttestation) bool {
+func (mp *MockProtector) CheckAttestationSafety(_ context.Context, _ *sila.IndexedAttestation) bool {
 	mp.VerifyAttestationCalled = true
 	return mp.AllowAttestation
 }
 
 // CheckBlockSafety returns bool with allow block value.
-func (mp *MockProtector) CheckBlockSafety(_ context.Context, _ *eth.SignedBeaconBlockHeader) bool {
+func (mp *MockProtector) CheckBlockSafety(_ context.Context, _ *sila.SignedBeaconBlockHeader) bool {
 	mp.VerifyBlockCalled = true
 	return mp.AllowBlock
 }

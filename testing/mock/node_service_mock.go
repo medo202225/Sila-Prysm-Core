@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 	grpc "google.golang.org/grpc"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -44,14 +44,14 @@ func (m *MockNodeClient) EXPECT() *MockNodeClientMockRecorder {
 }
 
 // GetSilaExecutionConnectionStatus mocks base method.
-func (m *MockNodeClient) GetSilaExecutionConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.SilaExecutionConnectionStatus, error) {
+func (m *MockNodeClient) GetSilaExecutionConnectionStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.SilaExecutionConnectionStatus, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetSilaExecutionConnectionStatus", varargs...)
-	ret0, _ := ret[0].(*eth.SilaExecutionConnectionStatus)
+	ret0, _ := ret[0].(*sila.SilaExecutionConnectionStatus)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -64,14 +64,14 @@ func (mr *MockNodeClientMockRecorder) GetSilaExecutionConnectionStatus(ctx, in a
 }
 
 // GetGenesis mocks base method.
-func (m *MockNodeClient) GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.Genesis, error) {
+func (m *MockNodeClient) GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.Genesis, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetGenesis", varargs...)
-	ret0, _ := ret[0].(*eth.Genesis)
+	ret0, _ := ret[0].(*sila.Genesis)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -84,7 +84,7 @@ func (mr *MockNodeClientMockRecorder) GetGenesis(ctx, in any, opts ...any) *gomo
 }
 
 // GetHealth mocks base method.
-func (m *MockNodeClient) GetHealth(ctx context.Context, in *eth.HealthRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (m *MockNodeClient) GetHealth(ctx context.Context, in *sila.HealthRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
@@ -104,14 +104,14 @@ func (mr *MockNodeClientMockRecorder) GetHealth(ctx, in any, opts ...any) *gomoc
 }
 
 // GetHost mocks base method.
-func (m *MockNodeClient) GetHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.HostData, error) {
+func (m *MockNodeClient) GetHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.HostData, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetHost", varargs...)
-	ret0, _ := ret[0].(*eth.HostData)
+	ret0, _ := ret[0].(*sila.HostData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -124,14 +124,14 @@ func (mr *MockNodeClientMockRecorder) GetHost(ctx, in any, opts ...any) *gomock.
 }
 
 // GetPeer mocks base method.
-func (m *MockNodeClient) GetPeer(ctx context.Context, in *eth.PeerRequest, opts ...grpc.CallOption) (*eth.Peer, error) {
+func (m *MockNodeClient) GetPeer(ctx context.Context, in *sila.PeerRequest, opts ...grpc.CallOption) (*sila.Peer, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetPeer", varargs...)
-	ret0, _ := ret[0].(*eth.Peer)
+	ret0, _ := ret[0].(*sila.Peer)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -144,14 +144,14 @@ func (mr *MockNodeClientMockRecorder) GetPeer(ctx, in any, opts ...any) *gomock.
 }
 
 // GetSyncStatus mocks base method.
-func (m *MockNodeClient) GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.SyncStatus, error) {
+func (m *MockNodeClient) GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.SyncStatus, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetSyncStatus", varargs...)
-	ret0, _ := ret[0].(*eth.SyncStatus)
+	ret0, _ := ret[0].(*sila.SyncStatus)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -164,14 +164,14 @@ func (mr *MockNodeClientMockRecorder) GetSyncStatus(ctx, in any, opts ...any) *g
 }
 
 // GetVersion mocks base method.
-func (m *MockNodeClient) GetVersion(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.Version, error) {
+func (m *MockNodeClient) GetVersion(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.Version, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetVersion", varargs...)
-	ret0, _ := ret[0].(*eth.Version)
+	ret0, _ := ret[0].(*sila.Version)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -184,14 +184,14 @@ func (mr *MockNodeClientMockRecorder) GetVersion(ctx, in any, opts ...any) *gomo
 }
 
 // ListImplementedServices mocks base method.
-func (m *MockNodeClient) ListImplementedServices(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.ImplementedServices, error) {
+func (m *MockNodeClient) ListImplementedServices(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.ImplementedServices, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListImplementedServices", varargs...)
-	ret0, _ := ret[0].(*eth.ImplementedServices)
+	ret0, _ := ret[0].(*sila.ImplementedServices)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -204,14 +204,14 @@ func (mr *MockNodeClientMockRecorder) ListImplementedServices(ctx, in any, opts 
 }
 
 // ListPeers mocks base method.
-func (m *MockNodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*eth.Peers, error) {
+func (m *MockNodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*sila.Peers, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListPeers", varargs...)
-	ret0, _ := ret[0].(*eth.Peers)
+	ret0, _ := ret[0].(*sila.Peers)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

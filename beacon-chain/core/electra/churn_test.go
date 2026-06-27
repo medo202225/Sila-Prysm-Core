@@ -11,20 +11,20 @@ import (
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
 
-func createValidatorsWithTotalActiveBalance(totalBal primitives.Gwei) []*eth.Validator {
+func createValidatorsWithTotalActiveBalance(totalBal primitives.Gwei) []*sila.Validator {
 	num := totalBal / primitives.Gwei(params.BeaconConfig().MinActivationBalance)
-	vals := make([]*eth.Validator, num)
+	vals := make([]*sila.Validator, num)
 	for i := range vals {
 		wd := make([]byte, 32)
 		wd[0] = params.BeaconConfig().CompoundingWithdrawalPrefixByte
 		wd[31] = byte(i)
 
-		vals[i] = &eth.Validator{
+		vals[i] = &sila.Validator{
 			ActivationEpoch:       primitives.Epoch(0),
 			EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
 			ExitEpoch:             params.BeaconConfig().FarFutureEpoch,
@@ -34,7 +34,7 @@ func createValidatorsWithTotalActiveBalance(totalBal primitives.Gwei) []*eth.Val
 		}
 	}
 	if totalBal%primitives.Gwei(params.BeaconConfig().MinActivationBalance) != 0 {
-		vals = append(vals, &eth.Validator{
+		vals = append(vals, &sila.Validator{
 			ActivationEpoch:  primitives.Epoch(0),
 			ExitEpoch:        params.BeaconConfig().FarFutureEpoch,
 			EffectiveBalance: uint64(totalBal) % params.BeaconConfig().MinActivationBalance,
@@ -56,7 +56,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 		{
 			name: "compute consolidation with no consolidation balance",
 			state: func(t *testing.T) state.BeaconState {
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                       slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch: 9,
 					Validators:                 createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
@@ -71,7 +71,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 		{
 			name: "new epoch for consolidations",
 			state: func(t *testing.T) state.BeaconState {
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                       slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch: 9,
 					Validators:                 createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
@@ -86,7 +86,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 		{
 			name: "flows into another epoch",
 			state: func(t *testing.T) state.BeaconState {
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                       slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch: 9,
 					Validators:                 createValidatorsWithTotalActiveBalance(32000000000000000), // 32M ETH
@@ -101,7 +101,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 		{
 			name: "not a new epoch, fits in remaining balance of current epoch",
 			state: func(t *testing.T) state.BeaconState {
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                          slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch:    15,
 					ConsolidationBalanceToConsume: 200000000000,                                              // 200 ETH
@@ -117,7 +117,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 		{
 			name: "not a new epoch, fits in remaining balance of current epoch",
 			state: func(t *testing.T) state.BeaconState {
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                          slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch:    15,
 					ConsolidationBalanceToConsume: 200000000000,                                              // 200 ETH
@@ -134,7 +134,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 			name: "balance to consume is zero, consolidation balance at limit",
 			state: func(t *testing.T) state.BeaconState {
 				activeBal := 32000000000000000 // 32M ETH
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                          slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch:    16,
 					ConsolidationBalanceToConsume: 0,
@@ -151,7 +151,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 			name: "consolidation balance equals consolidation balance to consume",
 			state: func(t *testing.T) state.BeaconState {
 				activeBal := 32000000000000000 // 32M ETH
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                          slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch:    16,
 					ConsolidationBalanceToConsume: helpers.ConsolidationChurnLimit(32000000000000000),
@@ -168,7 +168,7 @@ func TestComputeConsolidationEpochAndUpdateChurn(t *testing.T) {
 			name: "consolidation balance exceeds limit by one",
 			state: func(t *testing.T) state.BeaconState {
 				activeBal := 32000000000000000 // 32M ETH
-				s, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+				s, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 					Slot:                          slots.UnsafeEpochStart(10),
 					EarliestConsolidationEpoch:    16,
 					ConsolidationBalanceToConsume: 0,

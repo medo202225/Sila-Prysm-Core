@@ -3,7 +3,7 @@ package blockchain
 import (
 	"testing"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
@@ -13,7 +13,7 @@ func TestReportEpochMetrics_BadAttestation(t *testing.T) {
 	require.NoError(t, err)
 	h, err := util.NewBeaconState()
 	require.NoError(t, err)
-	require.NoError(t, h.AppendCurrentEpochAttestations(&eth.PendingAttestation{InclusionDelay: 0}))
+	require.NoError(t, h.AppendCurrentEpochAttestations(&sila.PendingAttestation{InclusionDelay: 0}))
 	err = reportEpochMetrics(t.Context(), s, h)
 	require.ErrorContains(t, "attestation with inclusion delay of 0", err)
 }
@@ -24,7 +24,7 @@ func TestReportEpochMetrics_SlashedValidatorOutOfBound(t *testing.T) {
 	require.NoError(t, err)
 	v.Slashed = true
 	require.NoError(t, h.UpdateValidatorAtIndex(0, v))
-	require.NoError(t, h.AppendCurrentEpochAttestations(&eth.PendingAttestation{InclusionDelay: 1, Data: util.HydrateAttestationData(&eth.AttestationData{})}))
+	require.NoError(t, h.AppendCurrentEpochAttestations(&sila.PendingAttestation{InclusionDelay: 1, Data: util.HydrateAttestationData(&sila.AttestationData{})}))
 	err = reportEpochMetrics(t.Context(), h, h)
 	require.ErrorContains(t, "slot 0 out of bounds", err)
 }

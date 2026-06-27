@@ -20,8 +20,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	mock2 "github.com/sila-chain/Sila-Consensus-Core/v7/testing/mock"
@@ -36,8 +36,8 @@ var (
 	testGraffiti = "0xcf8e0d4e9587369b2301d0790347320302cc0943d5a1884560367e8208d920f2"
 )
 
-func testEnvelope() *eth.SilaPayloadEnvelope {
-	return &eth.SilaPayloadEnvelope{
+func testEnvelope() *sila.SilaPayloadEnvelope {
+	return &sila.SilaPayloadEnvelope{
 		Payload: &silaenginev1.SilaPayloadGloas{
 			ParentHash:    make([]byte, 32),
 			FeeRecipient:  make([]byte, 20),
@@ -49,22 +49,22 @@ func testEnvelope() *eth.SilaPayloadEnvelope {
 			BlockHash:     make([]byte, 32),
 			SlotNumber:    1,
 		},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 		BuilderIndex:          0,
 		BeaconBlockRoot:       make([]byte, 32),
 		ParentBeaconBlockRoot: make([]byte, 32),
 	}
 }
 
-func gloasGenericBlock() *eth.GenericBeaconBlock {
+func gloasGenericBlock() *sila.GenericBeaconBlock {
 	return gloasGenericBlockWithBuilder(params.BeaconConfig().BuilderIndexSelfBuild)
 }
 
-func gloasGenericBlockWithBuilder(builderIndex primitives.BuilderIndex) *eth.GenericBeaconBlock {
+func gloasGenericBlockWithBuilder(builderIndex primitives.BuilderIndex) *sila.GenericBeaconBlock {
 	blk := util.NewBeaconBlockGloas().Block
 	blk.Body.SignedSilaPayloadBid.Message.BuilderIndex = builderIndex
-	return &eth.GenericBeaconBlock{
-		Block: &eth.GenericBeaconBlock_Gloas{Gloas: blk},
+	return &sila.GenericBeaconBlock{
+		Block: &sila.GenericBeaconBlock_Gloas{Gloas: blk},
 	}
 }
 
@@ -78,7 +78,7 @@ func TestProduceBlockV4_IncludePayloadTrue(t *testing.T) {
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
 	v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), gomock.Any()).Return(gloasGenericBlock(), nil)
 	v1alpha1Server.EXPECT().GetSilaPayloadEnvelope(gomock.Any(), gomock.Any()).Return(
-		&eth.SilaPayloadEnvelopeResponse{Envelope: testEnvelope()}, nil,
+		&sila.SilaPayloadEnvelopeResponse{Envelope: testEnvelope()}, nil,
 	)
 
 	server := &Server{
@@ -143,15 +143,15 @@ func TestProduceBlockV4_IncludePayloadTrue_PopulatedCache(t *testing.T) {
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
 	v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), gomock.Any()).Return(gloasGenericBlock(), nil)
 	v1alpha1Server.EXPECT().GetSilaPayloadEnvelope(gomock.Any(), gomock.Any()).Return(
-		&eth.SilaPayloadEnvelopeResponse{Envelope: envelope}, nil,
+		&sila.SilaPayloadEnvelopeResponse{Envelope: envelope}, nil,
 	)
 
 	server := &Server{
-		V1Alpha1Server:                v1alpha1Server,
+		V1Alpha1Server:           v1alpha1Server,
 		SilaPayloadEnvelopeCache: envCache,
-		SyncChecker:                   &mockSync.Sync{IsSyncing: false},
-		OptimisticModeFetcher:         &blockchainTesting.ChainService{},
-		BlockRewardFetcher:            &rewardtesting.MockBlockRewardFetcher{Rewards: &structs.BlockRewards{Total: "10"}},
+		SyncChecker:              &mockSync.Sync{IsSyncing: false},
+		OptimisticModeFetcher:    &blockchainTesting.ChainService{},
+		BlockRewardFetcher:       &rewardtesting.MockBlockRewardFetcher{Rewards: &structs.BlockRewards{Total: "10"}},
 	}
 
 	request := httptest.NewRequest(http.MethodGet, fmt.Sprintf("http://foo.example/sila/v4/validator/blocks/1?randao_reveal=%s&graffiti=%s", testRandao, testGraffiti), nil)
@@ -295,7 +295,7 @@ func TestProduceBlockV4_SSZ_IncludePayloadTrue(t *testing.T) {
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
 	v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), gomock.Any()).Return(gloasGenericBlock(), nil)
 	v1alpha1Server.EXPECT().GetSilaPayloadEnvelope(gomock.Any(), gomock.Any()).Return(
-		&eth.SilaPayloadEnvelopeResponse{Envelope: testEnvelope()}, nil,
+		&sila.SilaPayloadEnvelopeResponse{Envelope: testEnvelope()}, nil,
 	)
 
 	server := &Server{
@@ -326,7 +326,7 @@ func TestSilaPayloadEnvelope_SSZ(t *testing.T) {
 	envelope := testEnvelope()
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
 	v1alpha1Server.EXPECT().GetSilaPayloadEnvelope(gomock.Any(), gomock.Any()).Return(
-		&eth.SilaPayloadEnvelopeResponse{Envelope: envelope}, nil,
+		&sila.SilaPayloadEnvelopeResponse{Envelope: envelope}, nil,
 	)
 
 	server := &Server{V1Alpha1Server: v1alpha1Server}
@@ -342,7 +342,7 @@ func TestSilaPayloadEnvelope_SSZ(t *testing.T) {
 	assert.Equal(t, "application/octet-stream", writer.Header().Get("Content-Type"))
 	assert.Equal(t, version.String(version.Gloas), writer.Header().Get("Eth-Consensus-Version"))
 
-	blinded := &eth.WireBlindedSilaPayloadEnvelope{}
+	blinded := &sila.WireBlindedSilaPayloadEnvelope{}
 	require.NoError(t, blinded.UnmarshalSSZ(writer.Body.Bytes()))
 	wantHTR, err := envelope.HashTreeRoot()
 	require.NoError(t, err)
@@ -361,7 +361,7 @@ func TestSilaPayloadEnvelope_BeaconBlockRootMismatch(t *testing.T) {
 	envelope := testEnvelope()
 	v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
 	v1alpha1Server.EXPECT().GetSilaPayloadEnvelope(gomock.Any(), gomock.Any()).Return(
-		&eth.SilaPayloadEnvelopeResponse{Envelope: envelope}, nil,
+		&sila.SilaPayloadEnvelopeResponse{Envelope: envelope}, nil,
 	)
 
 	server := &Server{V1Alpha1Server: v1alpha1Server}

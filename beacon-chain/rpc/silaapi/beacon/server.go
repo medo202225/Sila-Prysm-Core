@@ -20,7 +20,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/silaexec"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stategen"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // Server defines a server implementation of the gRPC Beacon Chain service,
@@ -44,7 +44,7 @@ type Server struct {
 	HeadFetcher             blockchain.HeadFetcher
 	TimeFetcher             blockchain.TimeFetcher
 	OptimisticModeFetcher   blockchain.OptimisticModeFetcher
-	V1Alpha1ValidatorServer eth.BeaconNodeValidatorServer
+	V1Alpha1ValidatorServer sila.BeaconNodeValidatorServer
 	SyncChecker             sync.Checker
 	CanonicalHistory        *stategen.CanonicalHistory
 	ExecutionReconstructor  silaexec.Reconstructor

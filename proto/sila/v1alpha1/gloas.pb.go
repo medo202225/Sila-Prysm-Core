@@ -4,16 +4,16 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/gloas.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
+	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -26,21 +26,21 @@ const (
 )
 
 type SilaPayloadBid struct {
-	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
-	ParentBlockHash       []byte                                                                   `protobuf:"bytes,1,opt,name=parent_block_hash,json=parentBlockHash,proto3" json:"parent_block_hash,omitempty" ssz-size:"32"`
-	ParentBlockRoot       []byte                                                                   `protobuf:"bytes,2,opt,name=parent_block_root,json=parentBlockRoot,proto3" json:"parent_block_root,omitempty" ssz-size:"32"`
-	BlockHash             []byte                                                                   `protobuf:"bytes,3,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
-	PrevRandao            []byte                                                                   `protobuf:"bytes,4,opt,name=prev_randao,json=prevRandao,proto3" json:"prev_randao,omitempty" ssz-size:"32"`
-	FeeRecipient          []byte                                                                   `protobuf:"bytes,5,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
-	GasLimit              uint64                                                                   `protobuf:"varint,6,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
-	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,7,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
-	Slot                  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot         `protobuf:"varint,8,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Value                 github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,9,opt,name=value,proto3" json:"value,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
-	SilaPayment      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,10,opt,name=sila_payment,json=silaPayment,proto3" json:"sila_payment,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
-	BlobKzgCommitments    [][]byte                                                                 `protobuf:"bytes,11,rep,name=blob_kzg_commitments,json=blobKzgCommitments,proto3" json:"blob_kzg_commitments,omitempty" ssz-max:"4096" ssz-size:"?,48"`
-	SilaRequestsRoot []byte                                                                   `protobuf:"bytes,12,opt,name=sila_requests_root,json=silaRequestsRoot,proto3" json:"sila_requests_root,omitempty" ssz-size:"32"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state              protoimpl.MessageState                                                          `protogen:"open.v1"`
+	ParentBlockHash    []byte                                                                          `protobuf:"bytes,1,opt,name=parent_block_hash,json=parentBlockHash,proto3" json:"parent_block_hash,omitempty" ssz-size:"32"`
+	ParentBlockRoot    []byte                                                                          `protobuf:"bytes,2,opt,name=parent_block_root,json=parentBlockRoot,proto3" json:"parent_block_root,omitempty" ssz-size:"32"`
+	BlockHash          []byte                                                                          `protobuf:"bytes,3,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
+	PrevRandao         []byte                                                                          `protobuf:"bytes,4,opt,name=prev_randao,json=prevRandao,proto3" json:"prev_randao,omitempty" ssz-size:"32"`
+	FeeRecipient       []byte                                                                          `protobuf:"bytes,5,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
+	GasLimit           uint64                                                                          `protobuf:"varint,6,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
+	BuilderIndex       github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,7,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
+	Slot               github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot         `protobuf:"varint,8,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
+	Value              github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,9,opt,name=value,proto3" json:"value,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
+	SilaPayment        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,10,opt,name=sila_payment,json=silaPayment,proto3" json:"sila_payment,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
+	BlobKzgCommitments [][]byte                                                                        `protobuf:"bytes,11,rep,name=blob_kzg_commitments,json=blobKzgCommitments,proto3" json:"blob_kzg_commitments,omitempty" ssz-max:"4096" ssz-size:"?,48"`
+	SilaRequestsRoot   []byte                                                                          `protobuf:"bytes,12,opt,name=sila_requests_root,json=silaRequestsRoot,proto3" json:"sila_requests_root,omitempty" ssz-size:"32"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *SilaPayloadBid) Reset() {
@@ -159,7 +159,7 @@ func (x *SilaPayloadBid) GetSilaRequestsRoot() []byte {
 
 type SignedSilaPayloadBid struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       *SilaPayloadBid   `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Message       *SilaPayloadBid        `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Signature     []byte                 `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -210,12 +210,12 @@ func (x *SignedSilaPayloadBid) GetSignature() []byte {
 }
 
 type ProposerPreferences struct {
-	state          protoimpl.MessageState                                                     `protogen:"open.v1"`
-	DependentRoot  []byte                                                                     `protobuf:"bytes,1,opt,name=dependent_root,json=dependentRoot,proto3" json:"dependent_root,omitempty" ssz-size:"32"`
+	state          protoimpl.MessageState                                                            `protogen:"open.v1"`
+	DependentRoot  []byte                                                                            `protobuf:"bytes,1,opt,name=dependent_root,json=dependentRoot,proto3" json:"dependent_root,omitempty" ssz-size:"32"`
 	ProposalSlot   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,2,opt,name=proposal_slot,json=proposalSlot,proto3" json:"proposal_slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	ValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,3,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	FeeRecipient   []byte                                                                     `protobuf:"bytes,4,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
-	TargetGasLimit uint64                                                                     `protobuf:"varint,5,opt,name=target_gas_limit,json=targetGasLimit,proto3" json:"target_gas_limit,omitempty"`
+	FeeRecipient   []byte                                                                            `protobuf:"bytes,4,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
+	TargetGasLimit uint64                                                                            `protobuf:"varint,5,opt,name=target_gas_limit,json=targetGasLimit,proto3" json:"target_gas_limit,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -382,11 +382,11 @@ func (x *SubmitSignedProposerPreferencesRequest) GetSignedProposerPreferences() 
 }
 
 type PayloadAttestationData struct {
-	state             protoimpl.MessageState                                           `protogen:"open.v1"`
-	BeaconBlockRoot   []byte                                                           `protobuf:"bytes,1,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
+	state             protoimpl.MessageState                                                  `protogen:"open.v1"`
+	BeaconBlockRoot   []byte                                                                  `protobuf:"bytes,1,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	Slot              github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	PayloadPresent    bool                                                             `protobuf:"varint,3,opt,name=payload_present,json=payloadPresent,proto3" json:"payload_present,omitempty"`
-	BlobDataAvailable bool                                                             `protobuf:"varint,4,opt,name=blob_data_available,json=blobDataAvailable,proto3" json:"blob_data_available,omitempty"`
+	PayloadPresent    bool                                                                    `protobuf:"varint,3,opt,name=payload_present,json=payloadPresent,proto3" json:"payload_present,omitempty"`
+	BlobDataAvailable bool                                                                    `protobuf:"varint,4,opt,name=blob_data_available,json=blobDataAvailable,proto3" json:"blob_data_available,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -450,10 +450,10 @@ func (x *PayloadAttestationData) GetBlobDataAvailable() bool {
 }
 
 type PayloadAttestation struct {
-	state           protoimpl.MessageState                           `protogen:"open.v1"`
+	state           protoimpl.MessageState                         `protogen:"open.v1"`
 	AggregationBits github_com_sila_chain_go_bitfield.Bitvector512 `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector512" ssz-size:"64"`
-	Data            *PayloadAttestationData                          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
-	Signature       []byte                                           `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Data            *PayloadAttestationData                        `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Signature       []byte                                         `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -510,10 +510,10 @@ func (x *PayloadAttestation) GetSignature() []byte {
 }
 
 type PayloadAttestationMessage struct {
-	state          protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state          protoimpl.MessageState                                                            `protogen:"open.v1"`
 	ValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	Data           *PayloadAttestationData                                                    `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
-	Signature      []byte                                                                     `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Data           *PayloadAttestationData                                                           `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Signature      []byte                                                                            `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -570,12 +570,12 @@ func (x *PayloadAttestationMessage) GetSignature() []byte {
 }
 
 type BeaconBlockGloas struct {
-	state         protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                            `protogen:"open.v1"`
 	Slot          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	ProposerIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	ParentRoot    []byte                                                                     `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
-	StateRoot     []byte                                                                     `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
-	Body          *BeaconBlockBodyGloas                                                      `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`
+	ParentRoot    []byte                                                                            `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
+	StateRoot     []byte                                                                            `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
+	Body          *BeaconBlockBodyGloas                                                             `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -646,22 +646,22 @@ func (x *BeaconBlockGloas) GetBody() *BeaconBlockBodyGloas {
 }
 
 type BeaconBlockBodyGloas struct {
-	state                     protoimpl.MessageState        `protogen:"open.v1"`
-	RandaoReveal              []byte                        `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
-	SilaData                  *SilaData                     `protobuf:"bytes,2,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	Graffiti                  []byte                        `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
-	ProposerSlashings         []*ProposerSlashing           `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty" ssz-max:"16"`
-	AttesterSlashings         []*AttesterSlashingElectra    `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty" ssz-max:"1"`
-	Attestations              []*AttestationElectra         `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty" ssz-max:"8"`
-	Deposits                  []*Deposit                    `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"16"`
-	VoluntaryExits            []*SignedVoluntaryExit        `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
-	SyncAggregate             *SyncAggregate                `protobuf:"bytes,9,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
-	BlsToSilaChanges     []*SignedBLSToSilaChange `protobuf:"bytes,10,rep,name=bls_to_sila_changes,json=blsToSilaChanges,proto3" json:"bls_to_sila_changes,omitempty" ssz-max:"16"`
-	SignedSilaPayloadBid *SignedSilaPayloadBid    `protobuf:"bytes,11,opt,name=signed_sila_payload_bid,json=signedSilaPayloadBid,proto3" json:"signed_sila_payload_bid,omitempty"`
-	PayloadAttestations       []*PayloadAttestation         `protobuf:"bytes,12,rep,name=payload_attestations,json=payloadAttestations,proto3" json:"payload_attestations,omitempty" ssz-max:"4"`
-	ParentSilaRequests   *v1.SilaRequests         `protobuf:"bytes,13,opt,name=parent_sila_requests,json=parentSilaRequests,proto3" json:"parent_sila_requests,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	state                protoimpl.MessageState     `protogen:"open.v1"`
+	RandaoReveal         []byte                     `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
+	SilaData             *SilaData                  `protobuf:"bytes,2,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	Graffiti             []byte                     `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
+	ProposerSlashings    []*ProposerSlashing        `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty" ssz-max:"16"`
+	AttesterSlashings    []*AttesterSlashingElectra `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty" ssz-max:"1"`
+	Attestations         []*AttestationElectra      `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty" ssz-max:"8"`
+	Deposits             []*Deposit                 `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"16"`
+	VoluntaryExits       []*SignedVoluntaryExit     `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
+	SyncAggregate        *SyncAggregate             `protobuf:"bytes,9,opt,name=sync_aggregate,json=syncAggregate,proto3" json:"sync_aggregate,omitempty"`
+	BlsToSilaChanges     []*SignedBLSToSilaChange   `protobuf:"bytes,10,rep,name=bls_to_sila_changes,json=blsToSilaChanges,proto3" json:"bls_to_sila_changes,omitempty" ssz-max:"16"`
+	SignedSilaPayloadBid *SignedSilaPayloadBid      `protobuf:"bytes,11,opt,name=signed_sila_payload_bid,json=signedSilaPayloadBid,proto3" json:"signed_sila_payload_bid,omitempty"`
+	PayloadAttestations  []*PayloadAttestation      `protobuf:"bytes,12,rep,name=payload_attestations,json=payloadAttestations,proto3" json:"payload_attestations,omitempty" ssz-max:"4"`
+	ParentSilaRequests   *v1.SilaRequests           `protobuf:"bytes,13,opt,name=parent_sila_requests,json=parentSilaRequests,proto3" json:"parent_sila_requests,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *BeaconBlockBodyGloas) Reset() {
@@ -838,53 +838,53 @@ func (x *SignedBeaconBlockGloas) GetSignature() []byte {
 }
 
 type BeaconStateGloas struct {
-	state                         protoimpl.MessageState                                                       `protogen:"open.v1"`
-	GenesisTime                   uint64                                                                       `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot         []byte                                                                       `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	state                         protoimpl.MessageState                                                              `protogen:"open.v1"`
+	GenesisTime                   uint64                                                                              `protobuf:"varint,1001,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot         []byte                                                                              `protobuf:"bytes,1002,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 	Slot                          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot             `protobuf:"varint,1003,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	Fork                          *Fork                                                                        `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
-	LatestBlockHeader             *BeaconBlockHeader                                                           `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
-	BlockRoots                    [][]byte                                                                     `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
-	StateRoots                    [][]byte                                                                     `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
-	HistoricalRoots               [][]byte                                                                     `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
-	SilaData                      *SilaData                                                                    `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
-	SilaDataVotes                 []*SilaData                                                                  `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
-	SilaExecutionDepositIndex              uint64                                                                       `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
-	Validators                    []*Validator                                                                 `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
-	Balances                      []uint64                                                                     `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
-	RandaoMixes                   [][]byte                                                                     `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
-	Slashings                     []uint64                                                                     `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
-	PreviousEpochParticipation    []byte                                                                       `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	CurrentEpochParticipation     []byte                                                                       `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
-	JustificationBits             github_com_sila_chain_go_bitfield.Bitvector4                               `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
-	PreviousJustifiedCheckpoint   *Checkpoint                                                                  `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
-	CurrentJustifiedCheckpoint    *Checkpoint                                                                  `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
-	FinalizedCheckpoint           *Checkpoint                                                                  `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
-	InactivityScores              []uint64                                                                     `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
-	CurrentSyncCommittee          *SyncCommittee                                                               `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
-	NextSyncCommittee             *SyncCommittee                                                               `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
-	LatestBlockHash               []byte                                                                       `protobuf:"bytes,10001,opt,name=latest_block_hash,json=latestBlockHash,proto3" json:"latest_block_hash,omitempty" ssz-size:"32"`
-	NextWithdrawalIndex           uint64                                                                       `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
+	Fork                          *Fork                                                                               `protobuf:"bytes,1004,opt,name=fork,proto3" json:"fork,omitempty"`
+	LatestBlockHeader             *BeaconBlockHeader                                                                  `protobuf:"bytes,2001,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
+	BlockRoots                    [][]byte                                                                            `protobuf:"bytes,2002,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192,32"`
+	StateRoots                    [][]byte                                                                            `protobuf:"bytes,2003,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192,32"`
+	HistoricalRoots               [][]byte                                                                            `protobuf:"bytes,2004,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"?,32"`
+	SilaData                      *SilaData                                                                           `protobuf:"bytes,3001,opt,name=sila_data,json=silaexecData,proto3" json:"sila_data,omitempty"`
+	SilaDataVotes                 []*SilaData                                                                         `protobuf:"bytes,3002,rep,name=sila_data_votes,json=silaDataVotes,proto3" json:"sila_data_votes,omitempty" ssz-max:"2048"`
+	SilaExecutionDepositIndex     uint64                                                                              `protobuf:"varint,3003,opt,name=silaexec_deposit_index,json=silaExecutionDepositIndex,proto3" json:"silaexec_deposit_index,omitempty"`
+	Validators                    []*Validator                                                                        `protobuf:"bytes,4001,rep,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Balances                      []uint64                                                                            `protobuf:"varint,4002,rep,packed,name=balances,proto3" json:"balances,omitempty" ssz-max:"1099511627776"`
+	RandaoMixes                   [][]byte                                                                            `protobuf:"bytes,5001,rep,name=randao_mixes,json=randaoMixes,proto3" json:"randao_mixes,omitempty" ssz-size:"65536,32"`
+	Slashings                     []uint64                                                                            `protobuf:"varint,6001,rep,packed,name=slashings,proto3" json:"slashings,omitempty" ssz-size:"8192"`
+	PreviousEpochParticipation    []byte                                                                              `protobuf:"bytes,7001,opt,name=previous_epoch_participation,json=previousEpochParticipation,proto3" json:"previous_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	CurrentEpochParticipation     []byte                                                                              `protobuf:"bytes,7002,opt,name=current_epoch_participation,json=currentEpochParticipation,proto3" json:"current_epoch_participation,omitempty" ssz-max:"1099511627776"`
+	JustificationBits             github_com_sila_chain_go_bitfield.Bitvector4                                        `protobuf:"bytes,8001,opt,name=justification_bits,json=justificationBits,proto3" json:"justification_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector4" ssz-size:"1"`
+	PreviousJustifiedCheckpoint   *Checkpoint                                                                         `protobuf:"bytes,8002,opt,name=previous_justified_checkpoint,json=previousJustifiedCheckpoint,proto3" json:"previous_justified_checkpoint,omitempty"`
+	CurrentJustifiedCheckpoint    *Checkpoint                                                                         `protobuf:"bytes,8003,opt,name=current_justified_checkpoint,json=currentJustifiedCheckpoint,proto3" json:"current_justified_checkpoint,omitempty"`
+	FinalizedCheckpoint           *Checkpoint                                                                         `protobuf:"bytes,8004,opt,name=finalized_checkpoint,json=finalizedCheckpoint,proto3" json:"finalized_checkpoint,omitempty"`
+	InactivityScores              []uint64                                                                            `protobuf:"varint,9001,rep,packed,name=inactivity_scores,json=inactivityScores,proto3" json:"inactivity_scores,omitempty" ssz-max:"1099511627776"`
+	CurrentSyncCommittee          *SyncCommittee                                                                      `protobuf:"bytes,9002,opt,name=current_sync_committee,json=currentSyncCommittee,proto3" json:"current_sync_committee,omitempty"`
+	NextSyncCommittee             *SyncCommittee                                                                      `protobuf:"bytes,9003,opt,name=next_sync_committee,json=nextSyncCommittee,proto3" json:"next_sync_committee,omitempty"`
+	LatestBlockHash               []byte                                                                              `protobuf:"bytes,10001,opt,name=latest_block_hash,json=latestBlockHash,proto3" json:"latest_block_hash,omitempty" ssz-size:"32"`
+	NextWithdrawalIndex           uint64                                                                              `protobuf:"varint,11001,opt,name=next_withdrawal_index,json=nextWithdrawalIndex,proto3" json:"next_withdrawal_index,omitempty"`
 	NextWithdrawalValidatorIndex  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex   `protobuf:"varint,11002,opt,name=next_withdrawal_validator_index,json=nextWithdrawalValidatorIndex,proto3" json:"next_withdrawal_validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	HistoricalSummaries           []*HistoricalSummary                                                         `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
-	DepositRequestsStartIndex     uint64                                                                       `protobuf:"varint,12001,opt,name=deposit_requests_start_index,json=depositRequestsStartIndex,proto3" json:"deposit_requests_start_index,omitempty"`
+	HistoricalSummaries           []*HistoricalSummary                                                                `protobuf:"bytes,11003,rep,name=historical_summaries,json=historicalSummaries,proto3" json:"historical_summaries,omitempty" ssz-max:"16777216"`
+	DepositRequestsStartIndex     uint64                                                                              `protobuf:"varint,12001,opt,name=deposit_requests_start_index,json=depositRequestsStartIndex,proto3" json:"deposit_requests_start_index,omitempty"`
 	DepositBalanceToConsume       github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei             `protobuf:"varint,12002,opt,name=deposit_balance_to_consume,json=depositBalanceToConsume,proto3" json:"deposit_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	ExitBalanceToConsume          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei             `protobuf:"varint,12003,opt,name=exit_balance_to_consume,json=exitBalanceToConsume,proto3" json:"exit_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	EarliestExitEpoch             github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch            `protobuf:"varint,12004,opt,name=earliest_exit_epoch,json=earliestExitEpoch,proto3" json:"earliest_exit_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	ConsolidationBalanceToConsume github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei             `protobuf:"varint,12005,opt,name=consolidation_balance_to_consume,json=consolidationBalanceToConsume,proto3" json:"consolidation_balance_to_consume,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	EarliestConsolidationEpoch    github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch            `protobuf:"varint,12006,opt,name=earliest_consolidation_epoch,json=earliestConsolidationEpoch,proto3" json:"earliest_consolidation_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
-	PendingDeposits               []*PendingDeposit                                                            `protobuf:"bytes,12007,rep,name=pending_deposits,json=pendingDeposits,proto3" json:"pending_deposits,omitempty" ssz-max:"134217728"`
-	PendingPartialWithdrawals     []*PendingPartialWithdrawal                                                  `protobuf:"bytes,12008,rep,name=pending_partial_withdrawals,json=pendingPartialWithdrawals,proto3" json:"pending_partial_withdrawals,omitempty" ssz-max:"134217728"`
-	PendingConsolidations         []*PendingConsolidation                                                      `protobuf:"bytes,12009,rep,name=pending_consolidations,json=pendingConsolidations,proto3" json:"pending_consolidations,omitempty" ssz-max:"262144"`
+	PendingDeposits               []*PendingDeposit                                                                   `protobuf:"bytes,12007,rep,name=pending_deposits,json=pendingDeposits,proto3" json:"pending_deposits,omitempty" ssz-max:"134217728"`
+	PendingPartialWithdrawals     []*PendingPartialWithdrawal                                                         `protobuf:"bytes,12008,rep,name=pending_partial_withdrawals,json=pendingPartialWithdrawals,proto3" json:"pending_partial_withdrawals,omitempty" ssz-max:"134217728"`
+	PendingConsolidations         []*PendingConsolidation                                                             `protobuf:"bytes,12009,rep,name=pending_consolidations,json=pendingConsolidations,proto3" json:"pending_consolidations,omitempty" ssz-max:"262144"`
 	ProposerLookahead             []github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,13001,rep,packed,name=proposer_lookahead,json=proposerLookahead,proto3" json:"proposer_lookahead,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex" ssz-size:"64"`
-	Builders                      []*Builder                                                                   `protobuf:"bytes,14001,rep,name=builders,proto3" json:"builders,omitempty" ssz-max:"1099511627776"`
+	Builders                      []*Builder                                                                          `protobuf:"bytes,14001,rep,name=builders,proto3" json:"builders,omitempty" ssz-max:"1099511627776"`
 	NextWithdrawalBuilderIndex    github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex     `protobuf:"varint,14002,opt,name=next_withdrawal_builder_index,json=nextWithdrawalBuilderIndex,proto3" json:"next_withdrawal_builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
-	SilaPayloadAvailability  []byte                                                                       `protobuf:"bytes,14003,opt,name=sila_payload_availability,json=silaPayloadAvailability,proto3" json:"sila_payload_availability,omitempty" ssz-size:"1024"`
-	BuilderPendingPayments        []*BuilderPendingPayment                                                     `protobuf:"bytes,14004,rep,name=builder_pending_payments,json=builderPendingPayments,proto3" json:"builder_pending_payments,omitempty" ssz-size:"64"`
-	BuilderPendingWithdrawals     []*BuilderPendingWithdrawal                                                  `protobuf:"bytes,14005,rep,name=builder_pending_withdrawals,json=builderPendingWithdrawals,proto3" json:"builder_pending_withdrawals,omitempty" ssz-max:"1048576"`
-	LatestSilaPayloadBid     *SilaPayloadBid                                                         `protobuf:"bytes,14006,opt,name=latest_sila_payload_bid,json=latestSilaPayloadBid,proto3" json:"latest_sila_payload_bid,omitempty"`
-	PayloadExpectedWithdrawals    []*v1.Withdrawal                                                             `protobuf:"bytes,14007,rep,name=payload_expected_withdrawals,json=payloadExpectedWithdrawals,proto3" json:"payload_expected_withdrawals,omitempty" ssz-max:"16"`
-	PtcWindow                     []*PTCs                                                                      `protobuf:"bytes,14008,rep,name=ptc_window,json=ptcWindow,proto3" json:"ptc_window,omitempty" ssz-size:"96"`
+	SilaPayloadAvailability       []byte                                                                              `protobuf:"bytes,14003,opt,name=sila_payload_availability,json=silaPayloadAvailability,proto3" json:"sila_payload_availability,omitempty" ssz-size:"1024"`
+	BuilderPendingPayments        []*BuilderPendingPayment                                                            `protobuf:"bytes,14004,rep,name=builder_pending_payments,json=builderPendingPayments,proto3" json:"builder_pending_payments,omitempty" ssz-size:"64"`
+	BuilderPendingWithdrawals     []*BuilderPendingWithdrawal                                                         `protobuf:"bytes,14005,rep,name=builder_pending_withdrawals,json=builderPendingWithdrawals,proto3" json:"builder_pending_withdrawals,omitempty" ssz-max:"1048576"`
+	LatestSilaPayloadBid          *SilaPayloadBid                                                                     `protobuf:"bytes,14006,opt,name=latest_sila_payload_bid,json=latestSilaPayloadBid,proto3" json:"latest_sila_payload_bid,omitempty"`
+	PayloadExpectedWithdrawals    []*v1.Withdrawal                                                                    `protobuf:"bytes,14007,rep,name=payload_expected_withdrawals,json=payloadExpectedWithdrawals,proto3" json:"payload_expected_withdrawals,omitempty" ssz-max:"16"`
+	PtcWindow                     []*PTCs                                                                             `protobuf:"bytes,14008,rep,name=ptc_window,json=ptcWindow,proto3" json:"ptc_window,omitempty" ssz-size:"96"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -1242,7 +1242,7 @@ func (x *BeaconStateGloas) GetPtcWindow() []*PTCs {
 }
 
 type PTCs struct {
-	state            protoimpl.MessageState                                                       `protogen:"open.v1"`
+	state            protoimpl.MessageState                                                              `protogen:"open.v1"`
 	ValidatorIndices []github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,rep,packed,name=validator_indices,json=validatorIndices,proto3" json:"validator_indices,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex" ssz-size:"512"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
@@ -1286,13 +1286,13 @@ func (x *PTCs) GetValidatorIndices() []github_com_sila_chain_Sila_Sila_Core_v7_c
 }
 
 type BeaconBlockContentsGloas struct {
-	state                    protoimpl.MessageState    `protogen:"open.v1"`
-	Block                    *BeaconBlockGloas         `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
-	SilaPayloadEnvelope *SilaPayloadEnvelope `protobuf:"bytes,2,opt,name=sila_payload_envelope,json=silaPayloadEnvelope,proto3" json:"sila_payload_envelope,omitempty"`
-	KzgProofs                [][]byte                  `protobuf:"bytes,3,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"33554432" ssz-size:"?,48"`
-	Blobs                    [][]byte                  `protobuf:"bytes,4,rep,name=blobs,proto3" json:"blobs,omitempty" ssz-max:"4096" ssz-size:"?,131072"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Block               *BeaconBlockGloas      `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
+	SilaPayloadEnvelope *SilaPayloadEnvelope   `protobuf:"bytes,2,opt,name=sila_payload_envelope,json=silaPayloadEnvelope,proto3" json:"sila_payload_envelope,omitempty"`
+	KzgProofs           [][]byte               `protobuf:"bytes,3,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"33554432" ssz-size:"?,48"`
+	Blobs               [][]byte               `protobuf:"bytes,4,rep,name=blobs,proto3" json:"blobs,omitempty" ssz-max:"4096" ssz-size:"?,131072"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *BeaconBlockContentsGloas) Reset() {
@@ -1354,12 +1354,12 @@ func (x *BeaconBlockContentsGloas) GetBlobs() [][]byte {
 }
 
 type SignedSilaPayloadEnvelopeContents struct {
-	state                          protoimpl.MessageState          `protogen:"open.v1"`
+	state                     protoimpl.MessageState     `protogen:"open.v1"`
 	SignedSilaPayloadEnvelope *SignedSilaPayloadEnvelope `protobuf:"bytes,1,opt,name=signed_sila_payload_envelope,json=signedSilaPayloadEnvelope,proto3" json:"signed_sila_payload_envelope,omitempty"`
-	KzgProofs                      [][]byte                        `protobuf:"bytes,2,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"33554432" ssz-size:"?,48"`
-	Blobs                          [][]byte                        `protobuf:"bytes,3,rep,name=blobs,proto3" json:"blobs,omitempty" ssz-max:"4096" ssz-size:"?,131072"`
-	unknownFields                  protoimpl.UnknownFields
-	sizeCache                      protoimpl.SizeCache
+	KzgProofs                 [][]byte                   `protobuf:"bytes,2,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"33554432" ssz-size:"?,48"`
+	Blobs                     [][]byte                   `protobuf:"bytes,3,rep,name=blobs,proto3" json:"blobs,omitempty" ssz-max:"4096" ssz-size:"?,131072"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *SignedSilaPayloadEnvelopeContents) Reset() {
@@ -1414,9 +1414,9 @@ func (x *SignedSilaPayloadEnvelopeContents) GetBlobs() [][]byte {
 }
 
 type BuilderPendingPayment struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	Weight        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei `protobuf:"varint,1,opt,name=weight,proto3" json:"weight,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
-	Withdrawal    *BuilderPendingWithdrawal                                        `protobuf:"bytes,2,opt,name=withdrawal,proto3" json:"withdrawal,omitempty"`
+	Withdrawal    *BuilderPendingWithdrawal                                               `protobuf:"bytes,2,opt,name=withdrawal,proto3" json:"withdrawal,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1466,8 +1466,8 @@ func (x *BuilderPendingPayment) GetWithdrawal() *BuilderPendingWithdrawal {
 }
 
 type BuilderPendingWithdrawal struct {
-	state         protoimpl.MessageState                                                   `protogen:"open.v1"`
-	FeeRecipient  []byte                                                                   `protobuf:"bytes,1,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
+	state         protoimpl.MessageState                                                          `protogen:"open.v1"`
+	FeeRecipient  []byte                                                                          `protobuf:"bytes,1,opt,name=fee_recipient,json=feeRecipient,proto3" json:"fee_recipient,omitempty" ssz-size:"20"`
 	Amount        github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei         `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	BuilderIndex  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
 	unknownFields protoimpl.UnknownFields
@@ -1526,12 +1526,12 @@ func (x *BuilderPendingWithdrawal) GetBuilderIndex() github_com_sila_chain_Sila_
 }
 
 type DataColumnSidecarGloas struct {
-	state           protoimpl.MessageState                                           `protogen:"open.v1"`
-	Index           uint64                                                           `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
-	Column          [][]byte                                                         `protobuf:"bytes,2,rep,name=column,proto3" json:"column,omitempty" ssz-max:"4096" ssz-size:"?,2048"`
-	KzgProofs       [][]byte                                                         `protobuf:"bytes,4,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"4096" ssz-size:"?,48"`
+	state           protoimpl.MessageState                                                  `protogen:"open.v1"`
+	Index           uint64                                                                  `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
+	Column          [][]byte                                                                `protobuf:"bytes,2,rep,name=column,proto3" json:"column,omitempty" ssz-max:"4096" ssz-size:"?,2048"`
+	KzgProofs       [][]byte                                                                `protobuf:"bytes,4,rep,name=kzg_proofs,json=kzgProofs,proto3" json:"kzg_proofs,omitempty" ssz-max:"4096" ssz-size:"?,48"`
 	Slot            github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	BeaconBlockRoot []byte                                                           `protobuf:"bytes,6,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
+	BeaconBlockRoot []byte                                                                  `protobuf:"bytes,6,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1602,12 +1602,12 @@ func (x *DataColumnSidecarGloas) GetBeaconBlockRoot() []byte {
 }
 
 type SilaPayloadEnvelope struct {
-	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
-	Payload               *v1.SilaPayloadGloas                                                `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
-	SilaRequests     *v1.SilaRequests                                                    `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
+	state                 protoimpl.MessageState                                                          `protogen:"open.v1"`
+	Payload               *v1.SilaPayloadGloas                                                            `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	SilaRequests          *v1.SilaRequests                                                                `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
-	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
-	ParentBeaconBlockRoot []byte                                                                   `protobuf:"bytes,5,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
+	BeaconBlockRoot       []byte                                                                          `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
+	ParentBeaconBlockRoot []byte                                                                          `protobuf:"bytes,5,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1678,9 +1678,9 @@ func (x *SilaPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
 }
 
 type SignedSilaPayloadEnvelope struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Message       *SilaPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	Signature     []byte                    `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       *SilaPayloadEnvelope   `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Signature     []byte                 `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1730,14 +1730,14 @@ func (x *SignedSilaPayloadEnvelope) GetSignature() []byte {
 }
 
 type BlindedSilaPayloadEnvelope struct {
-	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
-	BlockHash             []byte                                                                   `protobuf:"bytes,1,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
-	SilaRequests     *v1.SilaRequests                                                    `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
+	state                 protoimpl.MessageState                                                          `protogen:"open.v1"`
+	BlockHash             []byte                                                                          `protobuf:"bytes,1,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
+	SilaRequests          *v1.SilaRequests                                                                `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
-	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
+	BeaconBlockRoot       []byte                                                                          `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
 	Slot                  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot         `protobuf:"varint,5,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	ParentBlockHash       []byte                                                                   `protobuf:"bytes,7,opt,name=parent_block_hash,json=parentBlockHash,proto3" json:"parent_block_hash,omitempty" ssz-size:"32"`
-	ParentBeaconBlockRoot []byte                                                                   `protobuf:"bytes,8,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
+	ParentBlockHash       []byte                                                                          `protobuf:"bytes,7,opt,name=parent_block_hash,json=parentBlockHash,proto3" json:"parent_block_hash,omitempty" ssz-size:"32"`
+	ParentBeaconBlockRoot []byte                                                                          `protobuf:"bytes,8,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1822,9 +1822,9 @@ func (x *BlindedSilaPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
 }
 
 type SignedBlindedSilaPayloadEnvelope struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
 	Message       *BlindedSilaPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	Signature     []byte                           `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature     []byte                      `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1874,12 +1874,12 @@ func (x *SignedBlindedSilaPayloadEnvelope) GetSignature() []byte {
 }
 
 type WireBlindedSilaPayloadEnvelope struct {
-	state                 protoimpl.MessageState                                                   `protogen:"open.v1"`
-	PayloadRoot           []byte                                                                   `protobuf:"bytes,1,opt,name=payload_root,json=payloadRoot,proto3" json:"payload_root,omitempty" ssz-size:"32"`
-	SilaRequests     *v1.SilaRequests                                                    `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
+	state                 protoimpl.MessageState                                                          `protogen:"open.v1"`
+	PayloadRoot           []byte                                                                          `protobuf:"bytes,1,opt,name=payload_root,json=payloadRoot,proto3" json:"payload_root,omitempty" ssz-size:"32"`
+	SilaRequests          *v1.SilaRequests                                                                `protobuf:"bytes,2,opt,name=sila_requests,json=silaRequests,proto3" json:"sila_requests,omitempty"`
 	BuilderIndex          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.BuilderIndex `protobuf:"varint,3,opt,name=builder_index,json=builderIndex,proto3" json:"builder_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.BuilderIndex"`
-	BeaconBlockRoot       []byte                                                                   `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
-	ParentBeaconBlockRoot []byte                                                                   `protobuf:"bytes,5,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
+	BeaconBlockRoot       []byte                                                                          `protobuf:"bytes,4,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
+	ParentBeaconBlockRoot []byte                                                                          `protobuf:"bytes,5,opt,name=parent_beacon_block_root,json=parentBeaconBlockRoot,proto3" json:"parent_beacon_block_root,omitempty" ssz-size:"32"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1950,9 +1950,9 @@ func (x *WireBlindedSilaPayloadEnvelope) GetParentBeaconBlockRoot() []byte {
 }
 
 type SignedWireBlindedSilaPayloadEnvelope struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
+	state         protoimpl.MessageState          `protogen:"open.v1"`
 	Message       *WireBlindedSilaPayloadEnvelope `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	Signature     []byte                               `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature     []byte                          `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2002,10 +2002,10 @@ func (x *SignedWireBlindedSilaPayloadEnvelope) GetSignature() []byte {
 }
 
 type Builder struct {
-	state             protoimpl.MessageState                                            `protogen:"open.v1"`
-	Pubkey            []byte                                                            `protobuf:"bytes,1,opt,name=pubkey,proto3" json:"pubkey,omitempty" ssz-size:"48"`
-	Version           []byte                                                            `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty" ssz-size:"1"`
-	SilaAddress  []byte                                                            `protobuf:"bytes,3,opt,name=sila_address,json=silaAddress,proto3" json:"sila_address,omitempty" ssz-size:"20"`
+	state             protoimpl.MessageState                                                   `protogen:"open.v1"`
+	Pubkey            []byte                                                                   `protobuf:"bytes,1,opt,name=pubkey,proto3" json:"pubkey,omitempty" ssz-size:"48"`
+	Version           []byte                                                                   `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty" ssz-size:"1"`
+	SilaAddress       []byte                                                                   `protobuf:"bytes,3,opt,name=sila_address,json=silaAddress,proto3" json:"sila_address,omitempty" ssz-size:"20"`
 	Balance           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Gwei  `protobuf:"varint,4,opt,name=balance,proto3" json:"balance,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Gwei"`
 	DepositEpoch      github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,5,opt,name=deposit_epoch,json=depositEpoch,proto3" json:"deposit_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	WithdrawableEpoch github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,6,opt,name=withdrawable_epoch,json=withdrawableEpoch,proto3" json:"withdrawable_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
@@ -2874,51 +2874,51 @@ func file_proto_sila_v1alpha1_gloas_proto_rawDescGZIP() []byte {
 
 var file_proto_sila_v1alpha1_gloas_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_proto_sila_v1alpha1_gloas_proto_goTypes = []any{
-	(*SilaPayloadBid)(nil),                       // 0: sila.eth.v1alpha1.SilaPayloadBid
-	(*SignedSilaPayloadBid)(nil),                 // 1: sila.eth.v1alpha1.SignedSilaPayloadBid
-	(*ProposerPreferences)(nil),                       // 2: sila.eth.v1alpha1.ProposerPreferences
-	(*SignedProposerPreferences)(nil),                 // 3: sila.eth.v1alpha1.SignedProposerPreferences
-	(*SubmitSignedProposerPreferencesRequest)(nil),    // 4: sila.eth.v1alpha1.SubmitSignedProposerPreferencesRequest
-	(*PayloadAttestationData)(nil),                    // 5: sila.eth.v1alpha1.PayloadAttestationData
-	(*PayloadAttestation)(nil),                        // 6: sila.eth.v1alpha1.PayloadAttestation
-	(*PayloadAttestationMessage)(nil),                 // 7: sila.eth.v1alpha1.PayloadAttestationMessage
-	(*BeaconBlockGloas)(nil),                          // 8: sila.eth.v1alpha1.BeaconBlockGloas
-	(*BeaconBlockBodyGloas)(nil),                      // 9: sila.eth.v1alpha1.BeaconBlockBodyGloas
-	(*SignedBeaconBlockGloas)(nil),                    // 10: sila.eth.v1alpha1.SignedBeaconBlockGloas
-	(*BeaconStateGloas)(nil),                          // 11: sila.eth.v1alpha1.BeaconStateGloas
-	(*PTCs)(nil),                                      // 12: sila.eth.v1alpha1.PTCs
-	(*BeaconBlockContentsGloas)(nil),                  // 13: sila.eth.v1alpha1.BeaconBlockContentsGloas
-	(*SignedSilaPayloadEnvelopeContents)(nil),    // 14: sila.eth.v1alpha1.SignedSilaPayloadEnvelopeContents
-	(*BuilderPendingPayment)(nil),                     // 15: sila.eth.v1alpha1.BuilderPendingPayment
-	(*BuilderPendingWithdrawal)(nil),                  // 16: sila.eth.v1alpha1.BuilderPendingWithdrawal
-	(*DataColumnSidecarGloas)(nil),                    // 17: sila.eth.v1alpha1.DataColumnSidecarGloas
-	(*SilaPayloadEnvelope)(nil),                  // 18: sila.eth.v1alpha1.SilaPayloadEnvelope
-	(*SignedSilaPayloadEnvelope)(nil),            // 19: sila.eth.v1alpha1.SignedSilaPayloadEnvelope
-	(*BlindedSilaPayloadEnvelope)(nil),           // 20: sila.eth.v1alpha1.BlindedSilaPayloadEnvelope
-	(*SignedBlindedSilaPayloadEnvelope)(nil),     // 21: sila.eth.v1alpha1.SignedBlindedSilaPayloadEnvelope
-	(*WireBlindedSilaPayloadEnvelope)(nil),       // 22: sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope
-	(*SignedWireBlindedSilaPayloadEnvelope)(nil), // 23: sila.eth.v1alpha1.SignedWireBlindedSilaPayloadEnvelope
-	(*Builder)(nil),                                   // 24: sila.eth.v1alpha1.Builder
-	(*SilaData)(nil),                                  // 25: sila.eth.v1alpha1.SilaData
-	(*ProposerSlashing)(nil),                          // 26: sila.eth.v1alpha1.ProposerSlashing
-	(*AttesterSlashingElectra)(nil),                   // 27: sila.eth.v1alpha1.AttesterSlashingElectra
-	(*AttestationElectra)(nil),                        // 28: sila.eth.v1alpha1.AttestationElectra
-	(*Deposit)(nil),                                   // 29: sila.eth.v1alpha1.Deposit
-	(*SignedVoluntaryExit)(nil),                       // 30: sila.eth.v1alpha1.SignedVoluntaryExit
-	(*SyncAggregate)(nil),                             // 31: sila.eth.v1alpha1.SyncAggregate
-	(*SignedBLSToSilaChange)(nil),                // 32: sila.eth.v1alpha1.SignedBLSToSilaChange
-	(*v1.SilaRequests)(nil),                      // 33: sila.silaengine.v1.SilaRequests
-	(*Fork)(nil),                                      // 34: sila.eth.v1alpha1.Fork
-	(*BeaconBlockHeader)(nil),                         // 35: sila.eth.v1alpha1.BeaconBlockHeader
-	(*Validator)(nil),                                 // 36: sila.eth.v1alpha1.Validator
-	(*Checkpoint)(nil),                                // 37: sila.eth.v1alpha1.Checkpoint
-	(*SyncCommittee)(nil),                             // 38: sila.eth.v1alpha1.SyncCommittee
-	(*HistoricalSummary)(nil),                         // 39: sila.eth.v1alpha1.HistoricalSummary
-	(*PendingDeposit)(nil),                            // 40: sila.eth.v1alpha1.PendingDeposit
-	(*PendingPartialWithdrawal)(nil),                  // 41: sila.eth.v1alpha1.PendingPartialWithdrawal
-	(*PendingConsolidation)(nil),                      // 42: sila.eth.v1alpha1.PendingConsolidation
-	(*v1.Withdrawal)(nil),                             // 43: sila.silaengine.v1.Withdrawal
-	(*v1.SilaPayloadGloas)(nil),                  // 44: sila.silaengine.v1.SilaPayloadGloas
+	(*SilaPayloadBid)(nil),                         // 0: sila.eth.v1alpha1.SilaPayloadBid
+	(*SignedSilaPayloadBid)(nil),                   // 1: sila.eth.v1alpha1.SignedSilaPayloadBid
+	(*ProposerPreferences)(nil),                    // 2: sila.eth.v1alpha1.ProposerPreferences
+	(*SignedProposerPreferences)(nil),              // 3: sila.eth.v1alpha1.SignedProposerPreferences
+	(*SubmitSignedProposerPreferencesRequest)(nil), // 4: sila.eth.v1alpha1.SubmitSignedProposerPreferencesRequest
+	(*PayloadAttestationData)(nil),                 // 5: sila.eth.v1alpha1.PayloadAttestationData
+	(*PayloadAttestation)(nil),                     // 6: sila.eth.v1alpha1.PayloadAttestation
+	(*PayloadAttestationMessage)(nil),              // 7: sila.eth.v1alpha1.PayloadAttestationMessage
+	(*BeaconBlockGloas)(nil),                       // 8: sila.eth.v1alpha1.BeaconBlockGloas
+	(*BeaconBlockBodyGloas)(nil),                   // 9: sila.eth.v1alpha1.BeaconBlockBodyGloas
+	(*SignedBeaconBlockGloas)(nil),                 // 10: sila.eth.v1alpha1.SignedBeaconBlockGloas
+	(*BeaconStateGloas)(nil),                       // 11: sila.eth.v1alpha1.BeaconStateGloas
+	(*PTCs)(nil),                                   // 12: sila.eth.v1alpha1.PTCs
+	(*BeaconBlockContentsGloas)(nil),               // 13: sila.eth.v1alpha1.BeaconBlockContentsGloas
+	(*SignedSilaPayloadEnvelopeContents)(nil),      // 14: sila.eth.v1alpha1.SignedSilaPayloadEnvelopeContents
+	(*BuilderPendingPayment)(nil),                  // 15: sila.eth.v1alpha1.BuilderPendingPayment
+	(*BuilderPendingWithdrawal)(nil),               // 16: sila.eth.v1alpha1.BuilderPendingWithdrawal
+	(*DataColumnSidecarGloas)(nil),                 // 17: sila.eth.v1alpha1.DataColumnSidecarGloas
+	(*SilaPayloadEnvelope)(nil),                    // 18: sila.eth.v1alpha1.SilaPayloadEnvelope
+	(*SignedSilaPayloadEnvelope)(nil),              // 19: sila.eth.v1alpha1.SignedSilaPayloadEnvelope
+	(*BlindedSilaPayloadEnvelope)(nil),             // 20: sila.eth.v1alpha1.BlindedSilaPayloadEnvelope
+	(*SignedBlindedSilaPayloadEnvelope)(nil),       // 21: sila.eth.v1alpha1.SignedBlindedSilaPayloadEnvelope
+	(*WireBlindedSilaPayloadEnvelope)(nil),         // 22: sila.eth.v1alpha1.WireBlindedSilaPayloadEnvelope
+	(*SignedWireBlindedSilaPayloadEnvelope)(nil),   // 23: sila.eth.v1alpha1.SignedWireBlindedSilaPayloadEnvelope
+	(*Builder)(nil),                                // 24: sila.eth.v1alpha1.Builder
+	(*SilaData)(nil),                               // 25: sila.eth.v1alpha1.SilaData
+	(*ProposerSlashing)(nil),                       // 26: sila.eth.v1alpha1.ProposerSlashing
+	(*AttesterSlashingElectra)(nil),                // 27: sila.eth.v1alpha1.AttesterSlashingElectra
+	(*AttestationElectra)(nil),                     // 28: sila.eth.v1alpha1.AttestationElectra
+	(*Deposit)(nil),                                // 29: sila.eth.v1alpha1.Deposit
+	(*SignedVoluntaryExit)(nil),                    // 30: sila.eth.v1alpha1.SignedVoluntaryExit
+	(*SyncAggregate)(nil),                          // 31: sila.eth.v1alpha1.SyncAggregate
+	(*SignedBLSToSilaChange)(nil),                  // 32: sila.eth.v1alpha1.SignedBLSToSilaChange
+	(*v1.SilaRequests)(nil),                        // 33: sila.silaengine.v1.SilaRequests
+	(*Fork)(nil),                                   // 34: sila.eth.v1alpha1.Fork
+	(*BeaconBlockHeader)(nil),                      // 35: sila.eth.v1alpha1.BeaconBlockHeader
+	(*Validator)(nil),                              // 36: sila.eth.v1alpha1.Validator
+	(*Checkpoint)(nil),                             // 37: sila.eth.v1alpha1.Checkpoint
+	(*SyncCommittee)(nil),                          // 38: sila.eth.v1alpha1.SyncCommittee
+	(*HistoricalSummary)(nil),                      // 39: sila.eth.v1alpha1.HistoricalSummary
+	(*PendingDeposit)(nil),                         // 40: sila.eth.v1alpha1.PendingDeposit
+	(*PendingPartialWithdrawal)(nil),               // 41: sila.eth.v1alpha1.PendingPartialWithdrawal
+	(*PendingConsolidation)(nil),                   // 42: sila.eth.v1alpha1.PendingConsolidation
+	(*v1.Withdrawal)(nil),                          // 43: sila.silaengine.v1.Withdrawal
+	(*v1.SilaPayloadGloas)(nil),                    // 44: sila.silaengine.v1.SilaPayloadGloas
 }
 var file_proto_sila_v1alpha1_gloas_proto_depIdxs = []int32{
 	0,  // 0: sila.eth.v1alpha1.SignedSilaPayloadBid.message:type_name -> sila.eth.v1alpha1.SilaPayloadBid

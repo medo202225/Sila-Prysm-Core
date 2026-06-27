@@ -8,8 +8,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
@@ -29,7 +29,7 @@ func TestProcessPendingConsolidations(t *testing.T) {
 		{
 			name: "no pending consolidations",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{}
+				pb := &sila.BeaconStateElectra{}
 
 				st, err := state_native.InitializeFromProtoUnsafeElectra(pb)
 				require.NoError(t, err)
@@ -40,8 +40,8 @@ func TestProcessPendingConsolidations(t *testing.T) {
 		{
 			name: "processes pending consolidation successfully",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{
-					Validators: []*eth.Validator{
+				pb := &sila.BeaconStateElectra{
+					Validators: []*sila.Validator{
 						{
 							WithdrawalCredentials: []byte{0x01, 0xFF},
 							EffectiveBalance:      params.BeaconConfig().MinActivationBalance,
@@ -54,7 +54,7 @@ func TestProcessPendingConsolidations(t *testing.T) {
 						params.BeaconConfig().MinActivationBalance,
 						params.BeaconConfig().MinActivationBalance,
 					},
-					PendingConsolidations: []*eth.PendingConsolidation{
+					PendingConsolidations: []*sila.PendingConsolidation{
 						{
 							SourceIndex: 0,
 							TargetIndex: 1,
@@ -90,8 +90,8 @@ func TestProcessPendingConsolidations(t *testing.T) {
 		{
 			name: "stop processing when a source val withdrawable epoch is in the future",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{
-					Validators: []*eth.Validator{
+				pb := &sila.BeaconStateElectra{
+					Validators: []*sila.Validator{
 						{
 							WithdrawalCredentials: []byte{0x01, 0xFF},
 							WithdrawableEpoch:     100,
@@ -104,7 +104,7 @@ func TestProcessPendingConsolidations(t *testing.T) {
 						params.BeaconConfig().MinActivationBalance,
 						params.BeaconConfig().MinActivationBalance,
 					},
-					PendingConsolidations: []*eth.PendingConsolidation{
+					PendingConsolidations: []*sila.PendingConsolidation{
 						{
 							SourceIndex: 0,
 							TargetIndex: 1,
@@ -135,8 +135,8 @@ func TestProcessPendingConsolidations(t *testing.T) {
 		{
 			name: "slashed validator is not consolidated",
 			state: func() state.BeaconState {
-				pb := &eth.BeaconStateElectra{
-					Validators: []*eth.Validator{
+				pb := &sila.BeaconStateElectra{
+					Validators: []*sila.Validator{
 						{
 							WithdrawalCredentials: []byte{0x01, 0xFF},
 						},
@@ -156,7 +156,7 @@ func TestProcessPendingConsolidations(t *testing.T) {
 						params.BeaconConfig().MinActivationBalance,
 						params.BeaconConfig().MinActivationBalance,
 					},
-					PendingConsolidations: []*eth.PendingConsolidation{
+					PendingConsolidations: []*sila.PendingConsolidation{
 						{
 							SourceIndex: 2,
 							TargetIndex: 3,

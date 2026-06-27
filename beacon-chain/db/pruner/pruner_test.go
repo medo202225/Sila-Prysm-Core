@@ -8,7 +8,7 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	slottest "github.com/sila-chain/Sila-Consensus-Core/v7/time/slots/testing"
@@ -87,7 +87,7 @@ func TestPruner_PruneSuccess(t *testing.T) {
 	beaconDB := dbtest.SetupDB(t)
 
 	// Create and save some blocks at different slots
-	var blks []*eth.SignedBeaconBlock
+	var blks []*sila.SignedBeaconBlock
 	for slot := primitives.Slot(1); slot <= 32; slot++ {
 		blk := util.NewBeaconBlock()
 		blk.Block.Slot = slot

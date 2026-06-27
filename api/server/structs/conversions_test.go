@@ -6,8 +6,8 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -92,10 +92,10 @@ func TestProposerSlashing_ToConsensus(t *testing.T) {
 }
 
 func TestProposerSlashing_FromConsensus(t *testing.T) {
-	input := []*eth.ProposerSlashing{
+	input := []*sila.ProposerSlashing{
 		{
-			Header_1: &eth.SignedBeaconBlockHeader{
-				Header: &eth.BeaconBlockHeader{
+			Header_1: &sila.SignedBeaconBlockHeader{
+				Header: &sila.BeaconBlockHeader{
 					Slot:          1,
 					ProposerIndex: 2,
 					ParentRoot:    []byte{3},
@@ -104,8 +104,8 @@ func TestProposerSlashing_FromConsensus(t *testing.T) {
 				},
 				Signature: []byte{6},
 			},
-			Header_2: &eth.SignedBeaconBlockHeader{
-				Header: &eth.BeaconBlockHeader{
+			Header_2: &sila.SignedBeaconBlockHeader{
+				Header: &sila.BeaconBlockHeader{
 					Slot:          7,
 					ProposerIndex: 8,
 					ParentRoot:    []byte{9},
@@ -116,8 +116,8 @@ func TestProposerSlashing_FromConsensus(t *testing.T) {
 			},
 		},
 		{
-			Header_1: &eth.SignedBeaconBlockHeader{
-				Header: &eth.BeaconBlockHeader{
+			Header_1: &sila.SignedBeaconBlockHeader{
+				Header: &sila.BeaconBlockHeader{
 					Slot:          13,
 					ProposerIndex: 14,
 					ParentRoot:    []byte{15},
@@ -126,8 +126,8 @@ func TestProposerSlashing_FromConsensus(t *testing.T) {
 				},
 				Signature: []byte{18},
 			},
-			Header_2: &eth.SignedBeaconBlockHeader{
-				Header: &eth.BeaconBlockHeader{
+			Header_2: &sila.SignedBeaconBlockHeader{
+				Header: &sila.BeaconBlockHeader{
 					Slot:          19,
 					ProposerIndex: 20,
 					ParentRoot:    []byte{21},
@@ -197,36 +197,36 @@ func TestAttesterSlashing_ToConsensus(t *testing.T) {
 }
 
 func TestAttesterSlashing_FromConsensus(t *testing.T) {
-	input := []*eth.AttesterSlashing{
+	input := []*sila.AttesterSlashing{
 		{
-			Attestation_1: &eth.IndexedAttestation{
+			Attestation_1: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{1, 2},
-				Data: &eth.AttestationData{
+				Data: &sila.AttestationData{
 					Slot:            3,
 					CommitteeIndex:  4,
 					BeaconBlockRoot: []byte{5},
-					Source: &eth.Checkpoint{
+					Source: &sila.Checkpoint{
 						Epoch: 6,
 						Root:  []byte{7},
 					},
-					Target: &eth.Checkpoint{
+					Target: &sila.Checkpoint{
 						Epoch: 8,
 						Root:  []byte{9},
 					},
 				},
 				Signature: []byte{10},
 			},
-			Attestation_2: &eth.IndexedAttestation{
+			Attestation_2: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{11, 12},
-				Data: &eth.AttestationData{
+				Data: &sila.AttestationData{
 					Slot:            13,
 					CommitteeIndex:  14,
 					BeaconBlockRoot: []byte{15},
-					Source: &eth.Checkpoint{
+					Source: &sila.Checkpoint{
 						Epoch: 16,
 						Root:  []byte{17},
 					},
-					Target: &eth.Checkpoint{
+					Target: &sila.Checkpoint{
 						Epoch: 18,
 						Root:  []byte{19},
 					},
@@ -235,34 +235,34 @@ func TestAttesterSlashing_FromConsensus(t *testing.T) {
 			},
 		},
 		{
-			Attestation_1: &eth.IndexedAttestation{
+			Attestation_1: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{21, 22},
-				Data: &eth.AttestationData{
+				Data: &sila.AttestationData{
 					Slot:            23,
 					CommitteeIndex:  24,
 					BeaconBlockRoot: []byte{25},
-					Source: &eth.Checkpoint{
+					Source: &sila.Checkpoint{
 						Epoch: 26,
 						Root:  []byte{27},
 					},
-					Target: &eth.Checkpoint{
+					Target: &sila.Checkpoint{
 						Epoch: 28,
 						Root:  []byte{29},
 					},
 				},
 				Signature: []byte{30},
 			},
-			Attestation_2: &eth.IndexedAttestation{
+			Attestation_2: &sila.IndexedAttestation{
 				AttestingIndices: []uint64{31, 32},
-				Data: &eth.AttestationData{
+				Data: &sila.AttestationData{
 					Slot:            33,
 					CommitteeIndex:  34,
 					BeaconBlockRoot: []byte{35},
-					Source: &eth.Checkpoint{
+					Source: &sila.Checkpoint{
 						Epoch: 36,
 						Root:  []byte{37},
 					},
-					Target: &eth.Checkpoint{
+					Target: &sila.Checkpoint{
 						Epoch: 38,
 						Root:  []byte{39},
 					},
@@ -363,55 +363,55 @@ func TestIndexedAttestation_ToConsensus(t *testing.T) {
 
 func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 	t.Run("empty blobkzg commitments", func(t *testing.T) {
-		bid := &eth.SilaPayloadBid{
-			ParentBlockHash:       bytes.Repeat([]byte{0x01}, 32),
-			ParentBlockRoot:       bytes.Repeat([]byte{0x02}, 32),
-			BlockHash:             bytes.Repeat([]byte{0x03}, 32),
-			PrevRandao:            bytes.Repeat([]byte{0x04}, 32),
-			FeeRecipient:          bytes.Repeat([]byte{0x05}, 20),
-			GasLimit:              100,
-			BuilderIndex:          7,
-			Slot:                  9,
-			Value:                 11,
-			SilaPayment:      22,
-			BlobKzgCommitments:    [][]byte{},
-			SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
+		bid := &sila.SilaPayloadBid{
+			ParentBlockHash:    bytes.Repeat([]byte{0x01}, 32),
+			ParentBlockRoot:    bytes.Repeat([]byte{0x02}, 32),
+			BlockHash:          bytes.Repeat([]byte{0x03}, 32),
+			PrevRandao:         bytes.Repeat([]byte{0x04}, 32),
+			FeeRecipient:       bytes.Repeat([]byte{0x05}, 20),
+			GasLimit:           100,
+			BuilderIndex:       7,
+			Slot:               9,
+			Value:              11,
+			SilaPayment:        22,
+			BlobKzgCommitments: [][]byte{},
+			SilaRequestsRoot:   bytes.Repeat([]byte{0x07}, 32),
 		}
 		roBid, err := blocks.WrappedROSilaPayloadBid(bid)
 		require.NoError(t, err)
 
 		got := ROSilaPayloadBidFromConsensus(roBid)
 		want := &SilaPayloadBid{
-			ParentBlockHash:       hexutil.Encode(bid.ParentBlockHash),
-			ParentBlockRoot:       hexutil.Encode(bid.ParentBlockRoot),
-			BlockHash:             hexutil.Encode(bid.BlockHash),
-			PrevRandao:            hexutil.Encode(bid.PrevRandao),
-			FeeRecipient:          hexutil.Encode(bid.FeeRecipient),
-			GasLimit:              "100",
-			BuilderIndex:          "7",
-			Slot:                  "9",
-			Value:                 "11",
-			SilaPayment:      "22",
-			BlobKzgCommitments:    []string{},
-			SilaRequestsRoot: hexutil.Encode(bid.SilaRequestsRoot),
+			ParentBlockHash:    hexutil.Encode(bid.ParentBlockHash),
+			ParentBlockRoot:    hexutil.Encode(bid.ParentBlockRoot),
+			BlockHash:          hexutil.Encode(bid.BlockHash),
+			PrevRandao:         hexutil.Encode(bid.PrevRandao),
+			FeeRecipient:       hexutil.Encode(bid.FeeRecipient),
+			GasLimit:           "100",
+			BuilderIndex:       "7",
+			Slot:               "9",
+			Value:              "11",
+			SilaPayment:        "22",
+			BlobKzgCommitments: []string{},
+			SilaRequestsRoot:   hexutil.Encode(bid.SilaRequestsRoot),
 		}
 		assert.DeepEqual(t, want, got)
 	})
 
 	t.Run("default", func(t *testing.T) {
-		bid := &eth.SilaPayloadBid{
-			ParentBlockHash:       bytes.Repeat([]byte{0x01}, 32),
-			ParentBlockRoot:       bytes.Repeat([]byte{0x02}, 32),
-			BlockHash:             bytes.Repeat([]byte{0x03}, 32),
-			PrevRandao:            bytes.Repeat([]byte{0x04}, 32),
-			FeeRecipient:          bytes.Repeat([]byte{0x05}, 20),
-			GasLimit:              100,
-			BuilderIndex:          7,
-			Slot:                  9,
-			Value:                 11,
-			SilaPayment:      22,
-			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x06}, 48)},
-			SilaRequestsRoot: bytes.Repeat([]byte{0x07}, 32),
+		bid := &sila.SilaPayloadBid{
+			ParentBlockHash:    bytes.Repeat([]byte{0x01}, 32),
+			ParentBlockRoot:    bytes.Repeat([]byte{0x02}, 32),
+			BlockHash:          bytes.Repeat([]byte{0x03}, 32),
+			PrevRandao:         bytes.Repeat([]byte{0x04}, 32),
+			FeeRecipient:       bytes.Repeat([]byte{0x05}, 20),
+			GasLimit:           100,
+			BuilderIndex:       7,
+			Slot:               9,
+			Value:              11,
+			SilaPayment:        22,
+			BlobKzgCommitments: [][]byte{bytes.Repeat([]byte{0x06}, 48)},
+			SilaRequestsRoot:   bytes.Repeat([]byte{0x07}, 32),
 		}
 		roBid, err := blocks.WrappedROSilaPayloadBid(bid)
 		require.NoError(t, err)
@@ -423,28 +423,28 @@ func TestROSilaPayloadBidFromConsensus(t *testing.T) {
 
 		got := ROSilaPayloadBidFromConsensus(roBid)
 		want := &SilaPayloadBid{
-			ParentBlockHash:       hexutil.Encode(bid.ParentBlockHash),
-			ParentBlockRoot:       hexutil.Encode(bid.ParentBlockRoot),
-			BlockHash:             hexutil.Encode(bid.BlockHash),
-			PrevRandao:            hexutil.Encode(bid.PrevRandao),
-			FeeRecipient:          hexutil.Encode(bid.FeeRecipient),
-			GasLimit:              "100",
-			BuilderIndex:          "7",
-			Slot:                  "9",
-			Value:                 "11",
-			SilaPayment:      "22",
-			BlobKzgCommitments:    bkcs,
-			SilaRequestsRoot: hexutil.Encode(bid.SilaRequestsRoot),
+			ParentBlockHash:    hexutil.Encode(bid.ParentBlockHash),
+			ParentBlockRoot:    hexutil.Encode(bid.ParentBlockRoot),
+			BlockHash:          hexutil.Encode(bid.BlockHash),
+			PrevRandao:         hexutil.Encode(bid.PrevRandao),
+			FeeRecipient:       hexutil.Encode(bid.FeeRecipient),
+			GasLimit:           "100",
+			BuilderIndex:       "7",
+			Slot:               "9",
+			Value:              "11",
+			SilaPayment:        "22",
+			BlobKzgCommitments: bkcs,
+			SilaRequestsRoot:   hexutil.Encode(bid.SilaRequestsRoot),
 		}
 		assert.DeepEqual(t, want, got)
 	})
 }
 
 func TestBuilderConversionsFromConsensus(t *testing.T) {
-	builder := &eth.Builder{
+	builder := &sila.Builder{
 		Pubkey:            bytes.Repeat([]byte{0xAA}, 48),
 		Version:           bytes.Repeat([]byte{0x01}, 4),
-		SilaAddress:  bytes.Repeat([]byte{0xBB}, 20),
+		SilaAddress:       bytes.Repeat([]byte{0xBB}, 20),
 		Balance:           42,
 		DepositEpoch:      3,
 		WithdrawableEpoch: 4,
@@ -452,23 +452,23 @@ func TestBuilderConversionsFromConsensus(t *testing.T) {
 	wantBuilder := &Builder{
 		Pubkey:            hexutil.Encode(builder.Pubkey),
 		Version:           hexutil.Encode(builder.Version),
-		SilaAddress:  hexutil.Encode(builder.SilaAddress),
+		SilaAddress:       hexutil.Encode(builder.SilaAddress),
 		Balance:           "42",
 		DepositEpoch:      "3",
 		WithdrawableEpoch: "4",
 	}
 
 	assert.DeepEqual(t, wantBuilder, BuilderFromConsensus(builder))
-	assert.DeepEqual(t, []*Builder{wantBuilder}, BuildersFromConsensus([]*eth.Builder{builder}))
+	assert.DeepEqual(t, []*Builder{wantBuilder}, BuildersFromConsensus([]*sila.Builder{builder}))
 }
 
 func TestBuilderPendingPaymentConversionsFromConsensus(t *testing.T) {
-	withdrawal := &eth.BuilderPendingWithdrawal{
+	withdrawal := &sila.BuilderPendingWithdrawal{
 		FeeRecipient: bytes.Repeat([]byte{0x10}, 20),
 		Amount:       15,
 		BuilderIndex: 2,
 	}
-	payment := &eth.BuilderPendingPayment{
+	payment := &sila.BuilderPendingPayment{
 		Weight:     5,
 		Withdrawal: withdrawal,
 	}
@@ -483,36 +483,36 @@ func TestBuilderPendingPaymentConversionsFromConsensus(t *testing.T) {
 	}
 
 	assert.DeepEqual(t, wantPayment, BuilderPendingPaymentFromConsensus(payment))
-	assert.DeepEqual(t, []*BuilderPendingPayment{wantPayment}, BuilderPendingPaymentsFromConsensus([]*eth.BuilderPendingPayment{payment}))
+	assert.DeepEqual(t, []*BuilderPendingPayment{wantPayment}, BuilderPendingPaymentsFromConsensus([]*sila.BuilderPendingPayment{payment}))
 	assert.DeepEqual(t, wantWithdrawal, BuilderPendingWithdrawalFromConsensus(withdrawal))
-	assert.DeepEqual(t, []*BuilderPendingWithdrawal{wantWithdrawal}, BuilderPendingWithdrawalsFromConsensus([]*eth.BuilderPendingWithdrawal{withdrawal}))
+	assert.DeepEqual(t, []*BuilderPendingWithdrawal{wantWithdrawal}, BuilderPendingWithdrawalsFromConsensus([]*sila.BuilderPendingWithdrawal{withdrawal}))
 }
 
 func TestBeaconStateGloasFromConsensus(t *testing.T) {
-	st, err := util.NewBeaconStateGloas(func(state *eth.BeaconStateGloas) error {
+	st, err := util.NewBeaconStateGloas(func(state *sila.BeaconStateGloas) error {
 		state.GenesisTime = 123
 		state.GenesisValidatorsRoot = bytes.Repeat([]byte{0x10}, 32)
 		state.Slot = 5
 		state.ProposerLookahead = []primitives.ValidatorIndex{1, 2}
-		state.LatestSilaPayloadBid = &eth.SilaPayloadBid{
-			ParentBlockHash:       bytes.Repeat([]byte{0x11}, 32),
-			ParentBlockRoot:       bytes.Repeat([]byte{0x12}, 32),
-			BlockHash:             bytes.Repeat([]byte{0x13}, 32),
-			PrevRandao:            bytes.Repeat([]byte{0x14}, 32),
-			FeeRecipient:          bytes.Repeat([]byte{0x15}, 20),
-			GasLimit:              64,
-			BuilderIndex:          3,
-			Slot:                  5,
-			Value:                 99,
-			SilaPayment:      7,
-			BlobKzgCommitments:    [][]byte{bytes.Repeat([]byte{0x16}, 48)},
-			SilaRequestsRoot: make([]byte, 32),
+		state.LatestSilaPayloadBid = &sila.SilaPayloadBid{
+			ParentBlockHash:    bytes.Repeat([]byte{0x11}, 32),
+			ParentBlockRoot:    bytes.Repeat([]byte{0x12}, 32),
+			BlockHash:          bytes.Repeat([]byte{0x13}, 32),
+			PrevRandao:         bytes.Repeat([]byte{0x14}, 32),
+			FeeRecipient:       bytes.Repeat([]byte{0x15}, 20),
+			GasLimit:           64,
+			BuilderIndex:       3,
+			Slot:               5,
+			Value:              99,
+			SilaPayment:        7,
+			BlobKzgCommitments: [][]byte{bytes.Repeat([]byte{0x16}, 48)},
+			SilaRequestsRoot:   make([]byte, 32),
 		}
-		state.Builders = []*eth.Builder{
+		state.Builders = []*sila.Builder{
 			{
 				Pubkey:            bytes.Repeat([]byte{0x20}, 48),
 				Version:           bytes.Repeat([]byte{0x21}, 4),
-				SilaAddress:  bytes.Repeat([]byte{0x22}, 20),
+				SilaAddress:       bytes.Repeat([]byte{0x22}, 20),
 				Balance:           88,
 				DepositEpoch:      1,
 				WithdrawableEpoch: 2,
@@ -520,17 +520,17 @@ func TestBeaconStateGloasFromConsensus(t *testing.T) {
 		}
 		state.NextWithdrawalBuilderIndex = 9
 		state.SilaPayloadAvailability = []byte{0x01, 0x02}
-		state.BuilderPendingPayments = []*eth.BuilderPendingPayment{
+		state.BuilderPendingPayments = []*sila.BuilderPendingPayment{
 			{
 				Weight: 3,
-				Withdrawal: &eth.BuilderPendingWithdrawal{
+				Withdrawal: &sila.BuilderPendingWithdrawal{
 					FeeRecipient: bytes.Repeat([]byte{0x23}, 20),
 					Amount:       4,
 					BuilderIndex: 5,
 				},
 			},
 		}
-		state.BuilderPendingWithdrawals = []*eth.BuilderPendingWithdrawal{
+		state.BuilderPendingWithdrawals = []*sila.BuilderPendingWithdrawal{
 			{
 				FeeRecipient: bytes.Repeat([]byte{0x24}, 20),
 				Amount:       6,

@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
@@ -22,8 +22,8 @@ import (
 	dbTest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
 	mockp2p "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/testing"
-	rpctesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/lookup"
+	rpctesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/testutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
@@ -35,7 +35,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	mock2 "github.com/sila-chain/Sila-Consensus-Core/v7/testing/mock"
@@ -43,8 +43,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	ssz "github.com/sila-chain/fastssz"
+	"github.com/sila-chain/go-bitfield"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/mock/gomock"
@@ -52,13 +52,13 @@ import (
 
 // fillGloasBlockTestData populates a Gloas block with non-zero test values for the
 // Gloas-specific fields: SignedSilaPayloadBid and PayloadAttestations.
-func fillGloasBlockTestData(b *eth.SignedBeaconBlockGloas, numPayloadAttestations int) {
+func fillGloasBlockTestData(b *sila.SignedBeaconBlockGloas, numPayloadAttestations int) {
 	slot := b.Block.Slot
 	b.Block.Body.SignedSilaPayloadBid = util.GenerateTestSignedSilaPayloadBid(slot)
 	b.Block.Body.PayloadAttestations = util.GenerateTestPayloadAttestations(numPayloadAttestations, slot)
 }
 
-func fillDBTestBlocks(ctx context.Context, t *testing.T, beaconDB db.Database) (*eth.SignedBeaconBlock, []*eth.BeaconBlockContainer) {
+func fillDBTestBlocks(ctx context.Context, t *testing.T, beaconDB db.Database) (*sila.SignedBeaconBlock, []*sila.BeaconBlockContainer) {
 	parentRoot := [32]byte{1, 2, 3}
 	genBlk := util.NewBeaconBlock()
 	genBlk.Block.ParentRoot = parentRoot[:]
@@ -69,7 +69,7 @@ func fillDBTestBlocks(ctx context.Context, t *testing.T, beaconDB db.Database) (
 
 	count := primitives.Slot(100)
 	blks := make([]interfaces.ReadOnlySignedBeaconBlock, count)
-	blkContainers := make([]*eth.BeaconBlockContainer, count)
+	blkContainers := make([]*sila.BeaconBlockContainer, count)
 	for i := range count {
 		b := util.NewBeaconBlock()
 		b.Block.Slot = i
@@ -78,16 +78,16 @@ func fillDBTestBlocks(ctx context.Context, t *testing.T, beaconDB db.Database) (
 		require.NoError(t, err)
 		blks[i], err = blocks.NewSignedBeaconBlock(b)
 		require.NoError(t, err)
-		blkContainers[i] = &eth.BeaconBlockContainer{
-			Block:     &eth.BeaconBlockContainer_Phase0Block{Phase0Block: b},
+		blkContainers[i] = &sila.BeaconBlockContainer{
+			Block:     &sila.BeaconBlockContainer_Phase0Block{Phase0Block: b},
 			BlockRoot: root[:],
 		}
 	}
 	require.NoError(t, beaconDB.SaveBlocks(ctx, blks))
 	headRoot := bytesutil.ToBytes32(blkContainers[len(blks)-1].BlockRoot)
-	summary := &eth.StateSummary{
+	summary := &sila.StateSummary{
 		Root: headRoot[:],
-		Slot: blkContainers[len(blks)-1].Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block.Block.Slot,
+		Slot: blkContainers[len(blks)-1].Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block.Block.Slot,
 	}
 	require.NoError(t, beaconDB.SaveStateSummary(ctx, summary))
 	require.NoError(t, beaconDB.SaveHeadBlockRoot(ctx, headRoot))
@@ -651,7 +651,7 @@ func TestGetBlockSSZV2(t *testing.T) {
 		assert.DeepEqual(t, sszExpected, writer.Body.Bytes())
 
 		// Verify SSZ round-trip preserves Gloas-specific fields
-		decoded := &eth.SignedBeaconBlockGloas{}
+		decoded := &sila.SignedBeaconBlockGloas{}
 		require.NoError(t, decoded.UnmarshalSSZ(writer.Body.Bytes()))
 		require.NotNil(t, decoded.Block.Body.SignedSilaPayloadBid)
 		assert.Equal(t, primitives.Slot(123), decoded.Block.Body.SignedSilaPayloadBid.Message.Slot)
@@ -660,18 +660,18 @@ func TestGetBlockSSZV2(t *testing.T) {
 }
 
 func TestGetBlockAttestationsV2(t *testing.T) {
-	preElectraAtts := []*eth.Attestation{
+	preElectraAtts := []*sila.Attestation{
 		{
 			AggregationBits: bitfield.Bitlist{0x00},
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            123,
 				CommitteeIndex:  123,
 				BeaconBlockRoot: bytesutil.PadTo([]byte("root1"), 32),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 123,
 					Root:  bytesutil.PadTo([]byte("root1"), 32),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 123,
 					Root:  bytesutil.PadTo([]byte("root1"), 32),
 				},
@@ -680,15 +680,15 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 		},
 		{
 			AggregationBits: bitfield.Bitlist{0x01},
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            456,
 				CommitteeIndex:  456,
 				BeaconBlockRoot: bytesutil.PadTo([]byte("root2"), 32),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 456,
 					Root:  bytesutil.PadTo([]byte("root2"), 32),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 456,
 					Root:  bytesutil.PadTo([]byte("root2"), 32),
 				},
@@ -696,18 +696,18 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 			Signature: bytesutil.PadTo([]byte("sig2"), 96),
 		},
 	}
-	electraAtts := []*eth.AttestationElectra{
+	electraAtts := []*sila.AttestationElectra{
 		{
 			AggregationBits: bitfield.Bitlist{0x00},
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            123,
 				CommitteeIndex:  123,
 				BeaconBlockRoot: bytesutil.PadTo([]byte("root1"), 32),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 123,
 					Root:  bytesutil.PadTo([]byte("root1"), 32),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 123,
 					Root:  bytesutil.PadTo([]byte("root1"), 32),
 				},
@@ -717,15 +717,15 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 		},
 		{
 			AggregationBits: bitfield.Bitlist{0x01},
-			Data: &eth.AttestationData{
+			Data: &sila.AttestationData{
 				Slot:            456,
 				CommitteeIndex:  456,
 				BeaconBlockRoot: bytesutil.PadTo([]byte("root2"), 32),
-				Source: &eth.Checkpoint{
+				Source: &sila.Checkpoint{
 					Epoch: 456,
 					Root:  bytesutil.PadTo([]byte("root2"), 32),
 				},
-				Target: &eth.Checkpoint{
+				Target: &sila.Checkpoint{
 					Epoch: 456,
 					Root:  bytesutil.PadTo([]byte("root2"), 32),
 				},
@@ -775,7 +775,7 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 		var attStructs []structs.Attestation
 		require.NoError(t, json.Unmarshal(resp.Data, &attStructs))
 
-		atts := make([]*eth.Attestation, len(attStructs))
+		atts := make([]*sila.Attestation, len(attStructs))
 		for i, attStruct := range attStructs {
 			atts[i], err = attStruct.ToConsensus()
 			require.NoError(t, err)
@@ -812,7 +812,7 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 		var attStructs []structs.AttestationElectra
 		require.NoError(t, json.Unmarshal(resp.Data, &attStructs))
 
-		atts := make([]*eth.AttestationElectra, len(attStructs))
+		atts := make([]*sila.AttestationElectra, len(attStructs))
 		for i, attStruct := range attStructs {
 			atts[i], err = attStruct.ToConsensus()
 			require.NoError(t, err)
@@ -895,7 +895,7 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 	t.Run("empty-attestations", func(t *testing.T) {
 		t.Run("pre-electra", func(t *testing.T) {
 			b := util.NewBeaconBlock()
-			b.Block.Body.Attestations = []*eth.Attestation{} // Explicitly set empty attestations
+			b.Block.Body.Attestations = []*sila.Attestation{} // Explicitly set empty attestations
 			sb, err := blocks.NewSignedBeaconBlock(b)
 			require.NoError(t, err)
 			mockChainService := &chainMock.ChainService{
@@ -924,7 +924,7 @@ func TestGetBlockAttestationsV2(t *testing.T) {
 
 		t.Run("electra", func(t *testing.T) {
 			eb := util.NewBeaconBlockFulu()
-			eb.Block.Body.Attestations = []*eth.AttestationElectra{} // Explicitly set empty attestations
+			eb.Block.Body.Attestations = []*sila.AttestationElectra{} // Explicitly set empty attestations
 			esb, err := blocks.NewSignedBeaconBlock(eb)
 			require.NoError(t, err)
 
@@ -1533,8 +1533,8 @@ func TestPublishBlockV2(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	t.Run("Phase 0", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Phase0)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Phase0)
 			var signedblock *structs.SignedBeaconBlock
 			err := json.Unmarshal([]byte(rpctesting.Phase0Block), &signedblock)
 			require.NoError(t, err)
@@ -1555,8 +1555,8 @@ func TestPublishBlockV2(t *testing.T) {
 	})
 	t.Run("Altair", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Altair)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Altair)
 			var signedblock *structs.SignedBeaconBlockAltair
 			err := json.Unmarshal([]byte(rpctesting.AltairBlock), &signedblock)
 			require.NoError(t, err)
@@ -1577,8 +1577,8 @@ func TestPublishBlockV2(t *testing.T) {
 	})
 	t.Run("Bellatrix", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Bellatrix)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Bellatrix)
 			converted, err := structs.BeaconBlockBellatrixFromConsensus(block.Bellatrix.Block)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBeaconBlockBellatrix
@@ -1601,8 +1601,8 @@ func TestPublishBlockV2(t *testing.T) {
 	})
 	t.Run("Capella", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Capella)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Capella)
 			converted, err := structs.BeaconBlockCapellaFromConsensus(block.Capella.Block)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBeaconBlockCapella
@@ -1625,8 +1625,8 @@ func TestPublishBlockV2(t *testing.T) {
 	})
 	t.Run("Deneb", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Deneb)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Deneb)
 			converted, err := structs.SignedBeaconBlockContentsDenebFromConsensus(block.Deneb)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBeaconBlockContentsDeneb
@@ -1649,8 +1649,8 @@ func TestPublishBlockV2(t *testing.T) {
 	})
 	t.Run("Electra", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Electra)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Electra)
 			converted, err := structs.SignedBeaconBlockContentsElectraFromConsensus(block.Electra)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBeaconBlockContentsElectra
@@ -1673,8 +1673,8 @@ func TestPublishBlockV2(t *testing.T) {
 	})
 	t.Run("Fulu", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Fulu)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Fulu)
 			converted, err := structs.SignedBeaconBlockContentsFuluFromConsensus(block.Fulu)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBeaconBlockContentsFulu
@@ -1756,8 +1756,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	t.Run("Phase 0", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Phase0)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Phase0)
 			var signedblock *structs.SignedBeaconBlock
 			err := json.Unmarshal([]byte(rpctesting.Phase0Block), &signedblock)
 			require.NoError(t, err)
@@ -1786,8 +1786,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Altair", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Altair)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Altair)
 			var signedblock *structs.SignedBeaconBlockAltair
 			err := json.Unmarshal([]byte(rpctesting.AltairBlock), &signedblock)
 			require.NoError(t, err)
@@ -1816,8 +1816,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Bellatrix", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_Bellatrix)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_Bellatrix)
 			return ok
 		}))
 		server := &Server{
@@ -1841,8 +1841,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Capella", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_Capella)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_Capella)
 			return ok
 		}))
 		server := &Server{
@@ -1867,8 +1867,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Deneb", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_Deneb)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_Deneb)
 			return ok
 		}))
 		server := &Server{
@@ -1893,8 +1893,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Electra", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_Electra)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_Electra)
 			return ok
 		}))
 		server := &Server{
@@ -1919,8 +1919,8 @@ func TestPublishBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Fulu", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_Fulu)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_Fulu)
 			return ok
 		}))
 		server := &Server{
@@ -2021,8 +2021,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	t.Run("Phase 0", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Phase0)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Phase0)
 			var signedblock *structs.SignedBeaconBlock
 			err := json.Unmarshal([]byte(rpctesting.Phase0Block), &signedblock)
 			require.NoError(t, err)
@@ -2043,8 +2043,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	})
 	t.Run("Altair", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Altair)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Altair)
 			var signedblock *structs.SignedBeaconBlockAltair
 			err := json.Unmarshal([]byte(rpctesting.AltairBlock), &signedblock)
 			require.NoError(t, err)
@@ -2065,8 +2065,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	})
 	t.Run("Blinded Bellatrix", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedBellatrix)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedBellatrix)
 			converted, err := structs.BlindedBeaconBlockBellatrixFromConsensus(block.BlindedBellatrix.Block)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBlindedBeaconBlockBellatrix
@@ -2089,8 +2089,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	})
 	t.Run("Blinded Capella", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedCapella)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedCapella)
 			converted, err := structs.BlindedBeaconBlockCapellaFromConsensus(block.BlindedCapella.Block)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBlindedBeaconBlockCapella
@@ -2113,8 +2113,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	})
 	t.Run("Blinded Deneb", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedDeneb)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedDeneb)
 			converted, err := structs.BlindedBeaconBlockDenebFromConsensus(block.BlindedDeneb.Message)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBlindedBeaconBlockDeneb
@@ -2137,8 +2137,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	})
 	t.Run("Blinded Electra", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedElectra)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedElectra)
 			converted, err := structs.BlindedBeaconBlockElectraFromConsensus(block.BlindedElectra.Message)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBlindedBeaconBlockElectra
@@ -2161,8 +2161,8 @@ func TestPublishBlindedBlockV2(t *testing.T) {
 	})
 	t.Run("Blinded Fulu", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedFulu)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedFulu)
 			converted, err := structs.BlindedBeaconBlockFuluFromConsensus(block.BlindedFulu.Message)
 			require.NoError(t, err)
 			var signedblock *structs.SignedBlindedBeaconBlockFulu
@@ -2243,8 +2243,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	t.Run("Phase 0", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Phase0)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Phase0)
 			var signedblock *structs.SignedBeaconBlock
 			err := json.Unmarshal([]byte(rpctesting.Phase0Block), &signedblock)
 			require.NoError(t, err)
@@ -2273,8 +2273,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Altair", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			block, ok := req.Block.(*eth.GenericSignedBeaconBlock_Altair)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			block, ok := req.Block.(*sila.GenericSignedBeaconBlock_Altair)
 			var signedblock *structs.SignedBeaconBlockAltair
 			err := json.Unmarshal([]byte(rpctesting.AltairBlock), &signedblock)
 			require.NoError(t, err)
@@ -2303,8 +2303,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Bellatrix", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedBellatrix)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedBellatrix)
 			return ok
 		}))
 		server := &Server{
@@ -2329,8 +2329,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Capella", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedCapella)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedCapella)
 			return ok
 		}))
 		server := &Server{
@@ -2355,8 +2355,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Deneb", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedDeneb)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedDeneb)
 			return ok
 		}))
 		server := &Server{
@@ -2381,8 +2381,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Electra", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedElectra)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedElectra)
 			return ok
 		}))
 		server := &Server{
@@ -2407,8 +2407,8 @@ func TestPublishBlindedBlockV2SSZ(t *testing.T) {
 	})
 	t.Run("Fulu", func(t *testing.T) {
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *eth.GenericSignedBeaconBlock) bool {
-			_, ok := req.Block.(*eth.GenericSignedBeaconBlock_BlindedFulu)
+		v1alpha1Server.EXPECT().ProposeBeaconBlock(gomock.Any(), mock.MatchedBy(func(req *sila.GenericSignedBeaconBlock) bool {
+			_, ok := req.Block.(*sila.GenericSignedBeaconBlock_BlindedFulu)
 			return ok
 		}))
 		server := &Server{
@@ -2521,8 +2521,8 @@ func TestValidateConsensus(t *testing.T) {
 		HeadFetcher: mockChainService,
 	}
 
-	require.NoError(t, server.validateConsensus(ctx, &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Phase0{
+	require.NoError(t, server.validateConsensus(ctx, &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Phase0{
 			Phase0: block,
 		},
 	}))
@@ -2575,14 +2575,14 @@ func TestServer_GetBlockRoot(t *testing.T) {
 	genBlk, blkContainers := fillDBTestBlocks(ctx, t, beaconDB)
 	headBlock := blkContainers[len(blkContainers)-1]
 	t.Run("get root", func(t *testing.T) {
-		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
+		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 
 		mockChainFetcher := &chainMock.ChainService{
 			DB:                  beaconDB,
 			Block:               wsb,
 			Root:                headBlock.BlockRoot,
-			FinalizedCheckPoint: &eth.Checkpoint{Root: blkContainers[64].BlockRoot},
+			FinalizedCheckPoint: &sila.Checkpoint{Root: blkContainers[64].BlockRoot},
 			FinalizedRoots:      map[[32]byte]bool{},
 		}
 
@@ -2699,14 +2699,14 @@ func TestServer_GetBlockRoot(t *testing.T) {
 		}
 	})
 	t.Run("sila optimistic", func(t *testing.T) {
-		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
+		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 
 		mockChainFetcher := &chainMock.ChainService{
 			DB:                  beaconDB,
 			Block:               wsb,
 			Root:                headBlock.BlockRoot,
-			FinalizedCheckPoint: &eth.Checkpoint{Root: blkContainers[64].BlockRoot},
+			FinalizedCheckPoint: &sila.Checkpoint{Root: blkContainers[64].BlockRoot},
 			Optimistic:          true,
 			FinalizedRoots:      map[[32]byte]bool{},
 			OptimisticRoots: map[[32]byte]bool{
@@ -2738,14 +2738,14 @@ func TestServer_GetBlockRoot(t *testing.T) {
 		require.DeepEqual(t, resp.SilaOptimistic, true)
 	})
 	t.Run("finalized", func(t *testing.T) {
-		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
+		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 
 		mockChainFetcher := &chainMock.ChainService{
 			DB:                  beaconDB,
 			Block:               wsb,
 			Root:                headBlock.BlockRoot,
-			FinalizedCheckPoint: &eth.Checkpoint{Root: blkContainers[64].BlockRoot},
+			FinalizedCheckPoint: &sila.Checkpoint{Root: blkContainers[64].BlockRoot},
 			Optimistic:          true,
 			FinalizedRoots: map[[32]byte]bool{
 				bytesutil.ToBytes32(blkContainers[32].BlockRoot): true,
@@ -2799,8 +2799,8 @@ func TestGetStateFork(t *testing.T) {
 	writer := httptest.NewRecorder()
 	writer.Body = &bytes.Buffer{}
 
-	fillFork := func(state *eth.BeaconState) error {
-		state.Fork = &eth.Fork{
+	fillFork := func(state *sila.BeaconState) error {
+		state.Fork = &sila.Fork{
 			PreviousVersion: []byte("prev"),
 			CurrentVersion:  []byte("curr"),
 			Epoch:           123,
@@ -3173,7 +3173,7 @@ func TestGetBlockHeaders(t *testing.T) {
 	url := "http://example.com/sila/v1/beacon/headers"
 
 	t.Run("list headers", func(t *testing.T) {
-		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
+		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 		st, err := util.NewBeaconState()
 		require.NoError(t, err)
@@ -3182,7 +3182,7 @@ func TestGetBlockHeaders(t *testing.T) {
 			DB:                  beaconDB,
 			Block:               wsb,
 			Root:                headBlock.BlockRoot,
-			FinalizedCheckPoint: &eth.Checkpoint{Root: blkContainers[64].BlockRoot},
+			FinalizedCheckPoint: &sila.Checkpoint{Root: blkContainers[64].BlockRoot},
 			FinalizedRoots:      map[[32]byte]bool{},
 			State:               st,
 		}
@@ -3197,13 +3197,13 @@ func TestGetBlockHeaders(t *testing.T) {
 			name       string
 			slot       string
 			parentRoot string
-			want       []*eth.SignedBeaconBlock
+			want       []*sila.SignedBeaconBlock
 			wantErr    bool
 		}{
 			{
 				name: "none",
-				want: []*eth.SignedBeaconBlock{
-					blkContainers[30].Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block,
+				want: []*sila.SignedBeaconBlock{
+					blkContainers[30].Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block,
 					b1,
 					b2,
 				},
@@ -3211,8 +3211,8 @@ func TestGetBlockHeaders(t *testing.T) {
 			{
 				name: "slot",
 				slot: "30",
-				want: []*eth.SignedBeaconBlock{
-					blkContainers[30].Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block,
+				want: []*sila.SignedBeaconBlock{
+					blkContainers[30].Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block,
 					b1,
 					b2,
 				},
@@ -3220,8 +3220,8 @@ func TestGetBlockHeaders(t *testing.T) {
 			{
 				name:       "parent root",
 				parentRoot: hexutil.Encode(b1.Block.ParentRoot),
-				want: []*eth.SignedBeaconBlock{
-					blkContainers[1].Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block,
+				want: []*sila.SignedBeaconBlock{
+					blkContainers[1].Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block,
 					b1,
 					b3,
 					b4,
@@ -3245,7 +3245,7 @@ func TestGetBlockHeaders(t *testing.T) {
 				for i, blk := range tt.want {
 					expectedBodyRoot, err := blk.Block.Body.HashTreeRoot()
 					require.NoError(t, err)
-					expectedHeader := &eth.BeaconBlockHeader{
+					expectedHeader := &sila.BeaconBlockHeader{
 						Slot:          blk.Block.Slot,
 						ProposerIndex: blk.Block.ProposerIndex,
 						ParentRoot:    blk.Block.ParentRoot,
@@ -3262,13 +3262,13 @@ func TestGetBlockHeaders(t *testing.T) {
 	})
 
 	t.Run("sila optimistic", func(t *testing.T) {
-		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
+		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 		mockChainFetcher := &chainMock.ChainService{
 			DB:                  beaconDB,
 			Block:               wsb,
 			Root:                headBlock.BlockRoot,
-			FinalizedCheckPoint: &eth.Checkpoint{Root: blkContainers[64].BlockRoot},
+			FinalizedCheckPoint: &sila.Checkpoint{Root: blkContainers[64].BlockRoot},
 			Optimistic:          true,
 			FinalizedRoots:      map[[32]byte]bool{},
 			OptimisticRoots: map[[32]byte]bool{
@@ -3296,7 +3296,7 @@ func TestGetBlockHeaders(t *testing.T) {
 	})
 
 	t.Run("finalized", func(t *testing.T) {
-		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*eth.BeaconBlockContainer_Phase0Block).Phase0Block)
+		wsb, err := blocks.NewSignedBeaconBlock(headBlock.Block.(*sila.BeaconBlockContainer_Phase0Block).Phase0Block)
 		require.NoError(t, err)
 		child1 := util.NewBeaconBlock()
 		child1.Block.ParentRoot = bytesutil.PadTo([]byte("parent"), 32)
@@ -3314,7 +3314,7 @@ func TestGetBlockHeaders(t *testing.T) {
 			DB:                  beaconDB,
 			Block:               wsb,
 			Root:                headBlock.BlockRoot,
-			FinalizedCheckPoint: &eth.Checkpoint{Root: blkContainers[64].BlockRoot},
+			FinalizedCheckPoint: &sila.Checkpoint{Root: blkContainers[64].BlockRoot},
 			FinalizedRoots:      map[[32]byte]bool{child1Root: true, child2Root: false},
 		}
 		bs := &Server{
@@ -3508,16 +3508,16 @@ func TestServer_GetBlockHeader(t *testing.T) {
 }
 
 func TestGetFinalityCheckpoints(t *testing.T) {
-	fillCheckpoints := func(state *eth.BeaconState) error {
-		state.PreviousJustifiedCheckpoint = &eth.Checkpoint{
+	fillCheckpoints := func(state *sila.BeaconState) error {
+		state.PreviousJustifiedCheckpoint = &sila.Checkpoint{
 			Root:  bytesutil.PadTo([]byte("previous"), 32),
 			Epoch: 113,
 		}
-		state.CurrentJustifiedCheckpoint = &eth.Checkpoint{
+		state.CurrentJustifiedCheckpoint = &sila.Checkpoint{
 			Root:  bytesutil.PadTo([]byte("current"), 32),
 			Epoch: 123,
 		}
-		state.FinalizedCheckpoint = &eth.Checkpoint{
+		state.FinalizedCheckpoint = &sila.Checkpoint{
 			Root:  bytesutil.PadTo([]byte("finalized"), 32),
 			Epoch: 103,
 		}
@@ -3721,8 +3721,8 @@ func TestServer_broadcastBlobSidecars(t *testing.T) {
 	blockToPropose.Blobs = [][]byte{{0x01}, {0x02}, {0x03}}
 	blockToPropose.KzgProofs = [][]byte{{0x01}, {0x02}, {0x03}}
 	blockToPropose.Block.Block.Body.BlobKzgCommitments = [][]byte{bytesutil.PadTo([]byte("kc"), 48), bytesutil.PadTo([]byte("kc1"), 48), bytesutil.PadTo([]byte("kc2"), 48)}
-	d := &eth.GenericSignedBeaconBlock_Deneb{Deneb: blockToPropose}
-	b := &eth.GenericSignedBeaconBlock{Block: d}
+	d := &sila.GenericSignedBeaconBlock_Deneb{Deneb: blockToPropose}
+	b := &sila.GenericSignedBeaconBlock{Block: d}
 
 	server := &Server{
 		Broadcaster:         &mockp2p.MockBroadcaster{},
@@ -4012,9 +4012,9 @@ func Test_validateBlobs(t *testing.T) {
 func TestGetPendingConsolidations(t *testing.T) {
 	st, _ := util.DeterministicGenesisStateElectra(t, 10)
 
-	cs := make([]*eth.PendingConsolidation, 10)
+	cs := make([]*sila.PendingConsolidation, 10)
 	for i := 0; i < len(cs); i += 1 {
-		cs[i] = &eth.PendingConsolidation{
+		cs[i] = &sila.PendingConsolidation{
 			SourceIndex: primitives.ValidatorIndex(i),
 			TargetIndex: primitives.ValidatorIndex(i + 1),
 		}
@@ -4067,17 +4067,17 @@ func TestGetPendingConsolidations(t *testing.T) {
 		require.Equal(t, "electra", rec.Header().Get(api.VersionHeader))
 
 		responseBytes := rec.Body.Bytes()
-		var recoveredConsolidations []*eth.PendingConsolidation
+		var recoveredConsolidations []*sila.PendingConsolidation
 
 		// Verify total size matches expected number of deposits
-		consolidationSize := (&eth.PendingConsolidation{}).SizeSSZ()
+		consolidationSize := (&sila.PendingConsolidation{}).SizeSSZ()
 		require.Equal(t, len(responseBytes), consolidationSize*len(cs))
 
 		for i := range cs {
 			start := i * consolidationSize
 			end := start + consolidationSize
 
-			var c eth.PendingConsolidation
+			var c sila.PendingConsolidation
 			require.NoError(t, c.UnmarshalSSZ(responseBytes[start:end]))
 			recoveredConsolidations = append(recoveredConsolidations, &c)
 		}
@@ -4202,9 +4202,9 @@ func TestGetPendingDeposits(t *testing.T) {
 	for j := range 96 {
 		dummySig[j] = byte(j)
 	}
-	deps := make([]*eth.PendingDeposit, 10)
+	deps := make([]*sila.PendingDeposit, 10)
 	for i := 0; i < len(deps); i += 1 {
-		deps[i] = &eth.PendingDeposit{
+		deps[i] = &sila.PendingDeposit{
 			PublicKey:             validators[i].PublicKey,
 			WithdrawalCredentials: validators[i].WithdrawalCredentials,
 			Amount:                100,
@@ -4260,17 +4260,17 @@ func TestGetPendingDeposits(t *testing.T) {
 		require.Equal(t, "electra", rec.Header().Get(api.VersionHeader))
 
 		responseBytes := rec.Body.Bytes()
-		var recoveredDeposits []*eth.PendingDeposit
+		var recoveredDeposits []*sila.PendingDeposit
 
 		// Verify total size matches expected number of deposits
-		depositSize := (&eth.PendingDeposit{}).SizeSSZ()
+		depositSize := (&sila.PendingDeposit{}).SizeSSZ()
 		require.Equal(t, len(responseBytes), depositSize*len(deps))
 
 		for i := range deps {
 			start := i * depositSize
 			end := start + depositSize
 
-			var deposit eth.PendingDeposit
+			var deposit sila.PendingDeposit
 			require.NoError(t, deposit.UnmarshalSSZ(responseBytes[start:end]))
 			recoveredDeposits = append(recoveredDeposits, &deposit)
 		}
@@ -4391,7 +4391,7 @@ func TestGetPendingPartialWithdrawals(t *testing.T) {
 	st, _ := util.DeterministicGenesisStateElectra(t, 10)
 	for i := 0; i < 10; i += 1 {
 		err := st.AppendPendingPartialWithdrawal(
-			&eth.PendingPartialWithdrawal{
+			&sila.PendingPartialWithdrawal{
 				Index:             primitives.ValidatorIndex(i),
 				Amount:            100,
 				WithdrawableEpoch: primitives.Epoch(0),
@@ -4448,16 +4448,16 @@ func TestGetPendingPartialWithdrawals(t *testing.T) {
 		require.Equal(t, "electra", rec.Header().Get(api.VersionHeader))
 
 		responseBytes := rec.Body.Bytes()
-		var recoveredWithdrawals []*eth.PendingPartialWithdrawal
+		var recoveredWithdrawals []*sila.PendingPartialWithdrawal
 
-		withdrawalSize := (&eth.PendingPartialWithdrawal{}).SizeSSZ()
+		withdrawalSize := (&sila.PendingPartialWithdrawal{}).SizeSSZ()
 		require.Equal(t, len(responseBytes), withdrawalSize*len(withdrawals))
 
 		for i := range withdrawals {
 			start := i * withdrawalSize
 			end := start + withdrawalSize
 
-			var withdrawal eth.PendingPartialWithdrawal
+			var withdrawal sila.PendingPartialWithdrawal
 			require.NoError(t, withdrawal.UnmarshalSSZ(responseBytes[start:end]))
 			recoveredWithdrawals = append(recoveredWithdrawals, &withdrawal)
 		}

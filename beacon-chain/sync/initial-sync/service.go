@@ -8,6 +8,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/paulbellamy/ratecounter"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/async/abool"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain"
 	blockfeed "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/block"
@@ -26,14 +29,11 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/paulbellamy/ratecounter"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -372,7 +372,7 @@ func missingBlobRequest(blk blocks.ROBlock, store *filesystem.BlobStorage) (p2pt
 		if onDisk.HasIndex(uint64(i)) {
 			continue
 		}
-		req = append(req, &eth.BlobIdentifier{BlockRoot: r[:], Index: uint64(i)})
+		req = append(req, &sila.BlobIdentifier{BlockRoot: r[:], Index: uint64(i)})
 	}
 	return req, nil
 }

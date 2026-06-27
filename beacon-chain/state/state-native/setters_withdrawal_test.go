@@ -5,7 +5,7 @@ import (
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
@@ -55,8 +55,8 @@ func TestSetNextWithdrawalValidatorIndex_Deneb(t *testing.T) {
 }
 
 func TestDequeuePendingWithdrawals(t *testing.T) {
-	s, err := InitializeFromProtoElectra(&eth.BeaconStateElectra{
-		PendingPartialWithdrawals: []*eth.PendingPartialWithdrawal{
+	s, err := InitializeFromProtoElectra(&sila.BeaconStateElectra{
+		PendingPartialWithdrawals: []*sila.PendingPartialWithdrawal{
 			{},
 			{},
 			{},
@@ -89,15 +89,15 @@ func TestDequeuePendingWithdrawals(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, uint64(0), num)
 
-	s, err = InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
 
 	require.ErrorContains(t, "is not supported", s.DequeuePendingPartialWithdrawals(0))
 }
 
 func TestAppendPendingWithdrawals(t *testing.T) {
-	s, err := InitializeFromProtoElectra(&eth.BeaconStateElectra{
-		PendingPartialWithdrawals: []*eth.PendingPartialWithdrawal{
+	s, err := InitializeFromProtoElectra(&sila.BeaconStateElectra{
+		PendingPartialWithdrawals: []*sila.PendingPartialWithdrawal{
 			{},
 			{},
 			{},
@@ -107,15 +107,15 @@ func TestAppendPendingWithdrawals(t *testing.T) {
 	num, err := s.NumPendingPartialWithdrawals()
 	require.NoError(t, err)
 	require.Equal(t, uint64(3), num)
-	require.NoError(t, s.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{}))
+	require.NoError(t, s.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{}))
 	num, err = s.NumPendingPartialWithdrawals()
 	require.NoError(t, err)
 	require.Equal(t, uint64(4), num)
 
-	require.NoError(t, s.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{Index: 1}))
+	require.NoError(t, s.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{Index: 1}))
 	s2 := s.Copy()
-	require.NoError(t, s2.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{Index: 3}))
-	require.NoError(t, s.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{Index: 2}))
+	require.NoError(t, s2.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{Index: 3}))
+	require.NoError(t, s.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{Index: 2}))
 	w, err := s.PendingPartialWithdrawals()
 	require.NoError(t, err)
 	require.Equal(t, primitives.ValidatorIndex(1), w[4].Index)
@@ -127,7 +127,7 @@ func TestAppendPendingWithdrawals(t *testing.T) {
 
 	require.ErrorContains(t, "cannot append nil pending partial withdrawal", s.AppendPendingPartialWithdrawal(nil))
 
-	s, err = InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
 
 	require.ErrorContains(t, "is not supported", s.AppendPendingPartialWithdrawal(nil))

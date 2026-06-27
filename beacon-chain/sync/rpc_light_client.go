@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	libp2pcore "github.com/libp2p/go-libp2p/core"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/types"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
@@ -11,8 +12,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	libp2pcore "github.com/libp2p/go-libp2p/core"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // lightClientBootstrapRPCHandler handles the /sila/beacon_chain/req/light_client_bootstrap/1/ RPC request.
@@ -83,10 +83,10 @@ func (s *Service) lightClientUpdatesByRangeRPCHandler(ctx context.Context, msg a
 	}
 	s.rateLimiter.add(stream, 1)
 
-	r, ok := msg.(*eth.LightClientUpdatesByRangeRequest)
+	r, ok := msg.(*sila.LightClientUpdatesByRangeRequest)
 	if !ok {
-		logger.Error("Message is not *eth.LightClientUpdatesByRangeReq")
-		return fmt.Errorf("message is not type %T", &eth.LightClientUpdatesByRangeRequest{})
+		logger.Error("Message is not *sila.LightClientUpdatesByRangeReq")
+		return fmt.Errorf("message is not type %T", &sila.LightClientUpdatesByRangeRequest{})
 	}
 
 	if r.Count == 0 {

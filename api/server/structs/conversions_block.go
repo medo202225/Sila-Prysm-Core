@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/slice"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 )
 
 var ErrUnsupportedConversion = errors.New("Could not determine api struct type to use for value")
@@ -23,7 +23,7 @@ var ErrUnsupportedConversion = errors.New("Could not determine api struct type t
 // Phase 0
 // ----------------------------------------------------------------------------
 
-func (h *SignedBeaconBlockHeader) ToConsensus() (*eth.SignedBeaconBlockHeader, error) {
+func (h *SignedBeaconBlockHeader) ToConsensus() (*sila.SignedBeaconBlockHeader, error) {
 	if h == nil {
 		return nil, errNilValue
 	}
@@ -36,13 +36,13 @@ func (h *SignedBeaconBlockHeader) ToConsensus() (*eth.SignedBeaconBlockHeader, e
 		return nil, server.NewDecodeError(err, "Signature")
 	}
 
-	return &eth.SignedBeaconBlockHeader{
+	return &sila.SignedBeaconBlockHeader{
 		Header:    msg,
 		Signature: sig,
 	}, nil
 }
 
-func (h *BeaconBlockHeader) ToConsensus() (*eth.BeaconBlockHeader, error) {
+func (h *BeaconBlockHeader) ToConsensus() (*sila.BeaconBlockHeader, error) {
 	if h == nil {
 		return nil, errNilValue
 	}
@@ -67,7 +67,7 @@ func (h *BeaconBlockHeader) ToConsensus() (*eth.BeaconBlockHeader, error) {
 		return nil, server.NewDecodeError(err, "BodyRoot")
 	}
 
-	return &eth.BeaconBlockHeader{
+	return &sila.BeaconBlockHeader{
 		Slot:          primitives.Slot(s),
 		ProposerIndex: primitives.ValidatorIndex(pi),
 		ParentRoot:    pr,
@@ -76,7 +76,7 @@ func (h *BeaconBlockHeader) ToConsensus() (*eth.BeaconBlockHeader, error) {
 	}, nil
 }
 
-func SignedBeaconBlockHeaderFromConsensus(src *eth.SignedBeaconBlockHeader) *SignedBeaconBlockHeader {
+func SignedBeaconBlockHeaderFromConsensus(src *sila.SignedBeaconBlockHeader) *SignedBeaconBlockHeader {
 	return &SignedBeaconBlockHeader{
 		Message: &BeaconBlockHeader{
 			Slot:          fmt.Sprintf("%d", src.Header.Slot),
@@ -89,7 +89,7 @@ func SignedBeaconBlockHeaderFromConsensus(src *eth.SignedBeaconBlockHeader) *Sig
 	}
 }
 
-func (b *SignedBeaconBlock) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlock) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -104,22 +104,22 @@ func (b *SignedBeaconBlock) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
 		return nil, server.NewDecodeError(err, "Message")
 	}
 
-	block := &eth.SignedBeaconBlock{
+	block := &sila.SignedBeaconBlock{
 		Block:     bl,
 		Signature: sig,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Phase0{Phase0: block}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Phase0{Phase0: block}}, nil
 }
 
-func (b *BeaconBlock) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlock) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Phase0{Phase0: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Phase0{Phase0: block}}, nil
 }
 
-func (b *BeaconBlock) ToConsensus() (*eth.BeaconBlock, error) {
+func (b *BeaconBlock) ToConsensus() (*sila.BeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -187,14 +187,14 @@ func (b *BeaconBlock) ToConsensus() (*eth.BeaconBlock, error) {
 		return nil, server.NewDecodeError(err, "Body.VoluntaryExits")
 	}
 
-	return &eth.BeaconBlock{
+	return &sila.BeaconBlock{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BeaconBlockBody{
+		Body: &sila.BeaconBlockBody{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -209,7 +209,7 @@ func (b *BeaconBlock) ToConsensus() (*eth.BeaconBlock, error) {
 	}, nil
 }
 
-func BeaconBlockHeaderFromConsensus(h *eth.BeaconBlockHeader) *BeaconBlockHeader {
+func BeaconBlockHeaderFromConsensus(h *sila.BeaconBlockHeader) *BeaconBlockHeader {
 	return &BeaconBlockHeader{
 		Slot:          fmt.Sprintf("%d", h.Slot),
 		ProposerIndex: fmt.Sprintf("%d", h.ProposerIndex),
@@ -219,7 +219,7 @@ func BeaconBlockHeaderFromConsensus(h *eth.BeaconBlockHeader) *BeaconBlockHeader
 	}
 }
 
-func BeaconBlockFromConsensus(b *eth.BeaconBlock) *BeaconBlock {
+func BeaconBlockFromConsensus(b *sila.BeaconBlock) *BeaconBlock {
 	return &BeaconBlock{
 		Slot:          fmt.Sprintf("%d", b.Slot),
 		ProposerIndex: fmt.Sprintf("%d", b.ProposerIndex),
@@ -244,38 +244,38 @@ func SignedBeaconBlockMessageJsoner(block interfaces.ReadOnlySignedBeaconBlock) 
 		return nil, err
 	}
 	switch pbStruct := pb.(type) {
-	case *eth.SignedBeaconBlock:
+	case *sila.SignedBeaconBlock:
 		return SignedBeaconBlockPhase0FromConsensus(pbStruct), nil
-	case *eth.SignedBeaconBlockAltair:
+	case *sila.SignedBeaconBlockAltair:
 		return SignedBeaconBlockAltairFromConsensus(pbStruct), nil
-	case *eth.SignedBlindedBeaconBlockBellatrix:
+	case *sila.SignedBlindedBeaconBlockBellatrix:
 		return SignedBlindedBeaconBlockBellatrixFromConsensus(pbStruct)
-	case *eth.SignedBeaconBlockBellatrix:
+	case *sila.SignedBeaconBlockBellatrix:
 		return SignedBeaconBlockBellatrixFromConsensus(pbStruct)
-	case *eth.SignedBlindedBeaconBlockCapella:
+	case *sila.SignedBlindedBeaconBlockCapella:
 		return SignedBlindedBeaconBlockCapellaFromConsensus(pbStruct)
-	case *eth.SignedBeaconBlockCapella:
+	case *sila.SignedBeaconBlockCapella:
 		return SignedBeaconBlockCapellaFromConsensus(pbStruct)
-	case *eth.SignedBlindedBeaconBlockDeneb:
+	case *sila.SignedBlindedBeaconBlockDeneb:
 		return SignedBlindedBeaconBlockDenebFromConsensus(pbStruct)
-	case *eth.SignedBeaconBlockDeneb:
+	case *sila.SignedBeaconBlockDeneb:
 		return SignedBeaconBlockDenebFromConsensus(pbStruct)
-	case *eth.SignedBlindedBeaconBlockElectra:
+	case *sila.SignedBlindedBeaconBlockElectra:
 		return SignedBlindedBeaconBlockElectraFromConsensus(pbStruct)
-	case *eth.SignedBeaconBlockElectra:
+	case *sila.SignedBeaconBlockElectra:
 		return SignedBeaconBlockElectraFromConsensus(pbStruct)
-	case *eth.SignedBlindedBeaconBlockFulu:
+	case *sila.SignedBlindedBeaconBlockFulu:
 		return SignedBlindedBeaconBlockFuluFromConsensus(pbStruct)
-	case *eth.SignedBeaconBlockFulu:
+	case *sila.SignedBeaconBlockFulu:
 		return SignedBeaconBlockFuluFromConsensus(pbStruct)
-	case *eth.SignedBeaconBlockGloas:
+	case *sila.SignedBeaconBlockGloas:
 		return SignedBeaconBlockGloasFromConsensus(pbStruct)
 	default:
 		return nil, ErrUnsupportedConversion
 	}
 }
 
-func SignedBeaconBlockPhase0FromConsensus(b *eth.SignedBeaconBlock) *SignedBeaconBlock {
+func SignedBeaconBlockPhase0FromConsensus(b *sila.SignedBeaconBlock) *SignedBeaconBlock {
 	return &SignedBeaconBlock{
 		Message:   BeaconBlockFromConsensus(b.Block),
 		Signature: hexutil.Encode(b.Signature),
@@ -286,7 +286,7 @@ func SignedBeaconBlockPhase0FromConsensus(b *eth.SignedBeaconBlock) *SignedBeaco
 // Altair
 // ----------------------------------------------------------------------------
 
-func (b *SignedBeaconBlockAltair) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockAltair) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -299,22 +299,22 @@ func (b *SignedBeaconBlockAltair) ToGeneric() (*eth.GenericSignedBeaconBlock, er
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	block := &eth.SignedBeaconBlockAltair{
+	block := &sila.SignedBeaconBlockAltair{
 		Block:     bl,
 		Signature: sig,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Altair{Altair: block}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Altair{Altair: block}}, nil
 }
 
-func (b *BeaconBlockAltair) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockAltair) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Altair{Altair: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Altair{Altair: block}}, nil
 }
 
-func (b *BeaconBlockAltair) ToConsensus() (*eth.BeaconBlockAltair, error) {
+func (b *BeaconBlockAltair) ToConsensus() (*sila.BeaconBlockAltair, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -392,14 +392,14 @@ func (b *BeaconBlockAltair) ToConsensus() (*eth.BeaconBlockAltair, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Body.SyncAggregate.SyncCommitteeSignature")
 	}
-	return &eth.BeaconBlockAltair{
+	return &sila.BeaconBlockAltair{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BeaconBlockBodyAltair{
+		Body: &sila.BeaconBlockBodyAltair{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -410,7 +410,7 @@ func (b *BeaconBlockAltair) ToConsensus() (*eth.BeaconBlockAltair, error) {
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -418,7 +418,7 @@ func (b *BeaconBlockAltair) ToConsensus() (*eth.BeaconBlockAltair, error) {
 	}, nil
 }
 
-func BeaconBlockAltairFromConsensus(b *eth.BeaconBlockAltair) *BeaconBlockAltair {
+func BeaconBlockAltairFromConsensus(b *sila.BeaconBlockAltair) *BeaconBlockAltair {
 	return &BeaconBlockAltair{
 		Slot:          fmt.Sprintf("%d", b.Slot),
 		ProposerIndex: fmt.Sprintf("%d", b.ProposerIndex),
@@ -441,7 +441,7 @@ func BeaconBlockAltairFromConsensus(b *eth.BeaconBlockAltair) *BeaconBlockAltair
 	}
 }
 
-func SignedBeaconBlockAltairFromConsensus(b *eth.SignedBeaconBlockAltair) *SignedBeaconBlockAltair {
+func SignedBeaconBlockAltairFromConsensus(b *sila.SignedBeaconBlockAltair) *SignedBeaconBlockAltair {
 	return &SignedBeaconBlockAltair{
 		Message:   BeaconBlockAltairFromConsensus(b.Block),
 		Signature: hexutil.Encode(b.Signature),
@@ -452,7 +452,7 @@ func SignedBeaconBlockAltairFromConsensus(b *eth.SignedBeaconBlockAltair) *Signe
 // Bellatrix
 // ----------------------------------------------------------------------------
 
-func (b *SignedBeaconBlockBellatrix) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockBellatrix) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -465,22 +465,22 @@ func (b *SignedBeaconBlockBellatrix) ToGeneric() (*eth.GenericSignedBeaconBlock,
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	block := &eth.SignedBeaconBlockBellatrix{
+	block := &sila.SignedBeaconBlockBellatrix{
 		Block:     bl,
 		Signature: sig,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Bellatrix{Bellatrix: block}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Bellatrix{Bellatrix: block}}, nil
 }
 
-func (b *BeaconBlockBellatrix) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockBellatrix) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Bellatrix{Bellatrix: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Bellatrix{Bellatrix: block}}, nil
 }
 
-func (b *BeaconBlockBellatrix) ToConsensus() (*eth.BeaconBlockBellatrix, error) {
+func (b *BeaconBlockBellatrix) ToConsensus() (*sila.BeaconBlockBellatrix, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -566,14 +566,14 @@ func (b *BeaconBlockBellatrix) ToConsensus() (*eth.BeaconBlockBellatrix, error) 
 		return nil, server.NewDecodeError(err, "Body.SilaPayload")
 	}
 
-	return &eth.BeaconBlockBellatrix{
+	return &sila.BeaconBlockBellatrix{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BeaconBlockBodyBellatrix{
+		Body: &sila.BeaconBlockBodyBellatrix{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -584,7 +584,7 @@ func (b *BeaconBlockBellatrix) ToConsensus() (*eth.BeaconBlockBellatrix, error) 
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -593,7 +593,7 @@ func (b *BeaconBlockBellatrix) ToConsensus() (*eth.BeaconBlockBellatrix, error) 
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockBellatrix) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBlindedBeaconBlockBellatrix) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -606,22 +606,22 @@ func (b *SignedBlindedBeaconBlockBellatrix) ToGeneric() (*eth.GenericSignedBeaco
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	block := &eth.SignedBlindedBeaconBlockBellatrix{
+	block := &sila.SignedBlindedBeaconBlockBellatrix{
 		Block:     bl,
 		Signature: sig,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_BlindedBellatrix{BlindedBellatrix: block}, IsBlinded: true}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_BlindedBellatrix{BlindedBellatrix: block}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockBellatrix) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BlindedBeaconBlockBellatrix) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_BlindedBellatrix{BlindedBellatrix: block}, IsBlinded: true}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_BlindedBellatrix{BlindedBellatrix: block}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockBellatrix) ToConsensus() (*eth.BlindedBeaconBlockBellatrix, error) {
+func (b *BlindedBeaconBlockBellatrix) ToConsensus() (*sila.BlindedBeaconBlockBellatrix, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -706,14 +706,14 @@ func (b *BlindedBeaconBlockBellatrix) ToConsensus() (*eth.BlindedBeaconBlockBell
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Body.SilaPayloadHeader")
 	}
-	return &eth.BlindedBeaconBlockBellatrix{
+	return &sila.BlindedBeaconBlockBellatrix{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BlindedBeaconBlockBodyBellatrix{
+		Body: &sila.BlindedBeaconBlockBodyBellatrix{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -724,7 +724,7 @@ func (b *BlindedBeaconBlockBellatrix) ToConsensus() (*eth.BlindedBeaconBlockBell
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -733,7 +733,7 @@ func (b *BlindedBeaconBlockBellatrix) ToConsensus() (*eth.BlindedBeaconBlockBell
 	}, nil
 }
 
-func BlindedBeaconBlockBellatrixFromConsensus(b *eth.BlindedBeaconBlockBellatrix) (*BlindedBeaconBlockBellatrix, error) {
+func BlindedBeaconBlockBellatrixFromConsensus(b *sila.BlindedBeaconBlockBellatrix) (*BlindedBeaconBlockBellatrix, error) {
 	payload, err := SilaPayloadHeaderFromConsensus(b.Body.SilaPayloadHeader)
 	if err != nil {
 		return nil, err
@@ -762,7 +762,7 @@ func BlindedBeaconBlockBellatrixFromConsensus(b *eth.BlindedBeaconBlockBellatrix
 	}, nil
 }
 
-func SignedBlindedBeaconBlockBellatrixFromConsensus(b *eth.SignedBlindedBeaconBlockBellatrix) (*SignedBlindedBeaconBlockBellatrix, error) {
+func SignedBlindedBeaconBlockBellatrixFromConsensus(b *sila.SignedBlindedBeaconBlockBellatrix) (*SignedBlindedBeaconBlockBellatrix, error) {
 	blindedBlock, err := BlindedBeaconBlockBellatrixFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -773,7 +773,7 @@ func SignedBlindedBeaconBlockBellatrixFromConsensus(b *eth.SignedBlindedBeaconBl
 	}, nil
 }
 
-func BeaconBlockBellatrixFromConsensus(b *eth.BeaconBlockBellatrix) (*BeaconBlockBellatrix, error) {
+func BeaconBlockBellatrixFromConsensus(b *sila.BeaconBlockBellatrix) (*BeaconBlockBellatrix, error) {
 	payload, err := SilaPayloadFromConsensus(b.Body.SilaPayload)
 	if err != nil {
 		return nil, err
@@ -802,7 +802,7 @@ func BeaconBlockBellatrixFromConsensus(b *eth.BeaconBlockBellatrix) (*BeaconBloc
 	}, nil
 }
 
-func SignedBeaconBlockBellatrixFromConsensus(b *eth.SignedBeaconBlockBellatrix) (*SignedBeaconBlockBellatrix, error) {
+func SignedBeaconBlockBellatrixFromConsensus(b *sila.SignedBeaconBlockBellatrix) (*SignedBeaconBlockBellatrix, error) {
 	block, err := BeaconBlockBellatrixFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -817,7 +817,7 @@ func SignedBeaconBlockBellatrixFromConsensus(b *eth.SignedBeaconBlockBellatrix) 
 // Capella
 // ----------------------------------------------------------------------------
 
-func (b *SignedBeaconBlockCapella) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockCapella) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -830,22 +830,22 @@ func (b *SignedBeaconBlockCapella) ToGeneric() (*eth.GenericSignedBeaconBlock, e
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	block := &eth.SignedBeaconBlockCapella{
+	block := &sila.SignedBeaconBlockCapella{
 		Block:     bl,
 		Signature: sig,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Capella{Capella: block}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Capella{Capella: block}}, nil
 }
 
-func (b *BeaconBlockCapella) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockCapella) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Capella{Capella: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Capella{Capella: block}}, nil
 }
 
-func (b *BeaconBlockCapella) ToConsensus() (*eth.BeaconBlockCapella, error) {
+func (b *BeaconBlockCapella) ToConsensus() (*sila.BeaconBlockCapella, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -937,14 +937,14 @@ func (b *BeaconBlockCapella) ToConsensus() (*eth.BeaconBlockCapella, error) {
 		return nil, server.NewDecodeError(err, "Body.BLSToSilaChanges")
 	}
 
-	return &eth.BeaconBlockCapella{
+	return &sila.BeaconBlockCapella{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BeaconBlockBodyCapella{
+		Body: &sila.BeaconBlockBodyCapella{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -955,7 +955,7 @@ func (b *BeaconBlockCapella) ToConsensus() (*eth.BeaconBlockCapella, error) {
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -965,7 +965,7 @@ func (b *BeaconBlockCapella) ToConsensus() (*eth.BeaconBlockCapella, error) {
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockCapella) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBlindedBeaconBlockCapella) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -978,22 +978,22 @@ func (b *SignedBlindedBeaconBlockCapella) ToGeneric() (*eth.GenericSignedBeaconB
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	block := &eth.SignedBlindedBeaconBlockCapella{
+	block := &sila.SignedBlindedBeaconBlockCapella{
 		Block:     bl,
 		Signature: sig,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_BlindedCapella{BlindedCapella: block}, IsBlinded: true}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_BlindedCapella{BlindedCapella: block}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockCapella) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BlindedBeaconBlockCapella) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_BlindedCapella{BlindedCapella: block}, IsBlinded: true}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_BlindedCapella{BlindedCapella: block}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockCapella) ToConsensus() (*eth.BlindedBeaconBlockCapella, error) {
+func (b *BlindedBeaconBlockCapella) ToConsensus() (*sila.BlindedBeaconBlockCapella, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1085,14 +1085,14 @@ func (b *BlindedBeaconBlockCapella) ToConsensus() (*eth.BlindedBeaconBlockCapell
 		return nil, server.NewDecodeError(err, "Body.BLSToSilaChanges")
 	}
 
-	return &eth.BlindedBeaconBlockCapella{
+	return &sila.BlindedBeaconBlockCapella{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BlindedBeaconBlockBodyCapella{
+		Body: &sila.BlindedBeaconBlockBodyCapella{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -1103,7 +1103,7 @@ func (b *BlindedBeaconBlockCapella) ToConsensus() (*eth.BlindedBeaconBlockCapell
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -1113,7 +1113,7 @@ func (b *BlindedBeaconBlockCapella) ToConsensus() (*eth.BlindedBeaconBlockCapell
 	}, nil
 }
 
-func BlindedBeaconBlockCapellaFromConsensus(b *eth.BlindedBeaconBlockCapella) (*BlindedBeaconBlockCapella, error) {
+func BlindedBeaconBlockCapellaFromConsensus(b *sila.BlindedBeaconBlockCapella) (*BlindedBeaconBlockCapella, error) {
 	payload, err := SilaPayloadHeaderCapellaFromConsensus(b.Body.SilaPayloadHeader)
 	if err != nil {
 		return nil, err
@@ -1143,7 +1143,7 @@ func BlindedBeaconBlockCapellaFromConsensus(b *eth.BlindedBeaconBlockCapella) (*
 	}, nil
 }
 
-func SignedBlindedBeaconBlockCapellaFromConsensus(b *eth.SignedBlindedBeaconBlockCapella) (*SignedBlindedBeaconBlockCapella, error) {
+func SignedBlindedBeaconBlockCapellaFromConsensus(b *sila.SignedBlindedBeaconBlockCapella) (*SignedBlindedBeaconBlockCapella, error) {
 	blindedBlock, err := BlindedBeaconBlockCapellaFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -1154,7 +1154,7 @@ func SignedBlindedBeaconBlockCapellaFromConsensus(b *eth.SignedBlindedBeaconBloc
 	}, nil
 }
 
-func BeaconBlockCapellaFromConsensus(b *eth.BeaconBlockCapella) (*BeaconBlockCapella, error) {
+func BeaconBlockCapellaFromConsensus(b *sila.BeaconBlockCapella) (*BeaconBlockCapella, error) {
 	payload, err := SilaPayloadCapellaFromConsensus(b.Body.SilaPayload)
 	if err != nil {
 		return nil, err
@@ -1184,7 +1184,7 @@ func BeaconBlockCapellaFromConsensus(b *eth.BeaconBlockCapella) (*BeaconBlockCap
 	}, nil
 }
 
-func SignedBeaconBlockCapellaFromConsensus(b *eth.SignedBeaconBlockCapella) (*SignedBeaconBlockCapella, error) {
+func SignedBeaconBlockCapellaFromConsensus(b *sila.SignedBeaconBlockCapella) (*SignedBeaconBlockCapella, error) {
 	block, err := BeaconBlockCapellaFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -1199,7 +1199,7 @@ func SignedBeaconBlockCapellaFromConsensus(b *eth.SignedBeaconBlockCapella) (*Si
 // Deneb
 // ----------------------------------------------------------------------------
 
-func (b *SignedBeaconBlockContentsDeneb) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockContentsDeneb) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1222,12 +1222,12 @@ func (b *SignedBeaconBlockContentsDeneb) ToGeneric() (*eth.GenericSignedBeaconBl
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Blobs[%d]", i))
 		}
 	}
-	blk := &eth.SignedBeaconBlockContentsDeneb{
+	blk := &sila.SignedBeaconBlockContentsDeneb{
 		Block:     signedDenebBlock,
 		KzgProofs: proofs,
 		Blobs:     blbs,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Deneb{Deneb: blk}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Deneb{Deneb: blk}}, nil
 }
 
 func (b *SignedBeaconBlockContentsDeneb) ToUnsigned() *BeaconBlockContentsDeneb {
@@ -1238,16 +1238,16 @@ func (b *SignedBeaconBlockContentsDeneb) ToUnsigned() *BeaconBlockContentsDeneb 
 	}
 }
 
-func (b *BeaconBlockContentsDeneb) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockContentsDeneb) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
 
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Deneb{Deneb: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Deneb{Deneb: block}}, nil
 }
 
-func (b *BeaconBlockContentsDeneb) ToConsensus() (*eth.BeaconBlockContentsDeneb, error) {
+func (b *BeaconBlockContentsDeneb) ToConsensus() (*sila.BeaconBlockContentsDeneb, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1270,14 +1270,14 @@ func (b *BeaconBlockContentsDeneb) ToConsensus() (*eth.BeaconBlockContentsDeneb,
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Blobs[%d]", i))
 		}
 	}
-	return &eth.BeaconBlockContentsDeneb{
+	return &sila.BeaconBlockContentsDeneb{
 		Block:     denebBlock,
 		KzgProofs: proofs,
 		Blobs:     blbs,
 	}, nil
 }
 
-func (b *BeaconBlockDeneb) ToConsensus() (*eth.BeaconBlockDeneb, error) {
+func (b *BeaconBlockDeneb) ToConsensus() (*sila.BeaconBlockDeneb, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1378,14 +1378,14 @@ func (b *BeaconBlockDeneb) ToConsensus() (*eth.BeaconBlockDeneb, error) {
 		}
 		blobKzgCommitments[i] = kzg
 	}
-	return &eth.BeaconBlockDeneb{
+	return &sila.BeaconBlockDeneb{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BeaconBlockBodyDeneb{
+		Body: &sila.BeaconBlockBodyDeneb{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -1396,18 +1396,18 @@ func (b *BeaconBlockDeneb) ToConsensus() (*eth.BeaconBlockDeneb, error) {
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
-			SilaPayload:      payload,
-			BlsToSilaChanges: blsChanges,
-			BlobKzgCommitments:    blobKzgCommitments,
+			SilaPayload:        payload,
+			BlsToSilaChanges:   blsChanges,
+			BlobKzgCommitments: blobKzgCommitments,
 		},
 	}, nil
 }
 
-func (b *SignedBeaconBlockDeneb) ToConsensus() (*eth.SignedBeaconBlockDeneb, error) {
+func (b *SignedBeaconBlockDeneb) ToConsensus() (*sila.SignedBeaconBlockDeneb, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1420,13 +1420,13 @@ func (b *SignedBeaconBlockDeneb) ToConsensus() (*eth.SignedBeaconBlockDeneb, err
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	return &eth.SignedBeaconBlockDeneb{
+	return &sila.SignedBeaconBlockDeneb{
 		Block:     block,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockDeneb) ToConsensus() (*eth.SignedBlindedBeaconBlockDeneb, error) {
+func (b *SignedBlindedBeaconBlockDeneb) ToConsensus() (*sila.SignedBlindedBeaconBlockDeneb, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1439,13 +1439,13 @@ func (b *SignedBlindedBeaconBlockDeneb) ToConsensus() (*eth.SignedBlindedBeaconB
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBlindedBeaconBlockDeneb{
+	return &sila.SignedBlindedBeaconBlockDeneb{
 		Message:   blindedBlock,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockDeneb) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBlindedBeaconBlockDeneb) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1457,13 +1457,13 @@ func (b *SignedBlindedBeaconBlockDeneb) ToGeneric() (*eth.GenericSignedBeaconBlo
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_BlindedDeneb{BlindedDeneb: &eth.SignedBlindedBeaconBlockDeneb{
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_BlindedDeneb{BlindedDeneb: &sila.SignedBlindedBeaconBlockDeneb{
 		Message:   blindedBlock,
 		Signature: sig,
 	}}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockDeneb) ToConsensus() (*eth.BlindedBeaconBlockDeneb, error) {
+func (b *BlindedBeaconBlockDeneb) ToConsensus() (*sila.BlindedBeaconBlockDeneb, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1565,14 +1565,14 @@ func (b *BlindedBeaconBlockDeneb) ToConsensus() (*eth.BlindedBeaconBlockDeneb, e
 		blobKzgCommitments[i] = kzg
 	}
 
-	return &eth.BlindedBeaconBlockDeneb{
+	return &sila.BlindedBeaconBlockDeneb{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BlindedBeaconBlockBodyDeneb{
+		Body: &sila.BlindedBeaconBlockBodyDeneb{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -1583,18 +1583,18 @@ func (b *BlindedBeaconBlockDeneb) ToConsensus() (*eth.BlindedBeaconBlockDeneb, e
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
-			SilaPayloadHeader: payload,
-			BlsToSilaChanges:  blsChanges,
-			BlobKzgCommitments:     blobKzgCommitments,
+			SilaPayloadHeader:  payload,
+			BlsToSilaChanges:   blsChanges,
+			BlobKzgCommitments: blobKzgCommitments,
 		},
 	}, nil
 }
 
-func (b *BlindedBeaconBlockDeneb) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BlindedBeaconBlockDeneb) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1603,10 +1603,10 @@ func (b *BlindedBeaconBlockDeneb) ToGeneric() (*eth.GenericBeaconBlock, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_BlindedDeneb{BlindedDeneb: blindedBlock}, IsBlinded: true}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_BlindedDeneb{BlindedDeneb: blindedBlock}, IsBlinded: true}, nil
 }
 
-func BeaconBlockContentsDenebFromConsensus(b *eth.BeaconBlockContentsDeneb) (*BeaconBlockContentsDeneb, error) {
+func BeaconBlockContentsDenebFromConsensus(b *sila.BeaconBlockContentsDeneb) (*BeaconBlockContentsDeneb, error) {
 	block, err := BeaconBlockDenebFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -1626,7 +1626,7 @@ func BeaconBlockContentsDenebFromConsensus(b *eth.BeaconBlockContentsDeneb) (*Be
 	}, nil
 }
 
-func SignedBeaconBlockContentsDenebFromConsensus(b *eth.SignedBeaconBlockContentsDeneb) (*SignedBeaconBlockContentsDeneb, error) {
+func SignedBeaconBlockContentsDenebFromConsensus(b *sila.SignedBeaconBlockContentsDeneb) (*SignedBeaconBlockContentsDeneb, error) {
 	block, err := SignedBeaconBlockDenebFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -1649,7 +1649,7 @@ func SignedBeaconBlockContentsDenebFromConsensus(b *eth.SignedBeaconBlockContent
 	}, nil
 }
 
-func BlindedBeaconBlockDenebFromConsensus(b *eth.BlindedBeaconBlockDeneb) (*BlindedBeaconBlockDeneb, error) {
+func BlindedBeaconBlockDenebFromConsensus(b *sila.BlindedBeaconBlockDeneb) (*BlindedBeaconBlockDeneb, error) {
 	blobKzgCommitments := make([]string, len(b.Body.BlobKzgCommitments))
 	for i := range b.Body.BlobKzgCommitments {
 		blobKzgCommitments[i] = hexutil.Encode(b.Body.BlobKzgCommitments[i])
@@ -1677,14 +1677,14 @@ func BlindedBeaconBlockDenebFromConsensus(b *eth.BlindedBeaconBlockDeneb) (*Blin
 				SyncCommitteeBits:      hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeBits),
 				SyncCommitteeSignature: hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeSignature),
 			},
-			SilaPayloadHeader: payload,
-			BLSToSilaChanges:  SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
-			BlobKzgCommitments:     blobKzgCommitments,
+			SilaPayloadHeader:  payload,
+			BLSToSilaChanges:   SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
+			BlobKzgCommitments: blobKzgCommitments,
 		},
 	}, nil
 }
 
-func SignedBlindedBeaconBlockDenebFromConsensus(b *eth.SignedBlindedBeaconBlockDeneb) (*SignedBlindedBeaconBlockDeneb, error) {
+func SignedBlindedBeaconBlockDenebFromConsensus(b *sila.SignedBlindedBeaconBlockDeneb) (*SignedBlindedBeaconBlockDeneb, error) {
 	block, err := BlindedBeaconBlockDenebFromConsensus(b.Message)
 	if err != nil {
 		return nil, err
@@ -1695,7 +1695,7 @@ func SignedBlindedBeaconBlockDenebFromConsensus(b *eth.SignedBlindedBeaconBlockD
 	}, nil
 }
 
-func BeaconBlockDenebFromConsensus(b *eth.BeaconBlockDeneb) (*BeaconBlockDeneb, error) {
+func BeaconBlockDenebFromConsensus(b *sila.BeaconBlockDeneb) (*BeaconBlockDeneb, error) {
 	blobKzgCommitments := make([]string, len(b.Body.BlobKzgCommitments))
 	for i := range b.Body.BlobKzgCommitments {
 		blobKzgCommitments[i] = hexutil.Encode(b.Body.BlobKzgCommitments[i])
@@ -1722,14 +1722,14 @@ func BeaconBlockDenebFromConsensus(b *eth.BeaconBlockDeneb) (*BeaconBlockDeneb, 
 				SyncCommitteeBits:      hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeBits),
 				SyncCommitteeSignature: hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeSignature),
 			},
-			SilaPayload:      payload,
-			BLSToSilaChanges: SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
-			BlobKzgCommitments:    blobKzgCommitments,
+			SilaPayload:        payload,
+			BLSToSilaChanges:   SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
+			BlobKzgCommitments: blobKzgCommitments,
 		},
 	}, nil
 }
 
-func SignedBeaconBlockDenebFromConsensus(b *eth.SignedBeaconBlockDeneb) (*SignedBeaconBlockDeneb, error) {
+func SignedBeaconBlockDenebFromConsensus(b *sila.SignedBeaconBlockDeneb) (*SignedBeaconBlockDeneb, error) {
 	block, err := BeaconBlockDenebFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -1744,7 +1744,7 @@ func SignedBeaconBlockDenebFromConsensus(b *eth.SignedBeaconBlockDeneb) (*Signed
 // Electra
 // ----------------------------------------------------------------------------
 
-func (b *SignedBeaconBlockContentsElectra) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockContentsElectra) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1767,12 +1767,12 @@ func (b *SignedBeaconBlockContentsElectra) ToGeneric() (*eth.GenericSignedBeacon
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Blobs[%d]", i))
 		}
 	}
-	blk := &eth.SignedBeaconBlockContentsElectra{
+	blk := &sila.SignedBeaconBlockContentsElectra{
 		Block:     signedElectraBlock,
 		KzgProofs: proofs,
 		Blobs:     blbs,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Electra{Electra: blk}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Electra{Electra: blk}}, nil
 }
 
 func (b *SignedBeaconBlockContentsElectra) ToUnsigned() *BeaconBlockContentsElectra {
@@ -1783,16 +1783,16 @@ func (b *SignedBeaconBlockContentsElectra) ToUnsigned() *BeaconBlockContentsElec
 	}
 }
 
-func (b *BeaconBlockContentsElectra) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockContentsElectra) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
 
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Electra{Electra: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Electra{Electra: block}}, nil
 }
 
-func (b *BeaconBlockContentsElectra) ToConsensus() (*eth.BeaconBlockContentsElectra, error) {
+func (b *BeaconBlockContentsElectra) ToConsensus() (*sila.BeaconBlockContentsElectra, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1815,14 +1815,14 @@ func (b *BeaconBlockContentsElectra) ToConsensus() (*eth.BeaconBlockContentsElec
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Blobs[%d]", i))
 		}
 	}
-	return &eth.BeaconBlockContentsElectra{
+	return &sila.BeaconBlockContentsElectra{
 		Block:     electraBlock,
 		KzgProofs: proofs,
 		Blobs:     blbs,
 	}, nil
 }
 
-func (b *BeaconBlockElectra) ToConsensus() (*eth.BeaconBlockElectra, error) {
+func (b *BeaconBlockElectra) ToConsensus() (*sila.BeaconBlockElectra, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1934,14 +1934,14 @@ func (b *BeaconBlockElectra) ToConsensus() (*eth.BeaconBlockElectra, error) {
 		return nil, server.NewDecodeError(err, "Body.SilaRequests")
 	}
 
-	return &eth.BeaconBlockElectra{
+	return &sila.BeaconBlockElectra{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BeaconBlockBodyElectra{
+		Body: &sila.BeaconBlockBodyElectra{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -1952,19 +1952,19 @@ func (b *BeaconBlockElectra) ToConsensus() (*eth.BeaconBlockElectra, error) {
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
-			SilaPayload:      payload,
-			BlsToSilaChanges: blsChanges,
-			BlobKzgCommitments:    blobKzgCommitments,
-			SilaRequests:     requests,
+			SilaPayload:        payload,
+			BlsToSilaChanges:   blsChanges,
+			BlobKzgCommitments: blobKzgCommitments,
+			SilaRequests:       requests,
 		},
 	}, nil
 }
 
-func (b *SignedBeaconBlockElectra) ToConsensus() (*eth.SignedBeaconBlockElectra, error) {
+func (b *SignedBeaconBlockElectra) ToConsensus() (*sila.SignedBeaconBlockElectra, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1977,13 +1977,13 @@ func (b *SignedBeaconBlockElectra) ToConsensus() (*eth.SignedBeaconBlockElectra,
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	return &eth.SignedBeaconBlockElectra{
+	return &sila.SignedBeaconBlockElectra{
 		Block:     block,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockElectra) ToConsensus() (*eth.SignedBlindedBeaconBlockElectra, error) {
+func (b *SignedBlindedBeaconBlockElectra) ToConsensus() (*sila.SignedBlindedBeaconBlockElectra, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -1996,13 +1996,13 @@ func (b *SignedBlindedBeaconBlockElectra) ToConsensus() (*eth.SignedBlindedBeaco
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBlindedBeaconBlockElectra{
+	return &sila.SignedBlindedBeaconBlockElectra{
 		Message:   blindedBlock,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockElectra) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBlindedBeaconBlockElectra) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2014,13 +2014,13 @@ func (b *SignedBlindedBeaconBlockElectra) ToGeneric() (*eth.GenericSignedBeaconB
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_BlindedElectra{BlindedElectra: &eth.SignedBlindedBeaconBlockElectra{
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_BlindedElectra{BlindedElectra: &sila.SignedBlindedBeaconBlockElectra{
 		Message:   blindedBlock,
 		Signature: sig,
 	}}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockElectra) ToConsensus() (*eth.BlindedBeaconBlockElectra, error) {
+func (b *BlindedBeaconBlockElectra) ToConsensus() (*sila.BlindedBeaconBlockElectra, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2195,14 +2195,14 @@ func (b *BlindedBeaconBlockElectra) ToConsensus() (*eth.BlindedBeaconBlockElectr
 		return nil, server.NewDecodeError(err, "Body.SilaRequests")
 	}
 
-	return &eth.BlindedBeaconBlockElectra{
+	return &sila.BlindedBeaconBlockElectra{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BlindedBeaconBlockBodyElectra{
+		Body: &sila.BlindedBeaconBlockBodyElectra{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -2213,7 +2213,7 @@ func (b *BlindedBeaconBlockElectra) ToConsensus() (*eth.BlindedBeaconBlockElectr
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -2236,14 +2236,14 @@ func (b *BlindedBeaconBlockElectra) ToConsensus() (*eth.BlindedBeaconBlockElectr
 				BlobGasUsed:      payloadBlobGasUsed,
 				ExcessBlobGas:    payloadExcessBlobGas,
 			},
-			BlsToSilaChanges: blsChanges,
-			BlobKzgCommitments:    blobKzgCommitments,
-			SilaRequests:     requests,
+			BlsToSilaChanges:   blsChanges,
+			BlobKzgCommitments: blobKzgCommitments,
+			SilaRequests:       requests,
 		},
 	}, nil
 }
 
-func (b *BlindedBeaconBlockElectra) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BlindedBeaconBlockElectra) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2252,10 +2252,10 @@ func (b *BlindedBeaconBlockElectra) ToGeneric() (*eth.GenericBeaconBlock, error)
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_BlindedElectra{BlindedElectra: blindedBlock}, IsBlinded: true}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_BlindedElectra{BlindedElectra: blindedBlock}, IsBlinded: true}, nil
 }
 
-func SignedBeaconBlockContentsElectraFromConsensus(b *eth.SignedBeaconBlockContentsElectra) (*SignedBeaconBlockContentsElectra, error) {
+func SignedBeaconBlockContentsElectraFromConsensus(b *sila.SignedBeaconBlockContentsElectra) (*SignedBeaconBlockContentsElectra, error) {
 	block, err := SignedBeaconBlockElectraFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2278,7 +2278,7 @@ func SignedBeaconBlockContentsElectraFromConsensus(b *eth.SignedBeaconBlockConte
 	}, nil
 }
 
-func BlindedBeaconBlockElectraFromConsensus(b *eth.BlindedBeaconBlockElectra) (*BlindedBeaconBlockElectra, error) {
+func BlindedBeaconBlockElectraFromConsensus(b *sila.BlindedBeaconBlockElectra) (*BlindedBeaconBlockElectra, error) {
 	blobKzgCommitments := make([]string, len(b.Body.BlobKzgCommitments))
 	for i := range b.Body.BlobKzgCommitments {
 		blobKzgCommitments[i] = hexutil.Encode(b.Body.BlobKzgCommitments[i])
@@ -2306,15 +2306,15 @@ func BlindedBeaconBlockElectraFromConsensus(b *eth.BlindedBeaconBlockElectra) (*
 				SyncCommitteeBits:      hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeBits),
 				SyncCommitteeSignature: hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeSignature),
 			},
-			SilaPayloadHeader: payload,
-			BLSToSilaChanges:  SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
-			BlobKzgCommitments:     blobKzgCommitments,
-			SilaRequests:      SilaRequestsFromConsensus(b.Body.SilaRequests),
+			SilaPayloadHeader:  payload,
+			BLSToSilaChanges:   SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
+			BlobKzgCommitments: blobKzgCommitments,
+			SilaRequests:       SilaRequestsFromConsensus(b.Body.SilaRequests),
 		},
 	}, nil
 }
 
-func BeaconBlockContentsElectraFromConsensus(b *eth.BeaconBlockContentsElectra) (*BeaconBlockContentsElectra, error) {
+func BeaconBlockContentsElectraFromConsensus(b *sila.BeaconBlockContentsElectra) (*BeaconBlockContentsElectra, error) {
 	block, err := BeaconBlockElectraFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2334,7 +2334,7 @@ func BeaconBlockContentsElectraFromConsensus(b *eth.BeaconBlockContentsElectra) 
 	}, nil
 }
 
-func SignedBlindedBeaconBlockElectraFromConsensus(b *eth.SignedBlindedBeaconBlockElectra) (*SignedBlindedBeaconBlockElectra, error) {
+func SignedBlindedBeaconBlockElectraFromConsensus(b *sila.SignedBlindedBeaconBlockElectra) (*SignedBlindedBeaconBlockElectra, error) {
 	block, err := BlindedBeaconBlockElectraFromConsensus(b.Message)
 	if err != nil {
 		return nil, err
@@ -2345,7 +2345,7 @@ func SignedBlindedBeaconBlockElectraFromConsensus(b *eth.SignedBlindedBeaconBloc
 	}, nil
 }
 
-func BeaconBlockElectraFromConsensus(b *eth.BeaconBlockElectra) (*BeaconBlockElectra, error) {
+func BeaconBlockElectraFromConsensus(b *sila.BeaconBlockElectra) (*BeaconBlockElectra, error) {
 	payload, err := SilaPayloadElectraFromConsensus(b.Body.SilaPayload)
 	if err != nil {
 		return nil, err
@@ -2373,15 +2373,15 @@ func BeaconBlockElectraFromConsensus(b *eth.BeaconBlockElectra) (*BeaconBlockEle
 				SyncCommitteeBits:      hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeBits),
 				SyncCommitteeSignature: hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeSignature),
 			},
-			SilaPayload:      payload,
-			BLSToSilaChanges: SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
-			BlobKzgCommitments:    blobKzgCommitments,
-			SilaRequests:     SilaRequestsFromConsensus(b.Body.SilaRequests),
+			SilaPayload:        payload,
+			BLSToSilaChanges:   SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
+			BlobKzgCommitments: blobKzgCommitments,
+			SilaRequests:       SilaRequestsFromConsensus(b.Body.SilaRequests),
 		},
 	}, nil
 }
 
-func SignedBeaconBlockElectraFromConsensus(b *eth.SignedBeaconBlockElectra) (*SignedBeaconBlockElectra, error) {
+func SignedBeaconBlockElectraFromConsensus(b *sila.SignedBeaconBlockElectra) (*SignedBeaconBlockElectra, error) {
 	block, err := BeaconBlockElectraFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2396,7 +2396,7 @@ func SignedBeaconBlockElectraFromConsensus(b *eth.SignedBeaconBlockElectra) (*Si
 // Fulu
 // ----------------------------------------------------------------------------
 
-func (b *SignedBeaconBlockContentsFulu) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockContentsFulu) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2419,12 +2419,12 @@ func (b *SignedBeaconBlockContentsFulu) ToGeneric() (*eth.GenericSignedBeaconBlo
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Blobs[%d]", i))
 		}
 	}
-	blk := &eth.SignedBeaconBlockContentsFulu{
+	blk := &sila.SignedBeaconBlockContentsFulu{
 		Block:     signedFuluBlock,
 		KzgProofs: proofs,
 		Blobs:     blbs,
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_Fulu{Fulu: blk}}, nil
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_Fulu{Fulu: blk}}, nil
 }
 
 func (b *SignedBeaconBlockContentsFulu) ToUnsigned() *BeaconBlockContentsFulu {
@@ -2435,16 +2435,16 @@ func (b *SignedBeaconBlockContentsFulu) ToUnsigned() *BeaconBlockContentsFulu {
 	}
 }
 
-func (b *BeaconBlockContentsFulu) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockContentsFulu) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
 
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Fulu{Fulu: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Fulu{Fulu: block}}, nil
 }
 
-func (b *BeaconBlockContentsFulu) ToConsensus() (*eth.BeaconBlockContentsFulu, error) {
+func (b *BeaconBlockContentsFulu) ToConsensus() (*sila.BeaconBlockContentsFulu, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2467,14 +2467,14 @@ func (b *BeaconBlockContentsFulu) ToConsensus() (*eth.BeaconBlockContentsFulu, e
 			return nil, server.NewDecodeError(err, fmt.Sprintf("Blobs[%d]", i))
 		}
 	}
-	return &eth.BeaconBlockContentsFulu{
+	return &sila.BeaconBlockContentsFulu{
 		Block:     fuluBlock,
 		KzgProofs: proofs,
 		Blobs:     blbs,
 	}, nil
 }
 
-func (b *SignedBeaconBlockFulu) ToConsensus() (*eth.SignedBeaconBlockFulu, error) {
+func (b *SignedBeaconBlockFulu) ToConsensus() (*sila.SignedBeaconBlockFulu, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2487,13 +2487,13 @@ func (b *SignedBeaconBlockFulu) ToConsensus() (*eth.SignedBeaconBlockFulu, error
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	return &eth.SignedBeaconBlockFulu{
+	return &sila.SignedBeaconBlockFulu{
 		Block:     block,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockFulu) ToConsensus() (*eth.SignedBlindedBeaconBlockFulu, error) {
+func (b *SignedBlindedBeaconBlockFulu) ToConsensus() (*sila.SignedBlindedBeaconBlockFulu, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2506,13 +2506,13 @@ func (b *SignedBlindedBeaconBlockFulu) ToConsensus() (*eth.SignedBlindedBeaconBl
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBlindedBeaconBlockFulu{
+	return &sila.SignedBlindedBeaconBlockFulu{
 		Message:   blindedBlock,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SignedBlindedBeaconBlockFulu) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBlindedBeaconBlockFulu) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2524,13 +2524,13 @@ func (b *SignedBlindedBeaconBlockFulu) ToGeneric() (*eth.GenericSignedBeaconBloc
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericSignedBeaconBlock{Block: &eth.GenericSignedBeaconBlock_BlindedFulu{BlindedFulu: &eth.SignedBlindedBeaconBlockFulu{
+	return &sila.GenericSignedBeaconBlock{Block: &sila.GenericSignedBeaconBlock_BlindedFulu{BlindedFulu: &sila.SignedBlindedBeaconBlockFulu{
 		Message:   blindedBlock,
 		Signature: sig,
 	}}, IsBlinded: true}, nil
 }
 
-func (b *BlindedBeaconBlockFulu) ToConsensus() (*eth.BlindedBeaconBlockFulu, error) {
+func (b *BlindedBeaconBlockFulu) ToConsensus() (*sila.BlindedBeaconBlockFulu, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2723,14 +2723,14 @@ func (b *BlindedBeaconBlockFulu) ToConsensus() (*eth.BlindedBeaconBlockFulu, err
 		blobKzgCommitments[i] = kzg
 	}
 
-	return &eth.BlindedBeaconBlockFulu{
+	return &sila.BlindedBeaconBlockFulu{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
 		StateRoot:     stateRoot,
-		Body: &eth.BlindedBeaconBlockBodyElectra{
+		Body: &sila.BlindedBeaconBlockBodyElectra{
 			RandaoReveal: randaoReveal,
-			SilaData: &eth.SilaData{
+			SilaData: &sila.SilaData{
 				DepositRoot:  depositRoot,
 				DepositCount: depositCount,
 				BlockHash:    blockHash,
@@ -2741,7 +2741,7 @@ func (b *BlindedBeaconBlockFulu) ToConsensus() (*eth.BlindedBeaconBlockFulu, err
 			Attestations:      atts,
 			Deposits:          deposits,
 			VoluntaryExits:    exits,
-			SyncAggregate: &eth.SyncAggregate{
+			SyncAggregate: &sila.SyncAggregate{
 				SyncCommitteeBits:      syncCommitteeBits,
 				SyncCommitteeSignature: syncCommitteeSig,
 			},
@@ -2764,8 +2764,8 @@ func (b *BlindedBeaconBlockFulu) ToConsensus() (*eth.BlindedBeaconBlockFulu, err
 				BlobGasUsed:      payloadBlobGasUsed,
 				ExcessBlobGas:    payloadExcessBlobGas,
 			},
-			BlsToSilaChanges: blsChanges,
-			BlobKzgCommitments:    blobKzgCommitments,
+			BlsToSilaChanges:   blsChanges,
+			BlobKzgCommitments: blobKzgCommitments,
 			SilaRequests: &silaenginev1.SilaRequests{
 				Deposits:       depositRequests,
 				Withdrawals:    withdrawalRequests,
@@ -2775,7 +2775,7 @@ func (b *BlindedBeaconBlockFulu) ToConsensus() (*eth.BlindedBeaconBlockFulu, err
 	}, nil
 }
 
-func (b *BlindedBeaconBlockFulu) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BlindedBeaconBlockFulu) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2784,10 +2784,10 @@ func (b *BlindedBeaconBlockFulu) ToGeneric() (*eth.GenericBeaconBlock, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_BlindedFulu{BlindedFulu: blindedBlock}, IsBlinded: true}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_BlindedFulu{BlindedFulu: blindedBlock}, IsBlinded: true}, nil
 }
 
-func BeaconBlockContentsFuluFromConsensus(b *eth.BeaconBlockContentsFulu) (*BeaconBlockContentsFulu, error) {
+func BeaconBlockContentsFuluFromConsensus(b *sila.BeaconBlockContentsFulu) (*BeaconBlockContentsFulu, error) {
 	block, err := BeaconBlockFuluFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2807,7 +2807,7 @@ func BeaconBlockContentsFuluFromConsensus(b *eth.BeaconBlockContentsFulu) (*Beac
 	}, nil
 }
 
-func SignedBeaconBlockContentsFuluFromConsensus(b *eth.SignedBeaconBlockContentsFulu) (*SignedBeaconBlockContentsFulu, error) {
+func SignedBeaconBlockContentsFuluFromConsensus(b *sila.SignedBeaconBlockContentsFulu) (*SignedBeaconBlockContentsFulu, error) {
 	block, err := SignedBeaconBlockFuluFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2830,7 +2830,7 @@ func SignedBeaconBlockContentsFuluFromConsensus(b *eth.SignedBeaconBlockContents
 	}, nil
 }
 
-func BlindedBeaconBlockFuluFromConsensus(b *eth.BlindedBeaconBlockFulu) (*BlindedBeaconBlockFulu, error) {
+func BlindedBeaconBlockFuluFromConsensus(b *sila.BlindedBeaconBlockFulu) (*BlindedBeaconBlockFulu, error) {
 	blobKzgCommitments := make([]string, len(b.Body.BlobKzgCommitments))
 	for i := range b.Body.BlobKzgCommitments {
 		blobKzgCommitments[i] = hexutil.Encode(b.Body.BlobKzgCommitments[i])
@@ -2858,15 +2858,15 @@ func BlindedBeaconBlockFuluFromConsensus(b *eth.BlindedBeaconBlockFulu) (*Blinde
 				SyncCommitteeBits:      hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeBits),
 				SyncCommitteeSignature: hexutil.Encode(b.Body.SyncAggregate.SyncCommitteeSignature),
 			},
-			SilaPayloadHeader: payload,
-			BLSToSilaChanges:  SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
-			BlobKzgCommitments:     blobKzgCommitments,
-			SilaRequests:      SilaRequestsFromConsensus(b.Body.SilaRequests),
+			SilaPayloadHeader:  payload,
+			BLSToSilaChanges:   SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
+			BlobKzgCommitments: blobKzgCommitments,
+			SilaRequests:       SilaRequestsFromConsensus(b.Body.SilaRequests),
 		},
 	}, nil
 }
 
-func SignedBlindedBeaconBlockFuluFromConsensus(b *eth.SignedBlindedBeaconBlockFulu) (*SignedBlindedBeaconBlockFulu, error) {
+func SignedBlindedBeaconBlockFuluFromConsensus(b *sila.SignedBlindedBeaconBlockFulu) (*SignedBlindedBeaconBlockFulu, error) {
 	block, err := BlindedBeaconBlockFuluFromConsensus(b.Message)
 	if err != nil {
 		return nil, err
@@ -2877,7 +2877,7 @@ func SignedBlindedBeaconBlockFuluFromConsensus(b *eth.SignedBlindedBeaconBlockFu
 	}, nil
 }
 
-func SignedBeaconBlockFuluFromConsensus(b *eth.SignedBeaconBlockFulu) (*SignedBeaconBlockFulu, error) {
+func SignedBeaconBlockFuluFromConsensus(b *sila.SignedBeaconBlockFulu) (*SignedBeaconBlockFulu, error) {
 	block, err := BeaconBlockFuluFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2892,7 +2892,7 @@ func SignedBeaconBlockFuluFromConsensus(b *eth.SignedBeaconBlockFulu) (*SignedBe
 // Gloas
 // ----------------------------------------------------------------------------
 
-func SignedBeaconBlockGloasFromConsensus(b *eth.SignedBeaconBlockGloas) (*SignedBeaconBlockGloas, error) {
+func SignedBeaconBlockGloasFromConsensus(b *sila.SignedBeaconBlockGloas) (*SignedBeaconBlockGloas, error) {
 	block, err := BeaconBlockGloasFromConsensus(b.Block)
 	if err != nil {
 		return nil, err
@@ -2903,7 +2903,7 @@ func SignedBeaconBlockGloasFromConsensus(b *eth.SignedBeaconBlockGloas) (*Signed
 	}, nil
 }
 
-func BeaconBlockGloasFromConsensus(b *eth.BeaconBlockGloas) (*BeaconBlockGloas, error) {
+func BeaconBlockGloasFromConsensus(b *sila.BeaconBlockGloas) (*BeaconBlockGloas, error) {
 	payloadAttestations := make([]*PayloadAttestation, len(b.Body.PayloadAttestations))
 	for i, pa := range b.Body.PayloadAttestations {
 		payloadAttestations[i] = PayloadAttestationFromConsensus(pa)
@@ -2915,52 +2915,52 @@ func BeaconBlockGloasFromConsensus(b *eth.BeaconBlockGloas) (*BeaconBlockGloas, 
 		ParentRoot:    hexutil.Encode(b.ParentRoot),
 		StateRoot:     hexutil.Encode(b.StateRoot),
 		Body: &BeaconBlockBodyGloas{
-			RandaoReveal:              hexutil.Encode(b.Body.RandaoReveal),
-			SilaData:                  SilaDataFromConsensus(b.Body.SilaData),
-			Graffiti:                  hexutil.Encode(b.Body.Graffiti),
-			ProposerSlashings:         ProposerSlashingsFromConsensus(b.Body.ProposerSlashings),
-			AttesterSlashings:         AttesterSlashingsElectraFromConsensus(b.Body.AttesterSlashings),
-			Attestations:              AttsElectraFromConsensus(b.Body.Attestations),
-			Deposits:                  DepositsFromConsensus(b.Body.Deposits),
-			VoluntaryExits:            SignedExitsFromConsensus(b.Body.VoluntaryExits),
-			SyncAggregate:             SyncAggregateFromConsensus(b.Body.SyncAggregate),
+			RandaoReveal:         hexutil.Encode(b.Body.RandaoReveal),
+			SilaData:             SilaDataFromConsensus(b.Body.SilaData),
+			Graffiti:             hexutil.Encode(b.Body.Graffiti),
+			ProposerSlashings:    ProposerSlashingsFromConsensus(b.Body.ProposerSlashings),
+			AttesterSlashings:    AttesterSlashingsElectraFromConsensus(b.Body.AttesterSlashings),
+			Attestations:         AttsElectraFromConsensus(b.Body.Attestations),
+			Deposits:             DepositsFromConsensus(b.Body.Deposits),
+			VoluntaryExits:       SignedExitsFromConsensus(b.Body.VoluntaryExits),
+			SyncAggregate:        SyncAggregateFromConsensus(b.Body.SyncAggregate),
 			BLSToSilaChanges:     SignedBLSChangesFromConsensus(b.Body.BlsToSilaChanges),
 			SignedSilaPayloadBid: SignedSilaPayloadBidFromConsensus(b.Body.SignedSilaPayloadBid),
-			PayloadAttestations:       payloadAttestations,
+			PayloadAttestations:  payloadAttestations,
 			ParentSilaRequests:   SilaRequestsFromConsensus(b.Body.ParentSilaRequests),
 		},
 	}, nil
 }
 
-func SignedSilaPayloadBidFromConsensus(b *eth.SignedSilaPayloadBid) *SignedSilaPayloadBid {
+func SignedSilaPayloadBidFromConsensus(b *sila.SignedSilaPayloadBid) *SignedSilaPayloadBid {
 	return &SignedSilaPayloadBid{
 		Message:   SilaPayloadBidFromConsensus(b.Message),
 		Signature: hexutil.Encode(b.Signature),
 	}
 }
 
-func SilaPayloadBidFromConsensus(b *eth.SilaPayloadBid) *SilaPayloadBid {
+func SilaPayloadBidFromConsensus(b *sila.SilaPayloadBid) *SilaPayloadBid {
 	blobKzgCommitments := make([]string, len(b.BlobKzgCommitments))
 	for i := range b.BlobKzgCommitments {
 		blobKzgCommitments[i] = hexutil.Encode(b.BlobKzgCommitments[i])
 	}
 	return &SilaPayloadBid{
-		ParentBlockHash:       hexutil.Encode(b.ParentBlockHash),
-		ParentBlockRoot:       hexutil.Encode(b.ParentBlockRoot),
-		BlockHash:             hexutil.Encode(b.BlockHash),
-		PrevRandao:            hexutil.Encode(b.PrevRandao),
-		FeeRecipient:          hexutil.Encode(b.FeeRecipient),
-		GasLimit:              fmt.Sprintf("%d", b.GasLimit),
-		BuilderIndex:          fmt.Sprintf("%d", b.BuilderIndex),
-		Slot:                  fmt.Sprintf("%d", b.Slot),
-		Value:                 fmt.Sprintf("%d", b.Value),
-		SilaPayment:      fmt.Sprintf("%d", b.SilaPayment),
-		BlobKzgCommitments:    blobKzgCommitments,
-		SilaRequestsRoot: hexutil.Encode(b.SilaRequestsRoot),
+		ParentBlockHash:    hexutil.Encode(b.ParentBlockHash),
+		ParentBlockRoot:    hexutil.Encode(b.ParentBlockRoot),
+		BlockHash:          hexutil.Encode(b.BlockHash),
+		PrevRandao:         hexutil.Encode(b.PrevRandao),
+		FeeRecipient:       hexutil.Encode(b.FeeRecipient),
+		GasLimit:           fmt.Sprintf("%d", b.GasLimit),
+		BuilderIndex:       fmt.Sprintf("%d", b.BuilderIndex),
+		Slot:               fmt.Sprintf("%d", b.Slot),
+		Value:              fmt.Sprintf("%d", b.Value),
+		SilaPayment:        fmt.Sprintf("%d", b.SilaPayment),
+		BlobKzgCommitments: blobKzgCommitments,
+		SilaRequestsRoot:   hexutil.Encode(b.SilaRequestsRoot),
 	}
 }
 
-func PayloadAttestationFromConsensus(pa *eth.PayloadAttestation) *PayloadAttestation {
+func PayloadAttestationFromConsensus(pa *sila.PayloadAttestation) *PayloadAttestation {
 	return &PayloadAttestation{
 		AggregationBits: hexutil.Encode(pa.AggregationBits),
 		Data:            PayloadAttestationDataFromConsensus(pa.Data),
@@ -2968,7 +2968,7 @@ func PayloadAttestationFromConsensus(pa *eth.PayloadAttestation) *PayloadAttesta
 	}
 }
 
-func PayloadAttestationMessageFromConsensus(m *eth.PayloadAttestationMessage) *PayloadAttestationMessage {
+func PayloadAttestationMessageFromConsensus(m *sila.PayloadAttestationMessage) *PayloadAttestationMessage {
 	return &PayloadAttestationMessage{
 		ValidatorIndex: fmt.Sprintf("%d", m.ValidatorIndex),
 		Data:           PayloadAttestationDataFromConsensus(m.Data),
@@ -2976,7 +2976,7 @@ func PayloadAttestationMessageFromConsensus(m *eth.PayloadAttestationMessage) *P
 	}
 }
 
-func PayloadAttestationDataFromConsensus(d *eth.PayloadAttestationData) *PayloadAttestationData {
+func PayloadAttestationDataFromConsensus(d *sila.PayloadAttestationData) *PayloadAttestationData {
 	return &PayloadAttestationData{
 		BeaconBlockRoot:   hexutil.Encode(d.BeaconBlockRoot),
 		Slot:              fmt.Sprintf("%d", d.Slot),
@@ -2985,7 +2985,7 @@ func PayloadAttestationDataFromConsensus(d *eth.PayloadAttestationData) *Payload
 	}
 }
 
-func (b *SignedBeaconBlockGloas) ToGeneric() (*eth.GenericSignedBeaconBlock, error) {
+func (b *SignedBeaconBlockGloas) ToGeneric() (*sila.GenericSignedBeaconBlock, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -2993,12 +2993,12 @@ func (b *SignedBeaconBlockGloas) ToGeneric() (*eth.GenericSignedBeaconBlock, err
 	if err != nil {
 		return nil, err
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Gloas{Gloas: signed},
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Gloas{Gloas: signed},
 	}, nil
 }
 
-func (b *SignedBeaconBlockGloas) ToConsensus() (*eth.SignedBeaconBlockGloas, error) {
+func (b *SignedBeaconBlockGloas) ToConsensus() (*sila.SignedBeaconBlockGloas, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -3011,13 +3011,13 @@ func (b *SignedBeaconBlockGloas) ToConsensus() (*eth.SignedBeaconBlockGloas, err
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	return &eth.SignedBeaconBlockGloas{
+	return &sila.SignedBeaconBlockGloas{
 		Block:     block,
 		Signature: sig,
 	}, nil
 }
 
-func (b *BeaconBlockGloas) ToConsensus() (*eth.BeaconBlockGloas, error) {
+func (b *BeaconBlockGloas) ToConsensus() (*sila.BeaconBlockGloas, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -3054,7 +3054,7 @@ func (b *BeaconBlockGloas) ToConsensus() (*eth.BeaconBlockGloas, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Body")
 	}
-	return &eth.BeaconBlockGloas{
+	return &sila.BeaconBlockGloas{
 		Slot:          primitives.Slot(slot),
 		ProposerIndex: primitives.ValidatorIndex(proposerIndex),
 		ParentRoot:    parentRoot,
@@ -3063,7 +3063,7 @@ func (b *BeaconBlockGloas) ToConsensus() (*eth.BeaconBlockGloas, error) {
 	}, nil
 }
 
-func (b *BeaconBlockBodyGloas) ToConsensus() (*eth.BeaconBlockBodyGloas, error) {
+func (b *BeaconBlockBodyGloas) ToConsensus() (*sila.BeaconBlockBodyGloas, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -3136,9 +3136,9 @@ func (b *BeaconBlockBodyGloas) ToConsensus() (*eth.BeaconBlockBodyGloas, error) 
 		}
 	}
 
-	return &eth.BeaconBlockBodyGloas{
+	return &sila.BeaconBlockBodyGloas{
 		RandaoReveal: randaoReveal,
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot:  depositRoot,
 			DepositCount: depositCount,
 			BlockHash:    blockHash,
@@ -3149,26 +3149,26 @@ func (b *BeaconBlockBodyGloas) ToConsensus() (*eth.BeaconBlockBodyGloas, error) 
 		Attestations:      atts,
 		Deposits:          deposits,
 		VoluntaryExits:    exits,
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      syncCommitteeBits,
 			SyncCommitteeSignature: syncCommitteeSig,
 		},
 		BlsToSilaChanges:     blsChanges,
 		SignedSilaPayloadBid: signedBid,
-		PayloadAttestations:       payloadAttestations,
+		PayloadAttestations:  payloadAttestations,
 		ParentSilaRequests:   parentSilaRequests,
 	}, nil
 }
 
-func (b *BeaconBlockGloas) ToGeneric() (*eth.GenericBeaconBlock, error) {
+func (b *BeaconBlockGloas) ToGeneric() (*sila.GenericBeaconBlock, error) {
 	block, err := b.ToConsensus()
 	if err != nil {
 		return nil, errors.Wrap(err, "could not convert gloas block to consensus")
 	}
-	return &eth.GenericBeaconBlock{Block: &eth.GenericBeaconBlock_Gloas{Gloas: block}}, nil
+	return &sila.GenericBeaconBlock{Block: &sila.GenericBeaconBlock_Gloas{Gloas: block}}, nil
 }
 
-func (b *SignedSilaPayloadBid) ToConsensus() (*eth.SignedSilaPayloadBid, error) {
+func (b *SignedSilaPayloadBid) ToConsensus() (*sila.SignedSilaPayloadBid, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -3180,13 +3180,13 @@ func (b *SignedSilaPayloadBid) ToConsensus() (*eth.SignedSilaPayloadBid, error) 
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Message")
 	}
-	return &eth.SignedSilaPayloadBid{
+	return &sila.SignedSilaPayloadBid{
 		Message:   message,
 		Signature: sig,
 	}, nil
 }
 
-func (b *SilaPayloadBid) ToConsensus() (*eth.SilaPayloadBid, error) {
+func (b *SilaPayloadBid) ToConsensus() (*sila.SilaPayloadBid, error) {
 	if b == nil {
 		return nil, errNilValue
 	}
@@ -3246,27 +3246,27 @@ func (b *SilaPayloadBid) ToConsensus() (*eth.SilaPayloadBid, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "SilaRequestsRoot")
 	}
-	return &eth.SilaPayloadBid{
-		ParentBlockHash:       parentBlockHash,
-		ParentBlockRoot:       parentBlockRoot,
-		BlockHash:             blockHash,
-		PrevRandao:            prevRandao,
-		FeeRecipient:          feeRecipient,
-		GasLimit:              gasLimit,
-		BuilderIndex:          primitives.BuilderIndex(builderIndex),
-		Slot:                  primitives.Slot(slot),
-		Value:                 primitives.Gwei(value),
-		SilaPayment:      primitives.Gwei(silaPayment),
-		BlobKzgCommitments:    blobKzgCommitments,
-		SilaRequestsRoot: silaRequestsRoot,
+	return &sila.SilaPayloadBid{
+		ParentBlockHash:    parentBlockHash,
+		ParentBlockRoot:    parentBlockRoot,
+		BlockHash:          blockHash,
+		PrevRandao:         prevRandao,
+		FeeRecipient:       feeRecipient,
+		GasLimit:           gasLimit,
+		BuilderIndex:       primitives.BuilderIndex(builderIndex),
+		Slot:               primitives.Slot(slot),
+		Value:              primitives.Gwei(value),
+		SilaPayment:        primitives.Gwei(silaPayment),
+		BlobKzgCommitments: blobKzgCommitments,
+		SilaRequestsRoot:   silaRequestsRoot,
 	}, nil
 }
 
-func PayloadAttestationsToConsensus(pa []*PayloadAttestation) ([]*eth.PayloadAttestation, error) {
+func PayloadAttestationsToConsensus(pa []*PayloadAttestation) ([]*sila.PayloadAttestation, error) {
 	if pa == nil {
 		return nil, errNilValue
 	}
-	result := make([]*eth.PayloadAttestation, len(pa))
+	result := make([]*sila.PayloadAttestation, len(pa))
 	for i, p := range pa {
 		converted, err := p.ToConsensus()
 		if err != nil {
@@ -3277,7 +3277,7 @@ func PayloadAttestationsToConsensus(pa []*PayloadAttestation) ([]*eth.PayloadAtt
 	return result, nil
 }
 
-func (p *PayloadAttestation) ToConsensus() (*eth.PayloadAttestation, error) {
+func (p *PayloadAttestation) ToConsensus() (*sila.PayloadAttestation, error) {
 	if p == nil {
 		return nil, errNilValue
 	}
@@ -3293,14 +3293,14 @@ func (p *PayloadAttestation) ToConsensus() (*eth.PayloadAttestation, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.PayloadAttestation{
+	return &sila.PayloadAttestation{
 		AggregationBits: aggregationBits,
 		Data:            data,
 		Signature:       sig,
 	}, nil
 }
 
-func (d *PayloadAttestationData) ToConsensus() (*eth.PayloadAttestationData, error) {
+func (d *PayloadAttestationData) ToConsensus() (*sila.PayloadAttestationData, error) {
 	if d == nil {
 		return nil, errNilValue
 	}
@@ -3312,7 +3312,7 @@ func (d *PayloadAttestationData) ToConsensus() (*eth.PayloadAttestationData, err
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Slot")
 	}
-	return &eth.PayloadAttestationData{
+	return &sila.PayloadAttestationData{
 		BeaconBlockRoot:   beaconBlockRoot,
 		Slot:              primitives.Slot(slot),
 		PayloadPresent:    d.PayloadPresent,
@@ -3320,7 +3320,7 @@ func (d *PayloadAttestationData) ToConsensus() (*eth.PayloadAttestationData, err
 	}, nil
 }
 
-func (p *PayloadAttestationMessage) ToConsensus() (*eth.PayloadAttestationMessage, error) {
+func (p *PayloadAttestationMessage) ToConsensus() (*sila.PayloadAttestationMessage, error) {
 	if p == nil {
 		return nil, errNilValue
 	}
@@ -3336,7 +3336,7 @@ func (p *PayloadAttestationMessage) ToConsensus() (*eth.PayloadAttestationMessag
 	if err != nil {
 		return nil, server.NewDecodeError(err, "Signature")
 	}
-	return &eth.PayloadAttestationMessage{
+	return &sila.PayloadAttestationMessage{
 		ValidatorIndex: primitives.ValidatorIndex(validatorIndex),
 		Data:           data,
 		Signature:      sig,

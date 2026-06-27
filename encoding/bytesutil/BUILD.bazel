@@ -7,7 +7,7 @@ go_library(
         "bytes.go",
         "bytes_go120.go",
         "bytes_legacy.go",
-        "eth_types.go",
+        "sila_types.go",
         "hex.go",
         "integers.go",
     ],
@@ -29,7 +29,7 @@ go_test(
     srcs = [
         "bits_test.go",
         "bytes_test.go",
-        "eth_types_test.go",
+        "sila_types_test.go",
         "hex_test.go",
         "integers_test.go",
     ],

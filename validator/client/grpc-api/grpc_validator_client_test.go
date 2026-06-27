@@ -11,7 +11,7 @@ import (
 	grpcutil "github.com/sila-chain/Sila-Consensus-Core/v7/api/grpc"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	mock2 "github.com/sila-chain/Sila-Consensus-Core/v7/testing/mock"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
@@ -25,28 +25,28 @@ import (
 
 func TestToValidatorDutiesContainer_HappyPath(t *testing.T) {
 	// Create a mock DutiesResponse with current and next duties.
-	dutiesResp := &eth.DutiesResponse{
-		CurrentEpochDuties: []*eth.DutiesResponse_Duty{
+	dutiesResp := &sila.DutiesResponse{
+		CurrentEpochDuties: []*sila.DutiesResponse_Duty{
 			{
 				Committee:        []primitives.ValidatorIndex{100, 101},
 				CommitteeIndex:   4,
 				AttesterSlot:     200,
 				ProposerSlots:    []primitives.Slot{400},
 				PublicKey:        []byte{0xAA, 0xBB},
-				Status:           eth.ValidatorStatus_ACTIVE,
+				Status:           sila.ValidatorStatus_ACTIVE,
 				ValidatorIndex:   101,
 				IsSyncCommittee:  false,
 				CommitteesAtSlot: 2,
 			},
 		},
-		NextEpochDuties: []*eth.DutiesResponse_Duty{
+		NextEpochDuties: []*sila.DutiesResponse_Duty{
 			{
 				Committee:        []primitives.ValidatorIndex{300, 301},
 				CommitteeIndex:   8,
 				AttesterSlot:     600,
 				ProposerSlots:    []primitives.Slot{700, 701},
 				PublicKey:        []byte{0xCC, 0xDD},
-				Status:           eth.ValidatorStatus_ACTIVE,
+				Status:           sila.ValidatorStatus_ACTIVE,
 				ValidatorIndex:   301,
 				IsSyncCommittee:  true,
 				CommitteesAtSlot: 3,
@@ -76,8 +76,8 @@ func TestToValidatorDutiesContainer_HappyPath(t *testing.T) {
 
 func TestToValidatorDutiesContainerV2_HappyPath(t *testing.T) {
 	// Create a mock DutiesResponse with current and next duties.
-	dutiesResp := &eth.DutiesV2Response{
-		CurrentEpochDuties: []*eth.DutiesV2Response_Duty{
+	dutiesResp := &sila.DutiesV2Response{
+		CurrentEpochDuties: []*sila.DutiesV2Response_Duty{
 			{
 				CommitteeLength:         2,
 				CommitteeIndex:          4,
@@ -85,13 +85,13 @@ func TestToValidatorDutiesContainerV2_HappyPath(t *testing.T) {
 				AttesterSlot:            200,
 				ProposerSlots:           []primitives.Slot{400},
 				PublicKey:               []byte{0xAA, 0xBB},
-				Status:                  eth.ValidatorStatus_ACTIVE,
+				Status:                  sila.ValidatorStatus_ACTIVE,
 				ValidatorIndex:          101,
 				IsSyncCommittee:         false,
 				CommitteesAtSlot:        2,
 			},
 		},
-		NextEpochDuties: []*eth.DutiesV2Response_Duty{
+		NextEpochDuties: []*sila.DutiesV2Response_Duty{
 			{
 				CommitteeLength:         2,
 				CommitteeIndex:          8,
@@ -99,7 +99,7 @@ func TestToValidatorDutiesContainerV2_HappyPath(t *testing.T) {
 				AttesterSlot:            600,
 				ProposerSlots:           []primitives.Slot{700, 701},
 				PublicKey:               []byte{0xCC, 0xDD},
-				Status:                  eth.ValidatorStatus_ACTIVE,
+				Status:                  sila.ValidatorStatus_ACTIVE,
 				ValidatorIndex:          301,
 				IsSyncCommittee:         true,
 				CommitteesAtSlot:        3,
@@ -140,7 +140,7 @@ func TestWaitForChainStart_StreamSetupFails(t *testing.T) {
 	validatorClient := &grpcValidatorClient{
 		grpcClientManager: newGrpcClientManager(
 			validatorTesting.MockNodeConnection(),
-			func(_ grpc.ClientConnInterface) eth.BeaconNodeValidatorClient {
+			func(_ grpc.ClientConnInterface) sila.BeaconNodeValidatorClient {
 				return beaconNodeValidatorClient
 			},
 		),
@@ -161,7 +161,7 @@ func TestStartEventStream(t *testing.T) {
 	grpcClient := &grpcValidatorClient{
 		grpcClientManager: newGrpcClientManager(
 			validatorTesting.MockNodeConnection(),
-			func(_ grpc.ClientConnInterface) eth.BeaconNodeValidatorClient {
+			func(_ grpc.ClientConnInterface) sila.BeaconNodeValidatorClient {
 				return beaconNodeValidatorClient
 			},
 		),
@@ -179,10 +179,10 @@ func TestStartEventStream(t *testing.T) {
 			prepare: func() {
 				stream := mock2.NewMockBeaconNodeValidator_StreamSlotsClient(ctrl)
 				beaconNodeValidatorClient.EXPECT().StreamSlots(gomock.Any(),
-					&eth.StreamSlotsRequest{VerifiedOnly: true}).Return(stream, nil)
+					&sila.StreamSlotsRequest{VerifiedOnly: true}).Return(stream, nil)
 				stream.EXPECT().Context().Return(ctx).AnyTimes()
 				stream.EXPECT().Recv().Return(
-					&eth.StreamSlotsResponse{Slot: 123},
+					&sila.StreamSlotsResponse{Slot: 123},
 					nil,
 				).AnyTimes()
 			},
@@ -199,10 +199,10 @@ func TestStartEventStream(t *testing.T) {
 			prepare: func() {
 				stream := mock2.NewMockBeaconNodeValidator_StreamSlotsClient(ctrl)
 				beaconNodeValidatorClient.EXPECT().StreamSlots(gomock.Any(),
-					&eth.StreamSlotsRequest{VerifiedOnly: true}).Return(stream, nil)
+					&sila.StreamSlotsRequest{VerifiedOnly: true}).Return(stream, nil)
 				stream.EXPECT().Context().Return(ctx).AnyTimes()
 				stream.EXPECT().Recv().Return(
-					&eth.StreamSlotsResponse{Slot: 123},
+					&sila.StreamSlotsResponse{Slot: 123},
 					nil,
 				).AnyTimes()
 			},
@@ -216,10 +216,10 @@ func TestStartEventStream(t *testing.T) {
 			prepare: func() {
 				stream := mock2.NewMockBeaconNodeValidator_StreamSlotsClient(ctrl)
 				beaconNodeValidatorClient.EXPECT().StreamSlots(gomock.Any(),
-					&eth.StreamSlotsRequest{VerifiedOnly: true}).Return(stream, nil)
+					&sila.StreamSlotsRequest{VerifiedOnly: true}).Return(stream, nil)
 				stream.EXPECT().Context().Return(ctx).AnyTimes()
 				stream.EXPECT().Recv().Return(
-					&eth.StreamSlotsResponse{Slot: 123},
+					&sila.StreamSlotsResponse{Slot: 123},
 					nil,
 				).AnyTimes()
 			},
@@ -330,11 +330,11 @@ func TestEnsureReady(t *testing.T) {
 			}
 
 			client := &grpcValidatorClient{
-				grpcClientManager: newGrpcClientManager(conn, func(_ grpc.ClientConnInterface) eth.BeaconNodeValidatorClient {
+				grpcClientManager: newGrpcClientManager(conn, func(_ grpc.ClientConnInterface) sila.BeaconNodeValidatorClient {
 					return mock2.NewMockBeaconNodeValidatorClient(ctrl)
 				}),
 				nodeClient: &grpcNodeClient{
-					grpcClientManager: newGrpcClientManager(conn, func(_ grpc.ClientConnInterface) eth.NodeClient {
+					grpcClientManager: newGrpcClientManager(conn, func(_ grpc.ClientConnInterface) sila.NodeClient {
 						return mockNodeClient
 					}),
 				},

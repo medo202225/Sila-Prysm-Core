@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/sip_7251.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
@@ -24,11 +24,11 @@ const (
 )
 
 type PendingDeposit struct {
-	state                 protoimpl.MessageState                                           `protogen:"open.v1"`
-	PublicKey             []byte                                                           `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
-	WithdrawalCredentials []byte                                                           `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
-	Amount                uint64                                                           `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Signature             []byte                                                           `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	state                 protoimpl.MessageState                                                  `protogen:"open.v1"`
+	PublicKey             []byte                                                                  `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	WithdrawalCredentials []byte                                                                  `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
+	Amount                uint64                                                                  `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Signature             []byte                                                                  `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
 	Slot                  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,5,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
@@ -100,9 +100,9 @@ func (x *PendingDeposit) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7_conse
 }
 
 type PendingPartialWithdrawal struct {
-	state             protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state             protoimpl.MessageState                                                            `protogen:"open.v1"`
 	Index             github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	Amount            uint64                                                                     `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount            uint64                                                                            `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	WithdrawableEpoch github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch          `protobuf:"varint,3,opt,name=withdrawable_epoch,json=withdrawableEpoch,proto3" json:"withdrawable_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -160,7 +160,7 @@ func (x *PendingPartialWithdrawal) GetWithdrawableEpoch() github_com_sila_chain_
 }
 
 type PendingConsolidation struct {
-	state         protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                            `protogen:"open.v1"`
 	SourceIndex   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,1,opt,name=source_index,json=sourceIndex,proto3" json:"source_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	TargetIndex   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=target_index,json=targetIndex,proto3" json:"target_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	unknownFields protoimpl.UnknownFields

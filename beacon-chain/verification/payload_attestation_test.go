@@ -15,7 +15,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls/common"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	testutil "github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
@@ -77,7 +77,7 @@ func TestPayloadAttestationVerifyValidatorInPTC(t *testing.T) {
 	setupPayloadAttTestConfig(t)
 
 	_, pk := newKey(t)
-	st := newTestState(t, []*eth.Validator{activeValidator(pk)}, 1)
+	st := newTestState(t, []*sila.Validator{activeValidator(pk)}, 1)
 	msg := newPayloadAttestationMessage(primitives.Slot(1), 0, bytes.Repeat([]byte{0x33}, 32))
 	pa, err := payloadattestation.NewReadOnly(msg)
 	require.NoError(t, err)
@@ -95,15 +95,15 @@ func TestPayloadAttestationVerifySignature(t *testing.T) {
 	setupPayloadAttTestConfig(t)
 
 	sk, pk := newKey(t)
-	st := newTestState(t, []*eth.Validator{activeValidator(pk)}, 1)
+	st := newTestState(t, []*sila.Validator{activeValidator(pk)}, 1)
 	root := bytes.Repeat([]byte{0x44}, 32)
-	data := &eth.PayloadAttestationData{
+	data := &sila.PayloadAttestationData{
 		BeaconBlockRoot:   root,
 		Slot:              1,
 		PayloadPresent:    true,
 		BlobDataAvailable: true,
 	}
-	msg := &eth.PayloadAttestationMessage{
+	msg := &sila.PayloadAttestationMessage{
 		ValidatorIndex: 0,
 		Data:           data,
 		Signature:      signPayloadAttestationMessage(t, st, data, sk),
@@ -121,10 +121,10 @@ func TestPayloadAttestationVerifySignature(t *testing.T) {
 	require.ErrorIs(t, v.VerifySignature(st), signing.ErrSigFailedToVerify)
 }
 
-func newPayloadAttestationMessage(slot primitives.Slot, idx primitives.ValidatorIndex, root []byte) *eth.PayloadAttestationMessage {
-	return &eth.PayloadAttestationMessage{
+func newPayloadAttestationMessage(slot primitives.Slot, idx primitives.ValidatorIndex, root []byte) *sila.PayloadAttestationMessage {
+	return &sila.PayloadAttestationMessage{
 		ValidatorIndex: idx,
-		Data: &eth.PayloadAttestationData{
+		Data: &sila.PayloadAttestationData{
 			BeaconBlockRoot:   root,
 			Slot:              slot,
 			PayloadPresent:    true,
@@ -134,7 +134,7 @@ func newPayloadAttestationMessage(slot primitives.Slot, idx primitives.Validator
 	}
 }
 
-func newTestState(t *testing.T, vals []*eth.Validator, slot primitives.Slot) state.BeaconState {
+func newTestState(t *testing.T, vals []*sila.Validator, slot primitives.Slot) state.BeaconState {
 	st, err := testutil.NewBeaconStateGloas()
 	require.NoError(t, err)
 	for _, v := range vals {
@@ -154,8 +154,8 @@ func setupPayloadAttTestConfig(t *testing.T) {
 	params.OverrideBeaconConfig(cfg)
 }
 
-func activeValidator(pub []byte) *eth.Validator {
-	return &eth.Validator{
+func activeValidator(pub []byte) *sila.Validator {
+	return &sila.Validator{
 		PublicKey:             pub,
 		EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalance,
 		WithdrawalCredentials: make([]byte, 32),
@@ -170,7 +170,7 @@ func newKey(t *testing.T) (common.SecretKey, []byte) {
 	return sk, sk.PublicKey().Marshal()
 }
 
-func signPayloadAttestationMessage(t *testing.T, st state.ReadOnlyBeaconState, data *eth.PayloadAttestationData, sk common.SecretKey) []byte {
+func signPayloadAttestationMessage(t *testing.T, st state.ReadOnlyBeaconState, data *sila.PayloadAttestationData, sk common.SecretKey) []byte {
 	domain, err := signing.Domain(st.Fork(), slots.ToEpoch(st.Slot()), params.BeaconConfig().DomainPTCAttester, st.GenesisValidatorsRoot())
 	require.NoError(t, err)
 	root, err := signing.ComputeSigningRoot(data, domain)

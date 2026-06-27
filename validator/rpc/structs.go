@@ -9,7 +9,7 @@ import (
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/sila-chain/Sila/common/hexutil"
 )
@@ -110,12 +110,12 @@ type GraffitiData struct {
 }
 
 type BeaconStatusResponse struct {
-	BeaconNodeEndpoint     string     `json:"beacon_node_endpoint"`
-	Connected              bool       `json:"connected"`
-	Syncing                bool       `json:"syncing"`
-	GenesisTime            string     `json:"genesis_time"`
+	BeaconNodeEndpoint string     `json:"beacon_node_endpoint"`
+	Connected          bool       `json:"connected"`
+	Syncing            bool       `json:"syncing"`
+	GenesisTime        string     `json:"genesis_time"`
 	SilaDepositAddress string     `json:"sila_deposit_address"`
-	ChainHead              *ChainHead `json:"chain_head"`
+	ChainHead          *ChainHead `json:"chain_head"`
 }
 
 // KeymanagerKind is a type of key manager for the wallet
@@ -219,7 +219,7 @@ type ValidatorPerformanceResponse struct {
 	InactivityScores              []uint64 `json:"inactivity_scores"`
 }
 
-func ValidatorPerformanceResponseFromConsensus(e *eth.ValidatorPerformanceResponse) *ValidatorPerformanceResponse {
+func ValidatorPerformanceResponseFromConsensus(e *sila.ValidatorPerformanceResponse) *ValidatorPerformanceResponse {
 	inclusionSlots := make([]uint64, len(e.InclusionSlots))
 	for i, index := range e.InclusionSlots {
 		inclusionSlots[i] = uint64(index)
@@ -287,7 +287,7 @@ type ValidatorBalance struct {
 	Status    string `json:"status"`
 }
 
-func ValidatorBalancesResponseFromConsensus(e *eth.ValidatorBalances) (*ValidatorBalancesResponse, error) {
+func ValidatorBalancesResponseFromConsensus(e *sila.ValidatorBalances) (*ValidatorBalancesResponse, error) {
 	balances := make([]*ValidatorBalance, len(e.Balances))
 	for i, balance := range e.Balances {
 		balances[i] = &ValidatorBalance{
@@ -328,7 +328,7 @@ type Validator struct {
 	WithdrawableEpoch          uint64 `json:"withdrawable_epoch"`
 }
 
-func ValidatorsResponseFromConsensus(e *eth.Validators) (*ValidatorsResponse, error) {
+func ValidatorsResponseFromConsensus(e *sila.Validators) (*ValidatorsResponse, error) {
 	validatorList := make([]*ValidatorContainer, len(e.ValidatorList))
 	for i, validatorContainer := range e.ValidatorList {
 		val := validatorContainer.Validator
@@ -371,7 +371,7 @@ type ChainHead struct {
 	OptimisticStatus           bool   `json:"optimistic_status"`
 }
 
-func ChainHeadResponseFromConsensus(e *eth.ChainHead) *ChainHead {
+func ChainHeadResponseFromConsensus(e *sila.ChainHead) *ChainHead {
 	return &ChainHead{
 		HeadSlot:                   fmt.Sprintf("%d", e.HeadSlot),
 		HeadEpoch:                  fmt.Sprintf("%d", e.HeadEpoch),
@@ -389,7 +389,7 @@ func ChainHeadResponseFromConsensus(e *eth.ChainHead) *ChainHead {
 	}
 }
 
-func (m *ChainHead) ToConsensus() (*eth.ChainHead, error) {
+func (m *ChainHead) ToConsensus() (*sila.ChainHead, error) {
 	headSlot, err := strconv.ParseUint(m.HeadSlot, 10, 64)
 	if err != nil {
 		return nil, server.NewDecodeError(err, "HeadSlot")
@@ -438,7 +438,7 @@ func (m *ChainHead) ToConsensus() (*eth.ChainHead, error) {
 	if err != nil {
 		return nil, server.NewDecodeError(err, "PreviousJustifiedBlockRoot")
 	}
-	return &eth.ChainHead{
+	return &sila.ChainHead{
 		HeadSlot:                   primitives.Slot(headSlot),
 		HeadEpoch:                  primitives.Epoch(headEpoch),
 		HeadBlockRoot:              headBlockRoot,

@@ -8,14 +8,14 @@ import (
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
 
 func TestSwitchToCompoundingValidator(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-		Validators: []*eth.Validator{
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+		Validators: []*sila.Validator{
 			{
 				WithdrawalCredentials: []byte{0x01, 0xFF}, // Has withdrawal credentials
 			},
@@ -55,8 +55,8 @@ func TestSwitchToCompoundingValidator(t *testing.T) {
 }
 
 func TestQueueEntireBalanceAndResetValidator(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
-		Validators: []*eth.Validator{
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
+		Validators: []*sila.Validator{
 			{
 				EffectiveBalance:           params.BeaconConfig().MinActivationBalance + 100_000,
 				ActivationEligibilityEpoch: primitives.Epoch(100),

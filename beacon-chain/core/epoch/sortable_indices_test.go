@@ -4,16 +4,16 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestSortableIndices(t *testing.T) {
-	st, err := state_native.InitializeFromProtoPhase0(&eth.BeaconState{
-		Validators: []*eth.Validator{
+	st, err := state_native.InitializeFromProtoPhase0(&sila.BeaconState{
+		Validators: []*sila.Validator{
 			{ActivationEligibilityEpoch: 0},
 			{ActivationEligibilityEpoch: 5},
 			{ActivationEligibilityEpoch: 4},

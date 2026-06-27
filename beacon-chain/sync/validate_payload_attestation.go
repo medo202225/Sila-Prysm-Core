@@ -3,16 +3,16 @@ package sync
 import (
 	"context"
 
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/verification"
 	payloadattestation "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/payload-attestation"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
 )
 
 var (
@@ -37,7 +37,7 @@ func (s *Service) validatePayloadAttestation(ctx context.Context, pid peer.ID, m
 	if err != nil {
 		return pubsub.ValidationReject, err
 	}
-	att, ok := m.(*eth.PayloadAttestationMessage)
+	att, ok := m.(*sila.PayloadAttestationMessage)
 	if !ok {
 		return pubsub.ValidationReject, errWrongMessage
 	}

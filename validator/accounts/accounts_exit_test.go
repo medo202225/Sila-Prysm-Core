@@ -12,7 +12,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sirupsen/logrus/hooks/test"
@@ -52,8 +52,8 @@ func TestPrepareAllKeys(t *testing.T) {
 }
 
 func TestWriteSignedVoluntaryExitJSON(t *testing.T) {
-	sve := &eth.SignedVoluntaryExit{
-		Exit: &eth.VoluntaryExit{
+	sve := &sila.SignedVoluntaryExit{
+		Exit: &sila.VoluntaryExit{
 			Epoch:          5,
 			ValidatorIndex: 300,
 		},

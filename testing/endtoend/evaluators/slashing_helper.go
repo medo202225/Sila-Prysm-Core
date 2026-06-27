@@ -4,25 +4,25 @@ import (
 	"context"
 	"crypto/rand"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/signing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type doubleAttestationHelper struct {
-	valClient    eth.BeaconNodeValidatorClient
-	beaconClient eth.BeaconChainClient
+	valClient    sila.BeaconNodeValidatorClient
+	beaconClient sila.BeaconChainClient
 	privKeys     []bls.SecretKey
 	pubKeys      [][]byte
-	domainResp   *eth.DomainResponse
-	attData      *eth.AttestationData
+	domainResp   *sila.DomainResponse
+	attData      *sila.AttestationData
 
 	committee []primitives.ValidatorIndex
 }
@@ -44,7 +44,7 @@ func (h *doubleAttestationHelper) setup(ctx context.Context) error {
 		pubKeys[i] = priv.PublicKey().Marshal()
 	}
 
-	duties, err := h.valClient.GetDuties(ctx, &eth.DutiesRequest{
+	duties, err := h.valClient.GetDuties(ctx, &sila.DutiesRequest{
 		Epoch:      chainHead.HeadEpoch,
 		PublicKeys: pubKeys,
 	})
@@ -62,7 +62,7 @@ func (h *doubleAttestationHelper) setup(ctx context.Context) error {
 			break
 		}
 	}
-	attDataReq := &eth.AttestationDataRequest{
+	attDataReq := &sila.AttestationDataRequest{
 		CommitteeIndex: committeeIndex,
 		Slot:           chainHead.HeadSlot,
 	}
@@ -72,7 +72,7 @@ func (h *doubleAttestationHelper) setup(ctx context.Context) error {
 		return err
 	}
 
-	req := &eth.DomainRequest{
+	req := &sila.DomainRequest{
 		Epoch:  chainHead.HeadEpoch,
 		Domain: params.BeaconConfig().DomainBeaconAttester[:],
 	}
@@ -100,7 +100,7 @@ func (h *doubleAttestationHelper) validatorIndexAtCommitteeIndex(idx uint64) pri
 // by the validator indicated by idx. idx represents the index in the committee of the attestation.
 // The block root value is random, which allows this to be seen by P2P networks as
 // new, unique blocks.
-func (h *doubleAttestationHelper) getSlashableAttestation(idx uint64) (*eth.Attestation, error) {
+func (h *doubleAttestationHelper) getSlashableAttestation(idx uint64) (*sila.Attestation, error) {
 	// msg must be unique so they are not filtered by P2P
 	randVal := make([]byte, 4)
 	_, err := rand.Read(randVal)
@@ -119,7 +119,7 @@ func (h *doubleAttestationHelper) getSlashableAttestation(idx uint64) (*eth.Atte
 
 	attBitfield := bitfield.NewBitlist(uint64(len(h.committee)))
 	attBitfield.SetBitAt(idx, true)
-	att := &eth.Attestation{
+	att := &sila.Attestation{
 		AggregationBits: attBitfield,
 		Data:            h.attData,
 		Signature:       h.privKeys[valIdx].Sign(signingRoot[:]).Marshal(),

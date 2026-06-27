@@ -7,6 +7,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p/core/crypto"
+	"github.com/libp2p/go-libp2p/core/network"
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/paulbellamy/ratecounter"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/async/abool"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
@@ -27,17 +32,12 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/libp2p/go-libp2p"
-	"github.com/libp2p/go-libp2p/core/crypto"
-	"github.com/libp2p/go-libp2p/core/network"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/paulbellamy/ratecounter"
 	logTest "github.com/sirupsen/logrus/hooks/test"
 )
 
@@ -78,7 +78,7 @@ func TestService_InitStartStop(t *testing.T) {
 
 				return &mock.ChainService{
 					State: st,
-					FinalizedCheckPoint: &eth.Checkpoint{
+					FinalizedCheckPoint: &sila.Checkpoint{
 						Epoch: 0,
 					},
 					Genesis:        time.Unix(4113849600, 0),
@@ -102,7 +102,7 @@ func TestService_InitStartStop(t *testing.T) {
 				require.NoError(t, err)
 				return &mock.ChainService{
 					State: st,
-					FinalizedCheckPoint: &eth.Checkpoint{
+					FinalizedCheckPoint: &sila.Checkpoint{
 						Epoch: 0,
 					},
 					Genesis:        time.Now().Add(-5 * time.Minute),
@@ -129,7 +129,7 @@ func TestService_InitStartStop(t *testing.T) {
 				require.NoError(t, st.SetSlot(futureSlot))
 				return &mock.ChainService{
 					State: st,
-					FinalizedCheckPoint: &eth.Checkpoint{
+					FinalizedCheckPoint: &sila.Checkpoint{
 						Epoch: slots.ToEpoch(futureSlot),
 					},
 					Genesis:        makeGenesisTime(futureSlot),
@@ -471,7 +471,7 @@ func TestService_Resync(t *testing.T) {
 					State: st,
 					Root:  genesisRoot[:],
 					DB:    beaconDB,
-					FinalizedCheckPoint: &eth.Checkpoint{
+					FinalizedCheckPoint: &sila.Checkpoint{
 						Epoch: slots.ToEpoch(futureSlot),
 					},
 					Genesis:        genesis,

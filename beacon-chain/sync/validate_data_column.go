@@ -7,6 +7,9 @@ import (
 	"slices"
 	"time"
 
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/feed/operation"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
@@ -18,13 +21,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/rand"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/logging"
 	silaTime "github.com/sila-chain/Sila-Consensus-Core/v7/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
 
 	"github.com/sirupsen/logrus"
 )
@@ -60,9 +60,9 @@ func (s *Service) validateDataColumn(ctx context.Context, pid peer.ID, msg *pubs
 	// Reject messages that are not of the expected type.
 	var roDataColumn blocks.RODataColumn
 	switch dc := m.(type) {
-	case *eth.DataColumnSidecar:
+	case *sila.DataColumnSidecar:
 		roDataColumn, err = blocks.NewRODataColumn(dc)
-	case *eth.DataColumnSidecarGloas:
+	case *sila.DataColumnSidecarGloas:
 		roDataColumn, err = blocks.NewRODataColumnGloas(dc)
 	default:
 		return pubsub.ValidationReject, errWrongMessage

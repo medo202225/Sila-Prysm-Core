@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
@@ -17,9 +18,9 @@ import (
 	corehelpers "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/filters"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/v1alpha1/validator"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared"
-	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/sila/v1alpha1/validator"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
@@ -27,11 +28,10 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	ssz "github.com/sila-chain/fastssz"
 	"github.com/sirupsen/logrus"
 )
@@ -49,7 +49,7 @@ var (
 	errMarshalSSZ       = errors.New("could not marshal block into SSZ")
 )
 
-type blockDecoder func([]byte) (*eth.GenericSignedBeaconBlock, error)
+type blockDecoder func([]byte) (*sila.GenericSignedBeaconBlock, error)
 
 func decodingError(v string, err error) error {
 	return fmt.Errorf("could not decode request body into %s consensus block: %w", v, err)
@@ -122,12 +122,12 @@ func readRequestBody(r *http.Request) ([]byte, error) {
 
 // GenericConverter is an example interface that your block structs could implement.
 type GenericConverter interface {
-	ToGeneric() (*eth.GenericSignedBeaconBlock, error)
+	ToGeneric() (*sila.GenericSignedBeaconBlock, error)
 }
 
 // decodeGenericJSON uses generics to unmarshal JSON into a type T that also
-// provides a ToGeneric() method to produce a *eth.GenericSignedBeaconBlock.
-func decodeGenericJSON[T GenericConverter](body []byte, forkVersion string) (*eth.GenericSignedBeaconBlock, error) {
+// provides a ToGeneric() method to produce a *sila.GenericSignedBeaconBlock.
+func decodeGenericJSON[T GenericConverter](body []byte, forkVersion string) (*sila.GenericSignedBeaconBlock, error) {
 	// Create a pointer to the zero value of T.
 	blockPtr := new(T)
 
@@ -282,9 +282,9 @@ func (s *Server) getBlockResponseBodyJson(ctx context.Context, blk interfaces.Re
 		return nil, err
 	}
 	return &structs.GetBlockV2Response{
-		Finalized:           finalized,
+		Finalized:      finalized,
 		SilaOptimistic: isOptimistic,
-		Version:             version.String(blk.Version()),
+		Version:        version.String(blk.Version()),
 		Data: &structs.SignedBlock{
 			Message:   jb,
 			Signature: mj.SigString(),
@@ -307,7 +307,7 @@ func (s *Server) GetBlockAttestationsV2(w http.ResponseWriter, r *http.Request) 
 	attStructs := make([]any, len(consensusAtts))
 	if v >= version.Electra {
 		for index, att := range consensusAtts {
-			a, ok := att.(*eth.AttestationElectra)
+			a, ok := att.(*sila.AttestationElectra)
 			if !ok {
 				httputil.HandleError(w, fmt.Sprintf("unable to convert consensus attestations electra of type %T", att), http.StatusInternalServerError)
 				return
@@ -317,7 +317,7 @@ func (s *Server) GetBlockAttestationsV2(w http.ResponseWriter, r *http.Request) 
 		}
 	} else {
 		for index, att := range consensusAtts {
-			a, ok := att.(*eth.Attestation)
+			a, ok := att.(*sila.Attestation)
 			if !ok {
 				httputil.HandleError(w, fmt.Sprintf("unable to convert consensus attestation of type %T", att), http.StatusInternalServerError)
 				return
@@ -333,10 +333,10 @@ func (s *Server) GetBlockAttestationsV2(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	resp := &structs.GetBlockAttestationsV2Response{
-		Version:             version.String(v),
+		Version:        version.String(v),
 		SilaOptimistic: isOptimistic,
-		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, root),
-		Data:                attBytes,
+		Finalized:      s.FinalizationFetcher.IsFinalized(ctx, root),
+		Data:           attBytes,
 	}
 	w.Header().Set(api.VersionHeader, version.String(v))
 	httputil.WriteJson(w, resp)
@@ -418,7 +418,7 @@ func (s *Server) publishBlindedBlockSSZ(ctx context.Context, w http.ResponseWrit
 }
 
 // decodeBlindedBlockSSZ dispatches to the correct SSZ decoder based on versionHeader.
-func decodeBlindedBlockSSZ(versionHeader string, body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedBlockSSZ(versionHeader string, body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	if decoder, exists := blindedSSZDecoders[versionHeader]; exists {
 		return decoder(body)
 	}
@@ -435,61 +435,61 @@ var blindedSSZDecoders = map[string]blockDecoder{
 	version.String(version.Phase0):    decodePhase0SSZ,
 }
 
-func decodeBlindedFuluSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	fuluBlock := &eth.SignedBlindedBeaconBlockFulu{}
+func decodeBlindedFuluSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	fuluBlock := &sila.SignedBlindedBeaconBlockFulu{}
 	if err := fuluBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(version.String(version.Fulu), err)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_BlindedFulu{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_BlindedFulu{
 			BlindedFulu: fuluBlock,
 		},
 	}, nil
 }
 
-func decodeBlindedElectraSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	electraBlock := &eth.SignedBlindedBeaconBlockElectra{}
+func decodeBlindedElectraSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	electraBlock := &sila.SignedBlindedBeaconBlockElectra{}
 	if err := electraBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(version.String(version.Electra), err)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_BlindedElectra{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_BlindedElectra{
 			BlindedElectra: electraBlock,
 		},
 	}, nil
 }
 
-func decodeBlindedDenebSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	denebBlock := &eth.SignedBlindedBeaconBlockDeneb{}
+func decodeBlindedDenebSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	denebBlock := &sila.SignedBlindedBeaconBlockDeneb{}
 	if err := denebBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(version.String(version.Deneb), err)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_BlindedDeneb{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_BlindedDeneb{
 			BlindedDeneb: denebBlock,
 		},
 	}, nil
 }
 
-func decodeBlindedCapellaSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	capellaBlock := &eth.SignedBlindedBeaconBlockCapella{}
+func decodeBlindedCapellaSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	capellaBlock := &sila.SignedBlindedBeaconBlockCapella{}
 	if err := capellaBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(version.String(version.Capella), err)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_BlindedCapella{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_BlindedCapella{
 			BlindedCapella: capellaBlock,
 		},
 	}, nil
 }
 
-func decodeBlindedBellatrixSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	bellatrixBlock := &eth.SignedBlindedBeaconBlockBellatrix{}
+func decodeBlindedBellatrixSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	bellatrixBlock := &sila.SignedBlindedBeaconBlockBellatrix{}
 	if err := bellatrixBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(version.String(version.Bellatrix), err)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_BlindedBellatrix{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_BlindedBellatrix{
 			BlindedBellatrix: bellatrixBlock,
 		},
 	}, nil
@@ -523,7 +523,7 @@ func (s *Server) publishBlindedBlock(ctx context.Context, w http.ResponseWriter,
 }
 
 // decodeBlindedBlockJSON dispatches to the correct JSON decoder based on versionHeader.
-func decodeBlindedBlockJSON(versionHeader string, body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedBlockJSON(versionHeader string, body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	if decoder, exists := blindedJSONDecoders[versionHeader]; exists {
 		return decoder(body)
 	}
@@ -540,35 +540,35 @@ var blindedJSONDecoders = map[string]blockDecoder{
 	version.String(version.Phase0):    decodePhase0JSON,
 }
 
-func decodeBlindedFuluJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedFuluJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBlindedBeaconBlockFulu](
 		body,
 		version.String(version.Fulu),
 	)
 }
 
-func decodeBlindedElectraJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedElectraJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBlindedBeaconBlockElectra](
 		body,
 		version.String(version.Electra),
 	)
 }
 
-func decodeBlindedDenebJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedDenebJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBlindedBeaconBlockDeneb](
 		body,
 		version.String(version.Deneb),
 	)
 }
 
-func decodeBlindedCapellaJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedCapellaJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBlindedBeaconBlockCapella](
 		body,
 		version.String(version.Capella),
 	)
 }
 
-func decodeBlindedBellatrixJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBlindedBellatrixJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBlindedBeaconBlockBellatrix](
 		body,
 		version.String(version.Bellatrix),
@@ -655,118 +655,118 @@ var sszDecoders = map[string]blockDecoder{
 }
 
 // decodeSSZToGenericBlock uses a lookup table to map a version string to the proper decoder.
-func decodeSSZToGenericBlock(versionHeader string, body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeSSZToGenericBlock(versionHeader string, body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	if decoder, found := sszDecoders[versionHeader]; found {
 		return decoder(body)
 	}
 	return nil, errors.New("body does not represent a valid block type")
 }
 
-func decodeGloasSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	gloasBlock := &eth.SignedBeaconBlockGloas{}
+func decodeGloasSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	gloasBlock := &sila.SignedBeaconBlockGloas{}
 	if err := gloasBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Gloas), err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Gloas{Gloas: gloasBlock},
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Gloas{Gloas: gloasBlock},
 	}, nil
 }
 
-func decodeFuluSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	fuluBlock := &eth.SignedBeaconBlockContentsFulu{}
+func decodeFuluSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	fuluBlock := &sila.SignedBeaconBlockContentsFulu{}
 	if err := fuluBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Fulu), err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Fulu{Fulu: fuluBlock},
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Fulu{Fulu: fuluBlock},
 	}, nil
 }
 
-func decodeElectraSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	electraBlock := &eth.SignedBeaconBlockContentsElectra{}
+func decodeElectraSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	electraBlock := &sila.SignedBeaconBlockContentsElectra{}
 	if err := electraBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Electra), err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Electra{Electra: electraBlock},
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Electra{Electra: electraBlock},
 	}, nil
 }
 
-func decodeDenebSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	denebBlock := &eth.SignedBeaconBlockContentsDeneb{}
+func decodeDenebSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	denebBlock := &sila.SignedBeaconBlockContentsDeneb{}
 	if err := denebBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Deneb),
 			err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Deneb{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Deneb{
 			Deneb: denebBlock,
 		},
 	}, nil
 }
 
-func decodeCapellaSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	capellaBlock := &eth.SignedBeaconBlockCapella{}
+func decodeCapellaSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	capellaBlock := &sila.SignedBeaconBlockCapella{}
 	if err := capellaBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Capella),
 			err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Capella{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Capella{
 			Capella: capellaBlock,
 		},
 	}, nil
 }
 
-func decodeBellatrixSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	bellatrixBlock := &eth.SignedBeaconBlockBellatrix{}
+func decodeBellatrixSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	bellatrixBlock := &sila.SignedBeaconBlockBellatrix{}
 	if err := bellatrixBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Bellatrix),
 			err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Bellatrix{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Bellatrix{
 			Bellatrix: bellatrixBlock,
 		},
 	}, nil
 }
 
-func decodeAltairSSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	altairBlock := &eth.SignedBeaconBlockAltair{}
+func decodeAltairSSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	altairBlock := &sila.SignedBeaconBlockAltair{}
 	if err := altairBlock.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Altair),
 			err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Altair{
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Altair{
 			Altair: altairBlock,
 		},
 	}, nil
 }
 
-func decodePhase0SSZ(body []byte) (*eth.GenericSignedBeaconBlock, error) {
-	phase0Block := &eth.SignedBeaconBlock{}
+func decodePhase0SSZ(body []byte) (*sila.GenericSignedBeaconBlock, error) {
+	phase0Block := &sila.SignedBeaconBlock{}
 	if err := phase0Block.UnmarshalSSZ(body); err != nil {
 		return nil, decodingError(
 			version.String(version.Phase0), err,
 		)
 	}
-	return &eth.GenericSignedBeaconBlock{
-		Block: &eth.GenericSignedBeaconBlock_Phase0{Phase0: phase0Block},
+	return &sila.GenericSignedBeaconBlock{
+		Block: &sila.GenericSignedBeaconBlock_Phase0{Phase0: phase0Block},
 	}, nil
 }
 
@@ -823,63 +823,63 @@ var jsonDecoders = map[string]blockDecoder{
 }
 
 // decodeJSONToGenericBlock uses a lookup table to map a version string to the proper decoder.
-func decodeJSONToGenericBlock(versionHeader string, body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeJSONToGenericBlock(versionHeader string, body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	if decoder, found := jsonDecoders[versionHeader]; found {
 		return decoder(body)
 	}
 	return nil, fmt.Errorf("body does not represent a valid block type")
 }
 
-func decodeGloasJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeGloasJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockGloas](
 		body,
 		version.String(version.Gloas),
 	)
 }
 
-func decodeFuluJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeFuluJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockContentsFulu](
 		body,
 		version.String(version.Fulu),
 	)
 }
 
-func decodeElectraJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeElectraJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockContentsElectra](
 		body,
 		version.String(version.Electra),
 	)
 }
 
-func decodeDenebJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeDenebJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockContentsDeneb](
 		body,
 		version.String(version.Deneb),
 	)
 }
 
-func decodeCapellaJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeCapellaJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockCapella](
 		body,
 		version.String(version.Capella),
 	)
 }
 
-func decodeBellatrixJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeBellatrixJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockBellatrix](
 		body,
 		version.String(version.Bellatrix),
 	)
 }
 
-func decodeAltairJSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodeAltairJSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlockAltair](
 		body,
 		version.String(version.Altair),
 	)
 }
 
-func decodePhase0JSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
+func decodePhase0JSON(body []byte) (*sila.GenericSignedBeaconBlock, error) {
 	return decodeGenericJSON[*structs.SignedBeaconBlock](
 		body,
 		version.String(version.Phase0),
@@ -887,7 +887,7 @@ func decodePhase0JSON(body []byte) (*eth.GenericSignedBeaconBlock, error) {
 }
 
 // broadcastSidecarsIfSupported broadcasts blob sidecars when an equivocated block occurs.
-func broadcastSidecarsIfSupported(ctx context.Context, s *Server, b interfaces.SignedBeaconBlock, gb *eth.GenericSignedBeaconBlock, versionHeader string) error {
+func broadcastSidecarsIfSupported(ctx context.Context, s *Server, b interfaces.SignedBeaconBlock, gb *sila.GenericSignedBeaconBlock, versionHeader string) error {
 	switch versionHeader {
 	case version.String(version.Electra):
 		return s.broadcastSeenBlockSidecars(ctx, b, gb.GetElectra().Blobs, gb.GetElectra().KzgProofs)
@@ -900,7 +900,7 @@ func broadcastSidecarsIfSupported(ctx context.Context, s *Server, b interfaces.S
 	}
 }
 
-func (s *Server) proposeBlock(ctx context.Context, w http.ResponseWriter, blk *eth.GenericSignedBeaconBlock) {
+func (s *Server) proposeBlock(ctx context.Context, w http.ResponseWriter, blk *sila.GenericSignedBeaconBlock) {
 	_, err := s.V1Alpha1ValidatorServer.ProposeBeaconBlock(ctx, blk)
 	if err != nil {
 		httputil.HandleError(w, err.Error(), http.StatusInternalServerError)
@@ -914,7 +914,7 @@ func unmarshalStrict(data []byte, v any) error {
 	return dec.Decode(v)
 }
 
-func (s *Server) validateBroadcast(ctx context.Context, r *http.Request, blk *eth.GenericSignedBeaconBlock) error {
+func (s *Server) validateBroadcast(ctx context.Context, r *http.Request, blk *sila.GenericSignedBeaconBlock) error {
 	switch r.URL.Query().Get(broadcastValidationQueryParam) {
 	case broadcastValidationConsensus:
 		if err := s.validateConsensus(ctx, blk); err != nil {
@@ -937,7 +937,7 @@ func (s *Server) validateBroadcast(ctx context.Context, r *http.Request, blk *et
 	return nil
 }
 
-func (s *Server) validateConsensus(ctx context.Context, b *eth.GenericSignedBeaconBlock) error {
+func (s *Server) validateConsensus(ctx context.Context, b *sila.GenericSignedBeaconBlock) error {
 	blk, err := blocks.NewSignedBeaconBlock(b.Block)
 	if err != nil {
 		return errors.Wrapf(err, "could not create signed beacon block")
@@ -1084,7 +1084,7 @@ func (s *Server) GetBlockRoot(w http.ResponseWriter, r *http.Request) {
 			Root: hexutil.Encode(root[:]),
 		},
 		SilaOptimistic: isOptimistic,
-		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, root),
+		Finalized:      s.FinalizationFetcher.IsFinalized(ctx, root),
 	}
 	httputil.WriteJson(w, response)
 }
@@ -1123,7 +1123,7 @@ func (s *Server) GetStateFork(w http.ResponseWriter, r *http.Request) {
 			Epoch:           fmt.Sprintf("%d", fork.Epoch),
 		},
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, response)
 }
@@ -1316,9 +1316,9 @@ func (s *Server) GetBlockHeaders(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := &structs.GetBlockHeadersResponse{
-		Data:                blkHdrs,
+		Data:           blkHdrs,
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, response)
 }
@@ -1374,7 +1374,7 @@ func (s *Server) GetBlockHeader(w http.ResponseWriter, r *http.Request) {
 			},
 		},
 		SilaOptimistic: isOptimistic,
-		Finalized:           s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
+		Finalized:      s.FinalizationFetcher.IsFinalized(ctx, blkRoot),
 	}
 	httputil.WriteJson(w, resp)
 }
@@ -1427,7 +1427,7 @@ func (s *Server) GetFinalityCheckpoints(w http.ResponseWriter, r *http.Request) 
 			},
 		},
 		SilaOptimistic: isOptimistic,
-		Finalized:           isFinalized,
+		Finalized:      isFinalized,
 	}
 	httputil.WriteJson(w, resp)
 }
@@ -1542,10 +1542,10 @@ func (s *Server) GetPendingConsolidations(w http.ResponseWriter, r *http.Request
 		}
 		isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 		resp := structs.GetPendingConsolidationsResponse{
-			Version:             version.String(st.Version()),
+			Version:        version.String(st.Version()),
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
-			Data:                structs.PendingConsolidationsFromConsensus(pd),
+			Finalized:      isFinalized,
+			Data:           structs.PendingConsolidationsFromConsensus(pd),
 		}
 		httputil.WriteJson(w, resp)
 	}
@@ -1598,10 +1598,10 @@ func (s *Server) GetPendingDeposits(w http.ResponseWriter, r *http.Request) {
 		}
 		isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 		resp := structs.GetPendingDepositsResponse{
-			Version:             version.String(st.Version()),
+			Version:        version.String(st.Version()),
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
-			Data:                structs.PendingDepositsFromConsensus(pd),
+			Finalized:      isFinalized,
+			Data:           structs.PendingDepositsFromConsensus(pd),
 		}
 		httputil.WriteJson(w, resp)
 	}
@@ -1654,10 +1654,10 @@ func (s *Server) GetPendingPartialWithdrawals(w http.ResponseWriter, r *http.Req
 		}
 		isFinalized := s.FinalizationFetcher.IsFinalized(ctx, blockRoot)
 		resp := structs.GetPendingPartialWithdrawalsResponse{
-			Version:             version.String(st.Version()),
+			Version:        version.String(st.Version()),
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
-			Data:                structs.PendingPartialWithdrawalsFromConsensus(ppw),
+			Finalized:      isFinalized,
+			Data:           structs.PendingPartialWithdrawalsFromConsensus(ppw),
 		}
 		httputil.WriteJson(w, resp)
 	}
@@ -1711,10 +1711,10 @@ func (s *Server) GetProposerLookahead(w http.ResponseWriter, r *http.Request) {
 			vi[i] = strconv.FormatUint(uint64(v), 10)
 		}
 		resp := structs.GetProposerLookaheadResponse{
-			Version:             version.String(st.Version()),
+			Version:        version.String(st.Version()),
 			SilaOptimistic: isOptimistic,
-			Finalized:           isFinalized,
-			Data:                vi,
+			Finalized:      isFinalized,
+			Data:           vi,
 		}
 		httputil.WriteJson(w, resp)
 	}

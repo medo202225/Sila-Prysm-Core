@@ -6,6 +6,9 @@ import (
 	"testing"
 	"time"
 
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	pb "github.com/libp2p/go-libp2p-pubsub/pb"
+	"github.com/pkg/errors"
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/testing"
 	dbtest "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/db/testing"
 	doublylinkedtree "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/forkchoice/doubly-linked-tree"
@@ -18,12 +21,9 @@ import (
 	lruwrpr "github.com/sila-chain/Sila-Consensus-Core/v7/cache/lru"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	pb "github.com/libp2p/go-libp2p-pubsub/pb"
-	"github.com/pkg/errors"
 )
 
 func TestValidateBlob_FromSelf(t *testing.T) {
@@ -67,7 +67,7 @@ func TestValidateBlob_InvalidMessageType(t *testing.T) {
 	_, err := p.Encoding().EncodeGossip(buf, msg)
 	require.NoError(t, err)
 
-	topic := p2p.GossipTypeMapping[reflect.TypeFor[*eth.SignedBeaconBlock]()]
+	topic := p2p.GossipTypeMapping[reflect.TypeFor[*sila.SignedBeaconBlock]()]
 	digest, err := s.currentForkDigest()
 	require.NoError(t, err)
 	topic = s.addDigestToTopic(topic, digest)
@@ -84,7 +84,7 @@ func TestValidateBlob_AlreadySeenInCache(t *testing.T) {
 	db := dbtest.SetupDB(t)
 	ctx := t.Context()
 	p := p2ptest.NewTestP2P(t)
-	chainService := &mock.ChainService{Genesis: time.Now(), FinalizedCheckPoint: &eth.Checkpoint{}, DB: db}
+	chainService := &mock.ChainService{Genesis: time.Now(), FinalizedCheckPoint: &sila.Checkpoint{}, DB: db}
 	stateGen := stategen.New(db, doublylinkedtree.New())
 	s := &Service{
 		seenBlobCache: lruwrpr.New(10),
@@ -126,7 +126,7 @@ func TestValidateBlob_AlreadySeenInCache(t *testing.T) {
 	_, err = p.Encoding().EncodeGossip(buf, b)
 	require.NoError(t, err)
 
-	topic := p2p.GossipTypeMapping[reflect.TypeFor[*eth.BlobSidecar]()]
+	topic := p2p.GossipTypeMapping[reflect.TypeFor[*sila.BlobSidecar]()]
 	digest, err := s.currentForkDigest()
 	require.NoError(t, err)
 	topic = s.addDigestAndIndexToTopic(topic, digest, 0) + p.Encoding().ProtocolSuffix()
@@ -156,7 +156,7 @@ func TestValidateBlob_InvalidTopicIndex(t *testing.T) {
 	_, err := p.Encoding().EncodeGossip(buf, msg)
 	require.NoError(t, err)
 
-	topic := p2p.GossipTypeMapping[reflect.TypeFor[*eth.BlobSidecar]()]
+	topic := p2p.GossipTypeMapping[reflect.TypeFor[*sila.BlobSidecar]()]
 	digest, err := s.currentForkDigest()
 	require.NoError(t, err)
 	topic = s.addDigestAndIndexToTopic(topic, digest, 1) + p.Encoding().ProtocolSuffix()
@@ -271,7 +271,7 @@ func TestValidateBlob_ErrorPathsWithMock(t *testing.T) {
 			_, err := p.Encoding().EncodeGossip(buf, msg)
 			require.NoError(t, err)
 
-			topic := p2p.GossipTypeMapping[reflect.TypeFor[*eth.BlobSidecar]()]
+			topic := p2p.GossipTypeMapping[reflect.TypeFor[*sila.BlobSidecar]()]
 			digest, err := s.currentForkDigest()
 			require.NoError(t, err)
 			topic = s.addDigestAndIndexToTopic(topic, digest, 0) + p.Encoding().ProtocolSuffix()

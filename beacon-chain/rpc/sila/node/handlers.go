@@ -5,16 +5,16 @@ import (
 	"io"
 	"net/http"
 
+	corenet "github.com/libp2p/go-libp2p/core/network"
+	"github.com/libp2p/go-libp2p/core/peer"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/p2p/peers/peerdata"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	corenet "github.com/libp2p/go-libp2p/core/network"
-	"github.com/libp2p/go-libp2p/core/peer"
-	"github.com/pkg/errors"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 // ListTrustedPeer retrieves data about the node's trusted peers.
@@ -41,8 +41,8 @@ func (s *Server) ListTrustedPeer(w http.ResponseWriter, r *http.Request) {
 				PeerId:             id.String(),
 				Enr:                "",
 				LastSeenP2PAddress: "",
-				State:              eth.ConnectionState(corenet.NotConnected).String(),
-				Direction:          eth.PeerDirection(corenet.DirUnknown).String(),
+				State:              sila.ConnectionState(corenet.NotConnected).String(),
+				Direction:          sila.PeerDirection(corenet.DirUnknown).String(),
 			}
 		}
 		allPeers = append(allPeers, p)
@@ -165,11 +165,11 @@ func httpPeerInfo(peerStatus *peers.Status, id peer.ID) (*structs.Peer, error) {
 		}
 		return nil, errors.Wrap(err, "could not obtain direction")
 	}
-	if eth.PeerDirection(direction) == eth.PeerDirection_UNKNOWN {
+	if sila.PeerDirection(direction) == sila.PeerDirection_UNKNOWN {
 		return nil, nil
 	}
-	v1ConnState := eth.ConnectionState(connectionState).String()
-	v1PeerDirection := eth.PeerDirection(direction).String()
+	v1ConnState := sila.ConnectionState(connectionState).String()
+	v1PeerDirection := sila.PeerDirection(direction).String()
 	p := structs.Peer{
 		PeerId:    id.String(),
 		State:     v1ConnState,

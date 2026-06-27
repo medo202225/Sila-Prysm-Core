@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 type NodeValidity uint8
@@ -50,10 +50,10 @@ func (p PayloadStatus) String() string {
 }
 
 type DumpV2 struct {
-	JustifiedCheckpoint           *eth.Checkpoint
-	FinalizedCheckpoint           *eth.Checkpoint
-	UnrealizedJustifiedCheckpoint *eth.Checkpoint
-	UnrealizedFinalizedCheckpoint *eth.Checkpoint
+	JustifiedCheckpoint           *sila.Checkpoint
+	FinalizedCheckpoint           *sila.Checkpoint
+	UnrealizedJustifiedCheckpoint *sila.Checkpoint
+	UnrealizedFinalizedCheckpoint *sila.Checkpoint
 	ProposerBoostRoot             []byte
 	PreviousProposerBoostRoot     []byte
 	HeadRoot                      []byte
@@ -63,7 +63,7 @@ type DumpV2 struct {
 type NodeV2 struct {
 	BlockRoot                       []byte
 	ParentRoot                      []byte
-	SilaBlockHash              []byte
+	SilaBlockHash                   []byte
 	Target                          []byte
 	Timestamp                       time.Time
 	Slot                            primitives.Slot
@@ -79,14 +79,14 @@ type NodeV2 struct {
 	GasLimit                        uint64
 	PayloadStatus                   PayloadStatus
 	Validity                        NodeValidity
-	SilaOptimistic             bool
+	SilaOptimistic                  bool
 }
 
 type Dump struct {
-	JustifiedCheckpoint           *eth.Checkpoint
-	FinalizedCheckpoint           *eth.Checkpoint
-	UnrealizedJustifiedCheckpoint *eth.Checkpoint
-	UnrealizedFinalizedCheckpoint *eth.Checkpoint
+	JustifiedCheckpoint           *sila.Checkpoint
+	FinalizedCheckpoint           *sila.Checkpoint
+	UnrealizedJustifiedCheckpoint *sila.Checkpoint
+	UnrealizedFinalizedCheckpoint *sila.Checkpoint
 	ProposerBoostRoot             []byte
 	PreviousProposerBoostRoot     []byte
 	HeadRoot                      []byte
@@ -95,7 +95,7 @@ type Dump struct {
 
 type Node struct {
 	Validity                 NodeValidity
-	SilaOptimistic      bool
+	SilaOptimistic           bool
 	Slot                     primitives.Slot
 	JustifiedEpoch           primitives.Epoch
 	FinalizedEpoch           primitives.Epoch
@@ -106,6 +106,6 @@ type Node struct {
 	Timestamp                time.Time
 	BlockRoot                []byte
 	ParentRoot               []byte
-	SilaBlockHash       []byte
+	SilaBlockHash            []byte
 	Target                   []byte
 }

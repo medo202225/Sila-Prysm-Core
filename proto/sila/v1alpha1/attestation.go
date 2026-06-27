@@ -1,11 +1,11 @@
-package eth
+package sila
 
 import (
-	"github.com/sila-chain/go-bitfield"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	ssz "github.com/sila-chain/fastssz"
+	"github.com/sila-chain/go-bitfield"
 	"google.golang.org/protobuf/proto"
 )
 

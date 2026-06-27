@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	empty "github.com/golang/protobuf/ptypes/empty"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -43,10 +43,10 @@ func (m *MockNodeClient) EXPECT() *MockNodeClientMockRecorder {
 }
 
 // Genesis mocks base method.
-func (m *MockNodeClient) Genesis(ctx context.Context, in *empty.Empty) (*eth.Genesis, error) {
+func (m *MockNodeClient) Genesis(ctx context.Context, in *empty.Empty) (*sila.Genesis, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Genesis", ctx, in)
-	ret0, _ := ret[0].(*eth.Genesis)
+	ret0, _ := ret[0].(*sila.Genesis)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -72,10 +72,10 @@ func (mr *MockNodeClientMockRecorder) IsReady(ctx any) *gomock.Call {
 }
 
 // Peers mocks base method.
-func (m *MockNodeClient) Peers(ctx context.Context, in *empty.Empty) (*eth.Peers, error) {
+func (m *MockNodeClient) Peers(ctx context.Context, in *empty.Empty) (*sila.Peers, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Peers", ctx, in)
-	ret0, _ := ret[0].(*eth.Peers)
+	ret0, _ := ret[0].(*sila.Peers)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -87,10 +87,10 @@ func (mr *MockNodeClientMockRecorder) Peers(ctx, in any) *gomock.Call {
 }
 
 // SyncStatus mocks base method.
-func (m *MockNodeClient) SyncStatus(ctx context.Context, in *empty.Empty) (*eth.SyncStatus, error) {
+func (m *MockNodeClient) SyncStatus(ctx context.Context, in *empty.Empty) (*sila.SyncStatus, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SyncStatus", ctx, in)
-	ret0, _ := ret[0].(*eth.SyncStatus)
+	ret0, _ := ret[0].(*sila.SyncStatus)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -102,10 +102,10 @@ func (mr *MockNodeClientMockRecorder) SyncStatus(ctx, in any) *gomock.Call {
 }
 
 // Version mocks base method.
-func (m *MockNodeClient) Version(ctx context.Context, in *empty.Empty) (*eth.Version, error) {
+func (m *MockNodeClient) Version(ctx context.Context, in *empty.Empty) (*sila.Version, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Version", ctx, in)
-	ret0, _ := ret[0].(*eth.Version)
+	ret0, _ := ret[0].(*sila.Version)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

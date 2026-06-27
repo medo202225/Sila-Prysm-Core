@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/data_columns.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"

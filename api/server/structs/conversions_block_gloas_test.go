@@ -6,16 +6,16 @@ import (
 
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
 )
 
-func testEnvelopeProto() *eth.SilaPayloadEnvelope {
-	return &eth.SilaPayloadEnvelope{
+func testEnvelopeProto() *sila.SilaPayloadEnvelope {
+	return &sila.SilaPayloadEnvelope{
 		Payload: &silaenginev1.SilaPayloadGloas{
 			ParentHash:    fillByteSlice(common.HashLength, 0xaa),
 			FeeRecipient:  fillByteSlice(20, 0xbb),
@@ -27,7 +27,7 @@ func testEnvelopeProto() *eth.SilaPayloadEnvelope {
 			BlockHash:     fillByteSlice(common.HashLength, 0x22),
 			SlotNumber:    42,
 		},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 		BuilderIndex:          7,
 		BeaconBlockRoot:       fillByteSlice(32, 0x33),
 		ParentBeaconBlockRoot: fillByteSlice(32, 0x44),
@@ -55,10 +55,10 @@ func TestSilaPayloadEnvelopeFromConsensus_NilRequests(t *testing.T) {
 	require.Equal(t, (*SilaRequests)(nil), result.SilaRequests)
 }
 
-func testWireBlindedProto() *eth.WireBlindedSilaPayloadEnvelope {
-	return &eth.WireBlindedSilaPayloadEnvelope{
+func testWireBlindedProto() *sila.WireBlindedSilaPayloadEnvelope {
+	return &sila.WireBlindedSilaPayloadEnvelope{
 		PayloadRoot:           fillByteSlice(32, 0x55),
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 		BuilderIndex:          7,
 		BeaconBlockRoot:       fillByteSlice(32, 0x33),
 		ParentBeaconBlockRoot: fillByteSlice(32, 0x44),
@@ -67,7 +67,7 @@ func testWireBlindedProto() *eth.WireBlindedSilaPayloadEnvelope {
 
 // HTR(blinded) must equal HTR(full) so the validator signature stays valid against either form.
 func TestWireBlindedHTRMatchesFull(t *testing.T) {
-	full := &eth.SilaPayloadEnvelope{
+	full := &sila.SilaPayloadEnvelope{
 		Payload: &silaenginev1.SilaPayloadGloas{
 			ParentHash:    fillByteSlice(32, 0x01),
 			FeeRecipient:  fillByteSlice(20, 0x02),
@@ -81,7 +81,7 @@ func TestWireBlindedHTRMatchesFull(t *testing.T) {
 			Withdrawals:   []*silaenginev1.Withdrawal{},
 			SlotNumber:    primitives.Slot(100),
 		},
-		SilaRequests:     &silaenginev1.SilaRequests{},
+		SilaRequests:          &silaenginev1.SilaRequests{},
 		BuilderIndex:          primitives.BuilderIndex(42),
 		BeaconBlockRoot:       fillByteSlice(32, 0x09),
 		ParentBeaconBlockRoot: fillByteSlice(32, 0x0a),
@@ -98,21 +98,21 @@ func TestWireBlindedHTRMatchesFull(t *testing.T) {
 	// SSZ roundtrip.
 	enc, err := blinded.MarshalSSZ()
 	require.NoError(t, err)
-	decoded := &eth.WireBlindedSilaPayloadEnvelope{}
+	decoded := &sila.WireBlindedSilaPayloadEnvelope{}
 	require.NoError(t, decoded.UnmarshalSSZ(enc))
 	rtHTR, err := decoded.HashTreeRoot()
 	require.NoError(t, err)
 	require.Equal(t, fullHTR, rtHTR)
 
 	// Signed wrapper SSZ roundtrip.
-	signedBlinded, err := SignedWireBlindedFromFull(&eth.SignedSilaPayloadEnvelope{
+	signedBlinded, err := SignedWireBlindedFromFull(&sila.SignedSilaPayloadEnvelope{
 		Message:   full,
 		Signature: fillByteSlice(96, 0x0b),
 	})
 	require.NoError(t, err)
 	signedEnc, err := signedBlinded.MarshalSSZ()
 	require.NoError(t, err)
-	decodedSigned := &eth.SignedWireBlindedSilaPayloadEnvelope{}
+	decodedSigned := &sila.SignedWireBlindedSilaPayloadEnvelope{}
 	require.NoError(t, decodedSigned.UnmarshalSSZ(signedEnc))
 	rtBlindedHTR, err := decodedSigned.Message.HashTreeRoot()
 	require.NoError(t, err)

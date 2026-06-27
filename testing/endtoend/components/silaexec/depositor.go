@@ -12,7 +12,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	contracts "github.com/sila-chain/Sila-Consensus-Core/v7/contracts/deposit"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -26,7 +26,7 @@ import (
 
 var gweiPerEth = big.NewInt(int64(params.BeaconConfig().GweiPerEth))
 
-func amtInGwei(deposit *eth.Deposit) *big.Int {
+func amtInGwei(deposit *sila.Deposit) *big.Int {
 	amt := big.NewInt(0).SetUint64(deposit.Data.Amount)
 	return amt.Mul(amt, gweiPerEth)
 }
@@ -36,7 +36,7 @@ func amtInGwei(deposit *eth.Deposit) *big.Int {
 // the `offset` parameter skips the first N validators in the deterministic list.
 // In order to test the requirement that our deposit follower is able to handle multiple partial deposits,
 // the `partial` flag specifies that half of the deposits should be broken up into 2 transactions.
-func computeDeposits(offset, nvals int, partial bool) ([]*eth.Deposit, error) {
+func computeDeposits(offset, nvals int, partial bool) ([]*sila.Deposit, error) {
 	balances := make([]uint64, offset+nvals)
 	partialIndex := len(balances) // set beyond loop invariant so by default nothing gets partial
 	if partial {
@@ -57,7 +57,7 @@ func computeDeposits(offset, nvals int, partial bool) ([]*eth.Deposit, error) {
 	}
 	deposits, _, err := util.DepositsWithBalance(balances)
 	if err != nil {
-		return []*eth.Deposit{}, err
+		return []*sila.Deposit{}, err
 	}
 
 	// if partial = false, these will be a no-op (partialIndex == len(deposits)),
@@ -130,7 +130,7 @@ func (h *DepositHistory) Balances(batch types.DepositBatch) map[[48]byte]uint64 
 // SentDeposit is the record of an individual deposit which has been successfully submitted as a transaction.
 type SentDeposit struct {
 	root    [32]byte
-	deposit *eth.Deposit
+	deposit *sila.Deposit
 	tx      *silaTypes.Transaction
 	time    time.Time
 	batch   types.DepositBatch
@@ -234,7 +234,7 @@ func (d *Depositor) SendAndMineByBatch(ctx context.Context, offset, nvals, batch
 
 // SendDeposit sends a single deposit. A record of this deposit will be tracked for the life of the Depositor,
 // allowing evaluators to use the deposit history to make assertions about those deposits.
-func (d *Depositor) SendDeposit(dep *eth.Deposit, txo *bind.TransactOpts, batch types.DepositBatch) error {
+func (d *Depositor) SendDeposit(dep *sila.Deposit, txo *bind.TransactOpts, batch types.DepositBatch) error {
 	contract, err := d.contractDepositor()
 	if err != nil {
 		return err

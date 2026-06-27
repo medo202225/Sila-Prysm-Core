@@ -2,12 +2,12 @@ package consensus_types
 
 import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 type IndexedPayloadAttestation struct {
 	AttestingIndices []primitives.ValidatorIndex
-	Data             *eth.PayloadAttestationData
+	Data             *sila.PayloadAttestationData
 	Signature        []byte
 }
 
@@ -20,7 +20,7 @@ func (x *IndexedPayloadAttestation) GetAttestingIndices() []primitives.Validator
 }
 
 // GetData returns the attestation data or nil when the receiver is nil.
-func (x *IndexedPayloadAttestation) GetData() *eth.PayloadAttestationData {
+func (x *IndexedPayloadAttestation) GetData() *sila.PayloadAttestationData {
 	if x == nil {
 		return nil
 	}

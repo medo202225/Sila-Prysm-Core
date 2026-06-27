@@ -4,15 +4,15 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/beacon_core_types.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
 	sync "sync"
 
-	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	_ "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/ext"
+	github_com_sila_chain_go_bitfield "github.com/sila-chain/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -25,12 +25,12 @@ const (
 )
 
 type BeaconBlockHeader struct {
-	state         protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                            `protogen:"open.v1"`
 	Slot          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	ProposerIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	ParentRoot    []byte                                                                     `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
-	StateRoot     []byte                                                                     `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
-	BodyRoot      []byte                                                                     `protobuf:"bytes,5,opt,name=body_root,json=bodyRoot,proto3" json:"body_root,omitempty" ssz-size:"32"`
+	ParentRoot    []byte                                                                            `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
+	StateRoot     []byte                                                                            `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
+	BodyRoot      []byte                                                                            `protobuf:"bytes,5,opt,name=body_root,json=bodyRoot,proto3" json:"body_root,omitempty" ssz-size:"32"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -369,7 +369,7 @@ func (x *SignedVoluntaryExit) GetSignature() []byte {
 }
 
 type VoluntaryExit struct {
-	state          protoimpl.MessageState                                                     `protogen:"open.v1"`
+	state          protoimpl.MessageState                                                            `protogen:"open.v1"`
 	Epoch          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	ValidatorIndex github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,2,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
 	unknownFields  protoimpl.UnknownFields
@@ -533,9 +533,9 @@ func (x *IndexedAttestationElectra) GetSignature() []byte {
 }
 
 type SyncAggregate struct {
-	state                  protoimpl.MessageState                           `protogen:"open.v1"`
+	state                  protoimpl.MessageState                         `protogen:"open.v1"`
 	SyncCommitteeBits      github_com_sila_chain_go_bitfield.Bitvector512 `protobuf:"bytes,1,opt,name=sync_committee_bits,json=syncCommitteeBits,proto3" json:"sync_committee_bits,omitempty" cast-type:"github.com/sila-chain/go-bitfield.Bitvector512" ssz-size:"64"`
-	SyncCommitteeSignature []byte                                           `protobuf:"bytes,2,opt,name=sync_committee_signature,json=syncCommitteeSignature,proto3" json:"sync_committee_signature,omitempty" ssz-size:"96"`
+	SyncCommitteeSignature []byte                                         `protobuf:"bytes,2,opt,name=sync_committee_signature,json=syncCommitteeSignature,proto3" json:"sync_committee_signature,omitempty" ssz-size:"96"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -585,9 +585,9 @@ func (x *SyncAggregate) GetSyncCommitteeSignature() []byte {
 }
 
 type Fork struct {
-	state           protoimpl.MessageState                                            `protogen:"open.v1"`
-	PreviousVersion []byte                                                            `protobuf:"bytes,1,opt,name=previous_version,json=previousVersion,proto3" json:"previous_version,omitempty" ssz-size:"4"`
-	CurrentVersion  []byte                                                            `protobuf:"bytes,2,opt,name=current_version,json=currentVersion,proto3" json:"current_version,omitempty" ssz-size:"4"`
+	state           protoimpl.MessageState                                                   `protogen:"open.v1"`
+	PreviousVersion []byte                                                                   `protobuf:"bytes,1,opt,name=previous_version,json=previousVersion,proto3" json:"previous_version,omitempty" ssz-size:"4"`
+	CurrentVersion  []byte                                                                   `protobuf:"bytes,2,opt,name=current_version,json=currentVersion,proto3" json:"current_version,omitempty" ssz-size:"4"`
 	Epoch           github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,3,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -749,11 +749,11 @@ func (x *HistoricalSummary) GetStateSummaryRoot() []byte {
 }
 
 type Validator struct {
-	state                      protoimpl.MessageState                                            `protogen:"open.v1"`
-	PublicKey                  []byte                                                            `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
-	WithdrawalCredentials      []byte                                                            `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
-	EffectiveBalance           uint64                                                            `protobuf:"varint,3,opt,name=effective_balance,json=effectiveBalance,proto3" json:"effective_balance,omitempty"`
-	Slashed                    bool                                                              `protobuf:"varint,4,opt,name=slashed,proto3" json:"slashed,omitempty"`
+	state                      protoimpl.MessageState                                                   `protogen:"open.v1"`
+	PublicKey                  []byte                                                                   `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	WithdrawalCredentials      []byte                                                                   `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
+	EffectiveBalance           uint64                                                                   `protobuf:"varint,3,opt,name=effective_balance,json=effectiveBalance,proto3" json:"effective_balance,omitempty"`
+	Slashed                    bool                                                                     `protobuf:"varint,4,opt,name=slashed,proto3" json:"slashed,omitempty"`
 	ActivationEligibilityEpoch github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,5,opt,name=activation_eligibility_epoch,json=activationEligibilityEpoch,proto3" json:"activation_eligibility_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	ActivationEpoch            github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,6,opt,name=activation_epoch,json=activationEpoch,proto3" json:"activation_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`
 	ExitEpoch                  github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Epoch `protobuf:"varint,7,opt,name=exit_epoch,json=exitEpoch,proto3" json:"exit_epoch,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Epoch"`

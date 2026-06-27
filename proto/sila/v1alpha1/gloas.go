@@ -1,4 +1,4 @@
-package eth
+package sila
 
 import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
@@ -10,18 +10,18 @@ func (header *SilaPayloadBid) Copy() *SilaPayloadBid {
 		return nil
 	}
 	return &SilaPayloadBid{
-		ParentBlockHash:       bytesutil.SafeCopyBytes(header.ParentBlockHash),
-		ParentBlockRoot:       bytesutil.SafeCopyBytes(header.ParentBlockRoot),
-		BlockHash:             bytesutil.SafeCopyBytes(header.BlockHash),
-		PrevRandao:            bytesutil.SafeCopyBytes(header.PrevRandao),
-		FeeRecipient:          bytesutil.SafeCopyBytes(header.FeeRecipient),
-		GasLimit:              header.GasLimit,
-		BuilderIndex:          header.BuilderIndex,
-		Slot:                  header.Slot,
-		Value:                 header.Value,
-		SilaPayment:      header.SilaPayment,
-		BlobKzgCommitments:    bytesutil.SafeCopy2dBytes(header.BlobKzgCommitments),
-		SilaRequestsRoot: bytesutil.SafeCopyBytes(header.SilaRequestsRoot),
+		ParentBlockHash:    bytesutil.SafeCopyBytes(header.ParentBlockHash),
+		ParentBlockRoot:    bytesutil.SafeCopyBytes(header.ParentBlockRoot),
+		BlockHash:          bytesutil.SafeCopyBytes(header.BlockHash),
+		PrevRandao:         bytesutil.SafeCopyBytes(header.PrevRandao),
+		FeeRecipient:       bytesutil.SafeCopyBytes(header.FeeRecipient),
+		GasLimit:           header.GasLimit,
+		BuilderIndex:       header.BuilderIndex,
+		Slot:               header.Slot,
+		Value:              header.Value,
+		SilaPayment:        header.SilaPayment,
+		BlobKzgCommitments: bytesutil.SafeCopy2dBytes(header.BlobKzgCommitments),
+		SilaRequestsRoot:   bytesutil.SafeCopyBytes(header.SilaRequestsRoot),
 	}
 }
 

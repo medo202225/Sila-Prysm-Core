@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"time"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/prom2json"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -240,7 +240,7 @@ func populateBeaconNodeStats(pf metricMap) BeaconNodeStats {
 }
 
 func statusIsActive(statusCode int64) bool {
-	s := eth.ValidatorStatus(statusCode)
+	s := sila.ValidatorStatus(statusCode)
 	return s.String() == "ACTIVE"
 }
 

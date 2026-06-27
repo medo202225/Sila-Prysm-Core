@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 	metadata "google.golang.org/grpc/metadata"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -43,10 +43,10 @@ func (m *MockBeaconNodeValidatorServer) EXPECT() *MockBeaconNodeValidatorServerM
 }
 
 // AggregatedSigAndAggregationBits mocks base method.
-func (m *MockBeaconNodeValidatorServer) AggregatedSigAndAggregationBits(arg0 context.Context, arg1 *eth.AggregatedSigAndAggregationBitsRequest) (*eth.AggregatedSigAndAggregationBitsResponse, error) {
+func (m *MockBeaconNodeValidatorServer) AggregatedSigAndAggregationBits(arg0 context.Context, arg1 *sila.AggregatedSigAndAggregationBitsRequest) (*sila.AggregatedSigAndAggregationBitsResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AggregatedSigAndAggregationBits", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AggregatedSigAndAggregationBitsResponse)
+	ret0, _ := ret[0].(*sila.AggregatedSigAndAggregationBitsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -58,7 +58,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) AggregatedSigAndAggregation
 }
 
 // AssignValidatorToSubnet mocks base method.
-func (m *MockBeaconNodeValidatorServer) AssignValidatorToSubnet(arg0 context.Context, arg1 *eth.AssignValidatorToSubnetRequest) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) AssignValidatorToSubnet(arg0 context.Context, arg1 *sila.AssignValidatorToSubnetRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AssignValidatorToSubnet", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -73,10 +73,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) AssignValidatorToSubnet(arg
 }
 
 // CheckDoppelGanger mocks base method.
-func (m *MockBeaconNodeValidatorServer) CheckDoppelGanger(arg0 context.Context, arg1 *eth.DoppelGangerRequest) (*eth.DoppelGangerResponse, error) {
+func (m *MockBeaconNodeValidatorServer) CheckDoppelGanger(arg0 context.Context, arg1 *sila.DoppelGangerRequest) (*sila.DoppelGangerResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CheckDoppelGanger", arg0, arg1)
-	ret0, _ := ret[0].(*eth.DoppelGangerResponse)
+	ret0, _ := ret[0].(*sila.DoppelGangerResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -88,10 +88,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) CheckDoppelGanger(arg0, arg
 }
 
 // DomainData mocks base method.
-func (m *MockBeaconNodeValidatorServer) DomainData(arg0 context.Context, arg1 *eth.DomainRequest) (*eth.DomainResponse, error) {
+func (m *MockBeaconNodeValidatorServer) DomainData(arg0 context.Context, arg1 *sila.DomainRequest) (*sila.DomainResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DomainData", arg0, arg1)
-	ret0, _ := ret[0].(*eth.DomainResponse)
+	ret0, _ := ret[0].(*sila.DomainResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -103,10 +103,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) DomainData(arg0, arg1 any) 
 }
 
 // GetAttestationData mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetAttestationData(arg0 context.Context, arg1 *eth.AttestationDataRequest) (*eth.AttestationData, error) {
+func (m *MockBeaconNodeValidatorServer) GetAttestationData(arg0 context.Context, arg1 *sila.AttestationDataRequest) (*sila.AttestationData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAttestationData", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AttestationData)
+	ret0, _ := ret[0].(*sila.AttestationData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -118,10 +118,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetAttestationData(arg0, ar
 }
 
 // GetAttesterDuties mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetAttesterDuties(arg0 context.Context, arg1 *eth.AttesterDutiesRequest) (*eth.AttesterDutiesResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetAttesterDuties(arg0 context.Context, arg1 *sila.AttesterDutiesRequest) (*sila.AttesterDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAttesterDuties", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AttesterDutiesResponse)
+	ret0, _ := ret[0].(*sila.AttesterDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -133,10 +133,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetAttesterDuties(arg0, arg
 }
 
 // GetBeaconBlock mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetBeaconBlock(arg0 context.Context, arg1 *eth.BlockRequest) (*eth.GenericBeaconBlock, error) {
+func (m *MockBeaconNodeValidatorServer) GetBeaconBlock(arg0 context.Context, arg1 *sila.BlockRequest) (*sila.GenericBeaconBlock, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBeaconBlock", arg0, arg1)
-	ret0, _ := ret[0].(*eth.GenericBeaconBlock)
+	ret0, _ := ret[0].(*sila.GenericBeaconBlock)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -148,10 +148,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetBeaconBlock(arg0, arg1 a
 }
 
 // GetDuties mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetDuties(arg0 context.Context, arg1 *eth.DutiesRequest) (*eth.DutiesResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetDuties(arg0 context.Context, arg1 *sila.DutiesRequest) (*sila.DutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetDuties", arg0, arg1)
-	ret0, _ := ret[0].(*eth.DutiesResponse)
+	ret0, _ := ret[0].(*sila.DutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -163,10 +163,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetDuties(arg0, arg1 any) *
 }
 
 // GetDutiesV2 mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetDutiesV2(arg0 context.Context, arg1 *eth.DutiesRequest) (*eth.DutiesV2Response, error) {
+func (m *MockBeaconNodeValidatorServer) GetDutiesV2(arg0 context.Context, arg1 *sila.DutiesRequest) (*sila.DutiesV2Response, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetDutiesV2", arg0, arg1)
-	ret0, _ := ret[0].(*eth.DutiesV2Response)
+	ret0, _ := ret[0].(*sila.DutiesV2Response)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -178,10 +178,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetDutiesV2(arg0, arg1 any)
 }
 
 // GetSilaPayloadEnvelope mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetSilaPayloadEnvelope(arg0 context.Context, arg1 *eth.SilaPayloadEnvelopeRequest) (*eth.SilaPayloadEnvelopeResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetSilaPayloadEnvelope(arg0 context.Context, arg1 *sila.SilaPayloadEnvelopeRequest) (*sila.SilaPayloadEnvelopeResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSilaPayloadEnvelope", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SilaPayloadEnvelopeResponse)
+	ret0, _ := ret[0].(*sila.SilaPayloadEnvelopeResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -193,10 +193,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetSilaPayloadEnvelope(arg0
 }
 
 // GetFeeRecipientByPubKey mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetFeeRecipientByPubKey(arg0 context.Context, arg1 *eth.FeeRecipientByPubKeyRequest) (*eth.FeeRecipientByPubKeyResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetFeeRecipientByPubKey(arg0 context.Context, arg1 *sila.FeeRecipientByPubKeyRequest) (*sila.FeeRecipientByPubKeyResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetFeeRecipientByPubKey", arg0, arg1)
-	ret0, _ := ret[0].(*eth.FeeRecipientByPubKeyResponse)
+	ret0, _ := ret[0].(*sila.FeeRecipientByPubKeyResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -208,10 +208,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetFeeRecipientByPubKey(arg
 }
 
 // GetPTCDuties mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetPTCDuties(arg0 context.Context, arg1 *eth.PTCDutiesRequest) (*eth.PTCDutiesResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetPTCDuties(arg0 context.Context, arg1 *sila.PTCDutiesRequest) (*sila.PTCDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetPTCDuties", arg0, arg1)
-	ret0, _ := ret[0].(*eth.PTCDutiesResponse)
+	ret0, _ := ret[0].(*sila.PTCDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -223,10 +223,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetPTCDuties(arg0, arg1 any
 }
 
 // GetProposerDutiesV2 mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetProposerDutiesV2(arg0 context.Context, arg1 *eth.ProposerDutiesRequest) (*eth.ProposerDutiesResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetProposerDutiesV2(arg0 context.Context, arg1 *sila.ProposerDutiesRequest) (*sila.ProposerDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetProposerDutiesV2", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ProposerDutiesResponse)
+	ret0, _ := ret[0].(*sila.ProposerDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -238,10 +238,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetProposerDutiesV2(arg0, a
 }
 
 // GetSyncCommitteeContribution mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetSyncCommitteeContribution(arg0 context.Context, arg1 *eth.SyncCommitteeContributionRequest) (*eth.SyncCommitteeContribution, error) {
+func (m *MockBeaconNodeValidatorServer) GetSyncCommitteeContribution(arg0 context.Context, arg1 *sila.SyncCommitteeContributionRequest) (*sila.SyncCommitteeContribution, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSyncCommitteeContribution", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SyncCommitteeContribution)
+	ret0, _ := ret[0].(*sila.SyncCommitteeContribution)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -253,10 +253,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetSyncCommitteeContributio
 }
 
 // GetSyncCommitteeDuties mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetSyncCommitteeDuties(arg0 context.Context, arg1 *eth.SyncCommitteeDutiesRequest) (*eth.SyncCommitteeDutiesResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetSyncCommitteeDuties(arg0 context.Context, arg1 *sila.SyncCommitteeDutiesRequest) (*sila.SyncCommitteeDutiesResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSyncCommitteeDuties", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SyncCommitteeDutiesResponse)
+	ret0, _ := ret[0].(*sila.SyncCommitteeDutiesResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -268,10 +268,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetSyncCommitteeDuties(arg0
 }
 
 // GetSyncMessageBlockRoot mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetSyncMessageBlockRoot(arg0 context.Context, arg1 *emptypb.Empty) (*eth.SyncMessageBlockRootResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetSyncMessageBlockRoot(arg0 context.Context, arg1 *emptypb.Empty) (*sila.SyncMessageBlockRootResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSyncMessageBlockRoot", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SyncMessageBlockRootResponse)
+	ret0, _ := ret[0].(*sila.SyncMessageBlockRootResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -283,10 +283,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetSyncMessageBlockRoot(arg
 }
 
 // GetSyncSubcommitteeIndex mocks base method.
-func (m *MockBeaconNodeValidatorServer) GetSyncSubcommitteeIndex(arg0 context.Context, arg1 *eth.SyncSubcommitteeIndexRequest) (*eth.SyncSubcommitteeIndexResponse, error) {
+func (m *MockBeaconNodeValidatorServer) GetSyncSubcommitteeIndex(arg0 context.Context, arg1 *sila.SyncSubcommitteeIndexRequest) (*sila.SyncSubcommitteeIndexResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSyncSubcommitteeIndex", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SyncSubcommitteeIndexResponse)
+	ret0, _ := ret[0].(*sila.SyncSubcommitteeIndexResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -298,10 +298,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) GetSyncSubcommitteeIndex(ar
 }
 
 // MultipleValidatorStatus mocks base method.
-func (m *MockBeaconNodeValidatorServer) MultipleValidatorStatus(arg0 context.Context, arg1 *eth.MultipleValidatorStatusRequest) (*eth.MultipleValidatorStatusResponse, error) {
+func (m *MockBeaconNodeValidatorServer) MultipleValidatorStatus(arg0 context.Context, arg1 *sila.MultipleValidatorStatusRequest) (*sila.MultipleValidatorStatusResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "MultipleValidatorStatus", arg0, arg1)
-	ret0, _ := ret[0].(*eth.MultipleValidatorStatusResponse)
+	ret0, _ := ret[0].(*sila.MultipleValidatorStatusResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -313,10 +313,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) MultipleValidatorStatus(arg
 }
 
 // PayloadAttestationData mocks base method.
-func (m *MockBeaconNodeValidatorServer) PayloadAttestationData(arg0 context.Context, arg1 *eth.PayloadAttestationDataRequest) (*eth.PayloadAttestationData, error) {
+func (m *MockBeaconNodeValidatorServer) PayloadAttestationData(arg0 context.Context, arg1 *sila.PayloadAttestationDataRequest) (*sila.PayloadAttestationData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PayloadAttestationData", arg0, arg1)
-	ret0, _ := ret[0].(*eth.PayloadAttestationData)
+	ret0, _ := ret[0].(*sila.PayloadAttestationData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -328,7 +328,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) PayloadAttestationData(arg0
 }
 
 // PrepareBeaconProposer mocks base method.
-func (m *MockBeaconNodeValidatorServer) PrepareBeaconProposer(arg0 context.Context, arg1 *eth.PrepareBeaconProposerRequest) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) PrepareBeaconProposer(arg0 context.Context, arg1 *sila.PrepareBeaconProposerRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PrepareBeaconProposer", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -343,10 +343,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) PrepareBeaconProposer(arg0,
 }
 
 // ProposeAttestation mocks base method.
-func (m *MockBeaconNodeValidatorServer) ProposeAttestation(arg0 context.Context, arg1 *eth.Attestation) (*eth.AttestResponse, error) {
+func (m *MockBeaconNodeValidatorServer) ProposeAttestation(arg0 context.Context, arg1 *sila.Attestation) (*sila.AttestResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeAttestation", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AttestResponse)
+	ret0, _ := ret[0].(*sila.AttestResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -358,10 +358,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ProposeAttestation(arg0, ar
 }
 
 // ProposeAttestationElectra mocks base method.
-func (m *MockBeaconNodeValidatorServer) ProposeAttestationElectra(arg0 context.Context, arg1 *eth.SingleAttestation) (*eth.AttestResponse, error) {
+func (m *MockBeaconNodeValidatorServer) ProposeAttestationElectra(arg0 context.Context, arg1 *sila.SingleAttestation) (*sila.AttestResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeAttestationElectra", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AttestResponse)
+	ret0, _ := ret[0].(*sila.AttestResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -373,10 +373,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ProposeAttestationElectra(a
 }
 
 // ProposeBeaconBlock mocks base method.
-func (m *MockBeaconNodeValidatorServer) ProposeBeaconBlock(arg0 context.Context, arg1 *eth.GenericSignedBeaconBlock) (*eth.ProposeResponse, error) {
+func (m *MockBeaconNodeValidatorServer) ProposeBeaconBlock(arg0 context.Context, arg1 *sila.GenericSignedBeaconBlock) (*sila.ProposeResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeBeaconBlock", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ProposeResponse)
+	ret0, _ := ret[0].(*sila.ProposeResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -388,10 +388,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ProposeBeaconBlock(arg0, ar
 }
 
 // ProposeExit mocks base method.
-func (m *MockBeaconNodeValidatorServer) ProposeExit(arg0 context.Context, arg1 *eth.SignedVoluntaryExit) (*eth.ProposeExitResponse, error) {
+func (m *MockBeaconNodeValidatorServer) ProposeExit(arg0 context.Context, arg1 *sila.SignedVoluntaryExit) (*sila.ProposeExitResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProposeExit", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ProposeExitResponse)
+	ret0, _ := ret[0].(*sila.ProposeExitResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -403,7 +403,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ProposeExit(arg0, arg1 any)
 }
 
 // PublishSilaPayloadEnvelope mocks base method.
-func (m *MockBeaconNodeValidatorServer) PublishSilaPayloadEnvelope(arg0 context.Context, arg1 *eth.SignedSilaPayloadEnvelope) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) PublishSilaPayloadEnvelope(arg0 context.Context, arg1 *sila.SignedSilaPayloadEnvelope) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PublishSilaPayloadEnvelope", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -418,7 +418,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) PublishSilaPayloadEnvelope(
 }
 
 // StreamBlocksAltair mocks base method.
-func (m *MockBeaconNodeValidatorServer) StreamBlocksAltair(arg0 *eth.StreamBlocksRequest, arg1 eth.BeaconNodeValidator_StreamBlocksAltairServer) error {
+func (m *MockBeaconNodeValidatorServer) StreamBlocksAltair(arg0 *sila.StreamBlocksRequest, arg1 sila.BeaconNodeValidator_StreamBlocksAltairServer) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "StreamBlocksAltair", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -432,7 +432,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) StreamBlocksAltair(arg0, ar
 }
 
 // StreamSlots mocks base method.
-func (m *MockBeaconNodeValidatorServer) StreamSlots(arg0 *eth.StreamSlotsRequest, arg1 eth.BeaconNodeValidator_StreamSlotsServer) error {
+func (m *MockBeaconNodeValidatorServer) StreamSlots(arg0 *sila.StreamSlotsRequest, arg1 sila.BeaconNodeValidator_StreamSlotsServer) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "StreamSlots", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -446,10 +446,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) StreamSlots(arg0, arg1 any)
 }
 
 // SubmitAggregateSelectionProof mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitAggregateSelectionProof(arg0 context.Context, arg1 *eth.AggregateSelectionRequest) (*eth.AggregateSelectionResponse, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitAggregateSelectionProof(arg0 context.Context, arg1 *sila.AggregateSelectionRequest) (*sila.AggregateSelectionResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitAggregateSelectionProof", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AggregateSelectionResponse)
+	ret0, _ := ret[0].(*sila.AggregateSelectionResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -461,10 +461,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitAggregateSelectionPro
 }
 
 // SubmitAggregateSelectionProofElectra mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitAggregateSelectionProofElectra(arg0 context.Context, arg1 *eth.AggregateSelectionRequest) (*eth.AggregateSelectionElectraResponse, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitAggregateSelectionProofElectra(arg0 context.Context, arg1 *sila.AggregateSelectionRequest) (*sila.AggregateSelectionElectraResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitAggregateSelectionProofElectra", arg0, arg1)
-	ret0, _ := ret[0].(*eth.AggregateSelectionElectraResponse)
+	ret0, _ := ret[0].(*sila.AggregateSelectionElectraResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -476,7 +476,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitAggregateSelectionPro
 }
 
 // SubmitPayloadAttestation mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitPayloadAttestation(arg0 context.Context, arg1 *eth.PayloadAttestationMessage) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitPayloadAttestation(arg0 context.Context, arg1 *sila.PayloadAttestationMessage) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitPayloadAttestation", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -491,10 +491,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitPayloadAttestation(ar
 }
 
 // SubmitSignedAggregateSelectionProof mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSignedAggregateSelectionProof(arg0 context.Context, arg1 *eth.SignedAggregateSubmitRequest) (*eth.SignedAggregateSubmitResponse, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitSignedAggregateSelectionProof(arg0 context.Context, arg1 *sila.SignedAggregateSubmitRequest) (*sila.SignedAggregateSubmitResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedAggregateSelectionProof", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SignedAggregateSubmitResponse)
+	ret0, _ := ret[0].(*sila.SignedAggregateSubmitResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -506,10 +506,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedAggregateSelect
 }
 
 // SubmitSignedAggregateSelectionProofElectra mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSignedAggregateSelectionProofElectra(arg0 context.Context, arg1 *eth.SignedAggregateSubmitElectraRequest) (*eth.SignedAggregateSubmitResponse, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitSignedAggregateSelectionProofElectra(arg0 context.Context, arg1 *sila.SignedAggregateSubmitElectraRequest) (*sila.SignedAggregateSubmitResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedAggregateSelectionProofElectra", arg0, arg1)
-	ret0, _ := ret[0].(*eth.SignedAggregateSubmitResponse)
+	ret0, _ := ret[0].(*sila.SignedAggregateSubmitResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -521,7 +521,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedAggregateSelect
 }
 
 // SubmitSignedContributionAndProof mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSignedContributionAndProof(arg0 context.Context, arg1 *eth.SignedContributionAndProof) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitSignedContributionAndProof(arg0 context.Context, arg1 *sila.SignedContributionAndProof) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedContributionAndProof", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -536,7 +536,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedContributionAnd
 }
 
 // SubmitSignedProposerPreferences mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSignedProposerPreferences(arg0 context.Context, arg1 *eth.SubmitSignedProposerPreferencesRequest) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitSignedProposerPreferences(arg0 context.Context, arg1 *sila.SubmitSignedProposerPreferencesRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedProposerPreferences", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -551,7 +551,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedProposerPrefere
 }
 
 // SubmitSignedSilaPayloadBid mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSignedSilaPayloadBid(arg0 context.Context, arg1 *eth.SignedSilaPayloadBid) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitSignedSilaPayloadBid(arg0 context.Context, arg1 *sila.SignedSilaPayloadBid) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSignedSilaPayloadBid", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -566,7 +566,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSignedSilaPayloadBid(
 }
 
 // SubmitSyncMessage mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitSyncMessage(arg0 context.Context, arg1 *eth.SyncCommitteeMessage) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitSyncMessage(arg0 context.Context, arg1 *sila.SyncCommitteeMessage) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitSyncMessage", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -581,7 +581,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitSyncMessage(arg0, arg
 }
 
 // SubmitValidatorRegistrations mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubmitValidatorRegistrations(arg0 context.Context, arg1 *eth.SignedValidatorRegistrationsV1) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubmitValidatorRegistrations(arg0 context.Context, arg1 *sila.SignedValidatorRegistrationsV1) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitValidatorRegistrations", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -596,7 +596,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubmitValidatorRegistration
 }
 
 // SubscribeCommitteeSubnets mocks base method.
-func (m *MockBeaconNodeValidatorServer) SubscribeCommitteeSubnets(arg0 context.Context, arg1 *eth.CommitteeSubnetsSubscribeRequest) (*emptypb.Empty, error) {
+func (m *MockBeaconNodeValidatorServer) SubscribeCommitteeSubnets(arg0 context.Context, arg1 *sila.CommitteeSubnetsSubscribeRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubscribeCommitteeSubnets", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -611,10 +611,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) SubscribeCommitteeSubnets(a
 }
 
 // ValidatorIndex mocks base method.
-func (m *MockBeaconNodeValidatorServer) ValidatorIndex(arg0 context.Context, arg1 *eth.ValidatorIndexRequest) (*eth.ValidatorIndexResponse, error) {
+func (m *MockBeaconNodeValidatorServer) ValidatorIndex(arg0 context.Context, arg1 *sila.ValidatorIndexRequest) (*sila.ValidatorIndexResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorIndex", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ValidatorIndexResponse)
+	ret0, _ := ret[0].(*sila.ValidatorIndexResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -626,10 +626,10 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ValidatorIndex(arg0, arg1 a
 }
 
 // ValidatorStatus mocks base method.
-func (m *MockBeaconNodeValidatorServer) ValidatorStatus(arg0 context.Context, arg1 *eth.ValidatorStatusRequest) (*eth.ValidatorStatusResponse, error) {
+func (m *MockBeaconNodeValidatorServer) ValidatorStatus(arg0 context.Context, arg1 *sila.ValidatorStatusRequest) (*sila.ValidatorStatusResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorStatus", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ValidatorStatusResponse)
+	ret0, _ := ret[0].(*sila.ValidatorStatusResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -641,7 +641,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) ValidatorStatus(arg0, arg1 
 }
 
 // WaitForActivation mocks base method.
-func (m *MockBeaconNodeValidatorServer) WaitForActivation(arg0 *eth.ValidatorActivationRequest, arg1 eth.BeaconNodeValidator_WaitForActivationServer) error {
+func (m *MockBeaconNodeValidatorServer) WaitForActivation(arg0 *sila.ValidatorActivationRequest, arg1 sila.BeaconNodeValidator_WaitForActivationServer) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "WaitForActivation", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -655,7 +655,7 @@ func (mr *MockBeaconNodeValidatorServerMockRecorder) WaitForActivation(arg0, arg
 }
 
 // WaitForChainStart mocks base method.
-func (m *MockBeaconNodeValidatorServer) WaitForChainStart(arg0 *emptypb.Empty, arg1 eth.BeaconNodeValidator_WaitForChainStartServer) error {
+func (m *MockBeaconNodeValidatorServer) WaitForChainStart(arg0 *emptypb.Empty, arg1 sila.BeaconNodeValidator_WaitForChainStartServer) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "WaitForChainStart", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -720,7 +720,7 @@ func (mr *MockBeaconNodeValidator_WaitForActivationServerMockRecorder) RecvMsg(a
 }
 
 // Send mocks base method.
-func (m *MockBeaconNodeValidator_WaitForActivationServer) Send(arg0 *eth.ValidatorActivationResponse) error {
+func (m *MockBeaconNodeValidator_WaitForActivationServer) Send(arg0 *sila.ValidatorActivationResponse) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Send", arg0)
 	ret0, _ := ret[0].(error)
@@ -839,7 +839,7 @@ func (mr *MockBeaconNodeValidator_WaitForChainStartServerMockRecorder) RecvMsg(a
 }
 
 // Send mocks base method.
-func (m *MockBeaconNodeValidator_WaitForChainStartServer) Send(arg0 *eth.ChainStartResponse) error {
+func (m *MockBeaconNodeValidator_WaitForChainStartServer) Send(arg0 *sila.ChainStartResponse) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Send", arg0)
 	ret0, _ := ret[0].(error)
@@ -958,7 +958,7 @@ func (mr *MockBeaconNodeValidator_StreamSlotsServerMockRecorder) RecvMsg(arg0 an
 }
 
 // Send mocks base method.
-func (m *MockBeaconNodeValidator_StreamSlotsServer) Send(arg0 *eth.StreamSlotsResponse) error {
+func (m *MockBeaconNodeValidator_StreamSlotsServer) Send(arg0 *sila.StreamSlotsResponse) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Send", arg0)
 	ret0, _ := ret[0].(error)

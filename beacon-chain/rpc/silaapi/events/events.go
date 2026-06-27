@@ -28,7 +28,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
 	engine "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
@@ -551,12 +551,12 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 		}, nil
 	case *operation.AggregatedAttReceivedData:
 		switch att := v.Attestation.AggregateVal().(type) {
-		case *eth.Attestation:
+		case *sila.Attestation:
 			return func() io.Reader {
 				att := structs.AttFromConsensus(att)
 				return jsonMarshalReader(eventName, att)
 			}, nil
-		case *eth.AttestationElectra:
+		case *sila.AttestationElectra:
 			return func() io.Reader {
 				att := structs.AttElectraFromConsensus(att)
 				return jsonMarshalReader(eventName, att)
@@ -566,12 +566,12 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 		}
 	case *operation.UnAggregatedAttReceivedData:
 		switch att := v.Attestation.(type) {
-		case *eth.Attestation:
+		case *sila.Attestation:
 			return func() io.Reader {
 				att := structs.AttFromConsensus(att)
 				return jsonMarshalReader(eventName, att)
 			}, nil
-		case *eth.AttestationElectra:
+		case *sila.AttestationElectra:
 			return func() io.Reader {
 				att := structs.AttElectraFromConsensus(att)
 				return jsonMarshalReader(eventName, att)
@@ -581,7 +581,7 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 		}
 	case *operation.SingleAttReceivedData:
 		switch att := v.Attestation.(type) {
-		case *eth.SingleAttestation:
+		case *sila.SingleAttestation:
 			return func() io.Reader {
 				att := structs.SingleAttFromConsensus(att)
 				return jsonMarshalReader(eventName, att)
@@ -614,11 +614,11 @@ func (s *Server) lazyReaderForEvent(ctx context.Context, event *feed.Event, topi
 		}, nil
 	case *operation.AttesterSlashingReceivedData:
 		switch slashing := v.AttesterSlashing.(type) {
-		case *eth.AttesterSlashing:
+		case *sila.AttesterSlashing:
 			return func() io.Reader {
 				return jsonMarshalReader(eventName, structs.AttesterSlashingFromConsensus(slashing))
 			}, nil
-		case *eth.AttesterSlashingElectra:
+		case *sila.AttesterSlashingElectra:
 			return func() io.Reader {
 				return jsonMarshalReader(eventName, structs.AttesterSlashingElectraFromConsensus(slashing))
 			}, nil

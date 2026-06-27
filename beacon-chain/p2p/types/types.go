@@ -8,10 +8,10 @@ import (
 	"encoding/binary"
 	"sort"
 
+	"github.com/pkg/errors"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	"github.com/pkg/errors"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	ssz "github.com/sila-chain/fastssz"
 )
 
@@ -129,7 +129,7 @@ func (m *ErrorMessage) UnmarshalSSZ(buf []byte) error {
 }
 
 // BlobSidecarsByRootReq is used to specify a list of blob targets (root+index) in a BlobSidecarsByRoot RPC request.
-type BlobSidecarsByRootReq []*eth.BlobIdentifier
+type BlobSidecarsByRootReq []*sila.BlobIdentifier
 
 // BlobIdentifier is a fixed size value, so we can compute its fixed size at start time (see init below)
 var blobIdSize int
@@ -174,9 +174,9 @@ func (b *BlobSidecarsByRootReq) UnmarshalSSZ(buf []byte) error {
 		return errors.Wrapf(ssz.ErrIncorrectByteSize, "size=%d", bufLen)
 	}
 	count := bufLen / blobIdSize
-	*b = make([]*eth.BlobIdentifier, count)
+	*b = make([]*sila.BlobIdentifier, count)
 	for i := range count {
-		id := &eth.BlobIdentifier{}
+		id := &sila.BlobIdentifier{}
 		err := id.UnmarshalSSZ(buf[i*blobIdSize : (i+1)*blobIdSize])
 		if err != nil {
 			return err
@@ -275,7 +275,7 @@ var _ ssz.Marshaler = DataColumnsByRootIdentifiers{}
 var _ ssz.Unmarshaler = (*DataColumnsByRootIdentifiers)(nil)
 
 // DataColumnsByRootIdentifiers is used to specify a list of data column targets (root+index) in a DataColumnSidecarsByRoot RPC request.
-type DataColumnsByRootIdentifiers []*eth.DataColumnsByRootIdentifier
+type DataColumnsByRootIdentifiers []*sila.DataColumnsByRootIdentifier
 
 // DataColumnIdentifier is a fixed size value, so we can compute its fixed size at start time (see init below)
 var dataColumnIdSize int
@@ -309,7 +309,7 @@ func (d *DataColumnsByRootIdentifiers) UnmarshalSSZ(buf []byte) error {
 	valueStart := offsetEnd
 
 	// Decode the identifers.
-	*d = make([]*eth.DataColumnsByRootIdentifier, count)
+	*d = make([]*sila.DataColumnsByRootIdentifier, count)
 	var start uint32
 	end := uint32(len(buf))
 	for i := count; i > 0; i-- {
@@ -322,7 +322,7 @@ func (d *DataColumnsByRootIdentifiers) UnmarshalSSZ(buf []byte) error {
 			return errors.Errorf("offset[%d] %d indexes before value section %d", i-1, start, valueStart)
 		}
 		// Decode the identifier.
-		ident := &eth.DataColumnsByRootIdentifier{}
+		ident := &sila.DataColumnsByRootIdentifier{}
 		if err := ident.UnmarshalSSZ(buf[start:end]); err != nil {
 			return err
 		}
@@ -389,9 +389,9 @@ func (d DataColumnsByRootIdentifiers) SizeSSZ() int {
 }
 
 func init() {
-	blobSizer := &eth.BlobIdentifier{}
+	blobSizer := &sila.BlobIdentifier{}
 	blobIdSize = blobSizer.SizeSSZ()
 
-	dataColumnSizer := &eth.DataColumnSidecarsByRangeRequest{}
+	dataColumnSizer := &sila.DataColumnSidecarsByRangeRequest{}
 	dataColumnIdSize = dataColumnSizer.SizeSSZ()
 }

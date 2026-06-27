@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sila-chain/go-bitfield"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/remote-web3signer/types"
 	"github.com/sila-chain/Sila/common/hexutil"
+	"github.com/sila-chain/go-bitfield"
 )
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ import (
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 func SyncComitteeBits() []byte {
-	currSize := new(eth.SyncAggregate).SyncCommitteeBits.Len()
+	currSize := new(sila.SyncAggregate).SyncCommitteeBits.Len()
 	switch currSize {
 	case 512:
 		return bitfield.NewBitvector512()
@@ -34,7 +34,7 @@ func SyncComitteeBits() []byte {
 }
 
 func AggregationBits() []byte {
-	currSize := new(eth.SyncCommitteeContribution).AggregationBits.Len()
+	currSize := new(sila.SyncCommitteeContribution).AggregationBits.Len()
 	switch currSize {
 	case 128:
 		return bitfield.NewBitvector128()
@@ -64,16 +64,16 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_AggregateAttestationAndProof{
-				AggregateAttestationAndProof: &eth.AggregateAttestationAndProof{
+				AggregateAttestationAndProof: &sila.AggregateAttestationAndProof{
 					AggregatorIndex: 0,
-					Aggregate: &eth.Attestation{
+					Aggregate: &sila.Attestation{
 						AggregationBits: bitfield.Bitlist{0b1101},
-						Data: &eth.AttestationData{
+						Data: &sila.AttestationData{
 							BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-							Source: &eth.Checkpoint{
+							Source: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
-							Target: &eth.Checkpoint{
+							Target: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
 						},
@@ -92,16 +92,16 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_AggregateAttestationAndProofElectra{
-				AggregateAttestationAndProofElectra: &eth.AggregateAttestationAndProofElectra{
+				AggregateAttestationAndProofElectra: &sila.AggregateAttestationAndProofElectra{
 					AggregatorIndex: 0,
-					Aggregate: &eth.AttestationElectra{
+					Aggregate: &sila.AttestationElectra{
 						AggregationBits: bitfield.Bitlist{0b1101},
-						Data: &eth.AttestationData{
+						Data: &sila.AttestationData{
 							BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-							Source: &eth.Checkpoint{
+							Source: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
-							Target: &eth.Checkpoint{
+							Target: &sila.Checkpoint{
 								Root: make([]byte, fieldparams.RootLength),
 							},
 						},
@@ -119,12 +119,12 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_AttestationData{
-				AttestationData: &eth.AttestationData{
+				AttestationData: &sila.AttestationData{
 					BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-					Source: &eth.Checkpoint{
+					Source: &sila.Checkpoint{
 						Root: make([]byte, fieldparams.RootLength),
 					},
-					Target: &eth.Checkpoint{
+					Target: &sila.Checkpoint{
 						Root: make([]byte, fieldparams.RootLength),
 					},
 				},
@@ -137,23 +137,23 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_Block{
-				Block: &eth.BeaconBlock{
+				Block: &sila.BeaconBlock{
 					Slot:          0,
 					ProposerIndex: 0,
 					ParentRoot:    make([]byte, fieldparams.RootLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
-					Body: &eth.BeaconBlockBody{
+					Body: &sila.BeaconBlockBody{
 						RandaoReveal: make([]byte, 32),
-						SilaData: &eth.SilaData{
+						SilaData: &sila.SilaData{
 							DepositRoot:  make([]byte, fieldparams.RootLength),
 							DepositCount: 0,
 							BlockHash:    make([]byte, 32),
 						},
 						Graffiti: make([]byte, 32),
-						ProposerSlashings: []*eth.ProposerSlashing{
+						ProposerSlashings: []*sila.ProposerSlashing{
 							{
-								Header_1: &eth.SignedBeaconBlockHeader{
-									Header: &eth.BeaconBlockHeader{
+								Header_1: &sila.SignedBeaconBlockHeader{
+									Header: &sila.BeaconBlockHeader{
 										Slot:          0,
 										ProposerIndex: 0,
 										ParentRoot:    make([]byte, fieldparams.RootLength),
@@ -162,8 +162,8 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 									},
 									Signature: make([]byte, fieldparams.BLSSignatureLength),
 								},
-								Header_2: &eth.SignedBeaconBlockHeader{
-									Header: &eth.BeaconBlockHeader{
+								Header_2: &sila.SignedBeaconBlockHeader{
+									Header: &sila.BeaconBlockHeader{
 										Slot:          0,
 										ProposerIndex: 0,
 										ParentRoot:    make([]byte, fieldparams.RootLength),
@@ -174,29 +174,29 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 								},
 							},
 						},
-						AttesterSlashings: []*eth.AttesterSlashing{
+						AttesterSlashings: []*sila.AttesterSlashing{
 							{
-								Attestation_1: &eth.IndexedAttestation{
+								Attestation_1: &sila.IndexedAttestation{
 									AttestingIndices: []uint64{0, 1, 2},
-									Data: &eth.AttestationData{
+									Data: &sila.AttestationData{
 										BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-										Source: &eth.Checkpoint{
+										Source: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
-										Target: &eth.Checkpoint{
+										Target: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
 									},
 									Signature: make([]byte, fieldparams.BLSSignatureLength),
 								},
-								Attestation_2: &eth.IndexedAttestation{
+								Attestation_2: &sila.IndexedAttestation{
 									AttestingIndices: []uint64{0, 1, 2},
-									Data: &eth.AttestationData{
+									Data: &sila.AttestationData{
 										BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-										Source: &eth.Checkpoint{
+										Source: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
-										Target: &eth.Checkpoint{
+										Target: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
 									},
@@ -204,25 +204,25 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 								},
 							},
 						},
-						Attestations: []*eth.Attestation{
+						Attestations: []*sila.Attestation{
 							{
 								AggregationBits: bitfield.Bitlist{0b1101},
-								Data: &eth.AttestationData{
+								Data: &sila.AttestationData{
 									BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-									Source: &eth.Checkpoint{
+									Source: &sila.Checkpoint{
 										Root: make([]byte, fieldparams.RootLength),
 									},
-									Target: &eth.Checkpoint{
+									Target: &sila.Checkpoint{
 										Root: make([]byte, fieldparams.RootLength),
 									},
 								},
 								Signature: make([]byte, 96),
 							},
 						},
-						Deposits: []*eth.Deposit{
+						Deposits: []*sila.Deposit{
 							{
 								Proof: [][]byte{[]byte("A")},
-								Data: &eth.Deposit_Data{
+								Data: &sila.Deposit_Data{
 									PublicKey:             make([]byte, fieldparams.BLSPubkeyLength),
 									WithdrawalCredentials: make([]byte, 32),
 									Amount:                0,
@@ -230,9 +230,9 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 								},
 							},
 						},
-						VoluntaryExits: []*eth.SignedVoluntaryExit{
+						VoluntaryExits: []*sila.SignedVoluntaryExit{
 							{
-								Exit: &eth.VoluntaryExit{
+								Exit: &sila.VoluntaryExit{
 									Epoch:          0,
 									ValidatorIndex: 0,
 								},
@@ -250,23 +250,23 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlockAltair{
-				BlockAltair: &eth.BeaconBlockAltair{
+				BlockAltair: &sila.BeaconBlockAltair{
 					Slot:          0,
 					ProposerIndex: 0,
 					ParentRoot:    make([]byte, fieldparams.RootLength),
 					StateRoot:     make([]byte, fieldparams.RootLength),
-					Body: &eth.BeaconBlockBodyAltair{
+					Body: &sila.BeaconBlockBodyAltair{
 						RandaoReveal: make([]byte, 32),
-						SilaData: &eth.SilaData{
+						SilaData: &sila.SilaData{
 							DepositRoot:  make([]byte, fieldparams.RootLength),
 							DepositCount: 0,
 							BlockHash:    make([]byte, 32),
 						},
 						Graffiti: make([]byte, 32),
-						ProposerSlashings: []*eth.ProposerSlashing{
+						ProposerSlashings: []*sila.ProposerSlashing{
 							{
-								Header_1: &eth.SignedBeaconBlockHeader{
-									Header: &eth.BeaconBlockHeader{
+								Header_1: &sila.SignedBeaconBlockHeader{
+									Header: &sila.BeaconBlockHeader{
 										Slot:          0,
 										ProposerIndex: 0,
 										ParentRoot:    make([]byte, fieldparams.RootLength),
@@ -275,8 +275,8 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 									},
 									Signature: make([]byte, fieldparams.BLSSignatureLength),
 								},
-								Header_2: &eth.SignedBeaconBlockHeader{
-									Header: &eth.BeaconBlockHeader{
+								Header_2: &sila.SignedBeaconBlockHeader{
+									Header: &sila.BeaconBlockHeader{
 										Slot:          0,
 										ProposerIndex: 0,
 										ParentRoot:    make([]byte, fieldparams.RootLength),
@@ -287,29 +287,29 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 								},
 							},
 						},
-						AttesterSlashings: []*eth.AttesterSlashing{
+						AttesterSlashings: []*sila.AttesterSlashing{
 							{
-								Attestation_1: &eth.IndexedAttestation{
+								Attestation_1: &sila.IndexedAttestation{
 									AttestingIndices: []uint64{0, 1, 2},
-									Data: &eth.AttestationData{
+									Data: &sila.AttestationData{
 										BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-										Source: &eth.Checkpoint{
+										Source: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
-										Target: &eth.Checkpoint{
+										Target: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
 									},
 									Signature: make([]byte, fieldparams.BLSSignatureLength),
 								},
-								Attestation_2: &eth.IndexedAttestation{
+								Attestation_2: &sila.IndexedAttestation{
 									AttestingIndices: []uint64{0, 1, 2},
-									Data: &eth.AttestationData{
+									Data: &sila.AttestationData{
 										BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-										Source: &eth.Checkpoint{
+										Source: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
-										Target: &eth.Checkpoint{
+										Target: &sila.Checkpoint{
 											Root: make([]byte, fieldparams.RootLength),
 										},
 									},
@@ -317,25 +317,25 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 								},
 							},
 						},
-						Attestations: []*eth.Attestation{
+						Attestations: []*sila.Attestation{
 							{
 								AggregationBits: bitfield.Bitlist{0b1101},
-								Data: &eth.AttestationData{
+								Data: &sila.AttestationData{
 									BeaconBlockRoot: make([]byte, fieldparams.RootLength),
-									Source: &eth.Checkpoint{
+									Source: &sila.Checkpoint{
 										Root: make([]byte, fieldparams.RootLength),
 									},
-									Target: &eth.Checkpoint{
+									Target: &sila.Checkpoint{
 										Root: make([]byte, fieldparams.RootLength),
 									},
 								},
 								Signature: make([]byte, 96),
 							},
 						},
-						Deposits: []*eth.Deposit{
+						Deposits: []*sila.Deposit{
 							{
 								Proof: [][]byte{[]byte("A")},
-								Data: &eth.Deposit_Data{
+								Data: &sila.Deposit_Data{
 									PublicKey:             make([]byte, fieldparams.BLSPubkeyLength),
 									WithdrawalCredentials: make([]byte, 32),
 									Amount:                0,
@@ -343,16 +343,16 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 								},
 							},
 						},
-						VoluntaryExits: []*eth.SignedVoluntaryExit{
+						VoluntaryExits: []*sila.SignedVoluntaryExit{
 							{
-								Exit: &eth.VoluntaryExit{
+								Exit: &sila.VoluntaryExit{
 									Epoch:          0,
 									ValidatorIndex: 0,
 								},
 								Signature: make([]byte, fieldparams.BLSSignatureLength),
 							},
 						},
-						SyncAggregate: &eth.SyncAggregate{
+						SyncAggregate: &sila.SyncAggregate{
 							SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 							SyncCommitteeBits:      SyncComitteeBits(),
 						},
@@ -367,7 +367,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlockBellatrix{
-				BlockBellatrix: util.HydrateBeaconBlockBellatrix(&eth.BeaconBlockBellatrix{}),
+				BlockBellatrix: util.HydrateBeaconBlockBellatrix(&sila.BeaconBlockBellatrix{}),
 			},
 		}
 	case "BLOCK_V2_BLINDED_BELLATRIX":
@@ -376,7 +376,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlindedBlockBellatrix{
-				BlindedBlockBellatrix: util.HydrateBlindedBeaconBlockBellatrix(&eth.BlindedBeaconBlockBellatrix{}),
+				BlindedBlockBellatrix: util.HydrateBlindedBeaconBlockBellatrix(&sila.BlindedBeaconBlockBellatrix{}),
 			},
 		}
 	case "BLOCK_V2_CAPELLA":
@@ -385,7 +385,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlockCapella{
-				BlockCapella: util.HydrateBeaconBlockCapella(&eth.BeaconBlockCapella{}),
+				BlockCapella: util.HydrateBeaconBlockCapella(&sila.BeaconBlockCapella{}),
 			},
 		}
 	case "BLOCK_V2_BLINDED_CAPELLA":
@@ -394,7 +394,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlindedBlockCapella{
-				BlindedBlockCapella: util.HydrateBlindedBeaconBlockCapella(&eth.BlindedBeaconBlockCapella{}),
+				BlindedBlockCapella: util.HydrateBlindedBeaconBlockCapella(&sila.BlindedBeaconBlockCapella{}),
 			},
 		}
 	case "BLOCK_V2_DENEB":
@@ -403,7 +403,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlockDeneb{
-				BlockDeneb: util.HydrateBeaconBlockDeneb(&eth.BeaconBlockDeneb{}),
+				BlockDeneb: util.HydrateBeaconBlockDeneb(&sila.BeaconBlockDeneb{}),
 			},
 		}
 	case "BLOCK_V2_BLINDED_DENEB":
@@ -412,7 +412,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlindedBlockDeneb{
-				BlindedBlockDeneb: util.HydrateBlindedBeaconBlockDeneb(&eth.BlindedBeaconBlockDeneb{}),
+				BlindedBlockDeneb: util.HydrateBlindedBeaconBlockDeneb(&sila.BlindedBeaconBlockDeneb{}),
 			},
 		}
 	case "BLOCK_V2_ELECTRA":
@@ -421,7 +421,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlockElectra{
-				BlockElectra: util.HydrateBeaconBlockElectra(&eth.BeaconBlockElectra{}),
+				BlockElectra: util.HydrateBeaconBlockElectra(&sila.BeaconBlockElectra{}),
 			},
 		}
 	case "BLOCK_V2_BLINDED_ELECTRA":
@@ -430,7 +430,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlindedBlockElectra{
-				BlindedBlockElectra: util.HydrateBlindedBeaconBlockElectra(&eth.BlindedBeaconBlockElectra{}),
+				BlindedBlockElectra: util.HydrateBlindedBeaconBlockElectra(&sila.BlindedBeaconBlockElectra{}),
 			},
 		}
 	case "BLOCK_V2_FULU":
@@ -439,7 +439,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlockFulu{
-				BlockFulu: util.HydrateBeaconBlockFulu(&eth.BeaconBlockElectra{}),
+				BlockFulu: util.HydrateBeaconBlockFulu(&sila.BeaconBlockElectra{}),
 			},
 		}
 	case "BLOCK_V2_BLINDED_FULU":
@@ -448,7 +448,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_BlindedBlockFulu{
-				BlindedBlockFulu: util.HydrateBlindedBeaconBlockFulu(&eth.BlindedBeaconBlockFulu{}),
+				BlindedBlockFulu: util.HydrateBlindedBeaconBlockFulu(&sila.BlindedBeaconBlockFulu{}),
 			},
 		}
 	case "RANDAO_REVEAL":
@@ -467,9 +467,9 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_ContributionAndProof{
-				ContributionAndProof: &eth.ContributionAndProof{
+				ContributionAndProof: &sila.ContributionAndProof{
 					AggregatorIndex: 0,
-					Contribution: &eth.SyncCommitteeContribution{
+					Contribution: &sila.SyncCommitteeContribution{
 						Slot:              0,
 						BlockRoot:         make([]byte, fieldparams.RootLength),
 						SubcommitteeIndex: 0,
@@ -497,7 +497,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_SyncAggregatorSelectionData{
-				SyncAggregatorSelectionData: &eth.SyncAggregatorSelectionData{
+				SyncAggregatorSelectionData: &sila.SyncAggregatorSelectionData{
 					Slot:              0,
 					SubcommitteeIndex: 0,
 				},
@@ -510,7 +510,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_Exit{
-				Exit: &eth.VoluntaryExit{
+				Exit: &sila.VoluntaryExit{
 					Epoch:          0,
 					ValidatorIndex: 0,
 				},
@@ -523,7 +523,7 @@ func GetMockSignRequest(t string) *validatorpb.SignRequest {
 			SigningRoot:     make([]byte, fieldparams.RootLength),
 			SignatureDomain: make([]byte, 4),
 			Object: &validatorpb.SignRequest_Registration{
-				Registration: &eth.ValidatorRegistrationV1{
+				Registration: &sila.ValidatorRegistrationV1{
 					FeeRecipient: make([]byte, fieldparams.FeeRecipientLength),
 					GasLimit:     uint64(0),
 					Timestamp:    uint64(0),

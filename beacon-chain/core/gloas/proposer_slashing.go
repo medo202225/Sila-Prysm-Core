@@ -1,13 +1,13 @@
 package gloas
 
 import (
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/time"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 )
 
 // RemoveBuilderPendingPayment removes the pending builder payment for the proposal slot.
@@ -25,7 +25,7 @@ import (
 //	    payment_index = slot % SLOTS_PER_EPOCH
 //	    state.builder_pending_payments[payment_index] = BuilderPendingPayment()
 //	</spec>
-func RemoveBuilderPendingPayment(st state.BeaconState, header *eth.BeaconBlockHeader) error {
+func RemoveBuilderPendingPayment(st state.BeaconState, header *sila.BeaconBlockHeader) error {
 	proposalEpoch := slots.ToEpoch(header.Slot)
 	currentEpoch := time.CurrentEpoch(st)
 	slotsPerEpoch := params.BeaconConfig().SlotsPerEpoch

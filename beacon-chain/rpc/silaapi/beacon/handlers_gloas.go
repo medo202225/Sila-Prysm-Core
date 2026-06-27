@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/blockchain/kzg"
@@ -22,9 +23,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/monitoring/tracing/trace"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
-	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -87,10 +87,10 @@ func (s *Server) GetSilaPayloadEnvelope(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	httputil.WriteJson(w, &structs.GetSilaPayloadEnvelopeResponse{
-		Version:             version.String(version.Gloas),
+		Version:        version.String(version.Gloas),
 		SilaOptimistic: isOptimistic,
-		Finalized:           finalized,
-		Data:                jsonEnvelope,
+		Finalized:      finalized,
+		Data:           jsonEnvelope,
 	})
 }
 
@@ -137,7 +137,7 @@ func (s *Server) PublishSilaPayloadEnvelope(w http.ResponseWriter, r *http.Reque
 // publishBlindedEnvelope reconstructs the full envelope from cache by beacon_block_root.
 // HTR(blinded) == HTR(full), so the validator signature stays valid.
 func (s *Server) publishBlindedEnvelope(ctx context.Context, w http.ResponseWriter, r *http.Request, body []byte) {
-	signedBlinded := &eth.SignedWireBlindedSilaPayloadEnvelope{}
+	signedBlinded := &sila.SignedWireBlindedSilaPayloadEnvelope{}
 	if httputil.IsRequestSsz(r) {
 		if err := signedBlinded.UnmarshalSSZ(body); err != nil {
 			httputil.HandleError(w, "could not decode SSZ blinded envelope: "+err.Error(), http.StatusBadRequest)
@@ -185,7 +185,7 @@ func (s *Server) publishBlindedEnvelope(ctx context.Context, w http.ResponseWrit
 		return
 	}
 
-	full := &eth.SignedSilaPayloadEnvelope{
+	full := &sila.SignedSilaPayloadEnvelope{
 		Message:   cached.Envelope,
 		Signature: signedBlinded.Signature,
 	}
@@ -221,7 +221,7 @@ func writeEnvelopePublishError(w http.ResponseWriter, err error) {
 // publishEnvelopeContents handles the stateless flow (header=false).
 func (s *Server) publishEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, body []byte) {
 	if httputil.IsRequestSsz(r) {
-		contents := &eth.SignedSilaPayloadEnvelopeContents{}
+		contents := &sila.SignedSilaPayloadEnvelopeContents{}
 		if err := contents.UnmarshalSSZ(body); err != nil {
 			httputil.HandleError(w, "could not decode SSZ envelope contents: "+err.Error(), http.StatusBadRequest)
 			return
@@ -248,7 +248,7 @@ func (s *Server) publishSilaPayloadEnvelopeContents(ctx context.Context, w http.
 }
 
 // publishSilaPayloadEnvelopeContentsSSZ handles the SSZ stateless variant.
-func (s *Server) publishSilaPayloadEnvelopeContentsSSZ(ctx context.Context, w http.ResponseWriter, r *http.Request, contents *eth.SignedSilaPayloadEnvelopeContents) {
+func (s *Server) publishSilaPayloadEnvelopeContentsSSZ(ctx context.Context, w http.ResponseWriter, r *http.Request, contents *sila.SignedSilaPayloadEnvelopeContents) {
 	if contents == nil || contents.SignedSilaPayloadEnvelope == nil {
 		httputil.HandleError(w, "nil signed sila payload envelope contents", http.StatusBadRequest)
 		return
@@ -258,7 +258,7 @@ func (s *Server) publishSilaPayloadEnvelopeContentsSSZ(ctx context.Context, w ht
 
 // processEnvelopeContents verifies caller-supplied blobs/proofs, broadcasts
 // derived sidecars, then delegates the envelope to the bare publish path.
-func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *eth.SignedSilaPayloadEnvelope, kzgProofs, blobs [][]byte) {
+func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *sila.SignedSilaPayloadEnvelope, kzgProofs, blobs [][]byte) {
 	if !s.validateEnvelopeBroadcast(ctx, w, r, signed) {
 		return
 	}
@@ -311,7 +311,7 @@ func (s *Server) processEnvelopeContents(ctx context.Context, w http.ResponseWri
 //     path requires envRoot to equal head.
 //   - consensus_and_equivocation: consensus + reject if a different beacon
 //     block at the envelope's slot has already been received.
-func (s *Server) validateEnvelopeBroadcast(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *eth.SignedSilaPayloadEnvelope) bool {
+func (s *Server) validateEnvelopeBroadcast(ctx context.Context, w http.ResponseWriter, r *http.Request, signed *sila.SignedSilaPayloadEnvelope) bool {
 	level := r.URL.Query().Get(broadcastValidationQueryParam)
 	switch level {
 	case "", broadcastValidationGossip:
@@ -399,14 +399,14 @@ func (s *Server) PublishSignedSilaPayloadBid(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	var signedBid *eth.SignedSilaPayloadBid
+	var signedBid *sila.SignedSilaPayloadBid
 	if httputil.IsRequestSsz(r) {
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			httputil.HandleError(w, "Could not read request body: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		signedBid = &eth.SignedSilaPayloadBid{}
+		signedBid = &sila.SignedSilaPayloadBid{}
 		if err := signedBid.UnmarshalSSZ(body); err != nil {
 			httputil.HandleError(w, "Could not unmarshal SSZ: "+err.Error(), http.StatusBadRequest)
 			return

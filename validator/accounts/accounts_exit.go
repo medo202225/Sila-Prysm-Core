@@ -8,18 +8,18 @@ import (
 	"path"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/blocks"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client"
 	beacon_api "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -184,12 +184,12 @@ func formatBeaconChaURL(key []byte) string {
 	}
 }
 
-func writeSignedVoluntaryExitJSON(sve *eth.SignedVoluntaryExit, outputDirectory string) error {
+func writeSignedVoluntaryExitJSON(sve *sila.SignedVoluntaryExit, outputDirectory string) error {
 	if err := file.MkdirAll(outputDirectory); err != nil {
 		return err
 	}
 
-	jsve := beacon_api.JsonifySignedVoluntaryExits([]*eth.SignedVoluntaryExit{sve})[0]
+	jsve := beacon_api.JsonifySignedVoluntaryExits([]*sila.SignedVoluntaryExit{sve})[0]
 	b, err := json.Marshal(jsve)
 	if err != nil {
 		return errors.Wrap(err, "failed to marshal JSON signed voluntary exit")

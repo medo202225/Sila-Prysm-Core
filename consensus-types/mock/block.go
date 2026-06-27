@@ -6,7 +6,7 @@ import (
 	field_params "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
@@ -18,7 +18,7 @@ type SignedBeaconBlock struct {
 	BeaconBlock interfaces.ReadOnlyBeaconBlock
 }
 
-func (SignedBeaconBlock) PbGenericBlock() (*eth.GenericSignedBeaconBlock, error) {
+func (SignedBeaconBlock) PbGenericBlock() (*sila.GenericSignedBeaconBlock, error) {
 	panic("implement me")
 }
 
@@ -74,7 +74,7 @@ func (SignedBeaconBlock) ToBlinded() (interfaces.ReadOnlySignedBeaconBlock, erro
 	panic("implement me")
 }
 
-func (SignedBeaconBlock) Header() (*eth.SignedBeaconBlockHeader, error) {
+func (SignedBeaconBlock) Header() (*sila.SignedBeaconBlockHeader, error) {
 	panic("implement me")
 }
 
@@ -171,7 +171,7 @@ func (BeaconBlockBody) RandaoReveal() [field_params.BLSSignatureLength]byte {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) SilaData() *eth.SilaData {
+func (BeaconBlockBody) SilaData() *sila.SilaData {
 	panic("implement me")
 }
 
@@ -179,23 +179,23 @@ func (BeaconBlockBody) Graffiti() [field_params.RootLength]byte {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) ProposerSlashings() []*eth.ProposerSlashing {
+func (BeaconBlockBody) ProposerSlashings() []*sila.ProposerSlashing {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) AttesterSlashings() []eth.AttSlashing {
+func (BeaconBlockBody) AttesterSlashings() []sila.AttSlashing {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) Deposits() []*eth.Deposit {
+func (BeaconBlockBody) Deposits() []*sila.Deposit {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) VoluntaryExits() []*eth.SignedVoluntaryExit {
+func (BeaconBlockBody) VoluntaryExits() []*sila.SignedVoluntaryExit {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) SyncAggregate() (*eth.SyncAggregate, error) {
+func (BeaconBlockBody) SyncAggregate() (*sila.SyncAggregate, error) {
 	panic("implement me")
 }
 
@@ -215,7 +215,7 @@ func (BeaconBlockBody) SilaData() (interfaces.SilaData, error) {
 	panic("implement me")
 }
 
-func (BeaconBlockBody) BLSToSilaChanges() ([]*eth.SignedBLSToSilaChange, error) {
+func (BeaconBlockBody) BLSToSilaChanges() ([]*sila.SignedBLSToSilaChange, error) {
 	panic("implement me")
 }
 
@@ -227,7 +227,7 @@ func (b *BeaconBlockBody) SetRandaoReveal([]byte) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetSilaData(*eth.SilaData) {
+func (b *BeaconBlockBody) SetSilaData(*sila.SilaData) {
 	panic("implement me")
 }
 
@@ -235,7 +235,7 @@ func (b *BeaconBlockBody) SetGraffiti([]byte) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetProposerSlashings([]*eth.ProposerSlashing) {
+func (b *BeaconBlockBody) SetProposerSlashings([]*sila.ProposerSlashing) {
 	panic("implement me")
 }
 
@@ -243,19 +243,19 @@ func (b *BeaconBlockBody) SetAttesterSlashings([]silapb.AttesterSlashing) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetAttestations([]*eth.Attestation) {
+func (b *BeaconBlockBody) SetAttestations([]*sila.Attestation) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetDeposits([]*eth.Deposit) {
+func (b *BeaconBlockBody) SetDeposits([]*sila.Deposit) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetVoluntaryExits([]*eth.SignedVoluntaryExit) {
+func (b *BeaconBlockBody) SetVoluntaryExits([]*sila.SignedVoluntaryExit) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetSyncAggregate(*eth.SyncAggregate) error {
+func (b *BeaconBlockBody) SetSyncAggregate(*sila.SyncAggregate) error {
 	panic("implement me")
 }
 
@@ -263,7 +263,7 @@ func (b *BeaconBlockBody) SetSilaData(interfaces.SilaData) error {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SetBLSToSilaChanges([]*eth.SignedBLSToSilaChange) error {
+func (b *BeaconBlockBody) SetBLSToSilaChanges([]*sila.SignedBLSToSilaChange) error {
 	panic("implement me")
 }
 
@@ -276,11 +276,11 @@ func (b *BeaconBlockBody) SilaRequests() (*silaenginev1.SilaRequests, error) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) PayloadAttestations() ([]*eth.PayloadAttestation, error) {
+func (b *BeaconBlockBody) PayloadAttestations() ([]*sila.PayloadAttestation, error) {
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) SignedSilaPayloadBid() (*eth.SignedSilaPayloadBid, error) {
+func (b *BeaconBlockBody) SignedSilaPayloadBid() (*sila.SignedSilaPayloadBid, error) {
 	panic("implement me")
 }
 
@@ -288,7 +288,7 @@ func (b *BeaconBlockBody) ParentSilaRequests() (*silaenginev1.SilaRequests, erro
 	panic("implement me")
 }
 
-func (b *BeaconBlockBody) Attestations() []eth.Att {
+func (b *BeaconBlockBody) Attestations() []sila.Att {
 	panic("implement me")
 }
 func (b *BeaconBlockBody) Version() int {

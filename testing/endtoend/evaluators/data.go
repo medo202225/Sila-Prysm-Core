@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"google.golang.org/grpc"
 )
@@ -24,11 +24,11 @@ var ColdStateCheckpoint = e2etypes.Evaluator{
 // Checks the first node for an old checkpoint using cold state storage.
 func checkColdStateCheckpoint(_ *e2etypes.EvaluationContext, conns ...*grpc.ClientConn) error {
 	ctx := context.Background()
-	client := eth.NewBeaconChainClient(conns[0])
+	client := sila.NewBeaconChainClient(conns[0])
 
 	for i := range primitives.Epoch(epochToCheck) {
-		res, err := client.ListValidatorAssignments(ctx, &eth.ListValidatorAssignmentsRequest{
-			QueryFilter: &eth.ListValidatorAssignmentsRequest_Epoch{Epoch: i},
+		res, err := client.ListValidatorAssignments(ctx, &sila.ListValidatorAssignmentsRequest{
+			QueryFilter: &sila.ListValidatorAssignmentsRequest_Epoch{Epoch: i},
 		})
 		if err != nil {
 			return err

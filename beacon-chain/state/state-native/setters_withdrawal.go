@@ -6,7 +6,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/stateutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 )
 
@@ -42,7 +42,7 @@ func (b *BeaconState) SetNextWithdrawalValidatorIndex(i primitives.ValidatorInde
 // AppendPendingPartialWithdrawal is a mutating call to the beacon state which appends the given
 // value to the end of the pending partial withdrawals slice in the state. This method requires
 // access to the Lock on the state and only applies in electra or later.
-func (b *BeaconState) AppendPendingPartialWithdrawal(ppw *eth.PendingPartialWithdrawal) error {
+func (b *BeaconState) AppendPendingPartialWithdrawal(ppw *sila.PendingPartialWithdrawal) error {
 	if b.version < version.Electra {
 		return errNotSupported("AppendPendingPartialWithdrawal", b.version)
 	}
@@ -56,7 +56,7 @@ func (b *BeaconState) AppendPendingPartialWithdrawal(ppw *eth.PendingPartialWith
 
 	pendingPartialWithdrawals := b.pendingPartialWithdrawals
 	if b.sharedFieldReferences[types.PendingPartialWithdrawals].Refs() > 1 {
-		pendingPartialWithdrawals = make([]*eth.PendingPartialWithdrawal, 0, len(b.pendingPartialWithdrawals)+1)
+		pendingPartialWithdrawals = make([]*sila.PendingPartialWithdrawal, 0, len(b.pendingPartialWithdrawals)+1)
 		pendingPartialWithdrawals = append(pendingPartialWithdrawals, b.pendingPartialWithdrawals...)
 		b.sharedFieldReferences[types.PendingPartialWithdrawals].MinusRef()
 		b.sharedFieldReferences[types.PendingPartialWithdrawals] = stateutil.NewRef(1)
@@ -86,7 +86,7 @@ func (b *BeaconState) DequeuePendingPartialWithdrawals(n uint64) error {
 	defer b.lock.Unlock()
 
 	if b.sharedFieldReferences[types.PendingPartialWithdrawals].Refs() > 1 {
-		pendingPartialWithdrawals := make([]*eth.PendingPartialWithdrawal, len(b.pendingPartialWithdrawals))
+		pendingPartialWithdrawals := make([]*sila.PendingPartialWithdrawal, len(b.pendingPartialWithdrawals))
 		copy(pendingPartialWithdrawals, b.pendingPartialWithdrawals)
 		b.pendingPartialWithdrawals = pendingPartialWithdrawals
 		b.sharedFieldReferences[types.PendingPartialWithdrawals].MinusRef()
@@ -102,7 +102,7 @@ func (b *BeaconState) DequeuePendingPartialWithdrawals(n uint64) error {
 }
 
 // SetPendingPartialWithdrawals sets the pending partial withdrawals. This method mutates the state.
-func (b *BeaconState) SetPendingPartialWithdrawals(pendingPartialWithdrawals []*eth.PendingPartialWithdrawal) error {
+func (b *BeaconState) SetPendingPartialWithdrawals(pendingPartialWithdrawals []*sila.PendingPartialWithdrawal) error {
 	if b.version < version.Electra {
 		return errNotSupported("SetPendingPartialWithdrawals", b.version)
 	}

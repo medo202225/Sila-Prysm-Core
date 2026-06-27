@@ -17,7 +17,7 @@ import (
 	event "github.com/sila-chain/Sila-Consensus-Core/v7/api/client/event"
 	proposer "github.com/sila-chain/Sila-Consensus-Core/v7/config/proposer"
 	primitives "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	iface "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/iface"
 	keymanager "github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	gomock "go.uber.org/mock/gomock"
@@ -375,10 +375,10 @@ func (mr *MockValidatorMockRecorder) SetTicker() *gomock.Call {
 }
 
 // SignValidatorRegistrationRequest mocks base method.
-func (m *MockValidator) SignValidatorRegistrationRequest(arg0 context.Context, arg1 iface.SigningFunc, arg2 *eth.ValidatorRegistrationV1) (*eth.SignedValidatorRegistrationV1, bool, error) {
+func (m *MockValidator) SignValidatorRegistrationRequest(arg0 context.Context, arg1 iface.SigningFunc, arg2 *sila.ValidatorRegistrationV1) (*sila.SignedValidatorRegistrationV1, bool, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SignValidatorRegistrationRequest", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*eth.SignedValidatorRegistrationV1)
+	ret0, _ := ret[0].(*sila.SignedValidatorRegistrationV1)
 	ret1, _ := ret[1].(bool)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2

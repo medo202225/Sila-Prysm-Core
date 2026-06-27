@@ -20,7 +20,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/validator"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	validatormock "github.com/sila-chain/Sila-Consensus-Core/v7/testing/validator-mock"
@@ -755,20 +755,20 @@ func TestServer_SetVoluntaryExit(t *testing.T) {
 		Seconds: time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC).Unix(),
 	}
 
-	beaconClient.EXPECT().ValidatorIndex(gomock.Any(), &eth.ValidatorIndexRequest{PublicKey: pubKeys[0][:]}).
+	beaconClient.EXPECT().ValidatorIndex(gomock.Any(), &sila.ValidatorIndexRequest{PublicKey: pubKeys[0][:]}).
 		Times(3).
-		Return(&eth.ValidatorIndexResponse{Index: 2}, nil)
+		Return(&sila.ValidatorIndexResponse{Index: 2}, nil)
 
 	beaconClient.EXPECT().DomainData(
 		gomock.Any(), // ctx
 		gomock.Any(), // epoch
 	).Times(3).
-		Return(&eth.DomainResponse{SignatureDomain: make([]byte, common.HashLength)}, nil /*err*/)
+		Return(&sila.DomainResponse{SignatureDomain: make([]byte, common.HashLength)}, nil /*err*/)
 
 	mockNodeClient.EXPECT().
 		Genesis(gomock.Any(), gomock.Any()).
 		Times(3).
-		Return(&eth.Genesis{GenesisTime: genesisTime}, nil)
+		Return(&sila.Genesis{GenesisTime: genesisTime}, nil)
 
 	s := &Server{
 		validatorService:          vs,
@@ -992,7 +992,7 @@ func TestServer_SetGasLimit(t *testing.T) {
 	require.NoError(t, err2)
 
 	type beaconResp struct {
-		resp  *eth.FeeRecipientByPubKeyResponse
+		resp  *sila.FeeRecipientByPubKeyResponse
 		error error
 	}
 
@@ -1536,7 +1536,7 @@ func TestServer_ListFeeRecipientByPubkey(t *testing.T) {
 		name   string
 		args   *proposer.Settings
 		want   *want
-		cached *eth.FeeRecipientByPubKeyResponse
+		cached *sila.FeeRecipientByPubKeyResponse
 	}{
 		{
 			name: "ProposerSettings.ProposeConfig.FeeRecipientConfig defined for pubkey (and ProposerSettings.DefaultConfig.FeeRecipientConfig defined)",
@@ -1662,7 +1662,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 		defaultEthaddress string
 	}
 	type beaconResp struct {
-		resp  *eth.FeeRecipientByPubKeyResponse
+		resp  *sila.FeeRecipientByPubKeyResponse
 		error error
 	}
 	tests := []struct {

@@ -5,12 +5,12 @@ import (
 
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
 func TestAppendPendingDeposit(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{})
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{})
 	require.NoError(t, err)
 	pbd, err := s.PendingDeposits()
 	require.NoError(t, err)
@@ -18,7 +18,7 @@ func TestAppendPendingDeposit(t *testing.T) {
 	creds := []byte{0xFA, 0xCC}
 	pubkey := []byte{0xAA, 0xBB}
 	sig := []byte{0xCC, 0xDD}
-	require.NoError(t, s.AppendPendingDeposit(&eth.PendingDeposit{
+	require.NoError(t, s.AppendPendingDeposit(&sila.PendingDeposit{
 		PublicKey:             pubkey,
 		WithdrawalCredentials: creds,
 		Amount:                10,
@@ -34,12 +34,12 @@ func TestAppendPendingDeposit(t *testing.T) {
 	require.Equal(t, primitives.Slot(1), pbd[0].Slot)
 	require.DeepEqual(t, sig, pbd[0].Signature)
 
-	ds := make([]*eth.PendingDeposit, 0, 4)
+	ds := make([]*sila.PendingDeposit, 0, 4)
 	require.NoError(t, s.SetPendingDeposits(ds))
-	require.NoError(t, s.AppendPendingDeposit(&eth.PendingDeposit{Amount: 1}))
+	require.NoError(t, s.AppendPendingDeposit(&sila.PendingDeposit{Amount: 1}))
 	s2 := s.Copy()
-	require.NoError(t, s2.AppendPendingDeposit(&eth.PendingDeposit{Amount: 3}))
-	require.NoError(t, s.AppendPendingDeposit(&eth.PendingDeposit{Amount: 2}))
+	require.NoError(t, s2.AppendPendingDeposit(&sila.PendingDeposit{Amount: 3}))
+	require.NoError(t, s.AppendPendingDeposit(&sila.PendingDeposit{Amount: 2}))
 	d, err := s.PendingDeposits()
 	require.NoError(t, err)
 	require.Equal(t, uint64(1), d[0].Amount)
@@ -50,30 +50,30 @@ func TestAppendPendingDeposit(t *testing.T) {
 	require.Equal(t, uint64(3), d[1].Amount)
 
 	// Fails for versions older than electra
-	s, err = state_native.InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = state_native.InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
-	require.ErrorContains(t, "not supported", s.AppendPendingDeposit(&eth.PendingDeposit{}))
+	require.ErrorContains(t, "not supported", s.AppendPendingDeposit(&sila.PendingDeposit{}))
 }
 
 func TestSetPendingDeposits(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{})
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{})
 	require.NoError(t, err)
 	pbd, err := s.PendingDeposits()
 	require.NoError(t, err)
 	require.Equal(t, 0, len(pbd))
-	require.NoError(t, s.SetPendingDeposits([]*eth.PendingDeposit{{}, {}, {}}))
+	require.NoError(t, s.SetPendingDeposits([]*sila.PendingDeposit{{}, {}, {}}))
 	pbd, err = s.PendingDeposits()
 	require.NoError(t, err)
 	require.Equal(t, 3, len(pbd))
 
 	// Fails for versions older than electra
-	s, err = state_native.InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = state_native.InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
-	require.ErrorContains(t, "not supported", s.SetPendingDeposits([]*eth.PendingDeposit{{}, {}, {}}))
+	require.ErrorContains(t, "not supported", s.SetPendingDeposits([]*sila.PendingDeposit{{}, {}, {}}))
 }
 
 func TestSetDepositBalanceToConsume(t *testing.T) {
-	s, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{})
+	s, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{})
 	require.NoError(t, err)
 	require.NoError(t, s.SetDepositBalanceToConsume(10))
 	dbtc, err := s.DepositBalanceToConsume()
@@ -81,7 +81,7 @@ func TestSetDepositBalanceToConsume(t *testing.T) {
 	require.Equal(t, primitives.Gwei(10), dbtc)
 
 	// Fails for versions older than electra
-	s, err = state_native.InitializeFromProtoDeneb(&eth.BeaconStateDeneb{})
+	s, err = state_native.InitializeFromProtoDeneb(&sila.BeaconStateDeneb{})
 	require.NoError(t, err)
 	require.ErrorContains(t, "not supported", s.SetDepositBalanceToConsume(10))
 }

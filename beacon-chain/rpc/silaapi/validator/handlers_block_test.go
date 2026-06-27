@@ -16,7 +16,7 @@ import (
 	rpctesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared/testing"
 	mockSync "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/sync/initial-sync/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	mock2 "github.com/sila-chain/Sila-Consensus-Core/v7/testing/mock"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
@@ -43,13 +43,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				return block.Message.ToGeneric()
 			}())
 		server := &Server{
@@ -78,13 +78,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 
 				return block.Message.ToGeneric()
 			}())
@@ -114,13 +114,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -153,13 +153,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -192,13 +192,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -231,13 +231,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				g, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				g.PayloadValue = "2000"
@@ -270,13 +270,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.ToUnsigned())
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -309,13 +309,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -348,13 +348,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.ToUnsigned())
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -387,13 +387,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -426,13 +426,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.ToUnsigned())
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -465,13 +465,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.Message)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -561,13 +561,13 @@ func TestProduceBlockV3(t *testing.T) {
 		jsonBytes, err := json.Marshal(block.ToUnsigned())
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -612,13 +612,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.Phase0Block), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				return block.Message.ToGeneric()
 			}())
 		server := &Server{
@@ -634,7 +634,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericSignedBeaconBlock_Phase0)
+		bl, ok := g.Block.(*sila.GenericSignedBeaconBlock_Phase0)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Phase0.Block.MarshalSSZ()
 		require.NoError(t, err)
@@ -649,13 +649,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.AltairBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				return block.Message.ToGeneric()
 			}())
 
@@ -673,7 +673,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericSignedBeaconBlock_Altair)
+		bl, ok := g.Block.(*sila.GenericSignedBeaconBlock_Altair)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Altair.Block.MarshalSSZ()
 		require.NoError(t, err)
@@ -688,13 +688,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.BellatrixBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -716,7 +716,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericSignedBeaconBlock_Bellatrix)
+		bl, ok := g.Block.(*sila.GenericSignedBeaconBlock_Bellatrix)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Bellatrix.Block.MarshalSSZ()
 		require.NoError(t, err)
@@ -731,13 +731,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.BlindedBellatrixBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -758,7 +758,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericSignedBeaconBlock_BlindedBellatrix)
+		bl, ok := g.Block.(*sila.GenericSignedBeaconBlock_BlindedBellatrix)
 		require.Equal(t, true, ok)
 		ssz, err := bl.BlindedBellatrix.Block.MarshalSSZ()
 		require.NoError(t, err)
@@ -773,13 +773,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.CapellaBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -800,7 +800,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericSignedBeaconBlock_Capella)
+		bl, ok := g.Block.(*sila.GenericSignedBeaconBlock_Capella)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Capella.Block.MarshalSSZ()
 		require.NoError(t, err)
@@ -815,13 +815,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.BlindedCapellaBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				g, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				g.PayloadValue = "2000"
@@ -842,7 +842,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericSignedBeaconBlock_BlindedCapella)
+		bl, ok := g.Block.(*sila.GenericSignedBeaconBlock_BlindedCapella)
 		require.Equal(t, true, ok)
 		ssz, err := bl.BlindedCapella.Block.MarshalSSZ()
 		require.NoError(t, err)
@@ -857,13 +857,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.DenebBlockContents), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -884,7 +884,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToUnsigned().ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_Deneb)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_Deneb)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Deneb.MarshalSSZ()
 		require.NoError(t, err)
@@ -899,13 +899,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.BlindedDenebBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -926,7 +926,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.Message.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_BlindedDeneb)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_BlindedDeneb)
 		require.Equal(t, true, ok)
 		ssz, err := bl.BlindedDeneb.MarshalSSZ()
 		require.NoError(t, err)
@@ -941,13 +941,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.ElectraBlockContents), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -968,7 +968,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToUnsigned().ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_Electra)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_Electra)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Electra.MarshalSSZ()
 		require.NoError(t, err)
@@ -983,13 +983,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.BlindedElectraBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -1010,7 +1010,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.Message.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_BlindedElectra)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_BlindedElectra)
 		require.Equal(t, true, ok)
 		ssz, err := bl.BlindedElectra.MarshalSSZ()
 		require.NoError(t, err)
@@ -1025,13 +1025,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.FuluBlockContents), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -1052,7 +1052,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToUnsigned().ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_Fulu)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_Fulu)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Fulu.MarshalSSZ()
 		require.NoError(t, err)
@@ -1067,13 +1067,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.BlindedFuluBlock), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.Message.ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -1094,7 +1094,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.Message.ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_BlindedFulu)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_BlindedFulu)
 		require.Equal(t, true, ok)
 		ssz, err := bl.BlindedFulu.MarshalSSZ()
 		require.NoError(t, err)
@@ -1111,13 +1111,13 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		err := json.Unmarshal([]byte(rpctesting.FuluBlockContents), &block)
 		require.NoError(t, err)
 		v1alpha1Server := mock2.NewMockBeaconNodeValidatorServer(ctrl)
-		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &eth.BlockRequest{
+		v1alpha1Server.EXPECT().GetBeaconBlock(gomock.Any(), &sila.BlockRequest{
 			Slot:         1,
 			RandaoReveal: bRandao,
 			Graffiti:     bGraffiti,
 			SkipMevBoost: false,
 		}).Return(
-			func() (*eth.GenericBeaconBlock, error) {
+			func() (*sila.GenericBeaconBlock, error) {
 				b, err := block.ToUnsigned().ToGeneric()
 				require.NoError(t, err)
 				b.PayloadValue = "2000"
@@ -1138,7 +1138,7 @@ func TestProduceBlockV3SSZ(t *testing.T) {
 		assert.Equal(t, http.StatusOK, writer.Code)
 		g, err := block.ToUnsigned().ToGeneric()
 		require.NoError(t, err)
-		bl, ok := g.Block.(*eth.GenericBeaconBlock_Fulu)
+		bl, ok := g.Block.(*sila.GenericBeaconBlock_Fulu)
 		require.Equal(t, true, ok)
 		ssz, err := bl.Fulu.MarshalSSZ()
 		require.NoError(t, err)

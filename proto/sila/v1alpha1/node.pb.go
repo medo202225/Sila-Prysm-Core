@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/node.proto
 
-package eth
+package sila
 
 import (
 	context "context"
@@ -222,12 +222,12 @@ func (x *SyncStatus) GetSyncing() bool {
 
 // Deprecated: Marked as deprecated in proto/sila/v1alpha1/node.proto.
 type Genesis struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	GenesisTime            *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	SilaDepositAddress []byte                 `protobuf:"bytes,2,opt,name=sila_deposit_address,json=silaDepositAddress,proto3" json:"sila_deposit_address,omitempty"`
-	GenesisValidatorsRoot  []byte                 `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	GenesisTime           *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	SilaDepositAddress    []byte                 `protobuf:"bytes,2,opt,name=sila_deposit_address,json=silaDepositAddress,proto3" json:"sila_deposit_address,omitempty"`
+	GenesisValidatorsRoot []byte                 `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *Genesis) Reset() {
@@ -859,20 +859,20 @@ func file_proto_sila_v1alpha1_node_proto_rawDescGZIP() []byte {
 var file_proto_sila_v1alpha1_node_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_proto_sila_v1alpha1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_sila_v1alpha1_node_proto_goTypes = []any{
-	(PeerDirection)(0),            // 0: sila.eth.v1alpha1.PeerDirection
-	(ConnectionState)(0),          // 1: sila.eth.v1alpha1.ConnectionState
-	(*HealthRequest)(nil),         // 2: sila.eth.v1alpha1.HealthRequest
-	(*SyncStatus)(nil),            // 3: sila.eth.v1alpha1.SyncStatus
-	(*Genesis)(nil),               // 4: sila.eth.v1alpha1.Genesis
-	(*Version)(nil),               // 5: sila.eth.v1alpha1.Version
-	(*ImplementedServices)(nil),   // 6: sila.eth.v1alpha1.ImplementedServices
-	(*PeerRequest)(nil),           // 7: sila.eth.v1alpha1.PeerRequest
-	(*Peers)(nil),                 // 8: sila.eth.v1alpha1.Peers
-	(*Peer)(nil),                  // 9: sila.eth.v1alpha1.Peer
-	(*HostData)(nil),              // 10: sila.eth.v1alpha1.HostData
-	(*SilaExecutionConnectionStatus)(nil),  // 11: sila.eth.v1alpha1.SilaExecutionConnectionStatus
-	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),         // 13: google.protobuf.Empty
+	(PeerDirection)(0),                    // 0: sila.eth.v1alpha1.PeerDirection
+	(ConnectionState)(0),                  // 1: sila.eth.v1alpha1.ConnectionState
+	(*HealthRequest)(nil),                 // 2: sila.eth.v1alpha1.HealthRequest
+	(*SyncStatus)(nil),                    // 3: sila.eth.v1alpha1.SyncStatus
+	(*Genesis)(nil),                       // 4: sila.eth.v1alpha1.Genesis
+	(*Version)(nil),                       // 5: sila.eth.v1alpha1.Version
+	(*ImplementedServices)(nil),           // 6: sila.eth.v1alpha1.ImplementedServices
+	(*PeerRequest)(nil),                   // 7: sila.eth.v1alpha1.PeerRequest
+	(*Peers)(nil),                         // 8: sila.eth.v1alpha1.Peers
+	(*Peer)(nil),                          // 9: sila.eth.v1alpha1.Peer
+	(*HostData)(nil),                      // 10: sila.eth.v1alpha1.HostData
+	(*SilaExecutionConnectionStatus)(nil), // 11: sila.eth.v1alpha1.SilaExecutionConnectionStatus
+	(*timestamppb.Timestamp)(nil),         // 12: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                 // 13: google.protobuf.Empty
 }
 var file_proto_sila_v1alpha1_node_proto_depIdxs = []int32{
 	12, // 0: sila.eth.v1alpha1.Genesis.genesis_time:type_name -> google.protobuf.Timestamp

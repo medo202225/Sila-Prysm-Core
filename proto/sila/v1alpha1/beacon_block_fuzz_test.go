@@ -1,66 +1,66 @@
-package eth_test
+package sila_test
 
 import (
 	"testing"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 func TestBeaconBlock_Fuzz(t *testing.T) {
 	// Phase 0 Full
-	fuzzCopies(t, &eth.SignedBeaconBlock{})
-	fuzzCopies(t, &eth.BeaconBlock{})
-	fuzzCopies(t, &eth.BeaconBlockBody{})
+	fuzzCopies(t, &sila.SignedBeaconBlock{})
+	fuzzCopies(t, &sila.BeaconBlock{})
+	fuzzCopies(t, &sila.BeaconBlockBody{})
 	// Altair Full
-	fuzzCopies(t, &eth.SignedBeaconBlockAltair{})
-	fuzzCopies(t, &eth.BeaconBlockAltair{})
-	fuzzCopies(t, &eth.BeaconBlockBodyAltair{})
+	fuzzCopies(t, &sila.SignedBeaconBlockAltair{})
+	fuzzCopies(t, &sila.BeaconBlockAltair{})
+	fuzzCopies(t, &sila.BeaconBlockBodyAltair{})
 	// Bellatrix Full
-	fuzzCopies(t, &eth.SignedBeaconBlockBellatrix{})
-	fuzzCopies(t, &eth.BeaconBlockBellatrix{})
-	fuzzCopies(t, &eth.BeaconBlockBodyBellatrix{})
+	fuzzCopies(t, &sila.SignedBeaconBlockBellatrix{})
+	fuzzCopies(t, &sila.BeaconBlockBellatrix{})
+	fuzzCopies(t, &sila.BeaconBlockBodyBellatrix{})
 	// Bellatrix Blinded
-	fuzzCopies(t, &eth.SignedBlindedBeaconBlockBellatrix{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockBellatrix{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockBodyBellatrix{})
+	fuzzCopies(t, &sila.SignedBlindedBeaconBlockBellatrix{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockBellatrix{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockBodyBellatrix{})
 	// Capella Full
-	fuzzCopies(t, &eth.SignedBeaconBlockCapella{})
-	fuzzCopies(t, &eth.BeaconBlockCapella{})
-	fuzzCopies(t, &eth.BeaconBlockBodyCapella{})
+	fuzzCopies(t, &sila.SignedBeaconBlockCapella{})
+	fuzzCopies(t, &sila.BeaconBlockCapella{})
+	fuzzCopies(t, &sila.BeaconBlockBodyCapella{})
 	// Capella Blinded
-	fuzzCopies(t, &eth.SignedBlindedBeaconBlockCapella{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockCapella{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockBodyCapella{})
+	fuzzCopies(t, &sila.SignedBlindedBeaconBlockCapella{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockCapella{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockBodyCapella{})
 	// Deneb Full
-	fuzzCopies(t, &eth.SignedBeaconBlockDeneb{})
-	fuzzCopies(t, &eth.BeaconBlockDeneb{})
-	fuzzCopies(t, &eth.BeaconBlockBodyDeneb{})
+	fuzzCopies(t, &sila.SignedBeaconBlockDeneb{})
+	fuzzCopies(t, &sila.BeaconBlockDeneb{})
+	fuzzCopies(t, &sila.BeaconBlockBodyDeneb{})
 	// Deneb Blinded
-	fuzzCopies(t, &eth.SignedBlindedBeaconBlockDeneb{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockDeneb{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockBodyDeneb{})
+	fuzzCopies(t, &sila.SignedBlindedBeaconBlockDeneb{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockDeneb{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockBodyDeneb{})
 	// Electra Full
-	fuzzCopies(t, &eth.SignedBeaconBlockElectra{})
-	fuzzCopies(t, &eth.BeaconBlockElectra{})
-	fuzzCopies(t, &eth.BeaconBlockBodyElectra{})
+	fuzzCopies(t, &sila.SignedBeaconBlockElectra{})
+	fuzzCopies(t, &sila.BeaconBlockElectra{})
+	fuzzCopies(t, &sila.BeaconBlockBodyElectra{})
 	// Electra Blinded
-	fuzzCopies(t, &eth.SignedBlindedBeaconBlockElectra{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockElectra{})
-	fuzzCopies(t, &eth.BlindedBeaconBlockBodyElectra{})
+	fuzzCopies(t, &sila.SignedBlindedBeaconBlockElectra{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockElectra{})
+	fuzzCopies(t, &sila.BlindedBeaconBlockBodyElectra{})
 }
 
 func TestCopyBeaconBlockFields_Fuzz(t *testing.T) {
-	fuzzCopies(t, &eth.SilaData{})
-	fuzzCopies(t, &eth.ProposerSlashing{})
-	fuzzCopies(t, &eth.SignedBeaconBlockHeader{})
-	fuzzCopies(t, &eth.BeaconBlockHeader{})
-	fuzzCopies(t, &eth.Deposit{})
-	fuzzCopies(t, &eth.Deposit_Data{})
-	fuzzCopies(t, &eth.SignedVoluntaryExit{})
-	fuzzCopies(t, &eth.VoluntaryExit{})
-	fuzzCopies(t, &eth.SyncAggregate{})
-	fuzzCopies(t, &eth.SignedBLSToSilaChange{})
-	fuzzCopies(t, &eth.BLSToSilaChange{})
-	fuzzCopies(t, &eth.HistoricalSummary{})
-	fuzzCopies(t, &eth.PendingDeposit{})
+	fuzzCopies(t, &sila.SilaData{})
+	fuzzCopies(t, &sila.ProposerSlashing{})
+	fuzzCopies(t, &sila.SignedBeaconBlockHeader{})
+	fuzzCopies(t, &sila.BeaconBlockHeader{})
+	fuzzCopies(t, &sila.Deposit{})
+	fuzzCopies(t, &sila.Deposit_Data{})
+	fuzzCopies(t, &sila.SignedVoluntaryExit{})
+	fuzzCopies(t, &sila.VoluntaryExit{})
+	fuzzCopies(t, &sila.SyncAggregate{})
+	fuzzCopies(t, &sila.SignedBLSToSilaChange{})
+	fuzzCopies(t, &sila.BLSToSilaChange{})
+	fuzzCopies(t, &sila.HistoricalSummary{})
+	fuzzCopies(t, &sila.PendingDeposit{})
 }

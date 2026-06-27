@@ -8,8 +8,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -53,7 +53,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 			args: args{
 				st: func() state.BeaconState {
 					preSt := st.Copy()
-					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 						Index:             0,
 						Amount:            params.BeaconConfig().FullExitRequestAmount,
 						WithdrawableEpoch: 0,
@@ -63,7 +63,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 					prefix := make([]byte, 12)
 					prefix[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 					v.WithdrawalCredentials = append(prefix, source...)
-					require.NoError(t, preSt.SetValidators([]*eth.Validator{v}))
+					require.NoError(t, preSt.SetValidators([]*sila.Validator{v}))
 					return preSt
 				}(),
 				wrs: []*silaenginev1.WithdrawalRequest{
@@ -83,8 +83,8 @@ func TestProcessWithdrawRequests(t *testing.T) {
 				v.WithdrawalCredentials = append(prefix, source...)
 				v.ExitEpoch = 261
 				v.WithdrawableEpoch = 517
-				require.NoError(t, wantPostSt.SetValidators([]*eth.Validator{v}))
-				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+				require.NoError(t, wantPostSt.SetValidators([]*sila.Validator{v}))
+				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 					Index:             0,
 					Amount:            params.BeaconConfig().FullExitRequestAmount,
 					WithdrawableEpoch: 0,
@@ -108,7 +108,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 			args: args{
 				st: func() state.BeaconState {
 					preSt := st.Copy()
-					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 						Index:             0,
 						Amount:            params.BeaconConfig().FullExitRequestAmount,
 						WithdrawableEpoch: 0,
@@ -118,9 +118,9 @@ func TestProcessWithdrawRequests(t *testing.T) {
 					prefix := make([]byte, 12)
 					prefix[0] = params.BeaconConfig().CompoundingWithdrawalPrefixByte
 					v.WithdrawalCredentials = append(prefix, source...)
-					require.NoError(t, preSt.SetValidators([]*eth.Validator{v}))
+					require.NoError(t, preSt.SetValidators([]*sila.Validator{v}))
 					require.NoError(t, preSt.SetBalances([]uint64{params.BeaconConfig().MinActivationBalance + 200}))
-					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 						Index:             0,
 						Amount:            100,
 						WithdrawableEpoch: 0,
@@ -142,22 +142,22 @@ func TestProcessWithdrawRequests(t *testing.T) {
 				prefix := make([]byte, 12)
 				prefix[0] = params.BeaconConfig().CompoundingWithdrawalPrefixByte
 				v.WithdrawalCredentials = append(prefix, source...)
-				require.NoError(t, wantPostSt.SetValidators([]*eth.Validator{v}))
+				require.NoError(t, wantPostSt.SetValidators([]*sila.Validator{v}))
 				bal, err := wantPostSt.BalanceAtIndex(0)
 				require.NoError(t, err)
 				bal += 200
 				require.NoError(t, wantPostSt.SetBalances([]uint64{bal}))
-				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 					Index:             0,
 					Amount:            0,
 					WithdrawableEpoch: 0,
 				}))
-				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 					Index:             0,
 					Amount:            100,
 					WithdrawableEpoch: 0,
 				}))
-				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+				require.NoError(t, wantPostSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 					Index:             0,
 					Amount:            100,
 					WithdrawableEpoch: 517,
@@ -192,7 +192,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 					prefix[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 					v.WithdrawalCredentials = append(prefix, source...)
 					v.ExitEpoch = 1000
-					require.NoError(t, preSt.SetValidators([]*eth.Validator{v}))
+					require.NoError(t, preSt.SetValidators([]*sila.Validator{v}))
 					return preSt
 				}(),
 				wrs: []*silaenginev1.WithdrawalRequest{
@@ -211,7 +211,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 				prefix[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 				v.WithdrawalCredentials = append(prefix, source...)
 				v.ExitEpoch = 1000
-				require.NoError(t, wantPostSt.SetValidators([]*eth.Validator{v}))
+				require.NoError(t, wantPostSt.SetValidators([]*sila.Validator{v}))
 				eee, err := got.EarliestExitEpoch()
 				require.NoError(t, err)
 				require.Equal(t, eee, primitives.Epoch(0))
@@ -229,7 +229,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 					prefix := make([]byte, 12)
 					prefix[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 					v.WithdrawalCredentials = append(prefix, source...)
-					require.NoError(t, preSt.SetValidators([]*eth.Validator{v}))
+					require.NoError(t, preSt.SetValidators([]*sila.Validator{v}))
 					return preSt
 				}(),
 				wrs: []*silaenginev1.WithdrawalRequest{
@@ -248,7 +248,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 				prefix := make([]byte, 12)
 				prefix[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 				v.WithdrawalCredentials = append(prefix, source...)
-				require.NoError(t, wantPostSt.SetValidators([]*eth.Validator{v}))
+				require.NoError(t, wantPostSt.SetValidators([]*sila.Validator{v}))
 				eee, err := got.EarliestExitEpoch()
 				require.NoError(t, err)
 				require.Equal(t, eee, primitives.Epoch(0))
@@ -264,7 +264,7 @@ func TestProcessWithdrawRequests(t *testing.T) {
 					params.OverrideBeaconConfig(cfg)
 					logrus.SetLevel(logrus.DebugLevel)
 					preSt := st.Copy()
-					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&eth.PendingPartialWithdrawal{
+					require.NoError(t, preSt.AppendPendingPartialWithdrawal(&sila.PendingPartialWithdrawal{
 						Index:             0,
 						Amount:            params.BeaconConfig().FullExitRequestAmount,
 						WithdrawableEpoch: 0,

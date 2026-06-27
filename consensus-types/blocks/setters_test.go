@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	consensus_types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
@@ -14,7 +14,7 @@ import (
 func TestSignedBeaconBlock_SetPayloadAttestations(t *testing.T) {
 	t.Run("rejects pre-Gloas versions", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Fulu)
-		payload := []*eth.PayloadAttestation{{}}
+		payload := []*sila.PayloadAttestation{{}}
 
 		err := sb.SetPayloadAttestations(payload)
 
@@ -24,10 +24,10 @@ func TestSignedBeaconBlock_SetPayloadAttestations(t *testing.T) {
 
 	t.Run("sets payload attestations for Gloas", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Gloas)
-		payload := []*eth.PayloadAttestation{
+		payload := []*sila.PayloadAttestation{
 			{
 				AggregationBits: bitfield.NewBitvector512(),
-				Data: &eth.PayloadAttestationData{
+				Data: &sila.PayloadAttestationData{
 					BeaconBlockRoot:   []byte{0x01, 0x02},
 					PayloadPresent:    true,
 					BlobDataAvailable: true,
@@ -46,7 +46,7 @@ func TestSignedBeaconBlock_SetPayloadAttestations(t *testing.T) {
 func TestSignedBeaconBlock_SetSignedSilaPayloadBid(t *testing.T) {
 	t.Run("rejects pre-Gloas versions", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Fulu)
-		payloadBid := &eth.SignedSilaPayloadBid{}
+		payloadBid := &sila.SignedSilaPayloadBid{}
 
 		err := sb.SetSignedSilaPayloadBid(payloadBid)
 
@@ -56,8 +56,8 @@ func TestSignedBeaconBlock_SetSignedSilaPayloadBid(t *testing.T) {
 
 	t.Run("sets signed sila payload bid for Gloas", func(t *testing.T) {
 		sb := newTestSignedBeaconBlock(version.Gloas)
-		payloadBid := &eth.SignedSilaPayloadBid{
-			Message: &eth.SilaPayloadBid{
+		payloadBid := &sila.SignedSilaPayloadBid{
+			Message: &sila.SilaPayloadBid{
 				ParentBlockHash: []byte{0xaa},
 				BlockHash:       []byte{0xbb},
 				FeeRecipient:    []byte{0xcc},

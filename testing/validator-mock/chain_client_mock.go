@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	empty "github.com/golang/protobuf/ptypes/empty"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -43,10 +43,10 @@ func (m *MockChainClient) EXPECT() *MockChainClientMockRecorder {
 }
 
 // ChainHead mocks base method.
-func (m *MockChainClient) ChainHead(ctx context.Context, in *empty.Empty) (*eth.ChainHead, error) {
+func (m *MockChainClient) ChainHead(ctx context.Context, in *empty.Empty) (*sila.ChainHead, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ChainHead", ctx, in)
-	ret0, _ := ret[0].(*eth.ChainHead)
+	ret0, _ := ret[0].(*sila.ChainHead)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -58,10 +58,10 @@ func (mr *MockChainClientMockRecorder) ChainHead(ctx, in any) *gomock.Call {
 }
 
 // ValidatorBalances mocks base method.
-func (m *MockChainClient) ValidatorBalances(ctx context.Context, in *eth.ListValidatorBalancesRequest) (*eth.ValidatorBalances, error) {
+func (m *MockChainClient) ValidatorBalances(ctx context.Context, in *sila.ListValidatorBalancesRequest) (*sila.ValidatorBalances, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorBalances", ctx, in)
-	ret0, _ := ret[0].(*eth.ValidatorBalances)
+	ret0, _ := ret[0].(*sila.ValidatorBalances)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -73,10 +73,10 @@ func (mr *MockChainClientMockRecorder) ValidatorBalances(ctx, in any) *gomock.Ca
 }
 
 // ValidatorParticipation mocks base method.
-func (m *MockChainClient) ValidatorParticipation(ctx context.Context, in *eth.GetValidatorParticipationRequest) (*eth.ValidatorParticipationResponse, error) {
+func (m *MockChainClient) ValidatorParticipation(ctx context.Context, in *sila.GetValidatorParticipationRequest) (*sila.ValidatorParticipationResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorParticipation", ctx, in)
-	ret0, _ := ret[0].(*eth.ValidatorParticipationResponse)
+	ret0, _ := ret[0].(*sila.ValidatorParticipationResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -88,10 +88,10 @@ func (mr *MockChainClientMockRecorder) ValidatorParticipation(ctx, in any) *gomo
 }
 
 // ValidatorPerformance mocks base method.
-func (m *MockChainClient) ValidatorPerformance(arg0 context.Context, arg1 *eth.ValidatorPerformanceRequest) (*eth.ValidatorPerformanceResponse, error) {
+func (m *MockChainClient) ValidatorPerformance(arg0 context.Context, arg1 *sila.ValidatorPerformanceRequest) (*sila.ValidatorPerformanceResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorPerformance", arg0, arg1)
-	ret0, _ := ret[0].(*eth.ValidatorPerformanceResponse)
+	ret0, _ := ret[0].(*sila.ValidatorPerformanceResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -103,10 +103,10 @@ func (mr *MockChainClientMockRecorder) ValidatorPerformance(arg0, arg1 any) *gom
 }
 
 // ValidatorQueue mocks base method.
-func (m *MockChainClient) ValidatorQueue(ctx context.Context, in *empty.Empty) (*eth.ValidatorQueue, error) {
+func (m *MockChainClient) ValidatorQueue(ctx context.Context, in *empty.Empty) (*sila.ValidatorQueue, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ValidatorQueue", ctx, in)
-	ret0, _ := ret[0].(*eth.ValidatorQueue)
+	ret0, _ := ret[0].(*sila.ValidatorQueue)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -118,10 +118,10 @@ func (mr *MockChainClientMockRecorder) ValidatorQueue(ctx, in any) *gomock.Call 
 }
 
 // Validators mocks base method.
-func (m *MockChainClient) Validators(ctx context.Context, in *eth.ListValidatorsRequest) (*eth.Validators, error) {
+func (m *MockChainClient) Validators(ctx context.Context, in *sila.ListValidatorsRequest) (*sila.Validators, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Validators", ctx, in)
-	ret0, _ := ret[0].(*eth.Validators)
+	ret0, _ := ret[0].(*sila.Validators)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

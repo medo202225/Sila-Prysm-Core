@@ -18,7 +18,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 )
@@ -308,11 +308,11 @@ func (s *Service) constructPendingBlobsRequest(root [32]byte, commitments int) (
 // requestsForMissingIndices constructs a slice of BlobIdentifiers that are missing from
 // local storage, based on a mapping that represents which indices are locally stored,
 // and the highest expected index.
-func requestsForMissingIndices(stored filesystem.BlobStorageSummary, commitments int, root [32]byte) []*eth.BlobIdentifier {
-	var ids []*eth.BlobIdentifier
+func requestsForMissingIndices(stored filesystem.BlobStorageSummary, commitments int, root [32]byte) []*sila.BlobIdentifier {
+	var ids []*sila.BlobIdentifier
 	for i := uint64(0); i < uint64(commitments); i++ {
 		if !stored.HasIndex(i) {
-			ids = append(ids, &eth.BlobIdentifier{Index: i, BlockRoot: root[:]})
+			ids = append(ids, &sila.BlobIdentifier{Index: i, BlockRoot: root[:]})
 		}
 	}
 	return ids

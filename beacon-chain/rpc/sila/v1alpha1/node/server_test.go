@@ -91,7 +91,7 @@ func TestNodeServer_GetImplementedServices(t *testing.T) {
 	res, err := ns.ListImplementedServices(t.Context(), &emptypb.Empty{})
 	require.NoError(t, err)
 	// Expecting node service and Server reflect. As of grpc, v1.65.0, there are two version of server reflection
-	// Services: [sila.eth.v1alpha1.Node grpc.reflection.v1.ServerReflection grpc.reflection.v1alpha.ServerReflection]
+	// Services: [sila.sila.v1alpha1.Node grpc.reflection.v1.ServerReflection grpc.reflection.v1alpha.ServerReflection]
 	assert.Equal(t, 3, len(res.Services))
 }
 

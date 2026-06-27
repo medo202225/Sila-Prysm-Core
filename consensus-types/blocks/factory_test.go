@@ -7,7 +7,7 @@ import (
 
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
@@ -16,116 +16,116 @@ import (
 
 func Test_NewSignedBeaconBlock(t *testing.T) {
 	t.Run("GenericSignedBeaconBlock_Phase0", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_Phase0{
-			Phase0: &eth.SignedBeaconBlock{
-				Block: &eth.BeaconBlock{
-					Body: &eth.BeaconBlockBody{}}}}
+		pb := &sila.GenericSignedBeaconBlock_Phase0{
+			Phase0: &sila.SignedBeaconBlock{
+				Block: &sila.BeaconBlock{
+					Body: &sila.BeaconBlockBody{}}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Phase0, b.Version())
 	})
 	t.Run("SignedBeaconBlock", func(t *testing.T) {
-		pb := &eth.SignedBeaconBlock{
-			Block: &eth.BeaconBlock{
-				Body: &eth.BeaconBlockBody{}}}
+		pb := &sila.SignedBeaconBlock{
+			Block: &sila.BeaconBlock{
+				Body: &sila.BeaconBlockBody{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Phase0, b.Version())
 	})
 	t.Run("GenericSignedBeaconBlock_Altair", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_Altair{
-			Altair: &eth.SignedBeaconBlockAltair{
-				Block: &eth.BeaconBlockAltair{
-					Body: &eth.BeaconBlockBodyAltair{}}}}
+		pb := &sila.GenericSignedBeaconBlock_Altair{
+			Altair: &sila.SignedBeaconBlockAltair{
+				Block: &sila.BeaconBlockAltair{
+					Body: &sila.BeaconBlockBodyAltair{}}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Altair, b.Version())
 	})
 	t.Run("SignedBeaconBlockAltair", func(t *testing.T) {
-		pb := &eth.SignedBeaconBlockAltair{
-			Block: &eth.BeaconBlockAltair{
-				Body: &eth.BeaconBlockBodyAltair{}}}
+		pb := &sila.SignedBeaconBlockAltair{
+			Block: &sila.BeaconBlockAltair{
+				Body: &sila.BeaconBlockBodyAltair{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Altair, b.Version())
 	})
 	t.Run("GenericSignedBeaconBlock_Bellatrix", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_Bellatrix{
-			Bellatrix: &eth.SignedBeaconBlockBellatrix{
-				Block: &eth.BeaconBlockBellatrix{
-					Body: &eth.BeaconBlockBodyBellatrix{}}}}
+		pb := &sila.GenericSignedBeaconBlock_Bellatrix{
+			Bellatrix: &sila.SignedBeaconBlockBellatrix{
+				Block: &sila.BeaconBlockBellatrix{
+					Body: &sila.BeaconBlockBodyBellatrix{}}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 	})
 	t.Run("SignedBeaconBlockBellatrix", func(t *testing.T) {
-		pb := &eth.SignedBeaconBlockBellatrix{
-			Block: &eth.BeaconBlockBellatrix{
-				Body: &eth.BeaconBlockBodyBellatrix{}}}
+		pb := &sila.SignedBeaconBlockBellatrix{
+			Block: &sila.BeaconBlockBellatrix{
+				Body: &sila.BeaconBlockBodyBellatrix{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 	})
 	t.Run("GenericSignedBeaconBlock_BlindedBellatrix", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_BlindedBellatrix{
-			BlindedBellatrix: &eth.SignedBlindedBeaconBlockBellatrix{
-				Block: &eth.BlindedBeaconBlockBellatrix{
-					Body: &eth.BlindedBeaconBlockBodyBellatrix{}}}}
+		pb := &sila.GenericSignedBeaconBlock_BlindedBellatrix{
+			BlindedBellatrix: &sila.SignedBlindedBeaconBlockBellatrix{
+				Block: &sila.BlindedBeaconBlockBellatrix{
+					Body: &sila.BlindedBeaconBlockBodyBellatrix{}}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("SignedBlindedBeaconBlockBellatrix", func(t *testing.T) {
-		pb := &eth.SignedBlindedBeaconBlockBellatrix{
-			Block: &eth.BlindedBeaconBlockBellatrix{
-				Body: &eth.BlindedBeaconBlockBodyBellatrix{}}}
+		pb := &sila.SignedBlindedBeaconBlockBellatrix{
+			Block: &sila.BlindedBeaconBlockBellatrix{
+				Body: &sila.BlindedBeaconBlockBodyBellatrix{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("GenericSignedBeaconBlock_Capella", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_Capella{
-			Capella: &eth.SignedBeaconBlockCapella{
-				Block: &eth.BeaconBlockCapella{
-					Body: &eth.BeaconBlockBodyCapella{}}}}
+		pb := &sila.GenericSignedBeaconBlock_Capella{
+			Capella: &sila.SignedBeaconBlockCapella{
+				Block: &sila.BeaconBlockCapella{
+					Body: &sila.BeaconBlockBodyCapella{}}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 	})
 	t.Run("SignedBeaconBlockCapella", func(t *testing.T) {
-		pb := &eth.SignedBeaconBlockCapella{
-			Block: &eth.BeaconBlockCapella{
-				Body: &eth.BeaconBlockBodyCapella{}}}
+		pb := &sila.SignedBeaconBlockCapella{
+			Block: &sila.BeaconBlockCapella{
+				Body: &sila.BeaconBlockBodyCapella{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 	})
 	t.Run("GenericSignedBeaconBlock_BlindedCapella", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_BlindedCapella{
-			BlindedCapella: &eth.SignedBlindedBeaconBlockCapella{
-				Block: &eth.BlindedBeaconBlockCapella{
-					Body: &eth.BlindedBeaconBlockBodyCapella{}}}}
+		pb := &sila.GenericSignedBeaconBlock_BlindedCapella{
+			BlindedCapella: &sila.SignedBlindedBeaconBlockCapella{
+				Block: &sila.BlindedBeaconBlockCapella{
+					Body: &sila.BlindedBeaconBlockBodyCapella{}}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("SignedBlindedBeaconBlockCapella", func(t *testing.T) {
-		pb := &eth.SignedBlindedBeaconBlockCapella{
-			Block: &eth.BlindedBeaconBlockCapella{
-				Body: &eth.BlindedBeaconBlockBodyCapella{}}}
+		pb := &sila.SignedBlindedBeaconBlockCapella{
+			Block: &sila.BlindedBeaconBlockCapella{
+				Body: &sila.BlindedBeaconBlockBodyCapella{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("GenericSignedBeaconBlock_Deneb", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_Deneb{
-			Deneb: &eth.SignedBeaconBlockContentsDeneb{
-				Block: &eth.SignedBeaconBlockDeneb{Block: &eth.BeaconBlockDeneb{
-					Body: &eth.BeaconBlockBodyDeneb{},
+		pb := &sila.GenericSignedBeaconBlock_Deneb{
+			Deneb: &sila.SignedBeaconBlockContentsDeneb{
+				Block: &sila.SignedBeaconBlockDeneb{Block: &sila.BeaconBlockDeneb{
+					Body: &sila.BeaconBlockBodyDeneb{},
 				}},
 			},
 		}
@@ -134,27 +134,27 @@ func Test_NewSignedBeaconBlock(t *testing.T) {
 		assert.Equal(t, version.Deneb, b.Version())
 	})
 	t.Run("SignedBeaconBlockDeneb", func(t *testing.T) {
-		pb := &eth.SignedBeaconBlockDeneb{
-			Block: &eth.BeaconBlockDeneb{
-				Body: &eth.BeaconBlockBodyDeneb{}}}
+		pb := &sila.SignedBeaconBlockDeneb{
+			Block: &sila.BeaconBlockDeneb{
+				Body: &sila.BeaconBlockBodyDeneb{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Deneb, b.Version())
 	})
 	t.Run("SignedBlindedBeaconBlockDeneb", func(t *testing.T) {
-		pb := &eth.SignedBlindedBeaconBlockDeneb{
-			Message: &eth.BlindedBeaconBlockDeneb{
-				Body: &eth.BlindedBeaconBlockBodyDeneb{}}}
+		pb := &sila.SignedBlindedBeaconBlockDeneb{
+			Message: &sila.BlindedBeaconBlockDeneb{
+				Body: &sila.BlindedBeaconBlockBodyDeneb{}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Deneb, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("GenericSignedBeaconBlock_BlindedDeneb", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_BlindedDeneb{
-			BlindedDeneb: &eth.SignedBlindedBeaconBlockDeneb{
-				Message: &eth.BlindedBeaconBlockDeneb{
-					Body: &eth.BlindedBeaconBlockBodyDeneb{},
+		pb := &sila.GenericSignedBeaconBlock_BlindedDeneb{
+			BlindedDeneb: &sila.SignedBlindedBeaconBlockDeneb{
+				Message: &sila.BlindedBeaconBlockDeneb{
+					Body: &sila.BlindedBeaconBlockBodyDeneb{},
 				}}}
 		b, err := NewSignedBeaconBlock(pb)
 		require.NoError(t, err)
@@ -162,9 +162,9 @@ func Test_NewSignedBeaconBlock(t *testing.T) {
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("SignedBeaconBlockGloas", func(t *testing.T) {
-		pb := &eth.SignedBeaconBlockGloas{
-			Block: &eth.BeaconBlockGloas{
-				Body: &eth.BeaconBlockBodyGloas{},
+		pb := &sila.SignedBeaconBlockGloas{
+			Block: &sila.BeaconBlockGloas{
+				Body: &sila.BeaconBlockBodyGloas{},
 			},
 			Signature: []byte("sig"),
 		}
@@ -174,10 +174,10 @@ func Test_NewSignedBeaconBlock(t *testing.T) {
 		assert.Equal(t, false, b.IsBlinded())
 	})
 	t.Run("GenericSignedBeaconBlock_Gloas", func(t *testing.T) {
-		pb := &eth.GenericSignedBeaconBlock_Gloas{
-			Gloas: &eth.SignedBeaconBlockGloas{
-				Block: &eth.BeaconBlockGloas{
-					Body: &eth.BeaconBlockBodyGloas{},
+		pb := &sila.GenericSignedBeaconBlock_Gloas{
+			Gloas: &sila.SignedBeaconBlockGloas{
+				Block: &sila.BeaconBlockGloas{
+					Body: &sila.BeaconBlockBodyGloas{},
 				},
 				Signature: []byte("sig"),
 			},
@@ -199,111 +199,111 @@ func Test_NewSignedBeaconBlock(t *testing.T) {
 
 func Test_NewBeaconBlock(t *testing.T) {
 	t.Run("GenericBeaconBlock_Phase0", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_Phase0{Phase0: &eth.BeaconBlock{Body: &eth.BeaconBlockBody{}}}
+		pb := &sila.GenericBeaconBlock_Phase0{Phase0: &sila.BeaconBlock{Body: &sila.BeaconBlockBody{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Phase0, b.Version())
 	})
 	t.Run("BeaconBlock", func(t *testing.T) {
-		pb := &eth.BeaconBlock{Body: &eth.BeaconBlockBody{}}
+		pb := &sila.BeaconBlock{Body: &sila.BeaconBlockBody{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Phase0, b.Version())
 	})
 	t.Run("GenericBeaconBlock_Altair", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_Altair{Altair: &eth.BeaconBlockAltair{Body: &eth.BeaconBlockBodyAltair{}}}
+		pb := &sila.GenericBeaconBlock_Altair{Altair: &sila.BeaconBlockAltair{Body: &sila.BeaconBlockBodyAltair{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Altair, b.Version())
 	})
 	t.Run("BeaconBlockAltair", func(t *testing.T) {
-		pb := &eth.BeaconBlockAltair{Body: &eth.BeaconBlockBodyAltair{}}
+		pb := &sila.BeaconBlockAltair{Body: &sila.BeaconBlockBodyAltair{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Altair, b.Version())
 	})
 	t.Run("GenericBeaconBlock_Bellatrix", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_Bellatrix{Bellatrix: &eth.BeaconBlockBellatrix{Body: &eth.BeaconBlockBodyBellatrix{}}}
+		pb := &sila.GenericBeaconBlock_Bellatrix{Bellatrix: &sila.BeaconBlockBellatrix{Body: &sila.BeaconBlockBodyBellatrix{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 	})
 	t.Run("BeaconBlockBellatrix", func(t *testing.T) {
-		pb := &eth.BeaconBlockBellatrix{Body: &eth.BeaconBlockBodyBellatrix{}}
+		pb := &sila.BeaconBlockBellatrix{Body: &sila.BeaconBlockBodyBellatrix{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 	})
 	t.Run("GenericBeaconBlock_BlindedBellatrix", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_BlindedBellatrix{BlindedBellatrix: &eth.BlindedBeaconBlockBellatrix{Body: &eth.BlindedBeaconBlockBodyBellatrix{}}}
+		pb := &sila.GenericBeaconBlock_BlindedBellatrix{BlindedBellatrix: &sila.BlindedBeaconBlockBellatrix{Body: &sila.BlindedBeaconBlockBodyBellatrix{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("BlindedBeaconBlockBellatrix", func(t *testing.T) {
-		pb := &eth.BlindedBeaconBlockBellatrix{Body: &eth.BlindedBeaconBlockBodyBellatrix{}}
+		pb := &sila.BlindedBeaconBlockBellatrix{Body: &sila.BlindedBeaconBlockBodyBellatrix{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Bellatrix, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("GenericBeaconBlock_Capella", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_Capella{Capella: &eth.BeaconBlockCapella{Body: &eth.BeaconBlockBodyCapella{}}}
+		pb := &sila.GenericBeaconBlock_Capella{Capella: &sila.BeaconBlockCapella{Body: &sila.BeaconBlockBodyCapella{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 	})
 	t.Run("BeaconBlockCapella", func(t *testing.T) {
-		pb := &eth.BeaconBlockCapella{Body: &eth.BeaconBlockBodyCapella{}}
+		pb := &sila.BeaconBlockCapella{Body: &sila.BeaconBlockBodyCapella{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 	})
 	t.Run("GenericBeaconBlock_BlindedCapella", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_BlindedCapella{BlindedCapella: &eth.BlindedBeaconBlockCapella{Body: &eth.BlindedBeaconBlockBodyCapella{}}}
+		pb := &sila.GenericBeaconBlock_BlindedCapella{BlindedCapella: &sila.BlindedBeaconBlockCapella{Body: &sila.BlindedBeaconBlockBodyCapella{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("BlindedBeaconBlockCapella", func(t *testing.T) {
-		pb := &eth.BlindedBeaconBlockCapella{Body: &eth.BlindedBeaconBlockBodyCapella{}}
+		pb := &sila.BlindedBeaconBlockCapella{Body: &sila.BlindedBeaconBlockBodyCapella{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Capella, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("GenericBeaconBlock_Deneb", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_Deneb{Deneb: &eth.BeaconBlockContentsDeneb{Block: &eth.BeaconBlockDeneb{
-			Body: &eth.BeaconBlockBodyDeneb{},
+		pb := &sila.GenericBeaconBlock_Deneb{Deneb: &sila.BeaconBlockContentsDeneb{Block: &sila.BeaconBlockDeneb{
+			Body: &sila.BeaconBlockBodyDeneb{},
 		}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Deneb, b.Version())
 	})
 	t.Run("BeaconBlockDeneb", func(t *testing.T) {
-		pb := &eth.BeaconBlockDeneb{Body: &eth.BeaconBlockBodyDeneb{}}
+		pb := &sila.BeaconBlockDeneb{Body: &sila.BeaconBlockBodyDeneb{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Deneb, b.Version())
 	})
 	t.Run("BlindedBeaconBlockDeneb", func(t *testing.T) {
-		pb := &eth.BlindedBeaconBlockDeneb{Body: &eth.BlindedBeaconBlockBodyDeneb{}}
+		pb := &sila.BlindedBeaconBlockDeneb{Body: &sila.BlindedBeaconBlockBodyDeneb{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Deneb, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("GenericBeaconBlock_BlindedDeneb", func(t *testing.T) {
-		pb := &eth.GenericBeaconBlock_BlindedDeneb{BlindedDeneb: &eth.BlindedBeaconBlockDeneb{Body: &eth.BlindedBeaconBlockBodyDeneb{}}}
+		pb := &sila.GenericBeaconBlock_BlindedDeneb{BlindedDeneb: &sila.BlindedBeaconBlockDeneb{Body: &sila.BlindedBeaconBlockBodyDeneb{}}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Deneb, b.Version())
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("BeaconBlockGloas", func(t *testing.T) {
-		pb := &eth.BeaconBlockGloas{Body: &eth.BeaconBlockBodyGloas{}}
+		pb := &sila.BeaconBlockGloas{Body: &sila.BeaconBlockBodyGloas{}}
 		b, err := NewBeaconBlock(pb)
 		require.NoError(t, err)
 		assert.Equal(t, version.Gloas, b.Version())
@@ -321,7 +321,7 @@ func Test_NewBeaconBlock(t *testing.T) {
 
 func Test_NewBeaconBlockBody(t *testing.T) {
 	t.Run("BeaconBlockBody", func(t *testing.T) {
-		pb := &eth.BeaconBlockBody{}
+		pb := &sila.BeaconBlockBody{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -329,7 +329,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, version.Phase0, b.version)
 	})
 	t.Run("BeaconBlockBodyAltair", func(t *testing.T) {
-		pb := &eth.BeaconBlockBodyAltair{}
+		pb := &sila.BeaconBlockBodyAltair{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -337,7 +337,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, version.Altair, b.version)
 	})
 	t.Run("BeaconBlockBodyBellatrix", func(t *testing.T) {
-		pb := &eth.BeaconBlockBodyBellatrix{}
+		pb := &sila.BeaconBlockBodyBellatrix{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -345,7 +345,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, version.Bellatrix, b.version)
 	})
 	t.Run("BlindedBeaconBlockBodyBellatrix", func(t *testing.T) {
-		pb := &eth.BlindedBeaconBlockBodyBellatrix{}
+		pb := &sila.BlindedBeaconBlockBodyBellatrix{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -354,7 +354,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("BeaconBlockBodyCapella", func(t *testing.T) {
-		pb := &eth.BeaconBlockBodyCapella{}
+		pb := &sila.BeaconBlockBodyCapella{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -362,7 +362,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, version.Capella, b.version)
 	})
 	t.Run("BlindedBeaconBlockBodyCapella", func(t *testing.T) {
-		pb := &eth.BlindedBeaconBlockBodyCapella{}
+		pb := &sila.BlindedBeaconBlockBodyCapella{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -371,7 +371,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("BeaconBlockBodyDeneb", func(t *testing.T) {
-		pb := &eth.BeaconBlockBodyDeneb{}
+		pb := &sila.BeaconBlockBodyDeneb{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -379,7 +379,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, version.Deneb, b.version)
 	})
 	t.Run("BlindedBeaconBlockBodyDeneb", func(t *testing.T) {
-		pb := &eth.BlindedBeaconBlockBodyDeneb{}
+		pb := &sila.BlindedBeaconBlockBodyDeneb{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -388,7 +388,7 @@ func Test_NewBeaconBlockBody(t *testing.T) {
 		assert.Equal(t, true, b.IsBlinded())
 	})
 	t.Run("BeaconBlockBodyGloas", func(t *testing.T) {
-		pb := &eth.BeaconBlockBodyGloas{}
+		pb := &sila.BeaconBlockBodyGloas{}
 		i, err := NewBeaconBlockBody(pb)
 		require.NoError(t, err)
 		b, ok := i.(*BeaconBlockBody)
@@ -483,9 +483,9 @@ func TestBuildSignedBeaconBlockFromSilaPayload(t *testing.T) {
 		require.ErrorIs(t, ErrNilSignedBeaconBlock, err)
 	})
 	t.Run("not blinded payload", func(t *testing.T) {
-		altairBlock := &eth.SignedBeaconBlockAltair{
-			Block: &eth.BeaconBlockAltair{
-				Body: &eth.BeaconBlockBodyAltair{}}}
+		altairBlock := &sila.SignedBeaconBlockAltair{
+			Block: &sila.BeaconBlockAltair{
+				Body: &sila.BeaconBlockBodyAltair{}}}
 		blk, err := NewSignedBeaconBlock(altairBlock)
 		require.NoError(t, err)
 		_, err = BuildSignedBeaconBlockFromSilaPayload(blk, nil)
@@ -508,9 +508,9 @@ func TestBuildSignedBeaconBlockFromSilaPayload(t *testing.T) {
 		require.NoError(t, err)
 		header, err := PayloadToHeader(wrapped)
 		require.NoError(t, err)
-		blindedBlock := &eth.SignedBlindedBeaconBlockBellatrix{
-			Block: &eth.BlindedBeaconBlockBellatrix{
-				Body: &eth.BlindedBeaconBlockBodyBellatrix{}}}
+		blindedBlock := &sila.SignedBlindedBeaconBlockBellatrix{
+			Block: &sila.BlindedBeaconBlockBellatrix{
+				Body: &sila.BlindedBeaconBlockBodyBellatrix{}}}
 
 		// Modify the header.
 		header.GasUsed += 1
@@ -537,9 +537,9 @@ func TestBuildSignedBeaconBlockFromSilaPayload(t *testing.T) {
 		require.NoError(t, err)
 		header, err := PayloadToHeader(wrapped)
 		require.NoError(t, err)
-		blindedBlock := &eth.SignedBlindedBeaconBlockBellatrix{
-			Block: &eth.BlindedBeaconBlockBellatrix{
-				Body: &eth.BlindedBeaconBlockBodyBellatrix{}}}
+		blindedBlock := &sila.SignedBlindedBeaconBlockBellatrix{
+			Block: &sila.BlindedBeaconBlockBellatrix{
+				Body: &sila.BlindedBeaconBlockBodyBellatrix{}}}
 		blindedBlock.Block.Body.SilaPayloadHeader = header
 
 		blk, err := NewSignedBeaconBlock(blindedBlock)
@@ -569,9 +569,9 @@ func TestBuildSignedBeaconBlockFromSilaPayload(t *testing.T) {
 		require.NoError(t, err)
 		header, err := PayloadToHeaderDeneb(wrapped)
 		require.NoError(t, err)
-		blindedBlock := &eth.SignedBlindedBeaconBlockDeneb{
-			Message: &eth.BlindedBeaconBlockDeneb{
-				Body: &eth.BlindedBeaconBlockBodyDeneb{}}}
+		blindedBlock := &sila.SignedBlindedBeaconBlockDeneb{
+			Message: &sila.BlindedBeaconBlockDeneb{
+				Body: &sila.BlindedBeaconBlockBodyDeneb{}}}
 		blindedBlock.Message.Body.SilaPayloadHeader = header
 
 		blk, err := NewSignedBeaconBlock(blindedBlock)

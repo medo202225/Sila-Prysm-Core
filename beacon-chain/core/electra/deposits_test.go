@@ -14,7 +14,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/bls"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
@@ -39,7 +39,7 @@ func TestProcessPendingDepositsMultiplesSameDeposits(t *testing.T) {
 	validators := state.Validators()
 	require.Equal(t, 0, len(validators))
 
-	deposits := make([]*eth.PendingDeposit, 0, depositCount)
+	deposits := make([]*sila.PendingDeposit, 0, depositCount)
 	for range depositCount {
 		deposit := stateTesting.GeneratePendingDeposit(t, secretKey, amountETH, withdrawalCredentials, slot)
 		deposits = append(deposits, deposit)
@@ -178,7 +178,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 				wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 				wc[31] = byte(0)
 				dep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
-				require.NoError(t, st.SetPendingDeposits([]*eth.PendingDeposit{dep}))
+				require.NoError(t, st.SetPendingDeposits([]*sila.PendingDeposit{dep}))
 				require.Equal(t, 0, len(st.Validators()))
 				require.Equal(t, 0, len(st.Balances()))
 				return st
@@ -216,7 +216,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 				validators[0].WithdrawalCredentials = wc
 				dep := stateTesting.GeneratePendingDeposit(t, sk, excessBalance, bytesutil.ToBytes32(wc), 0)
 				require.NoError(t, st.SetValidators(validators))
-				require.NoError(t, st.SetPendingDeposits([]*eth.PendingDeposit{dep}))
+				require.NoError(t, st.SetPendingDeposits([]*sila.PendingDeposit{dep}))
 				return st
 			}(),
 			check: func(t *testing.T, st state.BeaconState) {
@@ -324,8 +324,8 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(0)
 		validDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
-		invalidDep := &eth.PendingDeposit{PublicKey: make([]byte, 48)}
-		deps := []*eth.PendingDeposit{validDep, invalidDep}
+		invalidDep := &sila.PendingDeposit{PublicKey: make([]byte, 48)}
+		deps := []*sila.PendingDeposit{validDep, invalidDep}
 		require.NoError(t, electra.BatchProcessNewPendingDeposits(t.Context(), st, deps))
 		require.Equal(t, 1, len(st.Validators()))
 		require.Equal(t, 1, len(st.Balances()))
@@ -341,7 +341,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(0)
 		validDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
-		deps := []*eth.PendingDeposit{validDep, validDep}
+		deps := []*sila.PendingDeposit{validDep, validDep}
 		require.NoError(t, electra.BatchProcessNewPendingDeposits(t.Context(), st, deps))
 		require.Equal(t, 1, len(st.Validators()))
 		require.Equal(t, 1, len(st.Balances()))
@@ -360,7 +360,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 		validDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 		invalidSigDep := stateTesting.GeneratePendingDeposit(t, sk, params.BeaconConfig().MinActivationBalance, bytesutil.ToBytes32(wc), 0)
 		invalidSigDep.Signature = make([]byte, 96)
-		deps := []*eth.PendingDeposit{validDep, invalidSigDep}
+		deps := []*sila.PendingDeposit{validDep, invalidSigDep}
 		require.NoError(t, electra.BatchProcessNewPendingDeposits(t.Context(), st, deps))
 		require.Equal(t, 1, len(st.Validators()))
 		require.Equal(t, 1, len(st.Balances()))
@@ -373,18 +373,18 @@ func TestProcessDeposit_Electra_Simple(t *testing.T) {
 	require.NoError(t, err)
 	silaexecData, err := util.DeterministicSilaData(len(deps))
 	require.NoError(t, err)
-	registry := []*eth.Validator{
+	registry := []*sila.Validator{
 		{
 			PublicKey:             []byte{1},
 			WithdrawalCredentials: []byte{1, 2, 3},
 		},
 	}
 	balances := []uint64{0}
-	st, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
+	st, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
 		Validators: registry,
 		Balances:   balances,
 		SilaData:   silaexecData,
-		Fork: &eth.Fork{
+		Fork: &sila.Fork{
 			PreviousVersion: params.BeaconConfig().ElectraForkVersion,
 			CurrentVersion:  params.BeaconConfig().ElectraForkVersion,
 		},
@@ -407,22 +407,22 @@ func TestProcessDeposit_SkipsInvalidDeposit(t *testing.T) {
 	require.NoError(t, err)
 	root, err := dt.HashTreeRoot()
 	require.NoError(t, err)
-	silaexecData := &eth.SilaData{
+	silaexecData := &sila.SilaData{
 		DepositRoot:  root[:],
 		DepositCount: 1,
 	}
-	registry := []*eth.Validator{
+	registry := []*sila.Validator{
 		{
 			PublicKey:             []byte{1},
 			WithdrawalCredentials: []byte{1, 2, 3},
 		},
 	}
 	balances := []uint64{0}
-	beaconState, err := state_native.InitializeFromProtoElectra(&eth.BeaconStateElectra{
+	beaconState, err := state_native.InitializeFromProtoElectra(&sila.BeaconStateElectra{
 		Validators: registry,
 		Balances:   balances,
 		SilaData:   silaexecData,
-		Fork: &eth.Fork{
+		Fork: &sila.Fork{
 			PreviousVersion: params.BeaconConfig().GenesisForkVersion,
 			CurrentVersion:  params.BeaconConfig().GenesisForkVersion,
 		},
@@ -455,7 +455,7 @@ func TestApplyDeposit_TopUps_WithBadSignature(t *testing.T) {
 	withdrawalCred := make([]byte, 32)
 	withdrawalCred[0] = params.BeaconConfig().CompoundingWithdrawalPrefixByte
 	topUpAmount := uint64(1234)
-	depositData := &eth.Deposit_Data{
+	depositData := &sila.Deposit_Data{
 		PublicKey:             sk.PublicKey().Marshal(),
 		Amount:                topUpAmount,
 		WithdrawalCredentials: withdrawalCred,
@@ -479,13 +479,13 @@ func stateWithActiveBalanceETH(t *testing.T, balETH uint64) state.BeaconState {
 	balPerVal := params.BeaconConfig().MinActivationBalance
 	numVals := gwei / balPerVal
 
-	vals := make([]*eth.Validator, numVals)
+	vals := make([]*sila.Validator, numVals)
 	bals := make([]uint64, numVals)
 	for i := range numVals {
 		wc := make([]byte, 32)
 		wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 		wc[31] = byte(i)
-		vals[i] = &eth.Validator{
+		vals[i] = &sila.Validator{
 			ActivationEpoch:       0,
 			ExitEpoch:             params.BeaconConfig().FarFutureEpoch,
 			EffectiveBalance:      balPerVal,
@@ -494,17 +494,17 @@ func stateWithActiveBalanceETH(t *testing.T, balETH uint64) state.BeaconState {
 		}
 		bals[i] = balPerVal
 	}
-	st, err := state_native.InitializeFromProtoUnsafeElectra(&eth.BeaconStateElectra{
+	st, err := state_native.InitializeFromProtoUnsafeElectra(&sila.BeaconStateElectra{
 		Slot:       10 * params.BeaconConfig().SlotsPerEpoch,
 		Validators: vals,
 		Balances:   bals,
-		Fork: &eth.Fork{
+		Fork: &sila.Fork{
 			CurrentVersion: params.BeaconConfig().ElectraForkVersion,
 		},
 	})
 	require.NoError(t, err)
 	// set some fake finalized checkpoint
-	require.NoError(t, st.SetFinalizedCheckpoint(&eth.Checkpoint{
+	require.NoError(t, st.SetFinalizedCheckpoint(&sila.Checkpoint{
 		Epoch: 0,
 		Root:  make([]byte, 32),
 	}))
@@ -514,7 +514,7 @@ func stateWithActiveBalanceETH(t *testing.T, balETH uint64) state.BeaconState {
 // stateWithPendingDeposits with pending deposits and existing ethbalance
 func stateWithPendingDeposits(t *testing.T, balETH uint64, numDeposits, amount uint64) state.BeaconState {
 	st := stateWithActiveBalanceETH(t, balETH)
-	deps := make([]*eth.PendingDeposit, numDeposits)
+	deps := make([]*sila.PendingDeposit, numDeposits)
 	validators := st.Validators()
 	for i := 0; i < len(deps); i += 1 {
 		sk, err := bls.RandKey()
@@ -577,7 +577,7 @@ func TestApplyPendingDeposit_InvalidSignature(t *testing.T) {
 	wc := make([]byte, 32)
 	wc[0] = params.BeaconConfig().SilaAddressWithdrawalPrefixByte
 	wc[31] = byte(0)
-	dep := &eth.PendingDeposit{
+	dep := &sila.PendingDeposit{
 		PublicKey:             sk.PublicKey().Marshal(),
 		WithdrawalCredentials: wc,
 		Amount:                100,

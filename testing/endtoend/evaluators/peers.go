@@ -3,10 +3,10 @@ package evaluators
 import (
 	"context"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/pkg/errors"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/policies"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
-	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
@@ -20,7 +20,7 @@ var PeersCheck = types.Evaluator{
 }
 
 func peersTest(_ *types.EvaluationContext, conns ...*grpc.ClientConn) error {
-	debugClient := eth.NewDebugClient(conns[0])
+	debugClient := sila.NewDebugClient(conns[0])
 
 	peerResponses, err := debugClient.ListPeers(context.Background(), &emptypb.Empty{})
 	if err != nil {

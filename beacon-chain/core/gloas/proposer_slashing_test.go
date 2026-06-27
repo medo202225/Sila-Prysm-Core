@@ -8,7 +8,7 @@ import (
 	state_native "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state/state-native"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
@@ -22,7 +22,7 @@ func TestRemoveBuilderPendingPayment_CurrentEpoch(t *testing.T) {
 
 	setPendingPayment(t, st, paymentIndex, 123)
 
-	err := RemoveBuilderPendingPayment(st, &eth.BeaconBlockHeader{Slot: headerSlot})
+	err := RemoveBuilderPendingPayment(st, &sila.BeaconBlockHeader{Slot: headerSlot})
 	require.NoError(t, err)
 
 	got := getPendingPayment(t, st, paymentIndex)
@@ -41,7 +41,7 @@ func TestRemoveBuilderPendingPayment_PreviousEpoch(t *testing.T) {
 
 	setPendingPayment(t, st, paymentIndex, 456)
 
-	err := RemoveBuilderPendingPayment(st, &eth.BeaconBlockHeader{Slot: headerSlot})
+	err := RemoveBuilderPendingPayment(st, &sila.BeaconBlockHeader{Slot: headerSlot})
 	require.NoError(t, err)
 
 	got := getPendingPayment(t, st, paymentIndex)
@@ -60,7 +60,7 @@ func TestRemoveBuilderPendingPayment_OlderThanTwoEpoch(t *testing.T) {
 
 	original := getPendingPayment(t, st, paymentIndex)
 
-	err := RemoveBuilderPendingPayment(st, &eth.BeaconBlockHeader{Slot: headerSlot})
+	err := RemoveBuilderPendingPayment(st, &sila.BeaconBlockHeader{Slot: headerSlot})
 	require.NoError(t, err)
 
 	after := getPendingPayment(t, st, paymentIndex)
@@ -73,17 +73,17 @@ func newGloasStateWithPayments(t *testing.T, slot primitives.Slot) state.BeaconS
 
 	slotsPerEpoch := params.BeaconConfig().SlotsPerEpoch
 	paymentCount := int(slotsPerEpoch * 2)
-	payments := make([]*eth.BuilderPendingPayment, paymentCount)
+	payments := make([]*sila.BuilderPendingPayment, paymentCount)
 	for i := range payments {
-		payments[i] = &eth.BuilderPendingPayment{
-			Withdrawal: &eth.BuilderPendingWithdrawal{
+		payments[i] = &sila.BuilderPendingPayment{
+			Withdrawal: &sila.BuilderPendingWithdrawal{
 				FeeRecipient: bytes.Repeat([]byte{0x01}, 20),
 				Amount:       1,
 			},
 		}
 	}
 
-	st, err := state_native.InitializeFromProtoUnsafeGloas(&eth.BeaconStateGloas{
+	st, err := state_native.InitializeFromProtoUnsafeGloas(&sila.BeaconStateGloas{
 		Slot:                   slot,
 		BuilderPendingPayments: payments,
 	})
@@ -94,8 +94,8 @@ func newGloasStateWithPayments(t *testing.T, slot primitives.Slot) state.BeaconS
 func setPendingPayment(t *testing.T, st state.BeaconState, index int, amount uint64) {
 	t.Helper()
 
-	payment := &eth.BuilderPendingPayment{
-		Withdrawal: &eth.BuilderPendingWithdrawal{
+	payment := &sila.BuilderPendingPayment{
+		Withdrawal: &sila.BuilderPendingWithdrawal{
 			FeeRecipient: bytes.Repeat([]byte{0x02}, 20),
 			Amount:       primitives.Gwei(amount),
 		},
@@ -103,10 +103,10 @@ func setPendingPayment(t *testing.T, st state.BeaconState, index int, amount uin
 	require.NoError(t, st.SetBuilderPendingPayment(primitives.Slot(index), payment))
 }
 
-func getPendingPayment(t *testing.T, st state.BeaconState, index int) *eth.BuilderPendingPayment {
+func getPendingPayment(t *testing.T, st state.BeaconState, index int) *sila.BuilderPendingPayment {
 	t.Helper()
 
-	stateProto := st.ToProtoUnsafe().(*eth.BeaconStateGloas)
+	stateProto := st.ToProtoUnsafe().(*sila.BeaconStateGloas)
 
 	return stateProto.BuilderPendingPayments[index]
 }

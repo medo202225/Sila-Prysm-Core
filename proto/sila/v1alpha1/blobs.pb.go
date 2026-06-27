@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/blobs.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
@@ -120,15 +120,15 @@ func (x *SignedBlindedBlobSidecar) GetSignature() []byte {
 }
 
 type BlindedBlobSidecar struct {
-	state           protoimpl.MessageState                                                     `protogen:"open.v1"`
-	BlockRoot       []byte                                                                     `protobuf:"bytes,1,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
-	Index           uint64                                                                     `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
+	state           protoimpl.MessageState                                                            `protogen:"open.v1"`
+	BlockRoot       []byte                                                                            `protobuf:"bytes,1,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
+	Index           uint64                                                                            `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
 	Slot            github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot           `protobuf:"varint,3,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
-	BlockParentRoot []byte                                                                     `protobuf:"bytes,4,opt,name=block_parent_root,json=blockParentRoot,proto3" json:"block_parent_root,omitempty" ssz-size:"32"`
+	BlockParentRoot []byte                                                                            `protobuf:"bytes,4,opt,name=block_parent_root,json=blockParentRoot,proto3" json:"block_parent_root,omitempty" ssz-size:"32"`
 	ProposerIndex   github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.ValidatorIndex `protobuf:"varint,5,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.ValidatorIndex"`
-	BlobRoot        []byte                                                                     `protobuf:"bytes,6,opt,name=blob_root,json=blobRoot,proto3" json:"blob_root,omitempty" ssz-size:"32"`
-	KzgCommitment   []byte                                                                     `protobuf:"bytes,7,opt,name=kzg_commitment,json=kzgCommitment,proto3" json:"kzg_commitment,omitempty" ssz-size:"48"`
-	KzgProof        []byte                                                                     `protobuf:"bytes,8,opt,name=kzg_proof,json=kzgProof,proto3" json:"kzg_proof,omitempty" ssz-size:"48"`
+	BlobRoot        []byte                                                                            `protobuf:"bytes,6,opt,name=blob_root,json=blobRoot,proto3" json:"blob_root,omitempty" ssz-size:"32"`
+	KzgCommitment   []byte                                                                            `protobuf:"bytes,7,opt,name=kzg_commitment,json=kzgCommitment,proto3" json:"kzg_commitment,omitempty" ssz-size:"48"`
+	KzgProof        []byte                                                                            `protobuf:"bytes,8,opt,name=kzg_proof,json=kzgProof,proto3" json:"kzg_proof,omitempty" ssz-size:"48"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }

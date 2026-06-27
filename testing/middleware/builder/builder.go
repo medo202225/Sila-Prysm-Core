@@ -27,7 +27,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/authorization"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila/beacon/engine"
@@ -99,7 +99,7 @@ type Builder struct {
 	currPayload    interfaces.SilaData
 	blobBundle     *v1.BlobsBundle
 	mux            *http.ServeMux
-	validatorMap   map[string]*eth.ValidatorRegistrationV1
+	validatorMap   map[string]*sila.ValidatorRegistrationV1
 	valLock        sync.RWMutex
 	srv            *http.Server
 }
@@ -146,7 +146,7 @@ func New(opts ...Option) (*Builder, error) {
 	p.srv = srv
 	p.execClient = execClient
 	p.valLock.Lock()
-	p.validatorMap = map[string]*eth.ValidatorRegistrationV1{}
+	p.validatorMap = map[string]*sila.ValidatorRegistrationV1{}
 	p.valLock.Unlock()
 	p.mux = router
 	return p, nil
@@ -375,7 +375,7 @@ func (p *Builder) handleHeaderRequest(w http.ResponseWriter, req *http.Request) 
 		Value:  val,
 		Pubkey: secKey.PublicKey().Marshal(),
 	}
-	sszBid := &eth.BuilderBid{
+	sszBid := &sila.BuilderBid{
 		Header: hdr,
 		Value:  val.SSZBytes(),
 		Pubkey: secKey.PublicKey().Marshal(),
@@ -457,7 +457,7 @@ func (p *Builder) handleHeaderRequestCapella(w http.ResponseWriter) {
 		Value:  val,
 		Pubkey: secKey.PublicKey().Marshal(),
 	}
-	sszBid := &eth.BuilderBidCapella{
+	sszBid := &sila.BuilderBidCapella{
 		Header: hdr,
 		Value:  val.SSZBytes(),
 		Pubkey: secKey.PublicKey().Marshal(),
@@ -546,7 +546,7 @@ func (p *Builder) handleHeaderRequestDeneb(w http.ResponseWriter) {
 		Value:              val,
 		Pubkey:             secKey.PublicKey().Marshal(),
 	}
-	sszBid := &eth.BuilderBidDeneb{
+	sszBid := &sila.BuilderBidDeneb{
 		Header:             hdr,
 		BlobKzgCommitments: b.BlobsBundle.KzgCommitments,
 		Value:              val.SSZBytes(),
@@ -647,7 +647,7 @@ func (p *Builder) handleHeaderRequestElectra(w http.ResponseWriter) {
 		SilaRequests:       rv1,
 	}
 
-	sszBid := &eth.BuilderBidElectra{
+	sszBid := &sila.BuilderBidElectra{
 		Header:             hdr,
 		BlobKzgCommitments: b.BlobsBundle.KzgCommitments,
 		Value:              val.SSZBytes(),

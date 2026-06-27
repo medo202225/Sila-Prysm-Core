@@ -20,7 +20,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 )
@@ -111,7 +111,7 @@ func TestGetValidatorCountInvalidRequest(t *testing.T) {
 func TestGetValidatorCount(t *testing.T) {
 	st, _ := util.DeterministicGenesisState(t, 10)
 	farFutureEpoch := params.BeaconConfig().FarFutureEpoch
-	validators := []*eth.Validator{
+	validators := []*sila.Validator{
 		// Pending initialized.
 		{
 			ActivationEpoch:            farFutureEpoch,
@@ -194,7 +194,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"active"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "active",
@@ -209,7 +209,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"active_ongoing"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "active_ongoing",
@@ -224,7 +224,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"active_exiting"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "active_exiting",
@@ -239,7 +239,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"active_slashed"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "active_slashed",
@@ -254,7 +254,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"pending"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "pending",
@@ -269,7 +269,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"pending_initialized"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "pending_initialized",
@@ -284,7 +284,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"pending_queued"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "pending_queued",
@@ -300,7 +300,7 @@ func TestGetValidatorCount(t *testing.T) {
 			currentEpoch: 35,
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "exited",
@@ -316,7 +316,7 @@ func TestGetValidatorCount(t *testing.T) {
 			currentEpoch: 35,
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "exited_slashed",
@@ -332,7 +332,7 @@ func TestGetValidatorCount(t *testing.T) {
 			currentEpoch: 35,
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "exited_unslashed",
@@ -348,7 +348,7 @@ func TestGetValidatorCount(t *testing.T) {
 			currentEpoch: 45,
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "withdrawal",
@@ -364,7 +364,7 @@ func TestGetValidatorCount(t *testing.T) {
 			currentEpoch: 45,
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "withdrawal_possible",
@@ -380,7 +380,7 @@ func TestGetValidatorCount(t *testing.T) {
 			currentEpoch: 45,
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "withdrawal_done",
@@ -395,7 +395,7 @@ func TestGetValidatorCount(t *testing.T) {
 			statuses: []string{"active", "pending"},
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "active",
@@ -413,7 +413,7 @@ func TestGetValidatorCount(t *testing.T) {
 			stateID: "head",
 			expectedResponse: structs.GetValidatorCountResponse{
 				SilaOptimistic: "false",
-				Finalized:           "true",
+				Finalized:      "true",
 				Data: []*structs.ValidatorCount{
 					{
 						Status: "active",

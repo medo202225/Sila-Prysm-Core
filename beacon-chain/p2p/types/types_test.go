@@ -8,16 +8,16 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	ssz "github.com/sila-chain/fastssz"
 )
 
-func generateBlobIdentifiers(n int) []*eth.BlobIdentifier {
-	r := make([]*eth.BlobIdentifier, n)
+func generateBlobIdentifiers(n int) []*sila.BlobIdentifier {
+	r := make([]*sila.BlobIdentifier, n)
 	for i := range n {
-		r[i] = &eth.BlobIdentifier{
+		r[i] = &sila.BlobIdentifier{
 			BlockRoot: bytesutil.PadTo([]byte{byte(i)}, 32),
 			Index:     0,
 		}
@@ -28,7 +28,7 @@ func generateBlobIdentifiers(n int) []*eth.BlobIdentifier {
 func TestBlobSidecarsByRootReq_MarshalSSZ(t *testing.T) {
 	cases := []struct {
 		name         string
-		ids          []*eth.BlobIdentifier
+		ids          []*sila.BlobIdentifier
 		marshalErr   error
 		unmarshalErr error
 		unmarshalMod func([]byte) []byte
@@ -243,10 +243,10 @@ func TestSilaPayloadEnvelopesByRootReq_UnmarshalBadSize(t *testing.T) {
 // ====================================
 // DataColumnsByRootIdentifiers section
 // ====================================
-func generateDataColumnIdentifiers(n int) []*eth.DataColumnsByRootIdentifier {
-	r := make([]*eth.DataColumnsByRootIdentifier, n)
+func generateDataColumnIdentifiers(n int) []*sila.DataColumnsByRootIdentifier {
+	r := make([]*sila.DataColumnsByRootIdentifier, n)
 	for i := range n {
-		r[i] = &eth.DataColumnsByRootIdentifier{
+		r[i] = &sila.DataColumnsByRootIdentifier{
 			BlockRoot: bytesutil.PadTo([]byte{byte(i)}, 32),
 			Columns:   []uint64{uint64(i)},
 		}
@@ -311,7 +311,7 @@ func TestDataColumnSidecarsByRootReq_Marshal(t *testing.T) {
 func TestDataColumnSidecarsByRootReq_MarshalUnmarshal(t *testing.T) {
 	cases := []struct {
 		name         string
-		ids          []*eth.DataColumnsByRootIdentifier
+		ids          []*sila.DataColumnsByRootIdentifier
 		marshalErr   error
 		unmarshalErr string
 		unmarshalMod func([]byte) []byte

@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	fieldparams "github.com/sila-chain/Sila-Consensus-Core/v7/config/fieldparams"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
@@ -14,11 +15,10 @@ import (
 	types "github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/math"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -139,24 +139,24 @@ type ExecHeaderResponse struct {
 }
 
 // ToProto returns a SignedBuilderBid from ExecHeaderResponse for Bellatrix.
-func (ehr *ExecHeaderResponse) ToProto() (*eth.SignedBuilderBid, error) {
+func (ehr *ExecHeaderResponse) ToProto() (*sila.SignedBuilderBid, error) {
 	bb, err := ehr.Data.Message.ToProto()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBuilderBid{
+	return &sila.SignedBuilderBid{
 		Message:   bb,
 		Signature: ehr.Data.Signature,
 	}, nil
 }
 
 // ToProto returns a BuilderBid Proto for Bellatrix.
-func (bb *BuilderBid) ToProto() (*eth.BuilderBid, error) {
+func (bb *BuilderBid) ToProto() (*sila.BuilderBid, error) {
 	header, err := bb.Header.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.BuilderBid{
+	return &sila.BuilderBid{
 		Header: header,
 		// Note that SSZBytes() reverses byte order for the little-endian representation.
 		// Uint256.Bytes() is big-endian, SSZBytes takes this value and reverses it.
@@ -168,8 +168,8 @@ func (bb *BuilderBid) ToProto() (*eth.BuilderBid, error) {
 // BuilderBid is part of ExecHeaderResponse for Bellatrix.
 type BuilderBid struct {
 	Header *structs.SilaPayloadHeader `json:"header"`
-	Value  Uint256                         `json:"value"`
-	Pubkey hexutil.Bytes                   `json:"pubkey"`
+	Value  Uint256                    `json:"value"`
+	Pubkey hexutil.Bytes              `json:"pubkey"`
 }
 
 // ExecHeaderResponseCapella is the response of builder API /sila/v1/builder/header/{slot}/{parent_hash}/{pubkey} for Capella.
@@ -182,24 +182,24 @@ type ExecHeaderResponseCapella struct {
 }
 
 // ToProto returns a SignedBuilderBidCapella Proto from ExecHeaderResponseCapella.
-func (ehr *ExecHeaderResponseCapella) ToProto() (*eth.SignedBuilderBidCapella, error) {
+func (ehr *ExecHeaderResponseCapella) ToProto() (*sila.SignedBuilderBidCapella, error) {
 	bb, err := ehr.Data.Message.ToProto()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBuilderBidCapella{
+	return &sila.SignedBuilderBidCapella{
 		Message:   bb,
 		Signature: bytesutil.SafeCopyBytes(ehr.Data.Signature),
 	}, nil
 }
 
 // ToProto returns a BuilderBidCapella Proto.
-func (bb *BuilderBidCapella) ToProto() (*eth.BuilderBidCapella, error) {
+func (bb *BuilderBidCapella) ToProto() (*sila.BuilderBidCapella, error) {
 	header, err := bb.Header.ToConsensus()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.BuilderBidCapella{
+	return &sila.BuilderBidCapella{
 		Header: header,
 		// Note that SSZBytes() reverses byte order for the little-endian representation.
 		// Uint256.Bytes() is big-endian, SSZBytes takes this value and reverses it.
@@ -211,13 +211,13 @@ func (bb *BuilderBidCapella) ToProto() (*eth.BuilderBidCapella, error) {
 // BuilderBidCapella is field of ExecHeaderResponseCapella.
 type BuilderBidCapella struct {
 	Header *structs.SilaPayloadHeaderCapella `json:"header"`
-	Value  Uint256                                `json:"value"`
-	Pubkey hexutil.Bytes                          `json:"pubkey"`
+	Value  Uint256                           `json:"value"`
+	Pubkey hexutil.Bytes                     `json:"pubkey"`
 }
 
 // ExecPayloadResponseCapella is the builder API /sila/v1/builder/blinded_blocks for Capella.
 type ExecPayloadResponseCapella struct {
-	Version string                          `json:"version"`
+	Version string                     `json:"version"`
 	Data    structs.SilaPayloadCapella `json:"data"`
 }
 
@@ -282,12 +282,12 @@ type Withdrawal struct {
 
 // SignedBlindedBeaconBlockBellatrix is the request object for builder API /sila/v1/builder/blinded_blocks.
 type SignedBlindedBeaconBlockBellatrix struct {
-	*eth.SignedBlindedBeaconBlockBellatrix
+	*sila.SignedBlindedBeaconBlockBellatrix
 }
 
 // ProposerSlashing is a field in BlindedBeaconBlockBodyCapella.
 type ProposerSlashing struct {
-	*eth.ProposerSlashing
+	*sila.ProposerSlashing
 }
 
 // MarshalJSON returns a JSON byte array representation of ProposerSlashing.
@@ -303,7 +303,7 @@ func (s *ProposerSlashing) MarshalJSON() ([]byte, error) {
 
 // SignedBeaconBlockHeader is a field of ProposerSlashing.
 type SignedBeaconBlockHeader struct {
-	*eth.SignedBeaconBlockHeader
+	*sila.SignedBeaconBlockHeader
 }
 
 // MarshalJSON returns a JSON byte array representation of SignedBeaconBlockHeader.
@@ -319,7 +319,7 @@ func (h *SignedBeaconBlockHeader) MarshalJSON() ([]byte, error) {
 
 // BeaconBlockHeader is a field of SignedBeaconBlockHeader.
 type BeaconBlockHeader struct {
-	*eth.BeaconBlockHeader
+	*sila.BeaconBlockHeader
 }
 
 // MarshalJSON returns a JSON byte array representation of BeaconBlockHeader.
@@ -349,19 +349,19 @@ type ExecHeaderResponseDeneb struct {
 }
 
 // ToProto creates a SignedBuilderBidDeneb Proto from ExecHeaderResponseDeneb.
-func (ehr *ExecHeaderResponseDeneb) ToProto() (*eth.SignedBuilderBidDeneb, error) {
+func (ehr *ExecHeaderResponseDeneb) ToProto() (*sila.SignedBuilderBidDeneb, error) {
 	bb, err := ehr.Data.Message.ToProto()
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBuilderBidDeneb{
+	return &sila.SignedBuilderBidDeneb{
 		Message:   bb,
 		Signature: bytesutil.SafeCopyBytes(ehr.Data.Signature),
 	}, nil
 }
 
 // ToProto creates a BuilderBidDeneb Proto from BuilderBidDeneb.
-func (bb *BuilderBidDeneb) ToProto() (*eth.BuilderBidDeneb, error) {
+func (bb *BuilderBidDeneb) ToProto() (*sila.BuilderBidDeneb, error) {
 	header, err := bb.Header.ToConsensus()
 	if err != nil {
 		return nil, err
@@ -376,7 +376,7 @@ func (bb *BuilderBidDeneb) ToProto() (*eth.BuilderBidDeneb, error) {
 		}
 		kzgCommitments[i] = bytesutil.SafeCopyBytes(commit)
 	}
-	return &eth.BuilderBidDeneb{
+	return &sila.BuilderBidDeneb{
 		Header:             header,
 		BlobKzgCommitments: kzgCommitments,
 		// Note that SSZBytes() reverses byte order for the little-endian representation.
@@ -389,21 +389,21 @@ func (bb *BuilderBidDeneb) ToProto() (*eth.BuilderBidDeneb, error) {
 // BuilderBidDeneb is a field of ExecHeaderResponseDeneb.
 type BuilderBidDeneb struct {
 	Header             *structs.SilaPayloadHeaderDeneb `json:"header"`
-	BlobKzgCommitments []hexutil.Bytes                      `json:"blob_kzg_commitments"`
-	Value              Uint256                              `json:"value"`
-	Pubkey             hexutil.Bytes                        `json:"pubkey"`
+	BlobKzgCommitments []hexutil.Bytes                 `json:"blob_kzg_commitments"`
+	Value              Uint256                         `json:"value"`
+	Pubkey             hexutil.Bytes                   `json:"pubkey"`
 }
 
 // ExecPayloadResponseDeneb the response to the build API /sila/v1/builder/blinded_blocks that includes the version, sila payload object , and blobs bundle object.
 type ExecPayloadResponseDeneb struct {
-	Version string                               `json:"version"`
+	Version string                          `json:"version"`
 	Data    *SilaPayloadDenebAndBlobsBundle `json:"data"`
 }
 
 // SilaPayloadDenebAndBlobsBundle the main field used in ExecPayloadResponseDeneb.
 type SilaPayloadDenebAndBlobsBundle struct {
 	SilaPayload *structs.SilaPayloadDeneb `json:"sila_payload"`
-	BlobsBundle      *BlobsBundle                   `json:"blobs_bundle"`
+	BlobsBundle *BlobsBundle              `json:"blobs_bundle"`
 }
 
 // BlobsBundle is a field in SilaPayloadDenebAndBlobsBundle.
@@ -522,19 +522,19 @@ type ExecHeaderResponseElectra struct {
 }
 
 // ToProto creates a SignedBuilderBidElectra Proto from ExecHeaderResponseElectra.
-func (ehr *ExecHeaderResponseElectra) ToProto(slot types.Slot) (*eth.SignedBuilderBidElectra, error) {
+func (ehr *ExecHeaderResponseElectra) ToProto(slot types.Slot) (*sila.SignedBuilderBidElectra, error) {
 	bb, err := ehr.Data.Message.ToProto(slot)
 	if err != nil {
 		return nil, err
 	}
-	return &eth.SignedBuilderBidElectra{
+	return &sila.SignedBuilderBidElectra{
 		Message:   bb,
 		Signature: bytesutil.SafeCopyBytes(ehr.Data.Signature),
 	}, nil
 }
 
 // ToProto creates a BuilderBidElectra Proto from BuilderBidElectra.
-func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*eth.BuilderBidElectra, error) {
+func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*sila.BuilderBidElectra, error) {
 	header, err := bb.Header.ToConsensus()
 	if err != nil {
 		return nil, err
@@ -558,10 +558,10 @@ func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*eth.BuilderBidElectra, e
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to convert SilaRequests")
 	}
-	return &eth.BuilderBidElectra{
+	return &sila.BuilderBidElectra{
 		Header:             header,
 		BlobKzgCommitments: kzgCommitments,
-		SilaRequests:  silaRequests,
+		SilaRequests:       silaRequests,
 		// Note that SSZBytes() reverses byte order for the little-endian representation.
 		// Uint256.Bytes() is big-endian, SSZBytes takes this value and reverses it.
 		Value:  bytesutil.SafeCopyBytes(bb.Value.SSZBytes()),
@@ -572,10 +572,10 @@ func (bb *BuilderBidElectra) ToProto(slot types.Slot) (*eth.BuilderBidElectra, e
 // BuilderBidElectra is a field of ExecHeaderResponseElectra.
 type BuilderBidElectra struct {
 	Header             *structs.SilaPayloadHeaderDeneb `json:"header"`
-	BlobKzgCommitments []hexutil.Bytes                      `json:"blob_kzg_commitments"`
-	SilaRequests  *structs.SilaRequests           `json:"sila_requests"`
-	Value              Uint256                              `json:"value"`
-	Pubkey             hexutil.Bytes                        `json:"pubkey"`
+	BlobKzgCommitments []hexutil.Bytes                 `json:"blob_kzg_commitments"`
+	SilaRequests       *structs.SilaRequests           `json:"sila_requests"`
+	Value              Uint256                         `json:"value"`
+	Pubkey             hexutil.Bytes                   `json:"pubkey"`
 }
 
 // ErrorMessage is a JSON representation of the builder API's returned error message.

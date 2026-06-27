@@ -20,7 +20,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
@@ -416,7 +416,7 @@ func TestGetValidators_FilterByStatus(t *testing.T) {
 	st, _ = util.DeterministicGenesisState(t, 1)
 
 	farFutureEpoch := params.BeaconConfig().FarFutureEpoch
-	validators := []*eth.Validator{
+	validators := []*sila.Validator{
 		// Pending initialized.
 		{
 			ActivationEpoch:            farFutureEpoch,
@@ -1225,7 +1225,7 @@ func TestGetValidatorIdentities(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	st := genesisState.ToProtoUnsafe().(*eth.BeaconState)
+	st := genesisState.ToProtoUnsafe().(*sila.BeaconState)
 
 	t.Run("json", func(t *testing.T) {
 		t.Run("get all", func(t *testing.T) {
@@ -1459,7 +1459,7 @@ func TestGetValidatorIdentities(t *testing.T) {
 		})
 	})
 	t.Run("ssz", func(t *testing.T) {
-		size := uint64((&eth.ValidatorIdentity{}).SizeSSZ())
+		size := uint64((&sila.ValidatorIdentity{}).SizeSSZ())
 
 		t.Run("get all", func(t *testing.T) {
 			chainService := &chainMock.ChainService{}

@@ -5,21 +5,21 @@ import (
 	"path"
 	"testing"
 
+	"github.com/golang/snappy"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/gloas"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/spectest/utils"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
-	"github.com/golang/snappy"
 )
 
-type PayloadAttestationOperation func(ctx context.Context, s state.BeaconState, att *eth.PayloadAttestation) (state.BeaconState, error)
+type PayloadAttestationOperation func(ctx context.Context, s state.BeaconState, att *sila.PayloadAttestation) (state.BeaconState, error)
 
 func RunPayloadAttestationTest(t *testing.T, config string, fork string, sszToState SSZToState) {
-	runPayloadAttestationTest(t, config, fork, "payload_attestation", sszToState, func(ctx context.Context, s state.BeaconState, att *eth.PayloadAttestation) (state.BeaconState, error) {
+	runPayloadAttestationTest(t, config, fork, "payload_attestation", sszToState, func(ctx context.Context, s state.BeaconState, att *sila.PayloadAttestation) (state.BeaconState, error) {
 		// Create a mock block body with the payload attestation
 		body, err := createMockBlockBodyWithPayloadAttestation(att)
 		if err != nil {
@@ -53,7 +53,7 @@ func runPayloadAttestationTest(t *testing.T, config string, fork string, objName
 			require.NoError(t, err, "Failed to decompress payload attestation")
 
 			// Unmarshal payload attestation
-			att := &eth.PayloadAttestation{}
+			att := &sila.PayloadAttestation{}
 			err = att.UnmarshalSSZ(attestationSSZ)
 			require.NoError(t, err, "Failed to unmarshal payload attestation")
 
@@ -63,7 +63,7 @@ func runPayloadAttestationTest(t *testing.T, config string, fork string, objName
 }
 
 // runPayloadAttestationOperationTest runs a single payload attestation operation test
-func runPayloadAttestationOperationTest(t *testing.T, folderPath string, att *eth.PayloadAttestation, sszToState SSZToState, operationFn PayloadAttestationOperation) {
+func runPayloadAttestationOperationTest(t *testing.T, folderPath string, att *sila.PayloadAttestation, sszToState SSZToState, operationFn PayloadAttestationOperation) {
 	preBeaconStateFile, err := util.BazelFileBytes(folderPath, "pre.ssz_snappy")
 	require.NoError(t, err)
 	preBeaconStateSSZ, err := snappy.Decode(nil /* dst */, preBeaconStateFile)
@@ -103,20 +103,20 @@ func runPayloadAttestationOperationTest(t *testing.T, folderPath string, att *et
 }
 
 // createMockBlockBodyWithPayloadAttestation creates a mock block body containing the payload attestation
-func createMockBlockBodyWithPayloadAttestation(att *eth.PayloadAttestation) (*eth.BeaconBlockBodyGloas, error) {
-	body := &eth.BeaconBlockBodyGloas{
-		PayloadAttestations: []*eth.PayloadAttestation{att},
+func createMockBlockBodyWithPayloadAttestation(att *sila.PayloadAttestation) (*sila.BeaconBlockBodyGloas, error) {
+	body := &sila.BeaconBlockBodyGloas{
+		PayloadAttestations: []*sila.PayloadAttestation{att},
 		// Default values
-		RandaoReveal:          make([]byte, 96),
-		SilaData:              &eth.SilaData{},
-		Graffiti:              make([]byte, 32),
-		ProposerSlashings:     []*eth.ProposerSlashing{},
-		AttesterSlashings:     []*eth.AttesterSlashingElectra{},
-		Attestations:          []*eth.AttestationElectra{},
-		Deposits:              []*eth.Deposit{},
-		VoluntaryExits:        []*eth.SignedVoluntaryExit{},
-		SyncAggregate:         &eth.SyncAggregate{},
-		BlsToSilaChanges: []*eth.SignedBLSToSilaChange{},
+		RandaoReveal:      make([]byte, 96),
+		SilaData:          &sila.SilaData{},
+		Graffiti:          make([]byte, 32),
+		ProposerSlashings: []*sila.ProposerSlashing{},
+		AttesterSlashings: []*sila.AttesterSlashingElectra{},
+		Attestations:      []*sila.AttestationElectra{},
+		Deposits:          []*sila.Deposit{},
+		VoluntaryExits:    []*sila.SignedVoluntaryExit{},
+		SyncAggregate:     &sila.SyncAggregate{},
+		BlsToSilaChanges:  []*sila.SignedBLSToSilaChange{},
 	}
 	return body, nil
 }

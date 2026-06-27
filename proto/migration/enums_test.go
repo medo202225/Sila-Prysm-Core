@@ -3,34 +3,34 @@ package migration
 import (
 	"testing"
 
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	v1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaapi/v1"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 )
 
 func TestV1Alpha1ConnectionStateToV1(t *testing.T) {
 	tests := []struct {
 		name      string
-		connState eth.ConnectionState
+		connState sila.ConnectionState
 		want      v1.ConnectionState
 	}{
 		{
 			name:      "DISCONNECTED",
-			connState: eth.ConnectionState_DISCONNECTED,
+			connState: sila.ConnectionState_DISCONNECTED,
 			want:      v1.ConnectionState_DISCONNECTED,
 		},
 		{
 			name:      "CONNECTED",
-			connState: eth.ConnectionState_CONNECTED,
+			connState: sila.ConnectionState_CONNECTED,
 			want:      v1.ConnectionState_CONNECTED,
 		},
 		{
 			name:      "CONNECTING",
-			connState: eth.ConnectionState_CONNECTING,
+			connState: sila.ConnectionState_CONNECTING,
 			want:      v1.ConnectionState_CONNECTING,
 		},
 		{
 			name:      "DISCONNECTING",
-			connState: eth.ConnectionState_DISCONNECTING,
+			connState: sila.ConnectionState_DISCONNECTING,
 			want:      v1.ConnectionState_DISCONNECTING,
 		},
 	}
@@ -46,24 +46,24 @@ func TestV1Alpha1ConnectionStateToV1(t *testing.T) {
 func TestV1Alpha1PeerDirectionToV1(t *testing.T) {
 	tests := []struct {
 		name          string
-		peerDirection eth.PeerDirection
+		peerDirection sila.PeerDirection
 		want          v1.PeerDirection
 		wantErr       bool
 	}{
 		{
 			name:          "UNKNOWN",
-			peerDirection: eth.PeerDirection_UNKNOWN,
+			peerDirection: sila.PeerDirection_UNKNOWN,
 			want:          0,
 			wantErr:       true,
 		},
 		{
 			name:          "INBOUND",
-			peerDirection: eth.PeerDirection_INBOUND,
+			peerDirection: sila.PeerDirection_INBOUND,
 			want:          v1.PeerDirection_INBOUND,
 		},
 		{
 			name:          "OUTBOUND",
-			peerDirection: eth.PeerDirection_OUTBOUND,
+			peerDirection: sila.PeerDirection_OUTBOUND,
 			want:          v1.PeerDirection_OUTBOUND,
 		},
 	}

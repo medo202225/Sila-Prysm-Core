@@ -1,15 +1,15 @@
-package eth_test
+package sila_test
 
 import (
 	"fmt"
 	"testing"
 
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	fuzz "github.com/google/gofuzz"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 )
 
-func fuzzCopies[T any, C eth.Copier[T]](t *testing.T, obj C) {
+func fuzzCopies[T any, C sila.Copier[T]](t *testing.T, obj C) {
 	fuzzer := fuzz.NewWithSeed(0)
 	amount := 1000
 	t.Run(fmt.Sprintf("%T", obj), func(t *testing.T) {

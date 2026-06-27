@@ -3,14 +3,14 @@ package query_test
 import (
 	"testing"
 
-	"github.com/sila-chain/go-bitfield"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/blocks"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz/query"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	ssz "github.com/sila-chain/fastssz"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func TestProve_FixedTestContainer(t *testing.T) {
@@ -63,17 +63,17 @@ func TestProve_BeaconBlock(t *testing.T) {
 		sig[i] = 0x99
 	}
 
-	att := &eth.Attestation{
+	att := &sila.Attestation{
 		AggregationBits: bitfield.Bitlist{0x01},
-		Data: &eth.AttestationData{
+		Data: &sila.AttestationData{
 			Slot:            1,
 			CommitteeIndex:  1,
 			BeaconBlockRoot: root32,
-			Source: &eth.Checkpoint{
+			Source: &sila.Checkpoint{
 				Epoch: 1,
 				Root:  root32,
 			},
-			Target: &eth.Checkpoint{
+			Target: &sila.Checkpoint{
 				Epoch: 1,
 				Root:  root32,
 			},
@@ -84,7 +84,7 @@ func TestProve_BeaconBlock(t *testing.T) {
 	b := util.NewBeaconBlock()
 	b.Block.Slot = 123
 	b.Block.Body.RandaoReveal = randaoReveal
-	b.Block.Body.Attestations = []*eth.Attestation{att}
+	b.Block.Body.Attestations = []*sila.Attestation{att}
 
 	sb, err := blocks.NewSignedBeaconBlock(b)
 	require.NoError(t, err)

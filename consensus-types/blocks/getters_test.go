@@ -8,7 +8,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/interfaces"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
-	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	sila "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	validatorpb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1/validator-client"
 	pb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
@@ -87,8 +87,8 @@ func Test_SignedBeaconBlock_Copy(t *testing.T) {
 	})
 
 	t.Run("gloas deep copy", func(t *testing.T) {
-		payload := []*eth.PayloadAttestation{{Signature: []byte{0x01}}}
-		payloadBid := &eth.SignedSilaPayloadBid{Signature: []byte{0x02}}
+		payload := []*sila.PayloadAttestation{{Signature: []byte{0x01}}}
+		payloadBid := &sila.SignedSilaPayloadBid{Signature: []byte{0x02}}
 		sb := &SignedBeaconBlock{
 			version: version.Gloas,
 			block: &BeaconBlock{
@@ -134,7 +134,7 @@ func Test_SignedBeaconBlock_Header(t *testing.T) {
 	bb := &BeaconBlockBody{
 		version:      version.Phase0,
 		randaoReveal: [96]byte{},
-		silaexecData: &eth.SilaData{
+		silaexecData: &sila.SilaData{
 			DepositRoot: make([]byte, 32),
 			BlockHash:   make([]byte, 32),
 		},
@@ -165,11 +165,11 @@ func Test_SignedBeaconBlock_Header(t *testing.T) {
 }
 
 func Test_SignedBeaconBlock_PbGenericBlockGloas(t *testing.T) {
-	blk := &eth.SignedBeaconBlockGloas{
-		Block: &eth.BeaconBlockGloas{
+	blk := &sila.SignedBeaconBlockGloas{
+		Block: &sila.BeaconBlockGloas{
 			ParentRoot: make([]byte, fieldparams.RootLength),
 			StateRoot:  make([]byte, fieldparams.RootLength),
-			Body: &eth.BeaconBlockBodyGloas{
+			Body: &sila.BeaconBlockBodyGloas{
 				RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 				Graffiti:     make([]byte, fieldparams.RootLength),
 			},
@@ -182,7 +182,7 @@ func Test_SignedBeaconBlock_PbGenericBlockGloas(t *testing.T) {
 	generic, err := sb.PbGenericBlock()
 	require.NoError(t, err)
 	require.NotNil(t, generic)
-	_, ok := generic.Block.(*eth.GenericSignedBeaconBlock_Gloas)
+	_, ok := generic.Block.(*sila.GenericSignedBeaconBlock_Gloas)
 	require.Equal(t, true, ok)
 }
 
@@ -196,7 +196,7 @@ func Test_SignedBeaconBlock_UnmarshalSSZ(t *testing.T) {
 	require.NoError(t, sb.UnmarshalSSZ(buf))
 	msg, err := sb.Proto()
 	require.NoError(t, err)
-	actualPb, ok := msg.(*eth.SignedBeaconBlock)
+	actualPb, ok := msg.(*sila.SignedBeaconBlock)
 	require.Equal(t, true, ok)
 	actualHTR, err := actualPb.HashTreeRoot()
 	require.NoError(t, err)
@@ -306,7 +306,7 @@ func Test_BeaconBlock_UnmarshalSSZ(t *testing.T) {
 	require.NoError(t, b.UnmarshalSSZ(buf))
 	msg, err := b.Proto()
 	require.NoError(t, err)
-	actualPb, ok := msg.(*eth.BeaconBlock)
+	actualPb, ok := msg.(*sila.BeaconBlock)
 	require.Equal(t, true, ok)
 	actualHTR, err := actualPb.HashTreeRoot()
 	require.NoError(t, err)
@@ -346,7 +346,7 @@ func Test_BeaconBlockBody_RandaoReveal(t *testing.T) {
 }
 
 func Test_BeaconBlockBody_SilaData(t *testing.T) {
-	e := &eth.SilaData{DepositRoot: []byte("depositroot")}
+	e := &sila.SilaData{DepositRoot: []byte("depositroot")}
 	bb := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	bb.SetSilaData(e)
 	assert.DeepEqual(t, e, bb.Block().Body().SilaData())
@@ -359,21 +359,21 @@ func Test_BeaconBlockBody_Graffiti(t *testing.T) {
 }
 
 func Test_BeaconBlockBody_ProposerSlashings(t *testing.T) {
-	ps := make([]*eth.ProposerSlashing, 0)
+	ps := make([]*sila.ProposerSlashing, 0)
 	bb := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	bb.SetProposerSlashings(ps)
 	assert.DeepSSZEqual(t, ps, bb.Block().Body().ProposerSlashings())
 }
 
 func Test_BeaconBlockBody_AttesterSlashings(t *testing.T) {
-	as := make([]eth.AttSlashing, 0)
+	as := make([]sila.AttSlashing, 0)
 	bb := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	require.NoError(t, bb.SetAttesterSlashings(as))
 	assert.DeepSSZEqual(t, as, bb.Block().Body().AttesterSlashings())
 }
 
 func Test_BeaconBlockBody_Attestations(t *testing.T) {
-	a := make([]eth.Att, 0)
+	a := make([]sila.Att, 0)
 	bb := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	require.NoError(t, bb.SetAttestations(a))
 	assert.DeepSSZEqual(t, a, bb.Block().Body().Attestations())
@@ -383,7 +383,7 @@ func Test_BeaconBlockBody_ElectraAttestations(t *testing.T) {
 	bb := &SignedBeaconBlock{
 		block: &BeaconBlock{body: &BeaconBlockBody{
 			version: version.Electra,
-			attestationsElectra: []*eth.AttestationElectra{{
+			attestationsElectra: []*sila.AttestationElectra{{
 				Signature: []byte("electra"),
 			}},
 		}}}
@@ -393,7 +393,7 @@ func Test_BeaconBlockBody_ElectraAttestations(t *testing.T) {
 }
 
 func Test_BeaconBlockBody_Deposits(t *testing.T) {
-	d := make([]*eth.Deposit, 0)
+	d := make([]*sila.Deposit, 0)
 	bb := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	bb.SetDeposits(d)
 	assert.DeepSSZEqual(t, d, bb.Block().Body().Deposits())
@@ -407,7 +407,7 @@ func Test_BeaconBlockBody_PayloadAttestations(t *testing.T) {
 	})
 
 	t.Run("gloas returns payload", func(t *testing.T) {
-		payload := []*eth.PayloadAttestation{{Signature: []byte{0x01}}}
+		payload := []*sila.PayloadAttestation{{Signature: []byte{0x01}}}
 		sb := &SignedBeaconBlock{
 			version: version.Gloas,
 			block:   &BeaconBlock{version: version.Gloas, body: &BeaconBlockBody{version: version.Gloas}},
@@ -427,7 +427,7 @@ func Test_BeaconBlockBody_SignedSilaPayloadBid(t *testing.T) {
 	})
 
 	t.Run("gloas returns bid", func(t *testing.T) {
-		bid := &eth.SignedSilaPayloadBid{Signature: []byte{0xFF}}
+		bid := &sila.SignedSilaPayloadBid{Signature: []byte{0xFF}}
 		sb := &SignedBeaconBlock{
 			version: version.Gloas,
 			block:   &BeaconBlock{version: version.Gloas, body: &BeaconBlockBody{version: version.Gloas}},
@@ -440,14 +440,14 @@ func Test_BeaconBlockBody_SignedSilaPayloadBid(t *testing.T) {
 }
 
 func Test_BeaconBlockBody_VoluntaryExits(t *testing.T) {
-	ve := make([]*eth.SignedVoluntaryExit, 0)
+	ve := make([]*sila.SignedVoluntaryExit, 0)
 	bb := &SignedBeaconBlock{block: &BeaconBlock{body: &BeaconBlockBody{}}}
 	bb.SetVoluntaryExits(ve)
 	assert.DeepSSZEqual(t, ve, bb.Block().Body().VoluntaryExits())
 }
 
 func Test_BeaconBlockBody_SyncAggregate(t *testing.T) {
-	sa := &eth.SyncAggregate{}
+	sa := &sila.SyncAggregate{}
 	bb := &SignedBeaconBlock{version: version.Altair, block: &BeaconBlock{version: version.Altair, body: &BeaconBlockBody{version: version.Altair}}}
 	require.NoError(t, bb.SetSyncAggregate(sa))
 	result, err := bb.Block().Body().SyncAggregate()
@@ -456,7 +456,7 @@ func Test_BeaconBlockBody_SyncAggregate(t *testing.T) {
 }
 
 func Test_BeaconBlockBody_BLSToSilaChanges(t *testing.T) {
-	changes := []*eth.SignedBLSToSilaChange{{Message: &eth.BLSToSilaChange{ToSilaAddress: []byte("address")}}}
+	changes := []*sila.SignedBLSToSilaChange{{Message: &sila.BLSToSilaChange{ToSilaAddress: []byte("address")}}}
 	bb := &SignedBeaconBlock{version: version.Capella, block: &BeaconBlock{body: &BeaconBlockBody{version: version.Capella}}}
 	require.NoError(t, bb.SetBLSToSilaChanges(changes))
 	result, err := bb.Block().Body().BLSToSilaChanges()
@@ -565,56 +565,56 @@ func Test_BeaconBlockBody_HashTreeRootGloas(t *testing.T) {
 	assert.DeepEqual(t, expectedHTR, actualHTR)
 }
 
-func hydrateSignedBeaconBlock() *eth.SignedBeaconBlock {
-	return &eth.SignedBeaconBlock{
+func hydrateSignedBeaconBlock() *sila.SignedBeaconBlock {
+	return &sila.SignedBeaconBlock{
 		Signature: make([]byte, fieldparams.BLSSignatureLength),
 		Block:     hydrateBeaconBlock(),
 	}
 }
 
-func hydrateBeaconBlock() *eth.BeaconBlock {
-	return &eth.BeaconBlock{
+func hydrateBeaconBlock() *sila.BeaconBlock {
+	return &sila.BeaconBlock{
 		ParentRoot: make([]byte, fieldparams.RootLength),
 		StateRoot:  make([]byte, fieldparams.RootLength),
 		Body:       hydrateBeaconBlockBody(),
 	}
 }
 
-func hydrateBeaconBlockBody() *eth.BeaconBlockBody {
-	return &eth.BeaconBlockBody{
+func hydrateBeaconBlockBody() *sila.BeaconBlockBody {
+	return &sila.BeaconBlockBody{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
 	}
 }
 
-func hydrateBeaconBlockBodyAltair() *eth.BeaconBlockBodyAltair {
-	return &eth.BeaconBlockBodyAltair{
+func hydrateBeaconBlockBodyAltair() *sila.BeaconBlockBodyAltair {
+	return &sila.BeaconBlockBodyAltair{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      make([]byte, 64),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
 	}
 }
 
-func hydrateBeaconBlockBodyBellatrix() *eth.BeaconBlockBodyBellatrix {
-	return &eth.BeaconBlockBodyBellatrix{
+func hydrateBeaconBlockBodyBellatrix() *sila.BeaconBlockBodyBellatrix {
+	return &sila.BeaconBlockBodyBellatrix{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      make([]byte, 64),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
@@ -633,15 +633,15 @@ func hydrateBeaconBlockBodyBellatrix() *eth.BeaconBlockBodyBellatrix {
 	}
 }
 
-func hydrateBeaconBlockBodyCapella() *eth.BeaconBlockBodyCapella {
-	return &eth.BeaconBlockBodyCapella{
+func hydrateBeaconBlockBodyCapella() *sila.BeaconBlockBodyCapella {
+	return &sila.BeaconBlockBodyCapella{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
@@ -661,23 +661,23 @@ func hydrateBeaconBlockBodyCapella() *eth.BeaconBlockBodyCapella {
 	}
 }
 
-func hydrateBeaconBlockBodyGloas() *eth.BeaconBlockBodyGloas {
+func hydrateBeaconBlockBodyGloas() *sila.BeaconBlockBodyGloas {
 	bits := bitfield.NewBitvector512()
 	bits.SetBitAt(0, true)
 
-	return &eth.BeaconBlockBodyGloas{
+	return &sila.BeaconBlockBodyGloas{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
-		SignedSilaPayloadBid: &eth.SignedSilaPayloadBid{
-			Message: &eth.SilaPayloadBid{
+		SignedSilaPayloadBid: &sila.SignedSilaPayloadBid{
+			Message: &sila.SilaPayloadBid{
 				ParentBlockHash:    make([]byte, fieldparams.RootLength),
 				ParentBlockRoot:    make([]byte, fieldparams.RootLength),
 				BlockHash:          make([]byte, fieldparams.RootLength),
@@ -689,10 +689,10 @@ func hydrateBeaconBlockBodyGloas() *eth.BeaconBlockBodyGloas {
 			Signature: make([]byte, fieldparams.BLSSignatureLength),
 		},
 		ParentSilaRequests: &pb.SilaRequests{},
-		PayloadAttestations: []*eth.PayloadAttestation{
+		PayloadAttestations: []*sila.PayloadAttestation{
 			{
 				AggregationBits: bits,
-				Data: &eth.PayloadAttestationData{
+				Data: &sila.PayloadAttestationData{
 					BeaconBlockRoot: make([]byte, fieldparams.RootLength),
 				},
 				Signature: make([]byte, fieldparams.BLSSignatureLength),
@@ -701,15 +701,15 @@ func hydrateBeaconBlockBodyGloas() *eth.BeaconBlockBodyGloas {
 	}
 }
 
-func hydrateBeaconBlockBodyDeneb() *eth.BeaconBlockBodyDeneb {
-	return &eth.BeaconBlockBodyDeneb{
+func hydrateBeaconBlockBodyDeneb() *sila.BeaconBlockBodyDeneb {
+	return &sila.BeaconBlockBodyDeneb{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},
@@ -729,15 +729,15 @@ func hydrateBeaconBlockBodyDeneb() *eth.BeaconBlockBodyDeneb {
 	}
 }
 
-func hydrateBeaconBlockBodyElectra() *eth.BeaconBlockBodyElectra {
-	return &eth.BeaconBlockBodyElectra{
+func hydrateBeaconBlockBodyElectra() *sila.BeaconBlockBodyElectra {
+	return &sila.BeaconBlockBodyElectra{
 		RandaoReveal: make([]byte, fieldparams.BLSSignatureLength),
 		Graffiti:     make([]byte, fieldparams.RootLength),
-		SilaData: &eth.SilaData{
+		SilaData: &sila.SilaData{
 			DepositRoot: make([]byte, fieldparams.RootLength),
 			BlockHash:   make([]byte, fieldparams.RootLength),
 		},
-		SyncAggregate: &eth.SyncAggregate{
+		SyncAggregate: &sila.SyncAggregate{
 			SyncCommitteeBits:      make([]byte, fieldparams.SyncAggregateSyncCommitteeBytesLength),
 			SyncCommitteeSignature: make([]byte, fieldparams.BLSSignatureLength),
 		},

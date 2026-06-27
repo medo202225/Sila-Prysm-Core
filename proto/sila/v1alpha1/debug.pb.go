@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/debug.proto
 
-package eth
+package sila
 
 import (
 	context "context"
@@ -79,8 +79,8 @@ func (LoggingLevelRequest_Level) EnumDescriptor() ([]byte, []int) {
 }
 
 type InclusionSlotRequest struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
-	Id            uint64                                                           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
+	Id            uint64                                                                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Slot          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -131,7 +131,7 @@ func (x *InclusionSlotRequest) GetSlot() github_com_sila_chain_Sila_Sila_Core_v7
 }
 
 type InclusionSlotResponse struct {
-	state         protoimpl.MessageState                                           `protogen:"open.v1"`
+	state         protoimpl.MessageState                                                  `protogen:"open.v1"`
 	Slot          github_com_sila_chain_Sila_Sila_Core_v7_consensus_types_primitives.Slot `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/sila-chain/Sila-Consensus-Core/v7/consensus-types/primitives.Slot"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

@@ -4,7 +4,7 @@
 // 	protoc        v3.21.7
 // source: proto/sila/v1alpha1/powchain.proto
 
-package eth
+package sila
 
 import (
 	reflect "reflect"
