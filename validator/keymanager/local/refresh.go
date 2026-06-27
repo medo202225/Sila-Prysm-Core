@@ -15,7 +15,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/fsnotify/fsnotify"
 	"github.com/pkg/errors"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 // Listen for changes to the all-accounts.keystore.json file in our wallet

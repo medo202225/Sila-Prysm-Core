@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/schollz/progressbar/v3"
 	"github.com/sirupsen/logrus"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 // ImportKeystores into the local keymanager from an external source.

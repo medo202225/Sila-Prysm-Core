@@ -14,7 +14,7 @@ import (
 	"github.com/sila-chain/Sila/common/hexutil"
 	"github.com/google/uuid"
 	logTest "github.com/sirupsen/logrus/hooks/test"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 const password = "secretPassw0rd$1999"

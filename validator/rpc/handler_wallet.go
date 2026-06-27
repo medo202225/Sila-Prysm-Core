@@ -20,7 +20,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/tyler-smith/go-bip39"
 	"github.com/tyler-smith/go-bip39/wordlists"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 // CreateWallet via an API request, allowing a user to save a new wallet.

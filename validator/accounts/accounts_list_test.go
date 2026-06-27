@@ -25,7 +25,7 @@ import (
 	constant "github.com/sila-chain/Sila-Consensus-Core/v7/validator/testing"
 	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 	"go.uber.org/mock/gomock"
 )
 

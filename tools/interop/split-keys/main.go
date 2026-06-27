@@ -26,7 +26,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/derived"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
 	"github.com/tyler-smith/go-bip39"
-	util "github.com/wealdtech/go-silaconsensus-util"
+	util "github.com/sila-chain/go-silaconsensus-util"
 )
 
 var (

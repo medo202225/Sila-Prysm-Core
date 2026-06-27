@@ -24,7 +24,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
 	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 const (

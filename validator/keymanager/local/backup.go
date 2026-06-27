@@ -9,7 +9,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 // ExtractKeystores retrieves the secret keys for specified public keys

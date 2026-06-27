@@ -21,7 +21,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/logrusorgru/aurora"
 	"github.com/pkg/errors"
-	keystorev4 "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4"
+	keystorev4 "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4"
 )
 
 var (

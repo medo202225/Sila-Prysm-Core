@@ -812,7 +812,7 @@ def sila_deps():
     )
     go_repository(
         name = "com_github_ferranbt_fastssz",
-        importpath = "github.com/ferranbt/fastssz",
+        importpath = "github.com/sila-chain/fastssz",
         sum = "h1:OCDB+dYDEQDvAgtAGnTSidK1Pe2tW3nFV40XyMkTeDY=",
         version = "v0.1.4",
     )
@@ -3235,7 +3235,7 @@ def sila_deps():
     )
     go_repository(
         name = "com_github_wealdtech_go_bytesutil",
-        importpath = "github.com/wealdtech/go-bytesutil",
+        importpath = "github.com/sila-chain/go-bytesutil",
         sum = "h1:ocEg3Ke2GkZ4vQw5lp46rmO+pfqCCTgq35gqOy8JKVc=",
         version = "v1.1.1",
     )
@@ -3244,25 +3244,25 @@ def sila_deps():
         build_directives = [
             "gazelle:resolve go github.com/herumi/bls-eth-go-binary/bls @herumi_bls_eth_go_binary//:go_default_library",
         ],
-        importpath = "github.com/wealdtech/go-silaconsensus-types/v2",
+        importpath = "github.com/sila-chain/go-silaconsensus-types/v2",
         sum = "h1:b5aXlNBLKgjAg/Fft9VvGlqAUCQMP5LzYhlHRrr4yPg=",
         version = "v2.8.2",
     )
     go_repository(
         name = "com_github_wealdtech_go_silaconsensus_util",
-        importpath = "github.com/wealdtech/go-silaconsensus-util",
+        importpath = "github.com/sila-chain/go-silaconsensus-util",
         sum = "h1:2INPeOR35x5LdFFpSzyw954WzTD+DFyHe3yKlJnG5As=",
         version = "v1.6.3",
     )
     go_repository(
         name = "com_github_wealdtech_go_silaconsensus_wallet_encryptor_keystorev4",
-        importpath = "github.com/wealdtech/go-silaconsensus-wallet-encryptor-keystorev4",
+        importpath = "github.com/sila-chain/go-silaconsensus-wallet-encryptor-keystorev4",
         sum = "h1:SxrDVSr+oXuT1x8kZt4uWqNCvv5xXEGV9zd7cuSrZS8=",
         version = "v1.1.3",
     )
     go_repository(
         name = "com_github_wealdtech_go_silaconsensus_wallet_types_v2",
-        importpath = "github.com/wealdtech/go-silaconsensus-wallet-types/v2",
+        importpath = "github.com/sila-chain/go-silaconsensus-wallet-types/v2",
         sum = "h1:264/meVYWt1wFw6Mtn+xwkZkXjID42gNra4rycoiDXI=",
         version = "v2.8.2",
     )

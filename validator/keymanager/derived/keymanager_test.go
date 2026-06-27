@@ -13,7 +13,7 @@ import (
 	mock "github.com/sila-chain/Sila-Consensus-Core/v7/validator/accounts/testing"
 	constant "github.com/sila-chain/Sila-Consensus-Core/v7/validator/testing"
 	"github.com/tyler-smith/go-bip39"
-	util "github.com/wealdtech/go-silaconsensus-util"
+	util "github.com/sila-chain/go-silaconsensus-util"
 )
 
 const (

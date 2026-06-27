@@ -13,7 +13,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/sirupsen/logrus"
-	"github.com/wealdtech/go-bytesutil"
+	"github.com/sila-chain/go-bytesutil"
 )
 
 var (

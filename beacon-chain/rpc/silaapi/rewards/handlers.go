@@ -20,7 +20,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/wealdtech/go-bytesutil"
+	"github.com/sila-chain/go-bytesutil"
 )
 
 // BlockRewards is an HTTP handler for Beacon API getBlockRewards.

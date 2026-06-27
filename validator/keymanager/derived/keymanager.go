@@ -13,7 +13,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/keymanager/local"
 	"github.com/logrusorgru/aurora"
 	"github.com/pkg/errors"
-	util "github.com/wealdtech/go-silaconsensus-util"
+	util "github.com/sila-chain/go-silaconsensus-util"
 )
 
 const (
