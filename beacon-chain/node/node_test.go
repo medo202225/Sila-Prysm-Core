@@ -188,7 +188,7 @@ func Test_hasNetworkFlag(t *testing.T) {
 		},
 		{
 			name:         "Sila main network",
-			networkName:  features.Mainnet.Name,
+			networkName:  features.LegacyMainNetwork.Name,
 			networkValue: "mainnet",
 			want:         true,
 		},

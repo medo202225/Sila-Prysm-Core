@@ -252,8 +252,8 @@ var (
 	// SilaEngineEndpointTimeoutSeconds defines the seconds to wait before timing out Sila engine endpoints with sila payload execution semantics (newPayload, forkchoiceUpdated).
 	// If this flag is not used then default will be used as defined here:
 	// https://github.com/sila-chain/Sila-Execution-APIs/blob/main/src/engine/specification.md#core
-	EngineEndpointTimeoutSeconds = &cli.Uint64Flag{
-		Name:  "engine-endpoint-timeout-seconds",
+	SilaEngineEndpointTimeoutSeconds = &cli.Uint64Flag{
+		Name:  "silaengine-endpoint-timeout-seconds",
 		Usage: "Sets the SilaEngine timeout (seconds) for sila payload semantics (forkchoiceUpdated, newPayload)",
 	}
 	// SilaHeaderReqLimit defines a flag to set the maximum number of headers that a deposit log query can fetch. If none is set, 1000 will be the limit.

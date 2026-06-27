@@ -119,7 +119,7 @@ type Config struct {
 	OperationNotifier           opfeed.Notifier
 	StateGen                    *stategen.State
 	MaxMsgSize                  int
-	SilaEngineCaller            silaexec.EngineCaller
+	SilaEngineCaller            silaexec.SilaEngineCaller
 	OptimisticModeFetcher       blockchain.OptimisticModeFetcher
 	BlockBuilder                builder.BlockBuilder
 	Router                      *http.ServeMux

@@ -28,7 +28,7 @@ var _ e2etypes.MultipleComponentRunners = (*NodeSet)(nil)
 var _ e2etypes.MultipleComponentRunners = (*ProxySet)(nil)
 var _ e2etypes.ComponentRunner = (*Miner)(nil)
 var _ e2etypes.ComponentRunner = (*Node)(nil)
-var _ e2etypes.EngineProxy = (*Proxy)(nil)
+var _ e2etypes.SilaEngineProxy = (*Proxy)(nil)
 
 // WaitForBlocks waits for a certain amount of blocks to be mined by the SILAEXEC chain before returning.
 func WaitForBlocks(ctx context.Context, web3 *ethclient.Client, key *keystore.Key, blocksToWait uint64) error {

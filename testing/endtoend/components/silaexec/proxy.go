@@ -119,10 +119,10 @@ func (s *ProxySet) ComponentAtIndex(i int) (e2etypes.ComponentRunner, error) {
 // Proxy represents an silaengine-api proxy.
 type Proxy struct {
 	e2etypes.ComponentRunner
-	started     chan struct{}
-	index       int
-	engineProxy *proxy.Proxy
-	cancel      func()
+	started         chan struct{}
+	index           int
+	silaEngineProxy *proxy.Proxy
+	cancel          func()
 }
 
 // NewProxy creates and returns an silaengine-api proxy.
@@ -164,7 +164,7 @@ func (node *Proxy) Start(ctx context.Context) error {
 	// Set cancel into context.
 	ctx, cancel := context.WithCancel(ctx)
 	node.cancel = cancel
-	node.engineProxy = nProxy
+	node.silaEngineProxy = nProxy
 	// Mark node as ready.
 	close(node.started)
 	return nProxy.Start(ctx)
@@ -195,18 +195,18 @@ func (node *Proxy) Stop() error {
 
 // AddRequestInterceptor adds in a json-rpc request interceptor.
 func (node *Proxy) AddRequestInterceptor(rpcMethodName string, responseGen func() any, trigger func() bool) {
-	node.engineProxy.AddRequestInterceptor(rpcMethodName, responseGen, trigger)
+	node.silaEngineProxy.AddRequestInterceptor(rpcMethodName, responseGen, trigger)
 }
 
 // RemoveRequestInterceptor removes the request interceptor for the provided method.
 func (node *Proxy) RemoveRequestInterceptor(rpcMethodName string) {
-	node.engineProxy.RemoveRequestInterceptor(rpcMethodName)
+	node.silaEngineProxy.RemoveRequestInterceptor(rpcMethodName)
 }
 
 // ReleaseBackedUpRequests releases backed up http requests which
 // were previously ignored due to our interceptors.
 func (node *Proxy) ReleaseBackedUpRequests(rpcMethodName string) {
-	node.engineProxy.ReleaseBackedUpRequests(rpcMethodName)
+	node.silaEngineProxy.ReleaseBackedUpRequests(rpcMethodName)
 }
 
 func parseJWTSecretFromFile(jwtSecretFile string) ([]byte, error) {

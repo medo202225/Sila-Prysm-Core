@@ -85,7 +85,7 @@ var appFlags = []cli.Flag{
 	flags.MevRelayEndpoint,
 	flags.MaxBuilderEpochMissedSlots,
 	flags.MaxBuilderConsecutiveMissedSlots,
-	flags.EngineEndpointTimeoutSeconds,
+	flags.SilaEngineEndpointTimeoutSeconds,
 	flags.LocalBlockValueBoost,
 	flags.MinBuilderBid,
 	flags.MinBuilderDiff,

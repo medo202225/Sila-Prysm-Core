@@ -29,7 +29,7 @@ var (
 		Usage: "Runs Sila configured for the Hoodi test network.",
 	}
 	// Sila main-network flag for easier tooling, no-op
-	Mainnet = &cli.BoolFlag{
+	LegacyMainNetwork = &cli.BoolFlag{
 		Value: true,
 		Name:  "mainnet",
 		Usage: "Runs on main network. This is the default and can be omitted.",
@@ -242,7 +242,7 @@ var ValidatorFlags = append(deprecatedFlags, []cli.Flag{
 	HoleskyTestnet,
 	SepoliaTestnet,
 	HoodiTestnet,
-	Mainnet,
+	LegacyMainNetwork,
 	SilaMainnet,
 	dynamicKeyReloadDebounceInterval,
 	disableAttestTimely,
@@ -269,7 +269,7 @@ var BeaconChainFlags = combinedFlags([]cli.Flag{
 	HoleskyTestnet,
 	SepoliaTestnet,
 	HoodiTestnet,
-	Mainnet,
+	LegacyMainNetwork,
 	SilaMainnet,
 	disablePeerScorer,
 	disableBroadcastSlashingFlag,
@@ -316,7 +316,7 @@ var E2EBeaconChainFlags = []string{
 
 // NetworkFlags contains a list of network flags.
 var NetworkFlags = []cli.Flag{
-	Mainnet,
+	LegacyMainNetwork,
 	SilaMainnet,
 	SepoliaTestnet,
 	HoleskyTestnet,

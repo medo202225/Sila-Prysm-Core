@@ -24,8 +24,8 @@ import (
 	"github.com/sila-chain/Sila/core/types"
 	"github.com/sila-chain/Sila/crypto/kzg4844"
 	"github.com/sila-chain/Sila/ethclient"
-	silaAccessListClient "github.com/sila-chain/Sila/ethclient/gethclient"
 	"github.com/sila-chain/Sila/rpc"
+	silaAccessListClient "github.com/sila-chain/Sila/silaclient/silaclient"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 )

@@ -82,7 +82,7 @@ func (m *Miner) initAttempt(ctx context.Context, attempt int) (*os.File, error) 
 	}
 
 	// find the Sila execution binary so we can run it.
-	binaryPath, found := bazel.FindBinary("cmd/geth", "geth")
+	binaryPath, found := bazel.FindBinary("cmd/sila", "sila")
 	if !found {
 		return nil, errors.New("Sila binary not found")
 	}

@@ -153,7 +153,7 @@ type Reconstructor interface {
 
 // SilaEngineCaller defines a client that can interact with Sila execution
 // Sila node's engine service via JSON-RPC.
-type EngineCaller interface {
+type SilaEngineCaller interface {
 	NewPayload(ctx context.Context, payload interfaces.SilaData, versionedHashes []common.Hash, parentBlockRoot *common.Hash, silaRequests *pb.SilaRequests) ([]byte, error)
 	ForkchoiceUpdated(
 		ctx context.Context, state *pb.ForkchoiceState, attrs payloadattribute.Attributer,

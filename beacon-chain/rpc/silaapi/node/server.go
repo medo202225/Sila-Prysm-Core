@@ -26,5 +26,5 @@ type Server struct {
 	GenesisTimeFetcher    blockchain.TimeFetcher
 	HeadFetcher           blockchain.HeadFetcher
 	SilaChainInfoFetcher  silaexec.ChainInfoFetcher
-	SilaEngineCaller      silaexec.EngineCaller
+	SilaEngineCaller      silaexec.SilaEngineCaller
 }

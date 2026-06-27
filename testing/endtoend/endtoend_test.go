@@ -17,6 +17,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/client/beacon"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/transition"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/state"
@@ -25,8 +26,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/genesis"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
-	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	eth "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	silaenginev1 "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/components/silaexec"
@@ -35,7 +36,6 @@ import (
 	e2e "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/params"
 	e2etypes "github.com/sila-chain/Sila-Consensus-Core/v7/testing/endtoend/types"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
-	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
@@ -696,7 +696,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		// Set it for sila beacon node.
 		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
-		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
+		component.(e2etypes.SilaEngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
 			return &silaenginev1.PayloadStatus{
 				Status:          silaenginev1.PayloadStatus_SYNCING,
 				LatestValidHash: make([]byte, 32),
@@ -707,7 +707,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		// Set it for lighthouse beacon node.
 		component, err = r.comHandler.silaexecProxy.ComponentAtIndex(2)
 		require.NoError(r.t, err)
-		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
+		component.(e2etypes.SilaEngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
 			return &silaenginev1.PayloadStatus{
 				Status:          silaenginev1.PayloadStatus_SYNCING,
 				LatestValidHash: make([]byte, 32),
@@ -716,7 +716,7 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 			return true
 		})
 
-		component.(e2etypes.EngineProxy).AddRequestInterceptor(forkChoiceUpdatedMethod, func() any {
+		component.(e2etypes.SilaEngineProxy).AddRequestInterceptor(forkChoiceUpdatedMethod, func() any {
 			return &ForkchoiceUpdatedResponse{
 				Status: &silaenginev1.PayloadStatus{
 					Status:          silaenginev1.PayloadStatus_SYNCING,
@@ -734,19 +734,19 @@ func (r *testRunner) multiScenarioMulticlient(ec *e2etypes.EvaluationContext, ep
 		// Disable Interceptor
 		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
-		engineProxy, ok := component.(e2etypes.EngineProxy)
+		silaEngineProxy, ok := component.(e2etypes.SilaEngineProxy)
 		require.Equal(r.t, true, ok)
-		engineProxy.RemoveRequestInterceptor(newPayloadMethod)
-		engineProxy.ReleaseBackedUpRequests(newPayloadMethod)
+		silaEngineProxy.RemoveRequestInterceptor(newPayloadMethod)
+		silaEngineProxy.ReleaseBackedUpRequests(newPayloadMethod)
 
 		// Remove for lighthouse too
 		component, err = r.comHandler.silaexecProxy.ComponentAtIndex(2)
 		require.NoError(r.t, err)
-		engineProxy, ok = component.(e2etypes.EngineProxy)
+		silaEngineProxy, ok = component.(e2etypes.SilaEngineProxy)
 		require.Equal(r.t, true, ok)
-		engineProxy.RemoveRequestInterceptor(newPayloadMethod)
-		engineProxy.RemoveRequestInterceptor(forkChoiceUpdatedMethod)
-		engineProxy.ReleaseBackedUpRequests(newPayloadMethod)
+		silaEngineProxy.RemoveRequestInterceptor(newPayloadMethod)
+		silaEngineProxy.RemoveRequestInterceptor(forkChoiceUpdatedMethod)
+		silaEngineProxy.ReleaseBackedUpRequests(newPayloadMethod)
 
 		return true
 	case recoveryEpochStart, recoveryEpochEnd,
@@ -821,7 +821,7 @@ func (r *testRunner) multiScenario(ec *e2etypes.EvaluationContext, epoch uint64,
 	case optimisticStartEpoch:
 		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
-		component.(e2etypes.EngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
+		component.(e2etypes.SilaEngineProxy).AddRequestInterceptor(newPayloadMethod, func() any {
 			return &silaenginev1.PayloadStatus{
 				Status:          silaenginev1.PayloadStatus_SYNCING,
 				LatestValidHash: make([]byte, 32),
@@ -836,10 +836,10 @@ func (r *testRunner) multiScenario(ec *e2etypes.EvaluationContext, epoch uint64,
 		// Disable Interceptor
 		component, err := r.comHandler.silaexecProxy.ComponentAtIndex(0)
 		require.NoError(r.t, err)
-		engineProxy, ok := component.(e2etypes.EngineProxy)
+		silaEngineProxy, ok := component.(e2etypes.SilaEngineProxy)
 		require.Equal(r.t, true, ok)
-		engineProxy.RemoveRequestInterceptor(newPayloadMethod)
-		engineProxy.ReleaseBackedUpRequests(newPayloadMethod)
+		silaEngineProxy.RemoveRequestInterceptor(newPayloadMethod)
+		silaEngineProxy.ReleaseBackedUpRequests(newPayloadMethod)
 
 		return true
 	case recoveryEpochStart, recoveryEpochEnd,

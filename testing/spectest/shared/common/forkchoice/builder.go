@@ -29,13 +29,13 @@ import (
 type Builder struct {
 	service  *blockchain.Service
 	lastTick int64
-	execMock *engineMock
+	execMock *silaEngineMock
 	vwait    *verification.InitializerWaiter
 	fc       forkchoice.ForkChoicer
 }
 
 func NewBuilder(t testing.TB, initialState state.BeaconState, initialBlock interfaces.ReadOnlySignedBeaconBlock) *Builder {
-	execMock := &engineMock{
+	execMock := &silaEngineMock{
 		powBlocks: make(map[[32]byte]*silapb.PowBlock),
 	}
 	cw := startup.NewClockSynchronizer()

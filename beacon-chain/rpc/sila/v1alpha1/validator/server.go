@@ -84,7 +84,7 @@ type Server struct {
 	StateGen                    stategen.StateManager
 	ReplayerBuilder             stategen.ReplayerBuilder
 	BeaconDB                    db.HeadAccessDatabase
-	SilaEngineCaller            silaexec.EngineCaller
+	SilaEngineCaller            silaexec.SilaEngineCaller
 	BlockBuilder                builder.BlockBuilder
 	BLSChangesPool              blstoexec.PoolManager
 	ClockWaiter                 startup.ClockWaiter

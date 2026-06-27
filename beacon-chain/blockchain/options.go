@@ -65,7 +65,7 @@ func WithChainStartFetcher(f silaexec.ChainStartFetcher) Option {
 }
 
 // WithSilaEngineCaller to call SilaEngine.
-func WithSilaEngineCaller(c silaexec.EngineCaller) Option {
+func WithSilaEngineCaller(c silaexec.SilaEngineCaller) Option {
 	return func(s *Service) error {
 		s.cfg.SilaEngineCaller = c
 		return nil

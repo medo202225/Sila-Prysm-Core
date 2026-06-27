@@ -37,7 +37,7 @@ import (
 func startChainService(t testing.TB,
 	st state.BeaconState,
 	block interfaces.ReadOnlySignedBeaconBlock,
-	engineMock *engineMock,
+	silaEngineMock *silaEngineMock,
 	clockSync *startup.ClockSynchronizer,
 ) (*blockchain.Service, *stategen.State, forkchoice.ForkChoicer) {
 	ctx := context.Background()
@@ -68,7 +68,7 @@ func startChainService(t testing.TB,
 	fc.SetGenesisTime(genesis)
 	sg := stategen.New(db, fc)
 	opts := append([]blockchain.Option{},
-		blockchain.WithSilaEngineCaller(engineMock),
+		blockchain.WithSilaEngineCaller(silaEngineMock),
 		blockchain.WithFinalizedStateAtStartUp(st),
 		blockchain.WithDatabase(db),
 		blockchain.WithAttestationService(attPool),
@@ -94,35 +94,35 @@ func startChainService(t testing.TB,
 	return service, sg, fc
 }
 
-type engineMock struct {
+type silaEngineMock struct {
 	powBlocks       map[[32]byte]*silapb.PowBlock
 	latestValidHash []byte
 	payloadStatus   error
 }
 
-func (m *engineMock) GetPayload(context.Context, [8]byte, primitives.Slot) (*blocks.GetPayloadResponse, error) {
+func (m *silaEngineMock) GetPayload(context.Context, [8]byte, primitives.Slot) (*blocks.GetPayloadResponse, error) {
 	return nil, nil
 }
-func (m *engineMock) GetPayloadV2(context.Context, [8]byte) (*pb.SilaPayloadCapella, error) {
+func (m *silaEngineMock) GetPayloadV2(context.Context, [8]byte) (*pb.SilaPayloadCapella, error) {
 	return nil, nil
 }
-func (m *engineMock) ForkchoiceUpdated(context.Context, *pb.ForkchoiceState, payloadattribute.Attributer) (*pb.PayloadIDBytes, []byte, error) {
+func (m *silaEngineMock) ForkchoiceUpdated(context.Context, *pb.ForkchoiceState, payloadattribute.Attributer) (*pb.PayloadIDBytes, []byte, error) {
 	return nil, m.latestValidHash, m.payloadStatus
 }
 
-func (m *engineMock) NewPayload(context.Context, interfaces.SilaData, []common.Hash, *common.Hash, *pb.SilaRequests) ([]byte, error) {
+func (m *silaEngineMock) NewPayload(context.Context, interfaces.SilaData, []common.Hash, *common.Hash, *pb.SilaRequests) ([]byte, error) {
 	return m.latestValidHash, m.payloadStatus
 }
 
-func (m *engineMock) ForkchoiceUpdatedV2(context.Context, *pb.ForkchoiceState, payloadattribute.Attributer) (*pb.PayloadIDBytes, []byte, error) {
+func (m *silaEngineMock) ForkchoiceUpdatedV2(context.Context, *pb.ForkchoiceState, payloadattribute.Attributer) (*pb.PayloadIDBytes, []byte, error) {
 	return nil, m.latestValidHash, m.payloadStatus
 }
 
-func (m *engineMock) LatestSilaBlock(context.Context) (*pb.SilaBlock, error) {
+func (m *silaEngineMock) LatestSilaBlock(context.Context) (*pb.SilaBlock, error) {
 	return nil, nil
 }
 
-func (m *engineMock) SilaBlockByHash(_ context.Context, hash common.Hash, _ bool) (*pb.SilaBlock, error) {
+func (m *silaEngineMock) SilaBlockByHash(_ context.Context, hash common.Hash, _ bool) (*pb.SilaBlock, error) {
 	b, ok := m.powBlocks[bytesutil.ToBytes32(hash.Bytes())]
 	if !ok {
 		return nil, nil
@@ -139,10 +139,10 @@ func (m *engineMock) SilaBlockByHash(_ context.Context, hash common.Hash, _ bool
 	}, nil
 }
 
-func (m *engineMock) GetTerminalBlockHash(context.Context, uint64) ([]byte, bool, error) {
+func (m *silaEngineMock) GetTerminalBlockHash(context.Context, uint64) ([]byte, bool, error) {
 	return nil, false, nil
 }
 
-func (m *engineMock) GetClientVersionV1(context.Context) ([]*structs.ClientVersionV1, error) {
+func (m *silaEngineMock) GetClientVersionV1(context.Context) ([]*structs.ClientVersionV1, error) {
 	return nil, nil
 }

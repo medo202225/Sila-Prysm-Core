@@ -7,31 +7,31 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/bazelbuild/rules_go/go/tools/bazel"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/container/trie"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/crypto/hash"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/bytesutil"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/io/file"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
-	"github.com/bazelbuild/rules_go/go/tools/bazel"
-	"github.com/pkg/errors"
 	"gopkg.in/yaml.v3"
 )
 
 type testCase struct {
-	DepositData     depositData `yaml:"deposit_data"`
-	DepositDataRoot [32]byte    `yaml:"deposit_data_root"`
-	SilaData        *silaexecData   `yaml:"sila_data"`
-	BlockHeight     uint64      `yaml:"block_height"`
-	Snapshot        snapshot    `yaml:"snapshot"`
+	DepositData     depositData   `yaml:"deposit_data"`
+	DepositDataRoot [32]byte      `yaml:"deposit_data_root"`
+	SilaData        *silaexecData `yaml:"sila_data"`
+	BlockHeight     uint64        `yaml:"block_height"`
+	Snapshot        snapshot      `yaml:"snapshot"`
 }
 
 func (tc *testCase) UnmarshalYAML(value *yaml.Node) error {
 	raw := struct {
-		DepositData     depositData `yaml:"deposit_data"`
-		DepositDataRoot string      `yaml:"deposit_data_root"`
-		SilaData        *silaexecData   `yaml:"sila_data"`
-		BlockHeight     string      `yaml:"block_height"`
-		Snapshot        snapshot    `yaml:"snapshot"`
+		DepositData     depositData   `yaml:"deposit_data"`
+		DepositDataRoot string        `yaml:"deposit_data_root"`
+		SilaData        *silaexecData `yaml:"sila_data"`
+		BlockHeight     string        `yaml:"block_height"`
+		Snapshot        snapshot      `yaml:"snapshot"`
 	}{}
 	err := value.Decode(&raw)
 	if err != nil {
@@ -125,9 +125,9 @@ type snapshot struct {
 
 func (sd *snapshot) UnmarshalYAML(value *yaml.Node) error {
 	raw := struct {
-		Finalized            []string `yaml:"finalized"`
-		DepositRoot          string   `yaml:"deposit_root"`
-		DepositCount         string   `yaml:"deposit_count"`
+		Finalized       []string `yaml:"finalized"`
+		DepositRoot     string   `yaml:"deposit_root"`
+		DepositCount    string   `yaml:"deposit_count"`
 		SilaBlockHash   string   `yaml:"sila_block_hash"`
 		SilaBlockHeight string   `yaml:"sila_block_height"`
 	}{}
@@ -168,7 +168,7 @@ func readTestCases() ([]testCase, error) {
 	}
 	for _, ff := range testFolders {
 		if strings.Contains(ff.ShortPath, "sip4881_spec_tests") &&
-			strings.Contains(ff.ShortPath, "eip-4881/test_cases.yaml") {
+			strings.Contains(ff.ShortPath, "sip-4881/test_cases.yaml") {
 			enc, err := file.ReadFileAsBytes(ff.Path)
 			if err != nil {
 				return nil, err

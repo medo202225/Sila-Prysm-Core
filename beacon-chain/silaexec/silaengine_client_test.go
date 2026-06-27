@@ -44,9 +44,9 @@ import (
 
 var (
 	_ = Reconstructor(&Service{})
-	_ = EngineCaller(&Service{})
+	_ = SilaEngineCaller(&Service{})
 	_ = Reconstructor(&Service{})
-	_ = EngineCaller(&mocks.SilaEngineClient{})
+	_ = SilaEngineCaller(&mocks.SilaEngineClient{})
 )
 
 type RPCClientBad struct {

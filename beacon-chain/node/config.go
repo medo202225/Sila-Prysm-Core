@@ -117,8 +117,8 @@ func configureSilaExecutionConfig(cliCtx *cli.Context) error {
 			return err
 		}
 	}
-	if cliCtx.IsSet(flags.EngineEndpointTimeoutSeconds.Name) {
-		c.ExecutionEngineTimeoutValue = cliCtx.Uint64(flags.EngineEndpointTimeoutSeconds.Name)
+	if cliCtx.IsSet(flags.SilaEngineEndpointTimeoutSeconds.Name) {
+		c.ExecutionEngineTimeoutValue = cliCtx.Uint64(flags.SilaEngineEndpointTimeoutSeconds.Name)
 		if err := params.SetActive(c); err != nil {
 			return err
 		}

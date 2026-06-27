@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/logrusorgru/aurora"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/accounts"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/features"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/tos"
-	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli/v2"
 )
 
@@ -165,7 +165,7 @@ var Commands = []*cli.Command{
 					flags.ExitAllFlag,
 					flags.ForceExitFlag,
 					flags.VoluntaryExitJSONOutputPathFlag,
-					features.Mainnet,
+					features.LegacyMainNetwork,
 					features.SepoliaTestnet,
 					features.HoleskyTestnet,
 					features.HoodiTestnet,

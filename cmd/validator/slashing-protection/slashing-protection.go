@@ -21,7 +21,7 @@ var Commands = &cli.Command{
 			Flags: cmd.WrapFlags([]cli.Flag{
 				cmd.DataDirFlag,
 				flags.SlashingProtectionExportDirFlag,
-				features.Mainnet,
+				features.LegacyMainNetwork,
 				features.SepoliaTestnet,
 				features.HoleskyTestnet,
 				features.HoodiTestnet,
@@ -50,7 +50,7 @@ var Commands = &cli.Command{
 			Flags: cmd.WrapFlags([]cli.Flag{
 				cmd.DataDirFlag,
 				flags.SlashingProtectionJSONFileFlag,
-				features.Mainnet,
+				features.LegacyMainNetwork,
 				features.SepoliaTestnet,
 				features.HoleskyTestnet,
 				features.HoodiTestnet,

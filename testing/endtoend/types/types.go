@@ -98,7 +98,7 @@ type E2EConfig struct {
 	TestCheckpointSync      bool
 	TestSync                bool
 	TestFeature             bool
-	UseSilaShValidator     bool
+	UseSilaShValidator      bool
 	UsePprof                bool
 	UseWeb3RemoteSigner     bool
 	UsePersistentKeyFile    bool
@@ -224,7 +224,7 @@ type MultipleComponentRunners interface {
 	StopAtIndex(i int) error
 }
 
-type EngineProxy interface {
+type SilaEngineProxy interface {
 	ComponentRunner
 	// AddRequestInterceptor adds in a json-rpc request interceptor.
 	AddRequestInterceptor(rpcMethodName string, responseGen func() any, trigger func() bool)

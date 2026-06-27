@@ -163,7 +163,7 @@ var appHelpFlagGroups = []flagGroup{
 		Flags: []cli.Flag{
 			flags.ContractDeploymentBlock,
 			flags.SilaDepositFlag,
-			flags.EngineEndpointTimeoutSeconds,
+			flags.SilaEngineEndpointTimeoutSeconds,
 			flags.SilaHeaderReqLimit,
 			flags.ExecutionEngineEndpoint,
 			flags.ExecutionEngineHeaders,

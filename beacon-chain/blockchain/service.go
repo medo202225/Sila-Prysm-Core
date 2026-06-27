@@ -96,7 +96,7 @@ type config struct {
 	WeakSubjectivityCheckpt  *silapb.Checkpoint
 	BlockFetcher             silaexec.POWBlockFetcher
 	FinalizedStateAtStartUp  state.BeaconState
-	SilaEngineCaller         silaexec.EngineCaller
+	SilaEngineCaller         silaexec.SilaEngineCaller
 	SyncChecker              Checker
 }
 
