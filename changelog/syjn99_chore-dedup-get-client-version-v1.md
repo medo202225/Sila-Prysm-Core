@@ -4,4 +4,4 @@
 
 ### Ignored
 
-- Dedup JSON-RPC call functions for `engine_getClientVersionV1`.
+- Dedup JSON-RPC call functions for `silaEngine_getClientVersionV1`.
