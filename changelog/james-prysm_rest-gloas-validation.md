@@ -15,7 +15,7 @@
   `GET /sila/v1/validator/sila_payload_envelopes/{slot}/{beacon_block_root}`;
   the response is the spec-wire `BlindedSilaPayloadEnvelope` (payload replaced
   by `payload_root`, HTR equivalent to the full envelope). Returns only
-  `Eth-Consensus-Version` (beacon-APIs #580 / PR #10).
+  `Sila-Consensus-Version` (beacon-APIs #580 / PR #10).
 - Stateful self-build now works end to end: the validator client fetches the blinded
   envelope from the BN, signs its (HTR-equivalent) root, and publishes the
   `SignedBlindedSilaPayloadEnvelope`.

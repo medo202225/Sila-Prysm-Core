@@ -118,7 +118,7 @@ func TestProposeAttestation(t *testing.T) {
 
 			ctx := t.Context()
 
-			headers := map[string]string{"Eth-Consensus-Version": version.String(test.attestation.Version())}
+			headers := map[string]string{"Sila-Consensus-Version": version.String(test.attestation.Version())}
 			handler.EXPECT().Post(
 				gomock.Any(),
 				"/sila/v2/beacon/pool/attestations",
@@ -266,7 +266,7 @@ func TestProposeAttestationElectra(t *testing.T) {
 			ctx := t.Context()
 			headerMatcher := gomock.Any()
 			if test.expectedConsensusVersion != "" {
-				headerMatcher = gomock.Eq(map[string]string{"Eth-Consensus-Version": test.expectedConsensusVersion})
+				headerMatcher = gomock.Eq(map[string]string{"Sila-Consensus-Version": test.expectedConsensusVersion})
 			}
 			handler.EXPECT().Post(
 				gomock.Any(),

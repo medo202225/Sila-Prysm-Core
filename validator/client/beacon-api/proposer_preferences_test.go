@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	"go.uber.org/mock/gomock"
 )
 
@@ -42,7 +42,7 @@ func TestSubmitSignedProposerPreferences_Valid(t *testing.T) {
 	handler.EXPECT().Post(
 		gomock.Any(),
 		proposerPreferencesEndpoint,
-		map[string]string{"Eth-Consensus-Version": "gloas"},
+		map[string]string{"Sila-Consensus-Version": "gloas"},
 		bytes.NewBuffer(body),
 		nil,
 	).Return(nil).Times(1)
@@ -69,7 +69,7 @@ func TestSubmitSignedProposerPreferences_HandlerError(t *testing.T) {
 	handler.EXPECT().Post(
 		gomock.Any(),
 		proposerPreferencesEndpoint,
-		map[string]string{"Eth-Consensus-Version": "gloas"},
+		map[string]string{"Sila-Consensus-Version": "gloas"},
 		gomock.Any(),
 		nil,
 	).Return(errors.New("foo error")).Times(1)

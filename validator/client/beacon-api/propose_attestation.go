@@ -5,11 +5,11 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/core/helpers"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 )
 
 func (c *beaconApiValidatorClient) proposeAttestation(ctx context.Context, attestation *silapb.Attestation) (*silapb.AttestResponse, error) {
@@ -21,7 +21,7 @@ func (c *beaconApiValidatorClient) proposeAttestation(ctx context.Context, attes
 		return nil, err
 	}
 
-	headers := map[string]string{"Eth-Consensus-Version": version.String(attestation.Version())}
+	headers := map[string]string{"Sila-Consensus-Version": version.String(attestation.Version())}
 	err = c.handler.Post(
 		ctx,
 		"/sila/v2/beacon/pool/attestations",
@@ -50,7 +50,7 @@ func (c *beaconApiValidatorClient) proposeAttestationElectra(ctx context.Context
 		return nil, err
 	}
 	consensusVersion := version.String(slots.ToForkVersion(attestation.Data.Slot))
-	headers := map[string]string{"Eth-Consensus-Version": consensusVersion}
+	headers := map[string]string{"Sila-Consensus-Version": consensusVersion}
 	if err = c.handler.Post(
 		ctx,
 		"/sila/v2/beacon/pool/attestations",

@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sila-chain/go-bitfield"
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
@@ -44,7 +44,7 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/util"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
+	"github.com/sila-chain/go-bitfield"
 )
 
 func TestListAttestationsV2(t *testing.T) {
@@ -1376,17 +1376,17 @@ func TestSubmitSyncCommitteeSignatures(t *testing.T) {
 func TestListBLSToSilaChanges(t *testing.T) {
 	change1 := &silapbv1alpha1.SignedBLSToSilaChange{
 		Message: &silapbv1alpha1.BLSToSilaChange{
-			ValidatorIndex:     1,
-			FromBlsPubkey:      bytesutil.PadTo([]byte("pubkey1"), 48),
-			ToSilaAddress: bytesutil.PadTo([]byte("address1"), 20),
+			ValidatorIndex: 1,
+			FromBlsPubkey:  bytesutil.PadTo([]byte("pubkey1"), 48),
+			ToSilaAddress:  bytesutil.PadTo([]byte("address1"), 20),
 		},
 		Signature: bytesutil.PadTo([]byte("signature1"), 96),
 	}
 	change2 := &silapbv1alpha1.SignedBLSToSilaChange{
 		Message: &silapbv1alpha1.BLSToSilaChange{
-			ValidatorIndex:     2,
-			FromBlsPubkey:      bytesutil.PadTo([]byte("pubkey2"), 48),
-			ToSilaAddress: bytesutil.PadTo([]byte("address2"), 20),
+			ValidatorIndex: 2,
+			FromBlsPubkey:  bytesutil.PadTo([]byte("pubkey2"), 48),
+			ToSilaAddress:  bytesutil.PadTo([]byte("address2"), 20),
 		},
 		Signature: bytesutil.PadTo([]byte("signature2"), 96),
 	}
@@ -1444,9 +1444,9 @@ func TestSubmitSignedBLSToSilaChanges_Ok(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapbv1alpha1.BLSToSilaChange{
-			ToSilaAddress: silaAddress,
-			ValidatorIndex:     primitives.ValidatorIndex(i),
-			FromBlsPubkey:      pubkey,
+			ToSilaAddress:  silaAddress,
+			ValidatorIndex: primitives.ValidatorIndex(i),
+			FromBlsPubkey:  pubkey,
 		}
 
 		hashFn := ssz.NewHasherFunc(hash.CustomSHA256Hasher())
@@ -1542,9 +1542,9 @@ func TestSubmitSignedBLSToSilaChanges_Bellatrix(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapbv1alpha1.BLSToSilaChange{
-			ToSilaAddress: silaAddress,
-			ValidatorIndex:     primitives.ValidatorIndex(i),
-			FromBlsPubkey:      pubkey,
+			ToSilaAddress:  silaAddress,
+			ValidatorIndex: primitives.ValidatorIndex(i),
+			FromBlsPubkey:  pubkey,
 		}
 
 		hashFn := ssz.NewHasherFunc(hash.CustomSHA256Hasher())
@@ -1656,9 +1656,9 @@ func TestSubmitSignedBLSToSilaChanges_Failures(t *testing.T) {
 		pubkey := priv.PublicKey().Marshal()
 
 		message := &silapbv1alpha1.BLSToSilaChange{
-			ToSilaAddress: silaAddress,
-			ValidatorIndex:     primitives.ValidatorIndex(i),
-			FromBlsPubkey:      pubkey,
+			ToSilaAddress:  silaAddress,
+			ValidatorIndex: primitives.ValidatorIndex(i),
+			FromBlsPubkey:  pubkey,
 		}
 
 		hashFn := ssz.NewHasherFunc(hash.CustomSHA256Hasher())
@@ -2704,7 +2704,7 @@ func TestSubmitPayloadAttestations(t *testing.T) {
 
 		s.SubmitPayloadAttestations(writer, request)
 		assert.Equal(t, http.StatusBadRequest, writer.Code)
-		assert.StringContains(t, "Eth-Consensus-Version", writer.Body.String())
+		assert.StringContains(t, "Sila-Consensus-Version", writer.Body.String())
 	})
 	t.Run("ok", func(t *testing.T) {
 		params.SetupTestConfigCleanup(t)

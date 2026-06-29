@@ -5,11 +5,11 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/runtime/version"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
-	"github.com/pkg/errors"
 )
 
 func (c *beaconApiValidatorClient) submitSignedAggregateSelectionProof(ctx context.Context, in *silapb.SignedAggregateSubmitRequest) (*silapb.SignedAggregateSubmitResponse, error) {
@@ -17,7 +17,7 @@ func (c *beaconApiValidatorClient) submitSignedAggregateSelectionProof(ctx conte
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to marshal SignedAggregateAttestationAndProof")
 	}
-	headers := map[string]string{"Eth-Consensus-Version": version.String(in.SignedAggregateAndProof.Version())}
+	headers := map[string]string{"Sila-Consensus-Version": version.String(in.SignedAggregateAndProof.Version())}
 	err = c.handler.Post(ctx, "/sila/v2/validator/aggregate_and_proofs", headers, bytes.NewBuffer(body), nil)
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func (c *beaconApiValidatorClient) submitSignedAggregateSelectionProofElectra(ct
 	}
 	dataSlot := in.SignedAggregateAndProof.Message.Aggregate.Data.Slot
 	consensusVersion := version.String(slots.ToForkVersion(dataSlot))
-	headers := map[string]string{"Eth-Consensus-Version": consensusVersion}
+	headers := map[string]string{"Sila-Consensus-Version": consensusVersion}
 	if err = c.handler.Post(ctx, "/sila/v2/validator/aggregate_and_proofs", headers, bytes.NewBuffer(body), nil); err != nil {
 		return nil, err
 	}

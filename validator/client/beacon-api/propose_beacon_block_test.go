@@ -10,8 +10,8 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	rpctesting "github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared/testing"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
-	engine "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
+	engine "github.com/sila-chain/Sila-Consensus-Core/v7/proto/silaengine/v1"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/assert"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/testing/require"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
@@ -107,7 +107,7 @@ func TestProposeBeaconBlock_SSZ_Error(t *testing.T) {
 
 				// Expect PostSSZ to be called first with SSZ data
 				headers := map[string]string{
-					"Eth-Consensus-Version": testCase.consensusVersion,
+					"Sila-Consensus-Version": testCase.consensusVersion,
 				}
 				handler.EXPECT().PostSSZ(
 					gomock.Any(),
@@ -169,7 +169,7 @@ func TestProposeBeaconBlock_SSZSuccess_NoFallback(t *testing.T) {
 
 			// Expect PostSSZ to be called and succeed
 			headers := map[string]string{
-				"Eth-Consensus-Version": testCase.consensusVersion,
+				"Sila-Consensus-Version": testCase.consensusVersion,
 			}
 			handler.EXPECT().PostSSZ(
 				gomock.Any(),
@@ -683,7 +683,7 @@ func TestProposeBeaconBlock_SSZFails_Non406_NoFallback(t *testing.T) {
 
 			// Expect PostSSZ to be called first and fail with non-406 error
 			sszHeaders := map[string]string{
-				"Eth-Consensus-Version": testCase.consensusVersion,
+				"Sila-Consensus-Version": testCase.consensusVersion,
 			}
 			handler.EXPECT().PostSSZ(
 				gomock.Any(),

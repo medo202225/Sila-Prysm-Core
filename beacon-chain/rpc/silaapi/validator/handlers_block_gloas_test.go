@@ -340,7 +340,7 @@ func TestSilaPayloadEnvelope_SSZ(t *testing.T) {
 	server.SilaPayloadEnvelope(writer, request)
 	assert.Equal(t, http.StatusOK, writer.Code)
 	assert.Equal(t, "application/octet-stream", writer.Header().Get("Content-Type"))
-	assert.Equal(t, version.String(version.Gloas), writer.Header().Get("Eth-Consensus-Version"))
+	assert.Equal(t, version.String(version.Gloas), writer.Header().Get("Sila-Consensus-Version"))
 
 	blinded := &sila.WireBlindedSilaPayloadEnvelope{}
 	require.NoError(t, blinded.UnmarshalSSZ(writer.Body.Bytes()))

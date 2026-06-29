@@ -3,15 +3,15 @@ package api
 import "net/http"
 
 const (
-	VersionHeader                  = "Eth-Consensus-Version"
+	VersionHeader             = "Sila-Consensus-Version"
 	SilaPayloadBlindedHeader  = "Sila-Payload-Blinded"
 	SilaPayloadValueHeader    = "Sila-Payload-Value"
-	ConsensusBlockValueHeader      = "Eth-Consensus-Block-Value"
+	ConsensusBlockValueHeader = "Sila-Consensus-Block-Value"
 	SilaPayloadIncludedHeader = "Sila-Payload-Included"
-	JsonMediaType                  = "application/json"
-	OctetStreamMediaType           = "application/octet-stream"
-	EventStreamMediaType           = "text/event-stream"
-	KeepAlive                      = "keep-alive"
+	JsonMediaType             = "application/json"
+	OctetStreamMediaType      = "application/octet-stream"
+	EventStreamMediaType      = "text/event-stream"
+	KeepAlive                 = "keep-alive"
 )
 
 // SetSSEHeaders sets the headers needed for a server-sent event response.

@@ -123,7 +123,7 @@ func TestGetSilaPayloadEnvelope_AcceptsSlotID(t *testing.T) {
 
 	s.GetSilaPayloadEnvelope(w, req)
 	require.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, version.String(version.Gloas), w.Header().Get("Eth-Consensus-Version"))
+	assert.Equal(t, version.String(version.Gloas), w.Header().Get("Sila-Consensus-Version"))
 }
 
 func TestGetSilaPayloadEnvelope_BlockNotFound(t *testing.T) {

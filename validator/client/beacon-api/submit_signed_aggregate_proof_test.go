@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/config/params"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
@@ -14,7 +15,6 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/time/slots"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/mock"
 	testhelpers "github.com/sila-chain/Sila-Consensus-Core/v7/validator/client/beacon-api/test-helpers"
-	"github.com/pkg/errors"
 	"go.uber.org/mock/gomock"
 )
 
@@ -27,7 +27,7 @@ func TestSubmitSignedAggregateSelectionProof_Valid(t *testing.T) {
 	require.NoError(t, err)
 
 	ctx := t.Context()
-	headers := map[string]string{"Eth-Consensus-Version": version.String(signedAggregateAndProof.Message.Version())}
+	headers := map[string]string{"Sila-Consensus-Version": version.String(signedAggregateAndProof.Message.Version())}
 	handler := mock.NewMockJsonRestHandler(ctrl)
 	handler.EXPECT().Post(
 		gomock.Any(),
@@ -59,7 +59,7 @@ func TestSubmitSignedAggregateSelectionProof_BadRequest(t *testing.T) {
 	require.NoError(t, err)
 
 	ctx := t.Context()
-	headers := map[string]string{"Eth-Consensus-Version": version.String(signedAggregateAndProof.Message.Version())}
+	headers := map[string]string{"Sila-Consensus-Version": version.String(signedAggregateAndProof.Message.Version())}
 	handler := mock.NewMockJsonRestHandler(ctrl)
 	handler.EXPECT().Post(
 		gomock.Any(),
@@ -92,7 +92,7 @@ func TestSubmitSignedAggregateSelectionProofElectra_Valid(t *testing.T) {
 
 	ctx := t.Context()
 	expectedVersion := version.String(slots.ToForkVersion(signedAggregateAndProofElectra.Message.Aggregate.Data.Slot))
-	headers := map[string]string{"Eth-Consensus-Version": expectedVersion}
+	headers := map[string]string{"Sila-Consensus-Version": expectedVersion}
 	handler := mock.NewMockJsonRestHandler(ctrl)
 	handler.EXPECT().Post(
 		gomock.Any(),
@@ -129,7 +129,7 @@ func TestSubmitSignedAggregateSelectionProofElectra_BadRequest(t *testing.T) {
 
 	ctx := t.Context()
 	expectedVersion := version.String(slots.ToForkVersion(signedAggregateAndProofElectra.Message.Aggregate.Data.Slot))
-	headers := map[string]string{"Eth-Consensus-Version": expectedVersion}
+	headers := map[string]string{"Sila-Consensus-Version": expectedVersion}
 	handler := mock.NewMockJsonRestHandler(ctrl)
 	handler.EXPECT().Post(
 		gomock.Any(),
@@ -162,7 +162,7 @@ func TestSubmitSignedAggregateSelectionProofElectra_FuluVersion(t *testing.T) {
 
 	ctx := t.Context()
 	expectedVersion := version.String(slots.ToForkVersion(signedAggregateAndProofElectra.Message.Aggregate.Data.Slot))
-	headers := map[string]string{"Eth-Consensus-Version": expectedVersion}
+	headers := map[string]string{"Sila-Consensus-Version": expectedVersion}
 	handler := mock.NewMockJsonRestHandler(ctrl)
 	handler.EXPECT().Post(
 		gomock.Any(),

@@ -611,7 +611,7 @@ func TestSubmitBlindedBlock(t *testing.T) {
 		hc := &http.Client{
 			Transport: roundtrip(func(r *http.Request) (*http.Response, error) {
 				require.Equal(t, postBlindedBeaconBlockPath, r.URL.Path)
-				require.Equal(t, "bellatrix", r.Header.Get("Eth-Consensus-Version"))
+				require.Equal(t, "bellatrix", r.Header.Get("Sila-Consensus-Version"))
 				require.Equal(t, api.JsonMediaType, r.Header.Get("Content-Type"))
 				require.Equal(t, api.JsonMediaType, r.Header.Get("Accept"))
 				return &http.Response{
@@ -1565,7 +1565,7 @@ func TestSubmitBlindedBlockPostFulu(t *testing.T) {
 		hc := &http.Client{
 			Transport: roundtrip(func(r *http.Request) (*http.Response, error) {
 				require.Equal(t, postBlindedBeaconBlockV2Path, r.URL.Path)
-				require.Equal(t, "bellatrix", r.Header.Get("Eth-Consensus-Version"))
+				require.Equal(t, "bellatrix", r.Header.Get("Sila-Consensus-Version"))
 				require.Equal(t, api.JsonMediaType, r.Header.Get("Content-Type"))
 				require.Equal(t, api.JsonMediaType, r.Header.Get("Accept"))
 				// Post-Fulu: only return status code, no payload
@@ -1616,7 +1616,7 @@ func TestSubmitBlindedBlockPostFulu(t *testing.T) {
 		hc := &http.Client{
 			Transport: roundtrip(func(r *http.Request) (*http.Response, error) {
 				require.Equal(t, postBlindedBeaconBlockV2Path, r.URL.Path)
-				require.Equal(t, "bellatrix", r.Header.Get("Eth-Consensus-Version"))
+				require.Equal(t, "bellatrix", r.Header.Get("Sila-Consensus-Version"))
 				message := ErrorMessage{
 					Code:    400,
 					Message: "Bad Request",

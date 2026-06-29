@@ -6,11 +6,11 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/encoding/ssz"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/network/httputil"
 	silapb "github.com/sila-chain/Sila-Consensus-Core/v7/proto/sila/v1alpha1"
-	"github.com/pkg/errors"
 )
 
 type blockProcessingResult struct {
@@ -166,7 +166,7 @@ func (c *beaconApiValidatorClient) proposeBeaconBlock(ctx context.Context, in *s
 		endpoint = "/sila/v2/beacon/blinded_blocks"
 	}
 
-	headers := map[string]string{"Eth-Consensus-Version": res.consensusVersion}
+	headers := map[string]string{"Sila-Consensus-Version": res.consensusVersion}
 
 	// Try PostSSZ first with SSZ data
 	if res.marshalledSSZ != nil {
