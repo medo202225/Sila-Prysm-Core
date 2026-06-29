@@ -620,7 +620,7 @@ func (s *Server) SetFeeRecipientByPubkey(w http.ResponseWriter, r *http.Request)
 		httputil.HandleError(w, "Could not decode request body: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	silaExecutionAddress, valid := shared.ValidateHex(w, "ethaddress", req.SilaExecutionAddress, fieldparams.FeeRecipientLength)
+	silaExecutionAddress, valid := shared.ValidateHex(w, "silaaddress", req.SilaExecutionAddress, fieldparams.FeeRecipientLength)
 	if !valid {
 		return
 	}

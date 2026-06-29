@@ -88,7 +88,7 @@ type RemoteKeysResponse struct {
 // Fee Recipient keymanager api
 type FeeRecipient struct {
 	Pubkey               string `json:"pubkey"`
-	SilaExecutionAddress string `json:"ethaddress"`
+	SilaExecutionAddress string `json:"silaaddress"`
 }
 
 type GetFeeRecipientByPubkeyResponse struct {
@@ -96,7 +96,7 @@ type GetFeeRecipientByPubkeyResponse struct {
 }
 
 type SetFeeRecipientByPubkeyRequest struct {
-	SilaExecutionAddress string `json:"ethaddress"`
+	SilaExecutionAddress string `json:"silaaddress"`
 }
 
 // Graffiti keymanager api

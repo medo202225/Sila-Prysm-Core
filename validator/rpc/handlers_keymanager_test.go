@@ -1859,7 +1859,7 @@ func TestServer_SetFeeRecipientByPubkey_InvalidFeeRecipient(t *testing.T) {
 	s.SetFeeRecipientByPubkey(w, req)
 	assert.NotEqual(t, http.StatusAccepted, w.Code)
 
-	require.StringContains(t, "Invalid ethaddress", w.Body.String())
+	require.StringContains(t, "Invalid silaaddress", w.Body.String())
 }
 
 func TestServer_DeleteFeeRecipientByPubkey(t *testing.T) {
