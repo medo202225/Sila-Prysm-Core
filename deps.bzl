@@ -2764,19 +2764,19 @@ def sila_deps():
         version = "v1.3.0",
     )
     go_repository(
-        name = "com_github_protolambda_bls12_381_util",
+        name = "com_github_sila_chain_bls12_381_util",
         importpath = "github.com/sila-chain/bls12-381-util",
         sum = "h1:05DU2wJN7DTU7z28+Q+zejXkIsA/MF8JZQGhtBZZiWk=",
         version = "v0.1.0",
     )
     go_repository(
-        name = "com_github_protolambda_zrnt",
+        name = "com_github_sila_chain_zrnt",
         importpath = "github.com/sila-chain/zrnt",
         sum = "h1:qW55rnhZJDnOb3TwFiFRJZi3yTXFrJdGOFQM7vCwYGg=",
         version = "v0.34.1",
     )
     go_repository(
-        name = "com_github_protolambda_ztyp",
+        name = "com_github_sila_chain_ztyp",
         importpath = "github.com/sila-chain/ztyp",
         sum = "h1:rVcL3vBu9W/aV646zF6caLS/dyn9BN8NYiuJzicLNyY=",
         version = "v0.2.2",
