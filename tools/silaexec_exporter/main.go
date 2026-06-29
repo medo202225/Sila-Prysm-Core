@@ -101,7 +101,7 @@ func ConnectionToSilaExec(url string) error {
 func EthBalance(address string) *big.Float {
 	balance, err := eth.BalanceAt(context.TODO(), common.HexToAddress(address), nil)
 	if err != nil {
-		fmt.Printf("Error fetching ETH Balance for address: %v\n", address)
+		fmt.Printf("Error fetching SILA Balance for address: %v\n", address)
 	}
 	return ToEther(balance)
 }

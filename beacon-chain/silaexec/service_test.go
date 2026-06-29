@@ -304,7 +304,7 @@ func TestHandlePanic_OK(t *testing.T) {
 	// nil silaexecDataFetcher would panic if cached value not used
 	web3Service.rpcClient = nil
 	web3Service.processBlockHeader(nil)
-	require.LogsContain(t, hook, "Panicked when handling data from ETH 1.0 Chain!")
+	require.LogsContain(t, hook, "Panicked when handling data from Sila execution chain!")
 }
 
 func TestLogTillGenesis_OK(t *testing.T) {

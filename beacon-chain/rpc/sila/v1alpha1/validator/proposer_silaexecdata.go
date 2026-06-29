@@ -37,7 +37,7 @@ func (vs *Server) silaexecDataMajorityVote(ctx context.Context, beaconState stat
 	ctx, cancel := context.WithTimeout(ctx, silaDataTimeout)
 	defer cancel()
 
-	// post silaexec deposits, the Eth 1 data will then be frozen
+	// post silaexec deposits, the Sila execution data will then be frozen
 	if helpers.DepositRequestsStarted(beaconState) {
 		return beaconState.SilaData(), nil
 	}

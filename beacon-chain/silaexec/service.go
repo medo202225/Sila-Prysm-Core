@@ -134,7 +134,7 @@ type config struct {
 }
 
 // Service fetches important information about the canonical
-// silaexec chain via a web3 endpoint using an ethclient.
+// silaexec chain via a web3 endpoint using a Sila execution client.
 // The beacon chain requires synchronization with the silaexec chain's current
 // block hash, block number, and access to logs within the
 // Validator Registration Contract on the silaexec chain to kick off the beacon
@@ -165,7 +165,7 @@ type Service struct {
 	graffitiInfo            *GraffitiInfo
 }
 
-// NewService sets up a new instance with an ethclient when given a web3 endpoint as a string in the config.
+// NewService sets up a new instance with a Sila execution client when given a web3 endpoint as a string in the config.
 func NewService(ctx context.Context, opts ...Option) (*Service, error) {
 	ctx, cancel := context.WithCancel(ctx)
 	_ = cancel // govet fix for lost cancel. Cancel is handled in service.Stop()
@@ -479,7 +479,7 @@ func safelyHandlePanic() {
 	if r := recover(); r != nil {
 		log.WithFields(logrus.Fields{
 			"r": r,
-		}).Error("Panicked when handling data from ETH 1.0 Chain! Recovering...")
+		}).Error("Panicked when handling data from Sila execution chain! Recovering...")
 
 		debug.PrintStack()
 	}

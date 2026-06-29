@@ -198,7 +198,7 @@ func computeDomainData(domain [4]byte, epoch primitives.Epoch, fork *silapb.Fork
 // WaitForChainStart queries the logs of the Deposit Contract in order to verify the beacon chain
 // has started its runtime and validators begin their responsibilities. If it has not, it then
 // subscribes to an event stream triggered by the powchain service whenever the ChainStart log does
-// occur in the Deposit Contract on ETH 1.0.
+// occur in the Deposit Contract on the Sila execution layer.
 func (vs *Server) WaitForChainStart(_ *emptypb.Empty, stream silapb.BeaconNodeValidator_WaitForChainStartServer) error {
 	head, err := vs.HeadFetcher.HeadStateReadOnly(stream.Context())
 	if err != nil {
