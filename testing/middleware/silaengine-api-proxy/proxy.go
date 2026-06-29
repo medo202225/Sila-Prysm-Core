@@ -172,7 +172,7 @@ func (p *Proxy) ReleaseBackedUpRequests(rpcMethodName string) {
 // Checks if there is a custom interceptor hook on the request, check if it can be
 // triggered, and then write the custom response to the writer.
 func (p *Proxy) interceptIfNeeded(requestBytes []byte, w http.ResponseWriter, r *http.Request) (hasIntercepted bool, err error) {
-	if !isEngineAPICall(requestBytes) {
+	if !isSilaEngineAPICall(requestBytes) {
 		return
 	}
 	var jreq *jsonRPCObject
@@ -272,7 +272,7 @@ func parseRequestBytes(req *http.Request) ([]byte, error) {
 }
 
 // Checks whether the JSON-RPC request is for the SilaEngine API.
-func isEngineAPICall(reqBytes []byte) bool {
+func isSilaEngineAPICall(reqBytes []byte) bool {
 	jsonRequest, err := unmarshalRPCObject(reqBytes)
 	if err != nil {
 		switch {

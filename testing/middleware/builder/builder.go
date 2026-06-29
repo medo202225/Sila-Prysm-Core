@@ -217,7 +217,7 @@ func (p *Builder) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p *Builder) handleEngineCalls(req, resp []byte) {
-	if !isEngineAPICall(req) {
+	if !isSilaEngineAPICall(req) {
 		return
 	}
 	rpcObj, err := unmarshalRPCObject(req)
@@ -925,7 +925,7 @@ func parseRequestBytes(req *http.Request) ([]byte, error) {
 }
 
 // Checks whether the JSON-RPC request is for the SilaEngine API.
-func isEngineAPICall(reqBytes []byte) bool {
+func isSilaEngineAPICall(reqBytes []byte) bool {
 	jsonRequest, err := unmarshalRPCObject(reqBytes)
 	if err != nil {
 		switch {

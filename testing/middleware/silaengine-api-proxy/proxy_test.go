@@ -254,7 +254,7 @@ func TestProxy_CustomInterceptors(t *testing.T) {
 	})
 }
 
-func Test_isEngineAPICall(t *testing.T) {
+func Test_isSilaEngineAPICall(t *testing.T) {
 	tests := []struct {
 		name string
 		args *jsonRPCObject
@@ -288,8 +288,8 @@ func Test_isEngineAPICall(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			enc, err := json.Marshal(tt.args)
 			require.NoError(t, err)
-			if got := isEngineAPICall(enc); got != tt.want {
-				t.Errorf("isEngineAPICall() = %v, want %v", got, tt.want)
+			if got := isSilaEngineAPICall(enc); got != tt.want {
+				t.Errorf("isSilaEngineAPICall() = %v, want %v", got, tt.want)
 			}
 		})
 	}
