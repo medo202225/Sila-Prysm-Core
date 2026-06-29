@@ -1665,7 +1665,7 @@ func newTestIPCServer(t *testing.T) *rpc.Server {
 	server := rpc.NewServer()
 	err := server.RegisterName("engine", new(testEngineService))
 	require.NoError(t, err)
-	err = server.RegisterName("eth", new(testEngineService))
+	err = server.RegisterName("sila", new(testEngineService))
 	require.NoError(t, err)
 	return server
 }
