@@ -1,2 +1,2 @@
 ### Added
-- Implemented EIP 8045.
+- Implemented SIP 8045.
