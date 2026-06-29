@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/api/server/structs"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/beacon-chain/rpc/silaapi/shared"
 	"github.com/sila-chain/Sila-Consensus-Core/v7/cmd/validator/flags"
@@ -27,7 +28,6 @@ import (
 	"github.com/sila-chain/Sila-Consensus-Core/v7/validator/slashing-protection-history/format"
 	"github.com/sila-chain/Sila/common"
 	"github.com/sila-chain/Sila/common/hexutil"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -554,7 +554,7 @@ func (s *Server) DeleteRemoteKeys(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJson(w, RemoteKeysResponse{Data: data})
 }
 
-// ListFeeRecipientByPubkey returns the public key to eth address mapping object to the end user.
+// ListFeeRecipientByPubkey returns the public key to Sila execution address mapping object to the end user.
 func (s *Server) ListFeeRecipientByPubkey(w http.ResponseWriter, r *http.Request) {
 	_, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.ListFeeRecipientByPubkey")
 	defer span.End()
@@ -596,7 +596,7 @@ func (s *Server) ListFeeRecipientByPubkey(w http.ResponseWriter, r *http.Request
 	httputil.HandleError(w, "No fee recipient set", http.StatusBadRequest)
 }
 
-// SetFeeRecipientByPubkey updates the eth address mapped to the public key.
+// SetFeeRecipientByPubkey updates the Sila execution address mapped to the public key.
 func (s *Server) SetFeeRecipientByPubkey(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.SetFeeRecipientByPubkey")
 	defer span.End()
@@ -680,7 +680,7 @@ func (s *Server) SetFeeRecipientByPubkey(w http.ResponseWriter, r *http.Request)
 	w.WriteHeader(http.StatusAccepted)
 }
 
-// DeleteFeeRecipientByPubkey updates the eth address mapped to the public key to the default fee recipient listed
+// DeleteFeeRecipientByPubkey updates the Sila execution address mapped to the public key to the default fee recipient listed
 func (s *Server) DeleteFeeRecipientByPubkey(w http.ResponseWriter, r *http.Request) {
 	ctx, span := trace.StartSpan(r.Context(), "validator.keymanagerAPI.DeleteFeeRecipientByPubkey")
 	defer span.End()

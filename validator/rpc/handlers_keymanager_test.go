@@ -1529,7 +1529,7 @@ func TestServer_ListFeeRecipientByPubkey(t *testing.T) {
 	require.NoError(t, err)
 
 	type want struct {
-		EthAddress string
+		SilaExecutionAddress string
 	}
 
 	tests := []struct {
@@ -1555,7 +1555,7 @@ func TestServer_ListFeeRecipientByPubkey(t *testing.T) {
 				},
 			},
 			want: &want{
-				EthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				SilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 		},
 		{
@@ -1569,7 +1569,7 @@ func TestServer_ListFeeRecipientByPubkey(t *testing.T) {
 				},
 			},
 			want: &want{
-				EthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				SilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 		},
 	}
@@ -1596,7 +1596,7 @@ func TestServer_ListFeeRecipientByPubkey(t *testing.T) {
 			assert.Equal(t, http.StatusOK, w.Code)
 			resp := &GetFeeRecipientByPubkeyResponse{}
 			require.NoError(t, json.Unmarshal(w.Body.Bytes(), resp))
-			assert.Equal(t, tt.want.EthAddress, resp.Data.Ethaddress)
+			assert.Equal(t, tt.want.SilaExecutionAddress, resp.Data.Ethaddress)
 		})
 	}
 }
@@ -1658,8 +1658,8 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 	require.NoError(t, err)
 
 	type want struct {
-		valEthAddress     string
-		defaultEthaddress string
+		valSilaExecutionAddress     string
+		defaultSilaExecutionAddress string
 	}
 	type beaconResp struct {
 		resp  *sila.FeeRecipientByPubKeyResponse
@@ -1678,7 +1678,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 			args:             "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			proposerSettings: nil,
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1693,7 +1693,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				ProposeConfig: nil,
 			},
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1709,7 +1709,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				DefaultConfig: &proposer.Option{},
 			},
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1726,7 +1726,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				},
 			},
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1741,7 +1741,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				ProposeConfig: map[[48]byte]*proposer.Option{},
 			},
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1758,7 +1758,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				},
 			},
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1776,7 +1776,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				DefaultConfig: &proposer.Option{},
 			},
 			want: &want{
-				valEthAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
+				valSilaExecutionAddress: "0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9",
 			},
 			wantErr: false,
 			beaconReturn: &beaconResp{
@@ -1820,7 +1820,7 @@ func TestServer_FeeRecipientByPubkey(t *testing.T) {
 				s.SetFeeRecipientByPubkey(w, req)
 				assert.Equal(t, http.StatusAccepted, w.Code)
 
-				assert.Equal(t, tt.want.valEthAddress, s.validatorService.ProposerSettings().ProposeConfig[bytesutil.ToBytes48(byteval)].FeeRecipientConfig.FeeRecipient.Hex())
+				assert.Equal(t, tt.want.valSilaExecutionAddress, s.validatorService.ProposerSettings().ProposeConfig[bytesutil.ToBytes48(byteval)].FeeRecipientConfig.FeeRecipient.Hex())
 			})
 		}
 	}
@@ -1868,7 +1868,7 @@ func TestServer_DeleteFeeRecipientByPubkey(t *testing.T) {
 	byteval, err := hexutil.Decode(pubkey)
 	require.NoError(t, err)
 	type want struct {
-		EthAddress string
+		SilaExecutionAddress string
 	}
 	tests := []struct {
 		name             string
@@ -1893,7 +1893,7 @@ func TestServer_DeleteFeeRecipientByPubkey(t *testing.T) {
 				},
 			},
 			want: &want{
-				EthAddress: common.HexToAddress("0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9").Hex(),
+				SilaExecutionAddress: common.HexToAddress("0x046Fb65722E7b2455012BFEBf6177F1D2e9738D9").Hex(),
 			},
 			wantErr: false,
 		},
