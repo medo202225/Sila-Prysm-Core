@@ -35,9 +35,9 @@ const (
 	GetWeakSubjectivityPath = "/sila/v1/beacon/weak_subjectivity"
 )
 
-// StateOrBlockId represents the block_id / state_id parameters that several of the Eth Beacon API methods accept.
+// StateOrBlockId represents the block_id / state_id parameters that several of the Sila Beacon API methods accept.
 // StateOrBlockId constants are defined for named identifiers, and helper methods are provided
-// for slot and root identifiers. Example text from the Eth Beacon Node API documentation:
+// for slot and root identifiers. Example text from the Sila Beacon Node API documentation:
 //
 // "Block identifier can be one of: "head" (canonical head in node's view), "genesis", "finalized",
 // <slot>, <hex encoded blockRoot with 0x prefix>."
@@ -66,7 +66,7 @@ func RenderGetBlockPath(id StateOrBlockId) string {
 	return path.Join(getSignedBlockPath, string(id))
 }
 
-// Client provides a collection of helper methods for calling the Eth Beacon Node API endpoints.
+// Client provides a collection of helper methods for calling the Sila Beacon Node API endpoints.
 type Client struct {
 	*client.Client
 }
