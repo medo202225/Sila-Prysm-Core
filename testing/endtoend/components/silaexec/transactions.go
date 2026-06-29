@@ -98,7 +98,7 @@ func (t *TransactionGenerator) Start(ctx context.Context) error {
 
 	// Ensure the funded account has a comfortable minimum balance for blob and fuzzed txs.
 	minWei := new(big.Int).Mul(big.NewInt(1000), big.NewInt(0).SetUint64(params.BeaconConfig().GweiPerEth))
-	minWei.Mul(minWei, big.NewInt(1e9)) // 1000 ETH in wei
+	minWei.Mul(minWei, big.NewInt(1e9)) // 1000 SILA in wei
 	if err := ensureMinBalance(ctx, client, backend, mineKey, fundedAccount, minWei); err != nil {
 		return err
 	}
@@ -760,7 +760,7 @@ func fundAccount(client *rpc.Client, sourceKey, destKey *keystore.Key) error {
 	if err != nil {
 		return err
 	}
-	// Increased funding to 100 million ETH to handle extended test runs with blob transactions
+	// Increased funding to 100 million SILA to handle extended test runs with blob transactions
 	val, ok := big.NewInt(0).SetString("100000000000000000000000000", 10)
 	if !ok {
 		return errors.New("could not set big int for value")

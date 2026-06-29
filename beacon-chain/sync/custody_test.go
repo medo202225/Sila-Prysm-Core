@@ -262,7 +262,7 @@ func TestSemiSupernodeValidatorCustodyOverride(t *testing.T) {
 	config.NumberOfCustodyGroups = 128
 	config.CustodyRequirement = 4
 	config.ValidatorCustodyRequirement = 8
-	config.BalancePerAdditionalCustodyGroup = 1000000000 // 1 ETH in Gwei
+	config.BalancePerAdditionalCustodyGroup = 1000000000 // 1 SILA in Gwei
 	params.OverrideBeaconConfig(config)
 
 	ctx := t.Context()

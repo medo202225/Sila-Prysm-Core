@@ -422,7 +422,7 @@ func TestExpectedWithdrawals_underflow_electra(t *testing.T) {
 	require.NoError(t, err)
 	vals := make([]*silapb.Validator, 1)
 	balances := make([]uint64, 1)
-	balances[0] = 2015_000_000_000 //Validator A begins leaking ETH due to inactivity, and over time, its balance decreases to 2,015 ETH
+	balances[0] = 2015_000_000_000 //Validator A begins leaking SILA due to inactivity, and over time, its balance decreases to 2,015 SILA
 	val := &silapb.Validator{
 		WithdrawalCredentials: make([]byte, 32),
 		EffectiveBalance:      params.BeaconConfig().MaxEffectiveBalanceElectra,
