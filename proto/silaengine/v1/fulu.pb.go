@@ -34,7 +34,7 @@ type ExecutionBundleFulu struct {
 
 func (x *ExecutionBundleFulu) Reset() {
 	*x = ExecutionBundleFulu{}
-	mi := &file_proto_engine_v1_fulu_proto_msgTypes[0]
+	mi := &file_proto_silav1_fuluproto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +46,7 @@ func (x *ExecutionBundleFulu) String() string {
 func (*ExecutionBundleFulu) ProtoMessage() {}
 
 func (x *ExecutionBundleFulu) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_fulu_proto_msgTypes[0]
+	mi := &file_proto_silav1_fuluproto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +59,7 @@ func (x *ExecutionBundleFulu) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionBundleFulu.ProtoReflect.Descriptor instead.
 func (*ExecutionBundleFulu) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_fulu_proto_rawDescGZIP(), []int{0}
+	return file_proto_silav1_fuluproto_rawDescGZIP(), []int{0}
 }
 
 func (x *ExecutionBundleFulu) GetPayload() *SilaPayloadDeneb {
@@ -110,7 +110,7 @@ type ExecutionBundleGloas struct {
 
 func (x *ExecutionBundleGloas) Reset() {
 	*x = ExecutionBundleGloas{}
-	mi := &file_proto_engine_v1_fulu_proto_msgTypes[1]
+	mi := &file_proto_silav1_fuluproto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -122,7 +122,7 @@ func (x *ExecutionBundleGloas) String() string {
 func (*ExecutionBundleGloas) ProtoMessage() {}
 
 func (x *ExecutionBundleGloas) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_fulu_proto_msgTypes[1]
+	mi := &file_proto_silav1_fuluproto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -135,7 +135,7 @@ func (x *ExecutionBundleGloas) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionBundleGloas.ProtoReflect.Descriptor instead.
 func (*ExecutionBundleGloas) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_fulu_proto_rawDescGZIP(), []int{1}
+	return file_proto_silav1_fuluproto_rawDescGZIP(), []int{1}
 }
 
 func (x *ExecutionBundleGloas) GetPayload() *SilaPayloadGloas {
@@ -173,9 +173,9 @@ func (x *ExecutionBundleGloas) GetSilaRequests() [][]byte {
 	return nil
 }
 
-var File_proto_engine_v1_fulu_proto protoreflect.FileDescriptor
+var File_proto_silav1_fuluproto protoreflect.FileDescriptor
 
-var file_proto_engine_v1_fulu_proto_rawDesc = []byte{
+var file_proto_silav1_fuluproto_rawDesc = []byte{
 	0x0a, 0x1a, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76,
 	0x31, 0x2f, 0x66, 0x75, 0x6c, 0x75, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x12, 0x65, 0x74,
 	0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x76, 0x31,
@@ -231,26 +231,26 @@ var file_proto_engine_v1_fulu_proto_rawDesc = []byte{
 }
 
 var (
-	file_proto_engine_v1_fulu_proto_rawDescOnce sync.Once
-	file_proto_engine_v1_fulu_proto_rawDescData = file_proto_engine_v1_fulu_proto_rawDesc
+	file_proto_silav1_fuluproto_rawDescOnce sync.Once
+	file_proto_silav1_fuluproto_rawDescData = file_proto_silav1_fuluproto_rawDesc
 )
 
-func file_proto_engine_v1_fulu_proto_rawDescGZIP() []byte {
-	file_proto_engine_v1_fulu_proto_rawDescOnce.Do(func() {
-		file_proto_engine_v1_fulu_proto_rawDescData = protoimpl.X.CompressGZIP(file_proto_engine_v1_fulu_proto_rawDescData)
+func file_proto_silav1_fuluproto_rawDescGZIP() []byte {
+	file_proto_silav1_fuluproto_rawDescOnce.Do(func() {
+		file_proto_silav1_fuluproto_rawDescData = protoimpl.X.CompressGZIP(file_proto_silav1_fuluproto_rawDescData)
 	})
-	return file_proto_engine_v1_fulu_proto_rawDescData
+	return file_proto_silav1_fuluproto_rawDescData
 }
 
-var file_proto_engine_v1_fulu_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_proto_engine_v1_fulu_proto_goTypes = []any{
+var file_proto_silav1_fuluproto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_proto_silav1_fuluproto_goTypes = []any{
 	(*ExecutionBundleFulu)(nil),   // 0: sila.silaengine.v1.ExecutionBundleFulu
 	(*ExecutionBundleGloas)(nil),  // 1: sila.silaengine.v1.ExecutionBundleGloas
 	(*SilaPayloadDeneb)(nil), // 2: sila.silaengine.v1.SilaPayloadDeneb
 	(*BlobsBundleV2)(nil),         // 3: sila.silaengine.v1.BlobsBundleV2
 	(*SilaPayloadGloas)(nil), // 4: sila.silaengine.v1.SilaPayloadGloas
 }
-var file_proto_engine_v1_fulu_proto_depIdxs = []int32{
+var file_proto_silav1_fuluproto_depIdxs = []int32{
 	2, // 0: sila.silaengine.v1.ExecutionBundleFulu.payload:type_name -> sila.silaengine.v1.SilaPayloadDeneb
 	3, // 1: sila.silaengine.v1.ExecutionBundleFulu.blobs_bundle:type_name -> sila.silaengine.v1.BlobsBundleV2
 	4, // 2: sila.silaengine.v1.ExecutionBundleGloas.payload:type_name -> sila.silaengine.v1.SilaPayloadGloas
@@ -262,28 +262,28 @@ var file_proto_engine_v1_fulu_proto_depIdxs = []int32{
 	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_proto_engine_v1_fulu_proto_init() }
-func file_proto_engine_v1_fulu_proto_init() {
-	if File_proto_engine_v1_fulu_proto != nil {
+func init() { file_proto_silav1_fuluproto_init() }
+func file_proto_silav1_fuluproto_init() {
+	if File_proto_silav1_fuluproto != nil {
 		return
 	}
-	file_proto_engine_v1_sila_engine_proto_init()
+	file_proto_silav1_silaengineproto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_proto_engine_v1_fulu_proto_rawDesc,
+			RawDescriptor: file_proto_silav1_fuluproto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_proto_engine_v1_fulu_proto_goTypes,
-		DependencyIndexes: file_proto_engine_v1_fulu_proto_depIdxs,
-		MessageInfos:      file_proto_engine_v1_fulu_proto_msgTypes,
+		GoTypes:           file_proto_silav1_fuluproto_goTypes,
+		DependencyIndexes: file_proto_silav1_fuluproto_depIdxs,
+		MessageInfos:      file_proto_silav1_fuluproto_msgTypes,
 	}.Build()
-	File_proto_engine_v1_fulu_proto = out.File
-	file_proto_engine_v1_fulu_proto_rawDesc = nil
-	file_proto_engine_v1_fulu_proto_goTypes = nil
-	file_proto_engine_v1_fulu_proto_depIdxs = nil
+	File_proto_silav1_fuluproto = out.File
+	file_proto_silav1_fuluproto_rawDesc = nil
+	file_proto_silav1_fuluproto_goTypes = nil
+	file_proto_silav1_fuluproto_depIdxs = nil
 }

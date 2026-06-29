@@ -33,7 +33,7 @@ type WithdrawalRequest struct {
 
 func (x *WithdrawalRequest) Reset() {
 	*x = WithdrawalRequest{}
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[0]
+	mi := &file_proto_silav1_electraproto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45,7 +45,7 @@ func (x *WithdrawalRequest) String() string {
 func (*WithdrawalRequest) ProtoMessage() {}
 
 func (x *WithdrawalRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[0]
+	mi := &file_proto_silav1_electraproto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +58,7 @@ func (x *WithdrawalRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawalRequest.ProtoReflect.Descriptor instead.
 func (*WithdrawalRequest) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{0}
+	return file_proto_silav1_electraproto_rawDescGZIP(), []int{0}
 }
 
 func (x *WithdrawalRequest) GetSourceAddress() []byte {
@@ -95,7 +95,7 @@ type DepositRequest struct {
 
 func (x *DepositRequest) Reset() {
 	*x = DepositRequest{}
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[1]
+	mi := &file_proto_silav1_electraproto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -107,7 +107,7 @@ func (x *DepositRequest) String() string {
 func (*DepositRequest) ProtoMessage() {}
 
 func (x *DepositRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[1]
+	mi := &file_proto_silav1_electraproto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -120,7 +120,7 @@ func (x *DepositRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepositRequest.ProtoReflect.Descriptor instead.
 func (*DepositRequest) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{1}
+	return file_proto_silav1_electraproto_rawDescGZIP(), []int{1}
 }
 
 func (x *DepositRequest) GetPubkey() []byte {
@@ -169,7 +169,7 @@ type ConsolidationRequest struct {
 
 func (x *ConsolidationRequest) Reset() {
 	*x = ConsolidationRequest{}
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[2]
+	mi := &file_proto_silav1_electraproto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -181,7 +181,7 @@ func (x *ConsolidationRequest) String() string {
 func (*ConsolidationRequest) ProtoMessage() {}
 
 func (x *ConsolidationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[2]
+	mi := &file_proto_silav1_electraproto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -194,7 +194,7 @@ func (x *ConsolidationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsolidationRequest.ProtoReflect.Descriptor instead.
 func (*ConsolidationRequest) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{2}
+	return file_proto_silav1_electraproto_rawDescGZIP(), []int{2}
 }
 
 func (x *ConsolidationRequest) GetSourceAddress() []byte {
@@ -229,7 +229,7 @@ type SilaRequests struct {
 
 func (x *SilaRequests) Reset() {
 	*x = SilaRequests{}
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[3]
+	mi := &file_proto_silav1_electraproto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -241,7 +241,7 @@ func (x *SilaRequests) String() string {
 func (*SilaRequests) ProtoMessage() {}
 
 func (x *SilaRequests) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[3]
+	mi := &file_proto_silav1_electraproto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -254,7 +254,7 @@ func (x *SilaRequests) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SilaRequests.ProtoReflect.Descriptor instead.
 func (*SilaRequests) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{3}
+	return file_proto_silav1_electraproto_rawDescGZIP(), []int{3}
 }
 
 func (x *SilaRequests) GetDeposits() []*DepositRequest {
@@ -291,7 +291,7 @@ type ExecutionBundleElectra struct {
 
 func (x *ExecutionBundleElectra) Reset() {
 	*x = ExecutionBundleElectra{}
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[4]
+	mi := &file_proto_silav1_electraproto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -303,7 +303,7 @@ func (x *ExecutionBundleElectra) String() string {
 func (*ExecutionBundleElectra) ProtoMessage() {}
 
 func (x *ExecutionBundleElectra) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_engine_v1_electra_proto_msgTypes[4]
+	mi := &file_proto_silav1_electraproto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -316,7 +316,7 @@ func (x *ExecutionBundleElectra) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionBundleElectra.ProtoReflect.Descriptor instead.
 func (*ExecutionBundleElectra) Descriptor() ([]byte, []int) {
-	return file_proto_engine_v1_electra_proto_rawDescGZIP(), []int{4}
+	return file_proto_silav1_electraproto_rawDescGZIP(), []int{4}
 }
 
 func (x *ExecutionBundleElectra) GetPayload() *SilaPayloadDeneb {
@@ -354,9 +354,9 @@ func (x *ExecutionBundleElectra) GetSilaRequests() [][]byte {
 	return nil
 }
 
-var File_proto_engine_v1_electra_proto protoreflect.FileDescriptor
+var File_proto_silav1_electraproto protoreflect.FileDescriptor
 
-var file_proto_engine_v1_electra_proto_rawDesc = []byte{
+var file_proto_silav1_electraproto_rawDesc = []byte{
 	0x0a, 0x1d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76,
 	0x31, 0x2f, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x72, 0x61, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
 	0x12, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
@@ -444,19 +444,19 @@ var file_proto_engine_v1_electra_proto_rawDesc = []byte{
 }
 
 var (
-	file_proto_engine_v1_electra_proto_rawDescOnce sync.Once
-	file_proto_engine_v1_electra_proto_rawDescData = file_proto_engine_v1_electra_proto_rawDesc
+	file_proto_silav1_electraproto_rawDescOnce sync.Once
+	file_proto_silav1_electraproto_rawDescData = file_proto_silav1_electraproto_rawDesc
 )
 
-func file_proto_engine_v1_electra_proto_rawDescGZIP() []byte {
-	file_proto_engine_v1_electra_proto_rawDescOnce.Do(func() {
-		file_proto_engine_v1_electra_proto_rawDescData = protoimpl.X.CompressGZIP(file_proto_engine_v1_electra_proto_rawDescData)
+func file_proto_silav1_electraproto_rawDescGZIP() []byte {
+	file_proto_silav1_electraproto_rawDescOnce.Do(func() {
+		file_proto_silav1_electraproto_rawDescData = protoimpl.X.CompressGZIP(file_proto_silav1_electraproto_rawDescData)
 	})
-	return file_proto_engine_v1_electra_proto_rawDescData
+	return file_proto_silav1_electraproto_rawDescData
 }
 
-var file_proto_engine_v1_electra_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
-var file_proto_engine_v1_electra_proto_goTypes = []any{
+var file_proto_silav1_electraproto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_silav1_electraproto_goTypes = []any{
 	(*WithdrawalRequest)(nil),      // 0: sila.silaengine.v1.WithdrawalRequest
 	(*DepositRequest)(nil),         // 1: sila.silaengine.v1.DepositRequest
 	(*ConsolidationRequest)(nil),   // 2: sila.silaengine.v1.ConsolidationRequest
@@ -465,7 +465,7 @@ var file_proto_engine_v1_electra_proto_goTypes = []any{
 	(*SilaPayloadDeneb)(nil),  // 5: sila.silaengine.v1.SilaPayloadDeneb
 	(*BlobsBundle)(nil),            // 6: sila.silaengine.v1.BlobsBundle
 }
-var file_proto_engine_v1_electra_proto_depIdxs = []int32{
+var file_proto_silav1_electraproto_depIdxs = []int32{
 	1, // 0: sila.silaengine.v1.SilaRequests.deposits:type_name -> sila.silaengine.v1.DepositRequest
 	0, // 1: sila.silaengine.v1.SilaRequests.withdrawals:type_name -> sila.silaengine.v1.WithdrawalRequest
 	2, // 2: sila.silaengine.v1.SilaRequests.consolidations:type_name -> sila.silaengine.v1.ConsolidationRequest
@@ -478,28 +478,28 @@ var file_proto_engine_v1_electra_proto_depIdxs = []int32{
 	0, // [0:5] is the sub-list for field type_name
 }
 
-func init() { file_proto_engine_v1_electra_proto_init() }
-func file_proto_engine_v1_electra_proto_init() {
-	if File_proto_engine_v1_electra_proto != nil {
+func init() { file_proto_silav1_electraproto_init() }
+func file_proto_silav1_electraproto_init() {
+	if File_proto_silav1_electraproto != nil {
 		return
 	}
-	file_proto_engine_v1_sila_engine_proto_init()
+	file_proto_silav1_silaengineproto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_proto_engine_v1_electra_proto_rawDesc,
+			RawDescriptor: file_proto_silav1_electraproto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_proto_engine_v1_electra_proto_goTypes,
-		DependencyIndexes: file_proto_engine_v1_electra_proto_depIdxs,
-		MessageInfos:      file_proto_engine_v1_electra_proto_msgTypes,
+		GoTypes:           file_proto_silav1_electraproto_goTypes,
+		DependencyIndexes: file_proto_silav1_electraproto_depIdxs,
+		MessageInfos:      file_proto_silav1_electraproto_msgTypes,
 	}.Build()
-	File_proto_engine_v1_electra_proto = out.File
-	file_proto_engine_v1_electra_proto_rawDesc = nil
-	file_proto_engine_v1_electra_proto_goTypes = nil
-	file_proto_engine_v1_electra_proto_depIdxs = nil
+	File_proto_silav1_electraproto = out.File
+	file_proto_silav1_electraproto_rawDesc = nil
+	file_proto_silav1_electraproto_goTypes = nil
+	file_proto_silav1_electraproto_depIdxs = nil
 }
