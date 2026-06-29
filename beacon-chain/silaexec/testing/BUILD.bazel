@@ -4,7 +4,7 @@ go_library(
     name = "go_default_library",
     testonly = True,
     srcs = [
-        "mock_silaengine_client.go",
+        "mock_silaengineclient.go",
         "mock_sila_chain.go",
         "mock_faulty_powchain.go",
     ],
