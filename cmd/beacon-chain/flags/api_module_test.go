@@ -16,14 +16,14 @@ func TestEnableHTTPSilaAPI(t *testing.T) {
 	assert.Equal(t, false, EnableHTTPSilaAPI(""))
 }
 
-func TestEnableHTTPEthAPI(t *testing.T) {
-	assert.Equal(t, true, EnableHTTPEthAPI("eth"))
-	assert.Equal(t, true, EnableHTTPEthAPI("eth,foo"))
-	assert.Equal(t, true, EnableHTTPEthAPI("foo,eth"))
-	assert.Equal(t, true, EnableHTTPEthAPI("eth,eth"))
-	assert.Equal(t, true, EnableHTTPEthAPI("EtH"))
-	assert.Equal(t, false, EnableHTTPEthAPI("foo"))
-	assert.Equal(t, false, EnableHTTPEthAPI(""))
+func TestEnableHTTPSilaCompatAPI(t *testing.T) {
+	assert.Equal(t, true, EnableHTTPSilaCompatAPI("eth"))
+	assert.Equal(t, true, EnableHTTPSilaCompatAPI("eth,foo"))
+	assert.Equal(t, true, EnableHTTPSilaCompatAPI("foo,eth"))
+	assert.Equal(t, true, EnableHTTPSilaCompatAPI("eth,eth"))
+	assert.Equal(t, true, EnableHTTPSilaCompatAPI("EtH"))
+	assert.Equal(t, false, EnableHTTPSilaCompatAPI("foo"))
+	assert.Equal(t, false, EnableHTTPSilaCompatAPI(""))
 }
 
 func TestEnableApi(t *testing.T) {

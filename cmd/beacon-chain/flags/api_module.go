@@ -3,14 +3,14 @@ package flags
 import "strings"
 
 const SilaAPIModule string = "sila"
-const EthAPIModule string = "eth"
+const SilaCompatAPIModule string = "eth"
 
 func EnableHTTPSilaAPI(httpModules string) bool {
 	return enableAPI(httpModules, SilaAPIModule)
 }
 
-func EnableHTTPEthAPI(httpModules string) bool {
-	return enableAPI(httpModules, EthAPIModule)
+func EnableHTTPSilaCompatAPI(httpModules string) bool {
+	return enableAPI(httpModules, SilaCompatAPIModule)
 }
 
 func enableAPI(httpModules, api string) bool {

@@ -136,8 +136,8 @@ var (
 	// HTTPModules define the set of enabled HTTP APIs.
 	HTTPModules = &cli.StringFlag{
 		Name:  "http-modules",
-		Usage: "Comma-separated list of API module names. Possible values: `" + SilaAPIModule + `,` + EthAPIModule + "`.",
-		Value: SilaAPIModule + `,` + EthAPIModule,
+		Usage: "Comma-separated list of API module names. Possible values: `" + SilaAPIModule + `,` + SilaCompatAPIModule + "`.",
+		Value: SilaAPIModule + `,` + SilaCompatAPIModule,
 	}
 
 	// HTTPServerHost specifies a HTTP server host for the validator client.
