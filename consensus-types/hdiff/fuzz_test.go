@@ -160,7 +160,7 @@ func FuzzNewStateDiff(f *testing.F) {
 			for i := 0; i < numChanges && i < len(validatorData)-1; i++ {
 				idx := i % len(validators)
 				if validatorData[i+1]%2 == 0 {
-					validators[idx].EffectiveBalance += oneEthInGwei // 1 ETH
+					validators[idx].EffectiveBalance += oneEthInGwei // 1 SILA
 				}
 			}
 			_ = target.SetValidators(validators)
@@ -320,7 +320,7 @@ func FuzzApplyDiff(f *testing.F) {
 			func() { // Balance change
 				balances := target.Balances()
 				if len(balances) > 0 {
-					balances[0] += 1000000000 // 1 ETH
+					balances[0] += 1000000000 // 1 SILA
 					_ = target.SetBalances(balances)
 				}
 			},

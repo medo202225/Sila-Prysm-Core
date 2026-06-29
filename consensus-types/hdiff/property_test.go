@@ -96,7 +96,7 @@ func FuzzPropertyRoundTrip(f *testing.F) {
 				}
 				if shouldChange {
 					// Make realistic changes - small effective balance adjustments
-					validators[i].EffectiveBalance += 1000000000 // 1 ETH
+					validators[i].EffectiveBalance += 1000000000 // 1 SILA
 				}
 			}
 			_ = target.SetValidators(validators)
@@ -156,7 +156,7 @@ func FuzzPropertyResourceBounds(f *testing.F) {
 		if changes > 0 {
 			validatorList := target.Validators()
 			for i := 0; i < changes && i < len(validatorList); i++ {
-				validatorList[i].EffectiveBalance += 1000000000 // 1 ETH
+				validatorList[i].EffectiveBalance += 1000000000 // 1 SILA
 			}
 			_ = target.SetValidators(validatorList)
 		}
