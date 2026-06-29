@@ -22,12 +22,12 @@ import (
 func TestProcessPendingDepositsMultiplesSameDeposits(t *testing.T) {
 	const (
 		depositCount      = uint64(2)
-		amountETH         = uint64(32)
+		amountSILA         = uint64(32)
 		slot              = 0
 		activeBalanceGwei = 10_000
 	)
 
-	state := stateWithActiveBalanceETH(t, 0)
+	state := stateWithActiveBalanceSILA(t, 0)
 
 	secretKey, err := bls.RandKey()
 	require.NoError(t, err)
@@ -41,7 +41,7 @@ func TestProcessPendingDepositsMultiplesSameDeposits(t *testing.T) {
 
 	deposits := make([]*sila.PendingDeposit, 0, depositCount)
 	for range depositCount {
-		deposit := stateTesting.GeneratePendingDeposit(t, secretKey, amountETH, withdrawalCredentials, slot)
+		deposit := stateTesting.GeneratePendingDeposit(t, secretKey, amountSILA, withdrawalCredentials, slot)
 		deposits = append(deposits, deposit)
 	}
 
@@ -59,7 +59,7 @@ func TestProcessPendingDepositsMultiplesSameDeposits(t *testing.T) {
 
 	balance, err := state.BalanceAtIndex(0)
 	require.NoError(t, err)
-	require.Equal(t, depositCount*amountETH, balance)
+	require.Equal(t, depositCount*amountSILA, balance)
 }
 
 func TestProcessPendingDeposits(t *testing.T) {
@@ -77,7 +77,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 		{
 			name: "no deposits resets balance to consume",
 			state: func() state.BeaconState {
-				st := stateWithActiveBalanceETH(t, 1_000)
+				st := stateWithActiveBalanceSILA(t, 1_000)
 				require.NoError(t, st.SetDepositBalanceToConsume(100))
 				return st
 			}(),
@@ -171,7 +171,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 		{
 			name: "process pending deposit for unknown key, activates new key",
 			state: func() state.BeaconState {
-				st := stateWithActiveBalanceETH(t, 0)
+				st := stateWithActiveBalanceSILA(t, 0)
 				sk, err := bls.RandKey()
 				require.NoError(t, err)
 				wc := make([]byte, 32)
@@ -205,7 +205,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 			name: "process excess balance as a topup",
 			state: func() state.BeaconState {
 				excessBalance := uint64(100)
-				st := stateWithActiveBalanceETH(t, 32)
+				st := stateWithActiveBalanceSILA(t, 32)
 				validators := st.Validators()
 				sk, err := bls.RandKey()
 				require.NoError(t, err)
@@ -315,7 +315,7 @@ func TestProcessPendingDeposits(t *testing.T) {
 
 func TestBatchProcessNewPendingDeposits(t *testing.T) {
 	t.Run("one valid deposit one garbage deposit", func(t *testing.T) {
-		st := stateWithActiveBalanceETH(t, 0)
+		st := stateWithActiveBalanceSILA(t, 0)
 		require.Equal(t, 0, len(st.Validators()))
 		require.Equal(t, 0, len(st.Balances()))
 		sk, err := bls.RandKey()
@@ -332,7 +332,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 	})
 
 	t.Run("two valid deposits from same key", func(t *testing.T) {
-		st := stateWithActiveBalanceETH(t, 0)
+		st := stateWithActiveBalanceSILA(t, 0)
 		require.Equal(t, 0, len(st.Validators()))
 		require.Equal(t, 0, len(st.Balances()))
 		sk, err := bls.RandKey()
@@ -349,7 +349,7 @@ func TestBatchProcessNewPendingDeposits(t *testing.T) {
 	})
 
 	t.Run("one valid one with invalid signature deposit", func(t *testing.T) {
-		st := stateWithActiveBalanceETH(t, 0)
+		st := stateWithActiveBalanceSILA(t, 0)
 		require.Equal(t, 0, len(st.Validators()))
 		require.Equal(t, 0, len(st.Balances()))
 		sk, err := bls.RandKey()
@@ -473,9 +473,9 @@ func TestApplyDeposit_TopUps_WithBadSignature(t *testing.T) {
 	require.Equal(t, topUpAmount, pbd[0].Amount)
 }
 
-// stateWithActiveBalanceETH generates a mock beacon state given a balance in eth
-func stateWithActiveBalanceETH(t *testing.T, balETH uint64) state.BeaconState {
-	gwei := balETH * 1_000_000_000
+// stateWithActiveBalanceSILA generates a mock beacon state given a balance in SILA
+func stateWithActiveBalanceSILA(t *testing.T, balSILA uint64) state.BeaconState {
+	gwei := balSILA * 1_000_000_000
 	balPerVal := params.BeaconConfig().MinActivationBalance
 	numVals := gwei / balPerVal
 
@@ -511,9 +511,9 @@ func stateWithActiveBalanceETH(t *testing.T, balETH uint64) state.BeaconState {
 	return st
 }
 
-// stateWithPendingDeposits with pending deposits and existing ethbalance
-func stateWithPendingDeposits(t *testing.T, balETH uint64, numDeposits, amount uint64) state.BeaconState {
-	st := stateWithActiveBalanceETH(t, balETH)
+// stateWithPendingDeposits with pending deposits and existing SILA balance
+func stateWithPendingDeposits(t *testing.T, balSILA uint64, numDeposits, amount uint64) state.BeaconState {
+	st := stateWithActiveBalanceSILA(t, balSILA)
 	deps := make([]*sila.PendingDeposit, numDeposits)
 	validators := st.Validators()
 	for i := 0; i < len(deps); i += 1 {
@@ -533,7 +533,7 @@ func stateWithPendingDeposits(t *testing.T, balETH uint64, numDeposits, amount u
 
 func TestApplyPendingDeposit_TopUp(t *testing.T) {
 	excessBalance := uint64(100)
-	st := stateWithActiveBalanceETH(t, 32)
+	st := stateWithActiveBalanceSILA(t, 32)
 	validators := st.Validators()
 	sk, err := bls.RandKey()
 	require.NoError(t, err)
@@ -553,7 +553,7 @@ func TestApplyPendingDeposit_TopUp(t *testing.T) {
 }
 
 func TestApplyPendingDeposit_UnknownKey(t *testing.T) {
-	st := stateWithActiveBalanceETH(t, 0)
+	st := stateWithActiveBalanceSILA(t, 0)
 	sk, err := bls.RandKey()
 	require.NoError(t, err)
 	wc := make([]byte, 32)
@@ -570,7 +570,7 @@ func TestApplyPendingDeposit_UnknownKey(t *testing.T) {
 }
 
 func TestApplyPendingDeposit_InvalidSignature(t *testing.T) {
-	st := stateWithActiveBalanceETH(t, 0)
+	st := stateWithActiveBalanceSILA(t, 0)
 
 	sk, err := bls.RandKey()
 	require.NoError(t, err)

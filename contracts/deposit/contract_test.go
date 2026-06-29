@@ -18,8 +18,8 @@ func TestSetupRegistrationContract_OK(t *testing.T) {
 	assert.NoError(t, err, "Can not deploy validator registration contract")
 }
 
-// negative test case, deposit with less than 1 ETH which is less than the top off amount.
-func TestRegister_Below1ETH(t *testing.T) {
+// negative test case, deposit with less than 1 SILA which is less than the top off amount.
+func TestRegister_Below1SILA(t *testing.T) {
 	testAccount, err := mock.Setup()
 	require.NoError(t, err)
 
@@ -31,16 +31,16 @@ func TestRegister_Below1ETH(t *testing.T) {
 
 	var depositDataRoot [32]byte
 	copy(depositDataRoot[:], depositDataRoots[0])
-	testAccount.TxOpts.Value = mock.LessThan1Eth()
+	testAccount.TxOpts.Value = mock.LessThan1Sila()
 	_, err = testAccount.Contract.Deposit(testAccount.TxOpts, pubKeys[0].Marshal(), depositDataItems[0].WithdrawalCredentials, depositDataItems[0].Signature, depositDataRoot)
 	assert.ErrorContains(t, "execution reverted", err, "Validator registration should have failed with insufficient deposit")
 }
 
-// normal test case, test depositing 32 ETH and verify HashChainValue event is correctly emitted.
+// normal test case, test depositing 32 SILA and verify HashChainValue event is correctly emitted.
 func TestValidatorRegister_OK(t *testing.T) {
 	testAccount, err := mock.Setup()
 	require.NoError(t, err)
-	testAccount.TxOpts.Value = mock.Amount32Eth()
+	testAccount.TxOpts.Value = mock.Amount32Sila()
 
 	// Generate deposit data
 	privKeys, pubKeys, err := interop.DeterministicallyGenerateKeys(0 /*startIndex*/, 1)
