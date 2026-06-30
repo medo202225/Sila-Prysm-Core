@@ -533,8 +533,8 @@ def sila_deps():
     go_repository(
         name = "com_github_sila_chain_go_sila_kzg",
         importpath = "github.com/sila-chain/go-sila-kzg",
-        sum = "h1:FYRiJMJG2iv+2Dy3fi14SVGjcPteZ5HAAUe4YWlJygc=",
-        version = "v1.5.0",
+        sum = "h1:1p9OiOrPygguD9krGVikiwF+NaKZh7I+TtuZlL8Jrtk=",
+        version = "v1.5.0-sila.2",
     )
     go_repository(
         name = "com_github_crate_crypto_go_kzg_4844",
@@ -765,10 +765,10 @@ def sila_deps():
         importpath = "github.com/sila-chain/Sila",
         patch_args = ["-p1"],
         patches = [
-            "//third_party:com_github_sila_chain_sila_secp256k1.patch",
+            "//third_party:com_github_sila_chain_go_sila_secp256k1.patch",
         ],
-        sum = "h1:Ev/sQHH+UdKZHWjuVzhu2pxhi/sXaPZl23Q+Q5LDd4Q=",
-        version = "v1.17.3",
+        sum = "h1:LU7OB7o3O0R6FwOe0OKa8Ro0e+tAG3K1me7xr1ISYEo=",
+        version = "v1.17.4",
     )
     go_repository(
         name = "com_github_sila_chain_hid",
@@ -2784,20 +2784,20 @@ def sila_deps():
     go_repository(
         name = "com_github_sila_fastssz",
         importpath = "github.com/sila-chain/fastssz",
-        sum = "h1:UkcU1rqEBOInBQdP1mCE4Smo90Eux82VEOyBhEK9TA0=",
-        version = "v0.0.0-20260421202104-7a6eb71e6e45",
+        sum = "h1:WgLi8WajlUNE5q81/J0hCFJpjxEg1/kC3IZqXZ1+MJ0=",
+        version = "v0.1.4-sila.3",
     )
     go_repository(
         name = "com_github_sila_go_bitfield",
         importpath = "github.com/sila-chain/go-bitfield",
-        sum = "h1:M9Ia6En5b8/imySo4xQeeoJPG2tOOJEKk/GnfBI86Hk=",
-        version = "v0.0.0-20260504143531-5cbb6d0f5f2e",
+        sum = "h1:+DYZDkleSz4TXsHagX6uEoLKrarKR+JsrJQcWTBzGD0=",
+        version = "v0.0.1-sila.1",
     )
     go_repository(
         name = "com_github_sila_gohashtree",
         importpath = "github.com/sila-chain/gohashtree",
-        sum = "h1:ct41mg7HyIZd7uoSM/ud23f+3DxQG9tlMlQG+BVX23c=",
-        version = "v0.0.5-beta",
+        sum = "h1:J5eEN7PcHZxaDfLCsOB7Xzdh79xYzIMt5C7xi3i4z9o=",
+        version = "v0.0.4-beta-sila.1",
     )
     go_repository(
         name = "com_github_sila_prombbolt",
@@ -2808,8 +2808,8 @@ def sila_deps():
     go_repository(
         name = "com_github_sila_protoc_gen_go_cast",
         importpath = "github.com/sila-chain/protoc-gen-go-cast",
-        sum = "h1:q9wE0ZZRdTUAAeyFP/w0SwBEnCqlVy2+on6X2/e+eAU=",
-        version = "v0.0.0-20230228205207-28762a7b9294",
+        sum = "h1:z7nBBIcmDQVay8z1lDt2+fF7Kd9/kFB19zwt1OASLF0=",
+        version = "v0.0.1-sila.1",
     )
     go_repository(
         name = "com_github_quic_go_qpack",
