@@ -339,7 +339,7 @@ func (vs *Server) validatorStatus(
 		}
 		// Set validator deposit status if their deposit is visible.
 		resp.Status = depositStatus(dep.Data.Amount)
-		resp.SilaExecutionDepositBlockNumber = silaexecBlockNumBigInt.Uint64()
+		resp.SilaexecDepositBlockNumber = silaexecBlockNumBigInt.Uint64()
 
 		return resp, nonExistentIndex
 	// Deposited, Pending or Partially Deposited mean the validator has been put into the state.
@@ -351,7 +351,7 @@ func (vs *Server) validatorStatus(
 				// Check if there was a deposit.
 				_, silaexecBlockNumBigInt := vs.DepositFetcher.DepositByPubkey(ctx, pubKey)
 				if silaexecBlockNumBigInt != nil {
-					resp.SilaExecutionDepositBlockNumber = silaexecBlockNumBigInt.Uint64()
+					resp.SilaexecDepositBlockNumber = silaexecBlockNumBigInt.Uint64()
 				}
 			}
 		}
